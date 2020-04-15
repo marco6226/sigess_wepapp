@@ -1,0 +1,19 @@
+<p-growl [value]="msgs">
+</p-growl>
+
+<s-dataNotFound *ngIf="!tarjetaList || tarjetaList.length <= 0" icon="fa-eye" message="No se cuenta con tarjetas de reporte de condiciones parametrizadas">
+</s-dataNotFound>
+
+<p-panel header="Tarjetas de reporte" *ngIf="!tarjetaSelect" [style.display]="tarjetaList && tarjetaList.length > 0 ? 'block':'none'">
+  <div class="ui-g">
+    <ng-template ngFor let-tarjeta [ngForOf]="tarjetaList" let-i="index">
+      <div class="ui-g-12 ui-sm-12 ui-md-3" class="badge clickable active" (click)="selectTarjeta(tarjeta)">
+        <h4>{{tarjeta?.nombre}}</h4>
+        <h5>{{tarjeta?.codigo}}</h5>
+        <p>{{tarjeta?.descripcion}}</p>
+      </div>
+    </ng-template>
+  </div>
+</p-panel>
+
+<s-formulario-tarjeta [tarjeta]="tarjetaSelect" (onSave)="onSave($event)" *ngIf="tarjetaSelect"></s-formulario-tarjeta>

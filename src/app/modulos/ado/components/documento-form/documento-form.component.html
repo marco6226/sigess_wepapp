@@ -1,0 +1,124 @@
+<p-panel header="Ficha técnica">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-sm-12">
+      <span class="ui-float-label">
+        <input id="nombre-input" type="text" [ngModel]="documento?.nombre" (ngModelChange)="documento.nombre=$event" pInputText>
+        <label for="nombre-input">Nombre</label>
+      </span>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="version-input" type="text" [ngModel]="documento?.version" (ngModelChange)="documento.version=$event" pInputText>
+        <label for="version-input">Versión</label>
+      </span>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="codigo-input" type="text" [ngModel]="documento?.codigo" (ngModelChange)="documento.codigo=$event" pInputText>
+        <label for="codigo-input">Código</label>
+      </span>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="proceso-input" type="text" [ngModel]="documento?.proceso" (ngModelChange)="documento.proceso=$event" pInputText>
+        <label for="proceso-input">Proceso</label>
+      </span>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="ubicacionFisica-input" type="text" [ngModel]="documento?.ubicacionFisica" (ngModelChange)="documento.ubicacionFisica=$event"
+          pInputText>
+        <label for="ubicacionFisica-input">Ubicación</label>
+      </span>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 separator">
+      Elabora
+    </div>
+
+    <div class="ui-g-12 ui-sm-12">
+      <span class="ui-float-label">
+        <input id="nombresElaborador-input" type="text" [ngModel]="documento?.nombresElaborador" (ngModelChange)="documento.nombresElaborador=$event"
+          pInputText>
+        <label for="nombresElaborador-input">Nombres elaborador</label>
+      </span>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="identificacionElaborador-input" type="text" [ngModel]="documento?.identificacionElaborador" (ngModelChange)="documento.identificacionElaborador=$event"
+          pInputText>
+        <label for="identificacionElaborador-input">Identificación elaborador</label>
+      </span>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [ngModel]="documento?.fechaElaboracion" (ngModelChange)="documento.fechaElaboracion=$event"
+          appendTo="body"></p-calendar>
+        <label for="fechaElaboracion-input">Fecha elaboración</label>
+      </span>
+    </div>
+
+
+    <div class="ui-g-12 ui-sm-12 separator">
+      Verifica
+    </div>
+    <div class="ui-g-12 ui-sm-12">
+      <span class="ui-float-label">
+        <input id="nombresVerificador-input" type="text" [ngModel]="documento?.nombresVerificador" (ngModelChange)="documento.nombresVerificador=$event"
+          pInputText>
+        <label for="nombresVerificador-input">Nombres verificador</label>
+      </span>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="identificacionVerificador-input" type="text" [ngModel]="documento?.identificacionVerificador" (ngModelChange)="documento.identificacionVerificador=$event"
+          pInputText>
+        <label for="identificacionVerificador-input">Identificación Verificador</label>
+      </span>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <p-calendar id="fechaVerificacion" [locale]="localeES" dateFormat="dd/mm/yy" [ngModel]="documento?.fechaVerificacion" (ngModelChange)="documento.fechaVerificacion=$event"
+          appendTo="body"></p-calendar>
+        <label for="fechaVerificacion-input">Fecha verificación</label>
+      </span>
+    </div>
+
+
+    <div class="ui-g-12 ui-sm-12 separator">
+      Aprueba
+    </div>
+    <div class="ui-g-12 ui-sm-12">
+      <span class="ui-float-label">
+        <input id="nombresAprobador-input" type="text" [ngModel]="documento?.nombresAprobador" (ngModelChange)="documento.nombresAprobador=$event"
+          pInputText>
+        <label for="nombresAprobador-input">Nombres aprobador</label>
+      </span>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <input id="identificacionAprobador-input" type="text" [ngModel]="documento?.identificacionAprobador" (ngModelChange)="documento.identificacionAprobador=$event"
+          pInputText>
+        <label for="identificacionAprobador-input">Identificación aprobador</label>
+      </span>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6">
+      <span class="ui-float-label">
+        <p-calendar id="fechaAprobacion" [locale]="localeES" dateFormat="dd/mm/yy" [ngModel]="documento?.fechaAprobacion" (ngModelChange)="documento.fechaAprobacion=$event"
+          appendTo="body"></p-calendar>
+        <label for="fechaAprobacion-input">Fecha aprobación</label>
+      </span>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ">
+      <span class="ui-float-label">
+        <textarea id="descripcion-input" pInputTextarea [ngModel]="documento?.descripcion" (ngModelChange)="documento.descripcion=$event"></textarea>
+        <label for="descripcion-input">Descripción</label>
+      </span>
+    </div>
+  </div>
+</p-panel>

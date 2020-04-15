@@ -1,0 +1,100 @@
+<p-growl [value]="msgs"></p-growl>
+
+<div *ngIf="finalizado" style="margin: 20px;">
+  <h2>Inspección finalizada</h2>
+  <br/>
+  <a (click)="volver()">Volver</a>
+</div>
+<p-progressBar *ngIf="initLoading" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+
+<div *ngIf="!finalizado && initLoading == false" id="contenedor">
+  <p-panel>
+    <p-header>
+      <div style="float: left;">
+        <button *ngIf="!adicionar" pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button>
+        {{listaInspeccion?.nombre}}
+
+      </div>
+      <div style="float: right;">
+        {{listaInspeccion?.codigo}} | Versión: {{listaInspeccion?.listaInspeccionPK.version}}
+      </div>
+    </p-header>
+    <p>
+      {{listaInspeccion?.descripcion}}
+    </p>
+  </p-panel>
+  <br/>
+  <s-formulario *ngIf="listaInspeccion?.formulario" [formularioModel]="listaInspeccion?.formulario" (onValidChange)="actualizarValidacion($event)"></s-formulario>
+  <br/>
+  <s-lista-inspeccion-form [value]="listaInspeccion?.elementoInspeccionList" [opciones]="listaInspeccion?.opcionCalificacionList"
+    [editable]="false" [disabled]="consultar" [nivelRiesgoList]="nivelRiesgoList" diligenciable="true" #listaInspeccionForm
+    [usarNivelRiesgo]="listaInspeccion?.usarNivelRiesgo" [usarTipoHallazgo]="listaInspeccion?.usarTipoHallazgo"></s-lista-inspeccion-form>
+
+  <button pButton type="button" icon="fa fa-floppy-o" *ngIf="adicionar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
+    class="float-btn"></button>
+
+  <button pButton type="button" icon="fa fa-pencil" *ngIf="modificar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
+    class="float-btn ui-button-success"></button>
+
+  <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+
+</div>
+
+
+
+
+
+<div id="plantilla" style="display: none;">
+  <div style="background-color: white">
+    <table width="100%" style="border-collapse: collapse;">
+      <tr>
+        <td rowspan="2" style="width: 30%;border:solid thin #ccc;text-align: center">
+          <img style="width:100%;" id="P_empresa_logo" />
+        </td>
+        <td style="width: 55%;border:solid thin #ccc;text-align: center">
+          PROCESO GESTIÓN DEL TALENTO HUMANO
+        </td>
+        <td style="width: 15%;border:solid thin #ccc;text-align: center">
+          Código: <label id="P_codigo"></label>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:solid thin #ccc;text-align: center">
+          <label id="P_lista_nombre"></label>
+        </td>
+        <td style="border:solid thin #ccc;text-align: center">
+          Version <label id="P_version"></label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" style="background-color:#eee;border:solid thin #ccc;padding: 8px;-webkit-print-color-adjust: exact;">
+          <label id="P_formulario_nombre"></label>
+        </td>
+      </tr>
+      <tr id="L_campos_formulario">
+        <td style="border:solid thin #ccc;padding: 8px;">
+
+        </td>
+        <td style="border:solid thin #ccc;padding: 8px;" colspan="2">
+
+        </td>
+      </tr>
+    </table>
+    <table width="100%" style="border-collapse: collapse;">
+      <tr id="L_elementos_lista">
+        <td id="C_codigo" style="border:solid thin #ccc;padding: 8px;">
+
+        </td>
+        <td id="C_nombre" style="border:solid thin #ccc;padding: 8px;">
+
+        </td>
+        <td id="C_opciones" style="border:solid thin #ccc;padding: 8px;">
+
+        </td>
+        <td id="C_recomendacion" style="border:solid thin #ccc;padding: 8px;">
+
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

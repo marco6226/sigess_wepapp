@@ -1,0 +1,17 @@
+<p-panel>
+  <header>
+    <label class="ui-panel-title">AREAS</label>
+    <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeArea()"></button>
+    <button pButton type="button" icon="fa fa-plus" (click)="showDialog()"></button>
+  </header>
+  <p-messages [value]="msgs"></p-messages>
+  <!-- <p-dataTable [value]="selecteds" [(selection)]="areaDataTableSelect">
+    <p-column [style]="{'width':'38px'}" selectionMode="single"></p-column>
+    <p-column field="numero" [style]="{'width':'38px'}"></p-column>
+    <p-column field="tipoArea.nombre" header="Tipo"></p-column>
+    <p-column field="nivel" header="Nivel"></p-column>
+    <p-column field="nombre" header="Nombre"></p-column>
+  </p-dataTable> -->
+</p-panel>
+
+<area-selector #areaSelector (onAreaSelect)="addArea($event)"></area-selector>

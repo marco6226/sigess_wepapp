@@ -1,0 +1,51 @@
+<div *ngFor="let elem of value">
+  <table width="100%">
+    <tr class="node4">
+      <td width="65px" style="text-align: center;">
+        <textarea pInputTextarea [(ngModel)]="elem.codigo" *ngIf="editable" placeholder="Código" maxlength="20"></textarea>
+        <label *ngIf="!editable">{{nivelSeparator}}{{elem.codigo}}</label>
+      </td>
+
+      <td>
+        <textarea pInputTextarea [(ngModel)]="elem.nombre" *ngIf="editable" placeholder="Nombre" maxlength="255"></textarea>
+        <label *ngIf="!elem.calificable && !editable">{{elem.nombre}}</label>
+        <label *ngIf="elem.calificable && !editable" [title]="elem.descripcion" (click)="emitirEventoSelecElemento(elem)" class="clickeable">{{elem.nombre}}</label>
+      </td>
+
+      <td>
+        <textarea pInputTextarea [(ngModel)]="elem.descripcion" *ngIf="editable" placeholder="Descripción" maxlength="512"></textarea>
+        <label *ngIf="!editable">{{elem.descripcion}}</label>
+      </td>
+
+      <td style="width: 150px">
+        <p-multiSelect [options]="tiposHallazgo" [(ngModel)]="elem.tipoHallazgoList" optionLabel="nombre" defaultLabel="--Tipos Hallazgo--"
+          *ngIf="editable"></p-multiSelect>
+      </td>
+
+      <td width="10px">
+        <button pButton type="button" icon="fa fa-plus" (click)="addElemento(elem)" *ngIf="editable"></button>
+      </td>
+
+      <td width="10px">
+        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeElemento(value, elem)" *ngIf="editable"></button>
+      </td>
+
+      <ng-template ngFor let-opc [ngForOf]="opciones">
+        <td width="50px" align="center">
+          <label *ngIf="!elem.calificable">{{opc.nombre}}</label>
+          <p-radioButton #radiobutton [id]="elem.id + '_' + opc.id" [name]="elem.codigo + elem.nombre" [value]="opc.id" [label]=""
+            [disabled]="disabled" [(ngModel)]="elem.calificacion?.opcionCalificacion.id" [pTooltip]="opc.descripcion" tooltipPosition="left"
+            *ngIf="elem.calificable"></p-radioButton>
+        </td>
+      </ng-template>
+
+    </tr>
+    <tr>
+      <td [attr.colspan]="opciones?.length + 7">
+        <s-elemento-inspeccion-node [value]="elem?.elementoInspeccionList" [opciones]="opciones" [editable]="editable" [disabled]="disabled"
+          [nivelRiesgoList]="nivelRiesgoList" [diligenciable]="diligenciable" (onElementoClick)="emitirEventoSelecElemento($event)"
+          [tiposHallazgo]="tiposHallazgo"></s-elemento-inspeccion-node>
+      </td>
+    </tr>
+  </table>
+</div>

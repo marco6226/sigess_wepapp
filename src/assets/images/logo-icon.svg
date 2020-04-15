@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Capa_1"
+   data-name="Capa 1"
+   viewBox="0 0 499.59 500.5"
+   version="1.1"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/home/fmoreno/icon.png"
+   inkscape:export-xdpi="196.76936"
+   inkscape:export-ydpi="196.76936"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata31">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>logosigess</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1053"
+     id="namedview29"
+     showgrid="false"
+     inkscape:zoom="0.94305694"
+     inkscape:cx="216.40862"
+     inkscape:cy="120.00503"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer4" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#3ba2dc;}.cls-2{fill:#d17731;}</style>
+  </defs>
+  <title
+     id="title6">logosigess</title>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer 1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Layer 2">
+    <g
+       id="g4641"
+       transform="matrix(2.0195456,0,0,2.0195456,-264.05278,-173.72075)">
+      <path
+         id="path10"
+         d="m 339.03341,216.40411 -13.3987,-13.29263 a 29.373355,29.373355 0 1 0 -51.47346,-17.82706 57.883011,57.883011 0 0 1 4.6708,14.58061 58.754287,58.754287 0 1 1 -99.49969,-30.92271 l 13.75101,13.63736 a 39.612739,39.612739 0 1 0 67.46704,22.72893 47.68151,47.68151 0 0 1 -4.32986,-13.5275 48.405047,48.405047 0 0 1 3.00022,-26.07766 47.992138,47.992138 0 1 1 79.81264,50.68551 z"
+         class="cls-1"
+         inkscape:connector-curvature="0"
+         style="fill:#3ba2dc;stroke-width:0.37881553" />
+      <polygon
+         transform="matrix(0.37881552,0,0,0.37881552,162.25536,135.93991)"
+         id="polygon16"
+         points="453.33,217.59 428.11,189.17 405.55,226.65 "
+         class="cls-2"
+         style="fill:#d17731" />
+      <polygon
+         transform="matrix(0.37881552,0,0,0.37881552,162.25536,135.93991)"
+         id="polygon18"
+         points="356.15,230.28 385.17,212.59 389.55,242.94 "
+         class="cls-2"
+         style="fill:#d17731" />
+      <polygon
+         transform="matrix(0.37881552,0,0,0.37881552,162.25536,135.93991)"
+         id="polygon20"
+         points="317.04,215.64 340.83,214.29 334.4,232.12 "
+         class="cls-2"
+         style="fill:#d17731" />
+      <polygon
+         transform="matrix(0.37881552,0,0,0.37881552,162.25536,135.93991)"
+         id="polygon22"
+         points="104.91,53.87 118.86,93.22 70.26,100.34 "
+         class="cls-2"
+         style="fill:#d17731" />
+      <polygon
+         transform="matrix(0.37881552,0,0,0.37881552,162.25536,135.93991)"
+         id="polygon24"
+         points="138.3,69.34 173.28,86.17 178.68,52.05 "
+         class="cls-2"
+         style="fill:#d17731" />
+      <polygon
+         transform="matrix(0.37881552,0,0,0.37881552,162.25536,135.93991)"
+         id="polygon26"
+         points="199.53,76.2 216.9,95.71 228.18,77 "
+         class="cls-2"
+         style="fill:#d17731" />
+    </g>
+  </g>
+</svg>

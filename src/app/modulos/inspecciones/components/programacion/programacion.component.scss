@@ -1,0 +1,29 @@
+table{
+  border-collapse: collapse;
+  width: 100%;
+}
+td{
+  border: solid thin #ccc;
+  padding: 2px;
+}
+.dia-container{
+  height: 100px;
+  overflow-y: auto;
+}
+.dia{
+  background: #fefefe;
+  margin: 0px;
+  padding: 2px;
+  text-align: right;
+  font-weight: bold;
+}
+.dia:hover{
+  background: #eee;
+  cursor: pointer;
+}
+
+.cabecera-dias{
+  text-align: center;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%);
+}

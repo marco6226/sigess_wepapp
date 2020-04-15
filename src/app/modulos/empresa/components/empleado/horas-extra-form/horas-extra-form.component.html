@@ -1,0 +1,48 @@
+<p-growl [value]="msgs"></p-growl>
+
+<s-dataNotFound *ngIf="!horasExtraList || horasExtraList.length <= 0" icon="fa-clock-o" message="No se han adicionado horas extra al empleado actual">
+  <div *sTienePermiso="'EMP_POST_HEEMPL'">
+    Haz click
+    <a (click)="adicionarHorasExtra()">aqui</a>
+    para adicionarlas
+  </div>
+</s-dataNotFound>
+
+<p-table #dt [value]="horasExtraList" autoLayout="true" [style.display]="horasExtraList && horasExtraList.length > 0 ? 'block':'none'">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Fecha</th>
+      <th>Horas</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-he>
+    <tr>
+      <td>
+        <p-calendar [(ngModel)]="he.fecha" appendTo="body" dateFormat="dd/mm/yy"></p-calendar>
+      </td>
+      <td style="width:45px;">
+        <input pInputText [(ngModel)]="he.horas" />
+      </td>
+      <td style="width:45px;">
+        <button pButton type="button" (click)="guardarHorasExtra(he)" icon="fa fa-floppy-o" class="soft-icon" title="Guarda registro"
+          *ngIf="!he.id"></button>
+        <ng-container *ngIf="he.id">
+          <button *sTienePermiso="'EMP_PUT_HEEMPL'" pButton type="button" (click)="actualizarHorasExtra(he)" icon="fa fa-pencil" style="color:green !important;"
+            class="soft-icon" title="Actualizar registro"></button>
+        </ng-container>
+      </td>
+      <td style="width:45px;">
+        <button pButton type="button" (click)="descartarHorasExtra(he)" icon="fa fa-trash" class="soft-icon" title="Descartar registro"
+          *ngIf="!he.id"></button>
+        <ng-container *ngIf="he.id">
+          <button *sTienePermiso="'EMP_DELETE_HEEMPL'" pButton type="button" (click)="confirmarEliminar(he)" style="color:red !important;"
+            icon="fa fa-trash" class="soft-icon" title="Eliminar registro"></button>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<button *sTienePermiso="'EMP_POST_HEEMPL'" pButton type="button" (click)="adicionarHorasExtra()" icon="fa fa-plus" class="float-btn"
+  style="bottom: 100px;" title="Adicionar horas extra"></button>

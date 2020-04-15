@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+  <p-panel [header]="formulario.nombre">
+    <div class="ui-g">
+      <ng-template ngFor let-campo [ngForOf]="formulario.campoList" let-i="index">
+        <div class="ui-g-12 ui-md-6 ui-lg-4 ui-xl-3">
+
+          <label class="s-float-label" [title]="campo.descripcion">{{campo.nombre}}</label>
+          <div [ngSwitch]="campo.tipo">
+            <input pInputText *ngSwitchCase="'text'" [formControlName]="campo.nombre" [attr.required]="campo.requerido ? '' : null" />
+
+            <div *ngSwitchCase="'boolean'">
+              <p-radioButton [name]="campo.nombre" value="true" label="Si" [formControlName]="campo.nombre" [attr.required]="campo.requerido ? '' : null"></p-radioButton>
+              <p-radioButton [name]="campo.nombre" value="false" label="No" [formControlName]="campo.nombre"
+                [attr.required]="campo.requerido ? '' : null"></p-radioButton>
+            </div>
+
+            <p-dropdown *ngSwitchCase="'single_select'" [options]="selectorsMap[campo.id]" [formControlName]="campo.nombre" [attr.required]="campo.requerido ? '' : null"></p-dropdown>
+            <p-multiSelect *ngSwitchCase="'multiple_select'" [options]="selectorsMap[campo.id]" defaultLabel="--seleccione--" [formControlName]="campo.nombre"
+              [attr.required]="campo.requerido ? '' : null"></p-multiSelect>
+            <p-calendar *ngSwitchCase="'date'" [formControlName]="campo.nombre" [attr.required]="campo.requerido ? '' : null"></p-calendar>
+            <p-calendar *ngSwitchCase="'timestamp'" [showTime]="true" [formControlName]="campo.nombre" [attr.required]="campo.requerido ? '' : null"></p-calendar>
+          </div>
+
+        </div>
+      </ng-template>
+    </div>
+  </p-panel>
+</form>

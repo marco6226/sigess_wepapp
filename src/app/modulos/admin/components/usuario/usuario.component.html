@@ -1,0 +1,107 @@
+<p-growl [value]="msgs"></p-growl>
+<p-panel header="Usuarios">
+
+    <p-table #dt [value]="usuarioList" autoLayout="true" selectionMode="single" [(selection)]="usuarioSelect" [rows]="10" [paginator]="true"
+        dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="2"></th>
+                <th pSortableColumn="email">Correo electrónico
+                    <p-sortIcon field="email"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fechaModificacion">Última modificación
+                    <p-sortIcon field="fechaModificacion"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fechaCreacion">Fecha creación
+                    <p-sortIcon field="fechaCreacion"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ultimoLogin">Ultimo acceso
+                    <p-sortIcon field="ultimoLogin"></p-sortIcon>
+                </th>
+                <th pSortableColumn="estado">Estado
+                    <p-sortIcon field="estado"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                </td>
+                <td>
+                    <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
+                </td>
+                <td>
+                    <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaCreacion', 'bt')"></s-rangoFechaSelector>
+                </td>
+                <td>
+                    <s-rangoFechaSelector (onSelect)="dt.filter($event, 'ultimoLogin', 'bt')"></s-rangoFechaSelector>
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usr>
+            <tr [pSelectableRow]="usr">
+                <td class="td-avatar">
+                    <i *ngIf="!usr?.icon" class="fa fa-user-circle" aria-hidden="true"></i>
+                    <img *ngIf="usr?.icon" [src]="usr?.icon" style="border-radius: 50%;" />
+                </td>
+                <td>{{usr.email}}</td>
+                <td>{{usr.fechaModificacion | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{usr.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{usr.ultimoLogin | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>
+                    <label class="badge" [ngClass]="{'success': usr.estado == 'ACTIVO', 'novalid': usr.estado == 'ELIMINADO', 'warning': usr.estado == 'INACTIVO', 'active': usr.estado == 'CAMBIO_PASSWD', 'fatal': usr.estado == 'BLOQUEADO'}">
+                        {{usr.estado}}
+                    </label>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="abrirDlg(false)"></button>
+            <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                (click)="abrirDlg(true)" [disabled]="!usuarioSelect"></button>
+            <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+                (click)="eliminar()" [disabled]="!usuarioSelect"></button>
+        </ng-template>
+    </p-table>
+
+</p-panel>
+
+<p-dialog header="Usuario" [style]="{width: '450px'}" [(visible)]="visibleDlg" [responsive]="true" showEffect="fade" [modal]="true">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <label for="nombre" class="s-float-label">E-Mail</label>
+                <input pInputText id="nombre" formControlName="email" required/>
+            </div>
+            <div class="ui-g-12">
+                <label class="s-float-label">Perfiles</label>
+                <p-multiSelect [options]="perfilList" appendTo="body" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
+            </div>
+            <div class="ui-g-12">
+                <label for="ips" class="s-float-label">IP's Permitidas</label>
+                <p-chips [style]="{width: '100%'}" formControlName="ipPermitida" required [style]="{width: '450px'}"></p-chips>
+            </div>
+            <div class="ui-g-12">
+                <p-checkbox formControlName="mfa" binary="true" label="Requerir doble autenticación"></p-checkbox>
+            </div>
+            <div class="ui-g-12">
+                <label for="ips" class="s-float-label">Número móvil</label>
+                <p-inputMask title="El número debe iniciar con el indicativo del pais seguido de los 10 numeros siguientes" mask="(99) 999 999 9999"
+                    formControlName="numeroMovil" placeholder="(57) 000 000 0000" [required]="form.value.mfa"></p-inputMask>
+            </div>
+            <div class="ui-g-12" *ngIf="isUpdate && (usuarioSelect?.estado == 'ACTIVO' || usuarioSelect?.estado == 'INACTIVO')">
+                <label class="s-float-label">Estado</label>
+                <p-radioButton name="grestado" value="ACTIVO" label="ACTIVO" formControlName="estado" required></p-radioButton>
+                <p-radioButton name="grestado" value="INACTIVO" label="INACTIVO" formControlName="estado" required></p-radioButton>
+            </div>
+        </div>
+        <p-footer>
+            <div style="margin-top:10px;float: right;">
+                <button *ngIf="solicitando == false" pButton type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" label="Guardar"></button>
+                <p-progressSpinner *ngIf="solicitando == true" strokeWidth="8" [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+            </div>
+        </p-footer>
+    </form>
+</p-dialog>

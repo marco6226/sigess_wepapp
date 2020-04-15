@@ -1,0 +1,41 @@
+<p-growl [value]="msgs"></p-growl>
+
+<p-panel header="Horas hombre trabajadas {{anioSelect}}">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-sm-12 ui-md-8 ui-lg-6 ui-xl-4">
+      <h3>
+        <p-dropdown [options]="aniosList" [(ngModel)]="anioSelect" (onChange)="cambiarAnio($event)"></p-dropdown>
+      </h3>
+      <p-table #dt [value]="hhtList" >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Mes</th>
+            <th>Horas</th>
+            <th style="width:45px;"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-hht>
+          <tr [pSelectableRow]="hht">
+            <td>{{hht.nombreMes}}</td>
+            <td pEditableColumn>
+              <p-cellEditor>
+                <ng-template pTemplate="output">
+                  {{hht.valor | number:'1.0-0'}}
+                </ng-template>
+                <ng-template pTemplate="input">
+                  <input pInputText type="number" [(ngModel)]="hht.valor" onKeyPress="if(this.value.length>=9) return false;">
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <button pButton type="button" (click)="guardarHht(hht)" icon="fa fa-floppy-o" class="soft-icon" title="Guardar registro"
+                *ngIf="!hht.id"></button>
+              <button pButton type="button" (click)="actualizarHht(hht)" icon="fa fa-pencil" style="color:green !important;" class="soft-icon"
+                title="Actualizar registro" *ngIf="hht.id"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</p-panel>

@@ -1,0 +1,81 @@
+<p-growl [value]="msgs"></p-growl>
+
+
+<s-dataNotFound *ngIf="!evalDesempList || evalDesempList.length <= 0" icon="fa-list" message="Aún no se han realizado evaluaciones de desempeño">
+  <div *sTienePermiso="'EMP_POST_EVALDES'">
+    Crea una nueva haciendo click
+    <a (click)="redireccionarForm()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="Evaluaciones de desempeño" [style.display]="evalDesempList && evalDesempList.length > 0 ? 'block':'none'">
+
+  <p-table #dt [value]="evalDesempList" [(selection)]="evalDesempSelect" autoLayout="true" selectionMode="single" [rows]="10"
+    [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th rowspan="2" style="width: 2.5em;"></th>
+        <th pSortableColumn="fechaElaboracion">Fecha elaboración
+          <p-sortIcon field="fechaElaboracion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="empleado.primerNombre">Nombres
+          <p-sortIcon field="empleado.primerNombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="empleado.primerApellido">Apellidos
+          <p-sortIcon field="empleado.primerApellido"></p-sortIcon>
+        </th>
+        <th pSortableColumn="empleado.primerApellido">Identificación
+          <p-sortIcon field="empleado.numeroIdentificacion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cargo.nombre">Cargo
+          <p-sortIcon field="cargo.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="comentario">Comentario
+          <p-sortIcon field="comentario"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaElaboracion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'empleado.primerNombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'empleado.primerApellido', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'empleado.numeroIdentificacion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'cargo.nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'comentario', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-eval>
+      <tr [pSelectableRow]="eval" class="table-row table-row-selectable">
+        <td class="td-avatar">
+          <i *ngIf="!eval.empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+          <img *ngIf="eval.empleado.usuario?.icon" [src]="eval.empleado.usuario?.icon" style="border-radius: 50%;" />
+        </td>
+        <td>{{eval.fechaElaboracion | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{eval.empleado.primerNombre}}</td>
+        <td>{{eval.empleado.primerApellido}}</td>
+        <td>{{eval.empleado.numeroIdentificacion}}</td>
+        <td>{{eval.cargo.nombre}}</td>
+        <td>{{eval.comentario}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'EMP_POST_EVALDES'" pButton type="button" icon="fa fa-plus" label="Nuevo" (click)="redireccionarForm('POST')"></button>
+      <button *sTienePermiso="'EMP_GET_EVALDES'" pButton type="button" icon="fa fa-info" class="ui-button-secondary" label="Consultar"
+        (click)="redireccionarForm('GET')" [disabled]="!evalDesempSelect"></button>
+      <button *sTienePermiso="'EMP_PUT_EVALDES'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success" label="Modificar"
+        (click)="redireccionarForm('PUT')" [disabled]="!evalDesempSelect"></button>
+    </ng-template>
+  </p-table>
+
+</p-panel>

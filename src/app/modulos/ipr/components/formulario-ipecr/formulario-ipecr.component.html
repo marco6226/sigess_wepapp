@@ -1,0 +1,132 @@
+<p-growl [value]="msgs">
+</p-growl>
+<p-panel header="IPECR {{form.value.fechaElaboracion | date:'dd/MM/yyyy'}}">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="ui-g">
+
+      <div class="ui-g-12 ui-md-2">
+        <label class="s-float-label">Cargo</label>
+        <p-dropdown [options]="cargoItemsList" formControlName="cargo" required></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-2">
+        <label class="s-float-label">Trabajadores propios</label>
+        <p-spinner formControlName="numTrabajadoresPropios"></p-spinner>
+      </div>
+
+      <div class="ui-g-12 ui-md-2">
+        <label class="s-float-label">Trabajadores externos</label>
+        <p-spinner formControlName="numTrabajadoresExternos"></p-spinner>
+      </div>
+
+
+      <div class="ui-g-12 ui-md-2">
+        <label class="s-float-label">Grupos de exposición similar</label>
+        <p-chips formControlName="grupoExpSimilarList"></p-chips>
+      </div>
+
+      <div class="ui-g-12 ui-md-2">
+        <label class="s-float-label">Area</label>
+        <br/>
+        <area-selector formControlName="areaList"></area-selector>
+      </div>
+
+
+      <div class="ui-g-12 ui-md-2">
+        <label class="s-float-label">Ejecución</label>
+        <br/>
+        <p-radioButton name="groupRutinario" value="PROPIA" label="Propia" formControlName="ejecucion"></p-radioButton>
+        <p-radioButton name="groupRutinario" value="CONTRATADA" label="Contratada" formControlName="ejecucion"></p-radioButton>
+      </div>
+
+
+      <div class="ui-g-12 ui-md-6">
+        <label class="s-float-label">Descripción</label>
+        <textarea pInputTextarea formControlName="descripcion"></textarea>
+      </div>
+
+      <div class="ui-g-12 ui-md-2">
+        <div *ngIf="form.value.id && !consultar">
+          <label class="s-float-label">Participantes</label>
+          <br/>
+          <button *sTienePermiso="'IPECR_GET_PARTIPECR'" type="button" icon="fa fa-external-link-square" pButton [label]="participantesList?.length + ' participantes'"
+            (click)="visibleDlgPart = true;"></button>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-3">
+        <div *ngIf="!consultar && adicionar">
+          <button *sTienePermiso="'IPECR_POST_IPECR'" pButton type="submit" icon="fa fa-floppy-o" label="Guardar Ipecr" [ngClass]="'ui-button-active'"
+            [disabled]="!form.valid"></button>
+        </div>
+        <div *ngIf="!consultar && !adicionar">
+          <button *sTienePermiso="'IPECR_PUT_IPECR'" pButton type="submit" icon="fa fa-pencil" label="Actualizar Ipecr" [ngClass]="'ui-button-success'"
+            [disabled]="!form.valid"></button>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-1"></div>
+    </div>
+  </form>
+
+  <p-dialog header="Participantes IPECR" [(visible)]="visibleDlgPart" [width]="750">
+    <div style="font-size: 11px !important">
+
+      <form [formGroup]="formPart">
+        <p-table #dt [value]="participantesList" [(selection)]="participanteSelect" selectionMode="single" (onRowSelect)="onParticipanteSelect($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
+                Tipo
+                <p-dropdown [options]="tipoParticipanteItemList" formControlName="tipo" appendTo="body"></p-dropdown>
+              </th>
+              <th>
+                Nombres
+                <input pInputText formControlName="nombres" />
+              </th>
+              <th>
+                Apellidos
+                <input pInputText formControlName="apellidos" />
+              </th>
+              <th>
+                Cargo
+                <input pInputText formControlName="cargo" />
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td>
+                {{rowData.tipo}}
+              </td>
+              <td>
+                {{rowData.nombres}}
+              </td>
+              <td>
+                {{rowData.apellidos}}
+              </td>
+              <td>
+                {{rowData.cargo}}
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary" let-rowData>
+            <button *sTienePermiso="'IPECR_POST_PARTIPECR'" label="Adicionar" pButton type="button" icon="fa fa-plus" (click)="adicionarParticipante()"
+              [disabled]="!formPart.valid"></button>
+            <button *sTienePermiso="'IPECR_PUT_PARTIPECR'" label="Modificar" pButton type="button" icon="fa fa-pencil" class="ui-button-success"
+              (click)="modificarParticipante()" [disabled]="participanteSelect == null"></button>
+            <button *sTienePermiso="'IPECR_DELETE_PARTIPECR'" label="Eliminar" pButton type="button" icon="fa fa-trash" class="ui-button-danger"
+              (click)="confirmarEliminarParticipante()" [disabled]="participanteSelect == null"></button>
+          </ng-template>
+        </p-table>
+      </form>
+
+    </div>
+  </p-dialog>
+
+
+
+  <s-formularioPeligro *ngIf="form.value.id" [readOnly]="consultar" [ipecrId]="form.value.id" (onSave)="manejarRespuesta($event)"
+    (onDelete)="manejarRespDelete($event)"></s-formularioPeligro>
+
+</p-panel>

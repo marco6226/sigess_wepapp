@@ -1,0 +1,12 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-sm-12 ui-md-6" style="padding:0px;">
+    <p-calendar appendTo="body" placeholder="Desde" [(ngModel)]="desde" dateFormat="dd/mm/yy" (onSelect)="onSelect($event)" (onClearClick)="onSelect($event)"
+      showButtonBar="true" [locale]="es">
+    </p-calendar>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-md-6" style="padding:0px;">
+    <p-calendar appendTo="body" placeholder="Hasta" [(ngModel)]="hasta" dateFormat="dd/mm/yy" (onSelect)="onSelect($event)" (onClearClick)="onSelect($event)"
+      showButtonBar="true" [locale]="es">
+    </p-calendar>
+  </div>
+</div>

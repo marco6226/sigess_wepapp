@@ -1,0 +1,60 @@
+<p-growl [value]="msgs"></p-growl>
+<p-messages [(value)]="msgsSticky" [closable]="false"></p-messages>
+
+<s-dataNotFound *ngIf="!documentosList || documentosList.length <= 0" icon="fa-files-o" message="No se han adicionado documentos al empleado actual">
+  <div *sTienePermiso="'ADO_POST_DOCSUP'">
+    Agrega nuevos documentos
+    <a (click)="showDialog()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-table #dt [value]="documentosList" autoLayout="true" [style.display]="documentosList && documentosList.length > 0 ? 'block':'none'">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Proceso</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th rowspan="2"></th>
+    </tr>
+    <tr>
+      <td>
+        <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'proceso', 'contains')">
+      </td>
+      <td>
+        <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+      </td>
+      <td>
+        <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+      </td>
+      <td>
+
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <td>
+        <p-dropdown [options]="tipoDocumentosList" [(ngModel)]="rowData.proceso" appendTo="body"></p-dropdown>
+      </td>
+      <td>
+        <a (click)="download(rowData)" title="Descargar">{{rowData.nombre}}</a>
+      </td>
+      <td>
+        <textarea pInputTextarea [(ngModel)]="rowData.descripcion" placeholder="Descripción" maxlength="1024"></textarea>
+      </td>
+      <td style="width:95px;">
+        <button *sTienePermiso="'ADO_PUT_DIRDOC'" pButton type="button" icon="fa fa-pencil" (click)="modificar(rowData)" class="soft-icon"
+          title="Modificar registro"></button>
+        <button *sTienePermiso="'ADO_DELETE_DIRDOC'" pButton type="button" icon="fa fa-trash" (click)="confirmarEliminar(rowData)"
+          class="soft-icon" title="Eliminar registro"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<a style="visibility: hidden" id="dwldLink"></a>
+
+<s-documentoUpload [(visible)]="visibleDlg" [modParam]="empleado?.id" [modulo]="modulo" (onUpload)="onUpload($event)"></s-documentoUpload>
+
+<button *sTienePermiso="'ADO_POST_DOCSUP'" pButton type="button" (click)="showDialog()" icon="fa fa-plus" class="float-btn"
+  style="bottom: 100px;" title="Adicionar documento"></button>

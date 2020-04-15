@@ -1,0 +1,72 @@
+<p-panel *ngIf="tarjeta" [header]="tarjeta?.nombre">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4">
+        <p-panel header="Reporte">
+          <div class="obs-pnl">
+            <h4 style="margin-top: 0px">Tipo de observación:</h4>
+            <div [ngClass]="form.value.tipoObservacion == null ? 'invalid' : 'valid'">
+              <ng-template ngFor let-to [ngForOf]="tarjeta?.campos.tipo_observacion" let-i="index">
+                <p-radioButton name="tipo_observacion" [value]="to.label" [label]="to.label" formControlName="tipoObservacion"></p-radioButton>
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="obs-pnl">
+            <h4>Descripción:</h4>
+            <textarea pInputTextarea style="height:100px;" formControlName="descripcion" required></textarea>
+          </div>
+
+          <div>
+            <h4>Implicación:</h4>
+            <p-tree [value]="implicacionTree" selectionMode="checkbox" [style]="{'width':'100%'}" [(selection)]="implicacionSelectList"
+              [ngClass]="implicacionSelectList.length == 0 ? 'invalid' : 'valid'"></p-tree>
+          </div>
+
+          <div class="obs-pnl">
+            <h4>Area reportada:</h4>
+            <area-selector formControlName="area" required></area-selector>
+          </div>
+        </p-panel>
+      </div>
+
+      <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4">
+        <p-panel header="Detalle">
+          <div class="obs-pnl">
+            <h4 style="margin-top: 0px">Afecta:</h4>
+            <ng-template ngFor let-afectaOpt [ngForOf]="tarjeta?.campos.afecta" let-i="index">
+              <p-checkbox name="_afecta" [value]="afectaOpt.label" [label]="afectaOpt.label" formControlName="afecta" [(ngModel)]="afectaSelectList"></p-checkbox>
+            </ng-template>
+          </div>
+
+          <div class="obs-pnl">
+            <h4>Recomendación:</h4>
+            <textarea pInputTextarea style="height:100px;" formControlName="recomendacion"></textarea>
+          </div>
+
+          <div class="obs-pnl" *ngIf="tarjeta?.usarCausaRaiz">
+            <h4>Causa raíz:</h4>
+            <p-tree [value]="causaRaizList" selectionMode="checkbox" [style]="{'width':'100%'}" [(selection)]="causaRaizSelectList"></p-tree>
+          </div>
+
+          <div class="obs-pnl" *ngIf="tarjeta?.usarNivelRiesgo">
+            <h4>Nivel de riesgo:</h4>
+            <p-dropdown [options]="nivelRiesgoList" formControlName="nivelRiesgo"></p-dropdown>
+          </div>
+        </p-panel>
+      </div>
+
+      <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4">
+        <p-panel header="Registro gráfico">
+          <p-messages [(value)]="msgs"></p-messages>
+          <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" *ngIf="!readOnly"></button>
+          <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+
+          <s-galeria *ngIf="imagenesList?.length > 0" [images]="imagenesList" [readOnly]="readOnly"></s-galeria>
+        </p-panel>
+      </div>
+    </div>
+    <button *sTienePermiso="'AUC_POST_OBS'" pButton type="submit" icon="fa fa-floppy-o" title="Guardar observación" class="float-btn"
+      [disabled]="!form.valid || implicacionSelectList.length == 0"></button>
+  </form>
+</p-panel>

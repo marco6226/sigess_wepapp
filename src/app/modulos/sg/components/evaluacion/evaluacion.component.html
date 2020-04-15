@@ -1,0 +1,122 @@
+<p-growl [value]="msgs"></p-growl>
+<p-panel>
+  <p-header>
+    {{sistemaGestion?.nombre}}
+  </p-header>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <label class="ui-panel-title">{{sistemaGestion?.codigo}} - v{{sistemaGestion?.sistemaGestionPK.version}}</label>
+    </div>
+    <div class="ui-g-12">
+      <p>{{sistemaGestion?.descripcion}}</p>
+    </div>
+  </div>
+</p-panel>
+<br/>
+<p-tabView #tabView>
+  <p-tabPanel header="Datos evaluación">
+    <form [formGroup]="form" (ngSubmit)="guardarEvaluacion()">
+      <div class="ui-g">
+
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Nombre responsable
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="nombreResponsable" maxlength="100" required />
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Correo electrónico
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="emailResponsable" maxlength="45" required/>
+        </div>
+
+        <div class="ui-g-12  ui-sm-12 ui-md-2">
+          Actividad económica
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="actividadEconomica" maxlength="255" />
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Ciudad
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="ciudad" maxlength="255" />
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Dirección
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="direccion" maxlength="45" />
+        </div>
+
+
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Teléfono
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="telefono" maxlength="20" />
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Número de trabajadores
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <p-spinner formControlName="numeroTrabajadores" [min]="0" [max]="99999999" maxlength="10" required></p-spinner>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Nombre evaluador
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="nombreEvaluador" maxlength="255" required/>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+          Licencia evaluador
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-4">
+          <input type="text" pInputText formControlName="licenciaEvaluador" maxlength="45" required/>
+        </div>
+
+
+        <div class="ui-g-12 ui-sm-12 ui-md-12">
+          <textarea pInputTextarea rows="8" id="txtDescripcion" formControlName="descripcion" placeholder="Descripción" maxlength="1024"></textarea>
+        </div>
+
+      </div>
+      <br/><br/>
+      <button pButton type="submit" icon="fa fa-floppy-o" [label]="btnSaveLabel" [disabled]="!form.valid" *ngIf="!consultar"></button>
+    </form>
+  </p-tabPanel>
+
+  <p-tabPanel header="Cuestionario" [disabled]="true">
+    <s-sgecompositor [elementoList]="sistemaGestion?.elementoList" [editable]="false" [persistible]="modificar || guardar"
+      [evaluacion]="evaluacion" *ngIf="evaluacion" (onRadioSelectEvent)="onRadioSelectEvent($event)" (onElementDocumentSelect)="abrirDlgDocumento($event)"></s-sgecompositor>
+  </p-tabPanel>
+
+  <p-tabPanel header="Plan de trabajo" *ngIf="evaluacion?.fechaFinalizacion != null">
+    <div *ngIf="evaluacion">
+      <s-desv-eval [evaluacionId]="evaluacion?.id" [readOnly]="!modificar" (onUpdate)="onRespUpdate($event)"></s-desv-eval>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="Informe" *ngIf="evaluacion?.fechaFinalizacion != null">
+    <!--<sigess-visor-pdf [src]="reporte"></sigess-visor-pdf>-->
+    <div>
+      <div class="visor-menu">
+        <button pButton icon="fa fa-file-word-o" (click)="download()" title="Descargar archivo docx"></button>
+        <a download="ReporteSGE.docx" style="visibility: hidden" id="dwldLink"></a>
+      </div>
+      <div id="reportContainer"></div>
+    </div>
+  </p-tabPanel>
+</p-tabView>
+
+<s-documento-selector [titulo]="elementoDocSelect?.codigo+ ' ' + elementoDocSelect?.nombre" [(visible)]="visibleDocSelector"
+  [seleccion]="elementoDocSelect?.documentosList"></s-documento-selector>
+
+<p-dialog width="380" modal="true" responsive="true" height="680" header="Sitio evaluación">
+  <div style="height: 680px">
+    <area-selector></area-selector>
+  </div>
+</p-dialog>

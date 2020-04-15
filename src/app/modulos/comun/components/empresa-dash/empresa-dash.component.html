@@ -1,0 +1,47 @@
+<table>
+    <tr>
+        <td>
+            <div [ngClass]="grupoIconos['icon-aue'] == true ? 'icon-selected' : 'icon-selection'" class="icon-aue icon" (click)="onIconClick('icon-aue')"
+                pTooltip="Autoevaluación" tooltipPosition="bottom"></div>
+        </td>
+        <td>
+            <div [ngClass]="grupoIconos['icon-aus'] == true ? 'icon-selected' : 'icon-selection'" class="icon-aus icon" (click)="onIconClick('icon-aus')"
+                pTooltip="Ausentismo" tooltipPosition="bottom"></div>
+        </td>
+        <td>
+            <div [ngClass]="grupoIconos['icon-inp'] == true ? 'icon-selected' : 'icon-selection'" class="icon-inp icon" (click)="onIconClick('icon-inp')"
+                pTooltip="Inspecciones" tooltipPosition="bottom"></div>
+        </td>
+        <td>
+            <div [ngClass]="grupoIconos['icon-rai'] == true ? 'icon-selected' : 'icon-selection'" class="icon-rai icon" (click)="onIconClick('icon-rai')"
+                pTooltip="Reporte A/I" tooltipPosition="bottom"></div>
+        </td>
+    </tr>
+</table>
+
+<!--
+<div [ngClass]="grupoIconos['icon-aue'] == true ? 'visible' : 'invisible'">
+    <s-indicadoresSge></s-indicadoresSge>
+</div>
+<div [ngClass]="grupoIconos['icon-ipr'] == true ? 'visible' : 'invisible'">
+    <s-indicadoresAusentismo></s-indicadoresAusentismo>
+</div>
+<div [ngClass]="grupoIconos['icon-inp'] == true ? 'visible' : 'invisible'">
+    <s-indicadoresInp></s-indicadoresInp>
+</div>
+<div [ngClass]="grupoIconos['icon-rai'] == true ? 'visible' : 'invisible'">
+    <s-indicadoresRai></s-indicadoresRai>
+</div>
+-->
+<div *ngIf="grupoIconos['icon-aue']">
+    <s-indicadoresSge *ngIf="empresa" [empresa]="empresa"></s-indicadoresSge>
+</div>
+<div *ngIf="grupoIconos['icon-aus']">
+    <s-indicadoresAusentismo *ngIf="empresa" [empresa]="empresa"></s-indicadoresAusentismo>
+</div>
+<div *ngIf="grupoIconos['icon-inp']">
+    <s-indicadoresInp *ngIf="empresa" [empresa]="empresa"></s-indicadoresInp>
+</div>
+<div *ngIf="grupoIconos['icon-rai']">
+    <s-indicadoresRai *ngIf="empresa" [empresa]="empresa"></s-indicadoresRai>
+</div>

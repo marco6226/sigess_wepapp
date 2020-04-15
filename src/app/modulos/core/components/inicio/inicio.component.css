@@ -1,0 +1,29 @@
+input[type="image"]{
+	width: 150px;
+
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+input[type="image"]:hover {
+	width: 170px;
+}
+
+.div-icon{
+	text-align:center;
+	color: #555;
+	font-size: 24px;
+
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+.div-icon:hover{
+	color: #002284;
+}

@@ -1,0 +1,31 @@
+<div class="ui-g">
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-3 ui-xl-2">
+    <p-panel header="Dashboard:">
+      <p-selectButton [options]="[{label:'Consolidado', value:true},{label:'Empleado', value:false}]" [(ngModel)]="indSelect"></p-selectButton>
+    </p-panel>
+    <br/>
+    <s-selectorRangoFechas (onchange)="actualizarRangosCons($event)" [value]="rangosCons" *ngIf="indSelect"></s-selectorRangoFechas>
+    <s-selectorRangoFechas (onchange)="actualizarRangosEmp($event)" [value]="rangosEmp" *ngIf="!indSelect"></s-selectorRangoFechas>
+  </div>
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-9 ui-xl-10 ui-g-nopad" *ngIf="indSelect">
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6" *ngFor="let chart of chartsCons">
+      <s-panelGrafica [data]="chart" [titulo]="chart.title" [tipo]="chart.type" resumen="true"></s-panelGrafica>
+    </div>
+  </div>
+
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-9 ui-xl-10 ui-g-nopad" *ngIf="!indSelect">
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-12" >
+      <p-panel header="Empleado:">
+        <s-empleadoSelector [(ngModel)]="empleadoSelect" (onSelect)="onEmpleadoSelect($event)"></s-empleadoSelector>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6" *ngFor="let chart of chartsEmp">
+      <s-panelGrafica [data]="chart" [titulo]="chart.title" [tipo]="chart.type" resumen="true"></s-panelGrafica>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,48 @@
+<p-dialog header="Actualizar contraseña" [(visible)]="visible" [responsive]="true" showEffect="fade" [modal]="true" [closeOnEscape]="false"
+  [contentStyle]="{'width':'480px'}">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <div class="ui-g">
+
+      <div class="ui-g-12">
+        <label class="s-float-label">Contraseña anterior</label>
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+          <input id="passwdant" pInputText type="password" formControlName="oldPasswd" required/>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <label class="s-float-label">Contraseña nueva</label>
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+          <input type="password" pInputText formControlName="newPasswd" required/>
+        </div>
+        <label class="msg-validacion" *ngIf="!form.controls['newPasswd'].valid&&form.controls['newPasswd'].dirty">
+          {{form.controls['newPasswd'].errors.password}}
+        </label>
+
+        <p class="msg-validacion" *ngIf="form.controls['newPasswd'].value == form.controls['oldPasswd'].value">
+          La contraseña nueva no puede ser igual a la anterior
+        </p>
+      </div>
+
+      <div class="ui-g-12">
+        <label class="s-float-label">Repita contraseña nueva</label>
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+          <input type="password" pInputText formControlName="newPasswdConfirm" required/>
+        </div>
+        <label class="msg-validacion" *ngIf="form.controls['newPasswdConfirm'].value != form.controls['newPasswd'].value">La
+          contraseña nueva debe coincidir con su confirmación
+        </label>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Guardar" [disabled]="!form.valid 
+                                                      || (form.controls['newPasswdConfirm'].value != form.controls['newPasswd'].value 
+                                                      || (form.controls['newPasswd'].value == form.controls['oldPasswd'].value))">
+        </button>
+      </div>
+    </div>
+  </form>
+</p-dialog>

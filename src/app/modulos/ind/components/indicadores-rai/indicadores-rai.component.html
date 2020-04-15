@@ -1,0 +1,18 @@
+<div class="ui-g">
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-4 ui-xl-2">
+    <p-panel header="Tipo de reporte">
+      <p-dropdown [options]="tipoReporteList" [(ngModel)]="tipoReporteSelected" (onChange)="actualizarTipoReporte($event)"></p-dropdown>
+    </p-panel>
+    <br/>
+    <s-selectorRangoFechas (onchange)="actualizarRangos($event)"></s-selectorRangoFechas>
+  </div>
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-8 ui-xl-10 ui-g-nopad">
+    <ng-template ngFor let-chart [ngForOf]="chartList" *ngIf="chartList" let-i="index">
+      <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+        <s-panelGrafica *ngIf="chart" [data]="chart" tipo="bar" [titulo]="chart.title"></s-panelGrafica>
+      </div>
+    </ng-template>
+  </div>
+</div>

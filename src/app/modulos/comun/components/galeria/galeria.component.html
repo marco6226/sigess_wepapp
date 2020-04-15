@@ -1,0 +1,23 @@
+<div class="ui-g">
+    <div style="width: 100%;">
+        <a class="btn-remove fa fa-times-circle" (click)="onRemoveClick(image)" *ngIf="!readOnly"></a>
+        <img [src]="vpselect.source" style="width: 100%;padding: 10px;border: solid thin #ccc;" (click)="onImageClick($event, vpselect)">
+        <div style="height: 0px;width: 100%;">
+            <div *ngIf="vpselect.documento" class="wdescripcion">
+                <label style="margin-bottom: 5px;font-weight: bold;">{{vpselect.documento?.nombre}}</label>
+                <p> {{vpselect.documento?.descripcion}} </p>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let image of images; let i = index;" class="wvista-previa">
+        <a (click)="vistaPreviaSelect($event, image, i)" [title]="image.documento?.nombre">
+            <img [src]="image.source" style="width: 100%;">
+        </a>
+    </div>
+</div>
+
+<div class="modal" *ngIf="visibleDlg" (click)="cerrarDlg()">
+    <div class="content">
+        <img *ngIf="currentImage?.source" [src]="currentImage?.source" style="width: 100%;">
+    </div>
+</div>

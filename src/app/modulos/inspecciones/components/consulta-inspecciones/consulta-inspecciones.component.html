@@ -1,0 +1,168 @@
+<p-growl [value]="msgs"></p-growl>
+
+<p-panel header="Inspecciones">
+
+    <p-tabView>
+        <p-tabPanel header="Programadas">
+            <p-table #dt [value]="inspeccionesList" autoLayout="true" selectionMode="single" [(selection)]="inspeccionSelect" [rows]="10"
+                [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading"
+                sortField="fechaRealizada" sortOrder="1">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="programacion.fecha">Fecha programada
+                            <p-sortIcon field="programacion.fecha"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fechaRealizada">Fecha elaboración
+                            <p-sortIcon field="fechaRealizada"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="usuarioRegistra.email">Usuario elabora
+                            <p-sortIcon field="usuarioRegistra.email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="programacion.listaInspeccion.nombre">Lista inspección
+                            <p-sortIcon field="programacion.listaInspeccion.nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="programacion.area.nombre">Ubicación
+                            <p-sortIcon field="programacion.area.nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fechaModificacion">Última modificación
+                            <p-sortIcon field="fechaModificacion"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="usuarioModifica.email">Usuario modifica
+                            <p-sortIcon field="usuarioModifica.email"></p-sortIcon>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'programacion.fecha', 'bt')"></s-rangoFechaSelector>
+                        </td>
+                        <td>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'programacion.listaInspeccion.nombre', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'programacion.area.nombre', 'contains')">
+                        </td>
+                        <td>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-inspeccion>
+                    <tr [pSelectableRow]="inspeccion" class="table-row table-row-selectable">
+                        <td>{{inspeccion.programacion?.fecha | date:'dd/MM/yyyy'}}</td>
+                        <td>{{inspeccion?.fechaRealizada | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{inspeccion.usuarioRegistra?.email}}</td>
+                        <td>{{inspeccion.programacion?.listaInspeccion?.nombre}}</td>
+                        <td>{{inspeccion.programacion?.area?.nombre}}</td>
+                        <td>{{inspeccion?.fechaModificacion | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{inspeccion.usuarioModifica?.email}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary" let-rowData>
+                    <button *sTienePermiso="'INP_GET_INP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="redirect(true)"
+                        [disabled]="!inspeccionSelect"></button>
+                    <button *sTienePermiso="'INP_PUT_INP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                        (click)="redirect(false)" [disabled]="!inspeccionSelect"></button>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">
+                            <s-dataNotFound *ngIf="!inspeccionesList || inspeccionesList.length <= 0" icon="fa-check-square" message="No se encontraron registros de inspecciones">
+                                <div *sTienePermiso="'INP_GET_PROG'">
+                                    <!-- Verifica si hay inspecciones programadas para realizar
+                                            <a (click)="navegar()">aqui</a> -->
+                                </div>
+                            </s-dataNotFound>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="No programadas">
+            <p-table #dt [value]="inspeccionNoProgList" autoLayout="true" selectionMode="single" [(selection)]="inspeccionNoProgSelect"
+                [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoadNoProg($event)" [totalRecords]="totalRecordsNoProg"
+                [loading]="loadingNoProg" sortField="fechaRealizada" sortOrder="1">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="fechaRealizada">Fecha elaboración
+                            <p-sortIcon field="fechaRealizada"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="usuarioRegistra.email">Usuario elabora
+                            <p-sortIcon field="usuarioRegistra.email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="listaInspeccion.nombre">Lista inspección
+                            <p-sortIcon field="listaInspeccion.nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="area.nombre">Ubicación
+                            <p-sortIcon field="area.nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fechaModificacion">Última modificación
+                            <p-sortIcon field="fechaModificacion"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="usuarioModifica.email">Usuario modifica
+                            <p-sortIcon field="usuarioModifica.email"></p-sortIcon>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'listaInspeccion.nombre', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
+                        </td>
+                        <td>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
+                        </td>
+                        <td>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-inspeccion>
+                    <tr [pSelectableRow]="inspeccion" class="table-row table-row-selectable">
+                        <td>{{inspeccion?.fechaRealizada | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{inspeccion.usuarioRegistra?.email}}</td>
+                        <td>{{inspeccion.listaInspeccion?.nombre}}</td>
+                        <td>{{inspeccion.area?.nombre}}</td>
+                        <td>{{inspeccion?.fechaModificacion | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{inspeccion.usuarioModifica?.email}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary" let-rowData>
+
+                    <button *sTienePermiso="'INP_GET_INP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="redirectNoProg(true)"
+                        [disabled]="!inspeccionNoProgSelect"></button>
+
+                    <button *sTienePermiso="'INP_PUT_INP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                        (click)="redirectNoProg(false)" [disabled]="!inspeccionNoProgSelect"></button>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">
+                            <s-dataNotFound *ngIf="!inspeccionNoProgList || inspeccionNoProgList.length <= 0" icon="fa-check-square" message="No se encontraron registros de inspecciones">
+                                <div *sTienePermiso="'INP_GET_PROG'">
+                                    <!-- Verifica si hay inspecciones programadas para realizar
+                                            <a (click)="navegar()">aqui</a> -->
+                                </div>
+                            </s-dataNotFound>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</p-panel>

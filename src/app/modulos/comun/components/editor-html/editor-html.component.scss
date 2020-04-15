@@ -1,0 +1,43 @@
+.editor{
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+.toolbar{
+    padding: 0px;
+    border: none;
+    margin: 0px;
+    min-height: 0px;
+    text-align: left;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    background-color: #efeff4;
+}
+.toolbar button{
+    background-color: transparent;
+    border: none;
+    color: #555;
+    padding: 10px;
+    margin: 0px;
+    width: 40px;
+    height: inherit;
+    box-shadow: none;
+    border-radius: 0px;
+}
+.toolbar button:hover{
+    background-color: #ddd;
+}
+.content{
+    border: solid thin #ccc;
+    min-height: 300px;
+    height: auto;
+}
+.selector{
+    background-color: transparent;
+    border: none;
+    width: 40px;
+    height: 30px;
+}
+.selector:hover{
+    background-color: #ddd;
+}

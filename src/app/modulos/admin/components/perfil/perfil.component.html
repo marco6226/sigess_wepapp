@@ -1,0 +1,59 @@
+<p-growl [value]="msgs"></p-growl>
+<p-panel header="Perfiles">
+    <p-table #dt [value]="perfilList" autoLayout="true" selectionMode="single" [(selection)]="perfil" [rows]="10" [paginator]="true"
+        dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="nombre">Nombre
+                    <p-sortIcon field="nombre"></p-sortIcon>
+                </th>
+                <th pSortableColumn="descripcion">Descripción
+                    <p-sortIcon field="descripcion"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-reporte>
+            <tr [pSelectableRow]="reporte">
+                <td>{{reporte.nombre}}</td>
+                <td>{{reporte.descripcion}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <button *sTienePermiso="'ADM_POST_PERF'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="abrirDlgNuevo()"></button>
+            <button *sTienePermiso="'ADM_PUT_PERF'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                (click)="abrirDlgModificar()" [disabled]="!perfil"></button>
+        </ng-template>
+    </p-table>
+
+
+<p-dialog header="Perfil" [(visible)]="visibleDlg" [responsive]="true" (onHide)="hideDlg()" showEffect="fade" [modal]="true">
+    <div class="ui-g" *ngIf="perfil">
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+            <label for="nombre">Nombre</label>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-10">
+            <input pInputText id="nombre" [(ngModel)]="perfil.nombre" />
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-2">
+            <label for="descripcion">Descripción</label>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-10">
+            <textarea pInputTextarea id="descripcion" [(ngModel)]="perfil.descripcion"></textarea>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="fa fa-close" *ngIf="!visibleBtnSave" (click)="modificar()" label="Modificar"></button>
+            <button type="button" pButton icon="fa fa-check" *ngIf="visibleBtnSave" (click)="adicionar()" label="Guardar"></button>
+        </div>
+    </p-footer>
+</p-dialog>

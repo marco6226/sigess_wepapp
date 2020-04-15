@@ -1,0 +1,56 @@
+<p-table [value]="opcionRespuestaList" autoLayout="true" [(selection)]="selectedOpResp" *ngIf="editable" [style]="{'margin-bottom':'30px', 'margin-top':'25px'}"
+  emptymessage="Hacer click en adicionar para agregar opciones de respuesta...">
+  <ng-template pTemplate="header">
+    <tr>
+      <th colspan="5">
+        <label style="float: left;">OPCIONES DE RESPUESTA</label>
+        <a style="float:right;" (click)="addOpResp()">Adicionar</a>
+      </th>
+    </tr>
+    <tr>
+      <th style="width: 3em">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th style="width: 70px">Valor</th>
+      <th style="width: 120px">Despreciable</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-opc>
+    <tr [pSelectableRow]="opc">
+      <td>
+        <p-tableCheckbox [value]="opc"></p-tableCheckbox>
+      </td>
+      <td pEditableColumn>
+        <input type="text" pInputText [(ngModel)]="opc.nombre" />
+      </td>
+      <td pEditableColumn>
+        <input type="text" pInputText [(ngModel)]="opc.descripcion" />
+      </td>
+      <td pEditableColumn>
+        <input type="number" pInputText [(ngModel)]="opc.valor" />
+      </td>
+      <td>
+        <p-toggleButton [(ngModel)]="opc.despreciable" onLabel="Si" offLabel="No"></p-toggleButton>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+
+<sigess-sgenodo [elementoList]="elementoList" [opcionRespuestaList]="selectedOpResp" [editable]="editable" 
+  [persistible]="persistible" [evaluacionId]="evaluacion?.id" [respuestasList]="respuestasList" *ngIf="persistible ? (respuestasList && elementoList) : true"
+  #sgeNodo (onRadioSelectEvent)="onRadioSelect($event)" (onElementDocumentSelect)="abrirDlgDocumento($event)"></sigess-sgenodo>
+
+<button pButton type="button" icon="fa fa-plus" label="Adicionar elemento" (click)="addElementoMain()" *ngIf="editable"></button>
+
+<div id="compositor-menu" *ngIf="evaluacion != null">
+  <button pButton type="button" icon="fa fa-search" title="Buscar pregunta faltante" (click)="buscarPregunta()"></button>
+  <div>{{estadoEvaluacion?.numeroRespuestas}} / {{estadoEvaluacion?.numeroPreguntas}}</div>
+  <div>Completado: {{estadoEvaluacion?.numeroRespuestas / estadoEvaluacion?.numeroPreguntas | percent}}</div>
+</div>
+
+<br/>
+<br/>
+<br/>

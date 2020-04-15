@@ -1,0 +1,31 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-sm-12 ui-lg-4 ui-xl-2">
+    <p-panel header="Sistema de gestión:">
+      <p-dropdown *ngIf="sgeList" [options]="sgeList" [(ngModel)]="sgeSelected" (onChange)="cambiarSge($event)"></p-dropdown>
+      <p-messages *ngIf="!sgeList" [value]="[{ severity: 'warn', summary: '', detail: 'No se han parametrizado aún sistemas de evaluación' }]" [closable]="false"></p-messages>
+    </p-panel>
+    <br/>
+    <s-selectorRangoFechas (onchange)="actualizar($event)"></s-selectorRangoFechas>
+  </div>
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-8 ui-xl-10 ui-g-nopad">
+    <div class="ui-g-12" *ngIf="!dataIndGen && !dataInd">
+      <s-dataNotFound icon="fa-bar-chart" message="No se encontraron datos de evaluaciones para la visualización de los datos"></s-dataNotFound>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndGen" [data]="dataIndGen" tipo="line" [titulo]="dataIndGen?.title"></s-panelGrafica>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndGen" [data]="dataIndGen" tipo="bar" [titulo]="dataIndGen?.title"></s-panelGrafica>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataInd" [data]="dataInd" tipo="line" [titulo]="dataInd?.title"></s-panelGrafica>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataInd" [data]="dataInd" tipo="bar" [titulo]="dataInd?.title"></s-panelGrafica>
+    </div>
+  </div>
+
+</div>

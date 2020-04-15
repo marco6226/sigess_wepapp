@@ -1,0 +1,70 @@
+<p-panel>
+  <p-header>
+    <i class="fa fa-th-list" aria-hidden="true"></i>
+    <label class="ui-panel-title">Elementos de inspección</label>
+  </p-header>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <div style="margin-right: 25px;">
+        <s-elemento-inspeccion-node *ngIf="value" [value]="value" [editable]="editable" [opciones]="opciones" [disabled]="disabled" [nivelRiesgoList]="nivelRiesgoList"
+          [diligenciable]="diligenciable" (onElementoClick)="elementoClick($event)" [tiposHallazgo]="tipoHallazgoList"></s-elemento-inspeccion-node>
+
+        <a (click)="adicionarElementoInp()" *ngIf="editable" title="Adicionar nuevo elemento">Nuevo elemento</a>
+      </div>
+    </div>
+  </div>
+
+</p-panel>
+
+<p-dialog [(visible)]="visibleDlg" [draggable]="true" [resizable]="true" [responsive]="true" appendTo="body" [maximizable]="true"
+  [modal]="false" [width]="540">
+  <h2>{{elementoSelect?.codigo}}. {{elementoSelect?.nombre}}</h2>
+  <div class="ui-g">
+    <div class="ui-g-6">
+      <div class="ui-g-12">
+        <label class="s-float-label">Calificación</label>
+        <br/>
+        <ng-template ngFor let-opc [ngForOf]="opciones">
+          <p-radioButton #radiobutton name="radioselect" [value]="opc.id" [label]="opc.nombre" [(ngModel)]="elementoSelect?.calificacion.opcionCalificacion.id"
+            [pTooltip]="opc.descripcion" tooltipPosition="left" [disabled]="disabled"></p-radioButton>
+          <br/>
+        </ng-template>
+      </div>
+
+      <div class="ui-g-12" *ngIf="usarNivelRiesgo">
+        <label class="s-float-label">Nivel riesgo</label>
+        <select [disabled]="disabled" class="select-option" [ngModel]="elementoSelect?.calificacion?.nivelRiesgo?.id" (ngModelChange)="elementoSelect.calificacion.nivelRiesgo.id=$event">
+          <option *ngFor="let nr of nivelRiesgoList" [value]="nr.value">{{nr.label}} </option>
+        </select>
+      </div>
+
+      <div class="ui-g-12" *ngIf="usarTipoHallazgo">
+        <label class="s-float-label">Tipo hallazgo</label>
+        <select class="select-option" [ngModel]="elementoSelect?.calificacion?.tipoHallazgo?.id" (ngModelChange)="elementoSelect.calificacion.tipoHallazgo.id=$event">
+          <option value="">--seleccione--</option>
+          <option *ngFor="let th of elementoSelect?.tipoHallazgoList" [value]="th.id">{{th.nombre}}</option>
+        </select>
+      </div>
+
+      <div class="ui-g-12">
+        <label class="s-float-label">Descripción del hallazgo</label>
+        <textarea pInputTextarea style="width: 100%;height: 100%;" [(ngModel)]="elementoSelect?.calificacion.recomendacion" [disabled]="disabled"></textarea>
+      </div>
+    </div>
+
+    <div class="ui-g-6">
+      <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" [disabled]="disabled"></button>
+      <div *ngIf="loadingImg == true"  style="width: 100%;text-align: center;margin-top: 20px;">
+        <p-progressSpinner strokeWidth="8" [style]="{width: '45px', height: '45px'}"></p-progressSpinner>
+      </div>
+      <s-galeria *ngIf="imagenesList.length > 0" [images]="imagenesList" (onRemove)="removerImagen($event)" [readOnly]="disabled"></s-galeria>
+      <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+    </div>
+    <div class="ui-g-12">
+      <p-messages [(value)]="msgs"></p-messages>
+    </div>
+
+
+  </div>
+</p-dialog>

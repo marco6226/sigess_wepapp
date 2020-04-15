@@ -1,0 +1,37 @@
+select{
+  height: 30px;
+  background: #fff;
+  border: none;
+  width: 100%;
+  background: #fff0;
+}
+
+.badge{
+  margin: 5px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: move;
+}
+
+.data-container{
+  width: 100%;
+  overflow: auto;
+}
+
+.td-droppable{
+  background-color: #f4f4f4;
+}
+.active{
+  color:#fff;
+}
+
+.input-table{
+  border: none;
+  min-width: 200px;
+  background: #fff0;
+}
+
+.td-view{
+  min-width: 250px;
+}

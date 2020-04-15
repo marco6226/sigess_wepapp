@@ -1,0 +1,152 @@
+<p-growl [value]="msgs"></p-growl>
+<p-panel header="Parametrización de peligros">
+  <table width="100%">
+    <tr>
+      <td width="20%" valign="top">
+        <p-table [value]="tipoPeligroList" [(selection)]="tipoPeligroSelect" selectionMode="single" (onRowSelect)="onSelectTipoPeligro($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Tipo de peligro</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td> {{rowData.nombre}} </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary" let-rowData>
+            <input type="text" pInputText [(ngModel)]="nombreTipoPeligro" style="margin-bottom:10px;" />
+            <button *sTienePermiso="'IPECR_POST_TIPOPEL'" pButton type="button" icon="fa fa-floppy-o" (click)="adicionarTipoPeligro()"
+              [disabled]="!nombreTipoPeligro"></button>
+            <button *sTienePermiso="'IPECR_PUT_TIPOPEL'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" (click)="modificarTipoPeligro()"
+              [disabled]="!tipoPeligroSelect || !nombreTipoPeligro"></button>
+            <button *sTienePermiso="'IPECR_DELETE_TIPOPEL'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="eliminarTipoPeligro()"
+              [disabled]="!tipoPeligroSelect"></button>
+          </ng-template>
+        </p-table>
+      </td>
+      <td width="20%" valign="top">
+        <p-table [value]="peligroList" [(selection)]="peligroSelect" selectionMode="single" (onRowSelect)="onSelectPeligro($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Peligros</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td> {{rowData.nombre}} </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary" let-rowData>
+            <input type="text" pInputText [(ngModel)]="nombrePeligro" style="margin-bottom:10px;" />
+            <button *sTienePermiso="'IPECR_POST_PEL'" pButton type="button" icon="fa fa-floppy-o" (click)="adicionarPeligro()" [disabled]="!nombrePeligro || !tipoPeligroSelect"></button>
+            <button *sTienePermiso="'IPECR_PUT_PEL'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" (click)="modificarPeligro()"
+              [disabled]="!peligroSelect || !nombrePeligro"></button>
+            <button *sTienePermiso="'IPECR_DELETE_PEL'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="eliminarPeligro()"
+              [disabled]="!peligroSelect"></button>
+          </ng-template>
+        </p-table>
+      </td>
+      <td width="20%" valign="top">
+        <p-table [value]="fuenteList" [(selection)]="fuenteSelect" selectionMode="single" (onRowSelect)="onSelectFuente($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Fuentes</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td> {{rowData.nombre}} </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary" let-rowData>
+            <input type="text" pInputText [(ngModel)]="nombreFuente" style="margin-bottom:10px;" />
+            <button *sTienePermiso="'IPECR_POST_FUENT'" pButton type="button" icon="fa fa-floppy-o" (click)="adicionarFuente()" [disabled]="!nombreFuente || !peligroSelect"></button>
+            <button *sTienePermiso="'IPECR_PUT_FUENT'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" (click)="modificarFuente()"
+              [disabled]="!fuenteSelect || !nombreFuente"></button>
+            <button *sTienePermiso="'IPECR_DELETE_FUENT'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="eliminarFuente()"
+              [disabled]="!fuenteSelect"></button>
+          </ng-template>
+        </p-table>
+      </td>
+      <td width="20%" valign="top">
+        <p-table [value]="efectoList" [(selection)]="efectoSelect" selectionMode="single" (onRowSelect)="onSelectEfecto($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Efectos</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td> {{rowData.nombre}} </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary" let-rowData>
+            <input type="text" pInputText [(ngModel)]="nombreEfecto" style="margin-bottom:10px;" />
+            <button *sTienePermiso="'IPECR_POST_EFECT'" pButton type="button" icon="fa fa-floppy-o" (click)="adicionarEfecto()" [disabled]="!nombreEfecto || !peligroSelect"></button>
+            <button *sTienePermiso="'IPECR_PUT_EFECT'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" (click)="modificarEfecto()"
+              [disabled]="!efectoSelect || !nombreEfecto"></button>
+            <button *sTienePermiso="'IPECR_DELETE_EFECT'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="eliminarEfecto()"
+              [disabled]="!efectoSelect"></button>
+          </ng-template>
+        </p-table>
+      </td>
+      <td width="20%" valign="top">
+        <p-table [value]="controlList" [(selection)]="controlSelect" selectionMode="single" (onRowSelect)="onSelectControl($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Tipo</th>
+              <th>Controles</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td> {{rowData.tipoControl.nombre}} </td>
+              <td> {{rowData.nombre}} </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary" let-rowData>
+            <div class="ui-g">
+              <div class="ui-g-10" style="padding: 0px;">
+                <p-dropdown [options]="tipoControlItemsList" [(ngModel)]="tipoControlItemSelect" appendTo="body"></p-dropdown>
+              </div>
+              <div class="ui-g-2" style="padding: 0px;">
+                <button pButton type="button" icon="fa fa-cog" class="soft-icon" (click)="showDlgTipoControl()" title="Parametrización de tipos de control"></button>
+              </div>
+            </div>
+            <input type="text" pInputText [(ngModel)]="nombreControl" style="margin-bottom:10px;" />
+            <button *sTienePermiso="'IPECR_POST_CTRL'" pButton type="button" icon="fa fa-floppy-o" (click)="adicionarControl()" [disabled]="!nombreControl || !peligroSelect || !tipoControlItemSelect"></button>
+            <button *sTienePermiso="'IPECR_PUT_CTRL'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" (click)="modificarControl()"
+              [disabled]="!controlSelect || !nombreControl || !tipoControlItemSelect"></button>
+            <button *sTienePermiso="'IPECR_DELETE_CTRL'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="eliminarControl()"
+              [disabled]="!controlSelect"></button>
+          </ng-template>
+        </p-table>
+      </td>
+    </tr>
+  </table>
+</p-panel>
+
+<p-dialog header="Tipos de controles" [(visible)]="visibleDlgTipoControl" modal="true" [width]="300" appendTo="body">
+  <p-table [value]="tipoControlList" [(selection)]="tipoControlSelect" selectionMode="single" (onRowSelect)="onSelectTipoControl($event)">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Tipo control</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+      <tr [pSelectableRow]="rowData">
+        <td> {{rowData.nombre}} </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <input type="text" pInputText [(ngModel)]="nombreTipoControl" style="margin-bottom:10px;" />
+      <button *sTienePermiso="'IPECR_POST_TIPOCTRL'" pButton type="button" icon="fa fa-floppy-o" (click)="adicionarTipoControl()"
+        [disabled]="!nombreTipoControl"></button>
+      <button *sTienePermiso="'IPECR_PUT_TIPOCTRL'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" (click)="modificarTipoControl()"
+        [disabled]="!tipoControlSelect || !nombreTipoControl"></button>
+      <button *sTienePermiso="'IPECR_DELETE_TIPOCTRL'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="eliminarTipoControl()"
+        [disabled]="!tipoControlSelect"></button>
+    </ng-template>
+  </p-table>
+</p-dialog>

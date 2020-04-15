@@ -1,0 +1,36 @@
+<p-growl [value]="msgs">
+</p-growl>
+
+<p-panel header="REPORTE DE ACCIDENTES O INCIDENTES">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-sm-12 " *ngIf="empleadoSelect?.id != null || (!consultar && !modificar)">
+      <strong>Persona involucrada</strong>
+      <br/>
+      <br/>
+      <s-empleadoSelector [(ngModel)]="empleadoSelect" [readOnly]="reporteSelect"></s-empleadoSelector>
+      <br/>
+      <br/>
+    </div>
+    <div class="ui-g-12 ui-sm-12">
+      <strong>Tipo de reporte</strong>
+      <br/>
+      <br/>
+      <p-radioButton name="tipoReporte" label="Accidente" value="ACCIDENTE" [(ngModel)]="tipoReporte" [disabled]="reporteSelect"></p-radioButton>
+      <p-radioButton name="tipoReporte" label="Incidente" value="INCIDENTE" [(ngModel)]="tipoReporte" [disabled]="reporteSelect"></p-radioButton>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <button pButton type="button" icon="fa fa-arrow-right" label="Continuar" [disabled]="!tipoReporte || empleadoSelect?.id == null"
+    (click)="inicializarReporte()" *ngIf="!reporteSelect"></button>
+</p-panel>
+
+<br/>
+
+<s-form-accidente [reporte]="reporteSelect" *ngIf="reporteSelect" (onSave)="onSave($event)" [consultar]="consultar" [modificar]="modificar"
+  [adicionar]="adicionar"></s-form-accidente>
+
+<br/>
+
+<button pButton type="button" class="float-btn" [title]="consultar || modificar ? 'Atras' : 'Cancelar'" [icon]="consultar || modificar ? 'fa fa-chevron-left' : 'fa fa-ban'"
+  (click)="volver()" *ngIf="reporteSelect" style="margin-right:65px;"></button>

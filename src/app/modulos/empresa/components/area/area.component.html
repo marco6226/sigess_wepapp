@@ -1,0 +1,81 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+
+
+
+<p-tabView>
+
+  <p-tabPanel header="Organigrama">
+    <s-dataNotFound *ngIf="!areasNodes[0] || areasNodes[0].children.length <= 0" icon="fa-sitemap" message="No se cuenta con registro de áreas">
+      <div *sTienePermiso="'EMP_POST_AREA'">
+        Inicia agregandolas haciendo click
+        <a (click)="showAddForm('ORGANIZACIONAL')">aqui</a>
+      </div>
+    </s-dataNotFound>
+    <div [style.display]="areasNodes[0] && areasNodes[0].children.length > 0 ? 'block':'none'">
+      <div style="width:100%;overflow: auto;">
+        <p-organizationChart [value]="areasNodes" *ngIf="visibleTree" selectionMode="single" [(selection)]="areaSelected"></p-organizationChart>
+      </div>
+      <div>
+        <button *sTienePermiso="'EMP_POST_AREA'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="showAddForm('ORGANIZACIONAL')"></button>
+        <button *sTienePermiso="'EMP_PUT_AREA'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success" label="Modificar"
+          (click)="showUpdateForm('ORGANIZACIONAL')" [disabled]="!areaSelected"></button>
+        <button *sTienePermiso="'EMP_DELETE_AREA'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
+          (click)="onAreaDelete('ORGANIZACIONAL')" [disabled]="!areaSelected"></button>
+      </div>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="Estructura física">
+    <s-dataNotFound *ngIf="!sedesNodes[0] || sedesNodes[0].children.length <= 0" icon="fa-sitemap" message="No se cuenta con registro de sedes">
+      <div *sTienePermiso="'EMP_POST_AREA'">
+        Inicia agregandolas haciendo click
+        <a (click)="showAddForm('FISICA')">aqui</a>
+      </div>
+    </s-dataNotFound>
+    <div [style.display]="sedesNodes[0] && sedesNodes[0].children.length > 0 ? 'block':'none'">
+      <div style="width:100%;overflow: auto;">
+        <p-organizationChart [value]="sedesNodes" *ngIf="visibleTree" selectionMode="single" [(selection)]="sedeSelected"></p-organizationChart>
+      </div>
+      <div>
+        <button *sTienePermiso="'EMP_POST_AREA'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="showAddForm('FISICA')"></button>
+        <button *sTienePermiso="'EMP_PUT_AREA'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success" label="Modificar"
+          (click)="showUpdateForm('FISICA')" [disabled]="!sedeSelected"></button>
+        <button *sTienePermiso="'EMP_DELETE_AREA'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
+          (click)="onAreaDelete('FISICA')" [disabled]="!sedeSelected"></button>
+      </div>
+    </div>
+  </p-tabPanel>
+
+</p-tabView>
+
+<p-dialog [header]="areaSelected?.label" [(visible)]="visibleForm" width="380" modal="true" responsive="true" header="Datos de Area">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-3">
+        Nombre
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <input type="text" pInputText formControlName="nombre" required/>
+      </div>
+
+      <div class="ui-g-12 ui-md-3">
+        Tipo de area
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <p-dropdown [options]="tiposAreaList" formControlName="tipoAreaId" required appendTo="body"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-3">
+        Descripción
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <textarea type="text" pInputText formControlName="descripcion"></textarea>
+      </div>
+
+    </div>
+    <footer>
+      <button pButton type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" label="Guardar"></button>
+      <button pButton type="button" icon="fa fa-ban" class="ui-button-secondary" label="Cancelar" (click)="closeForm()"></button>
+    </footer>
+  </form>
+</p-dialog>

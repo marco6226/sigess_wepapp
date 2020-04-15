@@ -1,0 +1,5 @@
+<p-dialog header="Subir archivo" [visible]="visibleDlg" (visibleChange)="onVisibleChange($event)" modal="true">
+  <p-fileUpload name="file" maxFileSize="20000000" [style]="{'width':'480px'}" chooseLabel="Seleccionar" uploadLabel="Subir"
+    cancelLabel="Cancelar" customUpload="true" (uploadHandler)="upload($event)">
+  </p-fileUpload>
+</p-dialog>

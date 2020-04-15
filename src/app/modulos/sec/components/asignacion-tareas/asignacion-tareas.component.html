@@ -1,0 +1,149 @@
+<p-growl [value]="msgs"></p-growl>
+
+<s-dataNotFound *ngIf="!tareasList || tareasList.length <= 0" icon="fa-tasks" message="No se cuenta con registros de tareas generadas">
+  <div *sTienePermiso="'SEC_GET_ANADESV'">
+    Genera nuevas tareas a partir de un análisis de desviación
+    <a (click)="navegar()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+
+<p-panel header="Listado de tareas" [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
+
+  <div style="overflow: auto;">
+    <div style="min-width: 100%;">
+
+      <p-table #dt [value]="tareasList" autoLayout="true" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th></th>
+            <th pSortableColumn="nombre"> Nombre
+              <p-sortIcon field="nombre"></p-sortIcon>
+            </th>
+            <th pSortableColumn="descripcion">Descripción
+              <p-sortIcon field="descripcion"></p-sortIcon>
+            </th>
+            <th pSortableColumn="tipoAccion">Tipo acción
+              <p-sortIcon field="tipoAccion"></p-sortIcon>
+            </th>
+            <th pSortableColumn="estado">Estado
+              <p-sortIcon field="estado"></p-sortIcon>
+            </th>
+            <th pSortableColumn="fechaProyectada">Fecha proyectada
+              <p-sortIcon field="fechaProyectada"></p-sortIcon>
+            </th>
+            <th pSortableColumn="areaResponsable.nombre">Area
+              <p-sortIcon field="areaResponsable.nombre"></p-sortIcon>
+            </th>
+            <th pSortableColumn="usuarioRealiza.email">Usuario realiza
+              <p-sortIcon field="usuarioRealiza.email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="fechaRealizacion">Fecha realización
+              <p-sortIcon field="fechaRealizacion"></p-sortIcon>
+            </th>
+            <th pSortableColumn="observacionesRealizacion">Observación realizador
+              <p-sortIcon field="observacionesRealizacion"></p-sortIcon>
+            </th>
+            <th pSortableColumn="usuarioVerifica.email">Usuario verifica
+              <p-sortIcon field="usuarioVerifica.email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="fechaVerificacion">Fecha verificación
+              <p-sortIcon field="fechaVerificacion"></p-sortIcon>
+            </th>
+            <th pSortableColumn="observacionesVerificacion">Observación verificador
+              <p-sortIcon field="observacionesVerificacion"></p-sortIcon>
+            </th>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoAccion', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaProyectada', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'areaResponsable.nombre', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRealiza.email', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaRealizacion', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'observacionesRealizacion', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioVerifica.email', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaVerificacion', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'observacionesVerificacion', 'contains')">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tarea>
+          <tr [style.color]="tarea.estado == 'FINALIZADA' ? '#008800' : null">
+            <td style="width:55px;text-align: center;">
+              <ng-container *ngIf="tarea.estado == 'NUEVO'">
+                <button *sTienePermiso="'SEC_PUT_CUMP_TAR'" pButton type="button" icon="fa fa-check-circle" class="soft-icon" (click)="selectTarea(tarea);opCump.toggle($event)"
+                  title="Reportar cumplimiento de tarea"></button>
+              </ng-container>
+              <ng-container *ngIf="tarea.estado == 'REALIZADA'">
+                <button *sTienePermiso="'SEC_PUT_VERF_TAR'" pButton type="button" icon="fa fa-thumbs-up" class="soft-icon" (click)="selectTarea(tarea);opVerf.toggle($event)"
+                  title="Reportar verificación de tarea"></button>
+              </ng-container>
+            </td>
+            <td>{{tarea.nombre}}</td>
+            <td>{{tarea.descripcion}}</td>
+            <td>{{tarea.tipoAccion}}</td>
+            <td>{{tarea.estado}}</td>
+            <td>{{tarea.fechaProyectada | date:'dd-MMM-yyyy'}}</td>
+            <td>{{tarea.areaResponsable?.nombre}}</td>
+            <td>{{tarea.usuarioRealiza?.email}}</td>
+            <td>{{tarea.fechaRealizacion | date:'dd/MMM/yyyy'}}</td>
+            <td>{{tarea.observacionesRealizacion}}</td>
+            <td>{{tarea.usuarioVerifica?.email}}</td>
+            <td>{{tarea.fechaVerificacion | date:'dd-MM-yyyy'}}</td>
+            <td>{{tarea.observacionesVerificacion}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+
+</p-panel>
+
+<p-overlayPanel #opCump appendTo="body">
+  <div *ngIf="tareaSelect">
+    <h4>{{tareaSelect.nombre}}</h4>
+    <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesRealizacion" placeholder="Observaciones de cumplimiento"></textarea>
+    <br/>
+    <br/>
+    <button pButton type="button" (click)="reportarCumplimiento()" label="Reportar cumplimiento de tarea"></button>
+  </div>
+</p-overlayPanel>
+
+
+<p-overlayPanel #opVerf appendTo="body">
+  <div *ngIf="tareaSelect">
+    <h4>{{tareaSelect.nombre}}</h4>
+    <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesVerificacion" placeholder="Observaciones de verificación"></textarea>
+    <br/>
+    <br/>
+    <button pButton type="button" (click)="reportarVerificacion()" label="Reportar verificación de tarea"></button>
+  </div>
+</p-overlayPanel>

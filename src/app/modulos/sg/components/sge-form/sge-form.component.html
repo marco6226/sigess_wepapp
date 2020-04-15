@@ -1,0 +1,44 @@
+<p-growl [value]="msgs" sticky="true"></p-growl>
+
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="!sistemaGestion"></p-progressBar>
+
+<p-panel *ngIf="sistemaGestion" ><!--[class]="isLoaded ? 's-visible' : 's-invisible'"-->
+  <p-header>
+    {{form.value.nombre}}
+  </p-header>
+  <table style="width: 100%;">
+    <tr>
+      <td>
+        <form [formGroup]="form">
+          <table style="width: 100%;">
+            <tr>
+              <td width="50%">
+                <input type="text" placeholder="Nombre" pInputText formControlName="nombre" required />
+              </td>
+              <td rowspan="2">
+                <textarea pInputTextarea placeholder="Descripción" formControlName="descripcion" rows="3"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" placeholder="Código" pInputText formControlName="codigo" required />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <s-sgecompositor [elementoList]="sistemaGestion?.elementoList" [editable]="editable" (onElementDocumentSelect)="abrirDlgDocumento($event)"></s-sgecompositor>
+      </td>
+    </tr>
+  </table>
+
+  <button pButton type="button" [icon]="isUpdate ? 'fa fa-pencil':'fa fa-floppy-o'" [title]="btnLabel" (click)="save()" *ngIf="editable"
+    [disabled]="!form.valid" [class]="isUpdate ? 'float-btn ui-button-success':'float-btn'"></button>
+
+  <s-documento-selector [titulo]="elementoDocSelect?.codigo+ ' ' + elementoDocSelect?.nombre" [(visible)]="visibleDocSelector"
+    [seleccion]="elementoDocSelect?.documentosList" (onSave)="onDocumentSave($event)" [modificar]="editable"></s-documento-selector>
+
+</p-panel>

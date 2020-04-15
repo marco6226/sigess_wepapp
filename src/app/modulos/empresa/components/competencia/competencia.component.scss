@@ -1,0 +1,12 @@
+pre{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+.column-tree{
+  display: flex;
+  // justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+}

@@ -1,0 +1,71 @@
+<s-dataNotFound *ngIf="!reporteAusentismoList || reporteAusentismoList.length <= 0" icon="fa-list-ul" message="No se han reportado registros de ausentismo de personal">
+  <div *sTienePermiso="'AUC_POST_OBS'">
+    Realiza el reporte de un nuevo evento
+    <a (click)="navegar()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="REPORTES DE AUSENTISMO" [style.display]="reporteAusentismoList && reporteAusentismoList.length > 0 ? 'block':'none'">
+
+  <p-table #dt [value]="reporteAusentismoList" autoLayout="true" selectionMode="single" [(selection)]="reporteAusentismo" [rows]="10"
+    [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="fechaElaboracion">Fecha reporte
+          <p-sortIcon field="fechaElaboracion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="empleado.primerNombre">Empleado
+          <p-sortIcon field="empleado.primerNombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="causaAusentismo.nombre">Causa ausencia
+          <p-sortIcon field="causaAusentismo.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fechaDesde">Desde
+          <p-sortIcon field="fechaDesde"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fechaHasta">Hasta
+          <p-sortIcon field="fechaHasta"></p-sortIcon>
+        </th>
+        <th pSortableColumn="diasAusencia" style="width:60px">Dias
+          <p-sortIcon field="diasAusencia"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaElaboracion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'empleado.primerNombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'causaAusentismo.nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaDesde', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaHasta', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'diasAusencia', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-repAus>
+      <tr [pSelectableRow]="repAus" class="table-row table-row-selectable">
+        <td>{{repAus.fechaElaboracion | date:'dd MMM yyyy'}}</td>
+        <td>{{repAus.empleado.primerNombre}} {{repAus.empleado.primerApellido}}</td>
+        <td>{{repAus.causaAusentismo.nombre}}</td>
+        <td>{{repAus.fechaDesde | date: 'dd/MM/yyyy'}}</td>
+        <td>{{repAus.fechaHasta | date: 'dd/MM/yyyy'}}</td>
+        <td>{{repAus.diasAusencia}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button pButton type="button" icon="fa fa-search" label="Consultar" [disabled]="!reporteAusentismo" (click)="redireccionar(false)"></button>
+      <button *sTienePermiso="'AUS_PUT_REPAUS'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+        [disabled]="!reporteAusentismo" (click)="redireccionar(true)"></button>
+    </ng-template>
+  </p-table>
+
+</p-panel>

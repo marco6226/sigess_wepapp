@@ -1,0 +1,36 @@
+<div id="main-pnl">
+  <div class="logo"></div>
+
+  <div class="form-container" style="padding:30px;">
+    <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <h2>¿Dudas o sugerencias?</h2>
+          <p>Por favor deja tu mensaje y en breve nos pondremos en contacto.</p>
+        </div>
+        <div class="ui-g-12">
+          <label class="s-float-label">Correo electrónico</label>
+          <input type="text" pInputText formControlName="email" email="true" required/>
+        </div>
+
+        <div class="ui-g-12">
+          <label class="s-float-label">Nombres y Apellidos</label>
+          <input type="text" pInputText formControlName="nombres" required/>
+        </div>
+
+        <div class="ui-g-12">
+          <label class="s-float-label">Mensaje</label>
+          <textarea pInputTextarea formControlName="mensaje" rows="10" required></textarea>
+        </div>
+
+        <div class="ui-g-12">
+          <p-messages [(value)]="msgs"></p-messages>
+        </div>
+        <div class="ui-g-12">
+          <button pButton *ngIf="visibleEnviar" type="submit" label="Enviar" [disabled]="!userform.valid"></button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

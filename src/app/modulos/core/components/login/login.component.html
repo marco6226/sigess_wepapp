@@ -1,0 +1,57 @@
+<p-dialog header="Login" [(visible)]="visible" [responsive]="true" showEffect="fade" [modal]="modal" [closable]="false" [draggable]="false"
+ [resizable]="false" [showHeader]="false" [contentStyle]="{'border':'none', 'padding':'0px', 'background-color':'#FFFFFF00'}"
+ class="no-box-shadow">
+	<p-growl [(value)]="msgs" life="10000"></p-growl>
+	<div id="main-pnl">
+		<div class="logo"></div>
+
+		<div class="form-container">
+			<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+				<div class="ui-g">
+					<div class="ui-g-12" *ngIf="visiblePinForm == false">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+							<input type="text" pInputText placeholder="Correo Electrónico" formControlName="username" />
+						</div>
+					</div>
+
+					<div class="ui-g-12" *ngIf="visiblePinForm == false">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+							<input type="password" pInputText placeholder="Contraseña" formControlName="passwd" />
+						</div>
+					</div>
+
+					<div class="ui-g-12" *ngIf="visiblePinForm == true">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+							<input type="text" pInputText placeholder="PIN" formControlName="pin" />
+						</div>
+					</div>
+
+					<div class="ui-g-12">
+						<p-checkbox name="recordarPasswd" binary="true" formControlName="recordar" label="Mantener sesión" *ngIf="false"></p-checkbox>
+					</div>
+
+					<div class="ui-g-12">
+						<p-progressSpinner *ngIf="logueando == true" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+						<button *ngIf="logueando == false" pButton type="submit" [label]="visiblePinForm == true ? 'Validar' : 'Ingresar'" [disabled]="!userform.valid"></button>
+					</div>
+				</div>
+			</form>
+			<div style="margin-top:25px;" (click)="solicitarReset()" *ngIf="visibleLnkResetPasswd && logueando == false && visiblePinForm == false">
+				<a>Olvide mi contraseña</a>
+			</div>
+		</div>
+	</div>
+</p-dialog>
+
+<div class="panel-login-fallidos" *ngIf="contadorFallas >= intentosMax">
+	<div>
+		<p>
+			Se ha alcanzado el número máximo de intentos.
+		</p>
+		Podrá volver a intentar en
+		<label style="color:#3ba2dc;font-weight: bold;">{{relojText}}</label>
+	</div>
+</div>

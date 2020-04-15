@@ -1,0 +1,70 @@
+.visible{
+    height: inherit;
+    visibility: visible;
+}
+
+.invisible{
+    height: 0px;
+    visibility: hidden;
+}
+
+.icon{
+  height: 50px;
+  margin: 10px 10px 0px 10px;
+}
+
+.icon-adm,
+.icon-emp,
+.icon-inp,
+.icon-aue,
+.icon-sec,
+.icon-auc,
+.icon-rai,
+.icon-aus,
+.icon-ind,
+.icon-ipr,
+.icon-ctr,
+.icon-ado{
+  height: 50px;
+  background-size: 40px;
+  background-position-x: center;
+  background-position-y: 0px;
+  background-repeat: no-repeat;
+  width: 50px;
+}
+.icon-adm{
+  background-image: url('/assets/images/icons-invert/adm.svg');
+}
+.icon-emp{
+    background-image: url('/assets/images/icons-invert/emp.svg');
+}
+.icon-inp{
+    background-image: url('/assets/images/icons-invert/inp.svg');
+}
+.icon-aue{
+    background-image: url('/assets/images/icons-invert/aue.svg');
+}
+.icon-sec{
+    background-image: url('/assets/images/icons-invert/sec.svg');
+}
+.icon-auc{
+    background-image: url('/assets/images/icons-invert/auc.svg');
+}
+.icon-rai{
+    background-image: url('/assets/images/icons-invert/rai.svg');
+}
+.icon-ado{
+    background-image: url('/assets/images/icons-invert/ado.svg');
+}
+.icon-aus{
+    background-image: url('/assets/images/icons-invert/aus.svg');
+}
+.icon-ind{
+    background-image: url('/assets/images/icons-invert/ind.svg');
+}
+.icon-ipr{
+    background-image: url('/assets/images/icons-invert/ipr.svg');
+}
+.icon-ctr{
+    background-image: url('/assets/images/icons-invert/ctr.svg');
+}

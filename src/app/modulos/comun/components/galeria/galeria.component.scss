@@ -1,0 +1,52 @@
+.modal{
+  position: fixed;
+  top:0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  display: inline-block;
+  z-index: 100;
+}
+
+.content{
+  width: 94%;
+  height: 94%;
+  position: fixed;
+  top: 3%;
+  left: 3%;
+  overflow: auto;
+}
+
+.btn-remove{
+  color: #555;
+  position: relative;
+  top:17px;
+  right: 17px;
+  background-color: #fff;
+  font-size: 34px;
+  width: 31px;
+  height: 34px;
+  opacity: 0.5;
+  border-radius: 20px;
+}
+
+.btn-remove:hover{
+  opacity: 1;
+}
+
+.wvista-previa{
+  width: 20%;
+  padding: 5px;
+}
+
+.wdescripcion{
+  position: relative;
+  width: 100%;
+  height: 100px;
+  top: -100px;
+  color: #fff;
+  padding: 5px;
+  overflow: auto;
+  background-color: #00000099
+}

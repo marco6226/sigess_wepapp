@@ -1,0 +1,36 @@
+<div style="display: flex;">
+
+  <div style="text-align: center" *ngIf="loading == true">
+    <p-progressSpinner strokeWidth="8" [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+    <label style="position: relative;top: -7px;"> Cargando ubicaciones...</label>
+  </div>
+
+  <p-autoComplete *ngIf="loading == false" [disabled]="disabled" placeholder="Ubicación" [suggestions]="sugerenciasList" (completeMethod)="buscarUbicacion($event)"
+    (onSelect)="onSelection($event);" appendTo="body" emptyMessage="No se encontraron coincidencias" forceSelection="true"
+    field="label" [(ngModel)]="areaSelected">
+  </p-autoComplete>
+
+  <button *ngIf="loading == false" [disabled]="disabled" type="button" (click)="showDialog()" pButton icon="fa fa-sitemap"></button>
+</div>
+
+<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-width':'800px', 'max-height':'480px','min-width':'800px', 'min-height':'480px'}">
+
+  <p-tabView>
+
+    <p-tabPanel header="Organigrama">
+      <p-tree [value]="areasNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="single" [(selection)]="areaSelected"></p-tree>
+    </p-tabPanel>
+
+    <p-tabPanel header="Estructura física">
+      <p-tree [value]="sedesNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="single" [(selection)]="areaSelected"></p-tree>
+    </p-tabPanel>
+
+  </p-tabView>
+
+  <p-messages [value]="msgs"></p-messages>
+  <p-footer>
+    <button type="button" (click)="onAreaChange()" pButton label="Aceptar" icon="fa fa-check"></button>
+    <button type="button" (click)="closeDialog()" pButton label="Cancelar" icon="fa fa-close" class="ui-button-secondary"></button>
+  </p-footer>
+
+</p-dialog>

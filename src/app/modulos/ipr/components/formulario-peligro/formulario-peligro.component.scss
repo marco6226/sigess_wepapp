@@ -1,0 +1,30 @@
+.tabla-ipecr{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.tabla-ipecr thead th{
+  background: #ebedf0;
+	background: -moz-linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%) !important;
+	background: -webkit-linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%) !important;
+	background: -o-linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%) !important;
+	background: -ms-linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%) !important;
+	background: linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%) !important;
+	color: #333 !important;
+	font-weight: 100;
+}
+
+.tabla-ipecr thead th, .tabla-ipecr tr td{
+  border: solid thin #ccc;
+  padding: 0.7em;
+}
+
+.title-tipoctrl{
+  width: 100%;
+  border-bottom: solid thin #ccc;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
+  margin-top: 10px;
+  //font-weight: bold;
+}

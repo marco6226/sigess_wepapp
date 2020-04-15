@@ -1,0 +1,14 @@
+<div class="ui-g container">
+  <div class="ui-g-12">
+    <label class="pi pi-exclamation-triangle" style="font-size: 3em;color:#ccc;"> </label>
+    <p style="color:#777;">
+      {{message}}
+    </p>
+  </div>
+  <div class="ui-g-12" *ngIf="icon">
+    <i [ngClass]="['fa', icon]" style="font-size: 12em;color:#eee;align-self: flex-end"></i>
+  </div>
+  <div class="ui-g-12" *ngIf="icon">
+    <ng-content></ng-content>
+  </div>
+</div>

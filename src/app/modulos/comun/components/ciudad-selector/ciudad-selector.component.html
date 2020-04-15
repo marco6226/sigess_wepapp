@@ -1,0 +1,9 @@
+<div class="ui-g">
+  <div class="ui-g-6" style="padding: 0px">
+    <p-dropdown [options]="departamentosItems" [filter]="true" (onChange)="onDepartamentoChange($event)"
+      [(ngModel)]="departamentoSelectId"></p-dropdown>
+  </div>
+  <div class="ui-g-6" style="padding: 0px">
+    <p-dropdown [options]="ciudadesItems" [filter]="true" [(ngModel)]="value"></p-dropdown>
+  </div>
+</div>

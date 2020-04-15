@@ -1,0 +1,70 @@
+<p-growl [value]="msgs"></p-growl>
+
+<s-dataNotFound *ngIf="!tiposAreaList || tiposAreaList.length <= 0" icon="fa-object-group" message="Aún no se han registrado tipos de área">
+  <div *sTienePermiso="'EMP_POST_TIPOAREA'">
+    Inicia agregandolas haciendo click
+    <a (click)="showAddForm()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="Administración de tipos de áreas" [style.display]="tiposAreaList && tiposAreaList.length > 0 ? 'block':'none'"
+  icon="fa-object-group">
+  <p-table #dt [value]="tiposAreaList" autoLayout="true" selectionMode="single" [(selection)]="tipoAreaSelect" [rows]="10"
+    [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nombre">Nombre
+          <p-sortIcon field="nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">Descripción
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tipoArea>
+      <tr [pSelectableRow]="tipoArea">
+        <td>{{tipoArea.nombre}}</td>
+        <td>{{tipoArea.descripcion}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'EMP_POST_TIPOAREA'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="showAddForm()"></button>
+      <button *sTienePermiso="'EMP_PUT_TIPOAREA'" pButton type="button" icon="fa fa-pencil-square-o" label="Modificar" class="ui-button-success"
+        (click)="showUpdateForm()" [disabled]="!tipoAreaSelect"></button>
+      <button *sTienePermiso="'EMP_DELETE_TIPOAREA'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
+        (click)="onDelete()" [disabled]="!tipoAreaSelect"></button>
+    </ng-template>
+  </p-table>
+</p-panel>
+
+<p-dialog [(visible)]="visibleForm" width="380" modal="true" responsive="true" header="Datos de tipo de área">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-3">
+          Nombre
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input type="text" pInputText formControlName="nombre" required/>
+        </div>
+
+        <div class="ui-g-12 ui-md-3">
+          Descripción
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <textarea pInputTextarea formControlName="descripcion"></textarea>
+        </div>
+      </div>
+      <footer>
+        <button pButton type="submit" icon="fa fa-floppy-o" label="Guardar"></button>
+        <button pButton type="button" icon="fa fa-ban" class="ui-button-secondary" label="Cancelar" (click)="closeForm()"></button>
+      </footer>
+    </form>
+  </p-dialog>

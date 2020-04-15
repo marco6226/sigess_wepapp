@@ -1,0 +1,14 @@
+<p-autoComplete placeholder="CIE: nombre o código" [style]="{'width':'100%'}" (onSelect)="onSelect($event)" [suggestions]="cieList"
+  (completeMethod)="buscarCie($event)" [(ngModel)]="_value" *ngIf="_value?.id == null" [disabled]="disabled">
+  <ng-template let-cie pTemplate="item">
+    <div class="ui-helper-clearfix icon-usr" style="border-bottom:1px solid #D5D5D5">
+      <div>
+        {{cie?.codigo}} - {{cie?.nombre}}
+      </div>
+    </div>
+  </ng-template>
+</p-autoComplete>
+<div [ngClass]="disabled == true ? 'badge disabled' : 'badge active clickable'" style="padding-left: 0.5em;padding-top: 0.4em;"
+  *ngIf="_value?.id != null" (click)="resetCie()">
+  <strong>{{_value?.codigo}}</strong> - {{_value?.nombre}}
+</div>

@@ -1,0 +1,48 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ui-xl-3">
+    <p-panel header="Indicadores">
+      <ng-template ngFor let-ind [ngForOf]="indicadoresList" let-i="index">
+        <div class="ind-container" (click)="abrirDlg(ind)">
+          <h2>{{ind.nombre}}</h2>
+          <p>{{ind.descripcion}}</p>
+          <p><strong>Formulación:</strong> {{ind.formulacion}}</p>
+          <p><strong>Proceso:</strong> {{ind.proceso}}</p>
+          <p><strong>Modulo:</strong> {{ind.modulo}}</p>
+        </div>
+      </ng-template>
+    </p-panel>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-8 ui-xl-9">
+    <p-panel header="Tablero">
+      <div >
+        <label class="s-float-label">Nombre</label>
+        <input pInputText [(ngModel)]="nombre" />
+      </div>
+      <div >
+        <label class="s-float-label">Descripción</label>
+        <textarea pInputTextarea [(ngModel)]="descripcion"></textarea>
+      </div>
+      <s-editorHtml #editor ></s-editorHtml>
+    </p-panel>
+  </div>
+</div>
+
+<p-dialog header="Visualización indicador" [(visible)]="visibleDlg" modal="true" width="1080" appendTo="body">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4">
+      <div class="ui-g-12">
+        <p-panel header="Selección de área">
+          <area-selector [(ngModel)]="areaSelected" (onAreaSelect)="actualizarGrafica()"></area-selector>
+        </p-panel>
+      </div>
+      <div class="ui-g-12">
+        <s-selectorRangoFechas (onchange)="actualizarGrafica()" [value]="rangoFechas"></s-selectorRangoFechas>
+      </div>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-8">
+      <s-panelGrafica *ngIf="params" tipo="bar" [parametros]="params" (onExport)="onImgExport($event)" resumen="true"></s-panelGrafica>
+    </div>
+  </div>
+</p-dialog>
+
+<button pButton type="button" icon="fa fa-save" class="float-btn" (click)="guardar()"></button>

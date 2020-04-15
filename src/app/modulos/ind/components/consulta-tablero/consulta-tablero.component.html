@@ -1,0 +1,75 @@
+<p-growl [value]="msgs"></p-growl>
+<div class="ui-g">
+  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
+    <div class="ui-g-12 ui-md-6 ui-lg-8 ui-xl-12">
+      <p-panel header="Tableros">
+        <div class="tab-list" *ngFor="let item of tablerosList; let i = index">
+          <a (click)="selectTablero(item)">{{item.nombre}}</a>
+        </div>
+      </p-panel>
+
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-4 ui-xl-12">
+      <!-- <s-selectorRangoFechas (onchange)="actualizarRango($event)" [value]="rangoFechas"></s-selectorRangoFechas>
+      <button pButton label="Actualizar" (click)="actualizarTablero()"></button> -->
+    </div>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-10" *ngIf="tabSelected">
+    <!-- <p-panel>
+      <p-header> -->
+        <!-- <button pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> -->
+        <!-- {{tabSelected?.nombre}}
+      </p-header> -->
+      <!-- <div id="htmlDiv" style="overflow: auto;padding: 0.5cm;" [innerHTML]="tabSelected?.plantilla | safeBypass:'html'"></div> -->
+      
+    <!-- </p-panel> -->
+    <div id="htmlDiv" style="overflow: auto;" [innerHTML]="htmlSaneado | safeBypass:'html'"></div>
+  </div>
+</div>
+
+<div style="display: none;" *ngFor="let kpi of tabSelected?.kpisObj; let i = index">
+  <s-panelGrafica #pnlCharts [titulo]="kpi.modelo.titulo" [parametros]="kpi.parametros" [kpi]="kpi" (onSave)="onChartSave($event, pnlCharts)"
+    (onSettingsEvent)="manejarEvento($event, kpi, pnlCharts)"> </s-panelGrafica>
+</div>
+
+<p-dialog [(visible)]="modalVisible" modal="true" [style]="{width: '600px'}" [contentStyle]="{'max-height':'400px'}">
+  <p-tabView [activeIndex]="tabActivo" (onChange)="handleChange($event)">
+    <p-tabPanel header="Rangos de fechas">
+      <div class="ui-g">
+        <div class="ui-g-12" *ngFor="let rango of rangoFechas; let i = index">
+          <div class="ui-g-1">
+            <button pButton class="soft-icon" icon="fa fa-close" (click)="removerRango(i)"></button>
+          </div>
+          <div class="ui-g-4">
+            <input pInputText placeholder="Nombre" type="text" [ngModel]="rango?.nombre" (ngModelChange)="rango.nombre=$event">
+          </div>
+          <div class="ui-g-3">
+            <p-calendar appendTo="body" placeholder="Desde" [ngModel]="rango?.desde" (ngModelChange)="rango.desde=$event"></p-calendar>
+          </div>
+
+          <div class="ui-g-3">
+            <p-calendar appendTo="body" placeholder="Hasta" [ngModel]="rango?.hasta" (ngModelChange)="rango.hasta=$event"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Estilos series">
+      <div style="padding: 15px;">
+        <p-checkbox binary="true" [(ngModel)]="crossdata" label="Invertir series"></p-checkbox> 
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-6" *ngFor="let ds of datasets; let i = index">
+          <div class="border-bottom-dataset">
+            <input type="color" class="input-color" [(ngModel)]="ds.backgroundColor" />
+            <label style="position: relative;">{{ds.label}}</label>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+  <p-footer>
+    <button *ngIf="tabActivo == 0" pButton icon="fa fa-plus" label="Adicionar rango" (click)="adicionarRango()"></button>
+
+    <button pButton icon="fa fa-check" label="Aceptar" (click)="actualizarRangos()"></button>
+  </p-footer>
+</p-dialog>

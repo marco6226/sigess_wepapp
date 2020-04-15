@@ -1,0 +1,99 @@
+<div *ngIf="!visibleObservacion" style="margin: 50px;">
+  <h3>{{msg}}</h3>
+  <br/>
+  <a (click)="volver()">Volver</a>
+</div>
+
+<div *ngIf="visibleObservacion">
+  <p-panel header="Reportada el: {{observacion.fechaObservacion | date:'dd/MM/yyyy HH:mm'}}">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ">
+        <p-panel header="Datos de observación">
+          <div class="obs-pnl">
+            <h4>Tipo de reporte:</h4>
+            {{observacion.tipoObservacion}}
+          </div>
+          <div class="obs-pnl">
+            <h4>Descripción:</h4>
+            {{observacion.descripcion}}
+          </div>
+          <div class="obs-pnl">
+            <h4>Implicacion:</h4>
+            <ng-template ngFor let-imp [ngForOf]="observacion?.implicacionList" let-i="index">
+              - {{imp.nombre}}
+              <br/>
+            </ng-template>
+          </div>
+          <div class="obs-pnl">
+            <h4>Area:</h4>
+            {{observacion.area?.nombre}}
+          </div>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ">
+        <p-panel header="Detalle">
+          <div class="obs-pnl">
+            <h4>Afecta:</h4>
+            <ng-template ngFor let-afec [ngForOf]="observacion.afecta">
+              - {{afec}} <br/>
+            </ng-template>
+          </div>
+          <div class="obs-pnl" *ngIf="observacion.tarjeta?.usarCausaRaiz">
+            <h4>Causa raíz:</h4>
+            <ng-template ngFor let-cr [ngForOf]="observacion.causaRaizList">
+              - {{cr.nombre}}
+              <br/>
+            </ng-template>
+          </div>
+          <div class="obs-pnl" *ngIf="observacion.tarjeta?.usarNivelRiesgo">
+            <h4>Nivel riesgo:</h4>
+            {{observacion.nivelRiesgo?.nombre}} - {{observacion.nivelRiesgo?.descripcion}}
+          </div>
+          <div class="obs-pnl">
+            <h4> Usuario que reporta:</h4>
+            {{observacion.usuarioReporta?.email}}
+          </div>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ">
+        <p-panel header="Registro gráfico">
+          <s-dataNotFound *ngIf="!imagenesList || imagenesList.length <= 0" icon="fa-picture-o" message="No se ha encontrado evidencia gráfica de la observación">
+          </s-dataNotFound>
+          <s-galeria *ngIf="imagenesList?.length > 0" [images]="imagenesList" readOnly="true"></s-galeria>
+        </p-panel>
+      </div>
+    </div>
+  </p-panel>
+  <br/><br/>
+
+  <p-panel *ngIf="visiblePnlDenegada">
+    <p-header>
+      <button pButton type="button" icon="fa fa-ban" label="Denegar" *ngIf="!consultar" (click)="guardarDenegar()" class="ui-button-danger"
+        [disabled]="motivo == null || motivo.length == 0"></button>
+    </p-header>
+    <strong>Motivo</strong>
+    <br/>
+    <textarea pInputTextarea style="width:100%;height: 100px;" [(ngModel)]="motivo" [disabled]="consultar"></textarea>
+
+  </p-panel>
+
+  <p-panel *ngIf="visiblePnlAceptada">
+    <p-header>
+      <button pButton type="button" icon="fa fa-check" label="Aceptar" *ngIf="!consultar" (click)="guardarAceptar()" class="ui-button-success"
+        [disabled]="causaRaizSelectList == null || causaRaizSelectList.length == 0"></button>
+    </p-header>
+    <strong>Causa raiz aprobada:</strong>
+    <br/>
+    <br/>
+    <p-tree [value]="causaRaizList" selectionMode="checkbox" [(selection)]="causaRaizSelectList" [style]="{'width':'100%'}"></p-tree>
+  </p-panel>
+
+  <ng-container *ngIf="!consultar">
+    <button *sTienePermiso="'AUC_PUT_OBSACEPT'" pButton type="button" icon="fa fa-check" title="Gestionar observación" class="float-btn ui-button-success"
+      style="right: 100px;" (click)="aceptar()"></button>
+
+    <button *sTienePermiso="'AUC_PUT_OBSDENEG'" pButton type="button" icon="fa fa-ban" title="Denegar observación" class="float-btn ui-button-danger"
+      (click)="denegar()"></button>
+  </ng-container>
+
+</div>

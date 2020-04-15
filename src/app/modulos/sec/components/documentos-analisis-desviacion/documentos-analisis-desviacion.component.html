@@ -1,0 +1,29 @@
+<button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<p-messages [(value)]="msgs" [closable]="true"></p-messages>
+<div class="ui-g" style="margin-top: 10px;">
+  <div class="ui-g-12 ui-sm-12 ui-md-6">
+    <ng-template ngFor let-doc [ngForOf]="documentos" let-i="index">
+      <table class="dwrapper">
+        <tr>
+          <td>
+            <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+            <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+          </td>
+          <td style="text-align: right;">
+            <a class="fa fa-pencil" title="Actualizar descripción" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+          </td>
+        </tr>
+      </table>
+    </ng-template>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-md-6">
+    <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
+  </div>
+</div>
+<a style="visibility: hidden" id="dwldLink"></a>
+<s-documentoUpload [(visible)]="visibleDlg" [modParam]="analisisId" [modulo]="modulo" (onUpload)="onUpload($event)"></s-documentoUpload>

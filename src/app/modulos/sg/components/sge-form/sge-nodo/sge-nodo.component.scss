@@ -1,0 +1,67 @@
+// .node1{
+//   background-color: #0275d8;
+//   color: #fff;
+//   font-weight: bold;
+//   padding-bottom: 50px;
+// }
+// .node2{
+//   background-color: #fff;
+//   color: #0275d8;
+//   font-weight: bold;
+// }
+// .node3{
+//   background-color: #fff;
+//   color: #111;
+// }
+// .node4{
+//   background-color: #fff;
+//   color: #555;
+//   border-bottom: solid thin #ccc !important;
+// }
+.table-node{
+  width: calc(100% - 20px); 
+  margin-left: 20px;
+  border-left: solid thin;
+}
+.table-node tbody tr:first-child{  
+  border-top: solid thin;
+  border-color: inherit;
+}
+
+// .node1{
+//   border-left: solid thin #ccc;
+//   margin-left: 0px;
+// }
+// .node2{
+//   border-left: solid thin #ccc;
+//   width: calc(100% - 10px);
+//   margin-left: 10px;
+// }
+// .node3{
+//   border-left: solid thin #ccc;
+//   width: calc(100% - 20px);
+//   margin-left: 20px;
+// }
+// .node4{
+//   border-left: solid thin #ccc;
+//   width: calc(100% - 30px);
+//   margin-left: 30px;
+// }
+
+.node-container{
+  padding: 0px;
+}
+
+table, th, td {
+  border-collapse: collapse;
+  border: 0px;
+}
+
+td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.parametro-elemento{ 
+  width: 600px;
+}

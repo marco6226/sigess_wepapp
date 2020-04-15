@@ -1,0 +1,128 @@
+
+$header-color: #3ba2dc;
+$menu-background-color: rgba(0, 0, 0, 0);
+
+button{
+    height: 35px;
+    background-color: $menu-background-color;
+	color: #555;
+	border: none;
+	//border-bottom: solid thin #ccc;
+    width: 100%;
+    padding-left: 45px;
+    box-sizing: border-box;
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+    outline:none;
+
+    white-space: nowrap;
+    display: block;
+    text-overflow: unset;
+}
+
+button:hover{
+  background-color: #eee;
+}
+
+.icon-subitem{
+    position: relative;
+    left: -26px;
+    font-size: 16px;
+    top: 2px;
+    width: 16px;
+}
+
+.icon-sigess,
+.icon-adm,
+.icon-emp,
+.icon-inp,
+.icon-aue,
+.icon-sec,
+.icon-auc,
+.icon-rai,
+.icon-aus,
+.icon-ind,
+.icon-ipr,
+.icon-ctr,
+.icon-cop,
+.icon-help,
+.icon-ado{
+    background-size: 25px;
+    background-repeat: no-repeat;
+    background-position-x: 15px;
+    background-position-y: center;
+    padding-left: 65px;
+}
+.icon-sigess{
+    background-color: $header-color;
+    background-image: url(/assets/images/logo-icon-circle.svg);
+    background-size: 30px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 100;
+    box-shadow: 0px 2px 3px #aaa;
+    cursor: pointer;
+}
+.icon-adm{
+  background-image: url('/assets/images/icons-invert/adm.svg');
+}
+.icon-emp{
+    background-image: url('/assets/images/icons-invert/emp.svg');
+}
+.icon-inp{
+    background-image: url('/assets/images/icons-invert/inp.svg');
+}
+.icon-aue{
+    background-image: url('/assets/images/icons-invert/aue.svg');
+}
+.icon-sec{
+    background-image: url('/assets/images/icons-invert/sec.svg');
+}
+.icon-auc{
+    background-image: url('/assets/images/icons-invert/auc.svg');
+}
+.icon-rai{
+    background-image: url('/assets/images/icons-invert/rai.svg');
+}
+.icon-ado{
+    background-image: url('/assets/images/icons-invert/ado.svg');
+}
+.icon-aus{
+    background-image: url('/assets/images/icons-invert/aus.svg');
+}
+.icon-ind{
+    background-image: url('/assets/images/icons-invert/ind.svg');
+}
+.icon-ipr{
+    background-image: url('/assets/images/icons-invert/ipr.svg');
+}
+.icon-ctr{
+    background-image: url('/assets/images/icons-invert/ctr.svg');
+}
+.icon-cop{
+    background-image: url('/assets/images/icons-invert/cop.svg');
+}
+
+.icon-help{
+    background-image: url('/assets/images/question.svg');
+}
+
+
+
+/* Estilos personalizados para accordion del menu */
+.menu-container{
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    max-height: 0px;
+}
+
+.menu-container-expand{
+    overflow: hidden;
+    border: solid thin #ccc;
+    border-radius: 10px;
+}
+

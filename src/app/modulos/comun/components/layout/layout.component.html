@@ -1,0 +1,35 @@
+<p-confirmDialog icon="fa fa-question-circle" width="425" [closable]="false" acceptLabel="Si"></p-confirmDialog>
+<s-mensaje-usuario></s-mensaje-usuario>
+<s-cambioPasswd></s-cambioPasswd>
+<s-idleTimeout></s-idleTimeout>
+<s-login [modal]="true" [visible]="false"></s-login>
+
+<div id="layout">
+
+	<button id="btn-toggle-menu" #btnMenu class="btn-toggle-menu fa fa-bars" (click)="toggleMenu()"></button>
+
+	<div id="header" class="header" #header>
+		<div id="avatar">
+			<div id="avatar-content" (click)="menu.toggle($event)">
+				<i *ngIf="!usuario.icon" class="fa fa-user-circle" aria-hidden="true"></i>
+				<img *ngIf="usuario.icon" [src]="usuario.icon" style="border-radius: 50%;width: 48px;" />
+			</div>
+			<label style="align-self: center;font-size: 14px;margin-left: 10px;">{{usuario.email}}</label>
+		</div>
+		<div class="empresa-selector">
+			<p-dropdown [options]="empresasItems" [(ngModel)]="empresaSelect" [filter]="true" [style]="{'width':'250px'}" class="menu-empresa-selector"
+			 (onChange)="onChangeEmpresa()">
+
+			</p-dropdown>
+
+		</div>
+	</div>
+	<div id="menu" class="menu" #menu >
+		<ng-content select="layout-menu"></ng-content>
+	</div>
+	<div id="content" class="content" #content>
+		<ng-content select="layout-content"></ng-content>
+	</div>
+</div>
+
+<p-menu #menu popup="popup" [model]="items"></p-menu>

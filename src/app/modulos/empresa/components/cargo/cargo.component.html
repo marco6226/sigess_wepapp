@@ -1,0 +1,196 @@
+<p-growl [value]="msgs"></p-growl>
+
+<s-dataNotFound *ngIf="!cargosList || cargosList.length <= 0" icon="fa-briefcase" message="Aún no se han registrado cargos">
+  <div *sTienePermiso="'EMP_POST_CARGO'">
+    Inicia agregandolos haciendo click
+    <a (click)="showAddForm()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="Administración de cargos" [style.display]="cargosList && cargosList.length > 0 ? 'block':'none'" icon="fa-briefcase">
+
+  <p-table #dt [value]="cargosList" autoLayout="true" selectionMode="single" [(selection)]="cargoSelect" [rows]="10" [paginator]="true"
+    dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nombre">Nombre
+          <p-sortIcon field="nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">Descripción
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cargo>
+      <tr [pSelectableRow]="cargo">
+        <td>{{cargo.nombre}}</td>
+        <td>{{cargo.descripcion}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'EMP_POST_CARGO'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="showAddForm()"></button>
+      <button *sTienePermiso="'EMP_PUT_CARGO'" pButton type="button" icon="fa fa-pencil-square-o" label="Modificar" class="ui-button-success"
+        (click)="showUpdateForm()" [disabled]="!cargoSelect"></button>
+      <button *sTienePermiso="'EMP_DELETE_CARGO'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
+        (click)="onCargoDelete()" [disabled]="!cargoSelect"></button>
+    </ng-template>
+  </p-table>
+</p-panel>
+
+
+<p-dialog [(visible)]="visibleFormComp" modal="true" header="Parametrización de competencias" width="800">
+  <div style="overflow-y: auto;height: 600px;">
+    <s-competencia *ngIf="competenciasOpts" [value]="competenciasOpts"></s-competencia>
+  </div>
+</p-dialog>
+
+
+<p-dialog header="Title" [(visible)]="visibleForm" width="800" modal="true" [maximizable]="true" responsive="true" header="Datos de cargo">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div style="overflow-y: auto;height: 600px;">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-6">
+          <span class="ui-float-label">
+            <input id="cnombre-input" type="text" pInputText formControlName="nombre" required/>
+            <label for="cnombre-input">Nombre</label>
+          </span>
+        </div>
+
+        <div class="ui-g-12 ui-md-6">
+          <span class="ui-float-label">
+            <textarea id="cdescripcion-input" pInputTextarea formControlName="descripcion" rows="1"></textarea>
+            <label for="cdescripcion-input">Descripción</label>
+          </span>
+        </div>
+      </div>
+
+      <p-fieldset>
+        <p-header>
+          <label title="Click para adicionar función de cargo" class="clickable" (click)="addFuncion()">Funciones</label>
+        </p-header>
+        <table>
+          <tr *ngFor="let funcion of funciones;let in = index">
+            <td style="width: 1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removerFuncion(in)"></button>
+            </td>
+            <td>
+              <input name="inpfunc-{{in}}" [(ngModel)]="funcion.value" type="text" pInputText [ngModelOptions]="{standalone: true}" />
+            </td>
+          </tr>
+        </table>
+      </p-fieldset>
+
+
+      <p-fieldset>
+        <p-header>
+          <label title="Click para adicionar perfil educativo" class="clickable" (click)="addPerfilEdu()">Perfil educativo</label>
+        </p-header>
+        <div class="ui-g">
+          <table class="table">
+            <th style="width: 2.5em;"></th>
+            <th style="width: 50%;">Mínima</th>
+            <th>Deseable</th>
+            <tr *ngFor="let perfEdu of perfilEducativoList;let in = index">
+              <td>
+                <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removerPerfilEdu(in)"></button>
+              </td>
+              <td>
+                <p-dropdown [options]="perfilEducativoOpts" appendTo="body" [(ngModel)]="perfEdu.minima" [ngModelOptions]="{standalone: true}"
+                  [editable]="true"></p-dropdown>
+              </td>
+              <td>
+                <p-dropdown [options]="perfilEducativoOpts" appendTo="body" [(ngModel)]="perfEdu.deseable" [ngModelOptions]="{standalone: true}"
+                  [editable]="true"></p-dropdown>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </p-fieldset>
+
+      <p-fieldset>
+        <p-header>
+          <label title="Click para adicionar formación" class="clickable" (click)="addFormacion()">Formación</label>
+        </p-header>
+        <table class="table">
+          <th style="width: 2.5em;"></th>
+          <th style="width: 50%;">Mínima</th>
+          <th>Deseable</th>
+          <tr *ngFor="let formacion of formacionList;let in = index">
+            <td>
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removerFormacion(in)"></button>
+            </td>
+            <td>
+              <input name="inpformmin-{{in}}" [(ngModel)]="formacion.minima" type="text" pInputText [ngModelOptions]="{standalone: true}"
+              />
+            </td>
+            <td>
+              <input name="inpformdes-{{in}}" [(ngModel)]="formacion.deseable" type="text" pInputText [ngModelOptions]="{standalone: true}"
+              />
+            </td>
+          </tr>
+        </table>
+      </p-fieldset>
+
+      <p-fieldset>
+        <p-header>
+          <label>Experiencia laboral</label>
+        </p-header>
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="expmin-input" type="number" pInputText style="width: 100px;" formControlName="valorMinimo" />
+              <p-radioButton [style]="{'margin-left': '10px'}" name="expmin" value="anios" label="Año(s)" formControlName="unidadMinima"></p-radioButton>
+              <p-radioButton [style]="{'margin-left': '10px'}" name="expmin" value="meses" label="Mes(es)" formControlName="unidadMinima"></p-radioButton>
+              <label for="expmin-input">Mínima</label>
+            </span>
+          </div>
+
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="expdes-input" type="number" pInputText style="width: 100px;" formControlName="valorDeseable" />
+              <p-radioButton [style]="{'margin-left': '10px'}" name="expdes" value="anios" label="Año(s)" formControlName="unidadDeseable"></p-radioButton>
+              <p-radioButton [style]="{'margin-left': '10px'}" name="expdes" value="meses" label="Mes(es)" formControlName="unidadDeseable"></p-radioButton>
+              <label for="expdes-input">Deseable</label>
+            </span>
+          </div>
+        </div>
+      </p-fieldset>
+
+      <p-fieldset>
+        <p-header>
+          <button pButton type="button" icon="fa fa-gear" class="soft-icon" (click)="visibleFormComp = true"></button>
+          <label title="Click para adicionar competencias" class="clickable" (click)="addCompetencia()">Competencias</label>
+        </p-header>
+
+        <p-treeTable [value]="modeloCompt" selectionMode="checkbox" dataKey="id" appendTo="body" [(selection)]="competenciasList">
+          <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr>
+              <td class="column-tree">
+                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                <p-treeTableCheckbox *ngIf="rowNode.children == null" [value]="rowNode"></p-treeTableCheckbox>
+                <div>
+                  <label [title]="rowData?.descripcion">{{rowData?.nombre}}</label>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-treeTable>
+      </p-fieldset>
+
+
+    </div>
+    <p-footer>
+      <button pButton type="submit" icon="fa fa-floppy-o" label="Guardar"></button>
+      <button pButton type="button" icon="fa fa-ban" class="ui-button-secondary" label="Cancelar" (click)="closeForm()"></button>
+    </p-footer>
+  </form>
+</p-dialog>

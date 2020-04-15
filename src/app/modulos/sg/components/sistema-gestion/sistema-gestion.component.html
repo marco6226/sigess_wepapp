@@ -1,0 +1,29 @@
+<s-dataNotFound *ngIf="!sistemaGestionList || sistemaGestionList.length <= 0" icon="fa-th" message="Aún no se han registrado formatos de Autoevaluación">
+  <div *sTienePermiso="'SGE_POST_SGE'">
+    Elabora un nuevo formato de autoevaluación
+    <a (click)="navegar()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<div *ngFor="let sg of sistemaGestionList">
+  <p-panel>
+    <p-header>
+      <label>
+        {{sg.nombre}}
+      </label>
+      <label style="float: right;">
+        Version: {{sg.sistemaGestionPK.version}}
+      </label>
+    </p-header>
+    <h3>{{sg.codigo}}</h3>
+
+    <p>{{sg.descripcion}} </p>
+    <footer style="text-align: right;">
+      <button *sTienePermiso="'SGE_GET_SGE'" pButton type="button" icon="fa fa-search" label="Detalle" (click)="gotoSGEForm(sg, 'GET')"></button>
+      <button *sTienePermiso="'SGE_PUT_SGE'" pButton type="button" icon="fa fa-pencil" class="ui-button-success" label="Actualizar"
+        (click)="gotoSGEForm(sg, 'UPDATE')"></button>
+      <button *sTienePermiso="'SGE_POST_EVAL'" pButton type="button" icon="fa fa-list-ol" (click)="realizarEvaluacion(sg)" label="Evaluación"></button>
+    </footer>
+  </p-panel>
+  <br/>
+</div>

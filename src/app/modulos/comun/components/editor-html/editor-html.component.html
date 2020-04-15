@@ -1,0 +1,63 @@
+<div class="editor">
+  <div class="toolbar">
+    <button onclick="document.execCommand('bold', false, '');" class="fa fa-bold" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('italic', false, '');" class="fa fa-italic" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('underline', false, '');" class="fa fa-underline" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('strikethrough', false, '');" class="fa fa-strikethrough" (click)="contentChange()"></button>
+
+    <button onclick="document.execCommand('justifyLeft', false, '');" class="fa fa-align-left" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('justifyCenter', false, '');" class="fa fa-align-center" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('justifyRight', false, '');" class="fa fa-align-right" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('justifyFull', false, '');" class="fa fa-align-justify" (click)="contentChange()"></button>
+
+    <select onchange="document.execCommand('fontName', false, this.value);this.value=-1" class="selector" (change)="contentChange()">
+      <option style="display: none;" value="-1">A</option>
+      <option style="font-family: 'Times New Roman';" value="Times New Roman">Times New Roman</option>
+      <option style="font-family: 'Georgia';" value="Georgia">Georgia</option>
+      <option style="font-family: 'Arial';" value="Arial">Arial</option>
+      <option style="font-family: 'Verdana';" value="Verdana">Verdana</option>
+      <option style="font-family: 'Courier New';" value="Courier New">Courier New</option>
+      <option style="font-family: 'Lucida Console';" value="Lucida Console">Lucida Console</option>
+      <option style="font-family: sans-serif;" value="sans-serif">sans-serif</option>
+      <option style="font-family: monospace;" value="monospace">monospace</option>
+      <option style="font-family: Roboto;" value="Roboto">Roboto</option>
+      <option style="font-family: 'Helvetica Neue';" value="Helvetica Neue">Helvetica Neue</option>
+    </select>
+
+    <select onchange="document.execCommand('fontSize', false, this.value + 'em');this.value='-1'" class="selector" (change)="contentChange()">
+      <option style="display: none;" value="-1">A&darr;&uarr;</option>
+      <option style="font-size: 0.8em;" value="1">1</option>
+      <option style="font-size: 1.1em;" value="2">2</option>
+      <option style="font-size: 1.4em;" value="3">3</option>
+      <option style="font-size: 1.7em;" value="4">4</option>
+      <option style="font-size: 2em;" value="5">5</option>
+      <option style="font-size: 2.3em;" value="6">6</option>
+      <option style="font-size: 2.6em;" value="7">7</option>
+    </select>
+
+    <input type="color" onchange="document.execCommand('BackColor', false, this.value);" style="width: 40px" title="Color fondo"
+      (change)="contentChange()">
+
+      <input type="color" onchange="document.execCommand('ForeColor', false, this.value);" style="width: 40px" title="Color"
+      (change)="contentChange()">
+
+    <button onclick="document.execCommand('insertParagraph', false, '');" class="fa fa-paragraph" (click)="contentChange()"></button>
+
+    <button onclick="document.execCommand('indent', false, '');" class="fa fa-indent" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('outdent', false, '');" class="fa fa-dedent" (click)="contentChange()"></button>
+
+    <button onclick="document.execCommand('insertUnorderedList', false, '');" class="fa fa-list-ul" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('insertOrderedList', false, '');" class="fa fa-list-ol" (click)="contentChange()"></button>
+
+    <button onclick="document.execCommand('undo', false, '');" class="fa fa-undo" (click)="contentChange()"></button>
+    <button onclick="document.execCommand('redo', false, '');" class="fa fa-repeat" (click)="contentChange()"></button>
+
+    <button class="fa fa-code" (click)="visibleDlg=true"></button>
+
+  </div>
+  <div class="content" contenteditable="" id="editor" [innerHTML]="htmlString | safeBypass:'html' " (keydown)="contentChange()"></div>
+</div>
+
+<p-dialog header="Html" [(visible)]="visibleDlg">
+  <textarea pInputTextarea [ngModel]="htmlString" (ngModelChange)="htmlString=$event"></textarea>
+</p-dialog>

@@ -1,0 +1,33 @@
+.idle-main{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFFAA;
+  z-index: 1050;
+}
+
+.idle-container{
+  margin: auto;
+  background-color: white;
+  width: 300px;
+  padding: 15px;
+  box-shadow: 2px 2px 5px #ccc;
+}
+
+.progress-bar{
+  width: 100%;
+  height: 25px;
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.progress{
+  width: 0%;
+  height: 25px;
+  background-color: #3ba2dc;
+  border-radius: 5px;
+}
+
+p{
+  text-align: center;
+}

@@ -1,0 +1,43 @@
+<p-growl [value]="msgs"></p-growl>
+
+<s-dataNotFound *ngIf="!analisisDesviacionesList || analisisDesviacionesList.length <= 0" icon="fa-exchange" message="No se han generado aún investigaciones de desviaciones">
+  <div *sTienePermiso="'SEC_GET_DESV'">
+    Realiza una nueva investigación de desviación
+    <a (click)="navegar()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="Investigaciones realizadas" [style.display]="analisisDesviacionesList && analisisDesviacionesList.length > 0 ? 'block':'none'">
+  <p-table [value]="analisisDesviacionesList" [(value)]="analisisDesviacionesList" [rows]="10" [paginator]="true" [(selection)]="anDesvListSelect"
+    autoLayout="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:7em;"></th>
+        <th>Fecha</th>
+        <th>Observaciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-anDesv>
+      <tr>
+        <td style="text-align: center;">
+          <ng-container *ngIf="anDesv.tareaAsignada">
+            <button *sTienePermiso="'SEC_GET_TAR_ANA'" pButton type="button" icon="fa fa-search" class="soft-icon" (click)="consultarTareas(anDesv)"></button>
+            <button style="margin-left: 3px;" *sTienePermiso="'SEC_PUT_TAR'" pButton type="button" icon="fa fa-pencil" class="soft-icon"
+              (click)="modificarTareas(anDesv)"></button>
+          </ng-container>
+          <p-checkbox (click)="select(anDesv)" *ngIf="!anDesv.tareaAsignada"></p-checkbox>
+        </td>
+        <td>
+          {{anDesv.fechaElaboracion | date:'yyyy-MM-dd hh:mm a'}}
+        </td>
+        <td>
+          {{anDesv.observacion}}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <button *sTienePermiso="'SEC_POST_TAR'" pButton type="button" icon="fa fa-search" label="Generar Tareas" (click)="generarTareas()"
+        [disabled]="anDesvListSelect == null || anDesvListSelect.length <= 0"></button>
+    </ng-template>
+  </p-table>
+</p-panel>

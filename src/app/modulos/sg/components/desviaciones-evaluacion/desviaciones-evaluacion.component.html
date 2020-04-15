@@ -1,0 +1,40 @@
+<p-table [value]="desviacionesList" autoLayout="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Código</th>
+      <th>Elemento</th>
+      <th>Calificación</th>
+      <th class="width15">Actividad</th>
+      <th class="width15">Responsable</th>
+      <th class="width15">Recursos</th>
+      <th class="width15">Meta</th>
+      <th style="width: 3em;" *ngIf="!consultar"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-desviacion>
+    <tr>
+      <td>{{desviacion.elementoCodigo}}</td>
+      <td>{{desviacion.elementoNombre}}</td>
+      <td>{{desviacion.descripcionCalificacion}}</td>
+      <td>
+        <textarea pInputTextarea rows="5" [(ngModel)]="desviacion.actividad" *ngIf="!readOnly"></textarea>
+        <label *ngIf="readOnly">{{desviacion.actividad}}</label>
+      </td>
+      <td>
+        <textarea pInputTextarea rows="5" [(ngModel)]="desviacion.responsable" *ngIf="!readOnly"></textarea>
+        <label *ngIf="readOnly">{{desviacion.responsable}}</label>
+      </td>
+      <td>
+        <textarea pInputTextarea rows="5" [(ngModel)]="desviacion.recursos" *ngIf="!readOnly"></textarea>
+        <label *ngIf="readOnly">{{desviacion.recursos}}</label>
+      </td>
+      <td>
+        <textarea pInputTextarea rows="5" [(ngModel)]="desviacion.meta" *ngIf="!readOnly"></textarea>
+        <label *ngIf="readOnly">{{desviacion.meta}}</label>
+      </td>
+      <td *ngIf="!readOnly">
+        <button pButton type="button" icon="fa fa-floppy-o" class="soft-icon" (click)="modificarRespuesta(desviacion)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

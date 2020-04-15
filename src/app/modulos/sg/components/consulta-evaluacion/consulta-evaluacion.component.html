@@ -1,0 +1,78 @@
+<p-growl [value]="msgs"></p-growl>
+
+<s-dataNotFound *ngIf="!evaluacionesList || evaluacionesList.length <= 0" icon="fa-list-alt" message="Aún no se han realizado evaluaciones" >
+  <div *sTienePermiso="'SGE_GET_SGE'">
+    Inicia una nueva evaluación haciendo click
+    <a (click)="navegar()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="Registros de evaluaciones" [style.display]="evaluacionesList && evaluacionesList.length > 0 ? 'block':'none'">   
+
+  <p-table #dt [value]="evaluacionesList" autoLayout="true" selectionMode="single" [(selection)]="evaluacionSelect" [rows]="10"
+    [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="sistemaGestion.nombre">SGE
+          <p-sortIcon field="sistemaGestion.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fechaInicio">Iniciada
+          <p-sortIcon field="fechaInicio"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fechaFinalizacion">Finalizada
+          <p-sortIcon field="fechaFinalizacion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nombreResponsable">Responsable
+          <p-sortIcon field="nombreResponsable"></p-sortIcon>
+        </th>
+        <th pSortableColumn="ciudad">Ciudad
+          <p-sortIcon field="ciudad"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nombreEvaluador">Evaluador
+          <p-sortIcon field="nombreEvaluador"></p-sortIcon>
+        </th>
+        <th pSortableColumn="numeroRespuestas" rowspan="2">Completado
+          <p-sortIcon field="numeroRespuestas"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'sistemaGestion_nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaInicio', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaFinalizacion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombreResponsable', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombreEvaluador', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-eval>
+      <tr [pSelectableRow]="eval" class="table-row table-row-selectable">
+        <td>{{eval.sistemaGestion.nombre}}</td>
+        <td>{{eval.fechaInicio | date:'dd MMM yyyy'}}</td>
+        <td>{{eval.fechaFinalizacion | date:'dd MMM yyyy'}}</td>
+        <td>{{eval.nombreResponsable}}</td>
+        <td>{{eval.ciudad}}</td>
+        <td>{{eval.nombreEvaluador}}</td>
+        <td>{{eval.numeroRespuestas / eval.numeroPreguntas | percent}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'SGE_GET_EVAL'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="consultarEvaluacion()"
+        [disabled]="!evaluacionSelect"></button>
+      <button *sTienePermiso="'SGE_PUT_EVAL'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+        (click)="modificarEvaluacion()" [disabled]="!evaluacionSelect"></button>
+    </ng-template>
+  </p-table>
+
+</p-panel>

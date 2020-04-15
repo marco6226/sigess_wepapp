@@ -1,0 +1,79 @@
+<p-panel header="Reporte de condicion">
+
+  <p-table #dt [value]="observacionesList" autoLayout="true" selectionMode="single" [(selection)]="observacionSelect" [rows]="10"
+    [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="fechaObservacion" style="width:200px">Fecha
+          <p-sortIcon field="fechaObservacion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="tipoObservacion" style="width:130px">Tipo
+          <p-sortIcon field="tipoObservacion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">descripción
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nivelRiesgo.nombre" style="width:150px">Nivel de riesgo
+          <p-sortIcon field="nivelRiesgo.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="aceptada" style="width:120px">Estado
+          <p-sortIcon field="aceptada"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaObservacion', 'bt')"></s-rangoFechaSelector>
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoObservacion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nivelRiesgo.nombre', 'contains')">
+        </td>
+        <td>
+          <!-- <select (input)="dt.filter($event.target.value, 'aceptada', 'eq')">
+            <option [value]="true">Aceptada</option>
+            <option [value]="false">Denegada</option>
+            <option [value]="null">Sin asignar</option>
+          </select> -->
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'aceptada', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-observ>
+      <tr [pSelectableRow]="observ">
+        <td>{{observ.fechaObservacion | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{observ.tipoObservacion}}</td>
+        <td>{{observ.descripcion}}</td>
+        <td>{{observ.nivelRiesgo.nombre}}</td>
+        <td>
+          <span *ngIf="observ.aceptada == true" class="badge success">Aceptada</span>
+          <span *ngIf="observ.aceptada == false" class="badge novalid">Denegada</span>
+          <span *ngIf="observ.aceptada == null" class="badge inactive">Sin asignar</span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'AUC_GET_OBS'" pButton type="button" icon="fa fa-plus" label="Consultar" (click)="navToConsultar()"
+        [disabled]="!observacionSelect"></button>
+      <button *sTienePermiso="'AUC_PUT_OBS'" pButton type="button" icon="fa fa-pencil" label="Gestionar" class="ui-button-success"
+        [disabled]="!observacionSelect" (click)="navToGestionar()"></button>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">
+          <s-dataNotFound *ngIf="!observacionesList || observacionesList.length <= 0" icon="fa-list-ul" message="No se han reportado registros de observaciones">
+            <div *sTienePermiso="'AUC_POST_OBS'">
+              Realiza el reporte de una condición
+              <a (click)="navegar()">aqui</a>
+            </div>
+          </s-dataNotFound>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</p-panel>

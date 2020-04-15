@@ -1,0 +1,92 @@
+<s-dataNotFound *ngIf="!listaInspeccionList || listaInspeccionList.length <= 0" icon="fa-list-ol" message="Aún no se han elaborado listas de inspección">
+    <div *sTienePermiso="'INP_POST_LISTINP'">
+        Comienza la elaboración de una nueva lista
+        <a (click)="navegar()">aqui</a>
+    </div>
+</s-dataNotFound>
+
+<p-panel header="Listas de inspección" [style.display]="listaInspeccionList && listaInspeccionList.length > 0 ? 'block':'none'">
+    <p-table #dt [value]="listaInspeccionList" autoLayout="true" selectionMode="single" [(selection)]="listaInpSelect" [rows]="10"
+        [paginator]="true" dataKey="hash" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="codigo">Código
+                    <p-sortIcon field="codigo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="listaInspeccionPK.version">Versión
+                    <p-sortIcon field="listaInspeccionPK.version"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nombre">Nombre
+                    <p-sortIcon field="nombre"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tipoLista">Tipo de lista
+                    <p-sortIcon field="tipoLista"></p-sortIcon>
+                </th>
+                <th pSortableColumn="descripcion">Descripción
+                    <p-sortIcon field="descripcion"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'listaInspeccionPK.version', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoLista', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-listInp>
+            <tr [pSelectableRow]="listInp">
+                <td>{{listInp.codigo}}</td>
+                <td>{{listInp.listaInspeccionPK.version}}</td>
+                <td>{{listInp.nombre}}</td>
+                <td>{{listInp.tipoLista}}</td>
+                <td>{{listInp.descripcion}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+
+            <button *sTienePermiso="'INP_GET_LISTINP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="consultar()"
+                [disabled]="!listaInpSelect"></button>
+
+            <button *sTienePermiso="'INP_PUT_LISTINP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                (click)="modificar()" [disabled]="!listaInpSelect"></button>
+
+            <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Inspecciones" title="Descarga consolidado de inspecciones de la lista seleccionada"
+                class="ui-button-secondary" (click)="abrirDlg()" [disabled]="!listaInpSelect"></button>
+        </ng-template>
+    </p-table>
+</p-panel>
+
+<p-dialog [(visible)]="visibleDlg" modal="true">
+    <div class="ui-g">
+        <div class="ui-g-6">
+            <label class="s-float-label">Desde</label>
+            <p-calendar dateFormat="dd/mm/yy" [ngModel]="desde" (ngModelChange)="desde=$event" appendTo="body"></p-calendar>
+        </div>
+        <div class="ui-g-6">
+            <label class="s-float-label">Hasta</label>
+            <p-calendar dateFormat="dd/mm/yy" [ngModel]="hasta" (ngModelChange)="hasta=$event" appendTo="body"></p-calendar>
+        </div>
+    </div>
+    <div *ngIf="downloading == true">
+        <p-progressSpinner strokeWidth="8" [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+        <label style="position: relative;top: -7px;left:7px;">Descargando...</label>
+    </div>
+
+    <ng-container *ngIf="downloading != true">
+        <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Descargar" title="Descarga consolidado de inspecciones de la lista seleccionada"
+            (click)="descargarInspecciones()" [disabled]="desde == null || hasta == null"></button>
+    </ng-container>
+</p-dialog>
+
+<a style="visibility: hidden" id="dwldLink"></a>

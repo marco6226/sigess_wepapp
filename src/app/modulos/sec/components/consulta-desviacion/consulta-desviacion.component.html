@@ -1,0 +1,124 @@
+<p-tabView>
+  <p-tabPanel header="Consolidado desviaciones">
+
+    <div>
+      <p-table #dt [value]="desviacionesList" [rows]="5" [paginator]="true" [(selection)]="desviacionesListSelect" [autoLayout]="false"
+        [paginator]="true" paginatorPosition="top" dataKey="hashId" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
+        [loading]="loading" [responsive]="true">
+        <!-- paginatorPosition="both" [rowsPerPageOptions]="[5,10,15,20]"-->
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="analisisId" style="width: 126px;" title="Investigado">Investigado
+              <p-sortIcon field="analisisId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="modulo">Módulo
+              <p-sortIcon field="modulo"></p-sortIcon>
+            </th>
+            <th pSortableColumn="hashId">Código
+              <p-sortIcon field="hashId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="area.nombre">Área origen
+              <p-sortIcon field="area.nombre"></p-sortIcon>
+            </th>
+            <th pSortableColumn="concepto" style="width: 20%;">Concepto
+              <p-sortIcon field="concepto"></p-sortIcon>
+            </th>
+            <th pSortableColumn="aspectoCausante" style="width: 45%;">Aspecto causante
+              <p-sortIcon field="aspectoCausante"></p-sortIcon>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <p-dropdown [options]="[{label:'', value:null},{label:'Si', value:true},{label:'No', value:false}]" [style]="{'min-width':'0em'}"
+                (onChange)="dt.filter($event.value, 'analisisId', 'is_not_null')"></p-dropdown>
+            </td>
+            <td>
+              <p-dropdown [options]="opcionesModulos" [style]="{'min-width':'0em'}" (onChange)="dt.filter($event.value, 'modulo', 'equals')"></p-dropdown>
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'hashId', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'concepto', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'aspectoCausante', 'contains')">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-desviacion>
+          <tr [pSelectableRow]="desviacion">
+            <td style="text-align: center;">
+              <ng-container *ngIf="desviacion.analisisId">
+                <button pButton type="button" icon="fa fa-search" class="soft-icon" *sTienePermiso="'SEC_GET_ANADESV'" (click)="consultarAnalisis(desviacion)"
+                  style="margin-bottom:5px;"></button>
+                <button pButton type="button" icon="fa fa-pencil" class="soft-icon" *sTienePermiso="'SEC_PUT_ANADESV'" (click)="modificarAnalisis(desviacion)"></button>
+              </ng-container>
+              <p-tableCheckbox [value]="desviacion" *ngIf="!desviacion.analisisId"></p-tableCheckbox>
+            </td>
+            <td>{{desviacion.modulo}}</td>
+            <td>{{desviacion.hashId}}</td>
+            <td>{{desviacion.area_nombre}}</td>
+            <td>{{desviacion.concepto}}</td>
+            <td>{{desviacion.aspectoCausante}}</td>
+          </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="caption">
+          Showing {{dt.totalRecords}}/{{dt.rows}}/{{dt.first}}/{{dt.dataToRender?.length}}
+        </ng-template> -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              <s-dataNotFound icon="fa-exclamation" message="No se encontraron registros de desviaciones">
+                <div>
+                  Las desviaciones son generadas mediante el uso de otros módulos, y corresponden a no conformidades que pueden provenir de
+                  una calificación de una inspección por debajo del estándar, una observación por gestionar, o una evaluación.
+                </div>
+              </s-dataNotFound>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+
+          <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-search" label="Iniciar investigación" (click)="analizarDesviacion()"
+            [disabled]="desviacionesListSelect == null || desviacionesListSelect.length <= 0"></button>
+
+          <button *sTienePermiso="'SEC_GET_CONSINV'" pButton type="button" icon="fa fa-download" label="Investigaciones" title="Descargar investigaciones realizadas"
+            (click)="visibleDlg = true" class="ui-button-secondary"></button>
+
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Desviaciones inspecciones" *sTienePermiso="'SEC_GET_DESVINP'">
+    <s-consultaDesviacionInspeccion></s-consultaDesviacionInspeccion>
+  </p-tabPanel>
+</p-tabView>
+
+
+<p-dialog [(visible)]="visibleDlg" modal="true">
+  <div class="ui-g">
+    <div class="ui-g-6">
+      <label class="s-float-label">Desde</label>
+      <p-calendar dateFormat="dd/mm/yy" [ngModel]="desde" (ngModelChange)="desde=$event" appendTo="body"></p-calendar>
+    </div>
+    <div class="ui-g-6">
+      <label class="s-float-label">Hasta</label>
+      <p-calendar dateFormat="dd/mm/yy" [ngModel]="hasta" (ngModelChange)="hasta=$event" appendTo="body"></p-calendar>
+    </div>
+  </div>
+  <div *ngIf="downloading == true">
+    <p-progressSpinner strokeWidth="8" [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+    <label style="position: relative;top: -7px;left:7px;">Descargando...</label>
+  </div>
+
+  <ng-container *ngIf="downloading != true">
+    <button *sTienePermiso="'SEC_GET_CONSINV'" pButton type="button" icon="fa fa-download" label="Descargar" title="Descarga consolidado de investigaciones"
+      (click)="descargarInvs()" [disabled]="desde == null || hasta == null"></button>
+  </ng-container>
+</p-dialog>
+
+<a style="visibility: hidden" id="dwldLink"></a>

@@ -1,0 +1,68 @@
+<p-growl [value]="msgs">
+</p-growl>
+
+<p-accordion>
+  <ng-template ngFor let-conf [ngForOf]="configuracionJornadaList">
+    <p-accordionTab header="{{conf.fechaEntradaVigencia | date:'yyyy-MM-dd'}}">
+      <p-panel>
+        <p-header>
+          <div class="ui-g">
+            <div class="ui-g-12 ui-sm-12 ui-md-3">
+              ENTRADA VIGENCIA:
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-3">
+              <p-calendar [(ngModel)]="conf.fechaEntradaVigencia" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-4"></div>
+            <div class="ui-g-12 ui-sm-12 ui-md-2">
+              <ng-container *ngIf="conf.id">
+                <button pButton *sTienePermiso="'EMP_PUT_JORNEMPL'" type="button" icon="fa fa-pencil" label="Actualizar" class="ui-button-success"
+                  (click)="actualizarConfiguracion(conf)"></button>
+              </ng-container>
+              <button pButton type="button" icon="fa fa-floppy-o" *ngIf="!conf.id" (click)="adicionarConfiguracion(conf)"></button>
+              <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" *ngIf="!conf.id" (click)="removerConfiguracion(conf)"></button>
+            </div>
+          </div>
+        </p-header>
+
+        <div class="ui-g">
+          <div class="ui-g-12 ui-sm-12 ui-md-2">
+            Dia
+          </div>
+          <div class="ui-g-12 ui-sm-12 ui-md-3">
+            Inicio
+          </div>
+          <div class="ui-g-12 ui-sm-12 ui-md-3">
+            Fin
+          </div>
+          <div class="ui-g-12 ui-sm-12 ui-md-3">
+            Receso(Horas)
+          </div>
+          <div class="ui-g-12 ui-sm-12 ui-md-1">
+            Labora
+          </div>
+          <ng-template ngFor let-je [ngForOf]="conf.jornadaList" let-i="index">
+            <div class="ui-g-12 ui-sm-12 ui-md-2">
+              {{je.dia}}
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-3">
+              <p-calendar [timeOnly]="true" [(ngModel)]="je.horaInicio"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-3">
+              <p-calendar [timeOnly]="true" [(ngModel)]="je.horaFin"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-3">
+              <p-calendar [timeOnly]="true" [(ngModel)]="je.receso"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-1">
+              <p-checkbox binary="true" [(ngModel)]="je.labora"></p-checkbox>
+            </div>
+          </ng-template>
+        </div>
+      </p-panel>
+    </p-accordionTab>
+  </ng-template>
+</p-accordion>
+
+<button *sTienePermiso="'EMP_POST_JORNEMPL'" pButton type="button" class="float-btn" icon="fa fa-plus" title="Adicionar nueva configuracion de jornada"
+  style="bottom: 100px;" (click)="addFormulario()"></button>

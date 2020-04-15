@@ -1,0 +1,47 @@
+<div class="ui-g">
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-3 ui-xl-2">
+    <p-panel header="Dashboard:">
+      <p-selectButton [options]="[{label:'Indicadores', value:true},{label:'Caracterización', value:false}]" [(ngModel)]="indSelect"></p-selectButton>
+    </p-panel>
+    <br/>
+    <p-panel header="Años:" *ngIf="indSelect">
+      <p-multiSelect [options]="aniosList" [(ngModel)]="aniosListSelect" (onChange)="cambiarAnio($event)"></p-multiSelect>
+    </p-panel>
+    <br/>
+    <p-panel header="Causa ausentismo:" *ngIf="indSelect">
+      <p-dropdown *ngIf="causaAusentismoList" [options]="causaAusentismoList" [(ngModel)]="causaAusentismoSelected" (onChange)="cambiarCausaAusentismo($event)"></p-dropdown>
+      <p-messages [(value)]="causasMsg" [closable]="false"></p-messages>
+    </p-panel>
+    
+    <s-selectorRangoFechas *ngIf="!indSelect" (onchange)="actualizarRangos($event)" [value]="rangoCarac"></s-selectorRangoFechas>
+  </div>
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-9 ui-xl-10 ui-g-nopad" *ngIf="indSelect">
+    <div class="ui-g-12" *ngIf="!dataIndFrec && !dataIndSev && !dataIndIli">
+      <s-dataNotFound icon="fa-bar-chart" message="No se encontraron datos de ausentismo para la visualización de los datos"></s-dataNotFound>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndFrec" [data]="dataIndFrec" [titulo]="dataIndFrec.title" tipo="line"></s-panelGrafica>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndSev" [data]="dataIndSev" [titulo]="dataIndSev.title" tipo="line"></s-panelGrafica>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndIli" [data]="dataIndIli" [titulo]="dataIndIli.title" tipo="line"></s-panelGrafica>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndNumCasos" [data]="dataIndNumCasos" [titulo]="dataIndNumCasos.title" tipo="line"></s-panelGrafica>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6">
+      <s-panelGrafica *ngIf="dataIndNumDias" [data]="dataIndNumDias" [titulo]="dataIndNumDias.title" tipo="line"></s-panelGrafica>
+    </div>
+  </div>
+
+  <div class="ui-g-12 ui-sm-12 ui-lg-9 ui-xl-10 ui-g-nopad" *ngIf="!indSelect">
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-xl-6" *ngFor="let chart of caractCharts">
+      <s-panelGrafica [data]="chart" [titulo]="chart.title" [tipo]="chart.type"></s-panelGrafica>
+    </div>
+  </div>
+
+</div>

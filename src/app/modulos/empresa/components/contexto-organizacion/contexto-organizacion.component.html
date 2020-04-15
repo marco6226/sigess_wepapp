@@ -1,0 +1,216 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+
+<p-panel header="Análisis DOFA" [style]="{'margin-bottom':'20px'}">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('fortalezas')" title="Adicionar fortalezas">Fortalezas</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let fort of ctxOrg.data.fortalezas; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('fortalezas', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.fortalezas[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('debilidades')" title="Adicionar Debilidades">Debilidades (Amenazas internas)</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.debilidades; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('debilidades', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.debilidades[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('oportunidades')" title="Adicionar Oportunidades">Oportunidades</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.oportunidades; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('oportunidades', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.oportunidades[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('amenazas')" title="Adicionar Amenazas">Amenazas (Riesgo externo)</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.amenazas; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('amenazas', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.amenazas[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+  </div>
+</p-panel>
+
+<p-panel header="Requisitos a cumplir" [style]="{'margin-bottom':'20px'}">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('requisitosLegales')" title="Adicionar requisitos legales">Requisitos legales</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.requisitosLegales; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('requisitosLegales', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.requisitosLegales[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('normasSector')" title="Adicionar Normas del sector">Normas del sector</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.normasSector; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('normasSector', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.normasSector[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('requisitosMercado')" title="Adicionar requisitos de mercado">Establecidos por el mercado</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.requisitosMercado; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('requisitosMercado', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.requisitosMercado[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel>
+        <p-header>
+          <a (click)="adicionar('politicasInternas')" title="Adicionar Políticas internas">Políticas internas</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.politicasInternas; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('politicasInternas', i)" *ngIf="!consultar"></button>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="ctxOrg.data.politicasInternas[i]" />
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+  </div>
+</p-panel>
+
+
+<p-panel header="Partes interesadas SGC " [style]="{'margin-bottom':'50px'}">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-6">
+      <p-panel header="">
+        <p-header>
+          <a (click)="adicionar('partesInteresadasInterno')" title="Adicionar Partes interesadas SGC - Interno">SGC - Interno</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.partesInteresadasInterno; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('partesInteresadasInterno', i)" *ngIf="!consultar"></button>
+            </td>
+            <td valign="top" >
+              <textarea pInputTextarea [(ngModel)]="foo.nombre" placeholder="Parte interesada"></textarea>
+              <!-- <div class="edit-div" contenteditable>{{foo.nombre}}</div> -->
+            </td>
+            <td style="width:50%;" valign="top" >
+              <textarea pInputTextarea [(ngModel)]="foo.necesidades" placeholder="Necesidades - Expectativas"></textarea>
+              <!-- <div class="edit-div" contenteditable>{{foo.necesidades}}</div> -->
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel header="">
+        <p-header>
+          <a (click)="adicionar('partesInteresadasExterno')" title="Adicionar Partes interesadas SGC - Externo">SGC - Externo</a>
+        </p-header>
+        <table style="width: 100%;">
+          <tr *ngFor="let foo of ctxOrg.data.partesInteresadasExterno; let i=index; trackBy:customTrackBy">
+            <td style="width:1em;">
+              <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminar('partesInteresadasExterno', i)" *ngIf="!consultar"></button>
+            </td>
+            <td valign="top" >
+              <textarea pInputTextarea [(ngModel)]="foo.nombre" placeholder="Parte interesada"></textarea>
+              <!-- <div class="edit-div" contenteditable>{{foo.nombre}}</div> -->
+            </td>
+            <td style="width:50%;" valign="top" >
+              <textarea pInputTextarea [(ngModel)]="foo.necesidades" placeholder="Necesidades - Expectativas"></textarea>
+              <!-- <div class="edit-div" contenteditable>{{foo.necesidades}}</div> -->
+            </td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+  </div>
+</p-panel>
+
+<ng-container *ngIf="accion == 'POST'">
+  <button *sTienePermiso="'EMP_POST_CTXEMP'" pButton type="button" (click)="guardar()" icon="fa fa-floppy-o" class="float-btn"
+    title="Guardar"></button>
+</ng-container>
+
+
+<ng-container *ngIf="accion == 'PUT'">
+  <button *sTienePermiso="'EMP_PUT_CTXEMP'" pButton type="button" (click)="modificar()" icon="fa fa-pencil" class="float-btn ui-button-success"
+    title="Modificar"></button>
+</ng-container>

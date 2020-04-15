@@ -1,0 +1,29 @@
+header button{
+  float: right;
+  height: 28px;
+}
+
+#compositor-menu{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 100%;
+  background-color: transparent;
+}
+
+#compositor-menu button{
+  font-size: 16px;
+  border-radius: 8px;
+  float: right;
+}
+
+#compositor-menu div{
+  color: #06759a;
+  background-color: #7de2ff;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  float: right;
+  margin-right: 10px;
+  font-weight: bold;
+}

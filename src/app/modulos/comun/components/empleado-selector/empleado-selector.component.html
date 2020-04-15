@@ -1,0 +1,30 @@
+<p-autoComplete placeholder="Empleado: número identificación, correo electrónico o nombres y apellidos" [style]="{'width':'100%'}"
+  (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [(ngModel)]="_value"
+  *ngIf="_value?.id == null">
+  <ng-template let-empleado pTemplate="item">
+    <div class="ui-helper-clearfix" >
+      <div class="wrapper" >
+        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar/>
+        <div style="margin-left:20px">
+          <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}} {{empleado?.primerApellido}}</label>
+          <br/> {{empleado?.numeroIdentificacion}}
+          <br/> {{empleado?.usuario.email}}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-autoComplete>
+
+<!--[ngClass]="disabled == true ? 'badge disabled' : 'badge active clickable'"-->
+<div class="wrapper" [ngClass]="disabled == true ? 'disabled' : 'clickable'" style="padding-left: 20px;" *ngIf="_value?.id != null" (click)="resetEmpleado()">
+
+  <i *ngIf="!_value.usuario.avatar" class="fa fa-user-circle" style="font-size: 100px;;" aria-hidden="true"></i>
+  <img *ngIf="_value.usuario.avatar" [src]="_value.usuario.avatar" style="height:100px;width:100px;border-radius: 50%;" #imgAvatar/>
+
+  <div style="margin-left:20px">
+    <h4 style="margin:0px">{{_value?.primerNombre}} {{_value?.segundoNombre}} {{_value?.primerApellido}} {{_value?.segundoApellido}}</h4>
+    <p>{{_value?.tipoIdentificacion?.nombre}} {{_value?.numeroIdentificacion}}</p>
+    <p>{{_value?.cargo?.nombre}}</p>
+  </div>
+</div>

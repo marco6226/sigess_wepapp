@@ -1,0 +1,69 @@
+<p-growl [value]="msgs"></p-growl>
+
+<p-panel header="Cargue masivo de datos">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-2">
+      <p-dropdown [options]="opciones" [(ngModel)]="opcionSelect" disabled="true"></p-dropdown>
+    </div>
+    <div class="ui-g-12 ui-md-10">
+      <button pButton type="button" icon="pi pi-upload" (click)="fileInput.click()"></button>
+      <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+    </div>
+    <ng-template ngFor let-opt [ngForOf]="modelo[opcionSelect]" let-i="index">
+      <div class="badge active" pDraggable="dd" (onDragStart)="dragStart($event, opt)" *ngIf="!opt.selected">
+        {{opt.label}}
+      </div>
+    </ng-template>
+  </div>
+</p-panel>
+
+<br/>
+
+<p-panel *ngIf="dataFile">
+  <p-header>
+    <button *sTienePermiso="'EMP_POST_LOADEMP'" pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()"></button>
+  </p-header>
+
+
+  <p-table #dt [columns]="mapping" [value]="dataFile" paginator="true" [rows]="10" autoLayout="true">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" pDroppable="dd" (onDrop)="drop($event, col)" style="padding: 0px;height: 25px;">
+          <div *ngIf="col?.campo" class="badge active" pDraggable="dd" (onDragStart)="dragStart($event, col.campo)">
+            {{col.campo?.label}}
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.nombre}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+      <tr>
+        <ng-template ngFor let-col [ngForOf]="columns" let-j="index">
+          <td *ngIf="i == editRowIndex && j == editColIndex" style="padding: 0px;" [style.border]="i == editRowIndex ? 'solid 2px #3ba2dc' : 'solid 0px #ccc' ">
+            <select *ngIf="col['campo']?.opciones" [(ngModel)]="rowData[col.orden].nombre">
+              <option [value]="opt.value" *ngFor="let opt of col['campo']?.opciones">{{opt.label}}</option>
+            </select>
+            <!-- <p-dropdown *ngIf="col['campo']?.opciones" [options]="col['campo']?.opciones" [(ngModel)]="rowData[col.orden].nombre"></p-dropdown> -->
+            <input class="input-table" *ngIf="!col['campo']?.opciones" type="text" pInputText [(ngModel)]="rowData[col.orden].nombre"
+            />
+          </td>
+
+          <td *ngIf="i !== editRowIndex || j !== editColIndex" (click)="toggle(i, j)" [title]="rowData[col.orden]?.nombre" >
+            <div class="td-view">{{rowData[col.orden]?.nombre}}</div>
+          </td>
+        </ng-template>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      Mostrando {{((+dt.first+1))}} al {{+dt.first+ +dt.rows}} de {{+dt.totalRecords}} registros en total
+    </ng-template>
+  </p-table>
+
+  <p-messages [(value)]="msgsCarga"></p-messages>
+  
+</p-panel>
+

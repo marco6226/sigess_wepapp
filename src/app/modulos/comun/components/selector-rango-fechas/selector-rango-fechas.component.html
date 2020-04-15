@@ -1,0 +1,58 @@
+<p-panel>
+  <p-header>
+    Rango de fechas
+    <button pButton type="button" icon="fa fa-plus" (click)="adicionarNuevoRango();" [disabled]="!fechaDesde || !fechaHasta"
+      style="float:right;"></button>
+  </p-header>
+  <div class="ui-g">
+    <!--
+    <div class="ui-g-12" style="padding:0px;">
+      <table>
+        <tr>
+          <td>Últimos</td>
+          <td><input type="number" /></td>
+          <td>
+            <select>
+              <option value="1">Dia(s)</option>
+              <option value="2">Semana(s)</option>
+              <option value="3">Mes(es)</option>
+              <option value="4">Bimestre(s)</option>
+              <option value="5">Trimestre(s)</option>
+              <option value="6">Semestre(s)</option>
+              <option value="7">Año(s)</option>
+            </select>
+          </td>
+          <td><button pButton type="button" icon="fa fa-plus" (click)="adicionarNuevoRango();"></button></td>
+        </tr>
+      </table>
+    </div>
+    -->
+    <div class="ui-g-12 ui-sm-12">
+      <p-calendar [(ngModel)]="fechaDesde" [locale]="localeES" dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
+    </div>
+    <div class="ui-g-12 ui-sm-12">
+      <p-calendar [(ngModel)]="fechaHasta" [locale]="localeES" dateFormat="dd/mm/yy" placeholder="Hasta"></p-calendar>
+    </div>
+  </div>
+
+  <table style="width:100%;">
+    <ng-template ngFor let-rango [ngForOf]="rangosList" let-i="index">
+      <tr>
+        <td>
+          <div class="badge" [style.background]="rango.color">{{rango.desde | date:'dd/MM/yyyy'}}</div>
+        </td>
+        <td>
+          <div class="badge" [style.background]="rango.color">{{rango.hasta | date:'dd/MM/yyyy'}}</div>
+        </td>
+        <td>
+          <div class="color-picker-wrapper" [style.background]="rango.color">
+            <input type="color" [(ngModel)]="rango.color" (change)="cambiarColor($event)">
+          </div>
+        </td>
+        <td>
+          <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removerRango(i)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+</p-panel>

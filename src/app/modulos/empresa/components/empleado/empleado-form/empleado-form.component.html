@@ -1,0 +1,190 @@
+<p-tabView>
+  <p-tabPanel header="Datos básicos">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <p-panel header="PERSONAL">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-2">
+            Primer nombre
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="primerNombre" required/>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            <label>Segundo Nombre</label>
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="segundoNombre" />
+          </div>
+          <div class="ui-g-12 ui-md-2">
+            Primer Apellido
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="primerApellido" required/>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Segundo Apellido
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="segundoApellido" />
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Tipo identificación
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required></p-dropdown>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Número identificación
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="numeroIdentificacion" required/>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Ciudad residencia
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <s-ciudadSelector formControlName="ciudad"></s-ciudadSelector>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Zona residencia
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-radioButton name="zonaResidencia" value="U" label="Urbana" formControlName="zonaResidencia"></p-radioButton>
+            <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia"></p-radioButton>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Dirección residencia
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="direccion" />
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Teléfono
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="telefono1" />
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Teléfono 2
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="telefono2" />
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Fecha de nacimiento
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
+              dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Género
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-radioButton name="genero" value="M" label="Masculino" formControlName="genero"></p-radioButton>
+            <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero"></p-radioButton>
+          </div>
+
+        </div>
+      </p-panel>
+      <br/>
+      <p-panel header="LABORAL">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-2">
+            Correo electrónico
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="email" required/>
+          </div>
+          <div class="ui-g-12 ui-md-2">
+            Perfiles
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Código
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <input type="text" pInputText formControlName="codigo" />
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            AFP
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-dropdown [filter]="true" [options]="afpList" formControlName="afp"></p-dropdown>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            EPS
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"></p-dropdown>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Fecha de ingreso
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
+              dateFormat="dd/mm/yy" formControlName="fechaIngreso" required></p-calendar>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Tipo vinculación
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-dropdown [options]="tipoVinculacionList" formControlName="tipoVinculacion"></p-dropdown>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Ubicación
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <area-selector formControlName="area" required></area-selector>
+          </div>
+
+          <div class="ui-g-12 ui-md-2">
+            Cargo
+          </div>
+          <div class="ui-g-12 ui-md-4">
+            <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required></p-dropdown>
+          </div>
+        </div>
+      </p-panel>
+      <div style="text-align: center; width: 100%;">
+        <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" class="float-btn"
+          style="bottom: 100px;" title="Guardar datos de empleado"></button>
+
+        <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+      </div>
+    </form>
+
+  </p-tabPanel>
+
+  <p-tabPanel header="Jornada" [disabled]="!isUpdate">
+    <s-jornadaForm [value]="empleadoSelect" *ngIf="isUpdate && loaded"></s-jornadaForm>
+  </p-tabPanel>
+  <p-tabPanel header="Horas extra" [disabled]="!isUpdate">
+    <s-horasExtraForm [value]="empleadoSelect" *ngIf="isUpdate && loaded"></s-horasExtraForm>
+  </p-tabPanel>
+  <p-tabPanel header="Documentación" [disabled]="!isUpdate">
+    <s-documentosEmpleadoForm *ngIf="isUpdate && loaded" [value]="empleadoSelect"></s-documentosEmpleadoForm>
+  </p-tabPanel>
+</p-tabView>
+
+<button pButton *ngIf="solicitando == false" type="button" icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>

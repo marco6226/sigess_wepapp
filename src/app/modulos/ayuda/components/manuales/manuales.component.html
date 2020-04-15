@@ -1,0 +1,53 @@
+<p-panel header="Reporte de condicion">
+  <p-table #dt [value]="manuales" autoLayout="false" dataKey="id" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th rowspan="2">
+
+        </th>
+        <th pSortableColumn="nombre">Nombre
+          <p-sortIcon field="nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">Descripcion
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-man>
+      <tr [pSelectableRow]="man">
+        <td>
+          <button pButton type="button" icon="fa fa-video-camera" class="soft-icon" (click)="abrirVideo(man)"></button>
+        </td>
+        <td>{{man.nombre}}</td>
+        <td>{{man.descripcion}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="3">
+          <s-dataNotFound icon="fa-check-square" message="No se encontraron manuales"> </s-dataNotFound>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>
+
+<div class="video-dlg" *ngIf="visibleDlg" >
+  <div class="content-dlg">
+    <p-progressSpinner *ngIf="loadingVideo == true" strokeWidth="8" [style]="{width: '45px', height: '45px'}"></p-progressSpinner>
+    <div class="video-tools">
+        <button pButton class="btn-close-video" type="button" icon="fa fa-close"(click)="visibleDlg = false"></button>
+    </div>
+    <video *ngIf="rutaVideo != null" controls="controls" preload="metadata" autoplay="autoplay" class="videoPlayer" controlsList="nodownload">
+      <source [src]="rutaVideo" type="video/mp4" /> El navegador no soporta el video, por favor intenta en otro navegador
+    </video>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div *ngFor="let elem of elementoList" style="width:100%;">
+  <table class="table-node" [style.border-color]="nodeOpts[nivel - 1].color" > <!--[class]="nodeClass"-->
+    <tr [id]="'tr_' + elem.id">
+      <td width="20px">
+        <span class="fa fa-check-circle no-diligenciado" *ngIf="elem.opcionRespuestaList != null && elem.opcionRespuestaList.length > 0"
+          [id]="'valid-icon_' + elem.id" (click)="op.toggle($event)" style="cursor: pointer;"></span>
+      </td>
+      <td style="width:100px;" *ngIf="editable">
+        <input type="text" pInputText [(ngModel)]="elem.codigo"  />
+      </td>
+
+      <td [style.color]="elem.opcionRespuestaList.length > 0 ? '#555' : nodeOpts[nivel].color">
+        <input type="text" pInputText [(ngModel)]="elem.nombre" *ngIf="editable" />
+        <label *ngIf="!editable">{{elem.codigo}} {{elem.nombre}}</label>
+      </td>
+
+      <td *ngFor="let or of elem?.opcionRespuestaList" width="50px" align="center">
+        <s-radioButton #radiobutton [id]="elem.id + '_' + or.id" [name]="elem.codigo + elem.nombre" [value]="or.valor" [label]="or.nombre"
+          [pTooltip]="or.descripcion" tooltipPosition="left" [disabled]="!persistible" (onClick)="onRadioSelect(elem, or, tdContainer)"></s-radioButton>
+      </td>
+
+      <td width="10px">
+        <button pButton type="button" icon="fa fa-plus" (click)="addElemento(elem)" *ngIf="editable"></button>
+      </td>
+
+      <td width="10px">
+        <button pButton type="button" icon="fa fa-list-ol" class="ui-button-success" (click)="addOpcionResp(elem)" *ngIf="editable"></button>
+      </td>
+
+      <td width="35px">
+        <button pButton type="button" icon="fa fa-file" class="ui-button-info" (click)="abrirDlgDocumento(elem)" *ngIf="editable ? true : (persistible ? (elem?.documentosList != null && elem?.documentosList.length > 0) : (elem?.documentosList != null && elem?.documentosList.length > 0) )"></button>
+      </td>
+
+      <td width="10px">
+        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeElemento(elementoList, elem)" *ngIf="editable"></button>
+      </td>
+
+    </tr>
+    <tr>
+      <td [attr.colspan]="elem.opcionRespuestaList.length + 7" class="node-container">
+        <sigess-sgenodo [elementoList]="elem.elementoList" [opcionRespuestaList]="opcionRespuestaList" [editable]="editable" [nodeOpts]="nodeOpts" [nivel]="nivel"
+          [persistible]="persistible" [evaluacionId]="evaluacionId" [respuestasList]="respuestasList" #childNode (onRadioSelectEvent)="manageResponse($event)"
+          (onElementDocumentSelect)="abrirDlgDocumento($event)" (onElementParamSelect)="abrirDlgParametros($event)"></sigess-sgenodo>
+      </td>
+    </tr>
+  </table>
+  <p-overlayPanel #op appendTo="body" header="elem.nombre">
+    <h3 class="ui-dialog-title parametro-elemento">{{elem.codigo}}. {{elem.nombre}}</h3>
+    <br/>
+    <br/>
+
+    <label class="ui-dialog-title">Marco legal</label>
+    <br/>
+    <textarea pInputTextarea [(ngModel)]="elem.marcoLegal" *ngIf="editable"></textarea>
+    <p *ngIf="!editable" class="parametro-elemento">{{elem.marcoLegal}}</p>
+    <br/>
+    <br/>
+
+    <label class="ui-dialog-title">Criterio</label>
+    <br/>
+    <textarea pInputTextarea [(ngModel)]="elem.criterio" *ngIf="editable"></textarea>
+    <p *ngIf="!editable" class="parametro-elemento">{{elem.criterio}}</p>
+    <br/>
+    <br/>
+
+    <label class="ui-dialog-title">Modo verificación</label>
+    <br/>
+    <textarea pInputTextarea [(ngModel)]="elem.modoVerificacion" *ngIf="editable"></textarea>
+    <p *ngIf="!editable" class="parametro-elemento">{{elem.modoVerificacion}}</p>
+    <br/>
+    <br/>
+  </p-overlayPanel>
+</div>

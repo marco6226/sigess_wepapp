@@ -1,0 +1,11 @@
+<s-dataNotFound *ngIf="!empresasList || empresasList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de contratistas vinculados">
+
+</s-dataNotFound>
+
+<p-panel header="Seguimiento contratistas" [style.display]="empresasList && empresasList.length > 0 ? 'block':'none'">
+  <p-tabView>
+    <p-tabPanel [header]="emp.razonSocial" *ngFor="let emp of empresasList">
+      <s-empresaDash [empresa]="emp"></s-empresaDash>
+    </p-tabPanel>
+  </p-tabView>
+</p-panel>

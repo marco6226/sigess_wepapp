@@ -1,0 +1,49 @@
+<p-growl [value]="msgs"></p-growl>
+
+<p-panel header="Evaluación de desempeño">
+  <s-empleadoSelector (onSelect)="onSelect($event)" [(ngModel)]="empleadoSelect" [readOnly]="accion == 'GET' || accion == 'PUT'"></s-empleadoSelector>
+
+  <p-table #dt [value]="calificacionDesempenoList" autoLayout="true" [style]="{'margin-top': '15px'}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Puntaje</th>
+        <th>Competencias {{cargo?.nombre}}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-calif>
+      <tr>
+        <td style="width: 100px;">
+          <select [(ngModel)]="calif.puntaje" class="select-option" [disabled]="accion == 'GET'">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </td>
+        <td>
+          <label [title]="calif.descripcion">{{calif.competencia.nombre}}</label>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <textarea pInputTextarea style="margin-top:15px;" placeholder="Comentarios" [(ngModel)]="comentario" [disabled]="accion == 'GET'"></textarea>
+
+  <ng-container *ngIf="accion == 'POST'">
+    <button *sTienePermiso="'EMP_POST_EVALDES'" pButton type="button" (click)="guardar()" icon="fa fa-floppy-o" class="float-btn"
+      title="Guardar" [disabled]="!cargo || !empleadoSelect"></button>
+  </ng-container>
+
+  <ng-container *ngIf="accion == 'PUT'">
+    <button *sTienePermiso="'EMP_PUT_EVALDES'" pButton type="button" (click)="guardar()" icon="fa fa-pencil" class="float-btn ui-button-success"
+      title="Actualizar" [disabled]="!cargo"></button>
+  </ng-container>
+
+</p-panel>

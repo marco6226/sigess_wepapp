@@ -1,0 +1,25 @@
+.badge{
+  padding: 4px;
+}
+
+input[type="color"] {
+	opacity: 0;
+	display: block;
+	width: 32px;
+	height: 32px;
+	border: none;
+  cursor: pointer;
+}
+.color-picker-wrapper {
+  float: left;
+  height: 24px;
+}
+
+input, select{
+  height: 30px;
+	background: #fff;
+	border:none;
+	border-bottom: solid thin #ccc;
+  width: 100%;
+  background: #fff0;
+}

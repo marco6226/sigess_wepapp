@@ -1,0 +1,72 @@
+<p-table #dt [columns]="selectedColumns" [value]="desvInpList" autoLayout="false" [rows]="numRows" [paginator]="true" dataKey="hashId"
+  [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading" [reorderableColumns]="true"
+  [resizableColumns]="true" columnResizeMode="expand" [scrollable]="true" scrollHeight="400px" paginatorPosition="top">
+
+  <ng-template pTemplate="colgroup" let-columns>
+    <colgroup>
+      <col *ngFor="let col of columns" [style.width]="col.width">
+    </colgroup>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th [pSortableColumn]="col.field" *ngFor="let col of columns" pResizableColumn pReorderableColumn>{{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+    <tr>
+      <td *ngFor="let col of columns">
+        <div [ngSwitch]="col.type">
+          <input pInputText type="text" *ngSwitchCase="'text'" (input)="dt.filter($event.target.value, col.field, 'contains')">
+          <s-rangoFechaSelector *ngSwitchCase="'date'" (onSelect)="dt.filter($event, col.field, 'bt')"></s-rangoFechaSelector>
+          <input pInputText *ngSwitchCase="'number'" type="number" (input)="dt.filter($event.target.value, col.field, 'equals')">
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-desvInp let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <div [ngSwitch]="col.type">
+          <span *ngSwitchCase="'date'" [title]="desvInp[col.field]">{{desvInp[col.field] | date:'dd/MM/yyyy'}}</span>
+          <span *ngSwitchDefault [title]="desvInp[col.field]">{{desvInp[col.field]}}</span>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="caption">
+    <table style="width: 100%;">
+      <tr>
+        <td style="width: 200px;">
+          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="Mostrando {0} columnas"
+            [style]="{minWidth: '200px'}" defaultLabel="Mostrar columnas"></p-multiSelect>
+        </td>
+        <td valign="middle" style="width: 100px;">Paginación:</td>
+        <td valign="middle" style="width: 35px;">
+          <select [(ngModel)]="numRows" class="select-option" (change)="actualizarNumRows($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </td>
+        <td style="text-align: right;">
+          <button pButton type="button" title="Exportar a archivo csv" icon="fa fa-file-excel-o" class="ui-button-success" (click)="exportarCsv()"></button>
+        </td>
+        <td style="text-align: right;" style="width: 50px;">
+          <button pButton type="button" title="Reestablecer filtros" icon="fa fa-repeat" (click)="dt.reset()"></button>
+        </td>
+      </tr>
+    </table>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7">
+        <s-dataNotFound icon="fa-exclamation" message="No se encontraron registros de desviaciones">
+          <div>
+            Las desviaciones de inspeccion,corresponde a los elementos no conformes encontrados durante la inspección.
+          </div>
+        </s-dataNotFound>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

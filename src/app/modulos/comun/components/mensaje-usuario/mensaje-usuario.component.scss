@@ -1,0 +1,19 @@
+
+.main{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255,  255, 0.8);  
+  z-index: 1100;
+  
+  transform: translate(-100%, 0px);
+  transition: transform .5s;
+}
+
+.visible{
+  transform: translate(0px, 0px);
+}
+
+.invisible{
+  transform: translate(-100%, 0px);
+}

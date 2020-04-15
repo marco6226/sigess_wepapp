@@ -1,0 +1,30 @@
+<p-dialog [(visible)]="visible" width="480" (onHide)="onHide()" [header]="titulo">
+
+  <p-messages [(value)]="msgs" [closable]="true"></p-messages>
+
+  <table class="table-docs" width="100%">
+    <ng-template ngFor let-doc [ngForOf]="seleccion" let-i="index">
+      <tr>
+        <td>
+          <a (click)="download(doc)">{{doc.nombre}}</a>
+        </td>
+        <td width="50px" *ngIf="modificar">
+          <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminarDocumento(doc)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </table>
+
+  <p-autoComplete placeholder="Nombre documento" [style]="{'width':'100%'}" [suggestions]="directorioList" (completeMethod)="buscarDocumentos($event)"
+    (onSelect)="onSelect($event);" appendTo="body" emptyMessage="No se encontraron coincidencias" forceSelection="true" field="nombre"
+    [(ngModel)]="seleccionAutocomplete" *ngIf="modificar">
+
+  </p-autoComplete>
+
+  <p-footer *ngIf="modificar">
+    <button pButton type="button" icon="fa fa-pencil" (click)="actualizar()" label="Actualizar"></button>
+  </p-footer>
+
+</p-dialog>
+
+<a style="visibility: hidden" id="dwldLink"></a>

@@ -1,0 +1,132 @@
+<p-growl [value]="msgs"></p-growl>
+
+<p-panel header="PROGRAMACIÓN DE INSPECCIONES">
+
+  <table class="main">
+    <tr>
+      <th colspan="7" align="center">
+        <div style="width:25%;float:left;">
+          <p-dropdown [disabled]="progLoading" [options]="meses" (onChange)="updateMonth($event)" [(ngModel)]="mesSelect"></p-dropdown>
+        </div>
+        <div style="width:25%;float:left;margin-bottom:10px;">
+          <p-dropdown [disabled]="progLoading" [options]="aniosList" (onChange)="updateYear($event)" [(ngModel)]="anioSelect"></p-dropdown>
+        </div>
+      </th>
+    </tr>
+    <tr *ngIf="progLoading == true" >
+      <th colspan="7">
+          <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+      </th>
+    </tr>
+    <tr *ngIf="progLoading == false">
+      <ng-template ngFor let-dia [ngForOf]="dias">
+        <td class="cabecera-dias">
+          {{dia.nombre}}
+        </td>
+      </ng-template>
+    </tr>
+    <ng-template ngFor let-semana [ngForOf]="matriz" *ngIf="progLoading == false">
+      <tr>
+        <ng-template ngFor let-value [ngForOf]="semana">
+          <td style="width: 14.2%;" valign="top">
+            <div class="dia-container">
+              <div class="dia" (click)="openDlg(value.dia)">{{value?.dia?.getDate()}}</div>
+              <ng-template ngFor let-prog [ngForOf]="value?.programacionList">
+                <div class="badge clickable" [ngClass]="{'success': (prog.numeroInspecciones == prog.numeroRealizadas), 'active': (prog.numeroInspecciones > prog.numeroRealizadas)}"
+                  (click)="openProg(prog)">
+                  {{prog.numeroRealizadas}}/{{prog.numeroInspecciones}} insp. en {{prog.area.nombre}}
+                </div>
+              </ng-template>
+            </div>
+          </td>
+        </ng-template>
+      </tr>
+    </ng-template>
+  </table>
+</p-panel>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <p-dialog width="480" [(visible)]="visibleDlg" [responsive]="true" [modal]="true">
+
+    <p-header>
+      {{fechaSelect | date: 'yyyy-MM-dd' }}
+    </p-header>
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-4">
+        <label for="numeroInspecciones">Número de inspecciones</label>
+      </div>
+      <div class="ui-g-12 ui-md-8">
+        <input pInputText id="numeroInspecciones" formControlName="numeroInspecciones" required/>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <label for="listaInsp">Lista de inspección</label>
+      </div>
+      <div class="ui-g-12 ui-md-8">
+        <p-dropdown id="listaInsp" [options]="listasInspeccionList" formControlName="listaInspeccionPK" appendTo="body" required></p-dropdown>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <label for="areaResponsable">Ubicación responsable</label>
+      </div>
+      <div class="ui-g-12 ui-md-8">
+        <area-selector formControlName="area" required></area-selector>
+      </div>
+    </div>
+    <p-panel header="Periodicidad" *ngIf="adicionar">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-4">
+          <label for="areaResponsable">Cada</label>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <input pInputText type="number" formControlName="valorFrecuencia" />
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <p-dropdown [options]="periodicidadList" formControlName="unidadFrecuencia" appendTo="body"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <label for="areaResponsable">Hasta</label>
+        </div>
+        <div class="ui-g-12 ui-md-8">
+          <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaHasta" appendTo="body" [minDate]="fechaSelect"
+            [maxDate]="fechaMaxima" [readonlyInput]="true"></p-calendar>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <label for="areaResponsable">Incluir</label>
+        </div>
+        <div class="ui-g-12 ui-md-8">
+          <p-checkbox name="weekend" value="1" label="Lunes" [formControl]="form.controls['semana']"></p-checkbox><br/>
+          <p-checkbox name="weekend" value="2" label="Martes" [formControl]="form.controls['semana']"></p-checkbox><br/>
+          <p-checkbox name="weekend" value="3" label="Miércoles" [formControl]="form.controls['semana']"></p-checkbox><br/>
+          <p-checkbox name="weekend" value="4" label="Jueves" [formControl]="form.controls['semana']"></p-checkbox><br/>
+          <p-checkbox name="weekend" value="5" label="Viernes" [formControl]="form.controls['semana']"></p-checkbox><br/>
+          <p-checkbox name="weekend" value="6" label="Sábado" [formControl]="form.controls['semana']"></p-checkbox><br/>
+          <p-checkbox name="weekend" value="0" label="Domingo" [formControl]="form.controls['semana']"></p-checkbox>
+        </div>
+      </div>
+    </p-panel>
+    <p-footer>
+
+      <div style="text-align: center" *ngIf="loading == true">
+        <p-progressSpinner strokeWidth="8" [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+      </div>
+      <ng-container *ngIf="adicionar && loading == false">
+        <button *sTienePermiso="'INP_POST_PROG'" type="submit" pButton icon="fa fa-floppy-o" label="Guardar" [disabled]="!form.valid"></button>
+      </ng-container>
+
+      <ng-container *ngIf="!adicionar && loading == false">
+        <button *sTienePermiso="'INP_PUT_PROG'" type="submit" pButton icon="fa fa-pencil" label="Modificar" [disabled]="!form.valid"></button>
+      </ng-container>
+
+      <ng-container *ngIf="!adicionar && loading == false">
+        <button *sTienePermiso="'INP_POST_INP'" type="button" pButton icon="fa fa-list-ol" class="ui-button-success" label="Inspeccion"
+          (click)="irInspeccion()" [disabled]="btnInspDisable"></button>
+      </ng-container>
+
+      <ng-container *ngIf="!adicionar && loading == false">
+        <button *sTienePermiso="'INP_DELETE_PROG'" type="button" pButton icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
+          (click)="eliminarProgramacion()" [disabled]="!form.valid"></button>
+      </ng-container>
+
+    </p-footer>
+  </p-dialog>
+</form>

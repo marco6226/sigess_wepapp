@@ -1,0 +1,304 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <span class="badge active" style="font-size: 22px;">
+      {{ (analisisCosto.costoHoraAcc * analisisCosto.horasPerdidasAcc ) + (analisisCosto.diasMejora * analisisCosto.impDiarioMejora)
+      + (analisisCosto.diasCotizacion * analisisCosto.impDiarioCotizacion ) + (analisisCosto.horasReparInternEdif * analisisCosto.costoHoraReparInternEdif)
+      + (analisisCosto.costoMaterEdif) + analisisCosto.costoReparExternEdif + (analisisCosto.horasReparInternMaq * analisisCosto.costoHoraReparInternMaq)
+      + analisisCosto.costoReparExternMaq + (analisisCosto.numUnidMaterPrim * analisisCosto.costoUnidMaterPrim) + analisisCosto.perdidaProducc
+      + analisisCosto.perdidaParadaMaq + analisisCosto.costoHorasExtras + analisisCosto.costoContratReemplazo + analisisCosto.subContratServ
+      + analisisCosto.otrosCostosProducc + analisisCosto.costosMedidasPrev + analisisCosto.costoRespAdmin + analisisCosto.costoRespSegSocial
+      + analisisCosto.costoRespCivil + analisisCosto.costoRespJurid + analisisCosto.otrosCostos | currency:'COP':'symbol'
+      }}
+    </span><br/><br/>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-10"> </div>
+  <!---->
+  <div class="title ui-g-12 ui-sm-12">
+    COSTE POR ACCIDENTES
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Pérdidas por el accidentado (el día del accidente)</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Horas" [(ngModel)]="analisisCosto.horasPerdidasAcc" [disabled]="readOnly"/>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor hora" [(ngModel)]="analisisCosto.costoHoraAcc"  [disabled]="readOnly"/>
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoHoraAcc * analisisCosto.horasPerdidasAcc | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Mejoras voluntarias a la prestación por Incapacidad Temporal</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Cantidad de dias" [(ngModel)]="analisisCosto.diasMejora" [disabled]="readOnly"/>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor dia" [(ngModel)]="analisisCosto.impDiarioMejora" [disabled]="readOnly"/>
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.diasMejora * analisisCosto.impDiarioMejora | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Cotizaciones a la Seguridad Social (por parte de la empresa)</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Dias de cotización" [(ngModel)]="analisisCosto.diasCotizacion" [disabled]="readOnly" />
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor dia" [(ngModel)]="analisisCosto.impDiarioCotizacion" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.diasCotizacion * analisisCosto.impDiarioCotizacion | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="title ui-g-12 ui-sm-12">
+    COSTE DE DAÑOS MATERIALES
+  </div>
+  <div class="subtitle ui-g-12 ui-sm-12">Edificios e instalaciones</div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Reparación por el Servicio Interno</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Horas" [(ngModel)]="analisisCosto.horasReparInternEdif" [disabled]="readOnly" />
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor hora" [(ngModel)]="analisisCosto.costoHoraReparInternEdif" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.horasReparInternEdif * analisisCosto.costoHoraReparInternEdif | currency:'COP':'symbol' }}
+    </label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Materiales</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoMaterEdif" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoMaterEdif | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Reparación por el Servicio Externo</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoReparExternEdif" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoReparExternEdif | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="subtitle ui-g-12 ui-sm-12">Maquinaria, Herramientas y equipos de trabajo</div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Reparación por el Servicio Interno</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Horas" [(ngModel)]="analisisCosto.horasReparInternMaq" [disabled]="readOnly" />
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor hora" [(ngModel)]="analisisCosto.costoHoraReparInternMaq" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.horasReparInternMaq * analisisCosto.costoHoraReparInternMaq | currency:'COP':'symbol' }}
+    </label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Materiales</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoMatMaq" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoMatMaq | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Reparación por el Servicio Externo</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoReparExternMaq" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoReparExternMaq | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="subtitle ui-g-12 ui-sm-12">
+    Materias primas, productos terminados o semitransformados
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Coste x Nº unidades dañadas</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Cantidad unidades" [(ngModel)]="analisisCosto.numUnidMaterPrim" [disabled]="readOnly" />
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor unitario" [(ngModel)]="analisisCosto.costoUnidMaterPrim" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.numUnidMaterPrim * analisisCosto.costoUnidMaterPrim | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="subtitle ui-g-12 ui-sm-12">Pérdidas de producción</div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Producción prevista-Producción real</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.perdidaProducc" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.perdidaProducc | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Perdidas parada maquinaria</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.perdidaParadaMaq" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.perdidaParadaMaq | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="subtitle ui-g-12 ui-sm-12">Incremento de costes para mantener la producción</div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Costo Horas extras</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"> </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoHorasExtras" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoHorasExtras | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Contratación y formación del reemplazante</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoContratReemplazo" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoContratReemplazo | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Contratación y subcontratación de obras y servicios</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.subContratServ" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.subContratServ | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Otros costes</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.otrosCostosProducc" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.otrosCostosProducc | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="title ui-g-12 ui-sm-12">
+    COSTES DE PREVENCIÓN
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Coste de las medidas adoptadas para evitar la repetición del accidente</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costosMedidasPrev" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costosMedidasPrev | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="title ui-g-12 ui-sm-12">
+    OTROS COSTES
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Responsabilidad Administrativa: importe de las sanciones</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoRespAdmin" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoRespAdmin | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Responsabilidad en materia de Seguridad Social: recargos de prestaciones</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoRespSegSocial" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoRespSegSocial | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Responsabilidad civil: Indemnizaciones (abonadas directamente por la empresa)</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoRespCivil" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoRespCivil | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Coste de Defensa Jurídica (abogados, peritos, etc..)</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.costoRespJurid" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.costoRespJurid | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+  <div class="ui-g-12 ui-sm-12 ui-lg-6">
+    <label>Otros costes</label>
+  </div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-sm-12 ui-lg-2">
+    <input pInputText type="number" placeholder="Valor" [(ngModel)]="analisisCosto.otrosCostos" [disabled]="readOnly" />
+  </div>
+  <div class="subtotal ui-g-12 ui-sm-12 ui-lg-2">
+    <label>{{analisisCosto.otrosCostos | currency:'COP':'symbol' }}</label>
+  </div>
+  <!---->
+</div>

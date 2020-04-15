@@ -1,0 +1,13 @@
+<div class="idle-main" *ngIf="expired">
+  <div class="idle-container">
+    <p>
+      Cierre de sesión por inactividad
+    </p>
+    <div class="progress-bar">
+      <div class="progress" #divBar></div>
+    </div>
+    <p>
+      <a (click)="redireccionar()" *ngIf="visibleBtn">Volver a inicio de sesión</a>
+    </p>
+  </div>
+</div>

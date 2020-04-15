@@ -1,0 +1,84 @@
+<s-dataNotFound *ngIf="!ipecrList || ipecrList.length <= 0" icon="fa-list-ul" message="Aún no se han registrado evaluaciones de riesgo - IPECR">
+  <div *sTienePermiso="'IPECR_ELABIPECR'">
+    Comienza una nueva evaluación de riesgo
+    <a (click)="navegar()">aqui</a>
+  </div>
+</s-dataNotFound>
+
+<p-panel header="Consulta IPECR" [style.display]="ipecrList && ipecrList.length > 0 ? 'block':'none'">
+
+  <p-table #dt [value]="ipecrList" dataKey="id" selectionMode="single" [(selection)]="ipecrSelect" [rows]="10" [paginator]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="fechaElaboracionStr">Fecha Elaboración
+          <p-sortIcon field="fechaElaboracionStr"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cargo.nombre">Cargo
+          <p-sortIcon field="cargo.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="areasStr">Area
+          <p-sortIcon field="areasStr"></p-sortIcon>
+        </th>
+        <th pSortableColumn="ejecucion">Ejecución
+          <p-sortIcon field="ejecucion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="grupoExpSimilarStr">Grupos exposición
+          <p-sortIcon field="grupoExpSimilarStr"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">Descripción
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaElaboracionStr', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'cargo.nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'areasStr', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'ejecucion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'grupoExpSimilarStr', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ipecr>
+      <tr [pSelectableRow]="ipecr">
+        <td>
+          {{ipecr.fechaElaboracionStr}}
+        </td>
+        <td>
+          {{ipecr.cargo.nombre}}
+        </td>
+        <td>
+          {{ipecr.areasStr}}
+        </td>
+        <td>
+          {{ipecr.ejecucion}}
+        </td>
+        <td>
+          {{ipecr.grupoExpSimilarStr}}
+        </td>
+        <td>
+          {{ipecr.descripcion}}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'IPECR_GET_IPECR'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="consultarDetalle()"
+        [disabled]="!ipecrSelect"></button>
+      <button *sTienePermiso="'IPECR_PUT_IPECR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+        (click)="modificar()" [disabled]="!ipecrSelect"></button>
+    </ng-template>
+  </p-table>
+
+
+</p-panel>

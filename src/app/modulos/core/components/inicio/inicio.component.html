@@ -1,0 +1,11 @@
+<s-layout>
+
+  <layout-menu [expanded]="false"></layout-menu>
+
+  <layout-content>
+    <main [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+      <router-outlet #o="outlet"></router-outlet>
+    </main>
+  </layout-content>
+
+</s-layout>

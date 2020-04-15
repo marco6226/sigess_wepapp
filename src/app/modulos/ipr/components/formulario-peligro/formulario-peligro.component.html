@@ -1,0 +1,280 @@
+<table  class="tabla-ipecr" style="margin-bottom:75px;">
+  <thead>
+
+    <tr>
+      <th rowspan="2">
+        <label>Proceso</label>
+      </th>
+      <th rowspan="2">
+        <label>Tarea</label>
+      </th>
+      <th rowspan="2">
+        <label>Actividad</label>
+      </th>
+      <th rowspan="2">
+        <label>Zona/Lugar</label>
+      </th>
+      <th rowspan="2">
+        <label>Rutinario</label>
+      </th>
+      <th colspan="2">
+        <label>Peligros</label>
+      </th>
+
+      <th rowspan="2">
+        <label>Efectos</label>
+      </th>
+      <th rowspan="2">
+        <label>Controles Existentes</label>
+      </th>
+
+      <th colspan="7">
+        EVALUACIÓN DEL RIESGO (Describa los niveles de Deficiencia, Exposición y Consecuencia)
+      </th>
+      <th>
+        Valoración del Riesgo
+      </th>
+
+      <th colspan="2">
+        Criterios para establecer controles
+      </th>
+
+      <th rowspan="2">
+        <label>Medidas Intervención</label>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <label>Tipo</label>
+      </th>
+      <th>
+        <label>Nombre</label>
+      </th>
+      <th pTooltip="Nivel de deficiencia (ND)">
+        <label>ND</label>
+      </th>
+      <th pTooltip="Nivel de exposición (NE)">
+        <label>NE</label>
+      </th>
+      <th pTooltip="Nivel de probabilidad(ND x NE)">
+        <label>NP</label>
+      </th>
+      <th pTooltip="Interpretación del nivel de probabilidad">
+        <label>INP</label>
+      </th>
+      <th pTooltip="Nivel de consecuencia">
+        <label>NC</label>
+      </th>
+      <th pTooltip="Nivel de riesgo (NR) e intervención">
+        <label>NR</label>
+      </th>
+      <th pTooltip="Interpretación del nivel de riesgo">
+        <label>INR</label>
+      </th>
+      <th>
+        <label>Aceptabilidad Riesgo</label>
+      </th>
+      <th pTooltip="Número de expuestos">
+        <label>No Exp</label>
+      </th>
+      <th pTooltip="Peor consecuencia">
+        <label>Peor consecuencia</label>
+      </th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+    <ng-template ngFor let-pelIpr [ngForOf]="peligroIpecrList" let-i="index">
+      <tr (click)="onSelect(pelIpr, $event)" [ngClass]="readOnly == true ? '' : (pelIpr?.id == peligroIpecrSelect?.id ? 'selected' : 'no-select')">
+        <td *ngIf="rowGroupMetadata[pelIpr.proceso].index === i" [attr.rowspan]="rowGroupMetadata[pelIpr.proceso].size">
+          <label>{{pelIpr.proceso}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.tarea}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.actividad}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.zonaLugar}}</label>
+        </td>
+        <td>
+          <label *ngIf="pelIpr.rutinario">SI</label>
+          <label *ngIf="!pelIpr.rutinario">NO</label>
+        </td>
+        <td>
+          <label>{{pelIpr.peligro.tipoPeligro.nombre}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.peligro.nombre}}</label>
+        </td>
+        <td>
+          <ng-template ngFor let-efecto [ngForOf]="pelIpr.efectoList" let-i="index">
+            - {{efecto?.nombre}}
+            <br/>
+          </ng-template>
+        </td>
+        <td style="min-width: 150px;">
+          <ng-template ngFor let-control [ngForOf]="pelIpr.controlList" let-i="index">
+            <div class="title-tipoctrl" *ngIf="control.tipoControl.nombre != pelIpr.controlList[i-1]?.tipoControl.nombre">{{control.tipoControl.nombre}}</div>
+            - {{control?.nombre}}
+            <br/>
+          </ng-template>
+        </td>
+        <td>
+          <label>{{pelIpr.nivelDeficiencia}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.nivelExposicion}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.valorProbabilidad}}</label>
+        </td>
+        <td [style.background-color]="pelIpr.probabilidad?.color">
+          <label>{{pelIpr.probabilidad.nombre}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.consecuencia.nombre}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.valorRiesgo}}</label>
+        </td>
+        <td [style.background-color]="pelIpr.nivelRiesgo?.color">
+          <strong>{{pelIpr.nivelRiesgo.nombre}}</strong>
+        </td>
+        <td>
+          <label>{{pelIpr.nivelRiesgo.descripcion}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.numeroExpuestos}}</label>
+        </td>
+        <td>
+          <label>{{pelIpr.peorConsecuencia}}</label>
+        </td>
+        <td style="min-width: 150px;">
+          <ng-template ngFor let-control [ngForOf]="pelIpr.necesidadControlList" let-i="index">
+            <div class="title-tipoctrl" *ngIf="control.tipoControl.nombre != pelIpr.controlList[i-1]?.tipoControl.nombre">{{control.tipoControl.nombre}}</div>
+            - {{control?.nombre}}
+            <br/>
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
+
+<button *sTienePermiso="'IPECR_POST_PELIPECR'" pButton type="button" icon="fa fa-plus" title="Adicionar peligro" (click)="abrirDlgAdicionarPeligro()"
+  class="float-btn" style="right:150px;"></button>
+
+<button *sTienePermiso="'IPECR_PUT_PELIPECR'" pButton type="button" icon="fa fa-pencil" title="Modificar peligro" class="ui-button-success float-btn"
+  style="right:85px;" (click)="abrirDlgModificarPeligro()" [disabled]="!peligroIpecrSelect"></button>
+
+<button *sTienePermiso="'IPECR_DELETE_PELIPECR'" pButton type="button" icon="fa fa-trash" title="Eliminar peligro" class="ui-button-danger float-btn"
+  (click)="confirmEliminarPeligro()" [disabled]="!peligroIpecrSelect"></button>
+
+<form [formGroup]="form">
+  <p-dialog header="Selección de peligro" [(visible)]="visibleDlg" modal="modal" [responsive]="true" appendTo="body" [width]="700">
+    <div class="ui-g">
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Proceso</label>
+        <input pInputText formControlName="proceso" required />
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Zona/Lugar</label>
+        <input pInputText formControlName="zonaLugar" required />
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Tarea</label>
+        <input pInputText formControlName="tarea" required />
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Actividad</label>
+        <input pInputText formControlName="actividad" required />
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Peor consecuencia</label>
+        <input pInputText formControlName="peorConsecuencia" required />
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Rutinario</label>
+        <p-radioButton name="groupRutinario" value="true" label="Si" formControlName="rutinario" required></p-radioButton>
+        <p-radioButton name="groupRutinario" value="false" label="No" formControlName="rutinario" required></p-radioButton>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Nivel Deficiencia</label>
+        <p-dropdown [options]="nivelDeficienciaItemList" formControlName="nivelDeficiencia" filter="true" appendTo="body" required></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Nivel Exposición</label>
+        <p-dropdown [options]="nivelExposicionItemList" formControlName="nivelExposicion" filter="true" appendTo="body" required></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Tipo de peligro</label>
+        <p-dropdown [options]="tipoPeligroItemList" formControlName="tipoPeligro" filter="true" (onChange)="onTipoPeligroSelect($event)"
+          appendTo="body" required></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Peligro</label>
+        <p-dropdown [options]="peligroItemList" formControlName="peligro" filter="true" appendTo="body" (onChange)="onPeligroChange($event)"
+          required></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Efecto</label>
+        <p-multiSelect [options]="efectoItemList" formControlName="efectoList" appendTo="body" defaultLabel="--Seleccione--" required></p-multiSelect>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Fuente</label>
+        <p-multiSelect [options]="fuenteItemList" formControlName="fuenteList" appendTo="body" defaultLabel="--Seleccione--" required></p-multiSelect>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">N° Expuestos</label>
+        <p-spinner formControlName="numeroExpuestos" required></p-spinner>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Consecuencia</label>
+        <p-dropdown [options]="consecuenciaItemList" formControlName="consecuencia" filter="true" appendTo="body" required></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Controles existentes</label>
+        <p-multiSelect [options]="controlItemList" formControlName="controlList" defaultLabel="--Seleccione--" appendTo="body" required></p-multiSelect>
+      </div>
+
+      <div class="ui-g-12 ui-sm-8 ui-md-4">
+        <label class="s-float-label">Medidas Intervención</label>
+        <p-multiSelect [options]="controlItemList" formControlName="necesidadControlList" defaultLabel="--Seleccione--" appendTo="body"></p-multiSelect>
+      </div>
+    </div>
+
+    <p-footer>
+      <a *sTienePermiso="'IPECR_PARAMPEL'" (click)="abrirParametrizacion()" style="float: left;">Parametrizar peligros</a>
+      <button type="button" pButton icon="fa fa-floppy-o" (click)="guardarActualizarPeligro()" label="Guardar" *ngIf="adicionar" [disabled]="!form.valid"></button>
+      <button type="button" pButton icon="fa fa-pencil" (click)="guardarActualizarPeligro()" class="ui-button-success" *ngIf="form.value.id && !adicionar"
+        [disabled]="!form.valid" label="Modificar"></button>
+      <button type="button" pButton icon="fa fa-close" (click)="visibleDlg=false" class="ui-button-secondary" label="Cancelar"></button>
+    </p-footer>
+
+  </p-dialog>
+</form>
+
+<p-dialog [showHeader]="!visibleDlgParam" [(visible)]="visibleDlgParam" [responsive]="true" modal="modal" appendTo="body"
+  [width]="1150" (onHide)="actualizarPeligros()">
+  <s-parametrizacionPeligros></s-parametrizacionPeligros>
+  <button type="button" pButton icon="fa fa-close" (click)="visibleDlgParam=false" class="ui-button-secondary" label="Cerrar"
+    style="float: right;"></button>
+</p-dialog>

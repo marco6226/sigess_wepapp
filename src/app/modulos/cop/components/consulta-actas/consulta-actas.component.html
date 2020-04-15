@@ -1,0 +1,100 @@
+<p-growl [value]="msgs"></p-growl>
+
+<p-panel header="Actas COPASST">
+
+  <p-table #dt [value]="actasList" autoLayout="true" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)"
+    [totalRecords]="totalRecords" [loading]="loading" sortField="fechaElaboracion" sortOrder="1">
+    <ng-template pTemplate="header">
+      <tr>
+        <th rowspan="2" *sTienePermiso="'COP_DELETE_ACT'" style="width:1em;"></th>
+        <th pSortableColumn="fechaElaboracion" style="width: 200px;">Fecha Elaboración
+          <p-sortIcon field="fechaElaboracion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nombre">Nombre
+          <p-sortIcon field="nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">Descripción
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="area.nombre">Area
+          <p-sortIcon field="area.nombre"></p-sortIcon>
+        </th>
+        <th rowspan="2"></th>
+      </tr>
+      <tr>
+        <td>
+          <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaElaboracion', 'bt')"></s-rangoFechaSelector>
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-act let-ind="rowIndex">
+      <tr>
+        <td *sTienePermiso="'COP_DELETE_ACT'">
+          <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="eliminarActa(act, ind)"></button>
+        </td>
+        <td>{{act.fechaElaboracion | date: 'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{act.nombre}}</td>
+        <td>{{act.descripcion}}</td>
+        <td>{{act.area?.nombre}}</td>
+        <td [class]="act.documentosList != null && act.documentosList.length > 0 ? 'flex-content':''">
+          <div *ngFor="let doc of act.documentosList;let i = index" class="link-doc">
+            <a (click)="descargar(doc)">
+              {{doc.nombre}}
+            </a>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button *sTienePermiso="'COP_POST_ACT'" pButton type="button" icon="fa fa-plus" label="Nuevo" (click)="showDlg()"></button>
+    </ng-template>
+  </p-table>
+
+</p-panel>
+
+<p-dialog header="Acta COPASST" [(visible)]="visibleDlg" modal="true" [style]="{width: '640px'}">
+  <div class="ui-g">
+    <div class="ui-g-6">
+      <div class="ui-g-12">
+        <label class="s-float-label">Nombre*</label>
+        <input type="text" pInputText [(ngModel)]="nombre" required />
+      </div>
+      <div class="ui-g-12">
+        <label class="s-float-label">Descripcion</label>
+        <textarea pInputTextarea [(ngModel)]="descripcion"></textarea>
+      </div>
+      <div class="ui-g-12">
+        <label class="s-float-label">Area*</label>
+        <area-selector [(ngModel)]="area" required></area-selector>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <input type="file" #fileChooser (change)="onFileSelect(fileChooser.files)" style="display: none;" />
+      <a (click)="openFileChooser()">Adicionar documento</a>
+      <div class="ui-g-12" *ngFor="let doc of documentoList;let i = index">
+        <div class="ui-inputgroup">
+          <button pButton type="button" [icon]="doc.ext == 'jpg' || doc.ext == 'jpeg' || doc.ext == 'png' ? 'fa fa-file-image-o':'fa fa fa-file-o'"
+            (click)="downloadFile(doc)" title="Descargar"></button>
+          <input type="text" pInputText [(ngModel)]="doc.nombre" />
+          <button pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="removerDoc(doc, i)"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button pButton label="Guardar Acta" icon="fa fa-floppy-o" [disabled]="nombre == null || area == null" (click)="guardarActa()"></button>
+  </p-footer>
+</p-dialog>
+
+
+<!-- <s-documentoUpload modulo="cop" (onUpload)="onUpload($event)" [(visible)]="visibleDlg"></s-documentoUpload> -->

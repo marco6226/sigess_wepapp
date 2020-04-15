@@ -1,0 +1,87 @@
+<div style="padding: 10px;">
+  <div class="toolbar">
+    <!-- <button class="fa fa-line-chart" (click)="cambiarGrafica('line')"></button>
+  <button class="fa fa-pie-chart" (click)="cambiarGrafica('pie')"></button>
+  <button class="fa fa-area-chart" (click)="cambiarGrafica('line')"></button>
+  <button class="fa fa-bar-chart" (click)="cambiarGrafica('bar')"></button>
+  <button (click)="cambiarGrafica('polarArea')">AP</button>
+  <button (click)="cambiarGrafica('radar')">R</button>
+  <button (click)="cambiarGrafica('doughnut')">D</button>
+
+
+  <button class="fa fa-table" (click)="copiarTabla()"></button>
+
+  <button class="fa fa-refresh" (click)="invertirSeries()"></button>
+  <button class="fa fa-code" (click)="copiarCodigo()"></button> -->
+    <div style="width: 100%;text-align: center;padding-top: 8px;" *ngIf="loading == true">
+      <p-progressSpinner strokeWidth="8" [style]="{width: '20px', height: '20px'}"></p-progressSpinner>
+    </div>
+
+    <div style="width: 100%" *ngIf="loading == false">
+      <button *sTienePermiso="'IND_PUT_KPI'" class="fa fa-floppy-o" (click)="onSaveClick()"></button>
+      <button style="float: right" class="fa fa-sliders" (click)="abrirDlg()"></button>
+      <button style="float: right" class="fa fa-refresh" (click)="refresh()"></button>
+    </div>
+
+
+  </div>
+
+  <div class="main">
+    <table class="tbl" *ngIf="fichaTecnica" style="margin-bottom: 50px;">
+      <tr>
+        <th>Proceso</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td>{{fichaTecnica.proceso}}</td>
+        <td>{{fichaTecnica.nombre}}</td>
+        <td>{{fichaTecnica.descripcion}}</td>
+      </tr>
+      <tr>
+        <th>Meta</th>
+        <th>Seguimiento</th>
+        <th>Formulación</th>
+      </tr>
+      <tr>
+        <td>{{fichaTecnica.meta}}</td>
+        <td>{{fichaTecnica.frecuenciaSeguimiento}}</td>
+        <td>{{fichaTecnica.formulacion}}</td>
+      </tr>
+    </table>
+
+    <h3>{{titulo}}</h3>
+    <h4 *ngIf="parametros?.param.rangoUnico">{{parametros?.param.rangos[0].nombre}}</h4>
+
+    <p-chart *ngIf="kpi?.modelo.type != 'map' && !kpi?.modelo.hideChart" #chart [type]="kpi?.modelo.chartType" [data]="kpi?.modelo.dataChart" [options]="kpi?.modelo.options" height="320px"></p-chart>
+
+    <p-gmap *ngIf="tipo == 'map'" [options]="opciones" [overlays]="overlaysMap" [style]="{'width':'100%','height':'640px'}"></p-gmap>
+
+    <div #resumenDiv>
+      <table *ngIf="resumen" style="font-size: 12px;margin-top: 10px;width: 100%;border-collapse: collapse;">
+        <thead>
+          <th></th>
+          <th *ngFor="let ds of data?.datasets" [style.border-bottom-color]="ds.backgroundColor" style="border-bottom-width: 2px;">
+          <!-- <th *ngFor="let ds of data?.datasets" style="border-bottom-width: 2px;"> -->
+            {{ds.label}}
+          </th>
+        </thead>
+        <tr *ngFor="let lbl of data?.labels; let i = index;" [style.background]="(i % 2) == 0 ? '#efefef':'#ffffff'">
+          <td style="padding: 5px;border: solid thin #ccc;">
+            {{lbl}}
+          </td>
+          <td *ngFor="let ds of data?.datasets; let j = index;" style="padding: 5px;border: solid thin #ccc;" 
+            [style.backgroundColor]="ds.dataStyle != null && ds.dataStyle[i] != null ? ds.dataStyle[i].backgroundColor : ''"
+            [style.color]="ds.dataStyle != null && ds.dataStyle[i] != null ? ds.dataStyle[i].color : ''">
+            <div *ngIf="ds.data[i] == null" class="na-class">N/A</div>
+            <div *ngIf="ds.data[i] != null">
+              <span *ngIf="ds.posicionUnidad == 'inicio'">{{ds.unidad}}</span>
+              <span>{{ds.data[i] | number:'1.0-2'}}</span>
+              <span *ngIf="ds.posicionUnidad == 'fin'">{{ds.unidad}}</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
