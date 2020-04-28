@@ -74,6 +74,7 @@ export abstract class ServiceCRUD<T> {
         .map(res => res)
         .subscribe(
           res => {
+            console.log(res);
             resolve(res);
           }
           ,

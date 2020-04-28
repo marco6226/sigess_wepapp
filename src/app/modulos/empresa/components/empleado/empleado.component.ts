@@ -48,7 +48,6 @@ export class EmpleadoComponent implements OnInit {
     private sesionService: SesionService,
     private confirmationService: ConfirmationService
   ) {
-
   }
 
   ngOnInit() {
@@ -86,6 +85,7 @@ export class EmpleadoComponent implements OnInit {
   showUpdateForm() {
     if (this.empleadoSelect != null) {
       this.isUpdate = true;
+      console.log("FIX");
       this.visibleForm = true;
     } else {
       this.msgs = [];

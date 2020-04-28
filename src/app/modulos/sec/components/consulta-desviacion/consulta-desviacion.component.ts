@@ -47,7 +47,9 @@ export class ConsultaDesviacionComponent implements OnInit {
     private desviacionService: DesviacionService,
     private paramNav: ParametroNavegacionService,
     private router: Router,
-  ) { }
+  ) { 
+    console.log("this.desviacion");
+  }
 
   ngOnInit() {
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
