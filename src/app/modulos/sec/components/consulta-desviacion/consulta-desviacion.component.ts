@@ -56,6 +56,7 @@ export class ConsultaDesviacionComponent implements OnInit {
   }
 
   lazyLoad(event: any) {
+    console.log(event);
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -63,7 +64,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
     filterQuery.count = true;
-
+   
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
@@ -72,6 +73,7 @@ export class ConsultaDesviacionComponent implements OnInit {
       resp => {
         this.totalRecords = resp['count'];
         this.loading = false;
+        console.log(resp);
         this.desviacionesList = resp['data'];
       }
     ).catch(err => this.loading = false);
