@@ -4,14 +4,14 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 
-let protocol = 'https';
-let host = 'demo.sigess.app';
-let port = '5858';
+let protocol = 'http';
+let host = 'vps237705.vps.ovh.ca';
+let port = '8080';
 let path = protocol + "://" + host + ":" + port + "/sigess/api/";
 
 
 export const environment = {
-  production: true
+  production: false
 };
 
 export const endPoints = {
