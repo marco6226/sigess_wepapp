@@ -36,16 +36,16 @@
               <p-dropdown [options]="opcionesModulos" [style]="{'min-width':'0em'}" (onChange)="dt.filter($event.value, 'modulo', 'equals')"></p-dropdown>
             </td>
             <td>
-              <input pInputText type="text" (input)="dt.filter($event.target.value.toLowerCase(), 'hashId', 'contains')">
+              <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'hashId', 'contains')">
             </td>
             <td>
-              <input pInputText type="text" (input)="dt.filter($event.target.value.toLowerCase(), 'area.nombre', 'contains')">
+              <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'area.nombre', 'contains')">
             </td>
             <td>
-              <input pInputText type="text" (input)="dt.filter($event.target.value.toLowerCase(), 'concepto', 'contains')">
+              <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'concepto', 'contains')">
             </td>
             <td>
-              <input pInputText type="text" (input)="dt.filter($event.target.value.toLowerCase(), 'aspectoCausante', 'contains')">
+              <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'aspectoCausante', 'contains')">
             </td>
           </tr>
         </ng-template>

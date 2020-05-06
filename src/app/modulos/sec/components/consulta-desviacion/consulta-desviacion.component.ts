@@ -60,7 +60,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
-    filterQuery.sortOrder = event.sortOrder;
+    filterQuery.sortOrder = -1;
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
     filterQuery.count = true;

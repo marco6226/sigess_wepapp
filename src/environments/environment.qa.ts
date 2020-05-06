@@ -11,7 +11,7 @@ let path = protocol + "://" + host + ":" + port + "/sigess/api/";
 
 
 export const environment = {
-  production: true
+  production: false
 };
 
 export const endPoints = {

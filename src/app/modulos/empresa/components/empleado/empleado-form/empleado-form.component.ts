@@ -102,6 +102,7 @@ export class EmpleadoFormComponent implements OnInit {
     if (this.empleadoSelect != null) {
       let fq = new FilterQuery();
       fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
+      console.log(fq);
       this.empleadoService.findByFilter(fq).then(
         resp => {
           this.empleadoSelect = <Empleado>(resp['data'][0]);
