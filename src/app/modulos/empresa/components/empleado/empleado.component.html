@@ -97,8 +97,11 @@
         <button *sTienePermiso="'EMP_POST_EMPL'" pButton type="button" icon="fa fa-plus" label="Nuevo" (click)="showAddForm()"></button>
         <button *sTienePermiso="'EMP_PUT_EMPL'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success" label="Modificar"
           (click)="showUpdateForm()" [disabled]="!empleadoSelect"></button>
+          <button *sTienePermiso="'EMP_PUT_EMPL'" pButton type="button" icon="fa fa-eye" class="ui-button-success" label="Mirar"
+          (click)="showForm()" [disabled]="!empleadoSelect"></button>
         <button *sTienePermiso="'EMP_DELETE_EMPL'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
           (click)="onEmpleadoDelete()" [disabled]="!empleadoSelect"></button>
+          
       </ng-template>
     </p-table>
 
@@ -108,5 +111,5 @@
 
 <div>
   <s-empleadoForm *ngIf="visibleForm" (onEmpleadoCreate)="onEmpleadoCreate($event)" (onEmpleadoUpdate)="onEmpleadoUpdate($event)"
-    (onCancel)="onCancel()" [isUpdate]="isUpdate" [empleadoSelect]="empleadoSelect"></s-empleadoForm>
+    (onCancel)="onCancel()" [isUpdate]="isUpdate" [editable]="isEditable" [empleadoSelect]="empleadoSelect"></s-empleadoForm>
 </div>

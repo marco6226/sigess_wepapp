@@ -39,7 +39,7 @@ import { Criteria } from '../../../../core/entities/filter';
 export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
 
   msgs: Message[] = [];
-
+  @Input() name: string;
   @Input() _value: Area;
   @Input() disabled: boolean;
   @Output() onAreaSelect = new EventEmitter();
@@ -60,6 +60,8 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.loadAreas();
+    this.areaSelected = this.name
+    console.log(this.name,"63 line");
   }
 
 

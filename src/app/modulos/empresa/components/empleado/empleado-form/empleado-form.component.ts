@@ -34,13 +34,13 @@ import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 })
 export class EmpleadoFormComponent implements OnInit {
 
-
+  
   @Output() onEmpleadoCreate = new EventEmitter();
   @Output() onEmpleadoUpdate = new EventEmitter();
   @Output() onCancel = new EventEmitter();
   @Input() empleadoSelect: Empleado;
   @Input() isUpdate: boolean;
-
+  @Input() editable: boolean;
   form: FormGroup;
   empresaId = this.sesionService.getEmpresa().id;
   fechaActual = new Date();
@@ -98,7 +98,6 @@ export class EmpleadoFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("TEST");
     if (this.empleadoSelect != null) {
       let fq = new FilterQuery();
       fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
@@ -107,7 +106,6 @@ export class EmpleadoFormComponent implements OnInit {
         resp => {
           this.empleadoSelect = <Empleado>(resp['data'][0]);
           this.loaded = true;
-          console.log(this.empleadoSelect,"el empleado");
           this.form.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -230,7 +228,6 @@ export class EmpleadoFormComponent implements OnInit {
     });
     this.solicitando = true;
     if (this.isUpdate) {
-      console.log(empleado);
       this.empleadoService.update(empleado)
         .then(data => {
           this.manageUpdateResponse(<Empleado>data);

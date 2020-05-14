@@ -26,7 +26,7 @@ export class EmpleadoComponent implements OnInit {
   empresaId = this.sesionService.getEmpresa().id;
   visibleForm: boolean;
   isUpdate: boolean;
-
+  isEditable: boolean;
   loading: boolean;
   totalRecords: number;
   fields: string[] = [
@@ -85,6 +85,18 @@ export class EmpleadoComponent implements OnInit {
   showUpdateForm() {
     if (this.empleadoSelect != null) {
       this.isUpdate = true;
+      console.log("FIX");
+      this.visibleForm = true;
+    } else {
+      this.msgs = [];
+      this.msgs.push({ severity: 'warn', summary: "Debe seleccionar un empleado", detail: "Debe seleccionar un empleado para modificar" });
+    }
+  }
+
+  showForm() {
+    if (this.empleadoSelect != null) {
+      this.isUpdate = true;
+      this.isEditable = false;
       console.log("FIX");
       this.visibleForm = true;
     } else {

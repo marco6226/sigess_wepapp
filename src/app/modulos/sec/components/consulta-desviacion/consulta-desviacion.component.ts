@@ -31,6 +31,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     'hashId',
     'area_nombre',
     'concepto',
+    'fechaReporte',
     'aspectoCausante',
     'analisisId'
   ];
@@ -48,7 +49,6 @@ export class ConsultaDesviacionComponent implements OnInit {
     private paramNav: ParametroNavegacionService,
     private router: Router,
   ) { 
-    console.log("this.desviacion");
   }
 
   ngOnInit() {
@@ -56,7 +56,6 @@ export class ConsultaDesviacionComponent implements OnInit {
   }
 
   lazyLoad(event: any) {
-    console.log(event);
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;

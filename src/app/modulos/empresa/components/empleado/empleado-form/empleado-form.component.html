@@ -155,7 +155,8 @@
             Ubicación
           </div>
           <div class="ui-g-12 ui-md-4">
-            <area-selector formControlName="area" required></area-selector>
+            {{this.empleadoSelect.area.nombre}}
+            <area-selector formControlName="area" [name]="this.empleadoSelect.area.nombre" required></area-selector>
           </div>
 
           <div class="ui-g-12 ui-md-2">
@@ -166,7 +167,7 @@
           </div>
         </div>
       </p-panel>
-      <div style="text-align: center; width: 100%;">
+      <div style="text-align: center; width: 100%;" *ngIf="editable" >
         <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" class="float-btn"
           style="bottom: 100px;" title="Guardar datos de empleado"></button>
 

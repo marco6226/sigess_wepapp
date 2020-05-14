@@ -5,7 +5,7 @@
     <label style="position: relative;top: -7px;"> Cargando ubicaciones...</label>
   </div>
 
-  <p-autoComplete *ngIf="loading == false" [disabled]="disabled" placeholder="Ubicación" [suggestions]="sugerenciasList" (completeMethod)="buscarUbicacion($event)"
+  <p-autoComplete *ngIf="loading == false" [disabled]="disabled" [placeholder]="name" [suggestions]="sugerenciasList" (completeMethod)="buscarUbicacion($event)"
     (onSelect)="onSelection($event);" appendTo="body" emptyMessage="No se encontraron coincidencias" forceSelection="true"
     field="label" [(ngModel)]="areaSelected">
   </p-autoComplete>

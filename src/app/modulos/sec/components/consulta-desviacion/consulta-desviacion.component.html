@@ -20,10 +20,14 @@
             <th pSortableColumn="area.nombre">Área origen
               <p-sortIcon field="area.nombre"></p-sortIcon>
             </th>
+            <th pSortableColumn="fechaReporte" >Fecha
+              <p-sortIcon field="fechaReporte"></p-sortIcon>
+            </th>
             <th pSortableColumn="concepto" style="width: 20%;">Concepto
               <p-sortIcon field="concepto"></p-sortIcon>
             </th>
-            <th pSortableColumn="aspectoCausante" style="width: 45%;">Aspecto causante
+          
+            <th pSortableColumn="aspectoCausante" style="width: 35%;">Aspecto causante
               <p-sortIcon field="aspectoCausante"></p-sortIcon>
             </th>
           </tr>
@@ -45,7 +49,7 @@
               <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'concepto', 'contains')">
             </td>
             <td>
-              <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'aspectoCausante', 'contains')">
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'aspectoCausante', 'contains')">
             </td>
           </tr>
         </ng-template>
@@ -62,7 +66,9 @@
             <td>{{desviacion.modulo}}</td>
             <td>{{desviacion.hashId}}</td>
             <td>{{desviacion.area_nombre}}</td>
+            <td>{{desviacion.fechaReporte}}</td>
             <td>{{desviacion.concepto}}</td>
+           
             <td>{{desviacion.aspectoCausante}}</td>
           </tr>
         </ng-template>
