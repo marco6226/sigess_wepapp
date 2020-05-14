@@ -31,6 +31,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     'hashId',
     'area_nombre',
     'concepto',
+    'fechaReporte',
     'aspectoCausante',
     'analisisId'
   ];
@@ -60,7 +61,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
-    filterQuery.sortOrder = -1;
+    filterQuery.sortOrder = 1;
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
     filterQuery.count = true;
