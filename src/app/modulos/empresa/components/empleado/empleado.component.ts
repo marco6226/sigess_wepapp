@@ -154,13 +154,13 @@ export class EmpleadoComponent implements OnInit {
       }
     }
     this.msgs = [];
-    this.msgs.push({ severity: 'success', summary: "Empleado actualizado", detail: "Se ha actualizado el empleado " + empleado.numeroIdentificacion });
+    this.msgs.push({ severity: 'success', summary: 'Empleado actualizado', detail: 'Se ha actualizado el empleado ' + empleado.numeroIdentificacion });
   }
 
   manageCreateResponse(empleado: Empleado) {
     this.empleadosList.push(empleado);
     this.msgs = [];
-    this.msgs.push({ severity: 'success', summary: "Nuevo empleado creado", detail: "Se ha creado el empleado " + empleado.numeroIdentificacion });
+    this.msgs.push({ severity: 'success', summary: 'Nuevo empleado creado', detail: "Se ha creado el empleado " + empleado.numeroIdentificacion });
   }
 
 }
