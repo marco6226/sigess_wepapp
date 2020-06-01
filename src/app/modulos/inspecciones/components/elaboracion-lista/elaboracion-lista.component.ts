@@ -14,6 +14,8 @@ import { ListaInspeccionService } from 'app/modulos/inspecciones/services/lista-
 import { Message, SelectItem } from 'primeng/primeng';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
+import { PerfilService } from 'app/modulos/admin/services/perfil.service';
+import { Perfil } from 'app/modulos/empresa/entities/perfil';
 
 @Component({
   selector: 'app-elaboracion-lista',
@@ -31,6 +33,7 @@ export class ElaboracionListaComponent implements OnInit {
   adicionar: boolean = false;
   modificar: boolean = false;
   finalizado: boolean = false;
+  perfilList: SelectItem[] = [];
   tipoListaOpts: SelectItem[] = [
     { label: 'Maquinaria', value: 'Maquinaria' },
     { label: 'Instalaciones', value: 'Infraestructura' },
@@ -43,16 +46,25 @@ export class ElaboracionListaComponent implements OnInit {
     private fb: FormBuilder,
     private listaInspeccionService: ListaInspeccionService,
     private paramNav: ParametroNavegacionService,
+    private perfilService: PerfilService
   ) { }
 
   ngOnInit() {
-
+    this.perfilService.findAll().then(
+      resp => {
+        console.log(resp);
+        (<Perfil[]>resp['data']).forEach(perfil => {
+          this.perfilList.push({ label: perfil.nombre, value: perfil.id });
+        });
+      }
+    );
     this.form = this.fb.group({
       'id': null,
       'codigo': [null, Validators.required],
       'nombre': [null, Validators.required],
       'tipoLista': [null, Validators.required],
-      'descripcion': [null]
+      'descripcion': [null],
+      'perfilesId':[null, Validators.required]
     });
 
     switch (this.paramNav.getAccion<string>()) {
@@ -92,6 +104,7 @@ export class ElaboracionListaComponent implements OnInit {
         this.opcionesCalifList = listaInsp.opcionCalificacionList;
         this.elementoInspeccionList = listaInsp.elementoInspeccionList;
         this.formularioConstructor.formulario = listaInsp.formulario;
+       // this.perfilList = JSON.parse(listaInsp.fkPerfilId);
       }
     );
     this.form.patchValue({
@@ -129,6 +142,7 @@ export class ElaboracionListaComponent implements OnInit {
     listInp.nombre = this.form.value.nombre;
     listInp.codigo = this.form.value.codigo;
     listInp.tipoLista = this.form.value.tipoLista;
+    listInp.fkPerfilId = JSON.stringify(this.form.value.perfilesId);
     listInp.descripcion = this.form.value.descripcion;
     listInp.tipoLista = this.form.value.tipoLista;
     listInp.opcionCalificacionList = this.opcionesCalifList;
@@ -149,6 +163,8 @@ export class ElaboracionListaComponent implements OnInit {
     listInp.listaInspeccionPK = this.form.value.id;
     listInp.nombre = this.form.value.nombre;
     listInp.codigo = this.form.value.codigo;
+    listInp.fkPerfilId = JSON.stringify(this.form.value.perfilesId);
+
     listInp.descripcion = this.form.value.descripcion;
     listInp.tipoLista = this.form.value.tipoLista;
     listInp.opcionCalificacionList = this.opcionesCalifList;

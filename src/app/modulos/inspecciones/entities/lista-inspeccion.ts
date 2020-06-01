@@ -8,6 +8,7 @@ export class ListaInspeccion {
   listaInspeccionPK: ListaInspeccionPK = new ListaInspeccionPK();
   nombre: string;
   codigo: string;
+  fkPerfilId: string;
   tipoLista:string;
   descripcion: string;
   elementoInspeccionList: ElementoInspeccion[];

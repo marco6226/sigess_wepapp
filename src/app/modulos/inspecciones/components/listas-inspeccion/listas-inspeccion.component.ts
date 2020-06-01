@@ -6,6 +6,10 @@ import { ListaInspeccion } from 'app/modulos/inspecciones/entities/lista-inspecc
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { InspeccionService } from '../../services/inspeccion.service';
+import { filter } from 'rxjs-compat/operator/filter';
+import { Filter, Criteria } from 'app/modulos/core/entities/filter';
+import { UsuarioService } from 'app/modulos/admin/services/usuario.service';
+import { PerfilService } from 'app/modulos/admin/services/perfil.service';
 
 @Component({
   selector: 'app-listas-inspeccion',
@@ -25,6 +29,7 @@ export class ListasInspeccionComponent implements OnInit {
     'nombre',
     'tipoLista',
     'descripcion',
+    'fkPerfilId'
   ];
 
   visibleDlg: boolean;
@@ -37,7 +42,21 @@ export class ListasInspeccionComponent implements OnInit {
     private inspeccionService: InspeccionService,
     private paramNav: ParametroNavegacionService,
     private router: Router,
-  ) { }
+    private userService: PerfilService,
+  ) { 
+    let filterQuery = new FilterQuery();
+
+    filterQuery.filterList = [{
+      field: 'usuarioEmpresaList.usuario.id',
+      criteria: Criteria.EQUALS,
+      value1: '214',
+      value2: null
+    }];
+    this.userService.findByFilter(filterQuery).then(res=>{
+      console.log(res);
+    })
+
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -51,11 +70,11 @@ export class ListasInspeccionComponent implements OnInit {
     filterQuery.sortOrder = event.sortOrder;
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
+    
     filterQuery.count = true;
-
     filterQuery.fieldList = this.fields;
+    event.filters = {fkPerfilId: {  value: 4, field: 'fkPerfilId', matchMode: 'Contains' }}
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-
     this.listaInspeccionService.findByFilter(filterQuery).then(
       resp => {
         this.totalRecords = resp['count'];

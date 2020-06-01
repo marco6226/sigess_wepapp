@@ -25,6 +25,9 @@
           <label class="s-float-label">Tipo lista</label>
           <p-dropdown [options]="tipoListaOpts" formControlName="tipoLista" editable="true" placeholder="--Seleccione--" required></p-dropdown>
 
+          <label class="s-float-label">Perfiles</label>
+          <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
+
           <label class="s-float-label">Descripción</label>
           <textarea pInputTextarea formControlName="descripcion"></textarea>
         </p-panel>
