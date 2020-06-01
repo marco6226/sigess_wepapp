@@ -6,6 +6,7 @@ import { ListaInspeccion } from 'app/modulos/inspecciones/entities/lista-inspecc
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { InspeccionService } from '../../services/inspeccion.service';
+import { Message, SelectItem, ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-listas-inspeccion',
@@ -37,6 +38,7 @@ export class ListasInspeccionComponent implements OnInit {
     private inspeccionService: InspeccionService,
     private paramNav: ParametroNavegacionService,
     private router: Router,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {
@@ -86,6 +88,17 @@ export class ListasInspeccionComponent implements OnInit {
       ['/app/inspecciones/elaboracionLista']
     );
   }
+
+  eliminar() {
+    this.confirmationService.confirm({
+      header: 'Confirmar acción',
+      message: 'La lista de inspección ' + this.listaInpSelect.nombre + ' será eliminada, no podrá deshacer esta acción, ¿Dese continuar?',
+      accept: () =>
+        this.listaInspeccionService.delete(this.listaInpSelect.codigo)
+    });
+  }
+
+  
 
   navegar() {
     this.paramNav.redirect('/app/inspecciones/elaboracionLista');
