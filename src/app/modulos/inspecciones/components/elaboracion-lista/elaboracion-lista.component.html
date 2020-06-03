@@ -2,6 +2,7 @@
 
 <div *ngIf="finalizado" style="margin: 20px;">
   <h2>Inspección finalizada</h2>
+
   <br/>
   <a (click)="resetAll()">Crear nueva lista de inspeccion</a>
 </div>
@@ -9,13 +10,14 @@
 <div *ngIf="!finalizado">
 
   <div class="ui-g" style="margin-bottom: 250px;">
+    <a (click)="onClick()">test</a>
     <div class="ui-g-12 ui-sm-12 ui-md-6">
       <form [formGroup]="form">
         <p-panel>
           <p-header>
             <i class="fa fa-list" aria-hidden="true"></i>
             Información lista de inspección
-          </p-header>
+          </p-header> 
           <label class="s-float-label">Código</label>
           <input type="text" pInputText formControlName="codigo" required/>
 
@@ -26,7 +28,7 @@
           <p-dropdown [options]="tipoListaOpts" formControlName="tipoLista" editable="true" placeholder="--Seleccione--" required></p-dropdown>
 
           <label class="s-float-label">Perfiles</label>
-          <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
+          <p-multiSelect [options]="perfilList" formControlName="perfilesId" (onChange)="test($event)" defaultLabel="--Perfiles--" required></p-multiSelect>
 
           <label class="s-float-label">Descripción</label>
           <textarea pInputTextarea formControlName="descripcion"></textarea>
@@ -74,7 +76,7 @@
 
       </p-panel>
     </div>
-
+    
     <div class="ui-g-12 ui-sm-12 ui-md-12">
       <s-formularioConstructor #formularioConstructor></s-formularioConstructor>
     </div>

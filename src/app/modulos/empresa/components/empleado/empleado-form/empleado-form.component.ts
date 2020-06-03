@@ -105,6 +105,7 @@ export class EmpleadoFormComponent implements OnInit {
       this.empleadoService.findByFilter(fq).then(
         resp => {
           this.empleadoSelect = <Empleado>(resp['data'][0]);
+          console.log(this.empleadoSelect);
           this.loaded = true;
           this.form.patchValue({
             'id': this.empleadoSelect.id,
@@ -128,7 +129,7 @@ export class EmpleadoFormComponent implements OnInit {
             'zonaResidencia': this.empleadoSelect.zonaResidencia,
             'area': this.empleadoSelect.area,
             'cargoId': this.empleadoSelect.cargo.id,
-            'perfilesId': this.buildPerfilesIdList(this.empleadoSelect.usuario),
+            'perfilesId': [4],
             'email': this.empleadoSelect.usuario.email
           });
         }
@@ -169,21 +170,38 @@ export class EmpleadoFormComponent implements OnInit {
       resp => {
         (<Perfil[]>resp['data']).forEach(perfil => {
           this.perfilList.push({ label: perfil.nombre, value: perfil.id });
+        if ( this.isUpdate === true ) this.buildPerfilesIdList();
+          
+         
         });
       }
     );
-  }
+    
+  } 
 
-    debug(){
-      console.log(this.empleadoSelect), "empleado";
+    debug(){ 
+      console.log(this.form.value), "empleado";
     }
-  buildPerfilesIdList(usuario: Usuario) {
-    let perfilesIdList = [];
-    //usuario.usuarioEmpresaList.forEach(ue => {
-    // perfilesIdList.push(ue.perfil.id);
-    //});
+  async buildPerfilesIdList() {
+    console.log(this.empleadoSelect.id, "181");
+    let filterQuery = new FilterQuery();
+    filterQuery.filterList = [{
+      field: 'usuarioEmpresaList.usuario.id',
+      criteria: Criteria.EQUALS,
+      value1: this.empleadoSelect.usuario.id,
+      value2: null
+    }];
+     await this.perfilService.findByFilter(filterQuery).then(
+      resp => {
+        let perfilesId = [];
+         resp['data'].forEach(ident => perfilesId.push(ident.id));
+      
+     
+        this.form.patchValue({perfilesId: perfilesId})
+        console.log(this.form.value);
+        })
+     
   
-    return perfilesIdList;
   }
 
   onSubmit() {

@@ -10,6 +10,7 @@ import { filter } from 'rxjs-compat/operator/filter';
 import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 import { UsuarioService } from 'app/modulos/admin/services/usuario.service';
 import { PerfilService } from 'app/modulos/admin/services/perfil.service';
+import { Message, SelectItem, ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-listas-inspeccion',
@@ -43,27 +44,22 @@ export class ListasInspeccionComponent implements OnInit {
     private paramNav: ParametroNavegacionService,
     private router: Router,
     private userService: PerfilService,
+    private confirmationService: ConfirmationService,
   ) { 
-    let filterQuery = new FilterQuery();
-
-    filterQuery.filterList = [{
-      field: 'usuarioEmpresaList.usuario.id',
-      criteria: Criteria.EQUALS,
-      value1: '214',
-      value2: null
-    }];
-    this.userService.findByFilter(filterQuery).then(res=>{
-      console.log(res);
-    })
+   
 
   }
+    
+  
 
   ngOnInit() {
     this.loading = true;
   }
 
 
-  lazyLoad(event: any) {
+  async lazyLoad(event: any) {
+    let useri = await this.loadProfile();
+    console.log(useri);
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -104,6 +100,32 @@ export class ListasInspeccionComponent implements OnInit {
     this.router.navigate(
       ['/app/inspecciones/elaboracionLista']
     );
+  }
+
+  eliminar() {
+    this.confirmationService.confirm({
+      header: 'Confirmar acción',
+      message: 'La lista de inspección ' + this.listaInpSelect.nombre + ' será eliminada, no podrá deshacer esta acción, ¿Dese continuar?',
+      accept: () =>
+        this.listaInspeccionService.delete(this.listaInpSelect.codigo)
+    });
+  }
+
+
+  
+  
+ async loadProfile(){
+    let user:any = JSON.parse(localStorage.getItem('session'));
+    console.log(user.usuario.id);
+    let filterQuery = new FilterQuery();
+
+    filterQuery.filterList = [{
+      field: 'usuarioEmpresaList.usuario.id',
+      criteria: Criteria.EQUALS,
+      value1: user.usuario.id,
+      value2: null
+    }];
+     await this.userService.findByFilter(filterQuery).then();
   }
 
   navegar() {

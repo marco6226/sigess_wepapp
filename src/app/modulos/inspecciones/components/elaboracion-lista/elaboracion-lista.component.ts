@@ -82,10 +82,27 @@ export class ElaboracionListaComponent implements OnInit {
     }
     this.paramNav.reset();
   }
+  test(event){
+    console.log(event);
+    
+    console.log(this.perfilList);
+    
+  }
+  onClick(){
+    console.log(this.form.value);
+  }
+  buildPerfilesIdList(ids:Array<any>) {
+    let perfilesIdList = [];
+    console.log(ids);
+    ids.forEach(ue => {
 
+      perfilesIdList.push({id: ue});
+    });
+    console.log(perfilesIdList);
+    return perfilesIdList;
+  }
   consultarLista(listaInsp: ListaInspeccion) {
     let filterQuery = new FilterQuery();
-
     let filterId = new Filter();
     filterId.criteria = Criteria.EQUALS;
     filterId.field = "listaInspeccionPK.id";
@@ -104,7 +121,7 @@ export class ElaboracionListaComponent implements OnInit {
         this.opcionesCalifList = listaInsp.opcionCalificacionList;
         this.elementoInspeccionList = listaInsp.elementoInspeccionList;
         this.formularioConstructor.formulario = listaInsp.formulario;
-       // this.perfilList = JSON.parse(listaInsp.fkPerfilId);
+        this.form.patchValue({'perfilesId' : JSON.parse(listaInsp.fkPerfilId)} )  
       }
     );
     this.form.patchValue({
@@ -119,6 +136,7 @@ export class ElaboracionListaComponent implements OnInit {
     }
   }
 
+  
   addOpcionRespuesta() {
     let opc = new OpcionCalificacion();
     opc.despreciable = false;
@@ -126,6 +144,8 @@ export class ElaboracionListaComponent implements OnInit {
     this.opcionesCalifList.push(opc);
     this.opcionesCalifList = this.opcionesCalifList.slice();
   }
+
+ 
 
   removeOpcionCalificacion(opc: OpcionCalificacion) {
     for (let i = 0; i < this.opcionesCalifList.length; i++) {
