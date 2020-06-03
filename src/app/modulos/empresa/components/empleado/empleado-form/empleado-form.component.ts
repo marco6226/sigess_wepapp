@@ -98,6 +98,7 @@ export class EmpleadoFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     if (this.empleadoSelect != null) {
       let fq = new FilterQuery();
       fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
@@ -105,7 +106,6 @@ export class EmpleadoFormComponent implements OnInit {
       this.empleadoService.findByFilter(fq).then(
         resp => {
           this.empleadoSelect = <Empleado>(resp['data'][0]);
-          console.log(this.empleadoSelect);
           this.loaded = true;
           this.form.patchValue({
             'id': this.empleadoSelect.id,
@@ -136,6 +136,11 @@ export class EmpleadoFormComponent implements OnInit {
       );
     } else {
       this.loaded = true;
+      let area:any;
+      console.log("new register");
+
+      this.form.patchValue({'area': area});
+
     }
     this.comunService.findAllAfp().then(
       data => {
