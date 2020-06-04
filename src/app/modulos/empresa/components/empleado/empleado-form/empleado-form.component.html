@@ -112,7 +112,14 @@
                     <div class="ui-g-12 ui-md-4">
                         <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
                     </div>
+                    
+                    <div class="ui-g-12 ui-md-2">
+                        Ip Permitida
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <p-chips formControlName="ipPermitida"  ></p-chips>
 
+                    </div>
                     <div class="ui-g-12 ui-md-2">
                         Código
                     </div>
@@ -163,7 +170,7 @@
                     </div>
                 </div>
             </p-panel>
-            <div style="text-align: center; width: 100%;" *ngIf="editable">
+            <div style="text-align: center; width: 100%;" *ngIf="isUpdate || editable">
                 <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" class="float-btn" style="bottom: 100px;" title="Guardar datos de empleado"></button>
 
                 <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>

@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 
 	onSubmit(value: any) {
 		this.logueando = true;
-		console.log(value);
+		//console.log(value);
 		this.authService.login(value.username, value.passwd, value.recordar, value.pin)
 			.then(res => {
 				let aceptaTerm = this.authService.sesionService.getUsuario().fechaAceptaTerminos != null;

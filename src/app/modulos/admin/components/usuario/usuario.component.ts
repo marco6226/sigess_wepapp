@@ -113,7 +113,7 @@ export class UsuarioComponent implements OnInit {
     );
   }
 onClick(){
-    console.log(this.form.value);
+    //console.log(this.form.value);
   }
   abrirDlg(isUpdate: boolean) {
     this.isUpdate = isUpdate;
@@ -131,7 +131,7 @@ onClick(){
         resp => {
           let perfilesId = [];
           resp['data'].forEach(ident => perfilesId.push(ident.id));
-          console.log(resp['data']);
+          //console.log(resp['data']);
           this.form.patchValue({
             'id': this.usuarioSelect.id,
             'email': this.usuarioSelect.email,
@@ -154,7 +154,7 @@ onClick(){
   buildPerfilesIdList(usuario: Usuario) {
     let perfilesIdList = [];
     usuario.usuarioEmpresaList.forEach(ue => {
-      console.log(ue);
+      //console.log(ue);
       perfilesIdList.push(ue.perfil.id);
     });
     return perfilesIdList;

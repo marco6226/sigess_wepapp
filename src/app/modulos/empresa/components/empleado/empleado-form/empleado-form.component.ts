@@ -40,12 +40,13 @@ export class EmpleadoFormComponent implements OnInit {
   @Output() onCancel = new EventEmitter();
   @Input() empleadoSelect: Empleado;
   @Input() isUpdate: boolean;
+  @Input() show: boolean;
   @Input() editable: boolean;
   form: FormGroup;
   empresaId = this.sesionService.getEmpresa().id;
   fechaActual = new Date();
   yearRange: string = "1900:" + this.fechaActual.getFullYear();
-  localeES: any = locale_es;
+  localeES: any = locale_es; 
   tipoIdentificacionList: SelectItem[];
   tipoVinculacionList: SelectItem[];
   epsList: SelectItem[];
@@ -93,6 +94,7 @@ export class EmpleadoFormComponent implements OnInit {
       'area': [null, Validators.required],
       'cargoId': [null, Validators.required],
       'perfilesId': [null, Validators.required],
+      'ipPermitida': [null],
       'email': [null, Validators.required]
     });
   }
@@ -102,11 +104,12 @@ export class EmpleadoFormComponent implements OnInit {
     if (this.empleadoSelect != null) {
       let fq = new FilterQuery();
       fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
-      console.log(fq);
+     // //console.log(fq);
       this.empleadoService.findByFilter(fq).then(
         resp => {
           this.empleadoSelect = <Empleado>(resp['data'][0]);
           this.loaded = true;
+          ////console.log(this.empleadoSelect);
           this.form.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -129,7 +132,9 @@ export class EmpleadoFormComponent implements OnInit {
             'zonaResidencia': this.empleadoSelect.zonaResidencia,
             'area': this.empleadoSelect.area,
             'cargoId': this.empleadoSelect.cargo.id,
-            'perfilesId': [4],
+            'perfilesId': [4],    
+            'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+
             'email': this.empleadoSelect.usuario.email
           });
         }
@@ -137,10 +142,9 @@ export class EmpleadoFormComponent implements OnInit {
     } else {
       this.loaded = true;
       let area:any;
-      console.log("new register");
-
+      //console.log("new register");
       this.form.patchValue({'area': area});
-
+      this.editable = true;
     }
     this.comunService.findAllAfp().then(
       data => {
@@ -175,20 +179,23 @@ export class EmpleadoFormComponent implements OnInit {
       resp => {
         (<Perfil[]>resp['data']).forEach(perfil => {
           this.perfilList.push({ label: perfil.nombre, value: perfil.id });
-        if ( this.isUpdate === true ) this.buildPerfilesIdList();
-          
+
          
         });
+        if ( this.isUpdate === true || this.show === true ) this.buildPerfilesIdList();
+
       }
     );
-    
+
   } 
 
     debug(){ 
-      console.log(this.form.value), "empleado";
+      //console.log(this.form.value), "empleado";
     }
+
+
   async buildPerfilesIdList() {
-    console.log(this.empleadoSelect.id, "181");
+    ////console.log(this.empleadoSelect.id, "181");
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [{
       field: 'usuarioEmpresaList.usuario.id',
@@ -196,6 +203,7 @@ export class EmpleadoFormComponent implements OnInit {
       value1: this.empleadoSelect.usuario.id,
       value2: null
     }];
+
      await this.perfilService.findByFilter(filterQuery).then(
       resp => {
         let perfilesId = [];
@@ -203,7 +211,6 @@ export class EmpleadoFormComponent implements OnInit {
       
      
         this.form.patchValue({perfilesId: perfilesId})
-        console.log(this.form.value);
         })
      
   
@@ -242,7 +249,10 @@ export class EmpleadoFormComponent implements OnInit {
     empleado.area.id = this.form.value.area.id;
     empleado.cargo.id = this.form.value.cargoId;
     empleado.usuario.email = this.form.value.email;
+   // //console.log(this.form.value.ipPermitida);
+    empleado.usuario.ipPermitida = this.form.value.ipPermitida;
     empleado.usuario.usuarioEmpresaList = [];
+    
     this.form.value.perfilesId.forEach(perfilId => {
       let ue = new UsuarioEmpresa();
       ue.perfil = new Perfil();

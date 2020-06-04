@@ -61,7 +61,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     this.loadAreas();
     this.areaSelected = this.name
-    console.log(this.name,"63 line");
+    //console.log(this.name,"63 line");
   }
 
 

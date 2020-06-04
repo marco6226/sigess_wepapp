@@ -76,7 +76,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         case 'POST':
           this.sistCausAdminService.findDefault()
             .then((resp: SistemaCausaAdministrativa) => {
-              console.log(resp);
+              //console.log(resp);
               this.causaAdminList = this.buildTreeNode(resp.causaAdminList, null, 'causaAdminList');
             });
           this.sistemaCausaInmdService.findDefault()

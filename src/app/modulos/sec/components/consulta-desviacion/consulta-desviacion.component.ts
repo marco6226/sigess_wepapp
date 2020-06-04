@@ -72,7 +72,7 @@ export class ConsultaDesviacionComponent implements OnInit {
       resp => {
         this.totalRecords = resp['count'];
         this.loading = false;
-        console.log(resp);
+        //console.log(resp);
         this.desviacionesList = resp['data'];
       }
     ).catch(err => this.loading = false);

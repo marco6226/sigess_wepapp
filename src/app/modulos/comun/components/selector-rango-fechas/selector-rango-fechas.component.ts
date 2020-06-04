@@ -65,7 +65,7 @@ export class SelectorRangoFechasComponent implements OnInit {
   }
 
   cambiarColor(event:any){
-    console.log(event);
+    //console.log(event);
     this.onchange.emit(this.rangosList);
   }
 

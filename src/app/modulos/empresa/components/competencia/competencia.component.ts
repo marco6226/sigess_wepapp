@@ -37,7 +37,7 @@ export class CompetenciaComponent implements OnInit {
     this.modelo = [];
     this.recursiveBuild(list, this.modelo);
     this.modelo = this.modelo.slice();
-    console.log(this.modelo);
+    //console.log(this.modelo);
   }
 
   recursiveBuild(list: Competencia[], nodes: TreeNode[]) {
@@ -119,7 +119,7 @@ export class CompetenciaComponent implements OnInit {
 
   removerCompetencia() {
     let comp = <Competencia>this.nodeSelect.data;
-    console.log(this.nodeSelect);
+    //console.log(this.nodeSelect);
     this.competenciaService.delete(comp.id).then(
       resp => {
         comp = <Competencia>resp;

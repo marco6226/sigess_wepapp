@@ -74,7 +74,7 @@ export abstract class ServiceCRUD<T> {
         .map(res => res)
         .subscribe(
           res => {
-            console.log(res);
+            //console.log(res);
             resolve(res);
           }
           ,
@@ -191,7 +191,7 @@ export abstract class ServiceCRUD<T> {
 
   manageError(errResp: any) {
 
-    console.log("managing error...");
+    //console.log("managing error...");
     let msg: MensajeUsuario;
     try {
       msg = <MensajeUsuario>errResp.error;

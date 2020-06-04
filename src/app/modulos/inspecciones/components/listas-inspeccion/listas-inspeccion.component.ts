@@ -59,7 +59,7 @@ export class ListasInspeccionComponent implements OnInit {
 
   async lazyLoad(event: any) {
     let useri = await this.loadProfile();
-    console.log(useri);
+    //console.log(useri);
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -116,7 +116,7 @@ export class ListasInspeccionComponent implements OnInit {
   
  async loadProfile(){
     let user:any = JSON.parse(localStorage.getItem('session'));
-    console.log(user.usuario.id);
+    //console.log(user.usuario.id);
     let filterQuery = new FilterQuery();
 
     filterQuery.filterList = [{

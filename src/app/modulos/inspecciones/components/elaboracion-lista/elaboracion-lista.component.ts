@@ -52,7 +52,7 @@ export class ElaboracionListaComponent implements OnInit {
   ngOnInit() {
     this.perfilService.findAll().then(
       resp => {
-        console.log(resp);
+        //console.log(resp);
         (<Perfil[]>resp['data']).forEach(perfil => {
           this.perfilList.push({ label: perfil.nombre, value: perfil.id });
         });
@@ -83,22 +83,22 @@ export class ElaboracionListaComponent implements OnInit {
     this.paramNav.reset();
   }
   test(event){
-    console.log(event);
+    //console.log(event);
     
-    console.log(this.perfilList);
+    //console.log(this.perfilList);
     
   }
   onClick(){
-    console.log(this.form.value);
+    //console.log(this.form.value);
   }
   buildPerfilesIdList(ids:Array<any>) {
     let perfilesIdList = [];
-    console.log(ids);
+    //console.log(ids);
     ids.forEach(ue => {
 
       perfilesIdList.push({id: ue});
     });
-    console.log(perfilesIdList);
+    //console.log(perfilesIdList);
     return perfilesIdList;
   }
   consultarLista(listaInsp: ListaInspeccion) {

@@ -333,7 +333,7 @@ export class ProgramacionComponent implements OnInit {
       let incluirDia = semana.indexOf(fechaSiguiente.getDay().toString()) >= 0;
       if (esSabadoODomingo && !incluirDia) {
         fechaSiguiente.setDate(fechaSiguiente.getDate() + (fechaSiguiente.getDay() == 6 ? (semana.indexOf('0') >= 0 ? 1 : 2) : 1));
-        console.log("saltando dia " + fechaSiguiente.getDay());
+        //console.log("saltando dia " + fechaSiguiente.getDay());
       }
 */
 
@@ -342,7 +342,7 @@ export class ProgramacionComponent implements OnInit {
       let incluirDia = semana.indexOf(fechaSiguiente.getDay().toString()) >= 0;
       if (!incluirDia) {
         fechaSiguiente.setDate(fechaSiguiente.getDate() + 1);
-        console.log("saltando dia " + fechaSiguiente.getDay());
+        //console.log("saltando dia " + fechaSiguiente.getDay());
         continue;
       }
 

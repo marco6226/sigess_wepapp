@@ -25,6 +25,8 @@ export class EmpleadoComponent implements OnInit {
   empleadoSelect: Empleado;
   empresaId = this.sesionService.getEmpresa().id;
   visibleForm: boolean;
+  show: boolean;
+
   isUpdate: boolean;
   isEditable: boolean;
   loading: boolean;
@@ -85,7 +87,7 @@ export class EmpleadoComponent implements OnInit {
   showUpdateForm() {
     if (this.empleadoSelect != null) {
       this.isUpdate = true;
-      console.log("FIX");
+      //console.log("FIX");
       this.visibleForm = true;
     } else {
       this.msgs = [];
@@ -95,9 +97,10 @@ export class EmpleadoComponent implements OnInit {
 
   showForm() {
     if (this.empleadoSelect != null) {
-      this.isUpdate = true;
+      this.isUpdate = false;
       this.isEditable = false;
-      console.log("FIX");
+      this.show = true;
+      //console.log("FIX");
       this.visibleForm = true;
     } else {
       this.msgs = [];

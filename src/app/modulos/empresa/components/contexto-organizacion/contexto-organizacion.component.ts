@@ -24,7 +24,7 @@ export class ContextoOrganizacionComponent implements OnInit {
   ngOnInit() {
     this.ctxOrgService.findDefault().then(
       resp => {
-        console.log(resp);
+        //console.log(resp);
         this.ctxOrg = <ContextoOrganizacion>resp;
         if (this.ctxOrg == null) {
           this.ctxOrg = new ContextoOrganizacion();
