@@ -69,8 +69,7 @@ export class ListasInspeccionComponent implements OnInit {
     }];
     const userP = await this.userService.findByFilter(filterQuery);
     let userParray:any = userP;
-    console.log(userP);
-    console.log(2);
+    
 
     this.loading = true;
 
@@ -83,10 +82,10 @@ export class ListasInspeccionComponent implements OnInit {
     filterQuery.fieldList = this.fields;
     
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-   /* userParray.data.forEach(element => {
+   /*userParray.data.forEach(element => {
       filterQuery.filterList.push({
         field: 'fkPerfilId',
-        criteria: Criteria.LIKE,
+        criteria: Criteria.CONTAINS,
         value1: `%${element.id}%`,
         
       })
@@ -100,7 +99,19 @@ export class ListasInspeccionComponent implements OnInit {
         (<any[]>resp['data']).forEach(dto => {
           let obj = FilterQuery.dtoToObject(dto)
           obj['hash'] = obj.listaInspeccionPK.id + '.' + obj.listaInspeccionPK.version;
-          this.listaInspeccionList.push(obj);
+         try {
+           for (const profile of userParray.data) {
+            console.log(profile.id)
+
+            if (obj.fkPerfilId.includes(`${profile.id}`)) this.listaInspeccionList.push(obj);;
+
+           }
+         } catch (error) {
+           
+         } 
+            
+          
+        
         });
       }
     );
