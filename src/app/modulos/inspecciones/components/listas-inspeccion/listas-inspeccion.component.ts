@@ -58,10 +58,22 @@ export class ListasInspeccionComponent implements OnInit {
 
 
   async lazyLoad(event: any) {
-    let useri = await this.loadProfile();
-    //console.log(useri);
-    this.loading = true;
+    let user:any = JSON.parse(localStorage.getItem('session'));
     let filterQuery = new FilterQuery();
+
+    filterQuery.filterList = [{
+      field: 'usuarioEmpresaList.usuario.id',
+      criteria: Criteria.EQUALS,
+      value1: user.usuario.id,
+      value2: null
+    }];
+    const userP = await this.userService.findByFilter(filterQuery);
+    let userParray:any = userP;
+    console.log(userP);
+    console.log(2);
+
+    this.loading = true;
+
     filterQuery.sortField = event.sortField;
     filterQuery.sortOrder = event.sortOrder;
     filterQuery.offset = event.first;
@@ -69,8 +81,17 @@ export class ListasInspeccionComponent implements OnInit {
     
     filterQuery.count = true;
     filterQuery.fieldList = this.fields;
-    event.filters = {fkPerfilId: {  value: 4, field: 'fkPerfilId', matchMode: 'Contains' }}
+    
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+    userParray.data.forEach(element => {
+      filterQuery.filterList.push({
+        field: 'fkPerfilId',
+        criteria: Criteria.CONTAINS,
+        value1: `%${element.id}%`,
+        
+      })
+    });
+    
     this.listaInspeccionService.findByFilter(filterQuery).then(
       resp => {
         this.totalRecords = resp['count'];
@@ -115,18 +136,8 @@ export class ListasInspeccionComponent implements OnInit {
   
   
  async loadProfile(){
-    let user:any = JSON.parse(localStorage.getItem('session'));
-    //console.log(user.usuario.id);
-    let filterQuery = new FilterQuery();
-
-    filterQuery.filterList = [{
-      field: 'usuarioEmpresaList.usuario.id',
-      criteria: Criteria.EQUALS,
-      value1: user.usuario.id,
-      value2: null
-    }];
-     await this.userService.findByFilter(filterQuery).then();
-  }
+  
+    }
 
   navegar() {
     this.paramNav.redirect('/app/inspecciones/elaboracionLista');
