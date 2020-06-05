@@ -83,14 +83,14 @@ export class ListasInspeccionComponent implements OnInit {
     filterQuery.fieldList = this.fields;
     
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-    userParray.data.forEach(element => {
+   /* userParray.data.forEach(element => {
       filterQuery.filterList.push({
         field: 'fkPerfilId',
-        criteria: Criteria.CONTAINS,
+        criteria: Criteria.LIKE,
         value1: `%${element.id}%`,
         
       })
-    });
+    });*/
     
     this.listaInspeccionService.findByFilter(filterQuery).then(
       resp => {
