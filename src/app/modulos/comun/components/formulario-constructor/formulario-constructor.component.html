@@ -1,53 +1,53 @@
 <p-panel>
-  <p-header>
-    <i class="fa fa-cog" aria-hidden="true"></i>
-    <label class="ui-panel-title">Datos generales</label>
-    <a style="float:right;" (click)="adicionarCampo()" title="Adicionar nuevo campo de formulario">Nuevo</a>
-  </p-header>
-  <div class="ui-g">
-    <div class="ui-g-12 ui-sm-12 ui-md-6">
-      <label class="s-float-label">Nombre formulario</label>
-      <input pInputText id="nombre" [ngModel]="formulario?.nombre" (ngModelChange)="formulario.nombre=$event" />
+    <p-header>
+        <i class="fa fa-cog" aria-hidden="true"></i>
+        <label class="ui-panel-title">Datos generales</label>
+        <a style="float:right;" (click)="adicionarCampo()" title="Adicionar nuevo campo de formulario">Nuevo</a>
+    </p-header>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-sm-12 ui-md-6">
+            <label class="s-float-label">Nombre formulario</label>
+            <input pInputText id="nombre" [ngModel]="formulario?.nombre" (ngModelChange)="formulario.nombre=$event" />
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-6">
+            <label class="s-float-label">Descripción</label>
+            <input pInputText id="descripcion" [ngModel]="formulario?.descripcion" (ngModelChange)="formulario.descripcion=$event" />
+        </div>
     </div>
-    <div class="ui-g-12 ui-sm-12 ui-md-6">
-      <label class="s-float-label">Descripción</label>
-      <input pInputText id="descripcion" [ngModel]="formulario?.descripcion" (ngModelChange)="formulario.descripcion=$event" />
-    </div>
-  </div>
 
-  <p-table #dt [value]="formulario?.campoList" autoLayout="true">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Nombre campo</th>
-        <th>Descripción</th>
-        <th>Tipo</th>
-        <th>Opciones</th>
-        <th>Requerido</th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData>
-      <tr>
-        <td>
-          <input type="text" pInputText [(ngModel)]="rowData.nombre" />
-        </td>
-        <td>
-          <input type="text" pInputText [(ngModel)]="rowData.descripcion" />
-        </td>
-        <td>
-          <p-dropdown [options]="tiposDatos" [(ngModel)]="rowData.tipo" [disabled]="consultar" appendTo="body"></p-dropdown>
-        </td>
-        <td style="width:350px;text-align: center;">
-          <p-chips [(ngModel)]="rowData.opciones"></p-chips>
-        </td>
-        <td style="width:100px;text-align: center;">
-          <p-checkbox name="groupname" binary="true" [(ngModel)]="rowData.requerido" [disabled]="consultar"></p-checkbox>
-        </td>
-        <td style="width:50px;">
-          <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removerCampo(ri)"></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <p-table #dt [value]="formulario?.campoList" autoLayout="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombre campo</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Opciones</th>
+                <th>Requerido</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+            <tr>
+                <td>
+                    <input type="text" pInputText [(ngModel)]="rowData.nombre" />
+                </td>
+                <td>
+                    <input type="text" pInputText [(ngModel)]="rowData.descripcion" />
+                </td>
+                <td>
+                    <p-dropdown [options]="tiposDatos" [(ngModel)]="rowData.tipo" [disabled]="consultar" appendTo="body"></p-dropdown>
+                </td>
+                <td style="width:350px;text-align: center;">
+                    <p-chips [(ngModel)]="rowData.opciones"></p-chips>
+                </td>
+                <td style="width:100px;text-align: center;">
+                    <p-checkbox name="groupname" binary="true" [(ngModel)]="rowData.requerido" [disabled]="consultar"></p-checkbox>
+                </td>
+                <td style="width:50px;">
+                    <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removerCampo(i)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
 </p-panel>

@@ -171,7 +171,7 @@ export class ElaboracionListaComponent implements OnInit {
     this.listaInspeccionService.create(listInp).then(
       data => {
         this.msgs = [];
-        this.msgs.push({ severity: 'success', summary: 'Lista de inspección creada', detail: 'Se ha creado correctamente la lista de inspección ' + listInp.nombre });
+        this.msgs.push({ severity: 'success', summary: 'Lista de inspección creada', detail: 'Se ha creado correctamente la lista de inspección  ' + listInp.nombre });
         this.finalizado = true;
         this.adicionar = false;
       }

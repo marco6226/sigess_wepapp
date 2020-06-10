@@ -68,8 +68,7 @@ export class ListasInspeccionComponent implements OnInit {
       value2: null
     }];
     const userP = await this.userService.findByFilter(filterQuery);
-    let userParray:any = userP;
-    
+    let userParray:any = userP;    
 
     this.loading = true;
 
@@ -103,7 +102,11 @@ export class ListasInspeccionComponent implements OnInit {
            for (const profile of userParray.data) {
             console.log(profile.id)
 
-            if (obj.fkPerfilId.includes(`${profile.id}`)) this.listaInspeccionList.push(obj);;
+            if (obj.fkPerfilId.includes(`${profile.id}`)) {
+              this.listaInspeccionList.push(obj);
+              break;
+           }
+           
 
            }
          } catch (error) {
