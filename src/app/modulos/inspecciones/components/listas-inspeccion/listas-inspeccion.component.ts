@@ -101,10 +101,10 @@ export class ListasInspeccionComponent implements OnInit {
           obj['hash'] = obj.listaInspeccionPK.id + '.' + obj.listaInspeccionPK.version;
          try {
            for (const profile of userParray.data) {
-            console.log(profile.id)
-
-            if (obj.fkPerfilId.includes(`${profile.id}`)) this.listaInspeccionList.push(obj);;
-
+            if (obj.fkPerfilId.includes(`${profile.id}`)) {
+              this.listaInspeccionList.push(obj)
+              break;
+            };
            }
          } catch (error) {
            

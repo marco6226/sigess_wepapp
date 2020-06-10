@@ -50,11 +50,21 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   // Component methods
 
   addElemento(elemPadre: ElementoInspeccion) {
+    console.log(elemPadre);
     if (elemPadre.elementoInspeccionList == null) {
       elemPadre.elementoInspeccionList = [];
     }
+
+    let code:Number = (parseFloat(elemPadre.codigo) + (elemPadre.elementoInspeccionList.length/10) + 0.1);
+    console.log(code.toString().length);
+    if(code.toString().length >= 4)  {
+     // code = code.toFixed(2);
+
+      }  
+    
     let elemento = new ElementoInspeccion();
     elemento.numero = ++this.contadorElem;
+    elemento.codigo =  code.toString();
     elemPadre.elementoInspeccionList.push(elemento);
   }
 
