@@ -238,8 +238,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     this.msgs.push({
       severity: 'success',
       summary: 'Inspección ' + (this.adicionar ? 'creada' : 'modificada'),
-      detail: 'Se ha ' + (this.adicionar ? 'creado' : 'modificado') + ' correctamente la inspección'
-    });
+      detail: 'Se ha ' + (this.adicionar ? 'creado' : 'modificado') + ' correctamente la inspección' + ' INP-' + insp.id  });
     this.finalizado = true;
   }
 
