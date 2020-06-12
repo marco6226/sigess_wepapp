@@ -11,7 +11,7 @@ export class ContextoOrganizacionService extends ServiceCRUD<ContextoOrganizacio
         .map(res => res)
         .subscribe(
           res => {
-            console.log((<any>res)._body);
+            //console.log((<any>res)._body);
             if ((<any>res)._body === undefined || (<any>res)._body == null || (<any>res)._body === "") {
               resolve(null);
             } else {

@@ -19,7 +19,7 @@ export class AreaService extends ServiceCRUD<Area> {
           resolve(res.json());
         }
         ,
-        err => console.log(err)
+        err => //console.log(err)
         )
     });
   }

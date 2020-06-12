@@ -11,6 +11,7 @@ import { Message, OverlayPanel } from 'primeng/primeng'
 import { TipoHallazgoService } from 'app/modulos/inspecciones/services/tipo-hallazgo.service'
 import { TipoHallazgo } from '../../entities/tipo-hallazgo';
 import { SesionService } from '../../../core/services/sesion.service';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 's-lista-inspeccion-form',
@@ -60,9 +61,11 @@ export class ListaInspeccionFormComponent implements OnInit {
   adicionarElementoInp() {
     let elemento = new ElementoInspeccion();
     elemento.numero = ++this.contadorElem;
+    elemento.codigo = JSON.stringify(this.value.length+1);
+    console.log(this.value);
     if (this.value == null)
       this.value = [];
-    this.value.push(elemento);
+    this.value.push(elemento); 
   }
 
   elementoClick(elem: ElementoInspeccion) {

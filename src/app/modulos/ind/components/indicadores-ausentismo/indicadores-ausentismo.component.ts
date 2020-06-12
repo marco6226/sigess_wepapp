@@ -182,7 +182,7 @@ export class IndicadoresAusentismoComponent implements OnInit {
   /** gráficas de caracterizacion */
 
   actualizarRangos(event: any) {
-    console.log(event);
+    //console.log(event);
     this.indicadorAusentismoService.indCaract(event, '0').then(
       data => this.construirGraficasCaract(<any[]>data, event)
     );

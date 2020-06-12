@@ -59,6 +59,7 @@
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
             <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="abrirDlg(false)"></button>
+           
             <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
                 (click)="abrirDlg(true)" [disabled]="!usuarioSelect"></button>
             <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
@@ -78,6 +79,7 @@
             <div class="ui-g-12">
                 <label class="s-float-label">Perfiles</label>
                 <p-multiSelect [options]="perfilList" appendTo="body" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
+                <a (click)="onClick()">testar</a>
             </div>
             <div class="ui-g-12">
                 <label for="ips" class="s-float-label">IP's Permitidas</label>

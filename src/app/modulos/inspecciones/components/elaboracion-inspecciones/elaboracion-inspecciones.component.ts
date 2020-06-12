@@ -80,7 +80,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
       this.programacion = this.paramNav.getParametro<Programacion>();
       this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.programacion.listaInspeccion;
       this.area = this.programacion == null ? this.inspeccion.area : this.programacion.area;
-
+      console.log(this.programacion);
       let filterQuery = new FilterQuery();
 
       let filterId = new Filter();
@@ -238,8 +238,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     this.msgs.push({
       severity: 'success',
       summary: 'Inspección ' + (this.adicionar ? 'creada' : 'modificada'),
-      detail: 'Se ha ' + (this.adicionar ? 'creado' : 'modificado') + ' correctamente la inspección'
-    });
+      detail: 'Se ha ' + (this.adicionar ? 'creado' : 'modificado') + ' correctamente la inspección' + ' INP-' + insp.id  });
     this.finalizado = true;
   }
 

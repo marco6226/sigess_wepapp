@@ -25,6 +25,8 @@ export class EmpleadoComponent implements OnInit {
   empleadoSelect: Empleado;
   empresaId = this.sesionService.getEmpresa().id;
   visibleForm: boolean;
+  show: boolean;
+
   isUpdate: boolean;
   isEditable: boolean;
   loading: boolean;
@@ -85,8 +87,7 @@ export class EmpleadoComponent implements OnInit {
   showUpdateForm() {
     if (this.empleadoSelect != null) {
       this.isUpdate = true;
-      this.isEditable = true;
-      console.log("FIX");
+      //console.log("FIX");
       this.visibleForm = true;
     } else {
       this.msgs = [];
@@ -96,9 +97,10 @@ export class EmpleadoComponent implements OnInit {
 
   showForm() {
     if (this.empleadoSelect != null) {
-      this.isUpdate = true;
+      this.isUpdate = false;
       this.isEditable = false;
-      console.log("FIX");
+      this.show = true;
+      //console.log("FIX");
       this.visibleForm = true;
     } else {
       this.msgs = [];
@@ -155,13 +157,13 @@ export class EmpleadoComponent implements OnInit {
       }
     }
     this.msgs = [];
-    this.msgs.push({ severity: 'success', summary: "Empleado actualizado", detail: "Se ha actualizado el empleado " + empleado.numeroIdentificacion });
+    this.msgs.push({ severity: 'success', summary: 'Empleado actualizado', detail: 'Se ha actualizado el empleado ' + empleado.numeroIdentificacion });
   }
 
   manageCreateResponse(empleado: Empleado) {
     this.empleadosList.push(empleado);
     this.msgs = [];
-    this.msgs.push({ severity: 'success', summary: "Nuevo empleado creado", detail: "Se ha creado el empleado " + empleado.numeroIdentificacion });
+    this.msgs.push({ severity: 'success', summary: 'Nuevo empleado creado', detail: "Se ha creado el empleado " + empleado.numeroIdentificacion });
   }
 
 }

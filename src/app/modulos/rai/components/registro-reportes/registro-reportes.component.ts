@@ -105,7 +105,7 @@ export class RegistroReportesComponent implements OnInit {
       this.msgs.push({
         severity: 'success',
         summary: 'Reporte realizado',
-        detail: 'Se ha realizado correctamente el reporte de ' + reporte.tipo
+        detail: `Se ha registrado el reporte de  ${reporte.tipo} RAI-${reporte.id}`
       });
     } else if (this.modificar) {
       this.msgs.push({

@@ -1,4 +1,5 @@
 /* Column Priorities */
+
 @media only all {
     th.ui-p-6,
     td.ui-p-6,
@@ -16,7 +17,9 @@
     }
 }
 
+
 /* Show priority 1 at 320px (20em x 16px) */
+
 @media screen and (min-width: 20em) {
     th.ui-p-1,
     td.ui-p-1 {
@@ -24,7 +27,9 @@
     }
 }
 
+
 /* Show priority 2 at 480px (30em x 16px) */
+
 @media screen and (min-width: 30em) {
     th.ui-p-2,
     td.ui-p-2 {
@@ -32,7 +37,9 @@
     }
 }
 
+
 /* Show priority 3 at 640px (40em x 16px) */
+
 @media screen and (min-width: 40em) {
     th.ui-p-3,
     td.ui-p-3 {
@@ -40,7 +47,9 @@
     }
 }
 
+
 /* Show priority 4 at 800px (50em x 16px) */
+
 @media screen and (min-width: 50em) {
     th.ui-p-4,
     td.ui-p-4 {
@@ -48,7 +57,9 @@
     }
 }
 
+
 /* Show priority 5 at 960px (60em x 16px) */
+
 @media screen and (min-width: 60em) {
     th.ui-p-5,
     td.ui-p-5 {
@@ -56,10 +67,68 @@
     }
 }
 
+
 /* Show priority 6 at 1,120px (70em x 16px) */
+
 @media screen and (min-width: 70em) {
     th.ui-p-6,
     td.ui-p-6 {
         display: table-cell;
     }
+}
+
+
+/* Tooltip container */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    /* If you want dots under the hoverable text */
+}
+
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgb(10, 10, 10);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    margin-left: -60px;
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    top: 3px;
+    right: 1%;
+    height: 20px;
+}
+
+
+/* Tooltip arrow */
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(7, 7, 7) transparent transparent transparent;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

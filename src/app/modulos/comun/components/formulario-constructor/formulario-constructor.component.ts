@@ -40,11 +40,13 @@ export class FormularioConstructorComponent implements OnInit {
     let campo = new Campo();
     this.formulario.campoList.push(campo);
     this.formulario.campoList = this.formulario.campoList.slice();
+
   }
 
   removerCampo(indice: number) {
     this.formulario.campoList.splice(indice, 1);
     this.formulario.campoList = this.formulario.campoList.slice();
+
   }
 
 }

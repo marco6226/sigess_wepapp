@@ -71,7 +71,7 @@ export class ProgramacionComponent implements OnInit {
   areasPerm: string;
   loading: boolean = false;
   progLoading: boolean = false;
-
+  permiso:boolean = false;;
   constructor(
     private sesionService: SesionService,
     private router: Router,
@@ -80,11 +80,18 @@ export class ProgramacionComponent implements OnInit {
     private listaInspeccionService: ListaInspeccionService,
     private fb: FormBuilder,
   ) {
-
+  
   }
 
 
-  ngOnInit() {
+  ngOnInit() {   
+     let permiso = this.sesionService.getPermisosMap()['INP_PUT_PROG'];    
+
+    if (permiso != null && permiso.valido == true) {
+      this.permiso = true;
+    }
+  
+   
     this.areasPerm = this.sesionService.getPermisosMap()['INP_GET_PROG'].areas;
 
     this.fechaMaxima = new Date();
@@ -111,6 +118,8 @@ export class ProgramacionComponent implements OnInit {
     });
     let fechaActual = new Date();
     this.actualizarFecha(fechaActual.getFullYear(), fechaActual.getMonth());
+    this.form.controls.area.disabled
+    
   }
 
   buildAniosList(anioSelect: number) {
@@ -247,6 +256,8 @@ export class ProgramacionComponent implements OnInit {
     } else {
       this.form.enable();
     }
+
+    if(!this.permiso)this.form.disable();
   }
   openDlg(event: Date) {
     this.visibleDlg = true;
@@ -333,7 +344,7 @@ export class ProgramacionComponent implements OnInit {
       let incluirDia = semana.indexOf(fechaSiguiente.getDay().toString()) >= 0;
       if (esSabadoODomingo && !incluirDia) {
         fechaSiguiente.setDate(fechaSiguiente.getDate() + (fechaSiguiente.getDay() == 6 ? (semana.indexOf('0') >= 0 ? 1 : 2) : 1));
-        console.log("saltando dia " + fechaSiguiente.getDay());
+        //console.log("saltando dia " + fechaSiguiente.getDay());
       }
 */
 
@@ -342,7 +353,7 @@ export class ProgramacionComponent implements OnInit {
       let incluirDia = semana.indexOf(fechaSiguiente.getDay().toString()) >= 0;
       if (!incluirDia) {
         fechaSiguiente.setDate(fechaSiguiente.getDate() + 1);
-        console.log("saltando dia " + fechaSiguiente.getDay());
+        //console.log("saltando dia " + fechaSiguiente.getDay());
         continue;
       }
 

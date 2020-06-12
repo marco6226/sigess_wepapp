@@ -6,8 +6,7 @@
 </s-dataNotFound>
 
 <p-panel header="Listas de inspección" [style.display]="listaInspeccionList && listaInspeccionList.length > 0 ? 'block':'none'">
-    <p-table #dt [value]="listaInspeccionList" autoLayout="true" selectionMode="single" [(selection)]="listaInpSelect" [rows]="10"
-        [paginator]="true" dataKey="hash" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <p-table #dt [value]="listaInspeccionList" autoLayout="true" selectionMode="single" [(selection)]="listaInpSelect" [rows]="10" [paginator]="true" dataKey="hash" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="codigo">Código
@@ -37,7 +36,7 @@
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
                 </td>
                 <td>
-                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoLista', 'contains')">
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'fkPerfilId', 'contains')">
                 </td>
                 <td>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
@@ -55,14 +54,13 @@
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
 
-            <button *sTienePermiso="'INP_GET_LISTINP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="consultar()"
-                [disabled]="!listaInpSelect"></button>
+            <button *sTienePermiso="'INP_GET_LISTINP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="consultar()" [disabled]="!listaInpSelect"></button>
 
-            <button *sTienePermiso="'INP_PUT_LISTINP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                (click)="modificar()" [disabled]="!listaInpSelect"></button>
+            <button *sTienePermiso="'INP_PUT_LISTINP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modificar()" [disabled]="!listaInpSelect"></button>
 
-            <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Inspecciones" title="Descarga consolidado de inspecciones de la lista seleccionada"
-                class="ui-button-secondary" (click)="abrirDlg()" [disabled]="!listaInpSelect"></button>
+            <button pButton type="button" icon="fa fa-trash" label="Eliminar" title="Eliminar lista de inspección seleccionada" class="ui-button-danger" (click)="eliminar()" [disabled]="!listaInpSelect"></button>
+
+            <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Inspecciones" title="Descarga consolidado de inspecciones de la lista seleccionada" class="ui-button-secondary" (click)="abrirDlg()" [disabled]="!listaInpSelect"></button>
         </ng-template>
     </p-table>
 </p-panel>
@@ -84,8 +82,7 @@
     </div>
 
     <ng-container *ngIf="downloading != true">
-        <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Descargar" title="Descarga consolidado de inspecciones de la lista seleccionada"
-            (click)="descargarInspecciones()" [disabled]="desde == null || hasta == null"></button>
+        <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Descargar" title="Descarga consolidado de inspecciones de la lista seleccionada" (click)="descargarInspecciones()" [disabled]="desde == null || hasta == null"></button>
     </ng-container>
 </p-dialog>
 

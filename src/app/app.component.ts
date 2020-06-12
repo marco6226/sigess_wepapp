@@ -9,6 +9,6 @@ export class AppComponent {
   title = 'app works!';
   
   constructor(){
-  	console.log("Production: " + environment.production);
+  	//console.log("Production: " + environment.production);
   }
 }

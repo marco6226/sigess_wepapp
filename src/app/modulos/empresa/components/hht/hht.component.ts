@@ -30,7 +30,7 @@ export class HhtComponent implements OnInit {
   }
 
   cambiarAnio(event:any){
-    console.log(event);
+    //console.log(event);
     this.cargarAnios(this.anioSelect);
     this.cargarHht(this.anioSelect);
   }

@@ -1,8 +1,8 @@
 <div *ngFor="let elem of value">
-  <table width="100%">
+ <table width="100%">
     <tr class="node4">
       <td width="65px" style="text-align: center;">
-        <textarea pInputTextarea [(ngModel)]="elem.codigo" *ngIf="editable" placeholder="Código" maxlength="20"></textarea>
+        <textarea pInputTextarea [(ngModel)]="elem.codigo" *ngIf="editable" placeholder="Código" maxlength="20" disabled></textarea>
         <label *ngIf="!editable">{{nivelSeparator}}{{elem.codigo}}</label>
       </td>
 

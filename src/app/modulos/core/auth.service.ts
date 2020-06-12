@@ -117,7 +117,7 @@ export class AuthService {
     try {
       return CryptoJS.SHA256(value, "");
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       return "";
     }
   }
