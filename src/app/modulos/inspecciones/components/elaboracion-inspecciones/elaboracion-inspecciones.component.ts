@@ -80,7 +80,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
       this.programacion = this.paramNav.getParametro<Programacion>();
       this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.programacion.listaInspeccion;
       this.area = this.programacion == null ? this.inspeccion.area : this.programacion.area;
-
+      console.log(this.programacion);
       let filterQuery = new FilterQuery();
 
       let filterId = new Filter();

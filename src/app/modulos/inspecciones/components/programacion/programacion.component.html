@@ -66,12 +66,12 @@
         <p-dropdown id="listaInsp" [options]="listasInspeccionList" formControlName="listaInspeccionPK" appendTo="body" required></p-dropdown>
       </div>
       <div class="ui-g-12 ui-md-4">
-        <label for="areaResponsable">Ubicación responsable</label>
+        <label for="areaResponsable">Ubicación responsable {{permiso}}</label>
       </div>
       <div class="ui-g-12 ui-md-8">
-        <area-selector formControlName="area" required></area-selector>
+        <area-selector formControlName="area" required  ></area-selector>
       </div>
-    </div>
+    </div> 
     <p-panel header="Periodicidad" *ngIf="adicionar">
       <div class="ui-g">
         <div class="ui-g-12 ui-md-4">
@@ -112,14 +112,15 @@
       <ng-container *ngIf="adicionar && loading == false">
         <button *sTienePermiso="'INP_POST_PROG'" type="submit" pButton icon="fa fa-floppy-o" label="Guardar" [disabled]="!form.valid"></button>
       </ng-container>
-
+     
       <ng-container *ngIf="!adicionar && loading == false">
         <button *sTienePermiso="'INP_PUT_PROG'" type="submit" pButton icon="fa fa-pencil" label="Modificar" [disabled]="!form.valid"></button>
       </ng-container>
 
       <ng-container *ngIf="!adicionar && loading == false">
         <button *sTienePermiso="'INP_POST_INP'" type="button" pButton icon="fa fa-list-ol" class="ui-button-success" label="Inspeccion"
-          (click)="irInspeccion()" [disabled]="btnInspDisable"></button>
+          (click)="irInspeccion()" [disabled]="btnInspDisable">
+        </button>
       </ng-container>
 
       <ng-container *ngIf="!adicionar && loading == false">

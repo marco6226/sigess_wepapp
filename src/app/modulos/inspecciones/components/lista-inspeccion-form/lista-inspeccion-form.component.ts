@@ -61,8 +61,8 @@ export class ListaInspeccionFormComponent implements OnInit {
   adicionarElementoInp() {
     let elemento = new ElementoInspeccion();
     elemento.numero = ++this.contadorElem;
-    elemento.codigo = JSON.stringify(elemento.numero);
-
+    elemento.codigo = JSON.stringify(this.value.length+1);
+    console.log(this.value);
     if (this.value == null)
       this.value = [];
     this.value.push(elemento); 
