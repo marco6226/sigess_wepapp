@@ -92,15 +92,16 @@ export class UsuarioComponent implements OnInit {
   lazyLoad(event: any) {
     this.loading = true;
     let filterQuery = new FilterQuery();
-    filterQuery.sortField = event.sortField;
+    filterQuery.groupby = "id";
+    filterQuery.sortField =  event.sortField ? event.sortField  : 'email', event.sortOrder = '-1';
     filterQuery.sortOrder = event.sortOrder;
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
     filterQuery.count = true;
+   
 
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-
     this.usuarioService.findByFilter(filterQuery).then(
       resp => {
         this.totalRecords = resp['count'];

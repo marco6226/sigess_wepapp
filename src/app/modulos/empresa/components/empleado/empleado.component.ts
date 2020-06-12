@@ -85,6 +85,7 @@ export class EmpleadoComponent implements OnInit {
   showUpdateForm() {
     if (this.empleadoSelect != null) {
       this.isUpdate = true;
+      this.isEditable = true;
       console.log("FIX");
       this.visibleForm = true;
     } else {

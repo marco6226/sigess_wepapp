@@ -38,6 +38,9 @@ export abstract class ServiceCRUD<T> {
     if (filterQuery.offset != null) {
       urlParam += 'offset=' + filterQuery.offset + '&';
     }
+    if (filterQuery.groupby != null) {
+      urlParam += 'groupby=' + filterQuery.groupby + '&';
+    }
     if (filterQuery.rows != null) {
       urlParam += 'rows=' + filterQuery.rows + '&';
     }
@@ -68,6 +71,7 @@ export abstract class ServiceCRUD<T> {
   }
 
   findByFilter(filterQuery?: FilterQuery) {
+    console.log(filterQuery, "filtro linea 71");
     return new Promise((resolve, reject) => {
       this.httpInt.get(this.end_point + '?' + this.buildUrlParams(filterQuery))
         .retryWhen(this.retryFunction)
