@@ -49,36 +49,3 @@
     </tr>
   </table>
 </div>
-
-
-<div *ngFor="let elem of value" style="width:100%;">
-  <table class="table-node"  > <!--[class]="nodeClass"-->
-    <tr [id]="'tr_' + elem.id">
-      <td width="20px">
-        <span class="fa fa-check-circle no-diligenciado" *ngIf="elem.elementoInspeccionList != null && elem.elementoInspeccionList.length > 0"
-          [id]="'valid-icon_' + elem.id"  style="cursor: pointer;"></span>
-      </td>
-      <td style="width:100px;" *ngIf="editable">
-        <input type="text" pInputText [(ngModel)]="elem.codigo"  />
-      </td>
-
-      <td>
-        <input type="text" pInputText [(ngModel)]="elem.nombre" *ngIf="editable" />
-        <label *ngIf="!editable">{{elem.codigo}} {{elem.nombre}}</label>
-      </td>
-
-    
-
-      <td width="10px">
-        <button pButton type="button" icon="fa fa-plus" (click)="addElemento(elem)" *ngIf="editable"></button>
-      </td>
-
-
-      <!--<td width="10px">
-        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeElemento(, elem)" *ngIf="editable"></button>
-      </td>-->
-
-    </tr>
-   
-  </table>
-</div>
