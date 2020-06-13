@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterContentChecked } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Empleado } from 'app/modulos/empresa/entities/empleado'
 import { Area } from 'app/modulos/empresa/entities/area'
@@ -65,6 +65,7 @@ export class EmpleadoFormComponent implements OnInit {
     private comunService: ComunService,
     private cargoService: CargoService,
     private perfilService: PerfilService,
+
   ) {
     let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
     this.tipoIdentificacionList = defaultItem.concat(<SelectItem[]>tipo_identificacion);
@@ -182,7 +183,9 @@ export class EmpleadoFormComponent implements OnInit {
 
          
         });
-        if ( this.isUpdate === true || this.show === true ) this.buildPerfilesIdList();
+        if ( this.isUpdate === true || this.show === true )setTimeout(() => {
+          this.buildPerfilesIdList();
+        }, 500); 
 
       }
     );
@@ -207,7 +210,7 @@ export class EmpleadoFormComponent implements OnInit {
         let perfilesId = [];
          resp['data'].forEach(ident => perfilesId.push(ident.id));
       
-     
+          console.log(resp['data']);
         this.form.patchValue({perfilesId: perfilesId})
         })
      

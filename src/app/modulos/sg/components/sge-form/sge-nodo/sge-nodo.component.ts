@@ -88,7 +88,7 @@ export class SgeNodoComponent implements OnInit, AfterViewInit {
   addElemento(elemPadre: Elemento) {
     if (elemPadre.elementoList == null) {
       elemPadre.elementoList = [];
-    }
+    } 
     let elemento = new Elemento();
     elemento.codigo = elemPadre.codigo + "." + (elemPadre.elementoList.length + 1);
     elemPadre.elementoList.push(elemento);
