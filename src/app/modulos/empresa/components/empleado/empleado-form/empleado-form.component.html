@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
-                        Ciudad residencia
+                        Departamento y Ciudad 
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <s-ciudadSelector formControlName="ciudad"></s-ciudadSelector>
@@ -55,7 +55,7 @@
                         Zona residencia
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="zonaResidencia" value="U" label="Urbana" formControlName="zonaResidencia"></p-radioButton>
+                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia"></p-radioButton>
                         <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia"></p-radioButton>
                     </div>
 
@@ -79,7 +79,7 @@
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="telefono2" />
                     </div>
-                    <div (click)="debug()">debug</div>
+                    
                     <div class="ui-g-12 ui-md-2">
                         Fecha de nacimiento
                     </div>
@@ -91,7 +91,7 @@
                         Género
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="genero" value="M" label="Masculino" formControlName="genero"></p-radioButton>
+                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero"></p-radioButton>
                         <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero"></p-radioButton>
                     </div>
 
@@ -111,15 +111,8 @@
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
-                    </div>
+                    </div>                  
                     
-                    <div class="ui-g-12 ui-md-2">
-                        Ip Permitida
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-chips formControlName="ipPermitida"  ></p-chips>
-
-                    </div>
                     <div class="ui-g-12 ui-md-2">
                         Código
                     </div>
