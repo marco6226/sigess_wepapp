@@ -49,40 +49,36 @@
     </tr>
   </table>
 </div>
-<p-treeTable [value]="elementos.data">
-  <ng-template pTemplate="header">
-     <!-- <tr>
-          <th>Name</th>
-          <th>Size</th>
-          <th>Type</th>
-      </tr>-->
-  </ng-template>
-  <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-      <tr>
-          <td>
-              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-              {{rowData.codigo}}
-          </td>
-          <td>
-            <textarea pInputTextarea [(ngModel)]="rowData.nombre" *ngIf="editable" placeholder="Nombre" maxlength="255"></textarea>
-            <label *ngIf="!rowData.calificable && !editable">{{rowData.nombre}}</label>
-            <label *ngIf="rowData.calificable && !editable" [title]="rowData.descripcion" (click)="emitirEventoSelecElemento(rowData)" class="clickeable">{{rowData.nombre}}</label>
-          </td>
-          <td>{{rowData.descripcion}}</td>
-        
-      
-      <td style="width: 150px">
-            <p-multiSelect [options]="tiposHallazgo"  optionLabel="nombre" defaultLabel="--Tipos Hallazgo--"
-              *ngIf="editable"></p-multiSelect>
-      </td>    
 
-      <td width="10px">
-        <button pButton type="button" icon="fa fa-plus" (click)="addElemento(rowData)" *ngIf="editable"></button>
+
+<div *ngFor="let elem of value" style="width:100%;">
+  <table class="table-node"  > <!--[class]="nodeClass"-->
+    <tr [id]="'tr_' + elem.id">
+      <td width="20px">
+        <span class="fa fa-check-circle no-diligenciado" *ngIf="elem.elementoInspeccionList != null && elem.elementoInspeccionList.length > 0"
+          [id]="'valid-icon_' + elem.id"  style="cursor: pointer;"></span>
+      </td>
+      <td style="width:100px;" *ngIf="editable">
+        <input type="text" pInputText [(ngModel)]="elem.codigo"  />
       </td>
 
-      <td width="10px">
-        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeElemento(value, rowData)" *ngIf="editable"></button>
+      <td>
+        <input type="text" pInputText [(ngModel)]="elem.nombre" *ngIf="editable" />
+        <label *ngIf="!editable">{{elem.codigo}} {{elem.nombre}}</label>
       </td>
-      </tr>
-  </ng-template>
-</p-treeTable>
+
+    
+
+      <td width="10px">
+        <button pButton type="button" icon="fa fa-plus" (click)="addElemento(elem)" *ngIf="editable"></button>
+      </td>
+
+
+      <!--<td width="10px">
+        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeElemento(, elem)" *ngIf="editable"></button>
+      </td>-->
+
+    </tr>
+   
+  </table>
+</div>

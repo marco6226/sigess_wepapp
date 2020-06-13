@@ -24,9 +24,18 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   @Input("diligenciable") diligenciable: boolean;
   @Input("tiposHallazgo") tiposHallazgo:TipoHallazgo[];
   contadorElem: number = 0;
-
+  @Input() nodeOpts: any = {
+    0: { color: 'transparent', contraste: '' },
+    1: { color: '#00BFFF', contraste: '' },
+    2: { color: '#7B68EE', contraste: '' },
+    3: { color: '#20B2AA', contraste: '' },
+    4: { color: '#9370DB', contraste: '' },
+    5: { color: '#87CEEB', contraste: '' },
+    6: { color: '#265C5C', contraste: '' },
+    7: { color: '#4169E1', contraste: '' },
+    8: { color: '#7B68EE', contraste: '' },
+  };
   constructor() {
-    this.files = this.json.data;
    }
 
   // Interface implements
@@ -37,109 +46,7 @@ export class ElementoInspeccionNodeComponent implements OnInit {
       this.inicializarCalificacion(this.value);
     }
   }
-  elementos:TreeNode = {
-    data: [
-           {
-            data: {
-              codigo: "1",
-              nombre : "alv",
-              descripcion:"leonardo"
-                  },children :[{ 
-                   data:  {codigo: "1.1",
-                    nombre : "alv",
-                    descripcion:"leonardo"
-                  }
-                  
-                  }
-                ]
-           }
-      ]
-  }
-    
-   json:TreeNode = {
-    data:
-    [
-        {
-            data:{
-              codigo: "1",
-              nombre : "alv",
-              descripcion:"leonardo",
-              
-            },
-            children:[
-                {
-                    data:{
-                        name:"Work",
-                        size:"55kb",
-                        type:"Folder"
-                    },
-                    children:[
-                        {
-                            data:{
-                                name:"Expenses.doc",
-                                size:"30kb",
-                                type:"Document"
-                            }
-                        },
-                        {
-                            data:{
-                                name:"Resume.doc",
-                                size:"25kb",
-                                type:"Resume"
-                            }
-                        }
-                    ]
-                },
-                {
-                    data:{
-                        name:"Home",
-                        size:"20kb",
-                        type:"Folder"
-                    },
-                    children:[
-                        {
-                            data:{
-                                name:"Invoices",
-                                size:"20kb",
-                                type:"Text"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            data:{
-                name:"Pictures",
-                size:"150kb",
-                type:"Folder"
-            },
-            children:[
-                {
-                    data:{
-                        name:"barcelona.jpg",
-                        size:"90kb",
-                        type:"Picture"
-                    }
-                },
-                {
-                    data:{
-                        name:"primeui.png",
-                        size:"30kb",
-                        type:"Picture"
-                    }
-                },
-                {
-                    data:{
-                        name:"optimus.jpg",
-                        size:"30kb",
-                        type:"Picture"
-                    }
-                }
-            ]
-        }
-    ]
-}
+ 
 
       
   inicializarCalificacion(elemList: ElementoInspeccion[]) {
@@ -159,21 +66,13 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   // Component methods
 
   addElemento(elemPadre: ElementoInspeccion) {
-    console.log(elemPadre);
     if (elemPadre.elementoInspeccionList == null) {
       elemPadre.elementoInspeccionList = [];
     }
-
-    let code:Number = (parseFloat(elemPadre.codigo) + (elemPadre.elementoInspeccionList.length/10) + 0.1);
-    console.log(code.toString().length);
-    if(code.toString().length >= 4)  {
-     // code = code.toFixed(2);
-
-      }  
     
     let elemento = new ElementoInspeccion();
     elemento.numero = ++this.contadorElem;
-    elemento.codigo =  code.toString();
+    elemento.codigo = elemPadre.codigo + "." + (elemPadre.elementoInspeccionList.length + 1);
     console.log(elemPadre);
     elemPadre.elementoInspeccionList.push(elemento);
   }
