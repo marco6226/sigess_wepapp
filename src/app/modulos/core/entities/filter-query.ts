@@ -5,6 +5,7 @@ export class FilterQuery {
   offset?: number;
   rows?: number;
   sortField?: string;
+  groupby?: string;
   sortOrder?: number;
   count?: boolean;
   filterList?: Filter[];
