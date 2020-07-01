@@ -93,7 +93,8 @@ export class SgeNodoComponent implements OnInit, AfterViewInit {
     elemento.codigo = elemPadre.codigo + "." + (elemPadre.elementoList.length + 1);
     elemPadre.elementoList.push(elemento);
   }
-
+  
+ 
   addOpcionResp(elemento: Elemento) {
     elemento.opcionRespuestaList = this.opcionRespuestaList.slice(0);
   }

@@ -23,6 +23,7 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   @Input("nivelRiesgoList") nivelRiesgoList: any;
   @Input("diligenciable") diligenciable: boolean;
   @Input("tiposHallazgo") tiposHallazgo:TipoHallazgo[];
+  nivel;
   contadorElem: number = 0;
   @Input() nodeOpts: any = {
     0: { color: 'transparent', contraste: '' },
@@ -42,6 +43,10 @@ export class ElementoInspeccionNodeComponent implements OnInit {
 
    
   ngOnInit() {
+    if(this.nivel == null){
+      this.nivel = 0;
+    }
+    this.nivel += 1;
     if (this.value != null) {
       this.inicializarCalificacion(this.value);
     }
@@ -64,7 +69,11 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   }
 
   // Component methods
-
+  width(size){
+    console.log(size);
+    let width = 100-(size*5)
+    return `${width}%`;
+  }
   addElemento(elemPadre: ElementoInspeccion) {
     if (elemPadre.elementoInspeccionList == null) {
       elemPadre.elementoInspeccionList = [];

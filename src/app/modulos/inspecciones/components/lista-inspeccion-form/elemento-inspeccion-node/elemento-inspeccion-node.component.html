@@ -1,6 +1,7 @@
-<div *ngFor="let elem of value">
- <table width="100%">
-    <tr class="node4">
+<div *ngFor="let elem of value" st>
+ <table [width]="width(elem.codigo.split('.').length)" >
+    <tr class="node4"   >
+
       <td width="65px" style="text-align: center;">
         <textarea pInputTextarea [(ngModel)]="elem.codigo" *ngIf="editable" placeholder="Código" maxlength="20" disabled></textarea>
         <label *ngIf="!editable">{{nivelSeparator}}{{elem.codigo}}</label>
@@ -38,7 +39,6 @@
             *ngIf="elem.calificable"></p-radioButton>
         </td>
       </ng-template>
-
     </tr>
     <tr>
       <td [attr.colspan]="opciones?.length + 7">
