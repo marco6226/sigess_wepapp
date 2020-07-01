@@ -95,7 +95,7 @@ export class EmpleadoFormComponent implements OnInit {
       'area': [null, Validators.required],
       'cargoId': [null, Validators.required],
       'perfilesId': [null, Validators.required],
-      'ipPermitida': [null],
+      //'ipPermitida': [null],
       'email': [null, Validators.required]
     });
   }
@@ -134,7 +134,7 @@ export class EmpleadoFormComponent implements OnInit {
             'area': this.empleadoSelect.area,
             'cargoId': this.empleadoSelect.cargo.id,
             'perfilesId': [4],    
-            'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+            //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
 
             'email': this.empleadoSelect.usuario.email
           });
@@ -251,7 +251,7 @@ export class EmpleadoFormComponent implements OnInit {
     empleado.cargo.id = this.form.value.cargoId;
     empleado.usuario.email = this.form.value.email;
    // //console.log(this.form.value.ipPermitida);
-    empleado.usuario.ipPermitida = this.form.value.ipPermitida;
+   // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
     empleado.usuario.usuarioEmpresaList = [];
     
     this.form.value.perfilesId.forEach(perfilId => {
