@@ -72,7 +72,7 @@ export class UsuarioComponent implements OnInit {
       'id': [null],
       'email': [null, Validators.required],
       'perfilesId': [null, Validators.required],
-      'ipPermitida': [null, Validators.required],
+      'ipPermitida': [null],
       'mfa': mfaField,
       'numeroMovil': numMovField,
       'estado': [null]
