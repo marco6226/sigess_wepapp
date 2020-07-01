@@ -192,9 +192,7 @@ export class EmpleadoFormComponent implements OnInit {
 
   } 
 
-    debug(){ 
-      //console.log(this.form.value), "empleado";
-    }
+    
 
 
   async buildPerfilesIdList() {
