@@ -26,11 +26,13 @@ import { CargoService } from 'app/modulos/empresa/services/cargo.service'
 import { PerfilService } from 'app/modulos/admin/services/perfil.service'
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Filter, Criteria } from 'app/modulos/core/entities/filter';
+import { UsuarioService } from 'app/modulos/admin/services/usuario.service';
 
 @Component({
   selector: 's-empleadoForm',
   templateUrl: './empleado-form.component.html',
-  styleUrls: ['./empleado-form.component.scss']
+  styleUrls: ['./empleado-form.component.scss'],
+  providers: [UsuarioService]
 })
 export class EmpleadoFormComponent implements OnInit {
 
@@ -64,6 +66,8 @@ export class EmpleadoFormComponent implements OnInit {
     private enumeracionesService: EnumeracionesService,
     private comunService: ComunService,
     private cargoService: CargoService,
+    private usuarioService: UsuarioService,
+
     private perfilService: PerfilService,
 
   ) {
@@ -96,12 +100,12 @@ export class EmpleadoFormComponent implements OnInit {
       'cargoId': [null, Validators.required],
       'perfilesId': [null, Validators.required],
       //'ipPermitida': [null],
-      'email': [null, Validators.required]
+      'email': [null,{disabled:true}, Validators.required]
     });
   }
 
   ngOnInit() {
-    
+    this.isUpdate ? this.form.controls['email'].disable() : "" ; //this for disabled email in case of update
     if (this.empleadoSelect != null) {
       let fq = new FilterQuery();
       fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
@@ -110,7 +114,7 @@ export class EmpleadoFormComponent implements OnInit {
         resp => {
           this.empleadoSelect = <Empleado>(resp['data'][0]);
           this.loaded = true;
-          ////console.log(this.empleadoSelect);
+          console.log(this.empleadoSelect);
           this.form.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -136,7 +140,7 @@ export class EmpleadoFormComponent implements OnInit {
             'perfilesId': [4],    
             //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
 
-            'email': this.empleadoSelect.usuario.email
+            'email': [this.empleadoSelect.usuario.email]
           });
         }
       );
@@ -204,7 +208,7 @@ export class EmpleadoFormComponent implements OnInit {
       value1: this.empleadoSelect.usuario.id,
       value2: null
     }];
-
+    this.perfilService.update
      await this.perfilService.findByFilter(filterQuery).then(
       resp => {
         let perfilesId = [];
@@ -250,6 +254,7 @@ export class EmpleadoFormComponent implements OnInit {
     empleado.area.id = this.form.value.area.id;
     empleado.cargo.id = this.form.value.cargoId;
     empleado.usuario.email = this.form.value.email;
+    empleado.usuario.id = this.empleadoSelect.usuario.id;
    // //console.log(this.form.value.ipPermitida);
    // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
     empleado.usuario.usuarioEmpresaList = [];
@@ -262,6 +267,15 @@ export class EmpleadoFormComponent implements OnInit {
     });
     this.solicitando = true;
     if (this.isUpdate) {
+      console.log(empleado.usuario);
+      this.usuarioService.update(empleado.usuario)
+      .then(resp => {
+       console.log(resp);
+        this.solicitando = false;
+      })
+      .catch(err => {
+        this.solicitando = false;
+      });;
       this.empleadoService.update(empleado)
         .then(data => {
           this.manageUpdateResponse(<Empleado>data);

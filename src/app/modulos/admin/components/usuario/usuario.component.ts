@@ -212,6 +212,7 @@ onClick(){
 
     this.solicitando = true;
     if (this.isUpdate) {
+      console.log(usuario);
       this.usuarioService.update(usuario)
         .then(resp => {
           this.manageResponse(<Usuario>resp, true);
