@@ -70,7 +70,6 @@ export class ElementoInspeccionNodeComponent implements OnInit {
 
   // Component methods
   width(size){
-    console.log(size);
     let width = 100-(size*5)
     return `${width}%`;
   }
