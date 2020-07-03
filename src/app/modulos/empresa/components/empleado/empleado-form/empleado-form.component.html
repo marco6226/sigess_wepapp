@@ -104,10 +104,10 @@
                         Correo electrónico
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="email" required disabled/>
+                        <input type="text" pInputText formControlName="email" required />
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        Perfiles
+                        Perfiles {{this.isUpdate}}
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>

@@ -30,7 +30,6 @@ import { Area } from '../../../empresa/entities/area';
 export class ElaboracionInspeccionesComponent implements OnInit {
 
   pdfGenerado: boolean;
-
   @ViewChild('listaInspeccionForm', { static: false }) listaInspeccionForm: ListaInspeccionFormComponent;
   msgs: Message[];
   listaInspeccion: ListaInspeccion;
@@ -341,12 +340,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     }
 
     setTimeout(() => {
-      var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+      var WinPrint = window.open('','_blank');
+      console.log(WinPrint);
       WinPrint.document.write(template.innerHTML);
       WinPrint.document.close();
       WinPrint.focus();
       WinPrint.print();
-    }, 200);
+    }, 400);
   }
 
 }
