@@ -140,6 +140,7 @@ export class ElaboracionListaComponent implements OnInit {
   addOpcionRespuesta() {
     let opc = new OpcionCalificacion();
     opc.despreciable = false;
+    opc.requerirDoc = true;
     opc.numeral = this.opcionesCalifList.length == 0 ? 1 : this.opcionesCalifList[this.opcionesCalifList.length - 1].numeral + 1;
     this.opcionesCalifList.push(opc);
     this.opcionesCalifList = this.opcionesCalifList.slice();

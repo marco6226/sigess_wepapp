@@ -5,5 +5,6 @@ export class OpcionCalificacion {
   descripcion: number;
   valor: number;
   despreciable:boolean;
+  requerirDoc:boolean;
   numeral:number;
 }
