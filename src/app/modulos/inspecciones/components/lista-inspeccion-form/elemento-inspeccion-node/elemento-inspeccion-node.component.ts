@@ -70,7 +70,7 @@ export class ElementoInspeccionNodeComponent implements OnInit {
 
   // Component methods
   width(size){ 
-    let width = 95 - (size *0.1)
+    let width = 92 - (size *0.1)
     return `${width}%`;
   }
   addElemento(elemPadre: ElementoInspeccion) {
