@@ -51,6 +51,7 @@
                             <th>Descripción</th>
                             <th>Valor</th>
                             <th>Despreciable</th>
+                            <th>Obligar foto</th>
                             <th></th>
                         </tr>
                     </ng-template>
@@ -67,6 +68,9 @@
                             </td>
                             <td style="text-align: center;">
                                 <p-checkbox name="groupname" binary="true" [(ngModel)]="rowData.despreciable" [disabled]="consultar"></p-checkbox>
+                            </td>
+                            <td style="text-align: center;">
+                                <p-checkbox name="groupname" binary="true" [(ngModel)]="rowData.requerirDoc" [disabled]="consultar"></p-checkbox>
                             </td>
                             <td style="width:3em;">
                                 <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removeOpcionCalificacion(rowData)"></button>

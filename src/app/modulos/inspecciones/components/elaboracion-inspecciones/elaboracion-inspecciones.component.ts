@@ -79,7 +79,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
       this.programacion = this.paramNav.getParametro<Programacion>();
       this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.programacion.listaInspeccion;
       this.area = this.programacion == null ? this.inspeccion.area : this.programacion.area;
-      console.log(this.programacion);
+     // console.log(this.programacion);
       let filterQuery = new FilterQuery();
 
       let filterId = new Filter();
@@ -312,6 +312,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
       template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
       template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
 
+      console.log (this.listaInspeccion.nombre);
+      console.log (this.listaInspeccion.codigo);
+      console.log (this.listaInspeccion.listaInspeccionPK.version);
+      console.log (this.listaInspeccion.formulario.nombre);
+      
+
       let camposForm = template.querySelector('#L_campos_formulario');
       this.listaInspeccion.formulario.campoList.forEach(campo => {
         let tr = camposForm.cloneNode(true);
@@ -324,6 +330,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           }
         }
         camposForm.parentElement.appendChild(tr);
+        console.log  (this.inspeccion.respuestasCampoList);
       });
 
       let elemList = template.querySelector('#L_elementos_lista');
@@ -339,7 +346,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
       WinPrint.document.close();
       WinPrint.focus();
       WinPrint.print();
-      WinPrint.close();
     }, 400);
   }
 
