@@ -177,6 +177,22 @@ export class ElaboracionListaComponent implements OnInit {
       }
     );
   }
+    actualizarProfile(actualizarVersion:boolean){
+      let listInp = new ListaInspeccion();
+      listInp.listaInspeccionPK = this.form.value.id;
+      listInp.fkPerfilId = JSON.stringify(this.form.value.perfilesId);
+  
+      let param = (actualizarVersion == false ? null : 'actualizarVersion=true')+'&putProfile=true';
+      this.listaInspeccionService.update(listInp, param).then(
+        data => {
+          
+          this.msgs = [];
+          let detalle = actualizarVersion ? 'Se ha generado correctamente una nueva versión de la lista de inspección ' : 'Se ha actualizado correctamente la lista de inspección ';
+          this.msgs.push({ severity: 'success', summary: 'Perfiles de inspección actualizados' });
+        }
+      );
+
+                       }
 
   actualizar(actualizarVersion: boolean) {
     let listInp = new ListaInspeccion();

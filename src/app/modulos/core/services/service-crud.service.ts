@@ -173,6 +173,24 @@ export abstract class ServiceCRUD<T> {
     });
   }
 
+  updateAle(entity: T, params?: string, route?: string) {
+    let body = JSON.stringify(entity);
+    return new Promise((resolve, reject) => {
+      this.httpInt.post(this.end_point + route +"/"+ (params == null ? '' : '?'.concat(params)), body)
+        .retryWhen(this.retryFunction)
+        .map(res => res)
+        .subscribe(
+          res => {
+            resolve(res);
+          }
+          ,
+          err => {
+            reject(err);
+            this.manageError(err);
+          }
+        )
+    });
+  }
 
   delete(id: string) {
     return new Promise((resolve, reject) => {

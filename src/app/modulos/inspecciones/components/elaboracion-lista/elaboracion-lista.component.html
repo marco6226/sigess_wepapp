@@ -27,6 +27,9 @@
 
                     <label class="s-float-label">Perfiles</label>
                     <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
+                    <div *ngIf="modificar">
+                        <button  pButton type="button" (click)="actualizarProfile(false)" icon="fa fa-refresh" title="Crear nueva versión de la lista" [disabled]="!form.valid"></button>
+                    </div>
 
                     <label class="s-float-label">Descripción</label>
                     <textarea pInputTextarea formControlName="descripcion"></textarea>
