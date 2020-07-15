@@ -40,6 +40,6 @@ export class TerminosCondicionesComponent implements OnInit {
   logout() {
     this.authService.logout()
       .then(resp => this.router.navigate(['']))
-      .catch(err => alert("Se produjo un error al cerrar sesión"));
+      .catch(err => alert("Se produjo un error al cerrar sesión, ingresar nuevamente"));
   }
 }

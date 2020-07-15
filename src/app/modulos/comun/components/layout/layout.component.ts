@@ -73,7 +73,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		).catch(
 			err => {
 				//console.log(err);
-				alert("Se produjo un error al cerrar sesión")
+				alert("Se produjo un error al cerrar sesión, ingresar nuevamente")
 			}
 		);
 	}

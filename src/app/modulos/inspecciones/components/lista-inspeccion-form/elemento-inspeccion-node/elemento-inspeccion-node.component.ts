@@ -69,10 +69,7 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   }
 
   // Component methods
-  width(size){ 
-    let width = 92 - (size *0.1)
-    return `${width}%`;
-  }
+  
   addElemento(elemPadre: ElementoInspeccion) {
     if (elemPadre.elementoInspeccionList == null) {
       elemPadre.elementoInspeccionList = [];
