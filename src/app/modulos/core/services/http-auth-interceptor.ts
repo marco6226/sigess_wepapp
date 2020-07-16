@@ -18,7 +18,7 @@ import { MensajeUsuarioService } from '../../comun/services/mensaje-usuario.serv
 export class HttpAuthInterceptor implements HttpInterceptor {
 
   inflightAuthRequest: Observable<HttpEvent<any>> = null;
-
+ 
   constructor(
     public sesionService: SesionService,
     public authService: AuthService,
@@ -61,6 +61,7 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   getObservable(msg: MensajeUsuario, error, req: HttpRequest<any>, next): Observable<HttpEvent<any>> {
     switch (msg.codigo) {
       case 1_001:
+        console.log(msg);
         if (!this.inflightAuthRequest) {
           this.inflightAuthRequest = this.authService.refreshToken();
           if (!this.inflightAuthRequest) {

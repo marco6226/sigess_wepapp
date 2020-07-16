@@ -56,9 +56,22 @@ export class LoginComponent implements OnInit {
 	}
 
 	setVisible(visible: boolean) {
-		this.visible = visible;
+		this.msgs = [];
+        this.msgs.push({ severity: 'warn', detail: "Se cerro su sesion inicie de nuevo por favor" });
+        
+		this.visible = visible; 
+	} 
+	async validate(value){
+		let res:any = await this.authService.checkisLoginExist(value.username, value.passwd);
+		if(res.exit == "true"){
+			if (confirm('Se perderan los cambios no guardados de sus otras sesiones')) {
+				// Save it!
+				this.onSubmit(value);
+			  }
+		}else{
+			this.onSubmit(value);
+		}
 	}
-
 	onSubmit(value: any) {
 		this.logueando = true;
 		//console.log(value);

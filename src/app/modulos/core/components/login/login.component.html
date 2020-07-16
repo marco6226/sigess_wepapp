@@ -6,7 +6,7 @@
 		<div class="logo"></div>
 
 		<div class="form-container">
-			<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+			<form [formGroup]="userform" (ngSubmit)="validate(userform.value)">
 				<div class="ui-g">
 					<div class="ui-g-12" *ngIf="visiblePinForm == false">
 						<div class="ui-inputgroup">

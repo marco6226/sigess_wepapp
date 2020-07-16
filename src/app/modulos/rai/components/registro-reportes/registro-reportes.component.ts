@@ -77,6 +77,7 @@ export class RegistroReportesComponent implements OnInit {
   }
 
   inicializarReporte() {
+    console.log(this.tipoReporte);
     this.reporteService.inicializarReporte(this.empleadoSelect.id).then(
       data => {
         this.reporteSelect = <Reporte>data;

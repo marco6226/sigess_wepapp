@@ -14,6 +14,8 @@ import { endPoints } from './../../../environments/environment';
 import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { Subject } from 'rxjs/Subject';
 import { timeout } from 'rxjs/operators';
+import { Message } from 'primeng/api';
+import { Router } from '@angular/router';
 
 
 
@@ -22,15 +24,16 @@ export class AuthService {
 
   private loginSubject = new Subject<any>();
   private loginSubmitSubject = new Subject<any>();
-
+ msgs: Message[];
   jwtHelper: JwtHelper = new JwtHelper();
   authEndPoint = endPoints.auth;
   // store the URL so we can redirect after logging in
-  redirectUrl: string = '/app/home';
+  redirectUrl: string = '/app/home'; 
 
   constructor(
     public httpInt: HttpInt,
     public sesionService: SesionService,
+    private router:Router
   ) {
 
   }
@@ -53,6 +56,11 @@ export class AuthService {
           err => reject(err)
         );
     });
+  }
+
+  checkisLoginExist(login: string, passwd: string ){
+    let body = login + ":" + this.createHash(passwd)
+   return  this.httpInt.post(this.authEndPoint+ 'activetokens' + '?r=' + false + (false != null ? ("&pin=" + false) : ''), body).toPromise();
   }
 
   logout() {
@@ -135,6 +143,7 @@ export class AuthService {
       ).catch(error => {
         this.setLoginFormVisible(true);
       })
+    
       return this.loginSubmitSubject.asObservable();
     } else {
       // Si no se posee passwd, visualiza el formulario de login
