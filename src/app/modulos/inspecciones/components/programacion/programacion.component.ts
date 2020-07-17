@@ -13,6 +13,7 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones'
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { SesionService } from '../../../core/services/sesion.service';
+import { PerfilService } from 'app/modulos/admin/services/perfil.service';
 
 @Component({
   selector: 'app-programacion',
@@ -75,6 +76,7 @@ export class ProgramacionComponent implements OnInit {
   constructor(
     private sesionService: SesionService,
     private router: Router,
+    private userService: PerfilService,
     private paramNav: ParametroNavegacionService,
     private programacionService: ProgramacionService,
     private listaInspeccionService: ListaInspeccionService,
@@ -84,13 +86,25 @@ export class ProgramacionComponent implements OnInit {
   }
 
 
-  ngOnInit() {   
+ async ngOnInit() {   
      let permiso = this.sesionService.getPermisosMap()['INP_PUT_PROG'];    
 
     if (permiso != null && permiso.valido == true) {
       this.permiso = true;
     }
-  
+    let user:any = JSON.parse(localStorage.getItem('session'));
+    let filterQuery = new FilterQuery();
+
+    filterQuery.filterList = [{
+      field: 'usuarioEmpresaList.usuario.id',
+      criteria: Criteria.EQUALS,
+      value1: user.usuario.id,
+      value2: null
+    }];
+    const userP = await this.userService.findByFilter(filterQuery);
+    console.log(userP);
+    let userParray:any = userP;    
+
    
     this.areasPerm = this.sesionService.getPermisosMap()['INP_GET_PROG'].areas;
 
@@ -101,9 +115,24 @@ export class ProgramacionComponent implements OnInit {
 
     this.listaInspeccionService.findAll()
       .then(data => {
+        console.log(data);
         (<ListaInspeccion[]>data['data']).forEach(lista => {
-          this.listasInspeccionList.push({ label: lista.codigo + ' - ' + lista.nombre + ' v' + lista.listaInspeccionPK.version, value: lista.listaInspeccionPK });
+          try {
+            for (const profile of userParray.data) {
+             console.log(profile.id)
+ 
+             if (lista.fkPerfilId.includes(`${profile.id}`)) {
+              this.listasInspeccionList.push({ label: lista.codigo + ' - ' + lista.nombre + ' v' + lista.listaInspeccionPK.version, value: lista.listaInspeccionPK });
+              break;
+            }
+            
+ 
+            }
+          } catch (error) {
+            
+          } 
         });
+        console.log(this.listasInspeccionList);
         this.listasInspeccionList = this.listasInspeccionList.slice();
       });
     this.form = this.fb.group({

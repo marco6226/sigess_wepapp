@@ -86,7 +86,7 @@ export class ListasInspeccionComponent implements OnInit {
         field: 'fkPerfilId',
         criteria: Criteria.CONTAINS,
         value1: `%${element.id}%`,
-        
+         
       })
     });*/
     
