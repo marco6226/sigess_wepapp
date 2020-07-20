@@ -84,17 +84,17 @@ export class EmpresaAdminComponent implements OnInit {
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
-    filterQuery.sortOrder = event.sortOrder;
+    filterQuery.sortOrder = event.sortOrder; 
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
     filterQuery.count = true;
-
+    filterQuery.groupBy = "nit";
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
 
     this.empresaService.findByFilter(filterQuery).then(
       resp => {
-        this.totalRecords = resp['count'];
+        this.totalRecords =(<any[]> resp['data']).length;
         this.loading = false;
         this.empresasList = [];
         (<any[]>resp['data']).forEach(dto => this.empresasList.push(FilterQuery.dtoToObject(dto)));

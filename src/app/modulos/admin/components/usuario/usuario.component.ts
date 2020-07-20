@@ -92,7 +92,7 @@ export class UsuarioComponent implements OnInit {
   lazyLoad(event: any) {
     this.loading = true;
     let filterQuery = new FilterQuery();
-    filterQuery.groupby = "id";
+    filterQuery.groupBy = "id";
     filterQuery.sortField =  event.sortField ? event.sortField  : 'email', event.sortOrder = '-1';
     filterQuery.sortOrder = event.sortOrder;
     filterQuery.offset = event.first;

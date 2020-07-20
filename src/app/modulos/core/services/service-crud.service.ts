@@ -38,8 +38,8 @@ export abstract class ServiceCRUD<T> {
     if (filterQuery.offset != null) {
       urlParam += 'offset=' + filterQuery.offset + '&';
     }
-    if (filterQuery.groupby != null) {
-      urlParam += 'groupby=' + filterQuery.groupby + '&';
+    if (filterQuery.groupBy != null) {
+      urlParam += 'groupBy=' + filterQuery.groupBy + '&';
     }
     if (filterQuery.rows != null) {
       urlParam += 'rows=' + filterQuery.rows + '&';
