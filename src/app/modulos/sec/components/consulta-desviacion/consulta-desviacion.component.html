@@ -18,8 +18,8 @@
                         <th pSortableColumn="hashId" style="width: 10%;">Código
                             <p-sortIcon field="hashId"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="fechaReporte" style="width: 14%;">Fecha Reporte
-                            <p-sortIcon field="fechaReporte.date" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                        <th pSortableColumn="fechaReporte" style="width: 10%;">Fecha Reporte
+                            <p-sortIcon field="fechaReporte.date:'yyyy-MM-dd HH:mm'" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                         </th>
                         <th pSortableColumn="area.nombre" style="width: 15%;">Área origen
                             <p-sortIcon field="area.nombre"></p-sortIcon>
@@ -66,7 +66,7 @@
                         </td>
                         <td>{{desviacion.modulo}}</td>
                         <td>{{desviacion.hashId}}</td>
-                        <td>{{desviacion.fechaReporte}}</td>
+                        <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td>
                         <td>{{desviacion.area_nombre}}</td>
                         <td>{{desviacion.concepto}}</td>
                         <td>{{desviacion.aspectoCausante}}</td>
