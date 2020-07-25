@@ -62,7 +62,13 @@ export class LoginComponent implements OnInit {
 		this.visible = visible; 
 	} 
 	async validate(value){
-		let res:any = await this.authService.checkisLoginExist(value.username, value.passwd);
+		let res:any;
+		try {
+		 res = await this.authService.checkisLoginExist(value.username, value.passwd);
+
+			} catch (error) {
+				if(error.status ===400) res = {exit:"false"}
+			}
 		if(res.exit == "true"){
 			if (confirm('Se perderan los cambios no guardados de sus otras sesiones')) {
 				// Save it!
