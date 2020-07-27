@@ -193,9 +193,14 @@ export class FormularioAccidenteComponent implements OnInit {
   onSubmit() {
     let reporte = <Reporte>this.form.value;
     reporte.testigoReporteList = this.testigoReporteList;
+
     if (this.adicionar) {
       this.reporteService.create(reporte).then(
-        data => this.onSave.emit(<Reporte>data)
+        data => {
+          console.log(data);
+          this.onSave.emit(<Reporte>data)
+        }
+
       );
     } else if (this.modificar) {
       this.reporteService.update(reporte).then(
