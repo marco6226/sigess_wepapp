@@ -165,7 +165,8 @@ export class FormularioAccidenteComponent implements OnInit {
       }
       this.testigoReporteList = this.testigoReporteList.slice();
     }
-    this.visibleCamposAccidente = this.reporte.tipo == 'ACCIDENTE';
+   
+    this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
 
 
   }
