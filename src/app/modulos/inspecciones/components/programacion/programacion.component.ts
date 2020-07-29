@@ -82,7 +82,16 @@ export class ProgramacionComponent implements OnInit {
     private listaInspeccionService: ListaInspeccionService,
     private fb: FormBuilder,
   ) {
-  
+    this.form = this.fb.group({
+      id: null,
+      numeroInspecciones: ['', Validators.required],
+      listaInspeccionPK: ['', Validators.required],
+      area: ['', Validators.required],
+      unidadFrecuencia: null,
+      valorFrecuencia: null,
+      fechaHasta: null,
+      semana: null
+    }); 
   }
 
 
@@ -135,16 +144,7 @@ export class ProgramacionComponent implements OnInit {
         console.log(this.listasInspeccionList);
         this.listasInspeccionList = this.listasInspeccionList.slice();
       });
-    this.form = this.fb.group({
-      id: null,
-      numeroInspecciones: ['', Validators.required],
-      listaInspeccionPK: ['', Validators.required],
-      area: ['', Validators.required],
-      unidadFrecuencia: null,
-      valorFrecuencia: null,
-      fechaHasta: null,
-      semana: null
-    });
+    
     let fechaActual = new Date();
     this.actualizarFecha(fechaActual.getFullYear(), fechaActual.getMonth());
     this.form.controls.area.disabled
@@ -412,7 +412,8 @@ export class ProgramacionComponent implements OnInit {
       programacion.listaInspeccion.listaInspeccionPK = this.form.value.listaInspeccionPK;
     }
     programacion.numeroInspecciones = this.form.value.numeroInspecciones;
-    return programacion
+    return programacion;
+    console.log(programacion);
   }
 
 
