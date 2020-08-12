@@ -329,6 +329,12 @@
           <div class="ui-g-12 ui-sm-12 ui-md-4">
             <p-dropdown [options]="jornadaTrabajoList" formControlName="jornadaHabitual"></p-dropdown>
           </div>
+          <div class="ui-g-12 ui-md-2">
+            Ubicación
+        </div>
+        <div class="ui-g-12 ui-md-4">
+            <area-selector formControlName="area" [name]="this.reporte.areaAccidente ? this.reporte.areaAccidente:''" required></area-selector>
+        </div>
         </div>
       </p-accordionTab>
 
