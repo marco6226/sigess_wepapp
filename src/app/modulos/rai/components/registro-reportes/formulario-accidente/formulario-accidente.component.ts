@@ -3,6 +3,7 @@ import { Reporte } from 'app/modulos/rai/entities/reporte'
 import { ReporteService } from 'app/modulos/rai/services/reporte.service'
 import { TestigoReporte } from 'app/modulos/rai/entities/testigo-reporte'
 import { SelectItem } from 'primeng/primeng'
+import { Area } from 'app/modulos/empresa/entities/area'
 import {
   tipo_vinculacion,
   jornada_trabajo,
@@ -154,8 +155,9 @@ export class FormularioAccidenteComponent implements OnInit {
       tipoIdentificacionResponsable: this.reporte.tipoIdentificacionResponsable,
       numeroIdentificacionResponsable: this.reporte.numeroIdentificacionResponsable,
       cargoResponsable: this.reporte.cargoResponsable,
-      fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte)
+      fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte)      
     });
+    console.log(this.reporte.areaAccidente);
     if (this.reporte.testigoReporteList != null) {
       this.testigoReporteList = [];
       for (let i = 0; i < this.reporte.testigoReporteList.length; i++) {

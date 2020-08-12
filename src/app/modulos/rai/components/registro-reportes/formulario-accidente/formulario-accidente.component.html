@@ -333,7 +333,7 @@
             Ubicación
         </div>
         <div class="ui-g-12 ui-md-4">
-            <area-selector formControlName="area" [name]="this.reporte.areaAccidente ? this.reporte.areaAccidente:''" required></area-selector>
+            <area-selector formControlName="areaAccidente" [name]="this.reporte.areaAccidente ?this.reporte.areaAccidente.nombre:''" required></area-selector>
         </div>
         </div>
       </p-accordionTab>
