@@ -27,6 +27,7 @@ export class IndicadoresRaiComponent implements OnInit {
   ngOnInit() {
     this.tipoReporteList = tipo_reporte.slice();
     this.tipoReporteSelected = this.tipoReporteList[0].value;
+    console.log(this.tipoReporteList);
     let anioActual = new Date().getFullYear();
     let rangos = [
       { desde: new Date(anioActual + '-01-01'), hasta: new Date(anioActual + '-06-30'), color: Util.randomColor() },

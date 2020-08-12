@@ -31,7 +31,7 @@ export class RegistroReportesComponent implements OnInit {
     private paramNav: ParametroNavegacionService,
   ) { }
 
-  ngOnInit() {
+async  ngOnInit() {
     let repParam = this.paramNav.getParametro<Reporte>();
     if (repParam != null) {
       this.consultar = this.paramNav.getAccion<string>() == 'GET';
@@ -39,11 +39,14 @@ export class RegistroReportesComponent implements OnInit {
 
       let filterQuery = new FilterQuery();
       filterQuery.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1: repParam.id, value2: null }];
-      this.reporteService.findByFilter(filterQuery).then(
+    await  this.reporteService.findByFilter(filterQuery).then(
         resp => {
           this.reporteSelect = <Reporte>(resp['data'][0]);
+          console.log(this.reporteSelect);
           this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
+    
           this.tipoReporte = this.reporteSelect.tipo;
+          console.log(this.tipoReporte);
         }
       );
     } else {
@@ -97,7 +100,7 @@ export class RegistroReportesComponent implements OnInit {
     this.reporteSelect = null;
     this.tipoReporte = null;
     this.empleadoSelect = null;
-  }
+  } 
 
   onSave(reporte: Reporte) {
    

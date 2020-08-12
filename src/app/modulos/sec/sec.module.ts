@@ -20,13 +20,15 @@ import { TreeTableModule } from 'primeng/treetable';
 import { AnalisisCostosComponent } from './components/analisis-costos/analisis-costos.component';
 import { DocumentosAnalisisDesviacionComponent } from './components/documentos-analisis-desviacion/documentos-analisis-desviacion.component';
 import { ConsultaDesviacionInspeccionComponent } from './components/consulta-desviacion-inspeccion/consulta-desviacion-inspeccion.component';
+import { TooltipModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
     CommonModule,
     SecRoutingModule,
     ComunModule,
-    TreeTableModule
+    TreeTableModule,
+    TooltipModule
   ],
   declarations: [
     SecComponent,

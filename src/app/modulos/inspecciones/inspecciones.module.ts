@@ -14,12 +14,13 @@ import { ProgramacionService } from 'app/modulos/inspecciones/services/programac
 import { InspeccionService } from 'app/modulos/inspecciones/services/inspeccion.service';
 import { ConsultaInspeccionesComponent } from './components/consulta-inspecciones/consulta-inspecciones.component'
 import { PanelFlotanteComponent } from 'app/modulos/comun/components/panel-flotante/panel-flotante.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
   imports: [
     ComunModule,
-    InspeccionesRoutingModule
+    InspeccionesRoutingModule,
   ],
   declarations: [
     InspeccionesComponent,

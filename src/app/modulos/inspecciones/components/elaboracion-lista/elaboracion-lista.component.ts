@@ -56,7 +56,7 @@ export class ElaboracionListaComponent implements OnInit {
         (<Perfil[]>resp['data']).forEach(perfil => {
           this.perfilList.push({ label: perfil.nombre, value: perfil.id });
         });
-      }
+      } 
     );
     this.form = this.fb.group({
       'id': null,
@@ -158,7 +158,8 @@ export class ElaboracionListaComponent implements OnInit {
     }
   }
 
-  guardar() {
+  async guardar() {
+   
     let listInp = new ListaInspeccion();
     listInp.nombre = this.form.value.nombre;
     listInp.codigo = this.form.value.codigo;
@@ -167,8 +168,10 @@ export class ElaboracionListaComponent implements OnInit {
     listInp.descripcion = this.form.value.descripcion;
     listInp.tipoLista = this.form.value.tipoLista;
     listInp.opcionCalificacionList = this.opcionesCalifList;
+ 
     listInp.elementoInspeccionList = this.elementoInspeccionList;
     listInp.formulario = this.formularioConstructor.formulario;
+    await this.verifyIntegrity(listInp);
     this.listaInspeccionService.create(listInp).then(
       data => {
         this.msgs = [];
@@ -216,6 +219,15 @@ export class ElaboracionListaComponent implements OnInit {
       }
     );
   }
+
+  verifyIntegrity(listInp){
+
+    
+
+  }
+
+
+
 
   resetAll() {
     this.adicionar = true;

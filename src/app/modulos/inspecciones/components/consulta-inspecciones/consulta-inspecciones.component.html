@@ -15,6 +15,9 @@
                         <th pSortableColumn="fechaRealizada">Fecha elaboración
                             <p-sortIcon field="fechaRealizada"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="id">Codigo
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="usuarioRegistra.email">Usuario elabora
                             <p-sortIcon field="usuarioRegistra.email"></p-sortIcon>
                         </th>
@@ -51,6 +54,9 @@
                             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
                         </td>
                         <td>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'id', 'bt')"></s-rangoFechaSelector>
+                        </td>
+                        <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
                         </td>
                     </tr>
@@ -59,6 +65,7 @@
                     <tr [pSelectableRow]="inspeccion" class="table-row table-row-selectable">
                         <td>{{inspeccion.programacion?.fecha | date:'dd/MM/yyyy'}}</td>
                         <td>{{inspeccion?.fechaRealizada | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>INP-{{inspeccion.id}}</td>
                         <td>{{inspeccion.usuarioRegistra?.email}}</td>
                         <td>{{inspeccion.programacion?.listaInspeccion?.nombre}}</td>
                         <td>{{inspeccion.programacion?.area?.nombre}}</td>

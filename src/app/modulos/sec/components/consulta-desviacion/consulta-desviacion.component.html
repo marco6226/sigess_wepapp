@@ -27,7 +27,7 @@
                         <th pSortableColumn="concepto" style="width: 20%;">Concepto
                             <p-sortIcon field="concepto"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="aspectoCausante" style="width: 20%;">Aspecto causante
+                        <th pSortableColumn="aspectoCausante" style="width: 20%;">Aspecto causante 
                             <p-sortIcon field="aspectoCausante"></p-sortIcon>
                         </th>
                     </tr>
@@ -69,7 +69,7 @@
                         <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td>
                         <td>{{desviacion.area_nombre}}</td>
                         <td>{{desviacion.concepto}}</td>
-                        <td>{{desviacion.aspectoCausante}}</td>
+                        <td [pTooltip]="desviacion.aspectoCausante" tooltipPosition="top">{{desviacion.aspectoCausante | slice:0:100}}...</td>
                     </tr>
                 </ng-template>
                 <!-- <ng-template pTemplate="caption">
