@@ -109,7 +109,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 					]
 			},
 			{
-				label: 'Inspecciones',
+				label: 'Inspeccion',
 				class: 'icon-inp',
 				codigo: 'INP',
 				expanded: false,
