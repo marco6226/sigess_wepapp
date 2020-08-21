@@ -166,7 +166,8 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 					]
 			},
 			{
-				label: this.nombreSEC,
+				//label: this.nombreSEC,
+				label: 'Seguimiento y Control',
 				class: 'icon-sec',
 				expanded: false,
 				codigo: 'SEC',
