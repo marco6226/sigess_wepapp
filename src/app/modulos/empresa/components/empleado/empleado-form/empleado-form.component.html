@@ -172,14 +172,14 @@
 
     </p-tabPanel>
 
-    <p-tabPanel header="Jornada" [disabled]="!isUpdate">
-        <s-jornadaForm [value]="empleadoSelect" *ngIf="isUpdate && loaded"></s-jornadaForm>
+    <p-tabPanel header="Jornada" >
+        <s-jornadaForm [value]="empleadoSelect" *ngIf="loaded"></s-jornadaForm>
     </p-tabPanel>
-    <p-tabPanel header="Horas extra" [disabled]="!isUpdate">
-        <s-horasExtraForm [value]="empleadoSelect" *ngIf="isUpdate && loaded"></s-horasExtraForm>
+    <p-tabPanel header="Horas extra" >
+        <s-horasExtraForm [value]="empleadoSelect" *ngIf="loaded"></s-horasExtraForm>
     </p-tabPanel>
-    <p-tabPanel header="Documentación" [disabled]="!isUpdate">
-        <s-documentosEmpleadoForm *ngIf="isUpdate && loaded" [value]="empleadoSelect"></s-documentosEmpleadoForm>
+    <p-tabPanel header="Documentación" >
+        <s-documentosEmpleadoForm *ngIf="loaded" [value]="empleadoSelect"></s-documentosEmpleadoForm>
     </p-tabPanel>
 </p-tabView>
 

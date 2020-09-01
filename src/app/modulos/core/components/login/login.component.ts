@@ -66,9 +66,7 @@ export class LoginComponent implements OnInit {
 		try {
 		 res = await this.authService.checkisLoginExist(value.username, value.passwd);
 
-			} catch (error) {
-				if(error.status ===400) res = {exit:"false"}
-			}
+		
 		if(res.exit == "true"){
 			if (confirm('Se perderan los cambios no guardados de sus otras sesiones')) {
 				// Save it!
@@ -76,7 +74,10 @@ export class LoginComponent implements OnInit {
 			  }
 		}else{
 			this.onSubmit(value);
-		}
+        }
+    } catch (error) {
+        if(error.status ===400) res = {exit:"false"}
+    }
 	}
 	onSubmit(value: any) {
 		this.logueando = true;

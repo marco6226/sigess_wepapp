@@ -33,6 +33,21 @@ export class ModeloGraficaService extends ServiceCRUD<ModeloGrafica>{
         )
     });
   }
+
+  findInpN<T>(areaId, rangos, empresaId) {
+    return new Promise(resolve => {
+      this.httpInt.get(this.end_point + "indicadorInp/" + "test/"+ areaId + "/" + rangos + "/" + (empresaId == null ? 0 : empresaId))
+        .map(res => res)
+        .subscribe(
+        res => {
+          resolve(res);
+        }
+        ,
+        err => this.manageError(err)
+        )
+    });
+  }
+
   getClassName() {
     return "ModeloGrafica";
   }

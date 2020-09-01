@@ -9,7 +9,36 @@
 .fa-times-circle{
   color:rgb(200, 0, 0);
 }
+.info-card {
+    display: grid;
+    grid-template-columns: auto 80%;
+    min-height: 5rem;
+    
+}
 
+    .ui-card{ 
+    background: linear-gradient(256deg, #65afc4 0%, #88c0d0 100%);
+        }
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .fa{
+        font-size: 3rem;
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info .percent {
+    font-size: 2rem;
+
+}
 p label{
   font-weight: bold;
 }

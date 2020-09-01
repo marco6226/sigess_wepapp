@@ -11,7 +11,7 @@ import { RespuestaCampo } from '../../entities/respuesta-campo';
   styleUrls: ['./formulario.component.scss']
 })
 export class FormularioComponent implements OnInit {
-
+    es: any;
   @Input("formularioModel") formulario: Formulario;
   form: FormGroup;
   selectorsMap: any = [];
@@ -23,6 +23,18 @@ export class FormularioComponent implements OnInit {
 
   ngOnInit() {
     let group: any = {};
+    this.es = {
+        firstDayOfWeek: 0,
+        dayNames: ["Domingp", "Lunes", "Martes", "Miercoles", "Jueves", "Vienes", "Sabado"],
+        dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+        dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
+        monthNames: [ "Enero","Febrero ","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+        monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul", "Ago", "Sep", "Oct", "Nov", "Dec" ],
+        today: 'Today',
+        clear: 'Clear',
+        dateFormat: 'mm/dd/yy',
+        weekHeader: 'Wk'
+    };
     this.formulario.campoList.forEach(campo => {
       if (campo.tipo == 'multiple_select' || campo.tipo == 'single_select') {
         this.selectorsMap[campo.id] = (campo.tipo == 'single_select' ? [{ label: '--seleccione--', value: null }] : []);
@@ -45,7 +57,7 @@ export class FormularioComponent implements OnInit {
             campo.respuestaCampo.valor = campo.respuestaCampo.valor;
             break;
         }
-      } else {
+      } else { 
         campo.respuestaCampo = new RespuestaCampo();
       }
       let formControl = campo.requerido ? new FormControl(campo.respuestaCampo.valor, Validators.required) : new FormControl(campo.respuestaCampo.valor);
