@@ -109,7 +109,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 					]
 			},
 			{
-				label: 'Inspecciones',
+				label: 'Inspeccion',
 				class: 'icon-inp',
 				codigo: 'INP',
 				expanded: false,
@@ -166,7 +166,8 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 					]
 			},
 			{
-				label: this.nombreSEC,
+				//label: this.nombreSEC,
+				label: 'Seguimiento y Control',
 				class: 'icon-sec',
 				expanded: false,
 				codigo: 'SEC',
