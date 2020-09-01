@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
       setTimeout(() => {
           this.show=true
       }, 1000);
-      this.indicadorService.findInpN("test",null,3)
+      this.indicadorService.findInpN([1,2,3,4,5],null,3)
 
     this.usuarioService.consultarHistoriaLogin().then(
       resp => this.evtLogList = resp['data']
