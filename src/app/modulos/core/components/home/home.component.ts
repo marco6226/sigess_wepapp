@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit {
     this.data.datasets[index].data = [];
    });
    //0 = nrealiz, 1 = n_total, 2 name
-    let data:any = await this.indicadorService.findInpN([1,2,3,4,5],null,3)
+    let data:any = await this.indicadorService.findInpN(arrayIds,null,3)
         for (const iterator of data) {
             console.log(iterator);
             this.data.labels.push(iterator[2])
