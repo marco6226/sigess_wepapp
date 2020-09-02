@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   cities1:any [];
   areaSelected: any;
     cities2:any [];
-    show=false;
+    show=false; 
   constructor(
     private usuarioService: UsuarioService,
     private indicadorService: ModeloGraficaService,
@@ -100,13 +100,24 @@ export class HomeComponent implements OnInit {
     
    }
 
-   actualizarArea(areas){
+ async  actualizarArea(areas){
     let arrayIds = [];
    for (const area of areas) {
     arrayIds.push(area.id)
    }
-     this.indicadorService.findInpN(arrayIds,null,3)
-
+   this.data.labels = [];
+   this.data.datasets.forEach((element,index) => {
+    this.data.datasets[index].data = [];
+   });
+   //0 = nrealiz, 1 = n_total, 2 name
+    let data:any = await this.indicadorService.findInpN([1,2,3,4,5],null,3)
+        for (const iterator of data) {
+            console.log(iterator);
+            this.data.labels.push(iterator[2])
+            this.data.datasets[0].data.push(iterator[1])
+            this.data.datasets[1].data.push(iterator[0])
+        }
+        console.log(this.data);
    }
   async ngOnInit() {
       setTimeout(() => {
