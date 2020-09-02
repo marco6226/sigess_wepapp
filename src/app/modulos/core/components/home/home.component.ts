@@ -13,6 +13,7 @@ import { range } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
     data: any;
+    showData = false;
     data2: any;
     data3: any;
   evtLogList: any[];
@@ -101,6 +102,7 @@ export class HomeComponent implements OnInit {
    }
 
  async  actualizarArea(areas){
+    this.showData = false;
     let arrayIds = [];
    for (const area of areas) {
     arrayIds.push(area.id)
@@ -118,10 +120,12 @@ export class HomeComponent implements OnInit {
             this.data.datasets[1].data.push(iterator[0])
         }
         console.log(this.data);
+        this.showData = true;
    }
   async ngOnInit() {
       setTimeout(() => {
           this.show=true
+          this.showData = true;
       }, 1000);
       let arrtest = [1,2,4,5,4];
   

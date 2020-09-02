@@ -70,7 +70,8 @@
 
             </div>
            <ng-container *ngIf="this.data">
-            <div>
+            <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+            <div *ngIf="showData">
                 <p-chart type="bar" [data]="data"></p-chart>
             </div>
            </ng-container>
