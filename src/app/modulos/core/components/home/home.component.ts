@@ -101,15 +101,19 @@ export class HomeComponent implements OnInit {
    }
 
    actualizarArea(areas){
-       console.log(areas);
+    let arrayIds = [];
+   for (const area of areas) {
+    arrayIds.push(area.id)
+   }
+     this.indicadorService.findInpN(arrayIds,null,3)
+
    }
   async ngOnInit() {
       setTimeout(() => {
           this.show=true
       }, 1000);
       let arrtest = [1,2,4,5,4];
-      
-      this.indicadorService.findInpN([1,2,3,4,5],null,3)
+  
 
     this.usuarioService.consultarHistoriaLogin().then(
       resp => this.evtLogList = resp['data']
