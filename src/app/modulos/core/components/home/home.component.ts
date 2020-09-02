@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
             label: 'Inspecciones programadas',
             backgroundColor: '#d9c077',
             borderColor: '#1E88E5',
-            data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,]
+            data: [65, 59, 80, 81, 56, 55, 40,65]
         },
         {
             label: 'Inspecciones realizadas',
