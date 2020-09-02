@@ -13,6 +13,8 @@ import { range } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
     data: any;
+    data2: any;
+    data3: any;
   evtLogList: any[];
   cities1:any [];
   areaSelected: any;
@@ -39,22 +41,62 @@ export class HomeComponent implements OnInit {
         {name: 'Paris', code: 'PRS'}
     ];
     this.data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO','ORINOQUIA'],
         datasets: [
             {
-                label: 'My First dataset',
-                backgroundColor: '#42A5F5',
+                label: 'Inspecciones programadas',
+                backgroundColor: '#e09076',
                 borderColor: '#1E88E5',
                 data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,]
             },
             {
-                label: 'My Second dataset',
-                backgroundColor: '#9CCC65',
+                label: 'Inspecciones realizadas',
+                backgroundColor: '#7790d9',
                 borderColor: '#7CB342',
-                data: [28, 48, 40, 19, 86, 27, 90]
+                data: [28, 48, 40, 19, 56, 27, 19,60]
             }
         ]
-    }
+    };
+    this.data2 = {
+      labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO','ORINOQUIA'],
+      datasets: [
+          {
+              label: 'Inspecciones programadas',
+              backgroundColor: '#b7a6eb',
+              borderColor: '#1E88E5',
+              data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,]
+          },
+          {
+              label: 'Inspecciones realizadas',
+              backgroundColor: '#a6ebb7',
+              borderColor: '#7CB342',
+              data: [28, 48, 40, 19, 56, 27, 19,60]
+          }
+      ]
+  };
+  this.data3 = {
+    labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO','ORINOQUIA'],
+    options: {
+      title: {
+          display: true,
+          text: 'Custom Chart Title'
+      }
+  },
+    datasets: [
+        {
+            label: 'Inspecciones programadas',
+            backgroundColor: '#d9c077',
+            borderColor: '#1E88E5',
+            data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,]
+        },
+        {
+            label: 'Inspecciones realizadas',
+            backgroundColor: '#7790d9',
+            borderColor: '#7CB342',
+            data: [28, 48, 40, 19, 56, 27, 19,60]
+        }
+    ]
+}
     
    }
 

@@ -1,7 +1,7 @@
 <p-card class="ui-g-12 ">
 
     <div class="p-grid  p-mt-6 p-jc-evenly colorsitos">
-        <p-card class="p-col-12 p-xl-3 p-md-6 " [style]="{'background-color': '#9bf6ff'}">
+        <p-card class="p-col-12 p-xl-3 p-md-6 " [style]="{'background-color': '#42a6f5'}">
             <div class="info-card">
                 <div class="icon">
                     <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -15,7 +15,7 @@
             </div>
         </p-card>
 
-        <p-card class="p-col-12 p-xl-3 p-md-6  " [style]="{'background-color': '#ffc6ff'}">
+        <p-card class="p-col-12 p-xl-3 p-md-6  " [style]="{'background-color': '#76e0aa'}">
             <div class="info-card">
                 <div class="icon">
                     <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -24,12 +24,12 @@
                     <p class="percent p-m-0">
                         67%
                     </p>
-                    <label for="">INP Ejecutadas</label>
+                    <label for="">AT Investigados</label>
                 </div>
             </div>
         </p-card>
 
-        <p-card class="p-col-12 p-xl-3 p-md-6  " [style]="{'background-color': '#7CCAD5'}">
+        <p-card class="p-col-12 p-xl-3 p-md-6  " [style]="{'background-color': '#e0aa76'}">
             <div class="info-card">
                 <div class="icon">
                     <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -38,24 +38,75 @@
                     <p class="percent p-m-0">
                         67%
                     </p>
-                    <label for="">INP Ejecutadas</label>
+                    <label for="">Condiciones reportadas</label>
                 </div>
             </div>
         </p-card>
-        <p-card class="p-col-12 p-xl-3 p-md-6" [style]="{'background-color': '#65CBE9'}">
+        <p-card class="p-col-12 p-xl-3 p-md-6" [style]="{'background-color': '#e07677'}">
             <div class="info-card">
                 <div class="icon">
                     <i class="fa fa-line-chart" aria-hidden="true"></i>
                 </div>
                 <div class="info">
                     <p class="percent p-m-0">
-                        67%
+                        670
                     </p>
-                    <label for="">INP Ejecutadas</label>
+                    <label for="">AT reportados</label>
                 </div>
             </div>
         </p-card>
  
+        <div class="p-col-6 p-mt-4">
+            <div class="p-d-flex p-jc-evenly">
+                
+
+                <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
+              <div class="p-d-flex">      
+                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
+                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
+
+                </div>
+
+
+            </div>
+            <div>
+                <p-chart type="bar" [data]="data"></p-chart>
+            </div>
+        </div>
+        <div class="p-col-6 p-mt-4">
+            <div class="p-d-flex p-jc-evenly">
+                
+
+                <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
+              <div class="p-d-flex">      
+                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
+                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
+
+                </div>
+
+
+            </div>
+            <div>
+                <p-chart type="bar" [data]="data2"></p-chart>
+            </div>
+        </div>
+        <div class="p-col-6 p-mt-4">
+            <div class="p-d-flex p-jc-evenly">
+                
+
+                <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
+              <div class="p-d-flex">      
+                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
+                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
+
+                </div>
+
+
+            </div>
+            <div>
+                <p-chart type="bar" [data]="data3"></p-chart>
+            </div>
+        </div>
         <div class="p-col-6 p-mt-4">
             <div class="p-d-flex p-jc-evenly">
                 
