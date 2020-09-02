@@ -69,9 +69,12 @@
 
 
             </div>
+           <ng-container *ngIf="this.data">
             <div>
                 <p-chart type="bar" [data]="data"></p-chart>
             </div>
+           </ng-container>
+            
         </div>
         <div class="p-col-6 p-mt-4">
             <div class="p-d-flex p-jc-evenly">
