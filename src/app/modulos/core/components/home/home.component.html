@@ -72,7 +72,7 @@
            <ng-container *ngIf="this.data">
             <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
-                <p-chart type="bar" [data]="data"></p-chart>
+                <p-chart type="bar" [data]="data" [options]="options"></p-chart>
             </div>
            </ng-container>
             
@@ -91,7 +91,7 @@
 
             </div>
             <div>
-                <p-chart type="bar" [data]="data2"></p-chart>
+                <p-chart type="bar" [data]="data2"[options]="options2"></p-chart>
             </div>
         </div>
         <div class="p-col-6 p-mt-4">
@@ -108,7 +108,7 @@
 
             </div>
             <div>
-                <p-chart type="bar" [data]="data3"></p-chart>
+                <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
             </div>
         </div>
         <div class="p-col-6 p-mt-4">
@@ -124,9 +124,12 @@
 
 
             </div>
-            <div>
-                <p-chart type="bar" [data]="data"></p-chart>
-            </div>
+            <ng-container *ngIf="this.data">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                    <p-chart type="bar" [data]="data" [options]="options3"></p-chart>
+                </div>
+               </ng-container>
         </div>
         <div class="p-col-6"></div>
 

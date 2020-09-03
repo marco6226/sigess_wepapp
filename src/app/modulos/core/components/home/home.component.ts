@@ -13,6 +13,9 @@ import { range } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
     data: any;
+    options: any;
+    options2: any;
+    options3: any;
     showData = false;
     data2: any;
     data3: any;
@@ -57,6 +60,39 @@ export class HomeComponent implements OnInit {
                 data: [28, 48, 40, 19, 56, 27, 19,60]
             }
         ]
+    }; 
+    this.options = {
+      title: {
+        display: true,
+        circumference: 50 * Math.PI,
+        text: 'Cumplimiento Inspecciones',
+        fontSize: 20
+      },
+    legend: {
+      position: 'right'
+    }
+    };
+    this.options2 = {
+      title: {
+        display: true,
+        circumference: 50 * Math.PI,
+        text: 'Cobertura Inspecciones',
+        fontSize: 20
+      },
+    legend: {
+      position: 'right'
+    }
+    };
+    this.options3 = {
+      title: {
+        display: true,
+        circumference: 50 * Math.PI,
+        text: 'Efectividad Inspecciones',
+        fontSize: 20
+      },
+    legend: {
+      position: 'right'
+    }
     };
     this.data2 = {
       labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO','ORINOQUIA'],
@@ -76,13 +112,7 @@ export class HomeComponent implements OnInit {
       ]
   };
   this.data3 = {
-    labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO','ORINOQUIA'],
-    options: {
-      title: {
-          display: true,
-          text: 'Custom Chart Title'
-      }
-  },
+    labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO','ORINOQUIA'],   
     datasets: [
         {
             label: 'Inspecciones programadas',
