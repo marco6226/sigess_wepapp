@@ -44,6 +44,7 @@ export class IndicadoresRaiComponent implements OnInit {
   }
 
   actualizarGraficas(tipo, rangos: any[]) {
+      console.log(rangos);
     let strRango: string = '{';
     rangos.forEach(rango => {
       strRango += '"[';
@@ -56,7 +57,7 @@ export class IndicadoresRaiComponent implements OnInit {
     strRango += '}';
 
     this.indicadorService.findRai(tipo, strRango, (this.empresa == null ? null : this.empresa.id)).then(
-      data => {
+      data => { 
         this.chartList = <any[]>data
         this.chartList.forEach(chart => {
           for (let i = 0; i < chart.datasets.length; i++) {

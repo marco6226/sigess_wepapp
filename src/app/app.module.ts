@@ -29,6 +29,7 @@ import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
 
 
+
 const appRoutes: Routes = [
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -37,7 +38,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

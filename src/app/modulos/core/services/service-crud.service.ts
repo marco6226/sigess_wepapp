@@ -71,7 +71,7 @@ export abstract class ServiceCRUD<T> {
   }
 
   findByFilter(filterQuery?: FilterQuery) {
-    console.log(filterQuery, "filtro linea 71");
+   // console.log(filterQuery, "filtro linea 71");
     return new Promise((resolve, reject) => {
       this.httpInt.get(this.end_point + '?' + this.buildUrlParams(filterQuery))
         .retryWhen(this.retryFunction)

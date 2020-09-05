@@ -6,6 +6,10 @@
   color: green;
 }
 
+.mid-border{
+    padding-top: 3rem;
+border-top: 1px solid #dee2e6;
+}
 .fa-times-circle{
   color:rgb(200, 0, 0);
 }
@@ -13,7 +17,7 @@
     display: grid;
     grid-template-columns: auto 80%;
     min-height: 5rem;
-    
+     
 }
 
     .ui-card{ 

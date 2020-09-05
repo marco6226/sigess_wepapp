@@ -34,9 +34,9 @@ export class ModeloGraficaService extends ServiceCRUD<ModeloGrafica>{
     });
   }
 
-  findInpN<T>(areasId, rangos, empresaId) {
+  findInpN<T>(areasId, desde, hasta) {
     return new Promise(resolve => {
-      this.httpInt.get(this.end_point + "indicadorInp/" + "test/" + areasId+"/")
+      this.httpInt.get(this.end_point + "indicadorInp/" + "test/" + areasId + "/" + desde + "/"+ hasta)
         .map(res => res)
         .subscribe(
         res => {

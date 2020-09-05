@@ -56,19 +56,23 @@
             </div>
         </p-card>
  
-        <div class="p-col-6 p-mt-4">
+        <div class="p-col-12 p-mt-4 mid-border">
             <div class="p-d-flex p-jc-evenly">
                 
 
                 <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
               <div class="p-d-flex">      
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
+                  <p-calendar (onSelect)="selecFromDate($event)"  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
+                  <p-calendar (onSelect)="selectToDate($event)" [disabled]="!this.desde"  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
 
                 </div>
 
 
             </div>
+        </div>
+
+        <div class="p-col-6 p-mt-4">
+          
            <ng-container *ngIf="this.data">
             <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
@@ -78,52 +82,18 @@
             
         </div>
         <div class="p-col-6 p-mt-4">
-            <div class="p-d-flex p-jc-evenly">
-                
-
-                <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
-              <div class="p-d-flex">      
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
-
-                </div>
-
-
-            </div>
             <div>
                 <p-chart type="bar" [data]="data2"[options]="options2"></p-chart>
             </div>
         </div>
         <div class="p-col-6 p-mt-4">
-            <div class="p-d-flex p-jc-evenly">
-                
-
-                <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
-              <div class="p-d-flex">      
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
-
-                </div>
-
-
-            </div>
+           
             <div>
                 <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
             </div>
         </div>
         <div class="p-col-6 p-mt-4">
-            <div class="p-d-flex p-jc-evenly">
-                
-
-                <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
-              <div class="p-d-flex">      
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
-                  <p-calendar  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
-
-                </div>
-
-
-            </div>
+          
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
