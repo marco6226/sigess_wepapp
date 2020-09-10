@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit {
     }
     async actualizarArea(areas) {
         this.arrayIds = [];
-
+        console.log(areas);
         for (const area of areas) {
             this.arrayIds.push(area.id)
         }
@@ -172,6 +172,8 @@ export class HomeComponent implements OnInit {
         //0 = nrealiz, 1 = n_total, 2 name
         let data: any = await this.indicadorService.findInpN(this.arrayIds, this.desde, this.hasta)
         console.log(data);
+        if(data.length < 0) return false;
+       // console.log(data);
         for (const iterator of data) {
             console.log(iterator);
             this.data.labels.push(iterator[2])
@@ -216,21 +218,35 @@ export class HomeComponent implements OnInit {
                 };
                 let areasArry: any = data;
                 console.log(areasArry.data);
-                areasArry.data.forEach(nivel1 => {
-                    this.arrayIds.push(nivel1.id)
-                    if (nivel1.areaList.length > 0) {
-                        nivel1.areaList.forEach(nivel2 => {
-                            this.arrayIds.push(nivel2.id)
+               
+                    for (const nivel1 of areasArry.data) {
+                        this.arrayIds.push(nivel1)    
+                        console.log(nivel1.areaList);
+                        for (const nivel2 of nivel1.areaList) {
+                            this.arrayIds.push(nivel2)    
+
+                            console.log(nivel2.areaList);  
+                        }
+                            
+                    }
+                       /*
                             areasArry.data.forEach(nivel3 => {
                                 this.arrayIds.push(nivel3.id)
                                 if (nivel3.areaList.length > 0) { 
                                     this.arrayIds.push(nivel3.id)
                                 }
-                            })
-                        })
-                    }
-                });
-                console.log(this.arrayIds);
+                            })*/
+                   
+                    let areasArray = [];
+                    console.log( this.arrayIds.length);
+                       for (let index = 0; index < 7; index++) {
+                       let i =  Math.floor(Math.random() * this.arrayIds.length)
+                        areasArray.push(this.arrayIds[i]);
+                           
+                       }
+                       console.log(areasArray);
+              this.actualizarArea(areasArray)
+          // this.actualizarArea(this.areas)
                 allComplete.organi = true;
                 if (allComplete.organi == true && allComplete.fisica == true) {
 
