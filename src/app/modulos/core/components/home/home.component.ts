@@ -7,7 +7,7 @@ import { FilterQuery } from '../../entities/filter-query';
 import { Criteria } from '../../entities/filter';
 import { AreaService } from 'app/modulos/empresa/services/area.service';
 import { TreeNode } from 'primeng/api';
-//import { setTimeout } from 'timers';
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 
 @Component({
     selector: 'app-home',
@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
     areaSelected: any;
     cities2: any[];
     show = false;
+    localeES = locale_es;
     constructor(
         private usuarioService: UsuarioService,
         private indicadorService: ModeloGraficaService,
@@ -60,17 +61,29 @@ export class HomeComponent implements OnInit {
             datasets: [
                 {
                     label: 'Inspecciones programadas',
-                    backgroundColor: '#e09076',
+                    backgroundColor: '#00BCD4',
                     borderColor: '#1E88E5',
                     data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40,]
                 },
                 {
                     label: 'Inspecciones realizadas',
-                    backgroundColor: '#7790d9',
+                    backgroundColor: '#37474F',
                     borderColor: '#7CB342',
                     data: [28, 48, 40, 19, 56, 27, 19, 60]
                 }
-            ]
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
         };
         this.options = {
             title: {
@@ -81,7 +94,18 @@ export class HomeComponent implements OnInit {
             },
             legend: {
                 position: 'right'
-            }
+            },
+            scales: {
+                yAxes: [{stacked: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: false,
+                    }]
+            },
+            type: 'horizontalBar',
         };
         this.options2 = {
             title: {
@@ -92,7 +116,18 @@ export class HomeComponent implements OnInit {
             },
             legend: {
                 position: 'right'
-            }
+            },
+            scales: {
+                yAxes: [{stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: true,
+                    }]
+            },
+            type: 'horizontalBar',
         };
         this.options3 = {
             title: {
@@ -110,17 +145,28 @@ export class HomeComponent implements OnInit {
             datasets: [
                 {
                     label: 'Inspecciones programadas',
-                    backgroundColor: '#b7a6eb',
+                    backgroundColor: '#283593',
                     borderColor: '#1E88E5',
                     data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40,]
                 },
                 {
                     label: 'Inspecciones realizadas',
-                    backgroundColor: '#a6ebb7',
+                    backgroundColor: '#E91E63',
                     borderColor: '#7CB342',
                     data: [28, 48, 40, 19, 56, 27, 19, 60]
                 }
-            ]
+            ],
+            scales: {
+                yAxes: [{stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: true,
+                    }]
+            },
+            type: 'horizontalBar',
         };
         this.data3 = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
@@ -157,11 +203,12 @@ export class HomeComponent implements OnInit {
     }
     async actualizarArea(areas) {
         this.arrayIds = [];
-        console.log(areas);
+        
         for (const area of areas) {
             this.arrayIds.push(area.id)
         }
         this.updateCharts();
+        this.updateCharts2();
     }
     async updateCharts() {
         this.showData = false;
@@ -176,13 +223,35 @@ export class HomeComponent implements OnInit {
        // console.log(data);
         for (const iterator of data) {
             console.log(iterator);
-            this.data.labels.push(iterator[2])
+            this.data.labels.push(iterator[2])            
             this.data.datasets[0].data.push(iterator[1])
             this.data.datasets[1].data.push(iterator[0])
         }
-        console.log(this.data);
+        
         this.showData = true;
     }
+    async updateCharts2() {
+        this.showData = false;
+        this.data2.labels = ['Programadas', 'Realizadas'];
+        this.data2.datasets.forEach((element, index) => {
+            this.data2.datasets[index].data2 = [];
+        });
+        //0 = nrealiz, 1 = n_total, 2 name
+        let data2: any = await this.indicadorService.findInpCobertura(this.arrayIds, this.desde, this.hasta)
+        console.log(data2);
+        
+        if(data2.length < 0) return false;
+       // console.log(data);
+       for (const iterator of data2) {
+        console.log(iterator);
+                    
+        this.data2.datasets[0].data2.push(iterator[1])
+        this.data2.datasets[1].data2.push(iterator[0])
+    }
+        
+        this.showData = true;
+    }
+    
 
 
     selecFromDate(date: Date) {
@@ -221,11 +290,11 @@ export class HomeComponent implements OnInit {
                
                     for (const nivel1 of areasArry.data) {
                         this.arrayIds.push(nivel1)    
-                        console.log(nivel1.areaList);
+                        
                         for (const nivel2 of nivel1.areaList) {
                             this.arrayIds.push(nivel2)    
 
-                            console.log(nivel2.areaList);  
+                              
                         }
                             
                     }
@@ -244,7 +313,7 @@ export class HomeComponent implements OnInit {
                         areasArray.push(this.arrayIds[i]);
                            
                        }
-                       console.log(areasArray);
+                      
               this.actualizarArea(areasArray)
           // this.actualizarArea(this.areas)
                 allComplete.organi = true;

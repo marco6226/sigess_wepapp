@@ -47,6 +47,20 @@ export class ModeloGraficaService extends ServiceCRUD<ModeloGrafica>{
         )
     });
   }
+  
+  findInpCobertura<T>(areasId, desde, hasta) {
+    return new Promise(resolve => {
+      this.httpInt.get(this.end_point + "indicadorInp/" + "cobertura/" + areasId + "/" + desde + "/"+ hasta)
+        .map(res => res)
+        .subscribe(
+        res => {
+          resolve(res);
+        }
+        ,
+        err => this.manageError(err)
+        )
+    });
+  }
 
   getClassName() {
     return "ModeloGrafica";
