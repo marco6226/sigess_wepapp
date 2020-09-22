@@ -27,6 +27,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpAuthInterceptor } from './modulos/core/services/http-auth-interceptor';
 import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
+import { ScmModule } from './modulos/scm/scm.module';
 
 
 
@@ -56,10 +57,12 @@ const appRoutes: Routes = [
     RaiModule,
     SecModule,
     SgModule,
+    ScmModule,
     IndModule,
     CtrModule,
     CopModule,
     AyudaModule
+    //ng g  c modulos/scm/components/formulario-scm
   ],
   providers: [
     HttpInt,

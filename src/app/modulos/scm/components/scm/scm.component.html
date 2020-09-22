@@ -1,0 +1,89 @@
+<p-growl [value]="msgs"></p-growl>
+<p-panel header="Casos medicos">
+
+    <p-table #dt [value]="usuarioList" autoLayout="true" selectionMode="single" [(selection)]="usuarioSelect" [rows]="10" [paginator]="true"
+        dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="2"></th>
+                <th pSortableColumn="caso">#CASO
+                    <p-sortIcon field="caso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fapertura">Fecha de apertura
+                    <p-sortIcon field="fapertura"></p-sortIcon>
+                </th>
+                <th pSortableColumn="regional">Regional
+                    <p-sortIcon field="regional"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ciudad">Ciudad
+                    <p-sortIcon field="ciudad"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nameLastname">Apellido - Nombre
+                    <p-sortIcon field="nameLastname"></p-sortIcon>
+                </th>
+                <th pSortableColumn="charge">Cargo
+                    <p-sortIcon field="charge"></p-sortIcon>
+                </th>
+                <th pSortableColumn="saludstate">Estado de salud
+                    <p-sortIcon field="saludstate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="saludstate">Caso de mesa laboral
+                    <p-sortIcon field="saludstate"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usr>
+            <tr [pSelectableRow]="usr">
+                <td class="td-avatar">
+                    <i *ngIf="!usr?.icon" class="fa fa-user-circle" aria-hidden="true"></i>
+                    <img *ngIf="usr?.icon" [src]="usr?.icon" style="border-radius: 50%;" />
+                </td>
+                <td>{{usr.email}}</td>
+                <td>{{usr.fechaModificacion | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{usr.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{usr.ultimoLogin | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>
+                    <label class="badge" [ngClass]="{'success': usr.estado == 'ACTIVO', 'novalid': usr.estado == 'ELIMINADO', 'warning': usr.estado == 'INACTIVO', 'active': usr.estado == 'CAMBIO_PASSWD', 'fatal': usr.estado == 'BLOQUEADO'}">
+                        {{usr.estado}}
+                    </label>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus" label="Crear Caso" (click)="abrirDlg(false)"></button>
+           
+           <!-- <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                (click)="abrirDlg(true)" [disabled]="!usuarioSelect"></button>
+            <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+                (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
+        </ng-template>
+    </p-table>
+
+</p-panel>
+

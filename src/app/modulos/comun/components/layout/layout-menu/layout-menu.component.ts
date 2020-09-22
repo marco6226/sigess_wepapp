@@ -83,6 +83,17 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 						{ label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
 						{ label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
 					]
+            },
+            {
+				label: 'Casos medicos', class: 'icon-ado',
+				codigo: 'SGE',
+				expanded: false,
+				items:
+					[
+                        { label: 'Creacion de caso', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/creacion', class: 'fa fa-medkit' },
+                        { label: 'SCM', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/list', class: 'fa fa-list-alt' },
+
+					]
 			},
 			{
 				label: 'AutoEvaluación',
@@ -164,7 +175,8 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 					[
 						{ label: 'Gestión documental', codigo: 'ADO_GET_DIR', routerLink: '/app/ado/gestionDocumental', class: 'fa fa-files-o' },
 					]
-			},
+            },
+            
 			{
 				//label: this.nombreSEC,
 				label: 'Seguimiento y Control',

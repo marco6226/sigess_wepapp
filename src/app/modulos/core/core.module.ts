@@ -84,6 +84,8 @@ import { TerminosCondicionesComponent } from './components/terminos-condiciones/
 import { CardModule } from 'primeng/primeng';
 import { AreaSelectorIndComponent } from './components/area-selectorind/area-selectorind.component';
 import { ModeloGraficaService } from '../ind/services/modelo-grafica.service';
+import { FormularioScmComponent } from '../scm/components/formulario-scm/formulario-scm.component';
+import { ScmComponent } from '../scm/components/scm/scm.component';
 
 const appRoutes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -190,6 +192,15 @@ const appRoutes: Routes = [
 				canActivate: [AuthGuardService],
 				children: [
 					{ path: 'gestionDocumental', component: GestionDocumentalComponent },
+				]
+            },
+            {
+				path: 'scm',
+				canActivate: [AuthGuardService],
+				children: [
+                    { path: 'creacion', component: FormularioScmComponent },
+                    { path: 'list', component: ScmComponent },
+
 				]
 			},
 			{
