@@ -40,7 +40,7 @@
                     <div class="ui-g-12 ui-md-2">
                         Número identificación
                     </div>
-                    <div class="ui-g-12 ui-md-4">
+                    <div class="ui-g-12 ui-md-4 textt">
                         <p-autoComplete placeholder="Digite" [style]="{'width':'100%'}"
                         (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
                         *ngIf="empleado?.id == null">
