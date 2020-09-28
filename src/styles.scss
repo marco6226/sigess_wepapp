@@ -25,6 +25,25 @@ h3 {
 
 body {
     font-size: 0.9em;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        background-color: #fff;
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+    &::-webkit-scrollbar-track:hover {
+        background-color: #f4f4f4;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #3ba2dc;
+        border-radius: 16px;
+        border: 1px solid #fff;
+    }
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
 }
 
 * {

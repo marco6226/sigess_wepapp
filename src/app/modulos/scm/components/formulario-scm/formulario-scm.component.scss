@@ -44,6 +44,21 @@
     }
 }
 
+.subheader {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        height: 2px;
+        width: 2rem;
+        background-color: #9e9e9e;
+    }
+}
+
 .material-label {
     color: #9e9e9e;
 }
@@ -122,6 +137,17 @@
             background-color: unset;
         }
     }
+}
+
+// Textarea 
+.textarea-material {
+    line-height: normal;
+    overflow-y: hidden;
+    padding: .8rem 0 .8rem 0;
+    resize: none;
+    height: 2rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 :host ::ng-deep {
