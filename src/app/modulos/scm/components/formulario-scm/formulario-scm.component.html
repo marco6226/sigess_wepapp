@@ -211,16 +211,16 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Datos del trabajador</h5>
+                    <h5 class="title-header p-mb-2">Datos del trabajador involucrado</h5>
                 </div>
-                <div class="ui-g-12 ui-md-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" styleClass="select-material">
                         </p-dropdown>
                         <label for="autocomplete-input" class="active">Tipo de identificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6">
+                <div class="ui-g-12 ui-md-2 ui-lg-2">
                     <div class="input-field">
                         <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
                             <ng-template let-empleado pTemplate="item">
@@ -241,23 +241,23 @@
                         <label for="autocomplete-input" class="active">Número de identificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-4 ui-lg-6">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="autocomplete-input" />
                         <label for="autocomplete-input" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-4 ui-lg-8">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección/Gerencia" class="form-material" id="autocomplete-input" />
-                        <label for="autocomplete-input" class="active">Dirección/Gerencia</label>
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
                         </p-dropdown>
-                        <label for="autocomplete-input" class="active">Cargo/Categoría</label>
+                        <label for="autocomplete-input" class="active">Cargo / Categoría</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12">
@@ -428,10 +428,42 @@
 
             </div>
 
-            <div class="ui-g p-pt-2">
+            <div class="ui-g p-py-2">
                 <div class="ui-g-12">
                     <div class="ui-g-12">
                         <h5 class="title-header p-mb-2">Datos del jefe inmediato</h5>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-8">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Apellidos y nombres</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="autocomplete-input" class="active">Cargo / Categoría</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-5">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Dirección / Gerencia</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-3">
+                    <div class="input-field">
+                        <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material">
+                        </p-inputMask>
+                        <label for="autocomplete-input" class="active">Número móvil corporativo</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Correo corporativo</label>
                     </div>
                 </div>
             </div>
