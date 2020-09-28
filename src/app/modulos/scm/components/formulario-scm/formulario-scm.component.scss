@@ -11,7 +11,10 @@
 
 // Case data
 .case-data {
-    width: 16rem;
+    width: 18rem;
+    @media only screen and (min-width: 768px) {
+        width: 16rem;
+    }
     .case-code {
         display: flex;
         .title {
