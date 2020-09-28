@@ -1,0 +1,8 @@
+// Select {
+:host ::ng-deep .select-material {
+    &.ui-dropdown {
+        border: none;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: -1rem;
+    }
+}

@@ -1,9 +1,8 @@
 <div class="ui-g">
-  <div class="ui-g-6" style="padding: 0px">
-    <p-dropdown [options]="departamentosItems" [filter]="true" (onChange)="onDepartamentoChange($event)"
-      [(ngModel)]="departamentoSelectId"></p-dropdown>
-  </div>
-  <div class="ui-g-6" style="padding: 0px">
-    <p-dropdown [options]="ciudadesItems" [filter]="true" [(ngModel)]="value"></p-dropdown>
-  </div>
+    <div class="ui-g-12 ui-md-6 p-mb-2 p-mb-md-0">
+        <p-dropdown [options]="departamentosItems" [filter]="true" styleClass="select-material" (onChange)="onDepartamentoChange($event)" [(ngModel)]="departamentoSelectId"></p-dropdown>
+    </div>
+    <div class="ui-g-12 ui-md-6">
+        <p-dropdown [options]="ciudadesItems" [filter]="true" styleClass="select-material" [(ngModel)]="value"></p-dropdown>
+    </div>
 </div>

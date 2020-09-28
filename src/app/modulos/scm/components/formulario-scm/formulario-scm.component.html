@@ -1,4 +1,18 @@
-<p-tabView>
+<div class="p-d-flex p-mb-2 p-px-2 p-jc-end">
+    <div class="case-data p-d-flex p-jc-between">
+        <div class="case-code">
+            <div class="title">Caso:</div>
+            <div class="number">
+                #N/A
+            </div>
+        </div>
+        <div class="case-date">
+            28/09/2020
+        </div>
+    </div>
+</div>
+
+<p-tabView styleClass="custom-panel">
     <p-tabPanel header="Datos básicos">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <p-panel header="PERSONAL">
@@ -7,7 +21,7 @@
                         Primer nombre
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="primerNombre" required/>
+                        <input type="text" pInputText formControlName="primerNombre" required />
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -20,7 +34,7 @@
                         Primer Apellido
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="primerApellido" required/>
+                        <input type="text" pInputText formControlName="primerApellido" required />
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -34,34 +48,34 @@
                         Tipo identificación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required></p-dropdown>
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
+                        </p-dropdown>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
                         Número identificación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-autoComplete placeholder="Digite" [style]="{'width':'100%'}"
-                        (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
-                        *ngIf="empleado?.id == null">
-                        <ng-template let-empleado pTemplate="item">
-                          <div class="ui-helper-clearfix" >
-                            <div class="wrapper" >
-                              <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
-                              <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar/>
-                              <div style="margin-left:20px">
-                                <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}} {{empleado?.primerApellido}}</label>
-                                <br/> {{empleado?.numeroIdentificacion}}
-                                <br/> {{empleado?.usuario.email}}
-                              </div>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </p-autoComplete>             
-                          </div>
+                        <p-autoComplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}</label>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                    </div>
 
                     <div class="ui-g-12 ui-md-2">
-                        Departamento y Ciudad 
+                        Departamento y Ciudad
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <s-ciudadSelector formControlName="ciudad"></s-ciudadSelector>
@@ -71,8 +85,10 @@
                         Zona residencia
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia"></p-radioButton>
-                        <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia"></p-radioButton>
+                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia">
+                        </p-radioButton>
+                        <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
+                        </p-radioButton>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -95,7 +111,7 @@
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="telefono2" />
                     </div>
-                    
+
                     <div class="ui-g-12 ui-md-2">
                         Fecha de nacimiento
                     </div>
@@ -107,13 +123,15 @@
                         Género
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero"></p-radioButton>
-                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero"></p-radioButton>
+                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
+                        </p-radioButton>
+                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
+                        </p-radioButton>
                     </div>
 
                 </div>
             </p-panel>
-            <br/>
+            <br />
             <p-panel header="LABORAL">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-2">
@@ -127,8 +145,8 @@
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
-                    </div>                  
-                    
+                    </div>
+
                     <div class="ui-g-12 ui-md-2">
                         Código
                     </div>
@@ -175,7 +193,8 @@
                         Cargo
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required></p-dropdown>
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required>
+                        </p-dropdown>
                     </div>
                 </div>
             </p-panel>
@@ -188,11 +207,135 @@
 
     </p-tabPanel>
 
-    <p-tabPanel header="prueba" >
+    <p-tabPanel header="Información General">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <h5 class="title-header">Datos del trabajador</h5>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-3">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Primer nombre" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Primer nombre</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-3">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Segundo nombre" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Segundo nombre</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-3">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Primer apellido" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Primer apellido</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-3">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Segundo apellido" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Segundo apellido</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <div class="input-field">
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="autocomplete-input" class="active">Tipo de identificación</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <div class="input-field">
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}</label>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="autocomplete-input" class="active">Número de identificación</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-10">
+                    <div class="input-field">
+                        <s-ciudadSelector formControlName="ciudad" styleClass="select-material"></s-ciudadSelector>
+                        <label for="autocomplete-input" class="active"> Departamento y Ciudad</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <div class="input-field">
+                        <label for="autocomplete-input" class="active">Zona de residencia</label>
+                    </div>
+                    <div class="radio-inputs">
+                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia">
+                        </p-radioButton>
+                        <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
+                        </p-radioButton>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    Dirección residencia
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="direccion" />
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    Teléfono
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="telefono1" />
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    Teléfono 2
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="telefono2" />
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    Fecha de nacimiento
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    Género
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
+                    </p-radioButton>
+                    <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
+                    </p-radioButton>
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección/Gerencia" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Dirección/Gerencia</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Cargo/Categoria" class="form-material" id="autocomplete-input" />
+                        <label for="autocomplete-input" class="active">Cargo/Categoria</label>
+                    </div>
+                </div>
+            </div>
+        </form>
     </p-tabPanel>
-    <p-tabPanel header="prueba" >
+    <p-tabPanel header="Información Médica">
     </p-tabPanel>
-    <p-tabPanel header="prueba" >
+    <p-tabPanel header="Incapacidades">
     </p-tabPanel>
 </p-tabView>
 
