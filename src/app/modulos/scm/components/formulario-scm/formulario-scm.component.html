@@ -213,14 +213,14 @@
                 <div class="ui-g-12">
                     <h5 class="title-header p-mb-2">Datos del trabajador involucrado</h5>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Tipo de identificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
                             <ng-template let-empleado pTemplate="item">
@@ -243,17 +243,17 @@
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-8">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ul-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
                         </p-dropdown>
@@ -276,7 +276,7 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Antigüedad" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Antigüedad" class="form-material" id="" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
                 </div>
@@ -306,14 +306,14 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="autocomplete-input" />
+                        <input type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional" class="form-material" id="" />
                         <label for="" class="active">Regional</label>
                     </div>
                 </div>
@@ -327,7 +327,7 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-6">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Ubicación" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Ubicación" class="form-material" id="" />
                         <label for="" class="active">Ubicación</label>
                     </div>
                 </div>
@@ -353,7 +353,7 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Edad" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Edad" class="form-material" id="" />
                         <label for="" class="active">Edad</label>
                     </div>
                 </div>
@@ -436,7 +436,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-8">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
@@ -449,7 +449,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-5">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
@@ -462,7 +462,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
@@ -496,13 +496,13 @@
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Origen" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Origen" class="form-material" id="" />
                         <label for="" class="active">Origen</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Código CIE10" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Código CIE10" class="form-material" id="" />
                         <label for="" class="active">Código CIE10</label>
                     </div>
                 </div>
@@ -529,25 +529,25 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Caso de mesa laboral" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Caso de mesa laboral" class="form-material" id="" />
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Motivo" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Motivo" class="form-material" id="" />
                         <label for="" class="active">Motivo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="PCL" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="PCL" class="form-material" id="" />
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="% de la PCL" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="% de la PCL" class="form-material" id="" />
                         <label for="" class="active">% de la PCL</label>
                     </div>
                 </div>
@@ -587,7 +587,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Concepto de rehabilitación" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Concepto de rehabilitación" class="form-material" id="" />
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
@@ -620,7 +620,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="SVE" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="SVE" class="form-material" id="" />
                         <label for="" class="active">SVE</label>
                     </div>
                 </div>
@@ -646,7 +646,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Se generan recomendaciones" class="form-material" id="autocomplete-input" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Se generan recomendaciones" class="form-material" id="" />
                         <label for="" class="active">Se generan recomendaciones</label>
                     </div>
                 </div>
