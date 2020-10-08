@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { UsuarioService } from '../../../admin/services/usuario.service';
 import { Area, Estructura } from 'app/modulos/empresa/entities/area';
 import { ModeloGraficaService } from 'app/modulos/ind/services/modelo-grafica.service';
@@ -23,9 +23,15 @@ export class HomeComponent implements OnInit {
     hasta: String;
     options2: any;
     options3: any;
+    options4: any;
+    options5: any;
+    options6: any;
     showData = false;
     data2: any;
     data3: any;
+    data4: any;
+    data5: any;
+    data6: any;
     evtLogList: any[];
     cities1: any[];
     areaSelected: any;
@@ -38,24 +44,9 @@ export class HomeComponent implements OnInit {
         private areaService: AreaService
     ) {
         let date = new Date();
-        this.desde = `${date.getFullYear()}-${date.getMonth() - 4}-01`
+        this.desde = `${date.getFullYear()}-${date.getMonth() - 8}-01`
         this.hasta = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
-        this.cities1 = [
-            { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-            { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-            { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-            { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-            { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-        ];
-
-        //An array of cities
-        this.cities2 = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
+       
         this.data = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
             datasets: [
@@ -118,13 +109,18 @@ export class HomeComponent implements OnInit {
                 position: 'right'
             },
             scales: {
-                yAxes: [{stacked: true,
+                yAxes: [{stacked: false,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        min: 0
                     }
                 }],
                 xAxes: [{
-                    stacked: true,
+                    stacked: false,
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
                     }]
             },
             type: 'horizontalBar',
@@ -138,62 +134,243 @@ export class HomeComponent implements OnInit {
             },
             legend: {
                 position: 'right'
-            }
-        };
-        this.data2 = {
-            labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
-            datasets: [
-                {
-                    label: 'Inspecciones programadas',
-                    backgroundColor: '#283593',
-                    borderColor: '#1E88E5',
-                    data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40,]
-                },
-                {
-                    label: 'Inspecciones realizadas',
-                    backgroundColor: '#E91E63',
-                    borderColor: '#7CB342',
-                    data: [28, 48, 40, 19, 56, 27, 19, 60]
-                }
-            ],
+            },
             scales: {
-                yAxes: [{stacked: true,
+                yAxes: [{stacked: false,
                     ticks: {
                         beginAtZero: true
                     }
                 }],
                 xAxes: [{
-                    stacked: true,
+                    stacked: false,
                     }]
             },
             type: 'horizontalBar',
+        }; this.options4 = {
+            title: {
+                display: true,
+                circumference: 50 * Math.PI,
+                text: 'Cumplimiento AT',
+                fontSize: 20
+            },
+            legend: {
+                position: 'right'
+            },
+            scales: {
+                yAxes: [{stacked: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: false,ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
+                    }]
+            },
+            type: 'horizontalBar',
+        };
+        this.options5 = {
+            title: {
+                display: true,
+                circumference: 50 * Math.PI,
+                text: 'Eficacia Observaciones',
+                fontSize: 20
+            },
+            legend: {
+                position: 'right'
+            },
+            scales: {
+                yAxes: [{stacked: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: false,
+                    }]
+            },
+            type: 'horizontalBar',
+        };
+        this.options6 = {
+            title: {
+                display: true,
+                circumference: 50 * Math.PI,
+                text: 'Efectividad AT',
+                fontSize: 20
+            },
+            legend: {
+                position: 'right'
+            },
+            scales: {
+                yAxes: [{stacked: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: false,
+                    }]
+            },
+            type: 'horizontalBar',
+        };
+        this.data2 = {
+            labels: ['Cobertura'],
+            datasets: [
+                {
+                    label: 'Sedes programadas',
+                    backgroundColor: '#283593',
+                    borderColor: '#1E88E5',
+                    data: []
+                },
+                {
+                    label: 'Sedes Inspeccionadas',
+                    backgroundColor: '#E91E63',
+                    borderColor: '#7CB342',
+                    data: []
+                }
+            ],
+            scales: {
+                yAxes: [{stacked: false,
+                    ticks: {
+                        min: 0,
+                        beginAtZero: true
+                        
+                    }
+                }],
+                xAxes: [{
+                    stacked: false
+                    }]
+            },
+            type: 'horizontal bar',
         };
         this.data3 = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
             datasets: [
                 {
-                    label: 'Inspecciones programadas',
-                    backgroundColor: '#d9c077',
+                    label: 'Hallazgos encontrados',
+                    backgroundColor: '#747874',
                     borderColor: '#1E88E5',
-                    data: [65, 59, 80, 81, 56, 55, 40, 65]
+                    data: [65]
                 },
                 {
-                    label: 'Inspecciones realizadas',
+                    label: 'Hallazgos gestionados',
+                    backgroundColor: '#6CA752',
+                    borderColor: '#7CB342',
+                    data: [28]
+                }
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
+        }
+        this.data4 = {
+            labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
+            datasets: [
+                {
+                    label: 'AT ocurridos',
+                    backgroundColor: '#d9c077',
+                    borderColor: '#1E88E5',
+                    data: [65]
+                },
+                {
+                    label: 'AT investigados',
+                    backgroundColor: '#09A0B6',
+                    borderColor: '#7CB342',
+                    data: [28]
+                }
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
+        };
+        this.data5 = {
+            labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
+            datasets: [
+                {
+                    label: 'Observaciones reportadas',
+                    backgroundColor: '#377DC0',
+                    borderColor: '#1E88E5',
+                    data: [65]
+                },
+                {
+                    label: 'Observaciones aceptadas',
+                    backgroundColor: '#FF60CA',
+                    borderColor: '#7CB342',
+                    data: [28]
+                }
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
+        }
+        this.data6 = {
+            labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
+            datasets: [
+                {
+                    label: 'Tareas planeadas',
+                    backgroundColor: '#d9c077',
+                    borderColor: '#1E88E5',
+                    data: [65]
+                },
+                {
+                    label: 'Tareas gestionadas',
                     backgroundColor: '#7790d9',
                     borderColor: '#7CB342',
-                    data: [28, 48, 40, 19, 56, 27, 19, 60]
+                    data: [28]
                 }
-            ]
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
         }
-
+       
     }
     async ngOnInit() {
         setTimeout(() => {
             this.show = true
             this.showData = true;
             this.loadAreas();
+           
 
-        }, 1000);
+        }, 3000);
         let arrtest = [1, 2, 4, 5, 4];
 
 
@@ -209,7 +386,13 @@ export class HomeComponent implements OnInit {
         }
         this.updateCharts();
         this.updateCharts2();
+        this.updateCharts3();
+        this.updateCharts4();
+        this.updateCharts5();
+        this.updateCharts6();
+       
     }
+   
     async updateCharts() {
         this.showData = false;
         this.data.labels = [];
@@ -231,28 +414,105 @@ export class HomeComponent implements OnInit {
         this.showData = true;
     }
     async updateCharts2() {
-        this.showData = false;
-        this.data2.labels = ['Programadas', 'Realizadas'];
+         this.showData = false;
+       // this.data2.labels = ['Programadas', 'Realizadas'];
         this.data2.datasets.forEach((element, index) => {
-            this.data2.datasets[index].data2 = [];
+            this.data2.datasets[index].data = [];
         });
         //0 = nrealiz, 1 = n_total, 2 name
-        let data2: any = await this.indicadorService.findInpCobertura(this.arrayIds, this.desde, this.hasta)
-        console.log(data2);
-        
+        let data2: any = await  this.indicadorService.findInpCobertura(this.arrayIds, this.desde, this.hasta)
         if(data2.length < 0) return false;
-       // console.log(data);
-       for (const iterator of data2) {
-        console.log(iterator);
-                    
-        this.data2.datasets[0].data2.push(iterator[1])
-        this.data2.datasets[1].data2.push(iterator[0])
-    }
+        console.log(data2);
+       
+        {
+        this.data2.datasets[0].data.push(data2[0]);
+        this.data2.datasets[1].data.push(data2[1]);
         
         this.showData = true;
     }
+    }
+    async updateCharts3() {
+        this.showData = false;
+        this.data3.labels = [];
+        this.data3.datasets.forEach((element, index) => {
+            this.data3.datasets[index].data = [];
+       });
+        
+       let data3: any = await  this.indicadorService.findInpEfectividad(this.arrayIds, this.desde, this.hasta)
+       if(data3.length < 0) return false;
+       for (const iterator of data3) {
+       console.log("efectividad");
+       console.log(data3);
+       
+       this.data3.labels.push(iterator[2]);            
+       this.data3.datasets[0].data.push(iterator[1]);
+       this.data3.datasets[1].data.push(iterator[0]);
+      
+       this.showData = true;
+   }
+   }
+   async updateCharts4() {
+    this.showData = false;
+    this.data4.labels = [];
+    this.data4.datasets.forEach((element, index) => {
+        this.data4.datasets[index].data = [];
+   });
     
+   let data4: any = await  this.indicadorService.findInpCoberturaAt(this.arrayIds, this.desde, this.hasta)
+   if(data4.length < 0) return false;
+   for (const iterator of data4) {
+   console.log("cobertura at");
+   console.log(data4);
+   
+   this.data4.labels.push(iterator[2]);            
+   this.data4.datasets[0].data.push(iterator[1]);
+   this.data4.datasets[1].data.push(iterator[0]);
+  
+   this.showData = true;
+}
+}
+async updateCharts5() {
+    this.showData = false;
+    this.data5.labels = [];
+    this.data5.datasets.forEach((element, index) => {
+        this.data5.datasets[index].data = [];
+   });
+    
+   let data5: any = await  this.indicadorService.findInpEficaciaAuc(this.arrayIds, this.desde, this.hasta)
+   if(data5.length < 0) return false;
+   for (const iterator of data5) {
+   console.log("eficaciaauc");
+   console.log(data5);
+   
+   this.data5.labels.push(iterator[2]);            
+   this.data5.datasets[0].data.push(iterator[1]);
+   this.data5.datasets[1].data.push(iterator[0]);
+  
+   this.showData = true;
+}
+}
 
+async updateCharts6() {
+    this.showData = false;
+    this.data6.labels = [];
+    this.data6.datasets.forEach((element, index) => {
+        this.data6.datasets[index].data = [];
+   });
+    
+   let data6: any = await  this.indicadorService.findInpEfectividadAt(this.arrayIds, this.desde, this.hasta)
+   if(data6.length < 0) return false;
+   for (const iterator of data6) {
+   console.log("efectividad AT");
+   console.log(data6);
+   
+   this.data6.labels.push(iterator[2]);            
+   this.data6.datasets[0].data.push(iterator[1]);
+   this.data6.datasets[1].data.push(iterator[0]);
+  
+   this.showData = true;
+}
+}
+  
 
     selecFromDate(date: Date) {
         this.desde = date.toISOString().slice(0, 10)
@@ -264,6 +524,11 @@ export class HomeComponent implements OnInit {
         this.hasta = date.toISOString().slice(0, 10);
         console.log(date.toISOString().slice(0, 10));
         this.updateCharts();
+        this.updateCharts2();
+        this.updateCharts3();
+ 		this.updateCharts4();
+ 		this.updateCharts5();
+		 this.updateCharts6();
     }
 
     loadAreas() {
@@ -308,7 +573,7 @@ export class HomeComponent implements OnInit {
                    
                     let areasArray = [];
                     console.log( this.arrayIds.length);
-                       for (let index = 0; index < 7; index++) {
+                       for (let index = 0; index < 35; index++) {
                        let i =  Math.floor(Math.random() * this.arrayIds.length)
                         areasArray.push(this.arrayIds[i]);
                            

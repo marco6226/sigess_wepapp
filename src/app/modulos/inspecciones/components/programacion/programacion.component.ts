@@ -198,6 +198,7 @@ export class ProgramacionComponent implements OnInit {
       'listaInspeccion_listaInspeccionPK',
       'area_id',
       'area_nombre',
+      'areaPadre',
       'numeroInspecciones',
       'numeroRealizadas'
     ];
@@ -414,6 +415,7 @@ export class ProgramacionComponent implements OnInit {
     programacion.numeroInspecciones = this.form.value.numeroInspecciones;
     return programacion;
     console.log(programacion);
+    console.log(programacion.area);
   }
 
 

@@ -36,7 +36,7 @@ export class ModeloGraficaService extends ServiceCRUD<ModeloGrafica>{
 
   findInpN<T>(areasId, desde, hasta) {
     return new Promise(resolve => {
-      this.httpInt.get(this.end_point + "indicadorInp/" + "test/" + areasId + "/" + desde + "/"+ hasta)
+      this.httpInt.get(this.end_point + "indicadorInp/" + "cumplimientoinp/" + areasId + "/" + desde + "/"+ hasta)
         .map(res => res)
         .subscribe(
         res => {
@@ -51,17 +51,68 @@ export class ModeloGraficaService extends ServiceCRUD<ModeloGrafica>{
   findInpCobertura<T>(areasId, desde, hasta) {
     return new Promise(resolve => {
       this.httpInt.get(this.end_point + "indicadorInp/" + "cobertura/" + areasId + "/" + desde + "/"+ hasta)
-        .map(res => res)
+        .map(res2 => res2)
         .subscribe(
-        res => {
-          resolve(res);
+        res2 => {
+          resolve(res2);
         }
         ,
         err => this.manageError(err)
         )
     });
   }
-
+  findInpEfectividad<T>(areasId, desde, hasta) {
+    return new Promise(resolve => {
+      this.httpInt.get(this.end_point + "indicadorInp/" + "efectividad/" + areasId + "/" + desde + "/"+ hasta)
+        .map(res2 => res2)
+        .subscribe(
+        res2 => {
+          resolve(res2);
+        }
+        ,
+        err => this.manageError(err)
+        )
+    });
+  }
+  findInpEfectividadAt<T>(areasId, desde, hasta) {
+    return new Promise(resolve => {
+      this.httpInt.get(this.end_point + "indicadorInp/" + "efectividadat/" + areasId + "/" + desde + "/"+ hasta)
+        .map(res2 => res2)
+        .subscribe(
+        res2 => {
+          resolve(res2);
+        }
+        ,
+        err => this.manageError(err)
+        )
+    });
+  }
+  findInpCoberturaAt<T>(areasId, desde, hasta) {
+    return new Promise(resolve => {
+      this.httpInt.get(this.end_point + "indicadorInp/" + "coberturaat/" + areasId + "/" + desde + "/"+ hasta)
+        .map(res2 => res2)
+        .subscribe(
+        res2 => {
+          resolve(res2);
+        }
+        ,
+        err => this.manageError(err)
+        )
+    });
+  }
+  findInpEficaciaAuc<T>(areasId, desde, hasta) {
+    return new Promise(resolve => {
+      this.httpInt.get(this.end_point + "indicadorInp/" + "eficaciaauc/" + areasId + "/" + desde + "/"+ hasta)
+        .map(res2 => res2)
+        .subscribe(
+        res2 => {
+          resolve(res2);
+        }
+        ,
+        err => this.manageError(err)
+        )
+    });
+  }
   getClassName() {
     return "ModeloGrafica";
   }

@@ -13,11 +13,11 @@
   <button *ngIf="loading == false" [disabled]="disabled" type="button" (click)="showDialog()" pButton icon="fa fa-sitemap"></button>
 </div>
 
-<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-width':'800px', 'max-height':'480px','min-width':'800px', 'min-height':'480px'}">
+<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-width':'1024px', 'max-height':'768px','min-width':'800px', 'min-height':'480px'}">
 
   <p-tabView>
 
-    <p-tabPanel header="Organigrama">
+    <p-tabPanel header="Organigrama3">
       <p-tree [value]="areasNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="checkbox" [(selection)]="areaSelected"></p-tree>
     </p-tabPanel>
 

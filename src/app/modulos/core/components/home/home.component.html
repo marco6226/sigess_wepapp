@@ -82,29 +82,51 @@
             
         </div>
         <div class="p-col-6 p-mt-4">
-            <div>
+            <ng-container *ngIf="this.data2">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+            <div *ngIf="showData">
                 <p-chart type="horizontalBar"  [data]="data2" [options]="options2" ></p-chart>
             </div>
+        </ng-container>
         </div>
         <div class="p-col-6 p-mt-4">
            
-            <div>
-                <p-chart type="pie" [data]="data3" [options]="options3"></p-chart>
+            <ng-container *ngIf="this.data3">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
             </div>
+        </ng-container>
         </div>
         <div class="p-col-6 p-mt-4">
           
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
-                    <p-chart type="bar" [data]="data" [options]="options3"></p-chart>
+                    <p-chart type="bar" [data]="data4" [options]="options4"></p-chart>
                 </div>
                </ng-container>
         </div>
-        <div class="p-col-6"></div>
+        <div class="p-col-6 p-mt-4">
+          
+            <ng-container *ngIf="this.data">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                    <p-chart type="horizontalBar" [data]="data5" [options]="options5"></p-chart>
+                </div>
+               </ng-container>
+        </div>
+        <div class="p-col-6 p-mt-4">
+          
+            <ng-container *ngIf="this.data">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                    <p-chart type="bar" [data]="data6" [options]="options6"></p-chart>
+                </div>
+               </ng-container>
+        </div>
 
-
-    </div>
+        </div>
 
    
 
