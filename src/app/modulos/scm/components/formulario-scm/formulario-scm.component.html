@@ -13,221 +13,27 @@
 </div>
 
 <p-tabView styleClass="custom-panel">
-    <!-- <p-tabPanel header="Datos básicos">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <p-panel header="PERSONAL">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-2">
-                        Primer nombre
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="primerNombre" required />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        <label>Segundo Nombre</label>
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="segundoNombre" />
-                    </div>
-                    <div class="ui-g-12 ui-md-2">
-                        Primer Apellido
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="primerApellido" required />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Segundo Apellido
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="segundoApellido" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Tipo identificación
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
-                        </p-dropdown>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Número identificación
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-autoComplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
-                            <ng-template let-empleado pTemplate="item">
-                                <div class="ui-helper-clearfix">
-                                    <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
-                                        <div style="margin-left:20px">
-                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                {{empleado?.primerApellido}}</label>
-                                            <br /> {{empleado?.numeroIdentificacion}}
-                                            <br /> {{empleado?.usuario.email}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-autoComplete>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Departamento y Ciudad
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <s-ciudadSelector formControlName="ciudad"></s-ciudadSelector>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Zona residencia
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia">
-                        </p-radioButton>
-                        <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
-                        </p-radioButton>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Dirección residencia
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="direccion" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Teléfono
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="telefono1" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Teléfono 2
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="telefono2" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Fecha de nacimiento
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Género
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
-                        </p-radioButton>
-                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
-                        </p-radioButton>
-                    </div>
-
-                </div>
-            </p-panel>
-            <br />
-            <p-panel header="LABORAL">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-2">
-                        Correo electrónico
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="email" required />
-                    </div>
-                    <div class="ui-g-12 ui-md-2">
-                        Perfiles
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Código
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="codigo" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        AFP
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [filter]="true" [options]="afpList" formControlName="afp"></p-dropdown>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        EPS
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"></p-dropdown>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Fecha de ingreso
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngreso" required></p-calendar>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Tipo vinculación
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [options]="tipoVinculacionList" formControlName="tipoVinculacion"></p-dropdown>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Ubicación
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <area-selector formControlName="area" [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required></area-selector>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Cargo
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required>
-                        </p-dropdown>
-                    </div>
-                </div>
-            </p-panel>
-            <div style="text-align: center; width: 100%;" *ngIf="isUpdate || editable">
-                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" class="float-btn" style="bottom: 100px;" title="Guardar datos de empleado"></button>
-
-                <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
-            </div>
-        </form>
-
-    </p-tabPanel> -->
-
+   
     <p-tabPanel header="Información General">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
                 <div class="ui-g-12">
                     <h5 class="title-header p-mb-2">Datos del trabajador involucrado</h5>
                 </div>
+
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Tipo de identificación</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                            [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList"
+                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                            *ngIf="empleado?.id == null">
                             <ng-template let-empleado pTemplate="item">
                                 <div class="ui-helper-clearfix">
                                     <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
                                             <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
                                                 {{empleado?.primerApellido}}</label>
@@ -241,49 +47,64 @@
                         <label for="" class="active">Número de identificación</label>
                     </div>
                 </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="input-field">
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Tipo de identificación</label>
+                    </div>
+                </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
+                            class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-8">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
+                            class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Cargo / Categoría</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
+                        <textarea class="textarea-material" pInputTextarea [value]="cargoDescripcion || ''" ></textarea>
                         <label for="" class="active">Descripción del cargo</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaIngreso"></p-calendar>
                         <label for="" class="active">Fecha de vinculación</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Antigüedad" class="form-material" id="" />
+                        <input type="text" disabled pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
+                            class="form-material" id="" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Rango de antigüedad</label>
                     </div>
@@ -291,14 +112,16 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de desvinculación</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material">
+                        <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material">
                         </p-inputMask>
                         <label for="" class="active">Teléfono corporativo</label>
                     </div>
@@ -306,28 +129,54 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="" />
+                        <input type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
+                            class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
+                            class="form-material" id="" />
+                        <label for="" class="active">Contacto de emergencia</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <div class="input-field">
+                        <p-inputMask mask="(999) 999-9999" formControlName="phoneEmergencyContact"
+                            class="form-material">
+                        </p-inputMask>
+                        <label for="" class="active">Telefono de contacto de emergencia</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                    <div class="input-field">
+                        <input type="email" pInputText formControlName="emailEmergencyContact"
+                            placeholder="Correo corporativo" class="form-material" id="" />
+                        <label for="" class="active">Correo de contacto de emergencia</label>
+                    </div>
+                </div>
+
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional"
+                            class="form-material" id="" />
                         <label for="" class="active">Regional</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" styleClass="select-material" [(ngModel)]="value"></p-dropdown>
+                        <p-dropdown [filter]="true" styleClass="select-material" ></p-dropdown>
                         <label for="" class="active">Ciudad</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4 ui-lg-6">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Ubicación" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Ubicación"
+                            class="form-material" id="" />
                         <label for="" class="active">Ubicación</label>
                     </div>
                 </div>
@@ -346,14 +195,17 @@
 
                 <div class="ui-g-12 ui-md-3 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de nacimiento</label>
                     </div>
-                </div>
+                </div> 
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Edad" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Edad"
+                            class="form-material" id="" />
                         <label for="" class="active">Edad</label>
                     </div>
                 </div>
@@ -366,7 +218,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-6">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
+                        <textarea class="textarea-material" pInputTextarea ></textarea>
                         <label for="" class="active">Dirección de residencia</label>
                     </div>
                 </div>
@@ -388,7 +240,7 @@
                         <label for="" class="active">Teléfono de residencia</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <div class="ui-g-12 ui-md-3 ui-lg-2"> 
                     <div class="input-field">
                         <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material">
                         </p-inputMask>
@@ -403,25 +255,29 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <input type="email" pInputText formControlName="email" plaholder="Correo adicional alternativo" />
+                        <input type="email" pInputText formControlName="email"
+                            plaholder="Correo adicional alternativo" />
                         <label for="" class="active">Correo adicional alternativo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="afpList" formControlName="afp" styleClass="select-material"></p-dropdown>
+                        <p-dropdown [filter]="true" [options]="afpList" formControlName="afp"
+                            styleClass="select-material"></p-dropdown>
                         <label for="" class="active">AFP</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" styleClass="select-material"></p-dropdown>
+                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"
+                            styleClass="select-material"></p-dropdown>
                         <label for="" class="active">EPS</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" styleClass="select-material"></p-dropdown>
+                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"
+                            styleClass="select-material"></p-dropdown>
                         <label for="" class="active">ARL</label>
                     </div>
                 </div>
@@ -436,33 +292,37 @@
                 </div>
                 <div class="ui-g-12 ui-md-8">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
+                            class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Cargo / Categoría</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-5">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
+                            class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material">
+                        <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material">
                         </p-inputMask>
                         <label for="" class="active">Número móvil corporativo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Correo corporativo" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
+                            class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
@@ -470,24 +330,27 @@
         </form>
     </p-tabPanel>
     <p-tabPanel header="Información Médica">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="statusCaso"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Estado del caso</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaFinal"></p-calendar>
                         <label for="" class="active">Fecha de cierre</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-8">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
+                        <textarea class="textarea-material" pInputTextarea formControlName="observaciones"></textarea>
                         <label for="" class="active">Observaciones</label>
                     </div>
                 </div>
@@ -496,19 +359,22 @@
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Origen" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="origen" placeholder="Origen"
+                            class="form-material" id="" />
                         <label for="" class="active">Origen</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Código CIE10" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="codigoCie10" placeholder="Código CIE10"
+                            class="form-material" id="" />
                         <label for="" class="active">Código CIE10</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="sistemaAfectado"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Sistema afectado</label>
                     </div>
@@ -516,90 +382,105 @@
 
                 <div class="ui-g-12">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
+                        <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
                         <label for="" class="active">Diagnóstico</label>
                     </div>
                 </div>
                 <div class="ui-g-12">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
+                        <textarea class="textarea-material" pInputTextarea formControlName="descripcionCompletaCaso"></textarea>
                         <label for="" class="active">Descripción completa del caso</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Caso de mesa laboral" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="casoMedicoLaboral" placeholder="Caso de mesa laboral"
+                            class="form-material" id="" />
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Motivo" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="razon" placeholder="Motivo"
+                            class="form-material" id="" />
                         <label for="" class="active">Motivo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="PCL" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="pcl" placeholder="PCL"
+                            class="form-material" id="" />
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="% de la PCL" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
+                            class="form-material" id="" />
                         <label for="" class="active">% de la PCL</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="emisionPclFecha"></p-calendar>
                         <label for="" class="active">Fecha de emisión de la PCL</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-6">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="pclEmitEntidad"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite la PCL</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="statusDeCalificacion"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Estado de la calificación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaCalificacion"></p-calendar>
                         <label for="" class="active">Fecha de la calificación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteCalificacion"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite la calificación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Concepto de rehabilitación" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="conceptRehabilitacion"
+                            placeholder="Concepto de rehabilitación" class="form-material" id="" />
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaConceptRehabilitacion"></p-calendar>
                         <label for="" class="active">Fecha de concepto de rehabilitación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteConcepto"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite el concepto de
                             rehabilitación</label>
@@ -613,20 +494,23 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="requiereIntervencion"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Requiere intervención complementaria</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="SVE" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="sve" placeholder="SVE"
+                            class="form-material" id="" />
                         <label for="" class="active">SVE</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="professionalArea"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Área profesional</label>
                     </div>
@@ -634,25 +518,28 @@
 
                 <div class="ui-g-12">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
+                        <textarea class="textarea-material" pInputTextarea ></textarea>
                         <label for="" class="active">Justificación</label>
                     </div>
                 </div>
             </div>
 
-            <div class="ui-g p-py-2">
+          <!--
+           <div class="ui-g p-py-2">
                 <div class="ui-g-12">
                     <h5 class="title-header p-mb-2">Recomendaciones</h5>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Se generan recomendaciones" class="form-material" id="" />
+                        <input type="text" pInputText formControlName="primerNombre"
+                            placeholder="Se generan recomendaciones" class="form-material" id="" />
                         <label for="" class="active">Se generan recomendaciones</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-5">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite las recomendaciones</label>
                     </div>
@@ -660,7 +547,8 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-3">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Tipo</label>
                     </div>
@@ -668,35 +556,40 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de expedición</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de vencimiento</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Estado</label>
                     </div>
                 </div>
-
+ 
                 <div class="ui-g-12">
                     <div class="input-field">
                         <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
                         <label for="" class="active">Recomendaciones</label>
                     </div>
                 </div>
-            </div>
+            </div>--> 
         </form>
     </p-tabPanel>
     <p-tabPanel header="Incapacidades">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
                 <div class="ui-g-12">
                     <h5 class="title-header p-mb-2">Información sobre incapacidades</h5>
@@ -710,6 +603,7 @@
                                     {{col.header}}
                                 </th>
                             </tr>
+                            <!--Alcance de-->
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr>
@@ -722,8 +616,21 @@
                 </div>
 
             </div>
+            
         </form>
+    </p-tabPanel>
+    <div style="text-align: center; width: 100%;" >
+        <button pButton *ngIf="solicitando == false" (click)="onSubmit()" type="submit" icon="fa fa-floppy-o"
+             class="float-btn" style="bottom: 100px;"
+            title="Guardar datos de empleado"></button>
+
+        <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
+            [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+    </div>
+    <p-tabPanel header="Recomendaciones">
     </p-tabPanel>
 </p-tabView>
 
-<button pButton *ngIf="solicitando == false" type="button" icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
+<button pButton *ngIf="solicitando == false" type="button" icon="fa fa-chevron-left" class="float-btn"
+    (click)="closeForm()" title="Volver a listado de empleados"></button>
+    

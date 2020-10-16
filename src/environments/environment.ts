@@ -20,7 +20,7 @@ export const endPoints = {
   tipoArea: path + "tipoArea/",
   sede: path + "sede/",
   cargo: path + "cargo/",
-
+  scm: path + "casomedico/",
   EmpresaService: path + "empresa/",
   ContextoOrganizacionService: path + "contextoOrganizacion/",
   CargoService: path + "cargo/",

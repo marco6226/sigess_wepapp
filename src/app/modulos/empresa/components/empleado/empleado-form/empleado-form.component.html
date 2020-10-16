@@ -7,7 +7,7 @@
                         Primer nombre
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="primerNombre" required/>
+                        <input type="text" pInputText formControlName="primerNombre" required />
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -20,7 +20,7 @@
                         Primer Apellido
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="primerApellido" required/>
+                        <input type="text" pInputText formControlName="primerApellido" required />
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -34,18 +34,19 @@
                         Tipo identificación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required></p-dropdown>
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
+                        </p-dropdown>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
                         Número identificación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="numeroIdentificacion" required/>
+                        <input type="text" pInputText formControlName="numeroIdentificacion" required />
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
-                        Departamento y Ciudad 
+                        Departamento y Ciudad
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <s-ciudadSelector formControlName="ciudad"></s-ciudadSelector>
@@ -55,8 +56,10 @@
                         Zona residencia
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia"></p-radioButton>
-                        <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia"></p-radioButton>
+                        <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia">
+                        </p-radioButton>
+                        <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
+                        </p-radioButton>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -79,25 +82,57 @@
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="telefono2" />
                     </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Telefono Laboral
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="corporativePhone" />
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Contacto de emergencia
+                     </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="emergencyContact" placeholder="Contacto de emergencia" />
+                    </div>
                     
+
+                    <div class="ui-g-12 ui-md-2">
+                        Numero de emergencia
+                      </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="phoneEmergencyContact" placeholder="Numero de emergencia" />
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Email de emergencia
+                     </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="emailEmergencyContact" placeholder="Email de emergencia" />
+                    </div>
+
                     <div class="ui-g-12 ui-md-2">
                         Fecha de nacimiento
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaNacimiento"></p-calendar>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
                         Género
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero"></p-radioButton>
-                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero"></p-radioButton>
+                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
+                        </p-radioButton>
+                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
+                        </p-radioButton>
                     </div>
 
                 </div>
             </p-panel>
-            <br/>
+            <br />
             <p-panel header="LABORAL">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-2">
@@ -110,9 +145,10 @@
                         Perfiles
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
-                    </div>                  
-                    
+                        <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--"
+                            required></p-multiSelect>
+                    </div>
+
                     <div class="ui-g-12 ui-md-2">
                         Código
                     </div>
@@ -138,7 +174,9 @@
                         Fecha de ingreso
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngreso" required></p-calendar>
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaIngreso" required></p-calendar>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
@@ -152,35 +190,41 @@
                         Ubicación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <area-selector formControlName="area" [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required></area-selector>
+                        <area-selector formControlName="area"
+                            [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required></area-selector>
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
                         Cargo
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required></p-dropdown>
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required>
+                        </p-dropdown>
                     </div>
                 </div>
             </p-panel>
             <div style="text-align: center; width: 100%;" *ngIf="isUpdate || editable">
-                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" [disabled]="!form.valid" class="float-btn" style="bottom: 100px;" title="Guardar datos de empleado"></button>
+                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o"
+                    [disabled]="!form.valid" class="float-btn" style="bottom: 100px;"
+                    title="Guardar datos de empleado"></button>
 
-                <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+                <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
+                    [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
             </div>
         </form>
 
     </p-tabPanel>
 
-    <p-tabPanel header="Jornada" >
+    <p-tabPanel header="Jornada">
         <s-jornadaForm [value]="empleadoSelect" *ngIf="loaded"></s-jornadaForm>
     </p-tabPanel>
-    <p-tabPanel header="Horas extra" >
+    <p-tabPanel header="Horas extra">
         <s-horasExtraForm [value]="empleadoSelect" *ngIf="loaded"></s-horasExtraForm>
     </p-tabPanel>
-    <p-tabPanel header="Documentación" >
+    <p-tabPanel header="Documentación">
         <s-documentosEmpleadoForm *ngIf="loaded" [value]="empleadoSelect"></s-documentosEmpleadoForm>
     </p-tabPanel>
 </p-tabView>
 
-<button pButton *ngIf="solicitando == false" type="button" icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
+<button pButton *ngIf="solicitando == false" type="button" icon="fa fa-chevron-left" class="float-btn"
+    (click)="closeForm()" title="Volver a listado de empleados"></button>

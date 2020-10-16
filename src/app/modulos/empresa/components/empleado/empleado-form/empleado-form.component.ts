@@ -90,6 +90,10 @@ export class EmpleadoFormComponent implements OnInit {
       'telefono1': [null],
       'telefono2': [null],
       'afp': [null],
+      'emergencyContact' :[null],		
+      "corporativePhone":[null],
+      'phoneEmergencyContact' :[null],
+      'emailEmergencyContact' :[null],
       'ccf': [null],
       'ciudad': [null],
       'eps': [null],
@@ -231,6 +235,10 @@ export class EmpleadoFormComponent implements OnInit {
     empleado.codigo = this.form.value.codigo;
     empleado.direccion = this.form.value.direccion;
     empleado.fechaIngreso = this.form.value.fechaIngreso;
+    empleado.emergencyContact = this.form.value.emergencyContact;
+    empleado.corporativePhone = this.form.value.corporativePhone;
+    empleado.phoneEmergencyContact = this.form.value.phoneEmergencyContact;
+    empleado.emailEmergencyContact = this.form.value.emailEmergencyContact;
     empleado.fechaNacimiento = this.form.value.fechaNacimiento;
     empleado.genero = this.form.value.genero;
     empleado.numeroIdentificacion = this.form.value.numeroIdentificacion;

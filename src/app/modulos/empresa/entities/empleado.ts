@@ -26,6 +26,10 @@ export class Empleado {
   telefono2: string;
   afp: Afp;
   ccf: Ccf;
+  corporativePhone :string;
+  emergencyContact :string;
+  phoneEmergencyContact :string;
+  emailEmergencyContact :string;
   ciudad: Ciudad;
   eps: Eps;
   tipoIdentificacion: any;
