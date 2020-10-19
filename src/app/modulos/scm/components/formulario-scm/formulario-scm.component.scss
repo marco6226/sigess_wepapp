@@ -9,7 +9,9 @@
     align-items: center;
 }
 
-// Case data
+
+/* Case data */
+
 .case-data {
     width: 18rem;
     @media only screen and (min-width: 768px) {
@@ -30,7 +32,9 @@
     }
 }
 
-// General data
+
+/* General data */
+
 .title-header {
     font-size: 1.25rem;
     margin-block-start: 0;
@@ -71,16 +75,23 @@
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    margin-top: -1rem;
     @media only screen and (min-width: 768px) {
+        margin-top: 0;
+        margin-bottom: 0;
         height: 70%;
     }
 }
 
-// Inputs
+
+/* Inputs */
+
 .input-field {
     position: relative;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
     .form-material {
         background-color: transparent;
         border: none;
@@ -117,6 +128,7 @@
         }
     }
     label {
+        flex: 1;
         color: #007ad9;
         position: absolute;
         top: 0;
@@ -142,7 +154,35 @@
     }
 }
 
-// Textarea 
+
+/* Form material design */
+
+:host ::ng-deep .form-material {
+    &.ui-inputtext {
+        outline: none;
+        height: 2rem;
+        width: 100%;
+        font-size: 16px;
+        margin: 0 0 8px 0;
+        padding: 0;
+        padding-left: .25rem;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        -webkit-transition: border .3s, -webkit-box-shadow .3s;
+        transition: border .3s, -webkit-box-shadow .3s;
+        transition: box-shadow .3s, border .3s;
+        transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+        &:focus {
+            border-bottom: 1px solid #007ad9 !important;
+        }
+    }
+}
+
+
+/* Textarea  */
+
 .textarea-material {
     line-height: normal;
     overflow-y: hidden;
@@ -164,15 +204,16 @@
             }
         }
     }
-    // Select {
+    /*  Select */
     .select-material {
+        width: 100% !important;
         &.ui-dropdown {
             border: none;
             border-bottom: 1px solid #dee2e6;
             margin-bottom: -1rem;
         }
     }
-    // Radio buttons
+    /*   Radio buttons */
     .radio-material {
         &.ui-radiobutton {
             padding-top: .75rem;
@@ -183,7 +224,7 @@
             padding-top: .75rem;
         }
     }
-    // Panel
+    /* Panel */
     .custom-panel {
         &.ui-tabview {
             &.ui-tabview-top {
@@ -231,7 +272,7 @@
             }
         }
     }
-    // Table responsive
+    /* Table responsive */
     .p-datatable {
         &.p-datatable-responsive {
             .p-datatable-thead>tr>th,
