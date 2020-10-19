@@ -5,7 +5,6 @@
         dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
         <ng-template pTemplate="header">
             <tr>
-                <th rowspan="2"></th>
                 <th pSortableColumn="id">#CASO
                     <p-sortIcon field="id"></p-sortIcon>
                 </th>
@@ -58,21 +57,12 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-usr>
-            <tr [pSelectableRow]="usr">
-                <td class="td-avatar">
-                    <i *ngIf="!usr?.icon" class="fa fa-user-circle" aria-hidden="true"></i>
-                    <img *ngIf="usr?.icon" [src]="usr?.icon" style="border-radius: 50%;" />
-                </td>
-                <td>{{usr.email}}</td>
-                <td>{{usr.fechaModificacion | date:'dd/MM/yyyy HH:mm'}}</td>
-                <td>{{usr.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td>
-                <td>{{usr.ultimoLogin | date:'dd/MM/yyyy HH:mm'}}</td>
-                <td>
-                    <label class="badge" [ngClass]="{'success': usr.estado == 'ACTIVO', 'novalid': usr.estado == 'ELIMINADO', 'warning': usr.estado == 'INACTIVO', 'active': usr.estado == 'CAMBIO_PASSWD', 'fatal': usr.estado == 'BLOQUEADO'}">
-                        {{usr.estado}}
-                    </label>
-                </td>
+        <ng-template pTemplate="body" let-case>
+            <tr>
+                <td>{{case.statusCaso}}</td>
+                <td>{{case.fechaFinal}}</td>
+                <td>{{case.origen}}</td>
+                <td>{{case.justification}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>

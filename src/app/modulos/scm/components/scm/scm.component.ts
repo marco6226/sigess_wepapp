@@ -34,7 +34,7 @@ export class ScmComponent implements OnInit {
         'ultimoLogin',
         'ipPermitida',
         'mfa',
-        'numeroMovil'
+        'numeroMovil' 
         //'usuarioEmpresaList_perfil_id'
     ];
     estadosList: SelectItem[] = [
