@@ -11,6 +11,7 @@ export class AnalisisDesviacion {
   id: string;
   analisisCosto:AnalisisCosto;
   observacion: string;
+  jerarquia: string;
   fechaElaboracion: Date;
   tareaId: string;
   causaRaizList: CausaRaiz[];
@@ -18,8 +19,6 @@ export class AnalisisDesviacion {
   causasAdminList: CausaAdministrativa[];
   desviacionesList: Desviacion[];
   documentosList:Documento[];
-  tareaDesviacionList:Tarea[];
-
-  participantes:string;
-  tareaAsignada:boolean;
+  tareaDesviacionList:Tarea[]; participantes: string;
+  tareaAsignada:  boolean;
 }
