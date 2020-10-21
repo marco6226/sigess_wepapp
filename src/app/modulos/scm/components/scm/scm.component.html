@@ -1,11 +1,12 @@
 <p-growl [value]="msgs"></p-growl>
-<p-panel header="Casos medicos">
+<p-panel styleClass="material-panel">
+    <p-header>
+        Casos médicos
+    </p-header>
 
-    <p-table #dt [value]="casosList" autoLayout="true" selectionMode="single" [(selection)]="usuarioSelect" [rows]="10" [paginator]="true"
-        dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <p-table #dt [value]="casosList" class="table-material" autoLayout="true" selectionMode="single" [(selection)]="usuarioSelect" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
         <ng-template pTemplate="header">
             <tr>
-                <th rowspan="2"></th>
                 <th pSortableColumn="id">#CASO
                     <p-sortIcon field="id"></p-sortIcon>
                 </th>
@@ -77,8 +78,8 @@
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
             <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus" label="Crear Caso" (click)="abrirDlg(false)"></button>
-           
-           <!-- <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+
+            <!-- <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
                 (click)="abrirDlg(true)" [disabled]="!usuarioSelect"></button>
             <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                 (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
@@ -86,4 +87,3 @@
     </p-table>
 
 </p-panel>
-
