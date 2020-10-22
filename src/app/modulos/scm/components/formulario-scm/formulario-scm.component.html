@@ -287,7 +287,7 @@
                 </div>
 
             </div>
-
+            <form [formGroup]="jefeInmediato">
             <div class="ui-g p-py-2">
                 <div class="ui-g-12">
                     <div class="ui-g-12">
@@ -296,9 +296,28 @@
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-3">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre"
-                            placeholder="Documento de Identidad" class="form-material" id="" />
-                        <label for="" class="active">Documento de Identidad</label>
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                            [style]="{'width':'100%'}" (onSelect)="onSelectionJI($event)" [suggestions]="empleadosList"
+                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                            *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}</label>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="" class="active">Número de identificación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-lg-6">
@@ -339,7 +358,8 @@
                     </div>
                 </div>
             </div>
-
+        </form>
+        <form  [formGroup]="bussinessParner">
             <div class="ui-g p-py-2">
                 <div class="ui-g-12">
                     <div class="ui-g-12">
@@ -348,9 +368,28 @@
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-3">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre"
-                            placeholder="Documento de Identidad" class="form-material" id="" />
-                        <label for="" class="active">Documento de Identidad</label>
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                            [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)" [suggestions]="empleadosList"
+                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                            *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}</label>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="" class="active">Número de identificación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-lg-6">
@@ -391,7 +430,7 @@
                     </div>
                 </div>
             </div>
-
+        </form>
         </form>
     </p-tabPanel>
     <p-tabPanel header="Información Médica">

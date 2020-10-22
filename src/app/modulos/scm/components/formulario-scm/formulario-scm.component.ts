@@ -27,6 +27,8 @@ import * as moment from 'moment';
 export class FormularioScmComponent implements OnInit {
     value;
     casoMedicoForm:FormGroup;
+    bussinessParner:FormGroup;
+    jefeInmediato:FormGroup;
     cedula = "TANGAMANDAPIO";
     cargoDescripcion:string;
     empleado : Empleado;
@@ -69,7 +71,8 @@ export class FormularioScmComponent implements OnInit {
       let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
       this.tipoIdentificacionList = defaultItem.concat(<SelectItem[]>tipo_identificacion);
       this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
-  
+      //Instaciacion de datos de form
+      
       this.empleadoForm = fb.group({
         'id': [null],
         'primerNombre': [null, Validators.required],
@@ -134,18 +137,21 @@ export class FormularioScmComponent implements OnInit {
     }
   
     ngOnInit() {
+
+      
+
         this.casoMedicoForm.patchValue({
         casoMedicoLaboral: "asdasda",
         codigoCie10: "asdasdasd",
         conceptRehabilitacion: "asdasdasdadasd",
         descripcionCompletaCaso: "asdasdasdasd",
         diagnostico: "asdasdasdasd",
-        emisionPclFecha: "2020-10-14T05:00:00.000Z",
+        emisionPclFecha: null,
         entidadEmiteCalificacion: 48,
         entidadEmiteConcepto: 48,
-        fechaCalificacion: "2020-10-15T05:00:00.000Z",
-        fechaConceptRehabilitacion: "2020-10-06T05:00:00.000Z",
-        fechaFinal: "2020-10-01T05:00:00.000Z",
+        fechaCalificacion: null,
+        fechaConceptRehabilitacion: null,
+        fechaFinal: "",
         justification: null,
         observaciones: "asdasdadasd",
         origen: "asdasdad",
@@ -327,5 +333,17 @@ export class FormularioScmComponent implements OnInit {
 
       'email': [this.empleadoSelect.usuario.email]
     });
+  }
+
+  onSelectionBP(event) {
+    this.bussinessParner.patchValue({event})
+
+  }
+
+
+  onSelectionJI(event){
+    this.jefeInmediato.patchValue({event})
+    console.log(this.jefeInmediato);
+
   }
 }

@@ -6,56 +6,51 @@ import { SelectItem } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 
 @Component({
-    selector: 'app-scm',
-    templateUrl: './scm.component.html',
-    styleUrls: ['./scm.component.scss']
+  selector: 'app-scm',
+  templateUrl: './scm.component.html',
+  styleUrls: ['./scm.component.scss'],
 })
 export class ScmComponent implements OnInit {
+  empresaId: string;
+  casosList: any;
+  usuarioSelect: Usuario;
+  perfilList: SelectItem[] = [];
+  visibleDlg: boolean;
+  msgs: Message[] = [];
+  isUpdate: boolean;
+  form: FormGroup;
 
-    empresaId: string;
-    casosList: any;
-    usuarioSelect: Usuario;
-    perfilList: SelectItem[] = [];
-    visibleDlg: boolean;
-    msgs: Message[] = [];
-    isUpdate: boolean;
-    form: FormGroup;
+  solicitando: boolean = false;
+  loading: boolean;
+  totalRecords: number;
+  fields: string[] = [
+    'id',
+    'email',
+    'icon',
+    'estado',
+    'fechaModificacion',
+    'fechaCreacion',
+    'ultimoLogin',
+    'ipPermitida',
+    'mfa',
+    'numeroMovil',
+    // 'usuarioEmpresaList_perfil_id'
+  ];
+  estadosList: SelectItem[] = [
+    { value: 'ACTIVO', label: 'ACTIVO' },
+    { value: 'INACTIVO', label: 'INACTIVO' },
+  ];
 
-    solicitando: boolean = false;
-    loading: boolean;
-    totalRecords: number;
-    fields: string[] = [
-        'id',
-        'email',
-        'icon',
-        'estado',
-        'fechaModificacion',
-        'fechaCreacion',
-        'ultimoLogin',
-        'ipPermitida',
-        'mfa',
-        'numeroMovil' 
-        //'usuarioEmpresaList_perfil_id'
-    ];
-    estadosList: SelectItem[] = [
-        { value: 'ACTIVO', label: 'ACTIVO' },
-        { value: 'INACTIVO', label: 'INACTIVO' }
-    ];
+  constructor(private scmService: CasosMedicosService) {}
 
-    constructor(private scmService: CasosMedicosService) { }
+  async ngOnInit() {
+    this.casosList = await this.scmService.getAll();
+  }
 
-    async ngOnInit() {
-        this.casosList = await this.scmService.getAll();
-    }
+  onSubmit() {}
 
+  abrirDlg(bolean) {}
 
-    onSubmit() { }
-
-    abrirDlg(bolean) { }
-
-    eliminar() {
-
-
-    }
-    lazyLoad(event) { }
+  eliminar() {}
+  lazyLoad(event) {}
 }
