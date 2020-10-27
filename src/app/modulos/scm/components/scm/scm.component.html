@@ -61,10 +61,12 @@
         </ng-template>
         <ng-template pTemplate="body" let-case>
             <tr>
-                <td>{{case.statusCaso}}</td>
+                <td>{{case.id}}</td>
                 <td>{{case.fechaFinal}}</td>
-                <td>{{case.origen}}</td>
-                <td>{{case.justification}}</td>
+                <td>{{case.region}}</td>
+                <td>{{case.ciudad}}</td>
+                <td>{{case.names}}</td>
+                <td>{{case.cargo}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>

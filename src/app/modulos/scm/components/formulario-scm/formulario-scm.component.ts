@@ -72,7 +72,23 @@ export class FormularioScmComponent implements OnInit {
       this.tipoIdentificacionList = defaultItem.concat(<SelectItem[]>tipo_identificacion);
       this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
       //Instaciacion de datos de form
-      
+        this.bussinessParner = fb.group({
+            'numeroIdentificacion': [null, Validators.required],
+            'primerNombre': [null, Validators.required],
+            'segundoNombre': null,
+            'email': null,
+            'corporativePhone':[null],
+            'cargoId': [null, Validators.required],
+
+    })
+        this.jefeInmediato = fb.group({
+            'numeroIdentificacion': [null, Validators.required],
+            'primerNombre': [null, Validators.required],
+            'segundoNombre': null,
+            'email': null,
+            'corporativePhone':[null],
+            'cargoId': [null, Validators.required],
+        })
       this.empleadoForm = fb.group({
         'id': [null],
         'primerNombre': [null, Validators.required],
@@ -87,6 +103,7 @@ export class FormularioScmComponent implements OnInit {
         'numeroIdentificacion': [null, Validators.required],
         'telefono1': [null],
         'telefono2': [null],
+    
         'corporativePhone':[null],
         'emergencyContact' :[null],
         'phoneEmergencyContact' :[null],
@@ -115,6 +132,9 @@ export class FormularioScmComponent implements OnInit {
         "pkJefe": [null, Validators.required],
         "porcentajePcl": [null, Validators.required],
         "pcl": [null, Validators.required],
+        'region':[null],
+        'ciudad':[null],
+        'cargo':[null],
         "descripcionCompletaCaso": [null, Validators.required],
         "fechaCalificacion": [null, Validators.required],
         "sve": [null, Validators.required],
@@ -262,6 +282,15 @@ export class FormularioScmComponent implements OnInit {
     closeForm(){}
       
   async  onSubmit(){
+            console.log(this.cargoList);
+            this.casoMedicoForm.patchValue({
+                region: this.empleadoForm.get('area').value.nombre,
+                ciudad: this.empleadoForm.get('ciudad').value.nombre,
+               // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
+                pkJefe: this.jefeInmediato.get('numeroIdentificacion').value,
+                pkUser:  this.bussinessParner.get('numeroIdentificacion').value,
+               
+            })
             console.log(this.casoMedicoForm.value)
         console.log(await this.scmService.create(this.casoMedicoForm.value));
     }
@@ -298,8 +327,8 @@ export class FormularioScmComponent implements OnInit {
 
   onSelection(event) {
     this.value = event;
-    this.empleadoSelect = <Empleado>this.value;
-    this.loaded = true;
+    this.value = event;
+    this.empleadoSelect = <Empleado>this.value;    this.loaded = true;
     console.log(this.empleadoSelect);
     let fecha = moment(this.empleadoSelect.fechaIngreso)
     this.antiguedad =   `${fecha.diff(moment.now(),'months')*-1} Meses`
@@ -336,14 +365,34 @@ export class FormularioScmComponent implements OnInit {
   }
 
   onSelectionBP(event) {
-    this.bussinessParner.patchValue({event})
+
+    this.empleadoSelect = <Empleado>event;
+    this.bussinessParner.patchValue({ 'id': this.empleadoSelect.id,
+    'primerNombre': this.empleadoSelect.primerNombre,
+    'segundoNombre': this.empleadoSelect.segundoNombre,
+    'numeroIdentificacion': this.empleadoSelect.numeroIdentificacion,
+    'corporativePhone': this.empleadoSelect.corporativePhone,
+    'area': this.empleadoSelect.area,
+    'cargoId': this.empleadoSelect.cargo.id,  
+    //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+
+    'email': [this.empleadoSelect.usuario.email]})
 
   }
 
 
   onSelectionJI(event){
-    this.jefeInmediato.patchValue({event})
-    console.log(this.jefeInmediato);
+    this.empleadoSelect = <Empleado>event;
+    this.jefeInmediato.patchValue({ 'id': this.empleadoSelect.id,
+    'primerNombre': this.empleadoSelect.primerNombre,
+    'segundoNombre': this.empleadoSelect.segundoNombre,
+    'numeroIdentificacion': this.empleadoSelect.numeroIdentificacion,
+    'corporativePhone': this.empleadoSelect.corporativePhone,
+    'area': this.empleadoSelect.area,
+    'cargoId': this.empleadoSelect.cargo.id,  
+    //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+
+    'email': [this.empleadoSelect.usuario.email]})
 
   }
 }
