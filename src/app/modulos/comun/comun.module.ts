@@ -6,6 +6,7 @@ import { RouterModule, Routes, RouterLink } from '@angular/router';
 import { ConfirmationService } from 'primeng/primeng';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 
+import { CieSelectorComponent } from 'app/modulos/comun/components/cie-selector/cie-selector.component';
 
 import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { EnumeracionesService } from 'app/modulos/comun/services/enumeraciones.service'
@@ -153,7 +154,8 @@ import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.com
 		PaginatorModule,
 		ScrollPanelModule,
 		GMapModule,
-		ProgressSpinnerModule
+        ProgressSpinnerModule,
+        
 	],
 	exports: [
 		CommonModule,
@@ -207,7 +209,7 @@ import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.com
 		ScrollPanelModule,
 		GMapModule,
 		ProgressSpinnerModule,
-
+        CieSelectorComponent,
 		LayoutComponent,
 		LayoutMenuComponent,
 		LayoutContentComponent,
@@ -237,10 +239,11 @@ import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.com
 		ConfiguracionGeneralDirective
 	],
 	declarations: [
-		LayoutComponent,
+        LayoutComponent,
 		LayoutMenuComponent,
 		LayoutContentComponent,
-		AreaSelectorComponent,
+        CieSelectorComponent,
+        AreaSelectorComponent,
 		MultiAreaSelectorComponent,
 		CiudadSelectorComponent,
 		//PdfViewerComponent,

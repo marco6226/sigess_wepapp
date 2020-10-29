@@ -11,6 +11,7 @@ import { CargoService } from '../empresa/services/cargo.service';
 import { EmpleadoService } from '../empresa/services/empleado.service';
 import { PerfilService } from '../admin/services/perfil.service';
 import { UsuarioService } from '../admin/services/usuario.service';
+import { CieSelectorComponent } from '../comun/components/cie-selector/cie-selector.component';
 
 @NgModule({ 
   declarations: [FormularioScmComponent, ScmComponent],
@@ -27,6 +28,7 @@ import { UsuarioService } from '../admin/services/usuario.service';
     CargoService,
     EmpleadoService,
     PerfilService
-]
+],
+
 })
 export class ScmModule { }

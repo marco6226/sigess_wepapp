@@ -1,13 +1,14 @@
 <p-growl [value]="msgs"></p-growl>
+<div *ngIf="!visibleForm">
 <p-panel styleClass="material-panel">
     <p-header>
         Casos médicos
     </p-header>
 
-    <p-table #dt [value]="casosList" class="table-material" autoLayout="true" selectionMode="single" [(selection)]="usuarioSelect" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <p-table #dt [value]="casosList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id">#CASO
+                <th pSortableColumn="id">#CASO 
                     <p-sortIcon field="id"></p-sortIcon>
                 </th>
                 <th pSortableColumn="fapertura">Fecha de apertura
@@ -25,8 +26,8 @@
                 <th pSortableColumn="charge">Cargo
                     <p-sortIcon field="charge"></p-sortIcon>
                 </th>
-                <th pSortableColumn="saludstate">Estado de salud
-                    <p-sortIcon field="saludstate"></p-sortIcon>
+                <th pSortableColumn="statusCaso">Estado de caso
+                    <p-sortIcon field="statusCaso"></p-sortIcon>
                 </th>
                 <th pSortableColumn="saludstate">Caso de mesa laboral
                     <p-sortIcon field="saludstate"></p-sortIcon>
@@ -60,23 +61,32 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-case>
-            <tr>
+    
+            <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                 <td>{{case.id}}</td>
                 <td>{{case.fechaFinal}}</td>
                 <td>{{case.region}}</td>
                 <td>{{case.ciudad}}</td>
                 <td>{{case.names}}</td>
-                <td>{{case.cargo}}</td>
+                <td>{{case.cargo}}</td> 
+                <td>{{case.statusCaso}}</td>
+                <td>{{case.casoMedicoLaboral}}</td>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
-            <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus" label="Crear Caso" (click)="abrirDlg(false)"></button>
+            <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso" ></button>
 
-            <!-- <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                (click)="abrirDlg(true)" [disabled]="!usuarioSelect"></button>
-            <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+            <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                (click)="openCase()" [disabled]="!caseSelect"></button>
+           <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                 (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
         </ng-template>
     </p-table>
 
 </p-panel>
+</div>
+
+<div >
+ <app-formulario-scm *ngIf="visibleForm" (onCancel)="onCancel()"   [caseSelect]="caseSelect"></app-formulario-scm>
+</div>
