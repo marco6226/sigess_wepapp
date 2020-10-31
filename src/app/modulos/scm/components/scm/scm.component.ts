@@ -61,18 +61,25 @@ export class ScmComponent implements OnInit {
             //this.cargoList = this.cargoList.slice();
         }
     );
+   
+    await this.loadData();
+  }
+  
+  async loadData(){
     this.casosList = await this.scmService.getAll();
     this.casosList.forEach(element => {
-        let cargo = this.cargoList.find(cargo => cargo.id == element.cargo)
-        console.log(cargo.nombre);
-        if (cargo.nombre) {
-            element.cargo = cargo.nombre;
+        console.log(element);
+        let cargo = this.cargoList.find(cargo => cargo.value == element.cargo)
+        console.log(cargo);
+        if (cargo.label && cargo.value != null) {
+            element.cargo = cargo.label
         }else{
             element.cargo = "Sin definir";
         }
        
     });
   }
+
 
   onSubmit() {}
 
@@ -81,12 +88,14 @@ export class ScmComponent implements OnInit {
       console.log(54,this.caseSelect);
   }
 
-  onCancel() {
+  async onCancel() {
     this.visibleForm = false;
+    await this.loadData();
     console.log("close form");
   }
 
   eliminar() {}
+  
   lazyLoad(event) {
     console.log(event);
 

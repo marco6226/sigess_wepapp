@@ -15,9 +15,10 @@ import { Perfil } from 'app/modulos/empresa/entities/perfil';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { locale_es, tipo_identificacion, tipo_vinculacion } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
-import { SelectItem } from 'primeng/api';
+import { SelectItem,Message } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 import * as moment from 'moment';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-formulario-scm',
@@ -26,6 +27,8 @@ import * as moment from 'moment';
 })
 export class FormularioScmComponent implements OnInit {
     value;
+    msgs: Message[];
+ 
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
     jefeInmediato: FormGroup;
@@ -52,6 +55,9 @@ export class FormularioScmComponent implements OnInit {
     epsList: SelectItem[];
     afpList: SelectItem[];
     cargoList: SelectItem[];
+    caseStatus=[ {label:'Select City', value:null},
+    {label:'Abierto', value:1},
+    {label:'Cerrado', value:0},]
     perfilList: SelectItem[] = [];
     loaded: boolean;
     antiguedad;
@@ -66,15 +72,15 @@ export class FormularioScmComponent implements OnInit {
         private cargoService: CargoService,
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
-
         private perfilService: PerfilService,
-
+        private router: Router
     ) {
         let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
         this.tipoIdentificacionList = defaultItem.concat(<SelectItem[]>tipo_identificacion);
         this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
         //Instaciacion de datos de form
         this.bussinessParner = fb.group({
+            'id': ['', Validators.required],
             'numeroIdentificacion': [null, Validators.required],
             'primerNombre': [null, Validators.required],
             'segundoNombre': null,
@@ -84,6 +90,7 @@ export class FormularioScmComponent implements OnInit {
 
         })
         this.jefeInmediato = fb.group({
+            'id': ['', Validators.required],
             'numeroIdentificacion': [null, Validators.required],
             'primerNombre': [null, Validators.required],
             'segundoNombre': null,
@@ -125,8 +132,10 @@ export class FormularioScmComponent implements OnInit {
         });
 
         this.casoMedicoForm = fb.group({
+          
             "codigoCie10": [null, Validators.required],
             "razon": [null, Validators.required],
+            'names': [null, Validators.required],
             "observaciones": [null, Validators.required],
             "statusCaso": [null, Validators.required],
             "requiereIntervencion": [null, Validators.required],
@@ -151,6 +160,8 @@ export class FormularioScmComponent implements OnInit {
             "fechaFinal": [null, Validators.required],
             "emisionPclFecha": [null, Validators.required],
             "sistemaAfectado": [null, Validators.required],
+            "fechaCreacion": [null],
+
             "entidadEmiteCalificacion": [null, Validators.required],
             "pkBusinessPartner": [null, Validators.required],
             "pclEmitEntidad": [null, Validators.required],
@@ -199,65 +210,96 @@ export class FormularioScmComponent implements OnInit {
                 this.empleadoForm.patchValue({ 'area': area });
                 this.editable = true;
             }
-            this.comunService.findAllAfp().then(
-                data => {
-                    this.afpList = []
-                    this.afpList.push({ label: '--Seleccione--', value: null });
-                    (<Afp[]>data).forEach(afp => {
-                        this.afpList.push({ label: afp.nombre, value: afp.id });
-                    });
-                }
-            );
-            this.comunService.findAllEps().then(
-                data => {
-                    this.epsList = [];
-                    this.epsList.push({ label: '--Seleccione--', value: null });
-                    (<Eps[]>data).forEach(eps => {
-                        this.epsList.push({ label: eps.nombre, value: eps.id });
-                    });
-                }
-            );
-
-            this.cargoService.findAll().then(
-                resp => {
-                    this.cargoList = [];
-                    this.cargoList.push({ label: '--Seleccione--', value: null });
-                    (<Cargo[]>resp['data']).forEach(cargo => {
-                        this.cargoList.push({ label: cargo.nombre, value: cargo.id });
-                    });
-                    //this.cargoList = this.cargoList.slice();
-                }
-            );
-            this.perfilService.findAll().then(
-                resp => {
-                    (<Perfil[]>resp['data']).forEach(perfil => {
-                        this.perfilList.push({ label: perfil.nombre, value: perfil.id });
-
-
-                    });
-                    if (this.isUpdate === true || this.show === true) setTimeout(() => {
-                        this.buildPerfilesIdList();
-                    }, 500);
-
-                }
-            );
+        
         }
+        this.comunService.findAllAfp().then(
+            data => {
+                this.afpList = []
+                this.afpList.push({ label: '--Seleccione--', value: null });
+                (<Afp[]>data).forEach(afp => {
+                    this.afpList.push({ label: afp.nombre, value: afp.id });
+                });
+            }
+        );
+        this.comunService.findAllEps().then(
+            data => {
+                this.epsList = [];
+                this.epsList.push({ label: '--Seleccione--', value: null });
+                (<Eps[]>data).forEach(eps => {
+                    this.epsList.push({ label: eps.nombre, value: eps.id });
+                });
+            }
+        );
+
+        this.cargoService.findAll().then(
+            resp => {
+                this.cargoList = [];
+                this.cargoList.push({ label: '--Seleccione--', value: null });
+                (<Cargo[]>resp['data']).forEach(cargo => {
+                    this.cargoList.push({ label: cargo.nombre, value: cargo.id });
+                });
+                //this.cargoList = this.cargoList.slice();
+            }
+        );
+        this.perfilService.findAll().then(
+            resp => {
+                (<Perfil[]>resp['data']).forEach(perfil => {
+                    this.perfilList.push({ label: perfil.nombre, value: perfil.id });
+
+
+                });
+                if (this.isUpdate === true || this.show === true) setTimeout(() => {
+                    this.buildPerfilesIdList();
+                }, 500);
+
+            }
+        );
     }
     closeForm() {
         this.onCancel.emit();
       }
     async onSubmit() {
-        console.log(this.cargoList);
-        this.casoMedicoForm.patchValue({
+       
+            this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get('area').value.nombre,
             ciudad: this.empleadoForm.get('ciudad').value.nombre,
+            // statusCaso: this.casoMedicoForm.get('statusCaso').value,
+            names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ''}`,
+            cargo: this.empleadoForm.value.cargoId,
             // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
-            pkJefe: this.jefeInmediato.get('numeroIdentificacion').value,
-            pkUser: this.bussinessParner.get('numeroIdentificacion').value,
-
+            pkJefe: this.jefeInmediato.value.id || null,
+            pkBusinessPartner: this.bussinessParner.get('id').value || null, 
+            pkUser: this.empleadoForm.get('id').value || null,
+            codigoCie10: this.casoMedicoForm.value.id || null
         })
-        console.log(this.casoMedicoForm.value)
-        console.log(await this.scmService.create(this.casoMedicoForm.value));
+   
+        
+        console.log(
+            this.jefeInmediato.value,
+             this.empleadoForm.value,
+             this.casoMedicoForm.value, 
+             this.bussinessParner.value);
+
+
+             let status;
+             if (!this.caseSelect) {
+                this.casoMedicoForm.patchValue({fechaCreacion:Date.now()})
+                status  = await this.scmService.create(this.casoMedicoForm.value);
+             }else{
+                status = await this.scmService.edit(this.casoMedicoForm.value);
+             }
+             
+            if (status) {
+            
+                this.msgs = [];
+                this.msgs.push({ severity: 'success', summary: 'Caso medico creado', detail: `Su numero de caso es ${status}` });
+                setTimeout(res=>{ 
+                    this.closeForm();
+                    this.router.navigate(['/app/scm/list']);
+                    this.router.navigateByUrl('/app/scm/list') }, 3000);
+
+            }
+            
     }
 
     async buildPerfilesIdList() {
@@ -328,7 +370,10 @@ export class FormularioScmComponent implements OnInit {
             'email': [this.empleadoSelect.usuario.email]
         });
     }
-
+    onClick(){
+        this.router.navigate(['/app/scm/list']);
+        this.router.navigateByUrl('/app/scm/list')
+    }
     onSelectionBP(event) {
 
         this.empleadoSelect = <Empleado>event;

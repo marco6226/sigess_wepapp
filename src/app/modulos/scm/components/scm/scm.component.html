@@ -64,12 +64,12 @@
     
             <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                 <td>{{case.id}}</td>
-                <td>{{case.fechaFinal}}</td>
+                <td>{{case.fechaCreacion | date}}</td>
                 <td>{{case.region}}</td>
                 <td>{{case.ciudad}}</td>
                 <td>{{case.names}}</td>
                 <td>{{case.cargo}}</td> 
-                <td>{{case.statusCaso}}</td>
+                <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                 <td>{{case.casoMedicoLaboral}}</td>
 
             </tr>

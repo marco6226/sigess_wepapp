@@ -1,13 +1,14 @@
+<p-growl [value]="msgs"></p-growl>
 <div class="p-d-flex p-mb-2 p-px-2 p-jc-end">
-    <div class="case-data p-d-flex p-jc-between">
-        <div *ngIf="caseSelect" class="case-code">
+    <div *ngIf="caseSelect"  class="case-data p-d-flex p-jc-between">
+        <div class="case-code">
             <div  class="title">Caso:</div>
             <div  class="number">
                 #{{caseSelect.id}}
             </div>
         </div>
         <div class="case-date">
-            28/09/2020
+            {{caseSelect.fechaCreacion | date}}
         </div>
     </div>
 </div>
@@ -57,14 +58,14 @@
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="input-field">
-                        <input disabled disabled type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
+                        <input   type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
                             class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-8">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
                             class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
@@ -95,7 +96,7 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input disabled type="text" disabled pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
+                        <input  type="text"  pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
                             class="form-material" id="" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
@@ -130,14 +131,14 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
+                        <input  type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
+                        <input  type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
                             class="form-material" id="" />
                         <label for="" class="active">Contacto de emergencia</label>
                     </div>
@@ -152,7 +153,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="email" pInputText formControlName="emailEmergencyContact"
+                        <input  type="email" pInputText formControlName="emailEmergencyContact"
                             placeholder="Correo corporativo" class="form-material" id="" />
                         <label for="" class="active">Correo de contacto de emergencia</label>
                     </div>
@@ -161,7 +162,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Regional"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Regional"
                             class="form-material" id="" />
                         <label for="" class="active">Regional</label>
                     </div>
@@ -176,7 +177,7 @@
 
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Ubicación"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Ubicación"
                             class="form-material" id="" />
                         <label for="" class="active">Ubicación</label>
                     </div>
@@ -205,7 +206,7 @@
 
                 <div class="ui-g-12 ui-md-3 ui-lg-2">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Edad"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Edad"
                             class="form-material" id="" />
                         <label for="" class="active">Edad</label>
                     </div>
@@ -253,13 +254,13 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <input disabled type="email" pInputText formControlName="email" plaholder="Correo personal" />
+                        <input  type="email" pInputText formControlName="email" plaholder="Correo personal" />
                         <label for="" class="active">Correo personal</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <input disabled type="email" pInputText formControlName="email"
+                        <input  type="email" pInputText formControlName="email"
                             plaholder="Correo adicional alternativo" />
                         <label for="" class="active">Correo adicional alternativo</label>
                     </div>
@@ -322,7 +323,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-lg-6">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
                             class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
@@ -337,7 +338,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-5">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
                             class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
@@ -352,7 +353,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="email" placeholder="Correo corporativo"
+                        <input  type="text" pInputText formControlName="email" placeholder="Correo corporativo"
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
@@ -394,7 +395,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-lg-6">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
                             class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
@@ -409,7 +410,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-5">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
+                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
                             class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
@@ -424,7 +425,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="email" placeholder="Correo corporativo"
+                        <input  type="text" pInputText formControlName="email" placeholder="Correo corporativo"
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
@@ -438,7 +439,7 @@
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="statusCaso"
+                        <p-dropdown  [options]="caseStatus" formControlName="statusCaso"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Estado del caso</label>
@@ -463,7 +464,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="origen" placeholder="Origen"
+                        <input  type="text" pInputText formControlName="origen" placeholder="Origen"
                             class="form-material" id="" />
                         <label for="" class="active">Origen</label>
                     </div>
@@ -502,28 +503,28 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="casoMedicoLaboral"
+                        <input  type="text" pInputText formControlName="casoMedicoLaboral"
                             placeholder="Caso de mesa laboral" class="form-material" id="" />
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
+                        <input  type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
                             id="" />
                         <label for="" class="active">Motivo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="pcl" placeholder="PCL" class="form-material"
+                        <input  type="text" pInputText formControlName="pcl" placeholder="PCL" class="form-material"
                             id="" />
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
+                        <input  type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
                             class="form-material" id="" />
                         <label for="" class="active">% de la PCL</label>
                     </div>
@@ -571,7 +572,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="conceptRehabilitacion"
+                        <input  type="text" pInputText formControlName="conceptRehabilitacion"
                             placeholder="Concepto de rehabilitación" class="form-material" id="" />
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
@@ -609,7 +610,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="sve" placeholder="SVE" class="form-material"
+                        <input  type="text" pInputText formControlName="sve" placeholder="SVE" class="form-material"
                             id="" />
                         <label for="" class="active">SVE</label>
                     </div>
@@ -638,7 +639,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input disabled type="text" pInputText formControlName="primerNombre"
+                        <input  type="text" pInputText formControlName="primerNombre"
                             placeholder="Se generan recomendaciones" class="form-material" id="" />
                         <label for="" class="active">Se generan recomendaciones</label>
                     </div>
@@ -736,6 +737,5 @@
     <p-tabPanel header="Recomendaciones">
     </p-tabPanel>
 </p-tabView>
-
 <button pButton *ngIf="solicitando == false" type="button" [routerLink]="['/app/scm/list']" icon="fa fa-chevron-left" class="float-btn"
     (click)="closeForm()" title="Volver a listado de empleados"></button>
