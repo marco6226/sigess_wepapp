@@ -1,4 +1,6 @@
-<p-card class="ui-g-12 ">
+
+<p-card class="ui-g-12 " *ngIf="data6.datasets[0].data.length > 0">
+    
 
     <div class="p-grid  p-mt-6 p-jc-evenly colorsitos">
         <p-card class="p-col-12 p-xl-3 p-md-6 " [style]="{'background-color': '#42a6f5'}">
@@ -19,10 +21,10 @@
             <div class="info-card">
                 <div class="icon">
                     <i class="fa fa-line-chart" aria-hidden="true"></i>
-                </div>
+                 </div>
                 <div class="info">
                     <p class="percent p-m-0">
-                        67%
+                       67%
                     </p>
                     <label for="">AT Investigados</label>
                 </div>
@@ -107,7 +109,7 @@
                 </div>
                </ng-container>
         </div>
-        <div class="p-col-6 p-mt-4">
+        <div class="p-col-6 p-mt-4"> 
           
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
