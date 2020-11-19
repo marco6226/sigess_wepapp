@@ -84,6 +84,7 @@ import { TerminosCondicionesComponent } from './components/terminos-condiciones/
 import { CardModule } from 'primeng/primeng';
 import { AreaSelectorIndComponent } from './components/area-selectorind/area-selectorind.component';
 import { ModeloGraficaService } from '../ind/services/modelo-grafica.service';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 const appRoutes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -246,7 +247,17 @@ const appRoutes: Routes = [
 		RouterModule.forChild(appRoutes),
 		//CommonModule,
         ComunModule,
-        CardModule
+		CardModule,
+		NgCircleProgressModule.forRoot({
+			"backgroundColor": "#F1F1F1",
+			"backgroundPadding": -18,
+			"showSubtitle":false,
+			"outerStrokeWidth": 10,
+			"outerStrokeColor": "#FF6347",
+			"innerStrokeColor": "#32CD32",
+			"innerStrokeWidth": 1,
+			"responsive":false,
+			"startFromZero": false})
 	],
 	declarations: [
         InicioComponent,

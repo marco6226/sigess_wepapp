@@ -32,6 +32,19 @@ export class HomeComponent implements OnInit {
     data4: any;
     data5: any;
     data6: any;
+    data7: any;
+    data8: any;
+    data9: any;
+    data10: any;
+    planeadas: any;
+    ejecutadas: any ;
+    inptotal: any ;
+    planeadasat: any;
+    ejecutadasat: any ;
+    inptotalat: any ;
+    planeadasauc: any;
+    ejecutadasauc: any ;
+    inptotalauc: any ;
     evtLogList: any[];
     cities1: any[];
     areaSelected: any;
@@ -361,6 +374,40 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
+        this.data7 = {
+            labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
+            datasets: [
+                {
+                    label: 'Tareas planeadas',
+                    backgroundColor: '#d9c077',
+                    borderColor: '#1E88E5',
+                    data: [65]
+                },
+                {
+                    label: 'Tareas gestionadas',
+                    backgroundColor: '#7790d9',
+                    borderColor: '#7CB342',
+                    data: [28]
+                }
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
+        }
+       // this.data7 = 42 + 4 ;
+        this.data8 = 42 + 4 ;
+        this.data9 = 41 + 4 ;
+
+        this.data10 = "textosss" ;
        
     }
     async ngOnInit() {
@@ -390,6 +437,9 @@ export class HomeComponent implements OnInit {
         this.updateCharts4();
         this.updateCharts5();
         this.updateCharts6();
+        this.cumplimientoinp();
+        this.cumplimientoAT();
+        this.cumplimientoauc();
        
     }
    
@@ -401,17 +451,72 @@ export class HomeComponent implements OnInit {
         });
         //0 = nrealiz, 1 = n_total, 2 name
         let data: any = await this.indicadorService.findInpN(this.arrayIds, this.desde, this.hasta)
-        console.log(data);
+       // console.log(data);
         if(data.length < 0) return false;
        // console.log(data);
         for (const iterator of data) {
-            console.log(iterator);
+           // console.log(iterator);
             this.data.labels.push(iterator[2])            
             this.data.datasets[0].data.push(iterator[1])
             this.data.datasets[1].data.push(iterator[0])
         }
         
         this.showData = true;
+    }
+    async cumplimientoinp() {
+        
+        let data7: any = await this.indicadorService.findInptotal(this.arrayIds, this.desde, this.hasta)
+        console.log(data7[0])
+       
+      if(data7[0][0] != null)
+      {
+         this.ejecutadas = data7[0][0];
+         this.planeadas = data7[0][1];
+         this.inptotal = (this.ejecutadas / this.planeadas) * 100;
+        
+        console.log("cumplimiento insp")
+        console.log(this.inptotal)
+        console.log(this.ejecutadas)
+    }
+    }
+    async cumplimientoAT() {
+        
+        let data8: any = await this.indicadorService.findAttotal(this.arrayIds, this.desde, this.hasta)
+        console.log(data8[0])
+       // data7[0]push(this.planeadas)
+      // data7.datasets[0].data.push(this.planeadas);
+       
+      if(data8[0][0] != null) 
+      {
+         this.ejecutadasat = data8[0][0];
+         this.planeadasat = data8[0][1];
+         this.inptotalat = (this.ejecutadasat / this.planeadasat) * 100;
+
+      
+        
+        console.log("cumplimiento at")
+        console.log(this.inptotalat)
+        console.log(this.ejecutadasat)
+    }
+       
+    }
+    async cumplimientoauc() {
+        
+        let data9: any = await this.indicadorService.findAuctotal(this.arrayIds, this.desde, this.hasta)
+        console.log(data9[0])
+       // data7[0]push(this.planeadas)
+      // data7.datasets[0].data.push(this.planeadas);
+      if(data9[0][0] != null) {
+         this.ejecutadasauc = data9[0][0];
+         this.planeadasauc = data9[0][1];
+         this.inptotalauc = (this.ejecutadasauc / this.planeadasauc) * 100;
+
+      
+        
+        console.log("cumplimiento auc")
+        console.log(this.inptotalauc)
+        console.log(this.ejecutadasauc)
+    }
     }
     async updateCharts2() {
          this.showData = false;
@@ -422,7 +527,7 @@ export class HomeComponent implements OnInit {
         //0 = nrealiz, 1 = n_total, 2 name
         let data2: any = await  this.indicadorService.findInpCobertura(this.arrayIds, this.desde, this.hasta)
         if(data2.length < 0) return false;
-        console.log(data2);
+     //   console.log(data2);
        
         {
         this.data2.datasets[0].data.push(data2[0]);
@@ -441,8 +546,8 @@ export class HomeComponent implements OnInit {
        let data3: any = await  this.indicadorService.findInpEfectividad(this.arrayIds, this.desde, this.hasta)
        if(data3.length < 0) return false;
        for (const iterator of data3) {
-       console.log("efectividad");
-       console.log(data3);
+     //  console.log("efectividad");
+     //  console.log(data3);
        
        this.data3.labels.push(iterator[2]);            
        this.data3.datasets[0].data.push(iterator[1]);
@@ -458,11 +563,11 @@ export class HomeComponent implements OnInit {
         this.data4.datasets[index].data = [];
    });
     
-   let data4: any = await  this.indicadorService.findInpCoberturaAt(this.arrayIds, this.desde, this.hasta)
+   let data4 : any = await  this.indicadorService.findInpCoberturaAt(this.arrayIds, this.desde, this.hasta)
    if(data4.length < 0) return false;
    for (const iterator of data4) {
-   console.log("cobertura at");
-   console.log(data4);
+ //  console.log("cobertura at");
+ //  console.log(data4);
    
    this.data4.labels.push(iterator[2]);            
    this.data4.datasets[0].data.push(iterator[1]);
@@ -481,8 +586,8 @@ async updateCharts5() {
    let data5: any = await  this.indicadorService.findInpEficaciaAuc(this.arrayIds, this.desde, this.hasta)
    if(data5.length < 0) return false;
    for (const iterator of data5) {
-   console.log("eficaciaauc");
-   console.log(data5);
+ //  console.log("eficaciaauc");
+ //  console.log(data5);
    
    this.data5.labels.push(iterator[2]);            
    this.data5.datasets[0].data.push(iterator[1]);
@@ -502,8 +607,8 @@ async updateCharts6() {
    let data6: any = await  this.indicadorService.findInpEfectividadAt(this.arrayIds, this.desde, this.hasta)
    if(data6.length < 0) return false;
    for (const iterator of data6) {
-   console.log("efectividad AT");
-   console.log(data6);
+ //  console.log("efectividad AT");
+ //  console.log(data6);
    
    this.data6.labels.push(iterator[2]);            
    this.data6.datasets[0].data.push(iterator[1]);
@@ -528,7 +633,8 @@ async updateCharts6() {
         this.updateCharts3();
  		this.updateCharts4();
  		this.updateCharts5();
-		 this.updateCharts6();
+         this.updateCharts6();
+         this.cumplimientoinp();
     }
 
     loadAreas() {

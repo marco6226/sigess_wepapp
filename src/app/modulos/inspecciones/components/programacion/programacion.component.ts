@@ -141,8 +141,9 @@ export class ProgramacionComponent implements OnInit {
             
           } 
         });
-        console.log(this.listasInspeccionList);
+        console.log(this.listasInspeccionList[this.listasInspeccionList.length-1]);
         this.listasInspeccionList = this.listasInspeccionList.slice();
+        //this.listasInspeccionList = this.listasInspeccionList[this.listasInspeccionList.length-1];
       });
     
     let fechaActual = new Date();
@@ -198,7 +199,6 @@ export class ProgramacionComponent implements OnInit {
       'listaInspeccion_listaInspeccionPK',
       'area_id',
       'area_nombre',
-      'areaPadre',
       'numeroInspecciones',
       'numeroRealizadas'
     ];
