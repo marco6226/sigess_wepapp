@@ -477,7 +477,8 @@ export class HomeComponent implements OnInit {
         console.log("cumplimiento insp")
         console.log(this.inptotal)
         console.log(this.ejecutadas)
-    }
+    }else
+             this.data7 == null;
     }
     async cumplimientoAT() {
         
@@ -503,7 +504,7 @@ export class HomeComponent implements OnInit {
     async cumplimientoauc() {
         
         let data9: any = await this.indicadorService.findAuctotal(this.arrayIds, this.desde, this.hasta)
-        console.log(data9[0])
+        console.log(data9)
        // data7[0]push(this.planeadas)
       // data7.datasets[0].data.push(this.planeadas);
       if(data9[0][0] != null) {
@@ -526,8 +527,9 @@ export class HomeComponent implements OnInit {
         });
         //0 = nrealiz, 1 = n_total, 2 name
         let data2: any = await  this.indicadorService.findInpCobertura(this.arrayIds, this.desde, this.hasta)
+        console.log(data2);
+
         if(data2.length < 0) return false;
-     //   console.log(data2);
        
         {
         this.data2.datasets[0].data.push(data2[0]);
@@ -544,10 +546,11 @@ export class HomeComponent implements OnInit {
        });
         
        let data3: any = await  this.indicadorService.findInpEfectividad(this.arrayIds, this.desde, this.hasta)
+       console.log(data3);
+
        if(data3.length < 0) return false;
        for (const iterator of data3) {
      //  console.log("efectividad");
-     //  console.log(data3);
        
        this.data3.labels.push(iterator[2]);            
        this.data3.datasets[0].data.push(iterator[1]);
@@ -564,10 +567,11 @@ export class HomeComponent implements OnInit {
    });
     
    let data4 : any = await  this.indicadorService.findInpCoberturaAt(this.arrayIds, this.desde, this.hasta)
+   console.log(data4);
    if(data4.length < 0) return false;
    for (const iterator of data4) {
  //  console.log("cobertura at");
- //  console.log(data4);
+ 
    
    this.data4.labels.push(iterator[2]);            
    this.data4.datasets[0].data.push(iterator[1]);
@@ -584,10 +588,12 @@ async updateCharts5() {
    });
     
    let data5: any = await  this.indicadorService.findInpEficaciaAuc(this.arrayIds, this.desde, this.hasta)
+   
+   console.log(data5);
+
    if(data5.length < 0) return false;
    for (const iterator of data5) {
  //  console.log("eficaciaauc");
- //  console.log(data5);
    
    this.data5.labels.push(iterator[2]);            
    this.data5.datasets[0].data.push(iterator[1]);
@@ -605,6 +611,7 @@ async updateCharts6() {
    });
     
    let data6: any = await  this.indicadorService.findInpEfectividadAt(this.arrayIds, this.desde, this.hasta)
+   console.log(data6);
    if(data6.length < 0) return false;
    for (const iterator of data6) {
  //  console.log("efectividad AT");

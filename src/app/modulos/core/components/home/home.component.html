@@ -1,5 +1,5 @@
 
-<p-card class="ui-g-12 " *ngIf="data6.datasets[0].data.length > 0">
+<p-card class="ui-g-12 " *ngIf="data6.datasets[0].data">
     
     <div class="p-grid  p-mt-6 p-jc-evenly colorsitos">
     
@@ -65,7 +65,7 @@
         </div>
 
         <div class="p-col-6 p-mt-4">
-          
+            {{data.datasets[0].data | json}} asda
            <ng-container *ngIf="this.data">
             <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
@@ -75,6 +75,7 @@
             
         </div>
         <div class="p-col-6 p-mt-4">
+            {{data2.datasets[0].data | json}} asda
             <ng-container *ngIf="this.data2">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
@@ -83,7 +84,7 @@
         </ng-container>
         </div>
         <div class="p-col-6 p-mt-4">
-           
+            {{data3.datasets[0].data | json}} asda
             <ng-container *ngIf="this.data3">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
@@ -92,7 +93,7 @@
         </ng-container>
         </div>
         <div class="p-col-6 p-mt-4">
-          
+            {{data4.datasets[0].data | json}} asda
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
@@ -101,7 +102,7 @@
                </ng-container>
         </div>
         <div class="p-col-6 p-mt-4"> 
-          
+            {{data5.datasets[0].data | json}} asda
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
@@ -110,7 +111,7 @@
                </ng-container>
         </div>
         <div class="p-col-6 p-mt-4">
-          
+          {{data6.datasets[0].data | json}} asda
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
