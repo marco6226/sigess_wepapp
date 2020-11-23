@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
     data8: any;
     data9: any;
     data10: any;
+    data11: any;
     planeadas: any;
     ejecutadas: any ;
     inptotal: any ;
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit {
     areaSelected: any;
     cities2: any[];
     show = false;
+    mostrar = 2000;
     localeES = locale_es;
     constructor(
         private usuarioService: UsuarioService,
@@ -58,7 +60,7 @@ export class HomeComponent implements OnInit {
     ) {
         let date = new Date();
         this.desde = `${date.getFullYear()}-${date.getMonth() - 8}-01`
-        this.hasta = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+        this.hasta = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
        
         this.data = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
@@ -403,6 +405,35 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
+        this.data11 = {
+            labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
+            datasets: [
+                {
+                    label: 'Tareas planeadas',
+                    backgroundColor: '#d9c077',
+                    borderColor: '#1E88E5',
+                    data: [65]
+                },
+                {
+                    label: 'Tareas gestionadas',
+                    backgroundColor: '#7790d9',
+                    borderColor: '#7CB342',
+                    data: [28]
+                }
+            ],
+            options: {
+                scales: {
+                    yAxes: [{stacked: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        }]
+                }
+            }
+        }
        // this.data7 = 42 + 4 ;
         this.data8 = 42 + 4 ;
         this.data9 = 41 + 4 ;
@@ -499,6 +530,8 @@ export class HomeComponent implements OnInit {
         console.log(this.inptotalat)
         console.log(this.ejecutadasat)
     }
+    else
+             this.data8 == null;
        
     }
     async cumplimientoauc() {
@@ -518,6 +551,8 @@ export class HomeComponent implements OnInit {
         console.log(this.inptotalauc)
         console.log(this.ejecutadasauc)
     }
+    else
+             this.data9 == null;
     }
     async updateCharts2() {
          this.showData = false;

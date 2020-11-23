@@ -1,9 +1,10 @@
 
-<p-card class="ui-g-12 " *ngIf="data6.datasets[0].data">
+<p-card class="ui-g-12 " *ngIf="data.datasets[0].data" >
+   
     
     <div class="p-grid  p-mt-6 p-jc-evenly colorsitos">
     
-    <circle-progress
+<circle-progress
   [percent]="this.inptotal"
   [radius]="50"
   [outerStrokeWidth]="10"
@@ -12,7 +13,7 @@
   [innerStrokeColor]="'#C7E596'"
   [animation]="true"
   [animationDuration]="300"
-  
+  *sTienePermiso="'INP'"
 ></circle-progress>
 
 <circle-progress
@@ -24,6 +25,7 @@
 [innerStrokeColor]="'#96d3e5'"
 [animation]="true"
 [animationDuration]="300"
+*sTienePermiso="'RAI'"
 ></circle-progress>
 
 <circle-progress
@@ -35,15 +37,15 @@
 [innerStrokeColor]="'#e596d8'"
 [animation]="true"
 [animationDuration]="300"
-
+*sTienePermiso="'AUC'"
 ></circle-progress>
 <div class="p-col-12 p-mt-4 mid-border">
     <div class="p-d-flex p-jc-evenly">
         
 
-        <div class="p-d-flex"><p class="p-m-0">Cumplimiento inspecciones</p></div>
-        <div class="p-d-flex"><p class=".col-md-4">Cumplimiento investigación de AT/IT</p></div>
-        <div class="p-d-flex"><p class=".col-md-4">Cumplimiento reporte de condiciones</p></div>
+        <div class="p-d-flex" *sTienePermiso="'INP'"><p class="p-m-0">Cumplimiento inspecciones</p></div>
+        <div class="p-d-flex" *sTienePermiso="'RAI'"><p class=".col-md-4">Cumplimiento investigación de AT/IT</p></div>
+        <div class="p-d-flex" *sTienePermiso="'AUC'"><p class=".col-md-4">Cumplimiento reporte de condiciones</p></div>
 
 
     </div>
@@ -64,8 +66,7 @@
             </div>
         </div>
 
-        <div class="p-col-6 p-mt-4">
-            {{data.datasets[0].data | json}} asda
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">           
            <ng-container *ngIf="this.data">
             <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
@@ -74,8 +75,7 @@
            </ng-container>
             
         </div>
-        <div class="p-col-6 p-mt-4">
-            {{data2.datasets[0].data | json}} asda
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">
             <ng-container *ngIf="this.data2">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
@@ -83,8 +83,7 @@
             </div>
         </ng-container>
         </div>
-        <div class="p-col-6 p-mt-4">
-            {{data3.datasets[0].data | json}} asda
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">
             <ng-container *ngIf="this.data3">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
@@ -92,8 +91,7 @@
             </div>
         </ng-container>
         </div>
-        <div class="p-col-6 p-mt-4">
-            {{data4.datasets[0].data | json}} asda
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'RAI'">
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
@@ -101,8 +99,7 @@
                 </div>
                </ng-container>
         </div>
-        <div class="p-col-6 p-mt-4"> 
-            {{data5.datasets[0].data | json}} asda
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'AUC'"> 
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
@@ -110,8 +107,7 @@
                 </div>
                </ng-container>
         </div>
-        <div class="p-col-6 p-mt-4">
-          {{data6.datasets[0].data | json}} asda
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'RAI'">
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
