@@ -1,7 +1,6 @@
 
-<p-card class="ui-g-12 " *ngIf="data.datasets[0].data" >
+<p-card class="ui-g-12 " *ngIf="testing" >
    
-    
     <div class="p-grid  p-mt-6 p-jc-evenly colorsitos">
     
 <circle-progress
@@ -121,3 +120,8 @@
    
 
 </p-card>
+<div *ngIf="!testing" style="width: 100%; display: flex;
+flex-direction: column-reverse;">
+    <p-progressSpinner ></p-progressSpinner>
+
+</div>

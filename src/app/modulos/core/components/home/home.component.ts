@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
     options5: any;
     options6: any;
     showData = false;
+    testing=false;
     data2: any;
     data3: any;
     data4: any;
@@ -347,6 +348,10 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
+        setTimeout(async () => {
+           
+            this.testing = true
+          }, 4000);
         this.data6 = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
             datasets: [
