@@ -60,7 +60,9 @@
                   <p-calendar [locale]="localeES" (onSelect)="selectToDate($event)"  value="!this.hasta" dateFormat="dd/mm/yy"  placeholder="Hasta" appendTo="body" ></p-calendar>
 
                 </div>
-
+                
+               
+                
 
             </div>
         </div>
@@ -83,7 +85,7 @@
         </ng-container>
         </div>
         <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">
-            <ng-container *ngIf="this.data3">
+            <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
                 <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
@@ -91,7 +93,7 @@
         </ng-container>
         </div>
         <div class="p-col-6 p-mt-4" *sTienePermiso="'RAI'">
-            <ng-container *ngIf="this.data">
+            <ng-container *ngIf="this.data4">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
                     <p-chart type="bar" [data]="data4" [options]="options4"></p-chart>
@@ -99,7 +101,7 @@
                </ng-container>
         </div>
         <div class="p-col-6 p-mt-4" *sTienePermiso="'AUC'"> 
-            <ng-container *ngIf="this.data">
+            <ng-container *ngIf="this.data5">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
                     <p-chart type="horizontalBar" [data]="data5" [options]="options5"></p-chart>
@@ -107,7 +109,7 @@
                </ng-container>
         </div>
         <div class="p-col-6 p-mt-4" *sTienePermiso="'RAI'">
-            <ng-container *ngIf="this.data">
+            <ng-container *ngIf="this.data6">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
                     <p-chart type="bar" [data]="data6" [options]="options6"></p-chart>
@@ -120,8 +122,10 @@
    
 
 </p-card>
+
 <div *ngIf="!testing" style="width: 100%; display: flex;
 flex-direction: column-reverse;">
-    <p-progressSpinner ></p-progressSpinner>
+    
+    <div class="col-md-4"><img src="assets/images/icons-invert/tenor.gif" alt="" class="img-responsive" style="overflow: hidden"></div>
 
 </div>

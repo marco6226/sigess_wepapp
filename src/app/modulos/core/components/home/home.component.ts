@@ -2,7 +2,7 @@ import { Component, OnInit,ChangeDetectionStrategy, ChangeDetectorRef } from '@a
 import { UsuarioService } from '../../../admin/services/usuario.service';
 import { Area, Estructura } from 'app/modulos/empresa/entities/area';
 import { ModeloGraficaService } from 'app/modulos/ind/services/modelo-grafica.service';
-import { range } from 'rxjs';
+import { range, Observable  } from 'rxjs';
 import { FilterQuery } from '../../entities/filter-query';
 import { Criteria } from '../../entities/filter';
 import { AreaService } from 'app/modulos/empresa/services/area.service';
@@ -268,13 +268,13 @@ export class HomeComponent implements OnInit {
                     label: 'Hallazgos encontrados',
                     backgroundColor: '#747874',
                     borderColor: '#1E88E5',
-                    data: [65]
+                    data: []
                 },
                 {
                     label: 'Hallazgos gestionados',
                     backgroundColor: '#6CA752',
                     borderColor: '#7CB342',
-                    data: [28]
+                    data: []
                 }
             ],
             options: {
@@ -297,13 +297,13 @@ export class HomeComponent implements OnInit {
                     label: 'AT ocurridos',
                     backgroundColor: '#d9c077',
                     borderColor: '#1E88E5',
-                    data: [65]
+                    data: []
                 },
                 {
                     label: 'AT investigados',
                     backgroundColor: '#09A0B6',
                     borderColor: '#7CB342',
-                    data: [28]
+                    data: []
                 }
             ],
             options: {
@@ -326,13 +326,13 @@ export class HomeComponent implements OnInit {
                     label: 'Observaciones reportadas',
                     backgroundColor: '#377DC0',
                     borderColor: '#1E88E5',
-                    data: [65]
+                    data: []
                 },
                 {
                     label: 'Observaciones aceptadas',
                     backgroundColor: '#FF60CA',
                     borderColor: '#7CB342',
-                    data: [28]
+                    data: []
                 }
             ],
             options: {
@@ -349,9 +349,8 @@ export class HomeComponent implements OnInit {
             }
         }
         setTimeout(async () => {
-           
-            this.testing = true
-          }, 4000);
+            this.testing = true;
+          }, 3000);
         this.data6 = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
             datasets: [
@@ -359,13 +358,13 @@ export class HomeComponent implements OnInit {
                     label: 'Tareas planeadas',
                     backgroundColor: '#d9c077',
                     borderColor: '#1E88E5',
-                    data: [65]
+                    data: []
                 },
                 {
                     label: 'Tareas gestionadas',
                     backgroundColor: '#7790d9',
                     borderColor: '#7CB342',
-                    data: [28]
+                    data: []
                 }
             ],
             options: {
@@ -388,13 +387,13 @@ export class HomeComponent implements OnInit {
                     label: 'Tareas planeadas',
                     backgroundColor: '#d9c077',
                     borderColor: '#1E88E5',
-                    data: [65]
+                    data: []
                 },
                 {
                     label: 'Tareas gestionadas',
                     backgroundColor: '#7790d9',
                     borderColor: '#7CB342',
-                    data: [28]
+                    data: []
                 }
             ],
             options: {
@@ -417,13 +416,13 @@ export class HomeComponent implements OnInit {
                     label: 'Tareas planeadas',
                     backgroundColor: '#d9c077',
                     borderColor: '#1E88E5',
-                    data: [65]
+                    data: []
                 },
                 {
                     label: 'Tareas gestionadas',
                     backgroundColor: '#7790d9',
                     borderColor: '#7CB342',
-                    data: [28]
+                    data: []
                 }
             ],
             options: {
@@ -451,8 +450,6 @@ export class HomeComponent implements OnInit {
             this.show = true
             this.showData = true;
             this.loadAreas();
-           
-
         }, 3000);
         let arrtest = [1, 2, 4, 5, 4];
 
@@ -461,12 +458,14 @@ export class HomeComponent implements OnInit {
             resp => this.evtLogList = resp['data']
         );
     }
-    async actualizarArea(areas) {
+   
+     actualizarArea(areas) {
         this.arrayIds = [];
         
         for (const area of areas) {
             this.arrayIds.push(area.id)
         }
+        this.testing = false;
         this.updateCharts();
         this.updateCharts2();
         this.updateCharts3();
@@ -476,7 +475,9 @@ export class HomeComponent implements OnInit {
         this.cumplimientoinp();
         this.cumplimientoAT();
         this.cumplimientoauc();
-       
+        setTimeout(() => {
+            this.testing = true;
+        }, 1000);       
     }
    
     async updateCharts() {
@@ -675,6 +676,7 @@ async updateCharts6() {
     selectToDate(date: Date) {
         this.hasta = date.toISOString().slice(0, 10);
         console.log(date.toISOString().slice(0, 10));
+        this.testing = false;
         this.updateCharts();
         this.updateCharts2();
         this.updateCharts3();
@@ -682,6 +684,12 @@ async updateCharts6() {
  		this.updateCharts5();
          this.updateCharts6();
          this.cumplimientoinp();
+         this.cumplimientoAT();
+        this.cumplimientoauc();
+        setTimeout(() => {
+            this.testing = true;
+        }, 1000);
+        
     }
 
     loadAreas() {
