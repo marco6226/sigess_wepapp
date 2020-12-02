@@ -42,9 +42,9 @@ export class ConsultaReportesComponent implements OnInit {
     filterQuery.sortOrder = event.sortOrder;
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
-    filterQuery.count = true;
-
+    filterQuery.count = true; 
     filterQuery.fieldList = this.fields;
+
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
 
     this.reporteService.findByFilter(filterQuery).then(

@@ -19,24 +19,23 @@
 
 <br/>
 
-<p-panel *ngIf="dataFile">
+<p-panel *ngIf="workbookExcel.length>0">
   <p-header>
     <button *sTienePermiso="'EMP_POST_LOADEMP'" pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()"></button>
   </p-header>
 
 
-  <p-table #dt [columns]="mapping" [value]="dataFile" paginator="true" [rows]="10" autoLayout="true">
+  <p-table #dt [columns]="workbookExcel" [value]="dataFile" paginator="true" [rows]="10" autoLayout="true">
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" pDroppable="dd" (onDrop)="drop($event, col)" style="padding: 0px;height: 25px;">
-          <div *ngIf="col?.campo" class="badge active" pDraggable="dd" (onDragStart)="dragStart($event, col.campo)">
-            {{col.campo?.label}}
-          </div>
+        <th *ngFor="let col of modelo.EMPLEADO" pDroppable="dd" (onDrop)="drop($event, col)" style="padding: 0px;height: 25px;">
+            {{col.label}}
+         
         </th>
       </tr>
-      <tr>
-        <th *ngFor="let col of columns">
-          {{col.nombre}}
+      <tr *ngFor="let col of columns ">
+        <th *ngFor="let item of col | keyvalue">
+          {{item.value}}
         </th>
       </tr>
     </ng-template>
