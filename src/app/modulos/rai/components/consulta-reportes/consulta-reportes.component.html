@@ -34,7 +34,7 @@
           <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaAccidente', 'bt')"></s-rangoFechaSelector>
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')">
+          <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'id', 'equals')">
         </td>
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerNombreEmpleado', 'contains')">

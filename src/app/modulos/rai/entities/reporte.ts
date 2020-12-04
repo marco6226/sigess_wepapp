@@ -6,7 +6,7 @@ import { Empresa } from 'app/modulos/empresa/entities/empresa'
 import { TestigoReporte } from 'app/modulos/rai/entities/testigo-reporte'
 
 export class Reporte {
-  id: string;
+  id: number;
   tipo: string;
   nombreEps: string;
   codigoEps: string;
