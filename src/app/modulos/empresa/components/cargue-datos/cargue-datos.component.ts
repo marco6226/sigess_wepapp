@@ -11,6 +11,7 @@ import { CargoService } from 'app/modulos/empresa/services/cargo.service'
 import { PerfilService } from 'app/modulos/admin/services/perfil.service'
 import { AreaService } from 'app/modulos/empresa/services/area.service'
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service'
+import * as FileSaver from 'file-saver';
 
 import { tipo_identificacion, tipo_vinculacion, genero, zona, locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones'
 
@@ -24,7 +25,9 @@ import { Ccf } from '../../../comun/entities/ccf';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { SortOrder } from '../../../core/entities/filter';
 import { Usuario } from '../../entities/usuario';
-
+import { UsuarioEmpresa } from '../../entities/usuario-empresa';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx'
 @Component({
     selector: 's-cargueDatos',
     templateUrl: './cargue-datos.component.html',
@@ -50,13 +53,14 @@ export class CargueDatosComponent implements OnInit {
     optDragged: any;
     file: any;
     empleadosArray = [];
-    afpData = {};
-    epsData = {};
-    cargoData = {};
-    perfilData = {};
-    areaData = {};
-    ciudadData = {};
-    ccfData = {};
+    fallidosArray = [];
+    afpData = [];
+    epsData = [];
+    cargoData = [];
+    perfilData = [];
+    areaData = [];
+    ciudadData = [];
+    ccfData = [];
 
     afpOpc = [];
     epsOpc = [];
@@ -138,73 +142,55 @@ export class CargueDatosComponent implements OnInit {
         cargofiltQuery.sortField = 'nombre';
         cargofiltQuery.fieldList = ['id', 'nombre'];
 
-        this.areaService.findByFilter(areafiltQuery).then(
-            resp => {
-                (<Area[]>resp['data']).forEach(area => {
-                    this.areaData[area.nombre] = area;
-                    this.areaOpc.push(<SelectItem>{ label: area.nombre, value: area.nombre })
-                });
-                this.modelo['EMPLEADO'][15].opciones = this.defaultItem.concat(this.areaOpc);
-            }
-        );
-        this.comunService.findAllAfp().then(
-            data => {
-                (<Afp[]>data).forEach(afp => {
-                    this.afpData[afp.nombre] = afp;
-                    this.afpOpc.push(<SelectItem>{ label: afp.nombre, value: afp.nombre })
-                });
-                this.modelo['EMPLEADO'][18].opciones = this.defaultItem.concat(this.afpOpc);
-            }
-        );
-        this.comunService.findAllEps().then(
-            data => {
-                (<Eps[]>data).forEach(eps => {
-                    this.epsData[eps.nombre] = eps;
-                    this.epsOpc.push(<SelectItem>{ label: eps.nombre, value: eps.nombre })
-                });
-                this.modelo['EMPLEADO'][17].opciones = this.defaultItem.concat(this.epsOpc);
-            }
-        );
-        this.ciudadService.findByFilter(ciudadfiltQuery).then(
-            resp => {
-                (<Ciudad[]>resp['data']).forEach(ciudad => {
-                    this.ciudadData[ciudad.nombre] = ciudad;
-                    this.ciudadOpc.push(<SelectItem>{ label: ciudad.nombre, value: ciudad.nombre })
-                });
-                this.modelo['EMPLEADO'][20].opciones = this.defaultItem.concat(this.ciudadOpc);
-            }
-        );
-        this.comunService.findAllCcf().then(
-            resp => {
-                (<Ccf[]>resp).forEach(ccf => {
-                    this.ccfData[ccf.nombre] = ccf;
-                    this.ccfOpc.push(<SelectItem>{ label: ccf.nombre, value: ccf.nombre })
-                });
-                this.modelo['EMPLEADO'][19].opciones = this.defaultItem.concat(this.ccfOpc);
-            }
-        );
-        this.cargoService.findByFilter(cargofiltQuery).then(
-            resp => {
-                (<Cargo[]>resp['data']).forEach(cargo => {
-                    this.cargoData[cargo.nombre] = cargo;
-                    this.cargoOpc.push(<SelectItem>{ label: cargo.nombre, value: cargo.nombre })
-                });
-                this.modelo['EMPLEADO'][16].opciones = this.defaultItem.concat(this.cargoOpc);
-            }
-        );
-        this.perfilService.findAll().then(
-            resp => {
-                (<Perfil[]>resp['data']).forEach(perfil => {
-                    this.perfilData = resp;
-                    this.perfilOpc.push(<SelectItem>{ label: perfil.nombre, value: perfil.nombre })
-                });
-                this.modelo['EMPLEADO'][22].opciones = this.defaultItem.concat(this.perfilOpc);
-            }
-        );
+
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+        let areafiltQuery = new FilterQuery();
+        areafiltQuery.sortOrder = SortOrder.ASC;
+        areafiltQuery.sortField = 'nombre';
+        areafiltQuery.fieldList = ['id', 'nombre'];
 
+        let ciudadfiltQuery = new FilterQuery();
+        ciudadfiltQuery.sortOrder = SortOrder.ASC;
+        ciudadfiltQuery.sortField = 'nombre';
+        ciudadfiltQuery.fieldList = ['id', 'nombre'];
+
+        let cargofiltQuery = new FilterQuery();
+        cargofiltQuery.sortOrder = SortOrder.ASC;
+        cargofiltQuery.sortField = 'nombre';
+        cargofiltQuery.fieldList = ['id', 'nombre'];
+        //Carga de datos para validar empleados
+
+        //variable response para todas las respuestas solo se vacia
+        let response: any = await this.areaService.findByFilter(areafiltQuery);
+        this.areaData = response.data;
+
+        response = await this.comunService.findAllAfp();
+         this.afpData = response;
+
+        response  = await this.comunService.findAllEps();
+        this.epsData  = response;
+
+        response = await this.ciudadService.findByFilter(ciudadfiltQuery);
+        this.ciudadData = response.data;
+
+        response = await this.comunService.findAllCcf();
+        this.ccfData = response;
+
+        response = await this.cargoService.findByFilter(cargofiltQuery);
+        this.cargoData = response.data;
+
+        response = await this.perfilService.findAll();
+        this.perfilData = response.data;
+
+        console.log(this.afpData,
+            this.epsData,
+            this.cargoData,
+            this.perfilData,
+            this.areaData,
+            this.ciudadData,
+            this.ccfData);
     }
 
     onArchivoSelect(ev) {
@@ -223,14 +209,14 @@ export class CargueDatosComponent implements OnInit {
             }, {});
             this.workbookExcel = jsonData;
             console.log(this.workbookExcel);
-            this.validateJsonExcel(jsonData)
+            this.createEmployeArray(jsonData)
 
         }
         reader.readAsBinaryString(file);
 
     }
 
-    validateJsonExcel(arrayOfEmployees) {
+    createEmployeArray(arrayOfEmployees) {
         arrayOfEmployees.forEach(json => {
 
             let empleado = new Empleado();
@@ -253,11 +239,11 @@ export class CargueDatosComponent implements OnInit {
             empleado.ciudad = json.ciudad == null ? null : json.ciudad.id;
             if (json.afp != null) {
                 empleado.afp = new Afp();
-                empleado.afp.id = json.afp;
+                empleado.afp.nombre = json.afp;
             }
             if (json.eps != null) {
                 empleado.eps = new Eps();
-                empleado.eps.id = json.eps;
+                empleado.eps.nombre = json.eps;
             }
             empleado.tipoIdentificacion = json.tipoIdentificacion;
             empleado.tipoVinculacion = json.tipoVinculacion;
@@ -265,22 +251,72 @@ export class CargueDatosComponent implements OnInit {
             empleado.area = new Area();
             empleado.cargo = new Cargo();
             empleado.usuario = new Usuario();
-            empleado.area.id = json.area.id;
-            empleado.cargo.id = json.cargoId;
+            empleado.area.nombre = json.area;
+            empleado.cargo.nombre = json.cargo;
             empleado.usuario.email = json.email;
+            empleado.usuario.ipPermitida = [];
             //empleado.usuario.id = this.empleadoSelect.usuario.id;
             // //console.log(json.ipPermitida);
             // empleado.usuario.ipPermitida = json.ipPermitida;
             empleado.usuario.usuarioEmpresaList = [];
-            this.empleadosArray.push(empleado)
+            let empleadoValidado =  this.validateEmployeeCampos(empleado,json.perfil);
+            if (empleadoValidado.error) {
+                json.error = empleadoValidado.error;
+                    this.fallidosArray.push(json)
+                    return;
+            }
+            this.empleadosArray.push(empleadoValidado)
         });
-        console.log(this.empleadosArray);
+        console.log(this.empleadosArray,this.fallidosArray);
 
     }
 
 
     dragStart(e: any, opt: any) {
         this.optDragged = opt;
+    }
+
+    validateEmployeeCampos(employe:Empleado,perfilName):any {
+        let error;
+        let eps = this.epsData.find(eps => employe.eps.nombre == eps.nombre);
+        let perfil = this.perfilData.find(perfil=> perfilName == perfil.nombre);
+        let afp = this.afpData.find(afp=> employe.afp.nombre == afp.nombre);
+        let cargo = this.cargoData.find(cargo=> employe.cargo.nombre == cargo.nombre);
+        let area = this.areaData.find(area=> employe.area.nombre == area.nombre);
+
+        console.log(this.epsData,employe.eps.nombre);
+         if(eps){
+           employe.eps = eps; 
+         }else{
+            return {error:"Eps no existe o nula", employe}
+         }
+
+         if(afp){
+            employe.afp = afp; 
+          }else{
+             return {error:"afp no existe o nula", employe}
+          }
+          if(area){
+            employe.area = area; 
+          }else{
+             return {error:"area no existe o nula", employe}
+          }
+
+         if(cargo){
+            employe.cargo = cargo; 
+          }else{
+             return {error:"cargo no existe o nula", employe}
+          }
+
+         if(perfil){
+            let ue = new UsuarioEmpresa();
+            ue.perfil = new Perfil();
+            ue.perfil.id = perfil.id;
+            employe.usuario.usuarioEmpresaList.push(ue);          
+        }else{
+             return {error:"Perfil no existe o nula", employe}
+          }
+         return employe;
     }
 
     drop(e: any, cell: any) {
@@ -298,9 +334,8 @@ export class CargueDatosComponent implements OnInit {
     }
 
     cargarDatos() {
-        if (this.validarDatos()) {
-            this.empleadosList = this.generarObjetos();
-            this.empleadoService.loadAll(this.empleadosList).then(
+        if (true) {
+            this.empleadoService.loadAll(this.empleadosArray).then(
                 resp => {
                     if ((<Message[]>resp).length == 0) {
                         localStorage.setItem(this.cabecera, JSON.stringify(this.mapping));
@@ -318,6 +353,12 @@ export class CargueDatosComponent implements OnInit {
         }
     }
 
+    descargarFallidos() {
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.fallidosArray);  
+        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };  
+        const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });  
+        this.saveAsExcelFile(excelBuffer, 'Empleados con fallas');  
+    }
     generarObjetos() {
         let empleadosList = [];
         this.dataFile.forEach(row => {
@@ -332,7 +373,12 @@ export class CargueDatosComponent implements OnInit {
         });
         return empleadosList;
     }
-
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], {
+            type: EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
+    }
     cargarValor(objeto: any, campo: string, valor: string) {
         let indice = campo.indexOf('.');
         if (indice >= 0) {
