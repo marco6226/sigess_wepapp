@@ -15,7 +15,7 @@ import { Perfil } from 'app/modulos/empresa/entities/perfil';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { locale_es, tipo_identificacion, tipo_vinculacion } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
-import { SelectItem,Message } from 'primeng/api';
+import { SelectItem, Message } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 import * as moment from 'moment';
 import { Router, RouterLink } from '@angular/router';
@@ -28,7 +28,7 @@ import { Router, RouterLink } from '@angular/router';
 export class FormularioScmComponent implements OnInit {
     value;
     msgs: Message[];
- 
+
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
     jefeInmediato: FormGroup;
@@ -55,9 +55,9 @@ export class FormularioScmComponent implements OnInit {
     epsList: SelectItem[];
     afpList: SelectItem[];
     cargoList: SelectItem[];
-    caseStatus=[ {label:'Select City', value:null},
-    {label:'Abierto', value:1},
-    {label:'Cerrado', value:0},]
+    caseStatus = [{ label: 'Select City', value: null },
+    { label: 'Abierto', value: 1 },
+    { label: 'Cerrado', value: 0 },]
     perfilList: SelectItem[] = [];
     loaded: boolean;
     antiguedad;
@@ -100,7 +100,7 @@ export class FormularioScmComponent implements OnInit {
         })
         this.empleadoForm = fb.group({
             'id': [null],
-            'primerNombre': [{value: '', disabled: true}, Validators.required,],
+            'primerNombre': [{ value: '', disabled: true }, Validators.required,],
             'segundoNombre': null,
             'primerApellido': [null, Validators.required],
             'segundoApellido': null,
@@ -112,7 +112,6 @@ export class FormularioScmComponent implements OnInit {
             'numeroIdentificacion': [null, Validators.required],
             'telefono1': [null],
             'telefono2': [null],
-
             'corporativePhone': [null],
             'emergencyContact': [null],
             'phoneEmergencyContact': [null],
@@ -132,7 +131,7 @@ export class FormularioScmComponent implements OnInit {
         });
 
         this.casoMedicoForm = fb.group({
-          
+            'documento': [null],
             "codigoCie10": [null, Validators.required],
             "razon": [null, Validators.required],
             'names': [null, Validators.required],
@@ -169,11 +168,11 @@ export class FormularioScmComponent implements OnInit {
         })
     }
 
-    ngOnInit() { 
+    ngOnInit() {
 
         if (this.caseSelect) {
             console.log(this.caseSelect);
-            
+
             this.casoMedicoForm.patchValue(this.caseSelect)
             this.isUpdate ? this.empleadoForm.controls['email'].disable() : ""; //this for disabled email in case of update
             if (this.caseSelect != null) {
@@ -210,7 +209,7 @@ export class FormularioScmComponent implements OnInit {
                 this.empleadoForm.patchValue({ 'area': area });
                 this.editable = true;
             }
-        
+
         }
         this.comunService.findAllAfp().then(
             data => {
@@ -257,10 +256,10 @@ export class FormularioScmComponent implements OnInit {
     }
     closeForm() {
         this.onCancel.emit();
-      }
+    }
     async onSubmit() {
-       
-            this.casoMedicoForm.patchValue({
+
+        this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get('area').value.nombre,
             ciudad: this.empleadoForm.get('ciudad').value.nombre,
             // statusCaso: this.casoMedicoForm.get('statusCaso').value,
@@ -268,38 +267,39 @@ export class FormularioScmComponent implements OnInit {
             cargo: this.empleadoForm.value.cargoId,
             // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
             pkJefe: this.jefeInmediato.value.id || null,
-            pkBusinessPartner: this.bussinessParner.get('id').value || null, 
+            pkBusinessPartner: this.bussinessParner.get('id').value || null,
             pkUser: this.empleadoForm.get('id').value || null,
             codigoCie10: this.casoMedicoForm.value.id || null
         })
-   
-        
+
+
         console.log(
             this.jefeInmediato.value,
-             this.empleadoForm.value,
-             this.casoMedicoForm.value, 
-             this.bussinessParner.value);
+            this.empleadoForm.value,
+            this.casoMedicoForm.value,
+            this.bussinessParner.value);
 
 
-             let status;
-             if (!this.caseSelect) {
-                this.casoMedicoForm.patchValue({fechaCreacion:Date.now()})
-                status  = await this.scmService.create(this.casoMedicoForm.value);
-             }else{
-                status = await this.scmService.edit(this.casoMedicoForm.value);
-             }
-             
-            if (status) {
-            
-                this.msgs = [];
-                this.msgs.push({ severity: 'success', summary: 'Caso medico creado', detail: `Su numero de caso es ${status}` });
-                setTimeout(res=>{ 
-                    this.closeForm();
-                    this.router.navigate(['/app/scm/list']);
-                    this.router.navigateByUrl('/app/scm/list') }, 3000);
+        let status;
+        if (!this.caseSelect) {
+            this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() })
+            status = await this.scmService.create(this.casoMedicoForm.value);
+        } else {
+            status = await this.scmService.edit(this.casoMedicoForm.value);
+        }
 
-            }
-            
+        if (status) {
+
+            this.msgs = [];
+            this.msgs.push({ severity: 'success', summary: 'Caso medico creado', detail: `Su numero de caso es ${status}` });
+            setTimeout(res => {
+                this.closeForm();
+                this.router.navigate(['/app/scm/list']);
+                this.router.navigateByUrl('/app/scm/list')
+            }, 3000);
+
+        }
+
     }
 
     async buildPerfilesIdList() {
@@ -336,11 +336,13 @@ export class FormularioScmComponent implements OnInit {
         this.value = event;
         this.value = event;
         this.empleadoSelect = <Empleado>this.value; this.loaded = true;
-        console.log(this.empleadoSelect);
+        console.log(this.empleadoSelect.numeroIdentificacion);
         let fecha = moment(this.empleadoSelect.fechaIngreso)
         this.antiguedad = `${fecha.diff(moment.now(), 'months') * -1} Meses`
-        console.log(this.antiguedad);
         this.cargoDescripcion = this.empleadoSelect.cargo.descripcion;
+        this.casoMedicoForm.patchValue({
+            'documento': this.empleadoSelect.numeroIdentificacion
+        })
         this.empleadoForm.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -369,8 +371,9 @@ export class FormularioScmComponent implements OnInit {
 
             'email': [this.empleadoSelect.usuario.email]
         });
+        console.log(this.empleadoForm.value);
     }
-    onClick(){
+    onClick() {
         this.router.navigate(['/app/scm/list']);
         this.router.navigateByUrl('/app/scm/list')
     }
@@ -392,7 +395,7 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-   
+
     onSelectionJI(event) {
         this.empleadoSelect = <Empleado>event;
         this.jefeInmediato.patchValue({

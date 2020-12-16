@@ -28,6 +28,7 @@ import { HttpAuthInterceptor } from './modulos/core/services/http-auth-intercept
 import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
 import { ScmModule } from './modulos/scm/scm.module';
+import { RecomendationsformComponent } from './src/app/modulos/scm/components/recomendationsform/recomendationsform.component';
 
 
 
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    RecomendationsformComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

@@ -23,6 +23,10 @@
                 <th pSortableColumn="nameLastname">Apellido - Nombre
                     <p-sortIcon field="nameLastname"></p-sortIcon>
                 </th>
+                <th pSortableColumn="documento">Documento
+                    <p-sortIcon field="documento"></p-sortIcon>
+                </th>
+             
                 <th pSortableColumn="charge">Cargo
                     <p-sortIcon field="charge"></p-sortIcon>
                 </th>
@@ -34,6 +38,7 @@
                 </th>
             </tr>
             <tr>
+                
                 <td>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
                 </td>
@@ -44,7 +49,10 @@
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
                 </td>
                 <td>
-                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
                 </td>
                 <td>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
@@ -68,6 +76,7 @@
                 <td>{{case.region}}</td>
                 <td>{{case.ciudad}}</td>
                 <td>{{case.names}}</td>
+                <td>{{case.documento}}</td>
                 <td>{{case.cargo}}</td> 
                 <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                 <td>{{case.casoMedicoLaboral}}</td>

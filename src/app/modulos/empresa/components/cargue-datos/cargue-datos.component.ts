@@ -243,7 +243,7 @@ export class CargueDatosComponent implements OnInit {
             }
             if (json.eps != null) {
                 empleado.eps = new Eps();
-                empleado.eps.nombre = json.eps;
+                empleado.eps.nombre = json.eps || "";
             }
             empleado.tipoIdentificacion = json.tipoIdentificacion;
             empleado.tipoVinculacion = json.tipoVinculacion;
@@ -265,7 +265,9 @@ export class CargueDatosComponent implements OnInit {
                     this.fallidosArray.push(json)
                     return;
             }
-            this.empleadosArray.push(empleadoValidado)
+
+            this.empleadosArray.push(empleadoValidado);
+        
         });
         console.log(this.empleadosArray,this.fallidosArray);
 
