@@ -12,9 +12,10 @@ import { EmpleadoService } from '../empresa/services/empleado.service';
 import { PerfilService } from '../admin/services/perfil.service';
 import { UsuarioService } from '../admin/services/usuario.service';
 import { CieSelectorComponent } from '../comun/components/cie-selector/cie-selector.component';
+import { RecomendationsformComponent } from './components/recomendationsform/recomendationsform.component';
 
 @NgModule({ 
-  declarations: [FormularioScmComponent, ScmComponent],
+  declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent],
   imports: [
     CommonModule,
     ComunModule

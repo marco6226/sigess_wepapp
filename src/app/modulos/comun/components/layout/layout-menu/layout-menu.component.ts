@@ -92,6 +92,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 					[
                         { label: 'Creacion de caso', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/creacion', class: 'fa fa-medkit' },
                         { label: 'SCM', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/list', class: 'fa fa-list-alt' },
+                        { label: 'Recomendaciones', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/recomendations', class: 'fa fa-list-alt' },
 
 					]
 			},

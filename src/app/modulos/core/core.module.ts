@@ -86,6 +86,7 @@ import { AreaSelectorIndComponent } from './components/area-selectorind/area-sel
 import { ModeloGraficaService } from '../ind/services/modelo-grafica.service';
 import { FormularioScmComponent } from '../scm/components/formulario-scm/formulario-scm.component';
 import { ScmComponent } from '../scm/components/scm/scm.component';
+import { RecomendationsformComponent } from '../scm/components/recomendationsform/recomendationsform.component';
 
 const appRoutes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -200,6 +201,7 @@ const appRoutes: Routes = [
 				children: [
                     { path: 'creacion', component: FormularioScmComponent },
                     { path: 'list', component: ScmComponent },
+                    { path: 'recomendations', component: RecomendationsformComponent },
 
 				]
 			},

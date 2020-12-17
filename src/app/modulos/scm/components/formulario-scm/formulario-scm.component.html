@@ -1,9 +1,9 @@
 <p-growl [value]="msgs"></p-growl>
 <div class="p-d-flex p-mb-2 p-px-2 p-jc-end">
-    <div *ngIf="caseSelect"  class="case-data p-d-flex p-jc-between">
+    <div *ngIf="caseSelect" class="case-data p-d-flex p-jc-between">
         <div class="case-code">
-            <div  class="title">Caso:</div>
-            <div  class="number">
+            <div class="title">Caso:</div>
+            <div class="number">
                 #{{caseSelect.id}}
             </div>
         </div>
@@ -58,14 +58,14 @@
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="input-field">
-                        <input   type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
                             class="form-material" id="" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-8">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
                             class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
@@ -96,7 +96,7 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input  type="text"  pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
+                        <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
                             class="form-material" id="" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
@@ -131,14 +131,14 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input  type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
+                        <input type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
+                        <input type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
                             class="form-material" id="" />
                         <label for="" class="active">Contacto de emergencia</label>
                     </div>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input  type="email" pInputText formControlName="emailEmergencyContact"
+                        <input type="email" pInputText formControlName="emailEmergencyContact"
                             placeholder="Correo corporativo" class="form-material" id="" />
                         <label for="" class="active">Correo de contacto de emergencia</label>
                     </div>
@@ -162,7 +162,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Regional"
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional"
                             class="form-material" id="" />
                         <label for="" class="active">Regional</label>
                     </div>
@@ -177,7 +177,7 @@
 
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Ubicación"
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Ubicación"
                             class="form-material" id="" />
                         <label for="" class="active">Ubicación</label>
                     </div>
@@ -206,7 +206,7 @@
 
                 <div class="ui-g-12 ui-md-3 ui-lg-2">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Edad"
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Edad"
                             class="form-material" id="" />
                         <label for="" class="active">Edad</label>
                     </div>
@@ -252,15 +252,16 @@
                         <label for="" class="active">Teléfono personal</label>
                     </div>
                 </div>
+
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <input  type="email" pInputText formControlName="email" plaholder="Correo personal" />
+                        <input type="email" pInputText formControlName="email" plaholder="Correo personal" />
                         <label for="" class="active">Correo personal</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <input  type="email" pInputText formControlName="email"
+                        <input type="email" pInputText formControlName="email"
                             plaholder="Correo adicional alternativo" />
                         <label for="" class="active">Correo adicional alternativo</label>
                     </div>
@@ -289,149 +290,149 @@
 
             </div>
             <form [formGroup]="jefeInmediato">
-            <div class="ui-g p-py-2">
-                <div class="ui-g-12">
+                <div class="ui-g p-py-2">
                     <div class="ui-g-12">
-                        <h5 class="title-header p-mb-2">Datos del jefe inmediato</h5>
+                        <div class="ui-g-12">
+                            <h5 class="title-header p-mb-2">Datos del jefe inmediato</h5>
+                        </div>
                     </div>
-                </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
-                    <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                            [style]="{'width':'100%'}" (onSelect)="onSelectionJI($event)" [suggestions]="empleadosList"
-                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
-                            *ngIf="empleado?.id == null">
-                            <ng-template let-empleado pTemplate="item">
-                                <div class="ui-helper-clearfix">
-                                    <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                            style="font-size: 48px;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                            style="border-radius: 50%;" #imgAvatar />
-                                        <div style="margin-left:20px">
-                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                {{empleado?.primerApellido}}</label>
-                                            <br /> {{empleado?.numeroIdentificacion}}
-                                            <br /> {{empleado?.usuario.email}}
+                    <div class="ui-g-12 ui-md-4 ui-lg-3">
+                        <div class="input-field">
+                            <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                                [style]="{'width':'100%'}" (onSelect)="onSelectionJI($event)"
+                                [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                                formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                                <ng-template let-empleado pTemplate="item">
+                                    <div class="ui-helper-clearfix">
+                                        <div class="wrapper">
+                                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                                style="font-size: 48px;" aria-hidden="true"></i>
+                                            <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                                style="border-radius: 50%;" #imgAvatar />
+                                            <div style="margin-left:20px">
+                                                <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                    {{empleado?.primerApellido}}</label>
+                                                <br /> {{empleado?.numeroIdentificacion}}
+                                                <br /> {{empleado?.usuario.email}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </ng-template>
-                        </p-autoComplete>
-                        <label for="" class="active">Número de identificación</label>
+                                </ng-template>
+                            </p-autoComplete>
+                            <label for="" class="active">Número de identificación</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-6">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="primerNombre"
+                                placeholder="Apellidos y nombres" class="form-material" id="" />
+                            <label for="" class="active">Apellidos y nombres</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-3">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                                class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Cargo / Categoría</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-5">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="primerNombre"
+                                placeholder="Dirección / Gerencia" class="form-material" id="" />
+                            <label for="" class="active">Dirección / Gerencia</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="input-field">
+                            <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
+                                styleClass="form-material">
+                            </p-inputMask>
+                            <label for="" class="active">Número móvil corporativo</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
+                                class="form-material" id="" />
+                            <label for="" class="active">Correo corporativo</label>
+                        </div>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-8 ui-lg-6">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
-                            class="form-material" id="" />
-                        <label for="" class="active">Apellidos y nombres</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-3">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Cargo / Categoría</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-5">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
-                            class="form-material" id="" />
-                        <label for="" class="active">Dirección / Gerencia</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
-                            styleClass="form-material">
-                        </p-inputMask>
-                        <label for="" class="active">Número móvil corporativo</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="email" placeholder="Correo corporativo"
-                            class="form-material" id="" />
-                        <label for="" class="active">Correo corporativo</label>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <form  [formGroup]="bussinessParner">
-            <div class="ui-g p-py-2">
-                <div class="ui-g-12">
+            </form>
+            <form [formGroup]="bussinessParner">
+                <div class="ui-g p-py-2">
                     <div class="ui-g-12">
-                        <h5 class="title-header p-mb-2">Datos del Business Partner</h5>
+                        <div class="ui-g-12">
+                            <h5 class="title-header p-mb-2">Datos del Business Partner</h5>
+                        </div>
                     </div>
-                </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
-                    <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                            [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)" [suggestions]="empleadosList"
-                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
-                            *ngIf="empleado?.id == null">
-                            <ng-template let-empleado pTemplate="item">
-                                <div class="ui-helper-clearfix">
-                                    <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                            style="font-size: 48px;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                            style="border-radius: 50%;" #imgAvatar />
-                                        <div style="margin-left:20px">
-                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                {{empleado?.primerApellido}}</label>
-                                            <br /> {{empleado?.numeroIdentificacion}}
-                                            <br /> {{empleado?.usuario.email}}
+                    <div class="ui-g-12 ui-md-4 ui-lg-3">
+                        <div class="input-field">
+                            <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                                [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)"
+                                [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                                formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                                <ng-template let-empleado pTemplate="item">
+                                    <div class="ui-helper-clearfix">
+                                        <div class="wrapper">
+                                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                                style="font-size: 48px;" aria-hidden="true"></i>
+                                            <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                                style="border-radius: 50%;" #imgAvatar />
+                                            <div style="margin-left:20px">
+                                                <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                    {{empleado?.primerApellido}}</label>
+                                                <br /> {{empleado?.numeroIdentificacion}}
+                                                <br /> {{empleado?.usuario.email}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </ng-template>
-                        </p-autoComplete>
-                        <label for="" class="active">Número de identificación</label>
+                                </ng-template>
+                            </p-autoComplete>
+                            <label for="" class="active">Número de identificación</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-6">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="primerNombre"
+                                placeholder="Apellidos y nombres" class="form-material" id="" />
+                            <label for="" class="active">Apellidos y nombres</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-3">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                                class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Cargo / Categoría</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-5">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="primerNombre"
+                                placeholder="Dirección / Gerencia" class="form-material" id="" />
+                            <label for="" class="active">Dirección / Gerencia</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="input-field">
+                            <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
+                                styleClass="form-material">
+                            </p-inputMask>
+                            <label for="" class="active">Número móvil corporativo</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
+                                class="form-material" id="" />
+                            <label for="" class="active">Correo corporativo</label>
+                        </div>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-8 ui-lg-6">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Apellidos y nombres"
-                            class="form-material" id="" />
-                        <label for="" class="active">Apellidos y nombres</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-3">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Cargo / Categoría</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-5">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre" placeholder="Dirección / Gerencia"
-                            class="form-material" id="" />
-                        <label for="" class="active">Dirección / Gerencia</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
-                            styleClass="form-material">
-                        </p-inputMask>
-                        <label for="" class="active">Número móvil corporativo</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="email" placeholder="Correo corporativo"
-                            class="form-material" id="" />
-                        <label for="" class="active">Correo corporativo</label>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
         </form>
     </p-tabPanel>
     <p-tabPanel header="Información Médica">
@@ -439,8 +440,8 @@
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-dropdown  [options]="caseStatus" formControlName="statusCaso"
-                            class="select-material" styleClass="select-material">
+                        <p-dropdown [options]="caseStatus" formControlName="statusCaso" class="select-material"
+                            styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Estado del caso</label>
                     </div>
@@ -464,20 +465,20 @@
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="origen" placeholder="Origen"
+                        <input type="text" pInputText formControlName="origen" placeholder="Origen"
                             class="form-material" id="" />
                         <label for="" class="active">Origen</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                    <label class="s-float-label">Código CIE</label>
-                    <s-cieSelector id="ccide-input" formControlName="codigoCie10" ></s-cieSelector>
-                  </div>
+                        <label class="s-float-label">Código CIE</label>
+                        <s-cieSelector id="ccide-input" formControlName="codigoCie10"></s-cieSelector>
+                    </div>
                 </div>
-            
-                
-                
+
+
+
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="sistemaAfectado"
@@ -503,28 +504,28 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="casoMedicoLaboral"
+                        <input type="text" pInputText formControlName="casoMedicoLaboral"
                             placeholder="Caso de mesa laboral" class="form-material" id="" />
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
+                        <input type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
                             id="" />
                         <label for="" class="active">Motivo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="pcl" placeholder="PCL" class="form-material"
+                        <input type="text" pInputText formControlName="pcl" placeholder="PCL" class="form-material"
                             id="" />
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
+                        <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
                             class="form-material" id="" />
                         <label for="" class="active">% de la PCL</label>
                     </div>
@@ -572,7 +573,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="conceptRehabilitacion"
+                        <input type="text" pInputText formControlName="conceptRehabilitacion"
                             placeholder="Concepto de rehabilitación" class="form-material" id="" />
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
@@ -610,7 +611,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input  type="text" pInputText formControlName="sve" placeholder="SVE" class="form-material"
+                        <input type="text" pInputText formControlName="sve" placeholder="SVE" class="form-material"
                             id="" />
                         <label for="" class="active">SVE</label>
                     </div>
@@ -737,5 +738,5 @@
     <p-tabPanel header="Recomendaciones">
     </p-tabPanel>
 </p-tabView>
-<button pButton *ngIf="solicitando == false" type="button" [routerLink]="['/app/scm/list']" icon="fa fa-chevron-left" class="float-btn"
-    (click)="closeForm()" title="Volver a listado de empleados"></button>
+<button pButton *ngIf="solicitando == false" type="button" [routerLink]="['/app/scm/list']" icon="fa fa-chevron-left"
+    class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
