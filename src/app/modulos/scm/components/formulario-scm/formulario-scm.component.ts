@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PerfilService } from "app/modulos/admin/services/perfil.service";
 import { UsuarioService } from "app/modulos/admin/services/usuario.service";
@@ -23,6 +31,7 @@ import { SelectItem, Message } from "primeng/api";
 import { CasosMedicosService } from "../../services/casos-medicos.service";
 import * as moment from "moment";
 import { Router, RouterLink } from "@angular/router";
+import { AutoComplete } from "primeng/primeng";
 
 @Component({
   selector: "app-formulario-scm",
@@ -49,6 +58,8 @@ export class FormularioScmComponent implements OnInit {
   @Input() isUpdate: boolean;
   @Input() show: boolean;
   @Input() editable: boolean;
+  @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
+
   empleadoForm: FormGroup;
   empresaId = this.sesionService.getEmpresa().id;
   fechaActual = new Date();
@@ -349,13 +360,25 @@ export class FormularioScmComponent implements OnInit {
 
   async onSelection(event) {
     this.value = event;
-    this.value = event;
-    this.empleadoSelect = <Empleado>this.value;
+    let emp = <Empleado>this.value;
+    let validate;
+    try {
+      validate = await this.scmService.validate(emp.numeroIdentificacion);
+    } catch (error) {}
+    this.msgs = [];
+    if (!validate) {
+      this.msgs.push({
+        severity: "error",
+        summary: "Ya existe un caso medico",
+        detail: `de el usuario ${emp.numeroIdentificacion}`,
+      });
+
+      console.log(this.autoC);
+      return;
+    }
+
+    this.empleadoSelect = emp;
     this.loaded = true;
-    console.log(this.empleadoSelect.numeroIdentificacion);
-    console.log(
-      await this.scmService.validate(this.empleadoSelect.numeroIdentificacion)
-    );
 
     let fecha = moment(this.empleadoSelect.fechaIngreso);
     this.antiguedad = `${fecha.diff(moment.now(), "months") * -1} Meses`;
@@ -402,6 +425,7 @@ export class FormularioScmComponent implements OnInit {
     });
     console.log(this.empleadoForm.value);
   }
+
   onClick() {
     this.router.navigate(["/app/scm/list"]);
     this.router.navigateByUrl("/app/scm/list");
