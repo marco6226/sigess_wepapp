@@ -14,7 +14,7 @@ export class RecomendationsformComponent implements OnInit {
   cargoList: SelectItem[];
   fechaActual = new Date();
   recomendations: FormGroup;
-
+  tipoIdentificacionList;
   yearRange: string = "1900:" + this.fechaActual.getFullYear();
   localeES: any = locale_es;
 

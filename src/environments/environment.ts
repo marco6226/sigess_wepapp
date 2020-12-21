@@ -3,14 +3,13 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-let protocol = 'https';
-let host = 'sigess.app';
-let port = '5858';
+let protocol = "http";
+let host = "localhost";
+let port = "8080";
 let path = protocol + "://" + host + ":" + port + "/sigess/api/";
 
-
 export const environment = {
-  production: false
+  production: false,
 };
 
 export const endPoints = {
@@ -33,7 +32,7 @@ export const endPoints = {
   PerfilService: path + "perfil/",
   ConfiguracionJornadaService: path + "configuracionJornada/",
   HorasExtraService: path + "horasExtra/",
-  HhtService: path + 'hht/',
+  HhtService: path + "hht/",
   emp_perfil: path + "perfil/",
 
   departamento: path + "departamento/",
@@ -86,27 +85,27 @@ export const endPoints = {
   ReporteAusentismoService: path + "reporteAusentismo/",
   CausaAusentismoService: path + "causaAusentismo/",
 
-  IndicadorAusentismoService: path + 'indicadorAusentismo/',
-  IndicadorEmpresaService: path + 'indicadorEmpresa/',
-  IndicadorSgeService: path + 'indicadorSge/',
-  IndicadorService: path + 'indicador/',
-  TableroService: path + 'tablero/',
+  IndicadorAusentismoService: path + "indicadorAusentismo/",
+  IndicadorEmpresaService: path + "indicadorEmpresa/",
+  IndicadorSgeService: path + "indicadorSge/",
+  IndicadorService: path + "indicador/",
+  TableroService: path + "tablero/",
   ModeloGrafica: path,
 
-  TipoPeligroService: path + 'tipoPeligro/',
-  PeligroService: path + 'peligro/',
+  TipoPeligroService: path + "tipoPeligro/",
+  PeligroService: path + "peligro/",
   FuenteService: path + "fuente/",
-  EfectoService: path + 'efecto/',
-  TipoControlService: path + 'tipoControl/',
-  ControlService: path + 'control/',
-  IpecrService: path + 'ipecr/',
-  PeligroIpecrService: path + 'peligroIpecr/',
-  ParticipanteIpecrService: path + 'participanteIpecr/',
+  EfectoService: path + "efecto/",
+  TipoControlService: path + "tipoControl/",
+  ControlService: path + "control/",
+  IpecrService: path + "ipecr/",
+  PeligroIpecrService: path + "peligroIpecr/",
+  ParticipanteIpecrService: path + "participanteIpecr/",
 
-  ConfiguracionGeneralService: path + 'configuracion/',
-  SistemaCausaAdministrativaService: path + 'sistemaCausaAdministrativa/',
-  ActaService: path + 'acta/',
-  ContactoService: path + 'contacto/',
+  ConfiguracionGeneralService: path + "configuracion/",
+  SistemaCausaAdministrativaService: path + "sistemaCausaAdministrativa/",
+  ActaService: path + "acta/",
+  ContactoService: path + "contacto/",
 
-  ManualService: path + 'manual/',
+  ManualService: path + "manual/",
 };

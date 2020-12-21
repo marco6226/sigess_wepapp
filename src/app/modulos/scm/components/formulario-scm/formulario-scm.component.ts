@@ -372,7 +372,7 @@ export class FormularioScmComponent implements OnInit {
         summary: "Ya existe un caso medico",
         detail: `de el usuario ${emp.numeroIdentificacion}`,
       });
-
+      this.empleadoForm.patchValue({ numeroIdentificacion: null });
       console.log(this.autoC);
       return;
     }
