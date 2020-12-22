@@ -89,184 +89,183 @@ import { ScmComponent } from '../scm/components/scm/scm.component';
 import { RecomendationsformComponent } from '../scm/components/recomendationsform/recomendationsform.component';
 
 const appRoutes: Routes = [
-	{ path: '', redirectTo: '/login', pathMatch: 'full' },
-	{ path: 'login', component: LoginComponent },
-	{ path: 'contacto', component: ContactoComponent },
-	{
-		path: 'app', component: InicioComponent, canActivate: [AuthGuardService],
-		children: [
-			{
-				path: 'home', component: HomeComponent,
-				canActivate: [AuthGuardService],
-			},
-			{
-				path: 'terminos', component: TerminosCondicionesComponent,
-				canActivate: [AuthGuardService],
-			},
-			{
-				path: 'empresa',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'empresa', component: EmpresaAdminComponent, data: { state: 'app/empresa/empresa' } },
-					{ path: 'contextoOrganizacion', component: ContextoOrganizacionComponent },
-					{ path: 'area', component: AreaComponent },
-					{ path: 'tipoArea', component: TipoAreaComponent },
-					{ path: 'cargo', component: CargoComponent },
-					{ path: 'empleado', component: EmpleadoComponent, data: { state: 'app/empresa/empleado' } },
-					{ path: 'evaluacionDesempeno', component: EvaluacionDesempenoComponent },
-					{ path: 'evaluacionDesempenoForm', component: EvaluacionDesempenoFormComponent },
-					{ path: 'cargueDatos', component: CargueDatosComponent },
-					{ path: 'usuarioPreferencias', component: UsuarioPreferenciasComponent },
-					{ path: 'hht', component: HhtComponent },
-				]
-			},
-			{
-				path: 'ctr',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'adminContratistas', component: AdminContratistasComponent },
-					{ path: 'seguimientoContratistas', component: SeguimientoContratistasComponent },
-				]
-			},
-			{
-				path: 'admin',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'perfil', component: PerfilComponent },
-					{ path: 'usuario', component: UsuarioComponent },
-					{ path: 'permisos', component: PermisosComponent }
-				]
-			},
-			{
-				path: 'inspecciones',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'listasInspeccion', component: ListasInspeccionComponent },
-					{ path: 'elaboracionLista', component: ElaboracionListaComponent },
-					{ path: 'programacion', component: ProgramacionComponent },
-					{ path: 'elaboracionInspecciones', component: ElaboracionInspeccionesComponent },
-					{ path: 'consultaInspecciones', component: ConsultaInspeccionesComponent }
-				]
-			},
-			{
-				path: 'sg',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'sgeForm', component: SgeFormComponent },
-					{ path: 'sistemasGestion', component: SistemaGestionComponent },
-					{ path: 'evaluacion', component: EvaluacionComponent },
-					{ path: 'consultaEvaluaciones', component: ConsultaEvaluacionComponent }
-				]
-			},
-			{
-				path: 'sec',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'desviaciones', component: ConsultaDesviacionComponent },
-					// { path: 'consultaAnalisisDesviaciones', component: ConsultaAnalisisDesviacionComponent },
-					{ path: 'analisisDesviacion', component: AnalisisDesviacionComponent },
-					{ path: 'tareas', component: GestionTareasComponent },
-					{ path: 'tareasAsignadas', component: AsignacionTareasComponent }
-				]
-			},
-			{
-				path: 'auc',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'tarjeta', component: TarjetaComponent },
-					{ path: 'observaciones', component: RegistroObservacionesComponent },
-					{ path: 'consultaObservaciones', component: ConsultaObservacionesComponent },
-					{ path: 'gestionObservaciones', component: GestionObservacionesComponent }
-				]
-			},
-			{
-				path: 'rai',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'cargaArchivo', component: CargaArchivoComponent },
-					{ path: 'registroReporte', component: RegistroReportesComponent },
-					{ path: 'consultaReportes', component: ConsultaReportesComponent }
-				]
-			},
-			{
-				path: 'ado',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'gestionDocumental', component: GestionDocumentalComponent },
-				]
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+    { path: 'contacto', component: ContactoComponent },
+    {
+        path: 'app', component: InicioComponent, canActivate: [AuthGuardService],
+        children: [
+            {
+                path: 'home', component: HomeComponent,
+                canActivate: [AuthGuardService],
             },
             {
-				path: 'scm',
-				canActivate: [AuthGuardService],
-				children: [
+                path: 'terminos', component: TerminosCondicionesComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'empresa',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'empresa', component: EmpresaAdminComponent, data: { state: 'app/empresa/empresa' } },
+                    { path: 'contextoOrganizacion', component: ContextoOrganizacionComponent },
+                    { path: 'area', component: AreaComponent },
+                    { path: 'tipoArea', component: TipoAreaComponent },
+                    { path: 'cargo', component: CargoComponent },
+                    { path: 'empleado', component: EmpleadoComponent, data: { state: 'app/empresa/empleado' } },
+                    { path: 'evaluacionDesempeno', component: EvaluacionDesempenoComponent },
+                    { path: 'evaluacionDesempenoForm', component: EvaluacionDesempenoFormComponent },
+                    { path: 'cargueDatos', component: CargueDatosComponent },
+                    { path: 'usuarioPreferencias', component: UsuarioPreferenciasComponent },
+                    { path: 'hht', component: HhtComponent },
+                ]
+            },
+            {
+                path: 'ctr',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'adminContratistas', component: AdminContratistasComponent },
+                    { path: 'seguimientoContratistas', component: SeguimientoContratistasComponent },
+                ]
+            },
+            {
+                path: 'admin',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'perfil', component: PerfilComponent },
+                    { path: 'usuario', component: UsuarioComponent },
+                    { path: 'permisos', component: PermisosComponent }
+                ]
+            },
+            {
+                path: 'inspecciones',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'listasInspeccion', component: ListasInspeccionComponent },
+                    { path: 'elaboracionLista', component: ElaboracionListaComponent },
+                    { path: 'programacion', component: ProgramacionComponent },
+                    { path: 'elaboracionInspecciones', component: ElaboracionInspeccionesComponent },
+                    { path: 'consultaInspecciones', component: ConsultaInspeccionesComponent }
+                ]
+            },
+            {
+                path: 'sg',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'sgeForm', component: SgeFormComponent },
+                    { path: 'sistemasGestion', component: SistemaGestionComponent },
+                    { path: 'evaluacion', component: EvaluacionComponent },
+                    { path: 'consultaEvaluaciones', component: ConsultaEvaluacionComponent }
+                ]
+            },
+            {
+                path: 'sec',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'desviaciones', component: ConsultaDesviacionComponent },
+                    // { path: 'consultaAnalisisDesviaciones', component: ConsultaAnalisisDesviacionComponent },
+                    { path: 'analisisDesviacion', component: AnalisisDesviacionComponent },
+                    { path: 'tareas', component: GestionTareasComponent },
+                    { path: 'tareasAsignadas', component: AsignacionTareasComponent }
+                ]
+            },
+            {
+                path: 'auc',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'tarjeta', component: TarjetaComponent },
+                    { path: 'observaciones', component: RegistroObservacionesComponent },
+                    { path: 'consultaObservaciones', component: ConsultaObservacionesComponent },
+                    { path: 'gestionObservaciones', component: GestionObservacionesComponent }
+                ]
+            },
+            {
+                path: 'rai',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'cargaArchivo', component: CargaArchivoComponent },
+                    { path: 'registroReporte', component: RegistroReportesComponent },
+                    { path: 'consultaReportes', component: ConsultaReportesComponent }
+                ]
+            },
+            {
+                path: 'ado',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'gestionDocumental', component: GestionDocumentalComponent },
+                ]
+            },
+            {
+                path: 'scm',
+                canActivate: [AuthGuardService],
+                children: [
                     { path: 'creacion', component: FormularioScmComponent },
                     { path: 'list', component: ScmComponent },
-                    { path: 'recomendations', component: RecomendationsformComponent },
 
-				]
-			},
-			{
-				path: 'aus',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'reporteAusentismo', component: ReporteAusentismoComponent },
-					{ path: 'consultaAusentismo', component: ConsultaAusentismoComponent },
-				]
-			},
-			{
-				path: 'ind',
-				canActivate: [AuthGuardService],
-				children: [
-					// { path: 'elaboracionTablero', component: ElaboracionTableroComponent },
-					{ path: 'consultaTablero', component: ConsultaTableroComponent },
-					{ path: 'emp', component: IndicadoresEmpComponent },
-					{ path: 'ausentismo', component: IndicadoresAusentismoComponent },
-					{ path: 'sge', component: IndicadoresSgeComponent },
-					{ path: 'rai', component: IndicadoresRaiComponent },
-					{ path: 'inp', component: IndicadoresInpComponent },
-				]
-			},
-			{
-				path: 'ipr',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'peligros', component: ParametrizacionPeligrosComponent },
-					{ path: 'formularioIpecr', component: FormularioIpecrComponent },
-					{ path: 'consultaIpecr', component: ConsultaIpecrComponent },
-				]
-			},
-			{
-				path: 'cop',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'consultaActas', component: ConsultaActasComponent },
-				]
-			},
-			{
-				path: 'ayuda',
-				canActivate: [AuthGuardService],
-				children: [
-					{ path: 'manuales', component: ManualesComponent },
-				]
-			},
+                ]
+            },
+            {
+                path: 'aus',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'reporteAusentismo', component: ReporteAusentismoComponent },
+                    { path: 'consultaAusentismo', component: ConsultaAusentismoComponent },
+                ]
+            },
+            {
+                path: 'ind',
+                canActivate: [AuthGuardService],
+                children: [
+                    // { path: 'elaboracionTablero', component: ElaboracionTableroComponent },
+                    { path: 'consultaTablero', component: ConsultaTableroComponent },
+                    { path: 'emp', component: IndicadoresEmpComponent },
+                    { path: 'ausentismo', component: IndicadoresAusentismoComponent },
+                    { path: 'sge', component: IndicadoresSgeComponent },
+                    { path: 'rai', component: IndicadoresRaiComponent },
+                    { path: 'inp', component: IndicadoresInpComponent },
+                ]
+            },
+            {
+                path: 'ipr',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'peligros', component: ParametrizacionPeligrosComponent },
+                    { path: 'formularioIpecr', component: FormularioIpecrComponent },
+                    { path: 'consultaIpecr', component: ConsultaIpecrComponent },
+                ]
+            },
+            {
+                path: 'cop',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'consultaActas', component: ConsultaActasComponent },
+                ]
+            },
+            {
+                path: 'ayuda',
+                canActivate: [AuthGuardService],
+                children: [
+                    { path: 'manuales', component: ManualesComponent },
+                ]
+            },
 
-		]
-	}
+        ]
+    }
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forChild(appRoutes),
-		//CommonModule,
+    imports: [
+        RouterModule.forChild(appRoutes),
+        //CommonModule,
         ComunModule,
         CardModule
-	],
-	declarations: [
+    ],
+    declarations: [
         InicioComponent,
         AreaSelectorIndComponent,
-		HomeComponent,
-		TerminosCondicionesComponent
-	],
-	providers: [AuthGuardService, AuthService,ModeloGraficaService],
+        HomeComponent,
+        TerminosCondicionesComponent
+    ],
+    providers: [AuthGuardService, AuthService, ModeloGraficaService],
 })
 export class CoreModule { }

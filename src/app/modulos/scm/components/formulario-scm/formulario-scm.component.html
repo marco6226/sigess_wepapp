@@ -50,10 +50,10 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Tipo de identificación</label>
+
+                        <input type="text" pInputText formControlName="tipoIdentificacion"
+                            placeholder="Tipo de identificacion" class="form-material" id="" />
+                        <label for="" class="active">Tipo de identificacion</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -87,17 +87,18 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                        <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaIngreso"></p-calendar>
                         <label for="" class="active">Fecha de vinculación</label>
+
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
-                            class="form-material" id="" />
+                            class="form-material" id="" [disabled]="true" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
                 </div>
@@ -113,8 +114,8 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                        <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de desvinculación</label>
                     </div>
@@ -197,8 +198,8 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                        <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de nacimiento</label>
                     </div>
@@ -206,8 +207,7 @@
 
                 <div class="ui-g-12 ui-md-3 ui-lg-2">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Edad"
-                            class="form-material" id="" />
+                        <input type="text" pInputText [value]="edad" placeholder="Edad" class="form-material" id="" />
                         <label for="" class="active">Edad</label>
                     </div>
                 </div>
