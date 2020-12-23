@@ -105,9 +105,8 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
+                        <input type="text" pInputText [value]="range || ''" placeholder="Antigüedad"
+                            class="form-material" id="" [disabled]="true" />
                         <label for="" class="active">Rango de antigüedad</label>
                     </div>
                 </div>
@@ -207,14 +206,16 @@
 
                 <div class="ui-g-12 ui-md-3 ui-lg-2">
                     <div class="input-field">
-                        <input type="text" pInputText [value]="edad" placeholder="Edad" class="form-material" id="" />
+                        <input [disabled]="true" type="text" pInputText [value]="edad" placeholder="Edad"
+                            class="form-material" id="" />
                         <label for="" class="active">Edad</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-9">
                     <div class="input-field">
-                        <s-ciudadSelector formControlName="ciudad" class="select-material" styleClass="select-material">
+                        <s-ciudadSelector formControlName="ciudad" [id]="departamento" class="select-material"
+                            styleClass="select-material">
                         </s-ciudadSelector>
                         <label for="" class="active">Departamento y Ciudad</label>
                     </div>

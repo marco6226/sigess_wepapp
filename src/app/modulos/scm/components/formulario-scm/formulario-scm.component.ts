@@ -32,6 +32,7 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
 import * as moment from "moment";
 import { Router, RouterLink } from "@angular/router";
 import { AutoComplete } from "primeng/primeng";
+import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
 
 @Component({
     selector: "app-formulario-scm",
@@ -50,6 +51,7 @@ export class FormularioScmComponent implements OnInit {
     actualizar: boolean;
     adicionar: boolean;
     empleado: Empleado;
+
     empleadosList: Empleado[];
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
@@ -59,7 +61,12 @@ export class FormularioScmComponent implements OnInit {
     @Input() show: boolean;
     @Input() editable: boolean;
     @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
-
+    rangoAntiguedad = [
+        { label: "Entre 1 y 5 años", range: "1,2,3,4,5" },
+        { label: "Entre 6 y 10 años", range: "6,7,8,9,10" },
+        { label: "Entre 11 y 15 años", range: "11,12,13,14,15" },
+        { label: "Entre 16 y 20 años", range: "16,17,18,19,20" },
+    ]
     empleadoForm: FormGroup;
     empresaId = this.sesionService.getEmpresa().id;
     fechaActual = new Date();
@@ -78,7 +85,11 @@ export class FormularioScmComponent implements OnInit {
     perfilList: SelectItem[] = [];
     loaded: boolean;
     antiguedad;
+    range;
     solicitando: boolean = false;
+    departamento;
+
+
 
     constructor(
         private empleadoService: EmpleadoService,
@@ -92,6 +103,7 @@ export class FormularioScmComponent implements OnInit {
         private perfilService: PerfilService,
         private router: Router
     ) {
+
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
         this.tipoIdentificacionList = defaultItem.concat(
             <SelectItem[]>tipo_identificacion
@@ -103,20 +115,20 @@ export class FormularioScmComponent implements OnInit {
         this.bussinessParner = fb.group({
             id: ["", Validators.required],
             numeroIdentificacion: ["", Validators.required],
-            primerNombre: [null, Validators.required],
-            segundoNombre: null,
-            email: null,
-            corporativePhone: [null],
-            cargoId: [null, Validators.required],
+            primerNombre: [{ value: "", disabled: true }, Validators.required],
+            segundoNombre: { value: "", disabled: true },
+            email: { value: "", disabled: true },
+            corporativePhone: [{ value: "", disabled: true }],
+            cargoId: [{ value: "", disabled: true }, Validators.required],
         });
         this.jefeInmediato = fb.group({
             id: ["", Validators.required],
-            numeroIdentificacion: [null, Validators.required],
-            primerNombre: [null, Validators.required],
-            segundoNombre: null,
-            email: null,
-            corporativePhone: [null],
-            cargoId: [null, Validators.required],
+            numeroIdentificacion: [{ value: "", disabled: true }, Validators.required],
+            primerNombre: [{ value: "", disabled: true }, Validators.required],
+            segundoNombre: { value: "", disabled: true },
+            email: { value: "", disabled: true },
+            corporativePhone: [{ value: "", disabled: true }],
+            cargoId: [{ value: "", disabled: true }, Validators.required],
         });
         this.empleadoForm = fb.group({
             id: [null],
@@ -303,13 +315,29 @@ export class FormularioScmComponent implements OnInit {
             this.bussinessParner.value
         );
 
+        let { email, cargoId, perfilesId, ...empledo } = this.empleadoForm.value;
+        empledo.cargo = new Cargo();
+        empledo.cargo.id = cargoId;
+
+        if (this.empleadoForm.value.afp != null) {
+            empledo.afp = new Afp();
+            empledo.afp.id = this.empleadoForm.value.afp;
+        }
+        if (this.empleadoForm.value.eps != null) {
+            empledo.eps = new Eps();
+            empledo.eps.id = this.empleadoForm.value.eps;
+        }
+        console.log(empledo, this.empleadoSelect);
         let status;
         if (!this.caseSelect) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
-
+            let empleadoStatus = await this.empleadoService.update(empledo);
+            console.log(empleadoStatus);
             status = await this.scmService.create(this.casoMedicoForm.value);
         } else {
             console.log(this.caseSelect);
+            let empleadoStatus = await this.empleadoService.update(empledo);
+            console.log(empleadoStatus);
             this.casoMedicoForm.patchValue({ id: this.caseSelect.id });
             status = await this.scmService.edit(this.casoMedicoForm.value);
         }
@@ -390,12 +418,26 @@ export class FormularioScmComponent implements OnInit {
 
         let fecha = moment(this.empleadoSelect.fechaIngreso);
         let fechaNacimiento = moment(this.empleadoSelect.fechaNacimiento);
-        this.antiguedad = `${fecha.diff(moment.now(), "months") * -1} Meses`;
+        let antigueMoment = fecha.diff(moment.now(), "years") * -1;
+        this.antiguedad = ` ${antigueMoment} Años`;
+        if (antigueMoment === 0) {
+            this.range = 'Menor a 1 año'
+        }
+        for (let j = 0; j < this.rangoAntiguedad.length; j++) {
+            let subArray = this.rangoAntiguedad[j].range.split(',')
+            let a = subArray.find(range => range === antigueMoment.toString())
+
+            if (a) {
+                this.range = this.rangoAntiguedad[j].label;
+            }
+
+        }
         this.edad = `${fechaNacimiento.diff(moment.now(), "year") * -1}`;
         this.cargoDescripcion = this.empleadoSelect.cargo.descripcion;
         this.casoMedicoForm.patchValue({
             documento: this.empleadoSelect.numeroIdentificacion,
         });
+        this.departamento = this.empleadoSelect.area.id;
         this.empleadoForm.patchValue({
             id: this.empleadoSelect.id,
             primerNombre: this.empleadoSelect.primerNombre,
@@ -423,7 +465,7 @@ export class FormularioScmComponent implements OnInit {
             tipoIdentificacion:
                 this.empleadoSelect.tipoIdentificacion == null
                     ? null
-                    : this.empleadoSelect.tipoIdentificacion.id,
+                    : this.empleadoSelect.tipoIdentificacion.nombre,
             tipoVinculacion: this.empleadoSelect.tipoVinculacion,
             zonaResidencia: this.empleadoSelect.zonaResidencia,
             area: this.empleadoSelect.area,
