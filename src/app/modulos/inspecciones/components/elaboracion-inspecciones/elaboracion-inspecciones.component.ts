@@ -34,7 +34,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
   msgs: Message[];
   listaInspeccion: ListaInspeccion;
   inspeccion: Inspeccion;
-  inspeccionId: string;
+  inspeccionId: number;
   programacion: Programacion;
   nivelRiesgoList: SelectItem[] = [{ label: '--seleccione--', value: null }];
   inspTitlte: string;

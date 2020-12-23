@@ -42,6 +42,9 @@
                             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
                         </td>
                         <td>
+                            <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
+                        </td>
+                        <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
                         </td>
                         <td>
@@ -52,10 +55,7 @@
                         </td>
                         <td>
                             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
-                        </td>
-                        <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'id', 'bt')"></s-rangoFechaSelector>
-                        </td>
+                        </td>                        
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
                         </td>
@@ -142,6 +142,7 @@
                 <ng-template pTemplate="body" let-inspeccion>
                     <tr [pSelectableRow]="inspeccion" class="table-row table-row-selectable">
                         <td>{{inspeccion?.fechaRealizada | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{inspeccion.id?.codigo}}</td>
                         <td>{{inspeccion.usuarioRegistra?.email}}</td>
                         <td>{{inspeccion.listaInspeccion?.nombre}}</td>
                         <td>{{inspeccion.area?.nombre}}</td>

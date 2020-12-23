@@ -1,6 +1,6 @@
 <p-growl [value]="msgs"></p-growl>
 
-<p-panel header="Empresass">
+<p-panel header="Empresas">
 
   <p-table #dt [value]="empresasList" [(selection)]="empresaSelect" autoLayout="true" selectionMode="single"  [rows]="10" [paginator]="true"
     dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
@@ -13,6 +13,21 @@
           <p-sortIcon field="nombreComercial"></p-sortIcon>
         </th>
         <th pSortableColumn="nit">Nit
+          <p-sortIcon field="nit"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nit">Dirección
+          <p-sortIcon field="nit"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nit">Telefono
+          <p-sortIcon field="nit"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nit">Número de sede
+          <p-sortIcon field="nit"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nit">Email
+          <p-sortIcon field="nit"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nit">Pagina web
           <p-sortIcon field="nit"></p-sortIcon>
         </th>
         <th pSortableColumn="arl.nombre">ARL
@@ -36,6 +51,21 @@
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
         </td>
         <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+        </td>
+        <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'arl.nombre', 'contains')">
         </td>
         <td>
@@ -50,6 +80,11 @@
       <tr [pSelectableRow]="empresa">
         <td>{{empresa.razonSocial}}</td>
         <td>{{empresa.nombreComercial}}</td>
+        <td>{{empresa.nit}}</td>
+        <td>{{empresa.nit}}</td>
+        <td>{{empresa.nit}}</td>
+        <td>{{empresa.nit}}</td>
+        <td>{{empresa.nit}}</td>
         <td>{{empresa.nit}}</td>
         <td>{{empresa.arl?.nombre}}</td>
         <td>{{empresa.ciiu?.codigo}}</td>

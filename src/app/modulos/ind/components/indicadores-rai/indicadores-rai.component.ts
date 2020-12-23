@@ -18,11 +18,46 @@ export class IndicadoresRaiComponent implements OnInit {
   tipoReporteList: SelectItem[];
   tipoReporteSelected: string;
   chartList: any[];
+  data: any;
+  data7: any;
+  options7: any;
+    showData = false;
+    desde: String;
+    arrayIds = [];
+    hasta: String;
   anioActual: number = new Date().getFullYear();
 
   constructor(
     private indicadorService: ModeloGraficaService,
-  ) { }
+  ) { this.data7 = {
+    labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
+    datasets: [
+        {
+            label: 'Area',
+            backgroundColor: '#d9c077',
+            borderColor: '#1E88E5',
+            data: [65]
+        },
+        {
+            label: 'Tipo',
+            backgroundColor: '#7790d9',
+            borderColor: '#7CB342',
+            data: [65]
+        }
+    ],
+    options: {
+        scales: {
+            yAxes: [{stacked: false,
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+            xAxes: [{
+                stacked: false,
+                }]
+        }
+    }
+}}
 
   ngOnInit() {
     this.tipoReporteList = tipo_reporte.slice();
@@ -69,4 +104,27 @@ export class IndicadoresRaiComponent implements OnInit {
     );
 
   }
+  
+  async updateCharts7() {
+    this.showData = false;
+    this.data7.labels = [];
+    this.data7.datasets.forEach((element, index) => {
+        this.data7.datasets[index].data = [];
+   });
+    
+   let data7: any = await  this.indicadorService.findTipoAt(this.arrayIds, this.desde, this.hasta)
+   if(data7.length < 0) return false;
+   for (const iterator of data7) {
+    console.log(data7);
+    console.log(iterator);
+    this.data7.labels.push(iterator[1]);            
+    this.data7.datasets[0].data.push(iterator[0]);
+   // this.data7.datasets[1].data.push(iterator[0])
+  
+   this.showData = true;
+   console.log(iterator[1]);
+   console.log(iterator[2]);
+   console.log(iterator[3]);
+}
+}
 }

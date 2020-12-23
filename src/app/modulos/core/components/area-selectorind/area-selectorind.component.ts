@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms'
-import { SelectItem, Message, TreeNode } from 'primeng/primeng';
+import { SelectItem, Message, TreeNode, Tree } from 'primeng/primeng';
 import { Sede } from 'app/modulos/empresa/entities/sede'
 import { Area, Estructura } from 'app/modulos/empresa/entities/area'
 import { AreaService } from '../../../empresa/services/area.service'
@@ -110,7 +110,7 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
         let root: TreeNode = {
           label: '',
           selectable: false,
-          expanded: true,
+          expanded: false,
         };
         let nodos = this.createTreeNode(<Area[]>data['data'], null);
         root.children = nodos;
@@ -135,7 +135,7 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
         let root: TreeNode = {
           label: '',
           selectable: false,
-          expanded: true,
+          expanded: false,
         };
 
         let nodos = this.createTreeNode(<Area[]>data['data'], null);
@@ -213,6 +213,7 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
      // area.nombre = this.areaSelected.label;
    ///   area.descripcion = this.areaSelected.descripcion;
     //  this.value = area;
+    //if( areaSelected.TreeNode.Nodes[0].Expanded == true ) { //some work here}  
       this.onAreaSelect.emit(this.areaSelected);
       this.closeDialog();
     }
@@ -254,4 +255,7 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
     this.value = area;
     this.onAreaSelect.emit(area);
   }
+
+  
+
 }

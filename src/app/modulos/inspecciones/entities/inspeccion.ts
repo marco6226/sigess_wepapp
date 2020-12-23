@@ -8,7 +8,7 @@ import { ListaInspeccion } from './lista-inspeccion';
 import { Area } from '../../empresa/entities/area';
 
 export class Inspeccion {
-  id: string;
+  id: number;
   fechaRealizada: Date;
   fechaModificacion: Date;
   observacion: string;
