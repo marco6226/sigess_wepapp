@@ -10,6 +10,9 @@
         <th pSortableColumn="fechaAccidente">Fecha accidente
           <p-sortIcon field="fechaAccidente"></p-sortIcon>
         </th>
+        <th pSortableColumn="id">Codigo
+          <p-sortIcon field="id"></p-sortIcon>
+        </th>
         <th pSortableColumn="primerNombreEmpleado">Nombres
           <p-sortIcon field="primerNombreEmpleado"></p-sortIcon>
         </th>
@@ -31,6 +34,9 @@
           <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaAccidente', 'bt')"></s-rangoFechaSelector>
         </td>
         <td>
+          <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'id', 'equals')">
+        </td>
+        <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerNombreEmpleado', 'contains')">
         </td>
         <td>
@@ -48,6 +54,7 @@
       <tr [pSelectableRow]="reporte">
         <td>{{reporte.fechaReporte | date:'dd/MM/yyyy'}}</td>
         <td>{{reporte.fechaAccidente | date:'dd/MM/yyyy'}}</td>
+        <td>RAI-{{reporte.id}}</td>
         <td>{{reporte.primerNombreEmpleado}}</td>
         <td>{{reporte.primerApellidoEmpleado}}</td>
         <td>{{reporte.numeroIdentificacionEmpleado}}</td>

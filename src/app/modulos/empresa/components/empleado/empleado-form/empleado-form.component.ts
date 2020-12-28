@@ -262,7 +262,7 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.area.id = this.form.value.area.id;
         empleado.cargo.id = this.form.value.cargoId;
         empleado.usuario.email = this.form.value.email;
-        empleado.usuario.id = this.empleadoSelect.usuario.id;
+  
         // //console.log(this.form.value.ipPermitida);
         // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
         empleado.usuario.usuarioEmpresaList = [];
@@ -275,6 +275,7 @@ export class EmpleadoFormComponent implements OnInit {
         });
         this.solicitando = true;
         if (this.isUpdate) {
+      empleado.usuario.id = this.empleadoSelect.usuario.id;
             console.log(empleado.usuario);
             this.usuarioService.update(empleado.usuario)
                 .then(resp => {

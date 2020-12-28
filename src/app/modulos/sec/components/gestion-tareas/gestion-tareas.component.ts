@@ -32,6 +32,7 @@ export class GestionTareasComponent implements OnInit {
       'nombre': [null, Validators.required],
       'descripcion': [null, Validators.required],
       'tipoAccion': [null, Validators.required],
+      'jerarquia': [null, Validators.required],
       'fechaProyectada': [null, Validators.required],
       'areaResponsable': [null, Validators.required]
     });
@@ -55,6 +56,7 @@ export class GestionTareasComponent implements OnInit {
     tarea.nombre = this.form.value.nombre;
     tarea.descripcion = this.form.value.descripcion;
     tarea.tipoAccion = this.form.value.tipoAccion;
+    tarea.jerarquia = this.form.value.jerarquia;
     tarea.fechaProyectada = this.form.value.fechaProyectada;
     tarea.estado = this.form.value.estado;
     if (this.form.value.areaResponsable != null) {
@@ -76,6 +78,7 @@ export class GestionTareasComponent implements OnInit {
       nombre: tarea.nombre,
       descripcion: tarea.descripcion,
       tipoAccion: tarea.tipoAccion,
+      jerarquia: tarea.jerarquia,
       fechaProyectada: new Date(tarea.fechaProyectada),
       areaResponsable: tarea.areaResponsable
     });

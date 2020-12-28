@@ -17,12 +17,13 @@ export class ConsultaReportesComponent implements OnInit {
   loading: boolean;
   totalRecords: number;
   fields: string[] = [
-    'id',
+    
     'fechaReporte',
+    'fechaAccidente',
+    'id',
     'primerNombreEmpleado',
     'primerApellidoEmpleado',
     'numeroIdentificacionEmpleado',
-    'fechaAccidente',
     'tipo'
   ];
 
@@ -44,7 +45,6 @@ export class ConsultaReportesComponent implements OnInit {
     filterQuery.rows = event.rows;
     filterQuery.count = true; 
     filterQuery.fieldList = this.fields;
-
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
 
     this.reporteService.findByFilter(filterQuery).then(

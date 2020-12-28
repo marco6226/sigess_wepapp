@@ -26,6 +26,9 @@
             <th pSortableColumn="tipoAccion">Tipo acción
               <p-sortIcon field="tipoAccion"></p-sortIcon>
             </th>
+            <th pSortableColumn="jerarquia">Jerarquia de control
+              <p-sortIcon field="jerarquia"></p-sortIcon>
+            </th>
             <th pSortableColumn="estado">Estado
               <p-sortIcon field="estado"></p-sortIcon>
             </th>
@@ -64,6 +67,9 @@
             </td>
             <td>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoAccion', 'contains')">
+            </td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'jerarquia', 'contains')">
             </td>
             <td>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
@@ -109,6 +115,7 @@
             <td>{{tarea.nombre}}</td>
             <td>{{tarea.descripcion}}</td>
             <td>{{tarea.tipoAccion}}</td>
+            <td>{{tarea.jerarquia}}</td>
             <td>{{tarea.estado}}</td>
             <td>{{tarea.fechaProyectada | date:'dd-MMM-yyyy'}}</td>
             <td>{{tarea.areaResponsable?.nombre}}</td>

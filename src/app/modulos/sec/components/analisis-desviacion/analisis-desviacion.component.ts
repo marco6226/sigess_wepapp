@@ -20,6 +20,7 @@ import { SistemaCausaAdministrativaService } from '../../services/sistema-causa-
 import { Tarea } from '../../entities/tarea';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Criteria } from '../../../core/entities/filter';
+import { jerarquia } from '../../entities/jerarquia';
 
 @Component({
   selector: 's-analisisDesviacion',
@@ -45,12 +46,13 @@ export class AnalisisDesviacionComponent implements OnInit {
   causaInmediataList: TreeNode[] = [];
   causaInmediataListSelect: TreeNode[] = [];
   causaInmediataAnalisisList: CausaInmediata[];
-
+  
   desviacionesList: Desviacion[];
   analisisCosto: AnalisisCosto = new AnalisisCosto();
   participantes: any[];
   documentos: Documento[];
   observacion: string;
+  jerarquia: string;
   analisisId: string;
   msgs: Message[] = [];
   consultar: boolean = false;
@@ -178,6 +180,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.documentos = analisis.documentosList;
         this.causaInmediataAnalisisList = analisis.causaInmediataList;
         this.tareasList = analisis.tareaDesviacionList;
+        this.jerarquia = analisis.jerarquia;
+        console.log(jerarquia);
         this.sistCausAdminService.findDefault()
           .then((resp: SistemaCausaAdministrativa) =>
             this.causaAdminList = this.buildTreeNode(resp.causaAdminList, null, 'causaAdminList', this.causaAdminAnalisisList, this.causaAdminListSelect)
@@ -215,6 +219,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     ad.observacion = this.observacion;
     ad.participantes = JSON.stringify(this.participantes);
     ad.tareaDesviacionList = this.tareasList;
+    ad.jerarquia = ad.jerarquia;
+    console.log(ad.tareaDesviacionList);
     this.analisisDesviacionService.create(ad)
       .then(data => {
         let analisisDesviacion = <AnalisisDesviacion>data;
@@ -238,6 +244,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     ad.observacion = this.observacion;
     ad.participantes = JSON.stringify(this.participantes);
     ad.tareaDesviacionList = this.tareasList;
+    ad.jerarquia = this.jerarquia;
     this.analisisDesviacionService.update(ad).then(
       data => {
         this.manageResponse(<AnalisisDesviacion>data);

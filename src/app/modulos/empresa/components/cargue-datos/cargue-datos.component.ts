@@ -393,6 +393,7 @@ export class CargueDatosComponent implements OnInit {
     }
 
     validarDatos() {
+    
         for (let i = 0; i < this.modelo[this.opcionSelect].length; i++) {
             let element = (this.modelo[this.opcionSelect])[i];
             if (element['selected'] == false) {

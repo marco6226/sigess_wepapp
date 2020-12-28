@@ -7,6 +7,7 @@ export class Tarea {
   nombre: string;
   descripcion: string;
   tipoAccion: string;
+  jerarquia: string;
   estado: string;
   fechaProyectada: Date;
   fechaRealizacion: Date;

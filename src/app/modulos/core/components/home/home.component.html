@@ -1,78 +1,73 @@
-<p-card class="ui-g-12 ">
 
+<p-card class="ui-g-12 " *ngIf="testing" >
+   
     <div class="p-grid  p-mt-6 p-jc-evenly colorsitos">
-        <p-card class="p-col-12 p-xl-3 p-md-6 " [style]="{'background-color': '#42a6f5'}">
-            <div class="info-card">
-                <div class="icon">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                </div>
-                <div class="info">
-                    <p class="percent p-m-0 p-badge">
-                        67%
-                    </p>
-                    <label for="">INP Ejecutadas</label>
-                </div>
-            </div>
-        </p-card>
+    
+<circle-progress
+  [percent]="this.inptotal"
+  [radius]="50"
+  [outerStrokeWidth]="10"
+  [innerStrokeWidth]="8"
+  [outerStrokeColor]="'#78C000'"
+  [innerStrokeColor]="'#C7E596'"
+  [animation]="true"
+  [animationDuration]="300"
+  *sTienePermiso="'INP'"
+></circle-progress>
 
-        <p-card class="p-col-12 p-xl-3 p-md-6  " [style]="{'background-color': '#76e0aa'}">
-            <div class="info-card">
-                <div class="icon">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                </div>
-                <div class="info">
-                    <p class="percent p-m-0">
-                        67%
-                    </p>
-                    <label for="">AT Investigados</label>
-                </div>
-            </div>
-        </p-card>
+<circle-progress
+[percent]="this.inptotalat"
+[radius]="50"
+[outerStrokeWidth]="10"
+[innerStrokeWidth]="8"
+[outerStrokeColor]="'#5132db'"
+[innerStrokeColor]="'#96d3e5'"
+[animation]="true"
+[animationDuration]="300"
+*sTienePermiso="'RAI'"
+></circle-progress>
 
-        <p-card class="p-col-12 p-xl-3 p-md-6  " [style]="{'background-color': '#e0aa76'}">
-            <div class="info-card">
-                <div class="icon">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                </div>
-                <div class="info">
-                    <p class="percent p-m-0">
-                        67%
-                    </p>
-                    <label for="">Condiciones reportadas</label>
-                </div>
-            </div>
-        </p-card>
-        <p-card class="p-col-12 p-xl-3 p-md-6" [style]="{'background-color': '#e07677'}">
-            <div class="info-card">
-                <div class="icon">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                </div>
-                <div class="info">
-                    <p class="percent p-m-0">
-                        670
-                    </p>
-                    <label for="">AT reportados</label>
-                </div>
-            </div>
-        </p-card>
- 
+<circle-progress
+[percent]="this.inptotalauc"
+[radius]="50"
+[outerStrokeWidth]="10"
+[innerStrokeWidth]="8"
+[outerStrokeColor]="'#db328f'"
+[innerStrokeColor]="'#e596d8'"
+[animation]="true"
+[animationDuration]="300"
+*sTienePermiso="'AUC'"
+></circle-progress>
+<div class="p-col-12 p-mt-4 mid-border">
+    <div class="p-d-flex p-jc-evenly">
+        
+
+        <div class="p-d-flex" *sTienePermiso="'INP'"><p class="p-m-0">Cumplimiento inspecciones</p></div>
+        <div class="p-d-flex" *sTienePermiso="'RAI'"><p class=".col-md-4">Cumplimiento investigación de AT/IT</p></div>
+        <div class="p-d-flex" *sTienePermiso="'AUC'"><p class=".col-md-4">Cumplimiento reporte de condiciones</p></div>
+
+
+    </div>
+    </div>
+
         <div class="p-col-12 p-mt-4 mid-border">
             <div class="p-d-flex p-jc-evenly">
                 
 
                 <div class="p-d-flex"><p class="p-m-0">Area:</p> <area-selectorind *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)" ></area-selectorind></div>
               <div class="p-d-flex">      
-                  <p-calendar (onSelect)="selecFromDate($event)"  dateFormat="dd/mm/yy" placeholder="Desde" appendTo="body"></p-calendar>
-                  <p-calendar (onSelect)="selectToDate($event)" [disabled]="!this.desde"  dateFormat="dd/mm/yy" placeholder="Hasta" appendTo="body"></p-calendar>
+                  <p-calendar [locale]="localeES" (onSelect)="selecFromDate($event)"  dateFormat="dd/mm/yy" value="!this.desde"  placeholder="Desde" appendTo="body" ></p-calendar>
+                  <p-calendar [locale]="localeES" (onSelect)="selectToDate($event)"  value="!this.hasta" dateFormat="dd/mm/yy"  placeholder="Hasta" appendTo="body" ></p-calendar>
 
                 </div>
-
+                
+               
+                
 
             </div>
         </div>
 
-        <div class="p-col-6 p-mt-4">
-          
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">           
            <ng-container *ngIf="this.data">
             <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
             <div *ngIf="showData">
@@ -81,31 +76,56 @@
            </ng-container>
             
         </div>
-        <div class="p-col-6 p-mt-4">
-            <div>
-                <p-chart type="bar" [data]="data2"[options]="options2"></p-chart>
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">
+            <ng-container *ngIf="this.data2">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+            <div *ngIf="showData">
+                <p-chart type="horizontalBar"  [data]="data2" [options]="options2" ></p-chart>
             </div>
+        </ng-container>
         </div>
-        <div class="p-col-6 p-mt-4">
-           
-            <div>
-                <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
-            </div>
-        </div>
-        <div class="p-col-6 p-mt-4">
-          
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'INP'">
             <ng-container *ngIf="this.data">
                 <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
                 <div *ngIf="showData">
-                    <p-chart type="bar" [data]="data" [options]="options3"></p-chart>
+                <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
+            </div>
+        </ng-container>
+        </div>
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'RAI'">
+            <ng-container *ngIf="this.data4">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                    <p-chart type="bar" [data]="data4" [options]="options4"></p-chart>
                 </div>
                </ng-container>
         </div>
-        <div class="p-col-6"></div>
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'AUC'"> 
+            <ng-container *ngIf="this.data5">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                    <p-chart type="horizontalBar" [data]="data5" [options]="options5"></p-chart>
+                </div>
+               </ng-container>
+        </div>
+        <div class="p-col-6 p-mt-4" *sTienePermiso="'RAI'">
+            <ng-container *ngIf="this.data6">
+                <p-progressSpinner *ngIf="!showData"></p-progressSpinner>
+                <div *ngIf="showData">
+                    <p-chart type="bar" [data]="data6" [options]="options6"></p-chart>
+                </div>
+               </ng-container>
+        </div>
 
-
+        
     </div>
-
    
 
 </p-card>
+
+<div *ngIf="!testing" style="width: 100%; display: flex;
+flex-direction: column-reverse;">
+    
+    <div class="col-md-4"><img src="assets/images/icons-invert/tenor.gif" alt="" class="img-responsive" style="overflow: hidden"></div>
+
+</div>
