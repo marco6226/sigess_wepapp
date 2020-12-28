@@ -66,6 +66,7 @@ export class FormularioScmComponent implements OnInit {
         { label: "Entre 6 y 10 años", range: "6,7,8,9,10" },
         { label: "Entre 11 y 15 años", range: "11,12,13,14,15" },
         { label: "Entre 16 y 20 años", range: "16,17,18,19,20" },
+        { label: "Mayor a 20", range: "21,22,23,24,25,26,27,28,29" },
     ]
     empleadoForm: FormGroup;
     empresaId = this.sesionService.getEmpresa().id;
@@ -108,9 +109,12 @@ export class FormularioScmComponent implements OnInit {
         this.tipoIdentificacionList = defaultItem.concat(
             <SelectItem[]>tipo_identificacion
         );
+
         this.tipoVinculacionList = defaultItem.concat(
             <SelectItem[]>tipo_vinculacion
         );
+
+
         //Instaciacion de datos de form
         this.bussinessParner = fb.group({
             id: ["", Validators.required],
@@ -423,6 +427,7 @@ export class FormularioScmComponent implements OnInit {
         if (antigueMoment === 0) {
             this.range = 'Menor a 1 año'
         }
+
         for (let j = 0; j < this.rangoAntiguedad.length; j++) {
             let subArray = this.rangoAntiguedad[j].range.split(',')
             let a = subArray.find(range => range === antigueMoment.toString())
