@@ -43,6 +43,7 @@ export class FormularioScmComponent implements OnInit {
     value;
     msgs: Message[];
     edad;
+    modalRecomendatios = false;
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
     jefeInmediato: FormGroup;
@@ -51,7 +52,7 @@ export class FormularioScmComponent implements OnInit {
     actualizar: boolean;
     adicionar: boolean;
     empleado: Empleado;
-
+    recomendationList = []
     empleadosList: Empleado[];
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
