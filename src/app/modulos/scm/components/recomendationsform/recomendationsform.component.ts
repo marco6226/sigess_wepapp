@@ -12,7 +12,22 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
 export class RecomendationsformComponent implements OnInit {
     epsList: SelectItem[];
     afpList: SelectItem[];
-    cargoList: SelectItem[];
+    entit = [
+        { name: 'EPS', code: 'NY' },
+        { name: 'ARL', code: 'RM' },
+        { name: 'Entidad  que emite', code: 'RM' }
+
+    ];
+    typeList = [
+        { name: 'TIPO 1', code: 'NY' },
+        { name: 'TIPO Barbara', code: 'NY' },
+
+    ];
+    statusList = [
+        { name: 'Activo', code: 'NY' },
+        { name: 'Cerrado', code: 'NY' },
+
+    ];
     fechaActual = new Date();
     recomendation: FormGroup;
     tipoIdentificacionList;
@@ -43,7 +58,9 @@ export class RecomendationsformComponent implements OnInit {
         console.log(await this.scmService.getRecomendations())
     }
 
-    onSubmit() {
-        console.log(this.recomendation.value);
+    async onSubmit() {
+
+
+        console.log(await this.scmService.createRecomendation(this.recomendation.value));
     }
 }

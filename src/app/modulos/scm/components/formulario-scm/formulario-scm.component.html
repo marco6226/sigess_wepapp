@@ -743,34 +743,29 @@
             [rows]="10" [paginator]="true" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">#CASO
+                    <th pSortableColumn="id">Entidad emisora
                         <p-sortIcon field="id"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="fapertura">Fecha de apertura
+                    <th pSortableColumn="fapertura">Tipo
                         <p-sortIcon field="fapertura"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="regional">Regional
+                    <th pSortableColumn="regional">Estado
                         <p-sortIcon field="regional"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="ciudad">Ciudad
+                    <th pSortableColumn="ciudad">Recomendacion
                         <p-sortIcon field="ciudad"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="nameLastname">Apellido - Nombre
+                    <th pSortableColumn="nameLastname">Fecha inicial
                         <p-sortIcon field="nameLastname"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="documento">Documento
+                    <th pSortableColumn="documento">Fecha final
                         <p-sortIcon field="documento"></p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="charge">Cargo
+                    <th pSortableColumn="charge">Recomendacion genrada
                         <p-sortIcon field="charge"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="statusCaso">Estado de caso
-                        <p-sortIcon field="statusCaso"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="saludstate">Caso de mesa laboral
-                        <p-sortIcon field="saludstate"></p-sortIcon>
-                    </th>
+
                 </tr>
                 <tr>
 
@@ -795,12 +790,7 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
                     </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
+
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-case>
@@ -813,8 +803,7 @@
                     <td>{{case.names}}</td>
                     <td>{{case.documento}}</td>
                     <td>{{case.cargo}}</td>
-                    <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                    <td>{{case.casoMedicoLaboral}}</td>
+
 
                 </tr>
             </ng-template>

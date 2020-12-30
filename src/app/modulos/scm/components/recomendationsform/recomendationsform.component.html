@@ -13,8 +13,8 @@
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-5">
                 <div class="input-field">
-                    <p-dropdown [filter]="true" formControlName="entidadEmitRecomendaciones" [options]="cargoList"
-                        class="select-material" styleClass="select-material">
+                    <p-dropdown [filter]="true" formControlName="entidadEmitRecomendaciones" optionLabel="name"
+                        optionValue="name" [options]="entit" class="select-material" styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
@@ -22,8 +22,8 @@
 
             <div class="ui-g-12 ui-md-4 ui-lg-3">
                 <div class="input-field">
-                    <p-dropdown [filter]="true" formControlName="tipo" [options]="cargoList" class="select-material"
-                        styleClass="select-material">
+                    <p-dropdown [filter]="true" formControlName="tipo" optionLabel="name" optionValue="name"
+                        [options]="typeList" class="select-material" styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Tipo</label>
                 </div>
@@ -49,8 +49,8 @@
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <p-dropdown [filter]="true" formControlName="status" [options]="cargoList" class="select-material"
-                        styleClass="select-material">
+                    <p-dropdown [filter]="true" formControlName="status" optionLabel="name" optionValue="name"
+                        [options]="statusList" class="select-material" styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Estado</label>
                 </div>
