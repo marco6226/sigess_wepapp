@@ -206,7 +206,7 @@ export class FormularioScmComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         if (this.caseSelect) {
             console.log(this.caseSelect);
 
@@ -254,6 +254,9 @@ export class FormularioScmComponent implements OnInit {
                     let select = <Empleado>resp["data"][0];
                     this.onSelectionJI(select);
                 });
+
+                this.recomendationList = await this.scmService.getRecomendations();
+
             } else {
                 this.loaded = true;
                 let area: any;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { locale_es } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
 import { SelectItem } from "primeng/api";
@@ -12,22 +12,27 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
 export class RecomendationsformComponent implements OnInit {
     epsList: SelectItem[];
     afpList: SelectItem[];
+    @Input() id: any;
     entit = [
         { name: 'EPS', code: 'NY' },
         { name: 'ARL', code: 'RM' },
         { name: 'Entidad  que emite', code: 'RM' }
 
     ];
+
     typeList = [
-        { name: 'TIPO 1', code: 'NY' },
-        { name: 'TIPO Barbara', code: 'NY' },
+        { name: 'Activo', code: 'NY' },
+        { name: 'Cerrado', code: 'NY' },
 
     ];
+
     statusList = [
         { name: 'Activo', code: 'NY' },
         { name: 'Cerrado', code: 'NY' },
 
     ];
+
+
     fechaActual = new Date();
     recomendation: FormGroup;
     tipoIdentificacionList;
@@ -55,12 +60,39 @@ export class RecomendationsformComponent implements OnInit {
 
     async ngOnInit() {
 
-        console.log(await this.scmService.getRecomendations())
     }
 
     async onSubmit() {
+        console.log(this.recomendation.value, this.id);
+        let {
+            generateRecomendaciones,
 
+            entidadEmitRecomendaciones,
 
-        console.log(await this.scmService.createRecomendation(this.recomendation.value));
+            tipo,
+
+            fechaInicio,
+
+            fechaExpiracion,
+
+            status,
+            recomendaciones
+        } = this.recomendation.value;
+
+        let body = {
+            generateRecomendaciones: generateRecomendaciones,
+            entidadEmitRecomendaciones: entidadEmitRecomendaciones.code,
+
+            tipo: tipo.code,
+
+            fechaInicio,
+
+            fechaExpiracion,
+
+            status: status.code,
+            recomendaciones,
+            pkUser: this.id
+        }
+        console.log(await this.scmService.createRecomendation(body));
     }
 }

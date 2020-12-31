@@ -25,7 +25,7 @@ export class CasosMedicosService {
     }
 
     getRecomendations() {
-        return this.http.get(`${endPoints.scm}recomendation`).toPromise();
+        return this.http.get<[]>(`${endPoints.scm}recomendation`).toPromise();
     }
 
 

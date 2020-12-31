@@ -737,7 +737,7 @@
             [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
     </div>
 
-    <p-tabPanel header="Recomendaciones">
+    <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
         <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect"
             [rows]="10" [paginator]="true" dataKey="id" [lazy]="true">
@@ -796,13 +796,13 @@
             <ng-template pTemplate="body" let-case>
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                    <td>{{case.id}}</td>
-                    <td>{{case.fechaCreacion | date}}</td>
-                    <td>{{case.region}}</td>
-                    <td>{{case.ciudad}}</td>
-                    <td>{{case.names}}</td>
-                    <td>{{case.documento}}</td>
-                    <td>{{case.cargo}}</td>
+                    <td>{{case.entidadEmitRecomendaciones}}</td>
+                    <td>{{case.tipo }}</td>
+                    <td>{{case.status}}</td>
+                    <td>{{case.recomendaciones}}</td>
+                    <td>{{case.fechaInicio | date}}</td>
+                    <td>{{case.fechaExpiracion | date}}</td>
+                    <td>{{case.generateRecomendaciones}}</td>
 
 
                 </tr>
@@ -819,8 +819,9 @@
 
 </p-tabView>
 
-<p-dialog header="Crear Recomendacion" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}" [baseZIndex]="10000">
-    <app-recomendationsform></app-recomendationsform>
+<p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
+    [baseZIndex]="10000">
+    <app-recomendationsform [id]="caseSelect.documento"></app-recomendationsform>
 </p-dialog>
 
 <button pButton *ngIf="solicitando == false" type="button" [routerLink]="['/app/scm/list']" icon="fa fa-chevron-left"
