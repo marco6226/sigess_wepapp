@@ -128,7 +128,7 @@ export class FormularioScmComponent implements OnInit {
         });
         this.jefeInmediato = fb.group({
             id: ["", Validators.required],
-            numeroIdentificacion: [{ value: "", disabled: true }, Validators.required],
+            numeroIdentificacion: ["", Validators.required],
             primerNombre: [{ value: "", disabled: true }, Validators.required],
             segundoNombre: { value: "", disabled: true },
             email: { value: "", disabled: true },
