@@ -1,3 +1,6 @@
+<p-growl [value]="msgs"></p-growl>
+
+
 <form [formGroup]="recomendation">
     <div class="ui-g">
         <div class="ui-g p-py-2">
@@ -10,6 +13,8 @@
                         placeholder="Se generan recomendaciones" class="form-material" id="" />
                     <label for="" class="active">Se generan recomendaciones</label>
                 </div>
+                <small *ngIf="generateRecomendaciones.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-5">
                 <div class="input-field">
@@ -18,6 +23,8 @@
                     </p-dropdown>
                     <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
+                <small *ngIf="entidadEmitRecomendaciones.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
             </div>
 
             <div class="ui-g-12 ui-md-4 ui-lg-3">
@@ -27,6 +34,9 @@
                     </p-dropdown>
                     <label for="" class="active">Tipo</label>
                 </div>
+                <small *ngIf="tipo.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
+
             </div>
 
             <div class="ui-g-12 ui-md-4 ui-lg-4">
@@ -37,6 +47,8 @@
                     </p-calendar>
                     <label for="" class="active">Fecha de expedición</label>
                 </div>
+                <small *ngIf="fechaInicio.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-4">
                 <div class="input-field">
@@ -46,6 +58,8 @@
                     </p-calendar>
                     <label for="" class="active">Fecha de vencimiento</label>
                 </div>
+                <small *ngIf="fechaExpiracion.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
@@ -54,6 +68,8 @@
                     </p-dropdown>
                     <label for="" class="active">Estado</label>
                 </div>
+                <small *ngIf="status.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
             </div>
 
             <div class="ui-g-12">
@@ -61,7 +77,8 @@
                     <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea></textarea>
                     <label for="" class="active">Recomendaciones</label>
                 </div>
-
+                <small *ngIf="recomendaciones.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
                 <div class="ui-g-12">
                     <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" label="Guardar" icon="fa fa-plus"
                         (click)="onSubmit()">

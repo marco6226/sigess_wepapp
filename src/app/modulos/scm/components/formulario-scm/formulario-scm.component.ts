@@ -209,6 +209,7 @@ export class FormularioScmComponent implements OnInit {
     async ngOnInit() {
         if (this.caseSelect) {
             console.log(this.caseSelect);
+            this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
 
             this.casoMedicoForm.patchValue(this.caseSelect);
             this.isUpdate ? this.empleadoForm.controls["email"].disable() : ""; //this for disabled email in case of update
@@ -255,7 +256,6 @@ export class FormularioScmComponent implements OnInit {
                     this.onSelectionJI(select);
                 });
 
-                this.recomendationList = await this.scmService.getRecomendations();
 
             } else {
                 this.loaded = true;
@@ -507,6 +507,11 @@ export class FormularioScmComponent implements OnInit {
         });
     }
 
+    async onCloseModalrecomendation() {
+        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
+
+        this.modalRecomendatios = false;
+    }
     onSelectionJI(event) {
         this.empleadoSelect = <Empleado>event;
         this.jefeInmediato.patchValue({

@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { locale_es } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
-import { SelectItem } from "primeng/api";
+import { SelectItem, Message } from "primeng/api";
 import { CasosMedicosService } from "../../services/casos-medicos.service";
 
 @Component({
@@ -12,6 +12,8 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
 export class RecomendationsformComponent implements OnInit {
     epsList: SelectItem[];
     afpList: SelectItem[];
+    msgs: Message[];
+    @Output() eventClose = new EventEmitter<any>()
     @Input() id: any;
     entit = [
         { name: 'EPS', code: 'NY' },
@@ -20,6 +22,9 @@ export class RecomendationsformComponent implements OnInit {
 
     ];
 
+    fields: string[] = [
+        'documento',
+    ];
     typeList = [
         { name: 'Activo', code: 'NY' },
         { name: 'Cerrado', code: 'NY' },
@@ -43,27 +48,39 @@ export class RecomendationsformComponent implements OnInit {
         private scmService: CasosMedicosService,
     ) {
         this.recomendation = fb.group({
-            generateRecomendaciones: [null],
-            entidadEmitRecomendaciones: [null],
+            generateRecomendaciones: [null, Validators.required],
+            entidadEmitRecomendaciones: [null, Validators.required],
 
-            tipo: [null],
+            tipo: [null, Validators.required],
 
-            fechaInicio: [null],
+            fechaInicio: [null, Validators.required],
 
-            fechaExpiracion: [null],
+            fechaExpiracion: [null, Validators.required],
 
-            status: [null],
-            recomendaciones: [null],
+            status: [null, Validators.required],
+            recomendaciones: [null, Validators.required],
 
         });
     }
+    //Aqui estan los get para las validaciones
+    get tipo() { return this.recomendation.get('tipo'); }
+    get fechaInicio() { return this.recomendation.get('fechaInicio'); }
+    get entidadEmitRecomendaciones() { return this.recomendation.get('entidadEmitRecomendaciones'); }
+    get status() { return this.recomendation.get('status'); }
+    get generateRecomendaciones() { return this.recomendation.get('generateRecomendaciones'); }
+    get recomendaciones() { return this.recomendation.get('tipo'); }
+    get fechaExpiracion() { return this.recomendation.get('tipo'); }
 
     async ngOnInit() {
 
     }
 
     async onSubmit() {
-        console.log(this.recomendation.value, this.id);
+        this.msgs = [];
+
+        if (!this.recomendation.valid) {
+            return this.markFormGroupTouched(this.recomendation);
+        }
         let {
             generateRecomendaciones,
 
@@ -93,6 +110,42 @@ export class RecomendationsformComponent implements OnInit {
             recomendaciones,
             pkUser: this.id
         }
-        console.log(await this.scmService.createRecomendation(body));
+
+        try {
+
+            let res = await this.scmService.createRecomendation(body);
+
+            if (res) {
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Recomendacion creada",
+                    //  detail: `Su numero de caso es ${status}`,
+                });
+                setTimeout(() => {
+                    this.eventClose.emit()
+                }, 1000);
+            }
+        } catch (error) {
+
+            this.msgs.push({
+                severity: "error",
+                summary: "Error",
+                // detail: `de el usuario ${emp.numeroIdentificacion}`,
+            });
+
+        }
+
+
+    }
+
+    private markFormGroupTouched(formGroup: FormGroup) {
+        (<any>Object).values(formGroup.controls).forEach(control => {
+            control.markAsTouched();
+
+            if (control.controls) {
+                this.markFormGroupTouched(control);
+            }
+        });
     }
 }
+

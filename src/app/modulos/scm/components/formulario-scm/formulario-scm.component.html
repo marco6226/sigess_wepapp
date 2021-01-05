@@ -821,7 +821,8 @@
 
 <p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
-    <app-recomendationsform [id]="caseSelect.documento"></app-recomendationsform>
+    <app-recomendationsform [id]="caseSelect.documento" (eventClose)="onCloseModalrecomendation()">
+    </app-recomendationsform>
 </p-dialog>
 
 <button pButton *ngIf="solicitando == false" type="button" [routerLink]="['/app/scm/list']" icon="fa fa-chevron-left"
