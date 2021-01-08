@@ -16,6 +16,8 @@ export class RecomendationsformComponent implements OnInit {
     @Output() eventClose = new EventEmitter<any>()
     @Input() id: any;
     entit = [
+        { name: '', code: '' },
+
         { name: 'EPS', code: 'NY' },
         { name: 'ARL', code: 'RM' },
         { name: 'Entidad  que emite', code: 'RM' }
@@ -26,12 +28,16 @@ export class RecomendationsformComponent implements OnInit {
         'documento',
     ];
     typeList = [
+        { name: '', code: '' },
+
         { name: 'Activo', code: 'NY' },
         { name: 'Cerrado', code: 'NY' },
 
     ];
 
     statusList = [
+        { name: '', code: '' },
+
         { name: 'Activo', code: 'NY' },
         { name: 'Cerrado', code: 'NY' },
 
@@ -58,6 +64,7 @@ export class RecomendationsformComponent implements OnInit {
             fechaExpiracion: [null, Validators.required],
 
             status: [null, Validators.required],
+
             recomendaciones: [null, Validators.required],
 
         });
