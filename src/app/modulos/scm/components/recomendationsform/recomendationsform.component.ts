@@ -125,7 +125,7 @@ export class RecomendationsformComponent implements OnInit {
             pkUser: this.id,
             actionPlanResponsable,
 
-            actionPlan
+            actionPlan: actionPlan.code
         }
 
         try {
