@@ -79,12 +79,32 @@
                 </div>
                 <small *ngIf="recomendaciones.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
-                <div class="ui-g-12">
-                    <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" label="Guardar" icon="fa fa-plus"
-                        (click)="onSubmit()">
 
-                    </button>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <p-dropdown optionLabel="name" formControlName="actionPlain" optionValue="code"
+                        [options]="statusList" class="select-material" styleClass="select-material">
+                    </p-dropdown>
+                    <label for="" class="active">Plan de accion</label>
                 </div>
+                <small *ngIf="actionPlan.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" formControlName="actionPlanResponsable" pInputText placeholder="Responsable"
+                        class="form-material" id="" />
+                    <label for="" class="active">Responsable </label>
+                </div>
+                <small *ngIf="actionPlanResponsable.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
+            </div>
+            <div class="ui-g-12">
+                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" label="Guardar" icon="fa fa-plus"
+                    (click)="onSubmit()">
+
+                </button>
             </div>
         </div>
     </div>

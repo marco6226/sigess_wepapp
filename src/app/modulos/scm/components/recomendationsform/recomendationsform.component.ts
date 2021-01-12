@@ -64,7 +64,8 @@ export class RecomendationsformComponent implements OnInit {
             fechaExpiracion: [null, Validators.required],
 
             status: [null, Validators.required],
-
+            actionPlan: [null, Validators.required],
+            actionPlanResponsable: [null, Validators.required],
             recomendaciones: [null, Validators.required],
 
         });
@@ -76,7 +77,9 @@ export class RecomendationsformComponent implements OnInit {
     get status() { return this.recomendation.get('status'); }
     get generateRecomendaciones() { return this.recomendation.get('generateRecomendaciones'); }
     get recomendaciones() { return this.recomendation.get('tipo'); }
-    get fechaExpiracion() { return this.recomendation.get('tipo'); }
+    get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
+    get actionPlanResponsable() { return this.recomendation.get('actionPlanResponsable'); }
+    get actionPlan() { return this.recomendation.get('actionPlan'); }
 
     async ngOnInit() {
 
@@ -100,7 +103,11 @@ export class RecomendationsformComponent implements OnInit {
             fechaExpiracion,
 
             status,
-            recomendaciones
+            recomendaciones,
+
+            actionPlanResponsable,
+
+            actionPlan
         } = this.recomendation.value;
 
         let body = {
@@ -115,7 +122,10 @@ export class RecomendationsformComponent implements OnInit {
 
             status: status.code,
             recomendaciones,
-            pkUser: this.id
+            pkUser: this.id,
+            actionPlanResponsable,
+
+            actionPlan
         }
 
         try {
@@ -126,7 +136,7 @@ export class RecomendationsformComponent implements OnInit {
                 this.msgs.push({
                     severity: "success",
                     summary: "Recomendacion creada",
-                    //  detail: `Su numero de caso es ${status}`,
+                    //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
                     this.eventClose.emit()
