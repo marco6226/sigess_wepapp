@@ -33,6 +33,7 @@ import * as moment from "moment";
 import { Router, RouterLink } from "@angular/router";
 import { AutoComplete } from "primeng/primeng";
 import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
+import { ReporteAusentismoService } from "app/modulos/aus/services/reporte-ausentismo.service";
 
 @Component({
     selector: "app-formulario-scm",
@@ -43,6 +44,7 @@ export class FormularioScmComponent implements OnInit {
     value;
     msgs: Message[];
     edad;
+    incapacidades = [];
     modalRecomendatios = false;
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
@@ -207,6 +209,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async ngOnInit() {
+
         if (this.caseSelect) {
             console.log(this.caseSelect);
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
@@ -214,7 +217,7 @@ export class FormularioScmComponent implements OnInit {
             this.casoMedicoForm.patchValue(this.caseSelect);
             this.isUpdate ? this.empleadoForm.controls["email"].disable() : ""; //this for disabled email in case of update
             if (this.caseSelect != null) {
-                console.log("tiene data");
+                // console.log("tiene data");
                 let fq = new FilterQuery();
                 fq.filterList = [
                     {
@@ -250,6 +253,8 @@ export class FormularioScmComponent implements OnInit {
                         value2: null,
                     },
                 ];
+                this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser);
+                console.log(this.incapacidades);
                 // //console.log(fq);
                 this.empleadoService.findByFilter(fq).then((resp) => {
                     let select = <Empleado>resp["data"][0];

@@ -699,35 +699,60 @@
         </form>
     </p-tabPanel>
     <p-tabPanel header="Incapacidades">
-        <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
-            <div class="ui-g">
-                <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Información sobre incapacidades</h5>
-                </div>
-                <div class="ui-g-12">
-                    <!-- <p-table [columns]="cols" [value]="products" styleClass="p-datatable-responsive"> -->
-                    <p-table styleClass="p-datatable-responsive">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th *ngFor="let col of columns">
-                                    {{col.header}}
-                                </th>
-                            </tr>
-                            <!--Alcance de-->
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td *ngFor="let col of columns">
-                                    {{rowData[col.field]}}
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Información sobre incapacidades</h5>
+            </div>
+            <div class="ui-g-12">
+                <!-- <p-table [columns]="cols" [value]="products" styleClass="p-datatable-responsive"> -->
+                <p-table styleClass="p-datatable-responsive" [value]="incapacidades" [rows]="10" [paginator]="true"
+                    dataKey="id" [lazy]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="fechaDesde">Fecha Inicio
+                                <p-sortIcon field="fechaDesde"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="fechaHasta">Fecha Hasta
+                                <p-sortIcon field="fechaHasta"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="diasAusencia">Dias de incapacidad
+                                <p-sortIcon field="diasAusencia"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="causaAusentismo">Tipo
+                                <p-sortIcon field="ausaAusentismo"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="cie">Codigo CIE 10
+                                <p-sortIcon field="cie"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="documento">Diagnostico
+                                <p-sortIcon field="documento"></p-sortIcon>
+                            </th>
 
+
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-aus>
+
+                        <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
+                            <td>{{aus.fechaDesde | date}}</td>
+
+                            <td>{{aus.fechaHasta | date}}</td>
+
+                            <td>{{aus.diasAusencia}}</td>
+
+                            <td>{{aus.causaAusentismo.nombre}}</td>
+
+                            <td>{{aus.cie.codigo }}</td>
+
+                            <td>{{aus.cie.nombre}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
 
-        </form>
+        </div>
+
     </p-tabPanel>
     <div style="text-align: center; width: 100%;">
         <button pButton *ngIf="solicitando == false" (click)="onSubmit()" type="submit" icon="fa fa-floppy-o"

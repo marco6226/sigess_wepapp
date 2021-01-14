@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { endPoints } from "environments/environment";
 
@@ -6,7 +6,10 @@ import { endPoints } from "environments/environment";
     providedIn: "root",
 })
 export class CasosMedicosService {
-    constructor(private http: HttpClient) { }
+    headers;
+    constructor(private http: HttpClient) {
+
+    }
 
     create(casoMedico) {
         return this.http.post(`${endPoints.scm}`, casoMedico).toPromise();
@@ -28,7 +31,10 @@ export class CasosMedicosService {
         return this.http.get<[]>(`${endPoints.scm}recomendation/${documento}`).toPromise();
     }
 
+    ausentismos(documento) {
+        return this.http.get<[]>(`${endPoints.scm}scmausentismo/${documento}`).toPromise();
 
+    }
 
 
     createRecomendation(recomendation) {
