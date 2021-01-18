@@ -32,47 +32,48 @@ import { ScmModule } from './modulos/scm/scm.module';
 
 
 const appRoutes: Routes = [
-  { path: '**', component: PageNotFoundComponent }
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-  ],
-  imports: [
-    RouterModule.forRoot(appRoutes),
-    BrowserModule,
-    BrowserAnimationsModule,
+    declarations: [
+        AppComponent,
+        PageNotFoundComponent,
 
-    AdminModule,
-    AusModule,
-    CoreModule,
-    DocumentosModule,
-    EmpresaModule,
-    InspeccionesModule,
-    IprModule,
-    ObservacionesModule,
-    RaiModule,
-    SecModule,
-    SgModule,
-    ScmModule,
-    IndModule,
-    CtrModule,
-    CopModule,
-    AyudaModule
-    //ng g  c modulos/scm/components/formulario-scm
-  ],
-  providers: [
-    HttpInt,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpAuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    ],
+    imports: [
+        RouterModule.forRoot(appRoutes),
+        BrowserModule,
+        BrowserAnimationsModule,
+
+        AdminModule,
+        AusModule,
+        CoreModule,
+        DocumentosModule,
+        EmpresaModule,
+        InspeccionesModule,
+        IprModule,
+        ObservacionesModule,
+        RaiModule,
+        SecModule,
+        SgModule,
+        ScmModule,
+        IndModule,
+        CtrModule,
+        CopModule,
+        AyudaModule
+        //ng g  c modulos/scm/components/formulario-scm
+    ],
+    providers: [
+        HttpInt,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpAuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 
 })
 export class AppModule { }

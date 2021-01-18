@@ -698,7 +698,7 @@
             </div>-->
         </form>
     </p-tabPanel>
-    <p-tabPanel header="Incapacidades">
+    <p-tabPanel header="Incapacidades" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Información sobre incapacidades</h5>
@@ -764,8 +764,8 @@
 
     <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
-        <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect"
-            [rows]="10" [paginator]="true" dataKey="id" [lazy]="true">
+        <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true"
+            dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="id">Entidad emisora
@@ -842,7 +842,53 @@
         </p-table>
     </p-tabPanel>
 
+    <p-tabPanel header="Persistencia" *ngIf="caseSelect">
+
+        <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [(selection)]="logSelected"
+            [paginator]="true" dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Accion
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fapertura">Fecha
+                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="regional">Lugar del cambio
+                        <p-sortIcon field="regional"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ciudad">Documento de quien cambio
+                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    </th>
+
+
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
+
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.action}}</td>
+                    <td>{{case.fecha_creacion | date }}</td>
+                    <td>{{case.entity}}</td>
+                    <td>{{case.recomendaciones}}</td>
+
+
+
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </p-tabPanel>
+
 </p-tabView>
+
+
+<p-dialog header="Crear Recomendacion" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}"
+    [baseZIndex]="10000">
+    <app-logmodal [log]="logSelected" [logList]="logsList">
+    </app-logmodal>
+</p-dialog>
 
 <p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
     [baseZIndex]="10000">

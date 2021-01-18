@@ -54,7 +54,8 @@ export class FormularioScmComponent implements OnInit {
     actualizar: boolean;
     adicionar: boolean;
     empleado: Empleado;
-    recomendationList = []
+    recomendationList = [];
+    logsList = []
     empleadosList: Empleado[];
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
@@ -74,6 +75,7 @@ export class FormularioScmComponent implements OnInit {
     empleadoForm: FormGroup;
     empresaId = this.sesionService.getEmpresa().id;
     fechaActual = new Date();
+    logSelected;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -105,8 +107,7 @@ export class FormularioScmComponent implements OnInit {
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
-        private router: Router
-    ) {
+        private router: Router,) {
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
         this.tipoIdentificacionList = defaultItem.concat(
@@ -213,7 +214,7 @@ export class FormularioScmComponent implements OnInit {
         if (this.caseSelect) {
             console.log(this.caseSelect);
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
-
+            this.logsList = await this.scmService.getLogs(this.caseSelect.documento);
             this.casoMedicoForm.patchValue(this.caseSelect);
             this.isUpdate ? this.empleadoForm.controls["email"].disable() : ""; //this for disabled email in case of update
             if (this.caseSelect != null) {

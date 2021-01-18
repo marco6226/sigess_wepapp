@@ -14,9 +14,10 @@ import { UsuarioService } from '../admin/services/usuario.service';
 import { CieSelectorComponent } from '../comun/components/cie-selector/cie-selector.component';
 import { RecomendationsformComponent } from './components/recomendationsform/recomendationsform.component';
 import { CoreModule } from '../core/core.module';
+import { LogmodalComponent } from './components/logmodal/logmodal.component';
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent],
     imports: [
         CommonModule,
         ComunModule,

@@ -40,4 +40,10 @@ export class CasosMedicosService {
     createRecomendation(recomendation) {
         return this.http.post(`${endPoints.scm}recomendation`, recomendation).toPromise();
     }
+
+    getLogs(documento) {
+        return this.http.get<[]>(`${endPoints.scm}logs/${documento}`).toPromise();
+    }
+
+
 }
