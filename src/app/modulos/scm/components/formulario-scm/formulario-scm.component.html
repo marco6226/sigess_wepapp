@@ -825,8 +825,8 @@
                     <td>{{case.tipo }}</td>
                     <td>{{case.status}}</td>
                     <td>{{case.recomendaciones}}</td>
-                    <td>{{case.fechaInicio | date}}</td>
-                    <td>{{case.fechaExpiracion | date}}</td>
+                    <td>{{case.fechaInicio | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{case.fechaExpiracion | date:'dd/MM/yyyy HH:mm'}}</td>
                     <td>{{case.generateRecomendaciones}}</td>
 
 
@@ -869,7 +869,7 @@
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                     <td>{{case.action}}</td>
-                    <td>{{case.fecha_creacion | date }}</td>
+                    <td>{{case.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</td>
                     <td>{{case.entity}}</td>
                     <td>{{case.recomendaciones}}</td>
 
