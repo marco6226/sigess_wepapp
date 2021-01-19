@@ -8,6 +8,7 @@ import { Criteria } from '../../entities/filter';
 import { AreaService } from 'app/modulos/empresa/services/area.service';
 import { TreeNode } from 'primeng/api';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-home',
@@ -60,9 +61,9 @@ export class HomeComponent implements OnInit {
         private areaService: AreaService
     ) {
         let date = new Date();
-        this.desde = `${date.getFullYear()}-${date.getMonth() - 8}-01`
-        this.hasta = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-       
+        this.desde = moment(new Date()).subtract(6,"months").utc().format().slice(0,10);
+        this.hasta = moment(new Date()).utc().format().slice(0,10);
+        
         this.data = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
             datasets: [
@@ -488,7 +489,8 @@ export class HomeComponent implements OnInit {
         });
         //0 = nrealiz, 1 = n_total, 2 name
         let data: any = await this.indicadorService.findInpN(this.arrayIds, this.desde, this.hasta)
-       // console.log(data);
+        let date = new Date();
+        
         if(data.length < 0) return false;
        // console.log(data);
         for (const iterator of data) {
