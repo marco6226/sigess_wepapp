@@ -842,7 +842,7 @@
         </p-table>
     </p-tabPanel>
 
-    <p-tabPanel header="Persistencia" *ngIf="caseSelect">
+    <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
 
         <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [(selection)]="logSelected"
             [paginator]="true" dataKey="id" [lazy]="true">
