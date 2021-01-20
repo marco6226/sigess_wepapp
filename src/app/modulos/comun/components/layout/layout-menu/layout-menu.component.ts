@@ -85,7 +85,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                     ]
             },
             {
-                label: 'Casos medicos', class: 'icon-ado',
+                label: 'Seguimiento Casos medicos', class: 'icon-scm',
                 codigo: 'SGE',
                 expanded: false,
                 items:
