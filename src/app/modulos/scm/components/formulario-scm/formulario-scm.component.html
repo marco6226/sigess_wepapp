@@ -743,7 +743,7 @@
 
                             <td>{{aus.causaAusentismo.nombre}}</td>
 
-                            <td>{{aus.cie.codigo }}</td>
+                            <td>{{aus.cie | json }}</td>
 
                             <td>{{aus.cie.nombre}}</td>
                         </tr>
@@ -884,15 +884,15 @@
 </p-tabView>
 
 
-<p-dialog header="Crear Recomendacion" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}"
+<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
-    <app-logmodal [log]="logSelected" [logList]="logsList">
+    <app-logmodal *ngIf="logsList" [log]="logSelected" [logList]="logsList">
     </app-logmodal>
 </p-dialog>
 
 <p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
-    <app-recomendationsform [id]="caseSelect.documento" (eventClose)="onCloseModalrecomendation()">
+    <app-recomendationsform [id]="caseSelect.pkUser" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>
 

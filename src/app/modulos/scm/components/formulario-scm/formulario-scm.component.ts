@@ -63,6 +63,8 @@ export class FormularioScmComponent implements OnInit {
     @Input() caseSelect: any;
     @Input() isUpdate: boolean;
     @Input() show: boolean;
+    @Input() consultar: boolean = false;;
+
     @Input() editable: boolean;
     @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
     rangoAntiguedad = [
@@ -94,7 +96,6 @@ export class FormularioScmComponent implements OnInit {
     range;
     solicitando: boolean = false;
     departamento;
-
 
 
     constructor(
@@ -210,11 +211,16 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async ngOnInit() {
-
+        if (this.consultar) {
+            this.empleadoForm.disable();
+            this.bussinessParner.disable();
+            this.casoMedicoForm.disable();
+            this.empleadoForm.disable();
+        }
         if (this.caseSelect) {
             console.log(this.caseSelect);
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
-            this.logsList = await this.scmService.getLogs(this.caseSelect.documento);
+            this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
             this.casoMedicoForm.patchValue(this.caseSelect);
             this.isUpdate ? this.empleadoForm.controls["email"].disable() : ""; //this for disabled email in case of update
             if (this.caseSelect != null) {

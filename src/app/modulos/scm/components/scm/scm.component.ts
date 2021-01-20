@@ -21,6 +21,7 @@ export class ScmComponent implements OnInit {
     caseSelect: any;
     cargoList = [];
     msgs: Message[] = [];
+    consultar = false;
     isUpdate: boolean;
     form: FormGroup;
     visibleForm: boolean;
@@ -87,6 +88,14 @@ export class ScmComponent implements OnInit {
         this.visibleForm = true;
         console.log(54, this.caseSelect);
     }
+
+    openCaseConsultar() {
+        this.consultar = true;
+        this.visibleForm = true;
+
+        console.log(54, this.caseSelect);
+    }
+
 
     async onCancel() {
         this.visibleForm = false;
