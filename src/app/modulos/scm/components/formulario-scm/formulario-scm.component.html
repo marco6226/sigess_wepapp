@@ -743,7 +743,7 @@
 
                             <td>{{aus.causaAusentismo.nombre}}</td>
 
-                            <td>{{aus.cie | json }}</td>
+                            <td>{{aus.cie.codigo }}</td>
 
                             <td>{{aus.cie.nombre}}</td>
                         </tr>
@@ -777,7 +777,7 @@
                     <th pSortableColumn="regional">Estado
                         <p-sortIcon field="regional"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="ciudad">Recomendacion
+                    <th pSortableColumn="ciudad">Recomendación
                         <p-sortIcon field="ciudad"></p-sortIcon>
                     </th>
                     <th pSortableColumn="nameLastname">Fecha inicial
@@ -787,7 +787,7 @@
                         <p-sortIcon field="documento"></p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="charge">Recomendacion genrada
+                    <th pSortableColumn="charge">Recomendación generada
                         <p-sortIcon field="charge"></p-sortIcon>
                     </th>
 
