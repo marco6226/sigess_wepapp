@@ -117,8 +117,10 @@
                 <s-cieSelector id="ccide-input" formControlName="cie" [readOnly]="!adicionar && !actualizar">
                 </s-cieSelector>
             </div>
-
+            <button pButton *ngIf="backToScm" type="button" icon="fa fa-chevron-left" style="    margin-bottom: 5rem;"
+                class="float-btn" [routerLink]="['/app/scm/list']" title="Volver a listado de casos" sty></button>
         </div>
+
         <button pButton type="submit" class="float-btn" [icon]="adicionar ? 'fa fa-floppy-o': 'fa fa-pencil'
          " [disabled]="!form.valid" *ngIf="adicionar || actualizar"></button>
     </form>

@@ -11,6 +11,7 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Criteria } from '../../../core/entities/filter';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-reporte-ausentismo',
@@ -26,11 +27,12 @@ export class ReporteAusentismoComponent implements OnInit {
     form: FormGroup;
     actualizar: boolean;
     adicionar: boolean;
-
+    backToScm = false;
     constructor(
         private causaAusentismoService: CausaAusentismoService,
         private reporteAusentismoService: ReporteAusentismoService,
         private paramNavService: ParametroNavegacionService,
+        private activatedRoute: ActivatedRoute,
         private fb: FormBuilder,
     ) {
         this.form = this.fb.group({
@@ -101,6 +103,12 @@ export class ReporteAusentismoComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.activatedRoute.queryParams.subscribe(async params => {
+            if (params.case) {
+                this.backToScm = true;
+            }
+        })
+
         this.causasAusentismoList = [];
         this.causasAusentismoList.push({ label: '--seleccione--', value: null });
         this.causaAusentismoService.findAll().then(

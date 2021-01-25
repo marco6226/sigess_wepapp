@@ -7,7 +7,7 @@ import {
     ElementRef,
     ViewChild,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { PerfilService } from "app/modulos/admin/services/perfil.service";
 import { UsuarioService } from "app/modulos/admin/services/usuario.service";
 import { Afp } from "app/modulos/comun/entities/afp";
@@ -78,6 +78,7 @@ export class FormularioScmComponent implements OnInit {
     empresaId = this.sesionService.getEmpresa().id;
     fechaActual = new Date();
     logSelected;
+    status;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -86,7 +87,6 @@ export class FormularioScmComponent implements OnInit {
     afpList: SelectItem[];
     cargoList: SelectItem[];
     caseStatus = [
-        { label: "Select City", value: null },
         { label: "Abierto", value: 1 },
         { label: "Cerrado", value: 0 },
     ];
@@ -178,7 +178,7 @@ export class FormularioScmComponent implements OnInit {
             razon: [null, Validators.required],
             names: [null, Validators.required],
             observaciones: [null, Validators.required],
-            statusCaso: [null, Validators.required],
+            statusCaso: ["1", Validators.required],
             requiereIntervencion: [null, Validators.required],
             professionalArea: [null, Validators.required],
             pkJefe: [null, Validators.required],
@@ -202,12 +202,23 @@ export class FormularioScmComponent implements OnInit {
             emisionPclFecha: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
             fechaCreacion: [null],
-
             entidadEmiteCalificacion: [null, Validators.required],
             pkBusinessPartner: [null, Validators.required],
             pclEmitEntidad: [null, Validators.required],
             conceptRehabilitacion: [null, Validators.required],
         });
+        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+
+    }
+
+    get pkBusi() {
+        return this.casoMedicoForm.get("pkBusinessPartner") as FormControl
+    }
+    get pkUse() {
+        return this.casoMedicoForm.get("pkUser") as FormControl
+    }
+    get pkJefe() {
+        return this.casoMedicoForm.get("pkJefe") as FormControl
     }
 
     async ngOnInit() {
@@ -219,9 +230,12 @@ export class FormularioScmComponent implements OnInit {
         }
         if (this.caseSelect) {
             console.log(this.caseSelect);
-            this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
+            this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
             this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
             this.casoMedicoForm.patchValue(this.caseSelect);
+            console.log(this.casoMedicoForm.get("statusCaso").value);
+            this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+            console.log(status);
             this.isUpdate ? this.empleadoForm.controls["email"].disable() : ""; //this for disabled email in case of update
             if (this.caseSelect != null) {
                 // console.log("tiene data");
@@ -314,9 +328,20 @@ export class FormularioScmComponent implements OnInit {
         this.onCancel.emit();
     }
     async onSubmit() {
+        this.msgs = [];
+
+        if (!this.casoMedicoForm.valid) {
+            this.msgs.push({
+                severity: "error",
+                summary: "Por favor revise todos los campos",
+
+            });
+            return this.markFormGroupTouched(this.casoMedicoForm);
+        }
+
         this.casoMedicoForm.patchValue({
-            region: this.empleadoForm.get("area").value.nombre,
-            ciudad: this.empleadoForm.get("ciudad").value.nombre,
+            region: this.empleadoForm.get("area").value.nombre || "",
+            ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
             // statusCaso: this.casoMedicoForm.get('statusCaso').value,
             names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
                 }`,
@@ -363,7 +388,6 @@ export class FormularioScmComponent implements OnInit {
         }
 
         if (status) {
-            this.msgs = [];
             this.msgs.push({
                 severity: "success",
                 summary: "Caso medico creado",
@@ -537,6 +561,16 @@ export class FormularioScmComponent implements OnInit {
             //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
 
             email: [this.empleadoSelect.usuario.email],
+        });
+    }
+
+    private markFormGroupTouched(formGroup: FormGroup) {
+        (<any>Object).values(formGroup.controls).forEach(control => {
+            control.markAsTouched();
+
+            if (control.controls) {
+                this.markFormGroupTouched(control);
+            }
         });
     }
 }
