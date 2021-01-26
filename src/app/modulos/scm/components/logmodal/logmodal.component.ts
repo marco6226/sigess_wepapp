@@ -20,7 +20,7 @@ export class LogmodalComponent implements OnInit {
         this.comparador(this.arrayByentity[index - 1], this.log);
     }
 
-    
+
     comparador(anterior, editado) {
         anterior = JSON.parse(anterior.json); editado = JSON.parse(editado.json)
         console.log(anterior, editado);

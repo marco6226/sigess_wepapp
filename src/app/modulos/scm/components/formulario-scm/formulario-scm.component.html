@@ -736,7 +736,7 @@
                         </tr>
 
                     </ng-template>
-                    <ng-template pTemplate="body" let-aus>
+                    <ng-template pTemplate="body" let-aus *ngIf="incapacidades.length>0">
 
                         <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
                             <td>{{aus.fechaDesde | date}}</td>
@@ -749,7 +749,7 @@
 
                             <td>{{aus.cie.codigo }}</td>
 
-                            <td></td>
+                            <td>{{aus.cie.nombre }}</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="summary" let-rowData>

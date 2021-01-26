@@ -16,12 +16,13 @@ import { RecomendationsformComponent } from './components/recomendationsform/rec
 import { CoreModule } from '../core/core.module';
 import { LogmodalComponent } from './components/logmodal/logmodal.component';
 
+
 @NgModule({
     declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent],
     imports: [
         CommonModule,
         ComunModule,
-        CoreModule
+        CoreModule,
     ],
     providers: [
         UsuarioService,

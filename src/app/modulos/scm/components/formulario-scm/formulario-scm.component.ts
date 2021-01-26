@@ -173,39 +173,39 @@ export class FormularioScmComponent implements OnInit {
 
         this.casoMedicoForm = fb.group({
             id: [null],
-            documento: [null],
-            codigoCie10: [null, Validators.required],
-            razon: [null, Validators.required],
-            names: [null, Validators.required],
-            observaciones: [null, Validators.required],
-            statusCaso: ["1", Validators.required],
-            requiereIntervencion: [null, Validators.required],
-            professionalArea: [null, Validators.required],
+            documento: [null, Validators.required],
+            codigoCie10: [null, /*Validators.required*/],
+            razon: [null, /*Validators.required*/],
+            names: [null, /*Validators.required*/],
+            observaciones: [null, /*Validators.required*/],
+            statusCaso: ["1", /*Validators.required*/],
+            requiereIntervencion: [null, /*Validators.required*/],
+            professionalArea: [null, /*Validators.required*/],
             pkJefe: [null, Validators.required],
-            porcentajePcl: [null, Validators.required],
-            pcl: [null, Validators.required],
+            porcentajePcl: [null, /*Validators.required*/],
+            pcl: [null, /*Validators.required*/],
             region: [null],
             ciudad: [null],
             cargo: [null],
-            descripcionCompletaCaso: [null, Validators.required],
-            fechaCalificacion: [null, Validators.required],
-            sve: [null, Validators.required],
+            descripcionCompletaCaso: [null, /*Validators.required*/],
+            fechaCalificacion: [null, /*Validators.required*/],
+            sve: [null, /*Validators.required*/],
             pkUser: [null, Validators.required],
-            diagnostico: [null, Validators.required],
-            origen: [null, Validators.required],
-            fechaConceptRehabilitacion: [null, Validators.required],
-            entidadEmiteConcepto: [null, Validators.required],
-            justification: [null, Validators.required],
-            statusDeCalificacion: [null, Validators.required],
-            casoMedicoLaboral: [null, Validators.required],
-            fechaFinal: [null, Validators.required],
-            emisionPclFecha: [null, Validators.required],
-            sistemaAfectado: [null, Validators.required],
+            diagnostico: [null, /*Validators.required*/],
+            origen: [null, /*Validators.required*/],
+            fechaConceptRehabilitacion: [null, /*Validators.required*/],
+            entidadEmiteConcepto: [null, /*Validators.required*/],
+            justification: [null, /*Validators.required*/],
+            statusDeCalificacion: [null, /*Validators.required*/],
+            casoMedicoLaboral: [null, /*Validators.required*/],
+            fechaFinal: [null, /*Validators.required*/],
+            emisionPclFecha: [null, /*Validators.required*/],
+            sistemaAfectado: [null, /*Validators.required*/],
             fechaCreacion: [null],
-            entidadEmiteCalificacion: [null, Validators.required],
+            entidadEmiteCalificacion: [null, /*Validators.required*/],
             pkBusinessPartner: [null, Validators.required],
-            pclEmitEntidad: [null, Validators.required],
-            conceptRehabilitacion: [null, Validators.required],
+            pclEmitEntidad: [null, /*Validators.required*/],
+            conceptRehabilitacion: [null, /*Validators.required*/],
         });
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
@@ -329,7 +329,7 @@ export class FormularioScmComponent implements OnInit {
     }
     async onSubmit() {
         this.msgs = [];
-
+        console.log(this.casoMedicoForm);
         if (!this.casoMedicoForm.valid) {
             this.msgs.push({
                 severity: "error",
@@ -482,6 +482,7 @@ export class FormularioScmComponent implements OnInit {
         this.casoMedicoForm.patchValue({
             documento: this.empleadoSelect.numeroIdentificacion,
         });
+        this.casoMedicoForm.patchValue({ pkUser: this.empleadoSelect.id })
         this.departamento = this.empleadoSelect.area.id;
         this.empleadoForm.patchValue({
             id: this.empleadoSelect.id,
@@ -529,6 +530,8 @@ export class FormularioScmComponent implements OnInit {
     }
     onSelectionBP(event) {
         this.empleadoSelect = <Empleado>event;
+        this.casoMedicoForm.patchValue({ pkBusinessPartner: this.empleadoSelect.numeroIdentificacion })
+        this.casoMedicoForm.patchValue({ pkBusinessPartner: this.empleadoSelect.id })
         this.bussinessParner.patchValue({
             id: this.empleadoSelect.id,
             primerNombre: this.empleadoSelect.primerNombre,
@@ -550,6 +553,7 @@ export class FormularioScmComponent implements OnInit {
     }
     onSelectionJI(event) {
         this.empleadoSelect = <Empleado>event;
+        this.casoMedicoForm.patchValue({ pkJefe: this.empleadoSelect })
         this.jefeInmediato.patchValue({
             id: this.empleadoSelect.id,
             primerNombre: this.empleadoSelect.primerNombre,
