@@ -523,6 +523,14 @@
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
+                <div class="ui-g-6">
+                    <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" [disabled]="disabled"></button>
+                    <div *ngIf="loadingImg == true"  style="width: 100%;text-align: center;margin-top: 20px;">
+                      <p-progressSpinner strokeWidth="8" [style]="{width: '45px', height: '45px'}"></p-progressSpinner>
+                    </div>
+                    <s-galeria *ngIf="imagenesList.length > 0" [images]="imagenesList" (onRemove)="removerImagen($event)" [readOnly]="disabled"></s-galeria>
+                    <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+                  </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"

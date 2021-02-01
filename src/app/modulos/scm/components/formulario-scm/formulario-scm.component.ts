@@ -34,11 +34,14 @@ import { Router, RouterLink } from "@angular/router";
 import { AutoComplete } from "primeng/primeng";
 import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
 import { ReporteAusentismoService } from "app/modulos/aus/services/reporte-ausentismo.service";
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: "app-formulario-scm",
     templateUrl: "./formulario-scm.component.html",
     styleUrls: ["./formulario-scm.component.scss"],
+    providers: [DirectorioService]
 })
 export class FormularioScmComponent implements OnInit {
     value;
@@ -57,13 +60,18 @@ export class FormularioScmComponent implements OnInit {
     recomendationList = [];
     logsList = []
     empleadosList: Empleado[];
+    imagenesList: any[] = [];
+    imgMap: any = {};
+    loadingImg: boolean;
+    numMaxImg = 1;
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
     @Output() onCancel = new EventEmitter();
     @Input() caseSelect: any;
     @Input() isUpdate: boolean;
     @Input() show: boolean;
-    @Input() consultar: boolean = false;;
+    @Input() consultar: boolean = false;
+    @Input("disabled") disabled: boolean = false;
 
     @Input() editable: boolean;
     @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
@@ -108,6 +116,8 @@ export class FormularioScmComponent implements OnInit {
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
+        private domSanitizer: DomSanitizer,
+    private directorioService: DirectorioService,
         private router: Router,) {
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
@@ -222,11 +232,13 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async ngOnInit() {
+        
         if (this.consultar) {
             this.empleadoForm.disable();
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
             this.empleadoForm.disable();
+            
         }
         if (this.caseSelect) {
             console.log(this.caseSelect);
@@ -399,6 +411,19 @@ export class FormularioScmComponent implements OnInit {
                 this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
+      //  this.caseSelect = elem;
+    this.imagenesList = [];
+    let elemImgs: any[] = this.imgMap[status];
+    if (elemImgs != null && elemImgs.length > 0) {
+      elemImgs.forEach(objFile => {
+        if (objFile.file != null) {
+          let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(objFile.file));
+          this.imagenesList.push({ source: urlData });
+        }
+      });
+      this.imagenesList = this.imagenesList.slice();
+    }
+    console.log (this.imagenesList)
     }
 
     async buildPerfilesIdList() {
@@ -551,6 +576,37 @@ export class FormularioScmComponent implements OnInit {
 
         this.modalRecomendatios = false;
     }
+    onArchivoSelect(event) {
+        let file = event.target.files[0];
+        if (file.type != "image/jpeg" && file.type != "image/png") {
+          this.msgs.push({ severity: 'warn', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
+          return;
+        }
+        if (file.size > 1_500_000) {
+          this.msgs.push({ severity: 'warn', summary: 'Tamaño máximo superado 1.5MB', detail: 'La imágen supera el tamaño máximo permitido' });
+          return;
+        }
+        this.msgs = [];
+    
+        if (this.imagenesList == null)
+          this.imagenesList = [];
+    
+        if (this.imagenesList.length >= this.numMaxImg) {
+          this.msgs.push({
+            severity: 'warn',
+            summary: 'Número maximo de fotografias alcanzado',
+            detail: 'Ha alcanzado el número máximo de fotografias (' + this.numMaxImg + ') que puede adjuntar para este hallazgo'
+          });
+          return;
+        }
+        let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+        this.imagenesList.push({ source: urlData });
+        this.imagenesList = this.imagenesList.slice();
+        let keyMap = this.caseSelect.documento;
+        if (this.imgMap[keyMap] == null)
+          this.imgMap[keyMap] = [];
+        this.imgMap[keyMap].push({ file: file, change: true });
+      }
     onSelectionJI(event) {
         this.empleadoSelect = <Empleado>event;
         this.casoMedicoForm.patchValue({ pkJefe: this.empleadoSelect })
