@@ -34,12 +34,14 @@ import { Router, RouterLink } from "@angular/router";
 import { AutoComplete } from "primeng/primeng";
 import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
 import { ReporteAusentismoService } from "app/modulos/aus/services/reporte-ausentismo.service";
-import { DomSanitizer } from "@angular/platform-browser";
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: "app-formulario-scm",
     templateUrl: "./formulario-scm.component.html",
     styleUrls: ["./formulario-scm.component.scss"],
+    providers: [DirectorioService]
 })
 export class FormularioScmComponent implements OnInit {
     value;
@@ -63,13 +65,15 @@ export class FormularioScmComponent implements OnInit {
     recomendationList = [];
     logsList = []
     empleadosList: Empleado[];
+
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
     @Output() onCancel = new EventEmitter();
     @Input() caseSelect: any;
     @Input() isUpdate: boolean;
     @Input() show: boolean;
-    @Input() consultar: boolean = false;;
+    @Input() consultar: boolean = false;
+    @Input("disabled") disabled: boolean = false;
 
     @Input() editable: boolean;
     @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
@@ -116,6 +120,7 @@ export class FormularioScmComponent implements OnInit {
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
+        private directorioService: DirectorioService,
         private router: Router,) {
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
@@ -231,11 +236,13 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async ngOnInit() {
+
         if (this.consultar) {
             this.empleadoForm.disable();
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
             this.empleadoForm.disable();
+
         }
         if (this.caseSelect) {
             // console.log(this.caseSelect);
@@ -401,6 +408,19 @@ export class FormularioScmComponent implements OnInit {
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
+        //  this.caseSelect = elem;
+        this.imagenesList = [];
+        let elemImgs: any[] = this.imgMap[status];
+        if (elemImgs != null && elemImgs.length > 0) {
+            elemImgs.forEach(objFile => {
+                if (objFile.file != null) {
+                    let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(objFile.file));
+                    this.imagenesList.push({ source: urlData });
+                }
+            });
+            this.imagenesList = this.imagenesList.slice();
+        }
+        console.log(this.imagenesList)
     }
 
     async buildPerfilesIdList() {
@@ -588,6 +608,8 @@ export class FormularioScmComponent implements OnInit {
 
         this.modalRecomendatios = false;
     }
+
+
     onSelectionJI(event) {
         this.empleadoSelect = <Empleado>event;
         this.casoMedicoForm.patchValue({ pkJefe: this.empleadoSelect })

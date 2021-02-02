@@ -140,36 +140,11 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
-                            class="form-material" id="" />
-                        <label for="" class="active">Contacto de emergencia</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="phoneEmergencyContact" class="form-material"
-                            styleClass="form-material">
-                        </p-inputMask>
-                        <label for="" class="active">Telefono emergencia</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="email" pInputText formControlName="emailEmergencyContact"
-                            placeholder="Correo corporativo" class="form-material" id="" />
-                        <label for="" class="active">Correo emergencia</label>
-                    </div>
-                </div>
-
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText formControlName="email" placeholder="Regional"
+                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional"
                             class="form-material" id="" />
                         <label for="" class="active">Regional</label>
                     </div>
                 </div>
-
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" formControlName="ciudad" class="select-material"
@@ -177,7 +152,6 @@
                         <label for="" class="active">Ciudad</label>
                     </div>
                 </div>
-
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="area" placeholder="Ubicación"
@@ -185,7 +159,6 @@
                         <label for="" class="active">Ubicación</label>
                     </div>
                 </div>
-
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <div class="input-field">
                         <label for="" class="active">Género</label>
@@ -214,13 +187,12 @@
                         <label for="" class="active">Edad</label>
                     </div>
                 </div>
-
                 <div class="ui-g-12 ui-md-9">
                     <div class="input-field">
                         <s-ciudadSelector formControlName="ciudad" [id]="departamento" class="select-material"
                             styleClass="select-material">
                         </s-ciudadSelector>
-                        <label for="" class="active">Departamento y Ciudad</label>
+                        <label for="" class="active">Ciudad de residencia</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -266,6 +238,13 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
                     <div class="input-field">
+                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" class="select-material"
+                            styleClass="select-material"></p-dropdown>
+                        <label for="" class="active">EPS</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                    <div class="input-field">
                         <p-dropdown [filter]="true" [options]="afpList" formControlName="afp" class="select-material"
                             styleClass="select-material"></p-dropdown>
                         <label for="" class="active">AFP</label>
@@ -275,16 +254,32 @@
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" class="select-material"
                             styleClass="select-material"></p-dropdown>
-                        <label for="" class="active">EPS</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" class="select-material"
-                            styleClass="select-material"></p-dropdown>
                         <label for="" class="active">ARL</label>
                     </div>
                 </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
+                            class="form-material" id="" />
+                        <label for="" class="active">Contacto de emergencia</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="input-field">
+                        <p-inputMask mask="(999) 999-9999" formControlName="phoneEmergencyContact" class="form-material"
+                            styleClass="form-material">
+                        </p-inputMask>
+                        <label for="" class="active">Telefono de contacto de emergencia</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="email" pInputText formControlName="emailEmergencyContact"
+                            placeholder="Correo corporativo" class="form-material" id="" />
+                        <label for="" class="active">Correo de contacto de emergencia</label>
+                    </div>
+                </div>
+
 
             </div>
             <form [formGroup]="jefeInmediato">
@@ -523,25 +518,18 @@
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
-
-                <!--Galeria de imagenes o subida-->
-                <p-dialog header="Carga de imagen pcl" *ngIf="loadingImg" [(visible)]="loadingImg"
-                    [style]="{width: '50vw'}" [baseZIndex]="10000">
-                    <div class="ui-g-6">
-                        <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus"
-                            label="Adjuntar imágen"></button>
-                        <div *ngIf="loadingImg == true" style="width: 100%;text-align: center;margin-top: 20px;">
-                            <p-progressSpinner strokeWidth="8" [style]="{width: '45px', height: '45px'}">
-                            </p-progressSpinner>
-                        </div>
-                        <s-galeria *ngIf="imagenesList.length > 0" [images]="imagenesList"
-                            (onRemove)="removerImagen($event)"></s-galeria>
-                        <input name="myFile" type="file" style="visibility: hidden;" #fileInput
-                            (change)="onArchivoSelect($event)">
+                <div class="ui-g-6">
+                    <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen"
+                        [disabled]="disabled"></button>
+                    <div *ngIf="loadingImg == true" style="width: 100%;text-align: center;margin-top: 20px;">
+                        <p-progressSpinner strokeWidth="8" [style]="{width: '45px', height: '45px'}">
+                        </p-progressSpinner>
                     </div>
-                </p-dialog>
-
-
+                    <s-galeria *ngIf="imagenesList.length > 0" [images]="imagenesList"
+                        (onRemove)="removerImagen($event)" [readOnly]="disabled"></s-galeria>
+                    <input name="myFile" type="file" style="visibility: hidden;" #fileInput
+                        (change)="onArchivoSelect($event)">
+                </div>
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
