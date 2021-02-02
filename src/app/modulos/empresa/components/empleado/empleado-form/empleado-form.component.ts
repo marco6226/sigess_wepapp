@@ -142,6 +142,10 @@ export class EmpleadoFormComponent implements OnInit {
                         'area': this.empleadoSelect.area,
                         'cargoId': this.empleadoSelect.cargo.id,
                         'perfilesId': [4],
+                        "corporativePhone": this.empleadoSelect.corporativePhone,
+                        "emergencyContact": this.empleadoSelect.emergencyContact,
+                        "phoneEmergencyContact": this.empleadoSelect.phoneEmergencyContact,
+                        "emailEmergencyContact": this.empleadoSelect.emailEmergencyContact,
                         //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
 
                         'email': [this.empleadoSelect.usuario.email]
@@ -262,7 +266,7 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.area.id = this.form.value.area.id;
         empleado.cargo.id = this.form.value.cargoId;
         empleado.usuario.email = this.form.value.email;
-  
+
         // //console.log(this.form.value.ipPermitida);
         // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
         empleado.usuario.usuarioEmpresaList = [];
@@ -275,7 +279,7 @@ export class EmpleadoFormComponent implements OnInit {
         });
         this.solicitando = true;
         if (this.isUpdate) {
-      empleado.usuario.id = this.empleadoSelect.usuario.id;
+            empleado.usuario.id = this.empleadoSelect.usuario.id;
             console.log(empleado.usuario);
             this.usuarioService.update(empleado.usuario)
                 .then(resp => {

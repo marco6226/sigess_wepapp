@@ -378,7 +378,7 @@ export class CargueDatosComponent implements OnInit {
     private saveAsExcelFile(buffer: any, fileName: string): void {
         const data: Blob = new Blob([buffer], {
             type: EXCEL_TYPE
-        });
+        }); 
         FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
     }
     cargarValor(objeto: any, campo: string, valor: string) {
