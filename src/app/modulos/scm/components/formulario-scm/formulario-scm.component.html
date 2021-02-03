@@ -36,8 +36,8 @@
                                         <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                             style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
-                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                {{empleado?.primerApellido}}</label>
+                                            <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                </label>
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
                                         </div>
@@ -55,7 +55,7 @@
 
                         <input type="text" pInputText formControlName="tipoIdentificacion"
                             placeholder="Tipo de identificacion" class="form-material" id="" />
-                        <label for="" class="active">Tipo de identificacion</label>
+                        <label for="" class="active">Tipo de identificación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -133,7 +133,7 @@
 
                 <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
-                        <input type="email" pInputText formControlName="primerNombre" placeholder="Correo corporativo"
+                        <input type="email" pInputText formControlName="email" placeholder="Correo corporativo"
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
@@ -303,8 +303,8 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                    {{empleado?.primerApellido}}</label>
+                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                    </label>
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -377,8 +377,8 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                    {{empleado?.primerApellido}}</label>
+                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                    </label>
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
