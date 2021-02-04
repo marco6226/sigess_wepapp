@@ -520,7 +520,7 @@ export class FormularioScmComponent implements OnInit {
         }
         this.empleadoSelect = emp;
         this.loaded = true;
-        this.nameAndLastName = this.empleadoSelect.primerNombre + " " + this.empleadoSelect.primerApellido;
+        this.nameAndLastName = this.empleadoSelect.primerApellido + " " + this.empleadoSelect.segundoApellido + " " + this.empleadoSelect.primerNombre + " " + this.empleadoSelect.segundoNombre ;
         let fecha = moment(this.empleadoSelect.fechaIngreso);
         let fechaNacimiento = moment(this.empleadoSelect.fechaNacimiento);
         let antigueMoment = fecha.diff(moment.now(), "years") * -1;
