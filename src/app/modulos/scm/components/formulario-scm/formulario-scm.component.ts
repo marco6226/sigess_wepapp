@@ -237,13 +237,14 @@ export class FormularioScmComponent implements OnInit {
 
     async ngOnInit() {
 
+
         if (this.consultar) {
             this.empleadoForm.disable();
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
             this.empleadoForm.disable();
-
         }
+
         if (this.caseSelect) {
             // console.log(this.caseSelect);
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);

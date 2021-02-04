@@ -134,13 +134,40 @@
                     </div>
 
                     <div class="ui-g-12 ui-md-2">
-                        Email personal
+                        Correo personal
                     </div>
 
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="emailEmergencyContact"
-                            placeholder="Email personal" />
+                        <input type="text" pInputText formControlName="correoPersonal" placeholder="Email personal" />
                     </div>
+
+
+                    <div class="ui-g-12 ui-md-2">
+                        Direccion gerencia
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="direccionGerencia"
+                            placeholder="Direccion Gerencia" />
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2">
+                        Regional
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="regional" placeholder="Regional" />
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2">
+                        Ciudad
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad" />
+                    </div>
+
+
                 </div>
             </p-panel>
             <br />
@@ -237,8 +264,38 @@
     </p-tabPanel>
 
     <p-tabPanel header="Empresa">
-        <p-panel header="PERSONAL">
-            <div class="ui-g">
+        <p-panel header="Jefe inmediato">
+            <div class="ui-g" [formGroup]="jefeInmediatoForm">
+
+
+                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                    <div class="input-field">
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                            [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)"
+                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                            formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}</label>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="" class="active">Número de identificación</label>
+                    </div>
+                    <small *ngIf="3>4" id="username2-help" class="p-invalid">Requerido</small>
+                </div>
+
                 <div class="ui-g-12 ui-md-2">
                     Primer nombre
                 </div>
@@ -246,12 +303,7 @@
                     <input type="text" pInputText formControlName="primerNombre" required />
                 </div>
 
-                <div class="ui-g-12 ui-md-2">
-                    <label>Segundo Nombre</label>
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="segundoNombre" />
-                </div>
+
                 <div class="ui-g-12 ui-md-2">
                     Primer Apellido
                 </div>
@@ -259,123 +311,91 @@
                     <input type="text" pInputText formControlName="primerApellido" required />
                 </div>
 
-                <div class="ui-g-12 ui-md-2">
-                    Segundo Apellido
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="segundoApellido" />
-                </div>
 
                 <div class="ui-g-12 ui-md-2">
-                    Tipo identificación
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
-                    </p-dropdown>
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Número identificación
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="numeroIdentificacion" required />
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Departamento y Ciudad
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <s-ciudadSelector formControlName="ciudad"></s-ciudadSelector>
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Zona residencia
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <p-radioButton name="zonaResidencia" value="U" label="Urbana " formControlName="zonaResidencia">
-                    </p-radioButton>
-                    <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
-                    </p-radioButton>
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Dirección residencia
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="direccion" />
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Teléfono
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="telefono1" />
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Teléfono 2
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="telefono2" />
-                </div>
-                <div class="ui-g-12 ui-md-2">
-                    Telefono Laboral
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="corporativePhone" />
-                </div>
-                <div class="ui-g-12 ui-md-2">
-                    Contacto de emergencia
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="emergencyContact"
-                        placeholder="Contacto de emergencia" />
-                </div>
-
-
-                <div class="ui-g-12 ui-md-2">
-                    Numero de emergencia
+                    Dirección / Gerencia
                 </div>
 
                 <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="phoneEmergencyContact"
-                        placeholder="Numero de emergencia" />
-                </div>
-                <div class="ui-g-12 ui-md-2">
-                    Email de emergencia
+                    <input type="text" pInputText formControlName="direccionGerencia" />
                 </div>
 
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="emailEmergencyContact"
-                        placeholder="Email de emergencia" />
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Fecha de nacimiento
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                        [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                        formControlName="fechaNacimiento"></p-calendar>
-                </div>
-
-                <div class="ui-g-12 ui-md-2">
-                    Género
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
-                    </p-radioButton>
-                    <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
-                    </p-radioButton>
-                </div>
 
                 <div class="ui-g-12 ui-md-2">
                     Email personal
                 </div>
 
                 <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="emailEmergencyContact"
-                        placeholder="Email personal" />
+                    <input type="text" pInputText formControlName="correoPersonal" placeholder="Email personal" />
+                </div>
+            </div>
+        </p-panel>
+        <br>
+        <p-panel header="Business Partner">
+
+
+            <div class="ui-g" [formGroup]="businessForm">
+
+
+                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                    <div class="input-field">
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                            [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)" [suggestions]="empleadosList"
+                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                            *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}</label>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="" class="active">Número de identificación</label>
+                    </div>
+                    <small *ngIf="3>4" id="username2-help" class="p-invalid">Requerido</small>
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    Primer nombre
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="primerNombre" required />
+                </div>
+
+
+                <div class="ui-g-12 ui-md-2">
+                    Primer Apellido
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="primerApellido" required />
+                </div>
+
+
+                <div class="ui-g-12 ui-md-2">
+                    Dirección / Gerencia
+                </div>
+
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="direccionGerencia" />
+                </div>
+
+
+                <div class="ui-g-12 ui-md-2">
+                    Email personal
+                </div>
+
+                <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="correoPersonal" placeholder="Email personal" />
                 </div>
             </div>
         </p-panel>

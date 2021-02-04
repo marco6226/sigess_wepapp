@@ -45,8 +45,12 @@ export class EmpleadoFormComponent implements OnInit {
     @Input() show: boolean;
     @Input() editable: boolean;
     form: FormGroup;
+    jefeForm: FormGroup;
+    businessForm: FormGroup;
+    empleadosList = [];
     empresaId = this.sesionService.getEmpresa().id;
     fechaActual = new Date();
+    jefeInmediatoForm: FormGroup;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -56,7 +60,7 @@ export class EmpleadoFormComponent implements OnInit {
     cargoList: SelectItem[];
     perfilList: SelectItem[] = [];
     loaded: boolean;
-
+    empleado;
     solicitando: boolean = false;
 
     constructor(
@@ -75,6 +79,28 @@ export class EmpleadoFormComponent implements OnInit {
         this.tipoIdentificacionList = defaultItem.concat(<SelectItem[]>tipo_identificacion);
         this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
 
+
+        this.businessForm = fb.group({
+            id: ["", Validators.required],
+            numeroIdentificacion: ["", Validators.required],
+            primerNombre: [{ value: "", disabled: true }, Validators.required],
+            primerApellido: { value: "", disabled: true },
+            email: { value: "", disabled: true },
+            direccionGerencia: { value: "", disabled: true },
+            correoPersonal: { value: "", disabled: true },
+            cargoId: [{ value: "", disabled: true }, Validators.required],
+        });
+
+        this.jefeInmediatoForm = fb.group({
+            id: ["", Validators.required],
+            numeroIdentificacion: ["", Validators.required],
+            primerNombre: [{ value: "", disabled: true }, Validators.required],
+            primerApellido: { value: "", disabled: true },
+            email: { value: "", disabled: true },
+            direccionGerencia: { value: "", disabled: true },
+            correoPersonal: { value: "", disabled: true },
+            cargoId: [{ value: "", disabled: true }, Validators.required],
+        });
         this.form = fb.group({
             'id': [null],
             'primerNombre': [null, Validators.required],
@@ -104,7 +130,13 @@ export class EmpleadoFormComponent implements OnInit {
             'cargoId': [null, Validators.required],
             'perfilesId': [null, Validators.required],
             //'ipPermitida': [null],
-            'email': [null, { disabled: true }, Validators.required]
+            'email': [null, { disabled: true }, Validators.required],
+            direccionGerencia: [null],
+            regional: [null],
+            businessPartner: [null],
+            jefeInmediato: [null],
+            correoPersonal: [null],
+            ciudadGerencia: [null],
         });
     }
 
@@ -118,7 +150,13 @@ export class EmpleadoFormComponent implements OnInit {
                 resp => {
                     this.empleadoSelect = <Empleado>(resp['data'][0]);
                     this.loaded = true;
-                    console.log(this.empleadoSelect);
+
+                    if (this.empleadoSelect.businessPartner) {
+                        this.onSelectionBP(this.empleadoSelect.businessPartner)
+                    }
+                    if (this.empleadoSelect.jefeInmediato) {
+                        this.onSelectionJefeInmediato(this.empleadoSelect.jefeInmediato);
+                    }
                     this.form.patchValue({
                         'id': this.empleadoSelect.id,
                         'primerNombre': this.empleadoSelect.primerNombre,
@@ -146,8 +184,13 @@ export class EmpleadoFormComponent implements OnInit {
                         "emergencyContact": this.empleadoSelect.emergencyContact,
                         "phoneEmergencyContact": this.empleadoSelect.phoneEmergencyContact,
                         "emailEmergencyContact": this.empleadoSelect.emailEmergencyContact,
-                        //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+                        direccionGerencia: this.empleadoSelect.direccionGerencia,
+                        regional: this.empleadoSelect.regional,
+                        correoPersonal: this.empleadoSelect.correoPersonal,
+                        ciudadGerencia: this.empleadoSelect.ciudadGerencia,
 
+                        //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+                        businessPartner: this.empleadoSelect.businessPartner,
                         'email': [this.empleadoSelect.usuario.email]
                     });
                 }
@@ -266,6 +309,13 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.area.id = this.form.value.area.id;
         empleado.cargo.id = this.form.value.cargoId;
         empleado.usuario.email = this.form.value.email;
+        empleado.ciudadGerencia = this.form.value.ciudadGerencia;
+        empleado.regional = this.form.value.regional,
+            empleado.correoPersonal = this.form.value.correoPersonal;
+        empleado.direccionGerencia = this.form.value.correoPersonal;
+        empleado.businessPartner = this.form.value.businessPartner;
+        empleado.jefeInmediato = this.form.value.jefeInmediato;
+        console.log(this.form.value);
 
         // //console.log(this.form.value.ipPermitida);
         // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
@@ -321,7 +371,49 @@ export class EmpleadoFormComponent implements OnInit {
         this.onCancel.emit();
     }
 
+    // Component methods
+    buscarEmpleado(event) {
+        this.empleadoService
+            .buscar(event.query)
+            .then((data) => (this.empleadosList = <Empleado[]>data));
+    }
+    onSelectionBP(event) {
+        let empleado = <Empleado>event;
+        this.form.patchValue({ businessPartner: empleado.id })
+        this.businessForm.patchValue({
+            id: empleado.id,
+            primerNombre: empleado.primerNombre,
+            primerApellido: empleado.primerApellido,
+            numeroIdentificacion: empleado.numeroIdentificacion,
+            corporativePhone: empleado.corporativePhone,
+            area: empleado.area,
+            correoPersonal: empleado.correoPersonal,
+            cargoId: empleado.cargo.id,
+            //'ipPermitida': empleado.usuario.ipPermitida,
+
+            email: [empleado.usuario.email],
+        });
+    }
     /** MÉTODOS JORNADA */
+    onSelectionJefeInmediato(event) {
+
+        let empleado = <Empleado>event;
+        this.form.patchValue({ jefeInmediato: empleado.id })
+        console.log(this.form.value);
+        this.jefeInmediatoForm.patchValue({
+            id: empleado.id,
+            primerNombre: empleado.primerNombre,
+            primerApellido: empleado.primerApellido,
+            numeroIdentificacion: empleado.numeroIdentificacion,
+            corporativePhone: empleado.corporativePhone,
+            area: empleado.area,
+            correoPersonal: empleado.correoPersonal,
+            cargoId: empleado.cargo.id,
+            //'ipPermitida': empleado.usuario.ipPermitida,
+
+            email: [empleado.usuario.email],
+        });
+    }
 
 }
 
