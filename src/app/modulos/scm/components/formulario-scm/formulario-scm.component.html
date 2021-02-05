@@ -36,8 +36,9 @@
                                         <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                             style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
-                                            <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                </label>
+                                            <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                {{empleado?.segundoNombre}}
+                                            </label>
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
                                         </div>
@@ -52,9 +53,8 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
-
-                        <input type="text" pInputText formControlName="tipoIdentificacion"
-                            placeholder="Tipo de identificacion" class="form-material" id="" />
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
+                        </p-dropdown>
                         <label for="" class="active">Tipo de identificación</label>
                     </div>
                 </div>
@@ -147,15 +147,15 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" formControlName="ciudad" class="select-material"
-                            styleClass="select-material"></p-dropdown>
+                        <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Regional"
+                            class="form-material" id="" />
                         <label for="" class="active">Ciudad</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="area" placeholder="Ubicación"
-                            class="form-material" id="" />
+                        <area-selector formControlName="area"
+                            [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required></area-selector>
                         <label for="" class="active">Ubicación</label>
                     </div>
                 </div>
@@ -185,6 +185,14 @@
                         <input [disabled]="true" type="text" pInputText [value]="edad" placeholder="Edad"
                             class="form-material" id="" />
                         <label for="" class="active">Edad</label>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                    <div class="input-field">
+                        <input [disabled]="true" type="text" pInputText formControlName="regional"
+                            placeholder="regional" class="form-material" id="" />
+                        <label for="" class="active">Regional</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-9">
@@ -292,7 +300,7 @@
                     <div class="ui-g-12 ui-md-4 ui-lg-3">
                         <div class="input-field">
                             <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                                [style]="{'width':'100%'}" (onSelect)="onSelectionJI($event)"
+                                [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)"
                                 [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
                                 formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
                                 <ng-template let-empleado pTemplate="item">
@@ -303,8 +311,9 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                    </label>
+                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                    {{empleado?.segundoNombre}}
+                                                </label>
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -355,6 +364,14 @@
                         </div>
                     </div>
                 </div>
+                <div style="text-align: center; width: 100%;">
+                    <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit"
+                        icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
+                        title="Guardar datos de empleado"></button>
+
+                    <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
+                        [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+                </div>
             </form>
             <form [formGroup]="bussinessParner">
                 <div class="ui-g p-py-2">
@@ -377,8 +394,9 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                    </label>
+                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                    {{empleado?.segundoNombre}}
+                                                </label>
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -767,13 +785,7 @@
         </div>
 
     </p-tabPanel>
-    <div style="text-align: center; width: 100%;">
-        <button pButton *ngIf="solicitando == false" (click)="onSubmit()" type="submit" icon="fa fa-floppy-o"
-            class="float-btn" style="bottom: 100px;" title="Guardar datos de empleado"></button>
 
-        <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
-            [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
-    </div>
 
     <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 

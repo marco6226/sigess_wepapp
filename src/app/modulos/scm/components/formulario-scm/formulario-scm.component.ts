@@ -36,6 +36,8 @@ import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
 import { ReporteAusentismoService } from "app/modulos/aus/services/reporte-ausentismo.service";
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Area } from "app/modulos/empresa/entities/area";
+import { Usuario } from "app/modulos/empresa/entities/usuario";
 
 @Component({
     selector: "app-formulario-scm",
@@ -153,35 +155,41 @@ export class FormularioScmComponent implements OnInit {
             cargoId: [{ value: "", disabled: true }, Validators.required],
         });
         this.empleadoForm = fb.group({
-            id: [null],
-            primerNombre: [{ value: "", disabled: true }, Validators.required],
-            segundoNombre: null,
-            primerApellido: [null, Validators.required],
-            segundoApellido: null,
-            codigo: [null],
-            direccion: [null],
-            fechaIngreso: [{ value: null, disabled: true }, Validators.required],
-            fechaNacimiento: [null],
-            genero: [{ value: null, disabled: true }, Validators.required],
-            numeroIdentificacion: ["", Validators.required],
-            telefono1: [null],
-            telefono2: [null],
-            corporativePhone: [null],
-            emergencyContact: [null],
-            phoneEmergencyContact: [null],
-            emailEmergencyContact: [null],
-            afp: [null],
-            ccf: [null],
-            ciudad: [null],
-            eps: [null],
-            tipoIdentificacion: [{ value: null, disabled: true }, Validators.required],
-            tipoVinculacion: [null],
-            zonaResidencia: [null],
-            area: [null, Validators.required],
-            cargoId: [null, Validators.required],
-            perfilesId: [null, Validators.required],
+            'id': [null],
+            'primerNombre': [null, Validators.required],
+            'segundoNombre': null,
+            'primerApellido': [null, Validators.required],
+            'segundoApellido': null,
+            'codigo': [null],
+            'direccion': [null],
+            'fechaIngreso': [null, Validators.required],
+            'fechaNacimiento': [null],
+            'genero': [null],
+            'numeroIdentificacion': [null, Validators.required],
+            'telefono1': [null],
+            'telefono2': [null],
+            'afp': [null],
+            'emergencyContact': [null],
+            "corporativePhone": [null],
+            'phoneEmergencyContact': [null],
+            'emailEmergencyContact': [null],
+            'ccf': [null],
+            'ciudad': [null],
+            'eps': [null],
+            'tipoIdentificacion': [null, Validators.required],
+            'tipoVinculacion': [null],
+            'zonaResidencia': [null],
+            'area': [null, Validators.required],
+            'cargoId': [null, Validators.required],
+            'perfilesId': [null, Validators.required],
             //'ipPermitida': [null],
-            email: [null, { disabled: true }, Validators.required],
+            'email': [null, { disabled: true }, Validators.required],
+            direccionGerencia: [null],
+            regional: [null],
+            businessPartner: [null],
+            jefeInmediato: [null],
+            correoPersonal: [null],
+            ciudadGerencia: [null],
         });
 
         this.casoMedicoForm = fb.group({
@@ -272,33 +280,8 @@ export class FormularioScmComponent implements OnInit {
                     let select = <Empleado>resp["data"][0];
                     this.onSelection(select);
                 });
-                fq.filterList = [
-                    {
-                        criteria: Criteria.EQUALS,
-                        field: "id",
-                        value1: this.caseSelect.pkJefe,
-                        value2: null,
-                    },
-                ];
-                // //console.log(fq);
-                this.empleadoService.findByFilter(fq).then((resp) => {
-                    let select = <Empleado>resp["data"][0];
-                    this.onSelectionBP(select);
-                });
-                fq.filterList = [
-                    {
-                        criteria: Criteria.EQUALS,
-                        field: "id",
-                        value1: this.caseSelect.pkBusinessPartner,
-                        value2: null,
-                    },
-                ];
+
                 this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser);
-                // //console.log(fq);
-                this.empleadoService.findByFilter(fq).then((resp) => {
-                    let select = <Empleado>resp["data"][0];
-                    this.onSelectionJI(select);
-                });
 
 
             } else {
@@ -355,20 +338,20 @@ export class FormularioScmComponent implements OnInit {
             });
             return this.markFormGroupTouched(this.casoMedicoForm);
         }
-
-        this.casoMedicoForm.patchValue({
-            region: this.empleadoForm.get("area").value.nombre || "",
-            ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
-            // statusCaso: this.casoMedicoForm.get('statusCaso').value,
-            names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
-                }`,
-            cargo: this.empleadoForm.value.cargoId,
-            // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
-            pkJefe: this.jefeInmediato.value.id || null,
-            pkBusinessPartner: this.bussinessParner.get("id").value || null,
-            pkUser: this.empleadoForm.get("id").value || null,
-            codigoCie10: this.casoMedicoForm.value.id || null,
-        });
+        /*
+                this.casoMedicoForm.patchValue({
+                    region: this.empleadoForm.get("area").value.nombre || "",
+                    ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
+                    // statusCaso: this.casoMedicoForm.get('statusCaso').value,
+                    names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
+                        }`,
+                    cargo: this.empleadoForm.value.cargoId,
+                    // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
+                    pkJefe: this.jefeInmediato.value.id || null,
+                    pkBusinessPartner: this.bussinessParner.get("id").value || null,
+                    pkUser: this.empleadoForm.get("id").value || null,
+                    codigoCie10: this.casoMedicoForm.value.id || null,
+                });*/
 
 
         let { email, cargoId, perfilesId, ...empleado } = this.empleadoForm.value;
@@ -423,6 +406,7 @@ export class FormularioScmComponent implements OnInit {
         }
         console.log(this.imagenesList)
     }
+
 
     async buildPerfilesIdList() {
         ////console.log(this.empleadoSelect.id, "181");
@@ -520,7 +504,7 @@ export class FormularioScmComponent implements OnInit {
         }
         this.empleadoSelect = emp;
         this.loaded = true;
-        this.nameAndLastName = this.empleadoSelect.primerApellido + " " + this.empleadoSelect.segundoApellido + " " + this.empleadoSelect.primerNombre + " " + this.empleadoSelect.segundoNombre ;
+        this.nameAndLastName = this.empleadoSelect.primerApellido + " " + this.empleadoSelect.segundoApellido + " " + this.empleadoSelect.primerNombre + " " + this.empleadoSelect.segundoNombre;
         let fecha = moment(this.empleadoSelect.fechaIngreso);
         let fechaNacimiento = moment(this.empleadoSelect.fechaNacimiento);
         let antigueMoment = fecha.diff(moment.now(), "years") * -1;
@@ -546,7 +530,12 @@ export class FormularioScmComponent implements OnInit {
         this.departamento = this.empleadoSelect.area.id;
         // console.log(this.empleadoSelect, "Aqui estas");
 
-
+        if (this.empleadoSelect.businessPartner) {
+            this.onSelectionBP(this.empleadoSelect.businessPartner)
+        }
+        if (this.empleadoSelect.jefeInmediato) {
+            this.onSelectionJefeInmediato(this.empleadoSelect.jefeInmediato);
+        }
         this.empleadoForm.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -567,64 +556,151 @@ export class FormularioScmComponent implements OnInit {
             'tipoIdentificacion': this.empleadoSelect.tipoIdentificacion == null ? null : this.empleadoSelect.tipoIdentificacion.id,
             'tipoVinculacion': this.empleadoSelect.tipoVinculacion,
             'zonaResidencia': this.empleadoSelect.zonaResidencia,
-            'area': this.empleadoSelect.area.nombre,
+            'area': this.empleadoSelect.area,
             'cargoId': this.empleadoSelect.cargo.id,
             'perfilesId': [4],
             "corporativePhone": this.empleadoSelect.corporativePhone,
             "emergencyContact": this.empleadoSelect.emergencyContact,
             "phoneEmergencyContact": this.empleadoSelect.phoneEmergencyContact,
             "emailEmergencyContact": this.empleadoSelect.emailEmergencyContact,
-            //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+            direccionGerencia: this.empleadoSelect.direccionGerencia,
+            regional: this.empleadoSelect.regional,
+            correoPersonal: this.empleadoSelect.correoPersonal,
+            ciudadGerencia: this.empleadoSelect.ciudadGerencia,
 
+            //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+            businessPartner: this.empleadoSelect.businessPartner,
             'email': [this.empleadoSelect.usuario.email]
         });
 
         //  console.log(this.empleadoForm.value);
     }
 
+
+    submitEmp() {
+        let empleado = new Empleado();
+        console.log(this.empleadoForm.value);
+        empleado.id = this.empleadoForm.value.id;
+        empleado.primerNombre = this.empleadoForm.value.primerNombre;
+        empleado.segundoNombre = this.empleadoForm.value.segundoNombre;
+        empleado.primerApellido = this.empleadoForm.value.primerApellido;
+        empleado.segundoApellido = this.empleadoForm.value.segundoApellido;
+        empleado.codigo = this.empleadoForm.value.codigo;
+        empleado.direccion = this.empleadoForm.value.direccion;
+        empleado.fechaIngreso = this.empleadoForm.value.fechaIngreso;
+        empleado.emergencyContact = this.empleadoForm.value.emergencyContact;
+        empleado.corporativePhone = this.empleadoForm.value.corporativePhone;
+        empleado.phoneEmergencyContact = this.empleadoForm.value.phoneEmergencyContact;
+        empleado.emailEmergencyContact = this.empleadoForm.value.emailEmergencyContact;
+        empleado.fechaNacimiento = this.empleadoForm.value.fechaNacimiento;
+        empleado.genero = this.empleadoForm.value.genero;
+        empleado.numeroIdentificacion = this.empleadoForm.value.numeroIdentificacion;
+        empleado.telefono1 = this.empleadoForm.value.telefono1;
+        empleado.telefono2 = this.empleadoForm.value.telefono2;
+        empleado.ciudad = this.empleadoForm.value.ciudad == null ? null : this.empleadoForm.value.ciudad.id;
+        if (this.empleadoForm.value.afp != null) {
+            empleado.afp = new Afp();
+            empleado.afp.id = this.empleadoForm.value.afp;
+        }
+        if (this.empleadoForm.value.eps != null) {
+            empleado.eps = new Eps();
+            empleado.eps.id = this.empleadoForm.value.eps;
+        }
+        empleado.tipoIdentificacion = this.empleadoForm.value.tipoIdentificacion;
+        empleado.tipoVinculacion = this.empleadoForm.value.tipoVinculacion;
+        empleado.zonaResidencia = this.empleadoForm.value.zonaResidencia;
+        empleado.area = new Area();
+        empleado.cargo = new Cargo();
+        empleado.usuario = new Usuario();
+        empleado.area.id = this.empleadoForm.value.area.id;
+        empleado.cargo.id = this.empleadoForm.value.cargoId;
+        empleado.usuario.email = this.empleadoForm.value.email[0];
+        empleado.ciudadGerencia = this.empleadoForm.value.ciudadGerencia;
+        empleado.regional = this.empleadoForm.value.regional,
+            empleado.correoPersonal = this.empleadoForm.value.correoPersonal;
+        empleado.direccionGerencia = this.empleadoForm.value.correoPersonal;
+        empleado.businessPartner = this.empleadoForm.value.businessPartner;
+        empleado.jefeInmediato = this.empleadoForm.value.jefeInmediato;
+        // console.log(this.empleadoForm.value);
+
+        // //console.log(this.form.value.ipPermitida);
+        // empleado.usuario.ipPermitida = this.empleadoForm.value.ipPermitida;
+        empleado.usuario.usuarioEmpresaList = [];
+
+        this.empleadoForm.value.perfilesId.forEach(perfilId => {
+            let ue = new UsuarioEmpresa();
+            ue.perfil = new Perfil();
+            ue.perfil.id = perfilId;
+            empleado.usuario.usuarioEmpresaList.push(ue);
+        });
+        console.log(empleado, this.empleadoSelect);
+        this.solicitando = true;
+        empleado.usuario.id = this.empleadoSelect.usuario.id;
+        console.log(empleado.usuario);
+        this.usuarioService.update(empleado.usuario)
+            .then(resp => {
+                console.log(resp);
+                this.solicitando = false;
+            })
+            .catch(err => {
+                this.solicitando = false;
+            });;
+        this.empleadoService.update(empleado)
+            .then(data => {
+                //  this.manageUpdateResponse(<Empleado>data);
+                this.solicitando = false;
+            })
+            .catch(err => {
+                this.solicitando = false;
+            });
+    }
+
+
     onClick() {
         this.router.navigate(["/app/scm/list"]);
         this.router.navigateByUrl("/app/scm/list");
     }
-    onSelectionBP(event) {
-        this.empleadoSelect = <Empleado>event;
-        this.casoMedicoForm.patchValue({ pkBusinessPartner: this.empleadoSelect.numeroIdentificacion })
-        this.casoMedicoForm.patchValue({ pkBusinessPartner: this.empleadoSelect.id })
-        this.bussinessParner.patchValue({
-            id: this.empleadoSelect.id,
-            primerNombre: this.empleadoSelect.primerNombre,
-            segundoNombre: this.empleadoSelect.segundoNombre,
-            numeroIdentificacion: this.empleadoSelect.numeroIdentificacion,
-            corporativePhone: this.empleadoSelect.corporativePhone,
-            area: this.empleadoSelect.area,
-            cargoId: this.empleadoSelect.cargo.id,
-            //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
 
-            email: [this.empleadoSelect.usuario.email],
-        });
-    }
 
     async onCloseModalrecomendation() {
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
 
         this.modalRecomendatios = false;
     }
+    onSelectionBP(event) {
+        let empleado = <Empleado>event;
+        this.empleadoForm.patchValue({ businessPartner: empleado.id })
+        this.bussinessParner.patchValue({
+            id: empleado.id,
+            primerNombre: empleado.primerNombre,
+            primerApellido: empleado.primerApellido,
+            numeroIdentificacion: empleado.numeroIdentificacion,
+            corporativePhone: empleado.corporativePhone,
+            area: empleado.area,
+            correoPersonal: empleado.correoPersonal,
+            cargoId: empleado.cargo.id,
+            //'ipPermitida': empleado.usuario.ipPermitida,
 
+            email: [empleado.usuario.email],
+        });
+    }
+    /** MÉTODOS JORNADA */
+    onSelectionJefeInmediato(event) {
 
-    onSelectionJI(event) {
-        this.empleadoSelect = <Empleado>event;
-        this.casoMedicoForm.patchValue({ pkJefe: this.empleadoSelect })
+        let empleado = <Empleado>event;
+        this.empleadoForm.patchValue({ jefeInmediato: empleado.id })
         this.jefeInmediato.patchValue({
-            id: this.empleadoSelect.id,
-            primerNombre: this.empleadoSelect.primerNombre,
-            segundoNombre: this.empleadoSelect.segundoNombre,
-            numeroIdentificacion: this.empleadoSelect.numeroIdentificacion,
-            corporativePhone: this.empleadoSelect.corporativePhone,
-            area: this.empleadoSelect.area,
-            cargoId: this.empleadoSelect.cargo.id,
-            //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+            id: empleado.id,
+            primerNombre: empleado.primerNombre,
+            primerApellido: empleado.primerApellido,
+            numeroIdentificacion: empleado.numeroIdentificacion,
+            corporativePhone: empleado.corporativePhone,
+            area: empleado.area,
+            correoPersonal: empleado.correoPersonal,
+            cargoId: empleado.cargo.id,
+            //'ipPermitida': empleado.usuario.ipPermitida,
 
-            email: [this.empleadoSelect.usuario.email],
+            email: [empleado.usuario.email],
         });
     }
 
