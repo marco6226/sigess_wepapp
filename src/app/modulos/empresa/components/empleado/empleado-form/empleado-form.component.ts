@@ -150,7 +150,7 @@ export class EmpleadoFormComponent implements OnInit {
                 resp => {
                     this.empleadoSelect = <Empleado>(resp['data'][0]);
                     this.loaded = true;
-
+                    console.log(this.empleadoSelect);
                     if (this.empleadoSelect.businessPartner) {
                         this.onSelectionBP(this.empleadoSelect.businessPartner)
                     }
@@ -178,7 +178,7 @@ export class EmpleadoFormComponent implements OnInit {
                         'tipoVinculacion': this.empleadoSelect.tipoVinculacion,
                         'zonaResidencia': this.empleadoSelect.zonaResidencia,
                         'area': this.empleadoSelect.area,
-                        'cargoId': this.empleadoSelect.cargo.id,
+                        'cargoId': "",
                         'perfilesId': [4],
                         "corporativePhone": this.empleadoSelect.corporativePhone,
                         "emergencyContact": this.empleadoSelect.emergencyContact,
