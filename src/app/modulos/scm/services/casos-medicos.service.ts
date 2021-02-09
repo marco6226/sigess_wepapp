@@ -19,8 +19,8 @@ export class CasosMedicosService {
         return this.http.put(`${endPoints.scm}`, casoMedico).toPromise();
     }
 
-    validate(document) {
-        return this.http.get(`${endPoints.scm}validate/${document}`).toPromise();
+    getCaseList(document) {
+        return this.http.get<any[]>(`${endPoints.scm}validate/${document}`).toPromise();
     }
 
     getAll() {

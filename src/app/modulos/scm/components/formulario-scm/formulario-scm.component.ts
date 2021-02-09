@@ -52,7 +52,8 @@ export class FormularioScmComponent implements OnInit {
     incapacidades = [];
     imagenesList = [];
     imgMap: any = {};
-
+    casoSeleccionado;
+    casosList = [];
     numMaxImg = 3
     loadingImg = false;
     modalRecomendatios = false;
@@ -478,30 +479,13 @@ export class FormularioScmComponent implements OnInit {
     async onSelection(event) {
         this.value = event;
         let emp = <Empleado>this.value;
-        let validate;
-        if (!this.caseSelect) {
 
 
-            try {
-                validate = await this.scmService.validate(emp.numeroIdentificacion);
-                //   console.log(validate);
-            } catch (error) { console.log("lolsito"); }
+        this.casosList = await this.scmService.getCaseList(emp.id);
 
 
-            this.msgs = [];
-            if (!validate) {
-                this.msgs.push({
-                    severity: "error",
-                    summary: "Ya existe un caso medico",
-                    detail: `de el usuario ${emp.numeroIdentificacion}`,
-                });
-                this.empleadoForm.patchValue({ numeroIdentificacion: null });
-                this.antiguedad = ""; this.cargoDescripcion = "";
-                this.empleadoForm.reset();
-                //console.log(this.autoC);
-                return;
-            }
-        }
+
+
         this.empleadoSelect = emp;
         this.loaded = true;
         this.nameAndLastName = this.empleadoSelect.primerApellido + " " + this.empleadoSelect.segundoApellido + " " + this.empleadoSelect.primerNombre + " " + this.empleadoSelect.segundoNombre;
@@ -657,8 +641,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     onClick() {
-        this.router.navigate(["/app/scm/list"]);
-        this.router.navigateByUrl("/app/scm/list");
+        console.log(this.caseSelect);
     }
 
 
@@ -712,5 +695,16 @@ export class FormularioScmComponent implements OnInit {
                 this.markFormGroupTouched(control);
             }
         });
+    }
+
+    lazyLoad(event) {
+        console.log(event);
+    }
+
+    modifyCase() {
+        this.caseSelect = this.casoSeleccionado;
+        this.casoMedicoForm.patchValue(this.caseSelect);
+
+        console.log(this.casoSeleccionado);
     }
 }

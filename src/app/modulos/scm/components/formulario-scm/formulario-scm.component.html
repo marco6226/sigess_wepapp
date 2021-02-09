@@ -450,8 +450,12 @@
             </form>
         </form>
     </p-tabPanel>
-    <p-tabPanel header="Información Médica">
-        <form [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
+    <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
+
+
+
+
+        <form *ngIf="caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
@@ -721,6 +725,102 @@
                 </div>
             </div>-->
         </form>
+
+
+        <p-table *ngIf="!caseSelect" #dt [value]="casosList" (click)="onClick()" autoLayout="true"
+            selectionMode="single" [(selection)]="casoSeleccionado" [rows]="10" (onLazyLoad)="lazyLoad($event)"
+            [paginator]="true" dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">#CASO
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fapertura">Fecha de apertura
+                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="regional">Regional
+                        <p-sortIcon field="regional"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ciudad">Ciudad
+                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nameLastname">Apellido - Nombre
+                        <p-sortIcon field="nameLastname"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="documento">Documento
+                        <p-sortIcon field="documento"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="charge">Cargo
+                        <p-sortIcon field="charge"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="statusCaso">Estado de caso
+                        <p-sortIcon field="statusCaso"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="saludstate">Caso de mesa laboral
+                        <p-sortIcon field="saludstate"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
+
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.id}}</td>
+                    <td>{{case.fechaCreacion | date}}</td>
+                    <td>{{case.region}}</td>
+                    <td>{{case.ciudad}}</td>
+                    <td>{{case.names}}</td>
+                    <td>{{case.documento}}</td>
+                    <td>{{case.cargo}}</td>
+                    <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
+                    <td>{{case.casoMedicoLaboral}}</td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                    [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
+
+                <button *sTienePermiso="'ADM_PUT_USR'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil"
+                    label="Modificar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
+
+                <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Consultar"
+                    class="ui-button-success" [disabled]="!casoSeleccionado"></button>
+                <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+            (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
+            </ng-template>
+        </p-table>
+
     </p-tabPanel>
     <p-tabPanel header="Incapacidades" *ngIf="caseSelect">
         <div class="ui-g">
@@ -785,6 +885,8 @@
         </div>
 
     </p-tabPanel>
+
+
 
 
     <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
