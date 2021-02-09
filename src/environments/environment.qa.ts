@@ -5,7 +5,7 @@
 
 
 let protocol = 'https';
-let host = 'vps237705.vps.ovh.ca';
+let host = 'vps-185f4699.vps.ovh.ca';
 let port = '5858';
 let path = protocol + "://" + host + ":" + port + "/sigess/api/";
 

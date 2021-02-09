@@ -450,12 +450,17 @@
             </form>
         </form>
     </p-tabPanel>
+<<<<<<< HEAD
     <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
 
 
 
 
         <form *ngIf="caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
+=======
+    <p-tabPanel header="Casos medicos">
+        <form [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
+>>>>>>> aaf8c001caf87b355f7e4b27a24c2a39fd7f00f3
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
@@ -480,37 +485,7 @@
                 <div class="ui-g-12 p-mb-2">
                     <h5 class="title-header">Información del caso</h5>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <div class="input-field">
-                        <input type="text" pInputText formControlName="origen" placeholder="Origen"
-                            class="form-material" id="" />
-                        <label for="" class="active">Origen</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-4">
-                    <div class="input-field">
-                        <label class="s-float-label">Código CIE</label>
-                        <s-cieSelector id="ccide-input" formControlName="codigoCie10"></s-cieSelector>
-                    </div>
-                </div>
-
-
-
-                <div class="ui-g-12 ui-md-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="sistemaAfectado"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Sistema afectado</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12">
-                    <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
-                        <label for="" class="active">Diagnóstico</label>
-                    </div>
-                </div>
+               
                 <div class="ui-g-12">
                     <div class="input-field">
                         <textarea class="textarea-material" pInputTextarea
@@ -531,6 +506,37 @@
                         <input type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
                             id="" />
                         <label for="" class="active">Motivo</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="origen" placeholder="Origen"
+                            class="form-material" id="" />
+                        <label for="" class="active">Origen</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <div class="input-field">
+                        <label class="active">Código CIE</label>
+                        <s-cieSelector id="ccide-input" formControlName="codigoCie10"></s-cieSelector>
+                    </div>
+                </div>
+
+
+
+                <div class="ui-g-12 ui-md-4">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="sistemaAfectado"
+                            class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Sistema afectado</label>
+                    </div>
+                </div>
+
+                <div class="ui-g-12">
+                    <div class="input-field">
+                        <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
+                        <label for="" class="active">Diagnóstico</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4">
