@@ -53,6 +53,7 @@ export class FormularioScmComponent implements OnInit {
     imagenesList = [];
     imgMap: any = {};
     casoSeleccionado;
+    createCase;
     casosList = [];
     numMaxImg = 3
     loadingImg = false;
@@ -203,7 +204,6 @@ export class FormularioScmComponent implements OnInit {
             statusCaso: ["1", /*Validators.required*/],
             requiereIntervencion: [null, /*Validators.required*/],
             professionalArea: [null, /*Validators.required*/],
-            pkJefe: [null, Validators.required],
             porcentajePcl: [null, /*Validators.required*/],
             pcl: [null, /*Validators.required*/],
             region: [null],
@@ -225,7 +225,6 @@ export class FormularioScmComponent implements OnInit {
             sistemaAfectado: [null, /*Validators.required*/],
             fechaCreacion: [null],
             entidadEmiteCalificacion: [null, /*Validators.required*/],
-            pkBusinessPartner: [null, Validators.required],
             pclEmitEntidad: [null, /*Validators.required*/],
             conceptRehabilitacion: [null, /*Validators.required*/],
             descripcionCargo: [null]
@@ -234,15 +233,11 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-    get pkBusi() {
-        return this.casoMedicoForm.get("pkBusinessPartner") as FormControl
-    }
+
     get pkUse() {
         return this.casoMedicoForm.get("pkUser") as FormControl
     }
-    get pkJefe() {
-        return this.casoMedicoForm.get("pkJefe") as FormControl
-    }
+
 
     async ngOnInit() {
 
@@ -339,37 +334,25 @@ export class FormularioScmComponent implements OnInit {
             });
             return this.markFormGroupTouched(this.casoMedicoForm);
         }
-        /*
-                this.casoMedicoForm.patchValue({
-                    region: this.empleadoForm.get("area").value.nombre || "",
-                    ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
-                    // statusCaso: this.casoMedicoForm.get('statusCaso').value,
-                    names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
-                        }`,
-                    cargo: this.empleadoForm.value.cargoId,
-                    // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
-                    pkJefe: this.jefeInmediato.value.id || null,
-                    pkBusinessPartner: this.bussinessParner.get("id").value || null,
-                    pkUser: this.empleadoForm.get("id").value || null,
-                    codigoCie10: this.casoMedicoForm.value.id || null,
-                });*/
+
+        this.casoMedicoForm.patchValue({
+            region: this.empleadoForm.get("area").value.nombre || "",
+            ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
+            // statusCaso: this.casoMedicoForm.get('statusCaso').value,
+            names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
+                }`,
+            cargo: this.empleadoForm.value.cargoId,
+            // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
+
+            pkUser: this.empleadoForm.get("id").value || null,
+            codigoCie10: this.casoMedicoForm.value.id || null,
+        });
 
 
-        let { email, cargoId, perfilesId, ...empleado } = this.empleadoForm.value;
-        empleado.cargo = new Cargo();
-        empleado.cargo.id = cargoId;
 
-        if (this.empleadoForm.value.afp != null) {
-            empleado.afp = new Afp();
-            empleado.afp.id = this.empleadoForm.value.afp;
-        }
-        if (this.empleadoForm.value.eps != null) {
-            empleado.eps = new Eps();
-            empleado.eps.id = this.empleadoForm.value.eps;
-        }
-        console.log(empleado, this.empleadoSelect);
         let status;
-        if (!this.caseSelect) {
+        console.log(this.createCase);
+        if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
             //  let empleadoStatus = await this.empleadoService.update(empleado);
             //  console.log(empleadoStatus);
@@ -707,4 +690,11 @@ export class FormularioScmComponent implements OnInit {
 
         console.log(this.casoSeleccionado);
     }
+
+    createCaso() {
+
+        this.createCase = true;
+
+    }
+
 }

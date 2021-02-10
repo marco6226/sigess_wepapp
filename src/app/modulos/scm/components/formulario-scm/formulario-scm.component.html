@@ -323,8 +323,7 @@
                             </p-autoComplete>
                             <label for="" class="active">Número de identificación</label>
                         </div>
-                        <small *ngIf="pkJefe.errors?.required && pkJefe.touched" id="username2-help"
-                            class="p-invalid">Requerido</small>
+
                     </div>
                     <div class="ui-g-12 ui-md-8 ui-lg-6">
                         <div class="input-field">
@@ -406,8 +405,7 @@
                             </p-autoComplete>
                             <label for="" class="active">Número de identificación</label>
                         </div>
-                        <small *ngIf="pkBusi.errors?.required && pkBusi.touched" id="username2-help"
-                            class="p-invalid">Requerido</small>
+
                     </div>
                     <div class="ui-g-12 ui-md-8 ui-lg-6">
                         <div class="input-field">
@@ -480,7 +478,7 @@
                 <div class="ui-g-12 p-mb-2">
                     <h5 class="title-header">Información del caso</h5>
                 </div>
-               
+
                 <div class="ui-g-12">
                     <div class="input-field">
                         <textarea class="textarea-material" pInputTextarea
@@ -725,10 +723,17 @@
                     </div>
                 </div>
             </div>-->
+            <div style="text-align: center; width: 100%;">
+                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
+                    style="bottom: 100px;" title="Guardar datos de empleado"></button>
+
+                <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
+                    [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+            </div>
         </form>
 
 
-        <p-table *ngIf="!caseSelect" #dt [value]="casosList" (click)="onClick()" autoLayout="true"
+        <p-table *ngIf="!caseSelect && !createCase" #dt [value]="casosList" (click)="onClick()" autoLayout="true"
             selectionMode="single" [(selection)]="casoSeleccionado" [rows]="10" (onLazyLoad)="lazyLoad($event)"
             [paginator]="true" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
@@ -809,7 +814,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                <button *sTienePermiso="'ADM_POST_USR'" (click)="createCaso()" pButton type="button" icon="fa fa-plus"
                     [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
 
                 <button *sTienePermiso="'ADM_PUT_USR'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil"
@@ -823,6 +828,7 @@
         </p-table>
 
     </p-tabPanel>
+
     <p-tabPanel header="Incapacidades" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
