@@ -27,18 +27,26 @@ export class CasosMedicosService {
         return this.http.get(`${endPoints.scm}all`).toPromise();
     }
 
-    getRecomendations(documento) {
-        return this.http.get<[]>(`${endPoints.scm}recomendation/${documento}`).toPromise();
-    }
 
     ausentismos(documento) {
         return this.http.get<[]>(`${endPoints.scm}scmausentismo/${documento}`).toPromise();
 
     }
 
-
+    //Recomendations APis
+    getRecomendations(documento) {
+        return this.http.get<[]>(`${endPoints.scm}recomendation/${documento}`).toPromise();
+    }
     createRecomendation(recomendation) {
         return this.http.post(`${endPoints.scm}recomendation`, recomendation).toPromise();
+    }
+    //DiagnosticoApi
+
+    getDiagnosticos(documento) {
+        return this.http.get<[]>(`${endPoints.scm}diagnosticos/${documento}`).toPromise();
+    }
+    createDiagnosticos(diagnosticos) {
+        return this.http.post(`${endPoints.scm}diagnosticos`, diagnosticos).toPromise();
     }
 
     getLogs(documento) {

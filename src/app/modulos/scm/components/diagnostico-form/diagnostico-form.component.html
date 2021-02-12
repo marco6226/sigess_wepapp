@@ -1,0 +1,48 @@
+<p-growl [value]="msgs"></p-growl>
+
+
+<form [formGroup]="diagnosticoForm">
+    <div class="ui-g">
+        <div class="ui-g p-py-2">
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Diagnostico</h5>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <div class="input-field">
+                    <label class="active">Código CIE</label>
+                    <s-cieSelector id="ccide-input" formControlName="codigoCie10"></s-cieSelector>
+                </div>
+            </div>
+
+
+
+            <div class="ui-g-12 ui-md-4">
+                <div class="input-field">
+                    <textarea class="textarea-material" pInputTextarea formControlName="sistemaAfectado"></textarea>
+                    <label for="" class="active">Diagnóstico</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="input-field">
+                    <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
+                    <label for="" class="active">Diagnóstico</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-4">
+                <div class="input-field">
+                    <input type="text" pInputText formControlName="origen" placeholder="Origen" class="form-material"
+                        id="" />
+                    <label for="" class="active">Origen</label>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" label="Guardar" icon="fa fa-plus"
+                    (click)="onSubmit()">
+
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

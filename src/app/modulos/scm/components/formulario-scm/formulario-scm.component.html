@@ -894,7 +894,63 @@
     </p-tabPanel>
 
 
+    <p-tabPanel header="Diagnosticos" *ngIf="caseSelect">
 
+        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
+            dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Id
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fapertura">CIE
+                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="regional">Sistema Afectado
+                        <p-sortIcon field="regional"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ciudad">Diagnostico
+                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    </th>
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
+
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.id}}</td>
+                    <td>{{case.codigoCie10 }}</td>
+                    <td>{{case.sistemaAfectado}}</td>
+                    <td>{{case.diagnostico}}</td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                    (click)="modalDianostico = true">
+
+                </button>
+
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
 
     <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
@@ -1018,11 +1074,24 @@
 </p-tabView>
 
 
+
+
 <p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
     <app-logmodal *ngIf="logsList" [log]="logSelected" [logList]="logsList">
     </app-logmodal>
 </p-dialog>
+
+
+<p-dialog header="Crear Diagnostico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '50vw'}"
+    [baseZIndex]="10000">
+
+    <app-diagnostico-form *ngIf="caseSelect" [id]="caseSelect.id">
+
+    </app-diagnostico-form>
+
+</p-dialog>
+
 
 <p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
     [baseZIndex]="10000">

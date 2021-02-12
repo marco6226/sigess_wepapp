@@ -58,6 +58,7 @@ export class FormularioScmComponent implements OnInit {
     numMaxImg = 3
     loadingImg = false;
     modalRecomendatios = false;
+    modalDianostico = false;
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
     jefeInmediato: FormGroup;
@@ -69,6 +70,7 @@ export class FormularioScmComponent implements OnInit {
     recomendationList = [];
     logsList = []
     empleadosList: Empleado[];
+    diagnosticoList = [];
 
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
@@ -250,43 +252,7 @@ export class FormularioScmComponent implements OnInit {
         }
 
         if (this.caseSelect) {
-            // console.log(this.caseSelect);
-            this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
-            this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
-            this.casoMedicoForm.patchValue(this.caseSelect);
-            this.cargoDescripcion = this.caseSelect.descripcionCargo;
-
-            //console.log(this.casoMedicoForm.get("statusCaso").value);
-            this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
-            console.log(status);
-            this.isUpdate ? this.empleadoForm.controls["email"].disable() : ""; //this for disabled email in case of update
-            if (this.caseSelect != null) {
-                // console.log("tiene data");
-                let fq = new FilterQuery();
-                fq.filterList = [
-                    {
-                        criteria: Criteria.EQUALS,
-                        field: "id",
-                        value1: this.caseSelect.pkUser,
-                        value2: null,
-                    },
-                ];
-                // //console.log(fq);
-                this.empleadoService.findByFilter(fq).then((resp) => {
-                    let select = <Empleado>resp["data"][0];
-                    this.onSelection(select);
-                });
-
-                this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser);
-
-
-            } else {
-                this.loaded = true;
-                let area: any;
-                //console.log("new register");
-                this.empleadoForm.patchValue({ area: area });
-                this.editable = true;
-            }
+            this.onLoadInit()
         }
         this.comunService.findAllAfp().then((data) => {
             this.afpList = [];
@@ -684,11 +650,30 @@ export class FormularioScmComponent implements OnInit {
         console.log(event);
     }
 
-    modifyCase() {
+    async modifyCase() {
         this.caseSelect = this.casoSeleccionado;
         this.casoMedicoForm.patchValue(this.caseSelect);
-
+        console.log("selecciono un caso");
+        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
+        this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
+        this.casoMedicoForm.patchValue(this.caseSelect);
+        this.cargoDescripcion = this.caseSelect.descripcionCargo;
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+        //console.log(this.casoMedicoForm.get("statusCaso").value);
+        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
         console.log(this.casoSeleccionado);
+    }
+
+    async onLoadInit() {
+        console.log("selecciono un caso");
+        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
+        this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
+        this.casoMedicoForm.patchValue(this.caseSelect);
+        this.cargoDescripcion = this.caseSelect.descripcionCargo;
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+        //console.log(this.casoMedicoForm.get("statusCaso").value);
+        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+
     }
 
     createCaso() {

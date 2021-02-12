@@ -31,6 +31,7 @@ import { ScmModule } from './modulos/scm/scm.module';
 
 
 
+
 const appRoutes: Routes = [
     { path: '**', component: PageNotFoundComponent }
 ];
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent,
         PageNotFoundComponent,
+
 
     ],
     imports: [
