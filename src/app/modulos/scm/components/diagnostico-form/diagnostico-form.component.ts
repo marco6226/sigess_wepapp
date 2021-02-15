@@ -11,7 +11,9 @@ import { CasosMedicosService } from '../../services/casos-medicos.service';
 export class DiagnosticoFormComponent implements OnInit {
     diagnosticoForm: FormGroup;
     msgs: Message[];
+    @Input() caseId: string;
     @Input() id: string;
+
     @Output() eventClose = new EventEmitter<any>()
 
 
@@ -22,7 +24,7 @@ export class DiagnosticoFormComponent implements OnInit {
             codigoCie10: [null, Validators.required],
             diagnostico: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
-
+            origen: [null, Validators.required],
 
 
         });
@@ -49,7 +51,8 @@ export class DiagnosticoFormComponent implements OnInit {
             codigoCie10: codigoCie10.id,
             diagnostico,
             sistemaAfectado,
-            pkCase: this.id,
+            pkCase: this.caseId,
+            pkUser: this.id,
 
         }
 
@@ -60,7 +63,7 @@ export class DiagnosticoFormComponent implements OnInit {
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: "Recomendacion creada",
+                    summary: "Diagnostico creado",
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {

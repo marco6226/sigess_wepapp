@@ -453,7 +453,7 @@
 
 
 
-        <form *ngIf="caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="createCase || caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
@@ -900,7 +900,7 @@
             dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">Id
+                    <th pSortableColumn="id"># Del caso
                         <p-sortIcon field="id"></p-sortIcon>
                     </th>
                     <th pSortableColumn="fapertura">CIE
@@ -935,7 +935,7 @@
             <ng-template pTemplate="body" let-case>
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                    <td>{{case.id}}</td>
+                    <td>{{case.pkCase}}</td>
                     <td>{{case.codigoCie10 }}</td>
                     <td>{{case.sistemaAfectado}}</td>
                     <td>{{case.diagnostico}}</td>
@@ -1086,7 +1086,7 @@
 <p-dialog header="Crear Diagnostico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
 
-    <app-diagnostico-form *ngIf="caseSelect" [id]="caseSelect.id">
+    <app-diagnostico-form *ngIf="caseSelect" [id]="empleadoSelect.id" [caseId]="caseSelect.id">
 
     </app-diagnostico-form>
 

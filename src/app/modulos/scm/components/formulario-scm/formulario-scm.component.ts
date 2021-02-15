@@ -658,7 +658,7 @@ export class FormularioScmComponent implements OnInit {
         this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
         console.log(this.casoSeleccionado);
@@ -670,7 +670,7 @@ export class FormularioScmComponent implements OnInit {
         this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
