@@ -10,11 +10,12 @@ import { CasosMedicosService } from '../../services/casos-medicos.service';
 })
 export class DiagnosticoFormComponent implements OnInit {
     diagnosticoForm: FormGroup;
+    sistemaAfectado = [];
     msgs: Message[];
     @Input() caseId: string;
     @Input() id: string;
-
     @Output() eventClose = new EventEmitter<any>()
+
 
 
     constructor(fb: FormBuilder,
@@ -31,7 +32,11 @@ export class DiagnosticoFormComponent implements OnInit {
     }
 
     async ngOnInit() {
-
+        this.sistemaAfectado = await this.scmService.getSistemasAFectados();
+        this.sistemaAfectado.forEach((sistema, index) => {
+            this.sistemaAfectado[index] = { label: sistema.name, value: sistema.id }
+        });
+        console.log(this.sistemaAfectado);
     }
 
 

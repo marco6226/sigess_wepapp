@@ -18,8 +18,10 @@
 
             <div class="ui-g-12 ui-md-4">
                 <div class="input-field">
-                    <textarea class="textarea-material" pInputTextarea formControlName="sistemaAfectado"></textarea>
-                    <label for="" class="active">Diagnóstico</label>
+                    <p-dropdown [filter]="true" [options]="sistemaAfectado" formControlName="sistemaAfectado"
+                        class="select-material" styleClass="select-material">
+                    </p-dropdown>
+                    <label for="" class="active">Sistema Afectado</label>
                 </div>
             </div>
 

@@ -54,4 +54,9 @@ export class CasosMedicosService {
     }
 
 
+    getSistemasAFectados() {
+        return this.http.get<[]>(`${endPoints.scm}sistemaafectado/`).toPromise();
+    }
+
+
 }
