@@ -865,6 +865,107 @@
     </p-tabPanel>
 
 
+    <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
+
+        <form>
+            <div class="ui-g">
+
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <div class="input-field">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaFinal"></p-calendar>
+                        <label for="" class="active">Fecha de seguimiento</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-8">
+                    <div class="input-field">
+                        <textarea class="textarea-material" pInputTextarea formControlName="observaciones"></textarea>
+                        <label for="" class="active">Seguimiento</label>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-4 ui-lg-6">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="pclEmitEntidad"
+                            class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Total de tareas a realizar</label>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
+            dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Fecha de seguimiento
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fapertura">Seguimiento o actividad
+                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="regional">Tarea
+                        <p-sortIcon field="regional"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ciudad">Responsable
+                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="regional">Resultado
+                        <p-sortIcon field="regional"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ciudad">Documento soporte
+                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
+
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.pkCase}}</td>
+                    <td>{{case.codigoCie10 }}</td>
+                    <td>{{case.sistemaAfectado}}</td>
+                    <td>{{case.diagnostico}}</td>
+                    <td>{{case.sistemaAfectado}}</td>
+                    <td>{{case.diagnostico}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                    (click)="modalDianostico = true">
+
+                </button>
+
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+
+
     <p-tabPanel header="Diagnosticos" *ngIf="caseSelect">
 
         <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
