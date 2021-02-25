@@ -897,7 +897,7 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento" required>
+                                    <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento">
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{seguimiento.seguimiento}}
@@ -907,9 +907,9 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input [(ngModel)]="seguimiento.tarea">
+                                    <input pInputText type="text" [(ngModel)]="seguimiento.tarea">
                                 </ng-template>
-                                <ng-template pTemplate=" output">
+                                <ng-template pTemplate="output">
                                     {{seguimiento.tarea}}
                                 </ng-template>
                             </p-cellEditor>
