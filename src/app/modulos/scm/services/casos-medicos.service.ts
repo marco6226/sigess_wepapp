@@ -58,5 +58,17 @@ export class CasosMedicosService {
         return this.http.get<[]>(`${endPoints.scm}sistemaafectado/`).toPromise();
     }
 
+    createSeguimiento(pkCase) {
+        return this.http.post(`${endPoints.scm}seguimiento/`, { pkCase }).toPromise();
+
+    }
+    updateSeguimiento(seguimientoCase) {
+        return this.http.put(`${endPoints.scm}seguimiento/`, seguimientoCase).toPromise();
+
+    }
+
+    getSeguimientos(documento) {
+        return this.http.get<[]>(`${endPoints.scm}seguimiento/${documento}`).toPromise();
+    }
 
 }

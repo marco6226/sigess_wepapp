@@ -72,6 +72,25 @@ export class FormularioScmComponent implements OnInit {
     empleadosList: Empleado[];
     diagnosticoList = [];
 
+
+
+
+
+    seguimientos = [];
+
+    products2 = [];
+
+    statuses: SelectItem[];
+
+
+
+
+
+
+
+
+
+
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
     @Output() onCancel = new EventEmitter();
@@ -288,7 +307,8 @@ export class FormularioScmComponent implements OnInit {
         });
     }
     closeForm() {
-        this.onCancel.emit();
+        this.caseSelect = null;
+        this.empleadoSelect = null;
     }
     async onSubmit() {
         this.msgs = [];
@@ -659,6 +679,8 @@ export class FormularioScmComponent implements OnInit {
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
+        this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
         console.log(this.casoSeleccionado);
@@ -670,6 +692,7 @@ export class FormularioScmComponent implements OnInit {
         this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
+        this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
@@ -682,4 +705,42 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
+    onRowEditInit(product) {
+        console.log(product);
+
+    }
+
+    async onRowEditSave(product) {
+        this.msgs = [];
+        console.log(product);
+        if (product.responsable) {
+            product.responsable = product.responsable.id;
+        }
+        try {
+            let resp = await this.scmService.updateSeguimiento(product);
+            this.msgs.push({
+                severity: "success",
+                summary: "Seguimiento",
+                detail: `Su numero de seguimiento es ${product.id}`,
+            });
+            console.log(resp);
+            this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    onRowEditCancel(product, index: number) {
+
+    }
+    async nuevoSeguimiento() {
+        try {
+            let resp = await this.scmService.createSeguimiento(this.caseSelect.id);
+            console.log(resp);
+            this.seguimientos.push(resp)
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }

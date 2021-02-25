@@ -867,102 +867,116 @@
 
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
-        <form>
-            <div class="ui-g">
+        <div class="card">
+            <h5>Seguimientode caso</h5>
+            <p-table [value]="seguimientos" dataKey="id" editMode="row">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Fecha de seguimiento</th>
+                        <th>Seguimiento</th>
+                        <th>Tarea</th>
+                        <th>Responsable</th>
+                        <th>Resultado</th>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-2">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaFinal"></p-calendar>
-                        <label for="" class="active">Fecha de seguimiento</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-8">
-                    <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="observaciones"></textarea>
-                        <label for="" class="active">Seguimiento</label>
-                    </div>
-                </div>
+                        <th style="width:8rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-seguimiento let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="seguimiento">
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text">
 
-                <div class="ui-g-12 ui-md-4 ui-lg-6">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="pclEmitEntidad"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Total de tareas a realizar</label>
-                    </div>
-                </div>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{seguimiento.fechaSeg}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{seguimiento.seguimiento}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input [(ngModel)]="seguimiento.tarea" [style]="{'width':'100%'}">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{seguimiento.tarea}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
+                                        placeholder="Digite" [style]="{'width':'100%'}"
+                                        (onSelect)="seguimiento.responsable = $event" [suggestions]="empleadosList"
+                                        (completeMethod)="buscarEmpleado($event)" field="primerNombre"
+                                        [(ngModel)]="seguimiento.responsable" *ngIf="empleado?.id == null">
+                                        <ng-template let-empleado pTemplate="item">
+                                            <div class="ui-helper-clearfix">
+                                                <div class="wrapper">
+                                                    <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                                        style="font-size: 48px;" aria-hidden="true"></i>
+                                                    <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                                        style="border-radius: 50%;" #imgAvatar />
+                                                    <div style="margin-left:20px">
+                                                        <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                            {{empleado?.segundoNombre}}
+                                                        </label>
+                                                        <br /> {{empleado?.numeroIdentificacion}}
+                                                        <br /> {{empleado?.usuario.email}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </p-autoComplete>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{seguimiento.responsable?.numeroIdentificacion }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="seguimiento.resultado">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{seguimiento.resultado}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="text-align:center">
+                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                (click)="onRowEditInit(seguimiento)" class="p-button-rounded p-button-text"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(seguimiento)"
+                                class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowEditCancel(seguimiento, ri)"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary" let-rowData>
+                    <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                        (click)="nuevoSeguimiento()">
 
-            </div>
-        </form>
+                    </button>
 
-        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
-            dataKey="id" [lazy]="true">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="id">Fecha de seguimiento
-                        <p-sortIcon field="id"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="fapertura">Seguimiento o actividad
-                        <p-sortIcon field="fapertura"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="regional">Tarea
-                        <p-sortIcon field="regional"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="ciudad">Responsable
-                        <p-sortIcon field="ciudad"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="regional">Resultado
-                        <p-sortIcon field="regional"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="ciudad">Documento soporte
-                        <p-sortIcon field="ciudad"></p-sortIcon>
-                    </th>
-
-                </tr>
-                <tr>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-case>
-
-                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                    <td>{{case.pkCase}}</td>
-                    <td>{{case.codigoCie10 }}</td>
-                    <td>{{case.sistemaAfectado}}</td>
-                    <td>{{case.diagnostico}}</td>
-                    <td>{{case.sistemaAfectado}}</td>
-                    <td>{{case.diagnostico}}</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
-                    (click)="modalDianostico = true">
-
-                </button>
-
-            </ng-template>
-        </p-table>
+                </ng-template>
+            </p-table>
+        </div>
     </p-tabPanel>
 
 
