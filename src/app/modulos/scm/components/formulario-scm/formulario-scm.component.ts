@@ -679,8 +679,7 @@ export class FormularioScmComponent implements OnInit {
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
-        this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
-
+        this.fechaSeg()
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
         console.log(this.casoSeleccionado);
@@ -692,7 +691,7 @@ export class FormularioScmComponent implements OnInit {
         this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+        this.fechaSeg();
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
@@ -724,7 +723,7 @@ export class FormularioScmComponent implements OnInit {
                 detail: `Su numero de seguimiento es ${product.id}`,
             });
             console.log(resp);
-            this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+            this.fechaSeg();
         } catch (error) {
             console.log(error);
         }
@@ -743,4 +742,13 @@ export class FormularioScmComponent implements OnInit {
         }
 
     }
+    async fechaSeg() {
+        this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+        this.seguimientos.map((seg, idx) => {
+            if (seg.fechaSeg) {
+                this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()
+            }
+        })
+    }
+
 }

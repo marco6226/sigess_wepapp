@@ -68,7 +68,7 @@ export class CasosMedicosService {
     }
 
     getSeguimientos(documento) {
-        return this.http.get<[]>(`${endPoints.scm}seguimiento/${documento}`).toPromise();
+        return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`).toPromise();
     }
 
 }

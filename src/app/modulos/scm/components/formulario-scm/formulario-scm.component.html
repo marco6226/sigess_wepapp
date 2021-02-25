@@ -886,11 +886,11 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text">
-
+                                    <p-calendar [(ngModel)]="seguimiento.fechaSeg" placeholder="mm/dd/yyyy">
+                                    </p-calendar>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{seguimiento.fechaSeg}}
+                                    {{seguimiento.fechaSeg | date}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
@@ -907,9 +907,9 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input [(ngModel)]="seguimiento.tarea" [style]="{'width':'100%'}">
+                                    <input [(ngModel)]="seguimiento.tarea">
                                 </ng-template>
-                                <ng-template pTemplate="output">
+                                <ng-template pTemplate=" output">
                                     {{seguimiento.tarea}}
                                 </ng-template>
                             </p-cellEditor>
@@ -942,7 +942,7 @@
                                     </p-autoComplete>
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{seguimiento.responsable?.numeroIdentificacion }}
+                                    {{seguimiento.responsable?.primerNombre }}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
