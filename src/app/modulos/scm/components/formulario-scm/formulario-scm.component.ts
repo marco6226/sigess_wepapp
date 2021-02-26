@@ -38,6 +38,7 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Area } from "app/modulos/empresa/entities/area";
 import { Usuario } from "app/modulos/empresa/entities/usuario";
+import { ThrowStmt } from "@angular/compiler";
 
 @Component({
     selector: "app-formulario-scm",
@@ -263,6 +264,7 @@ export class FormularioScmComponent implements OnInit {
     async ngOnInit() {
 
 
+
         if (this.consultar) {
             this.empleadoForm.disable();
             this.bussinessParner.disable();
@@ -271,8 +273,13 @@ export class FormularioScmComponent implements OnInit {
         }
 
         if (this.caseSelect) {
-            this.onLoadInit()
+            console.log(this.caseSelect);
+            this.onLoadInit();
+            this.modifyCase()
+
         }
+
+
         this.comunService.findAllAfp().then((data) => {
             this.afpList = [];
             this.afpList.push({ label: "--Seleccione--", value: null });
@@ -306,6 +313,8 @@ export class FormularioScmComponent implements OnInit {
                 }, 500);
         });
     }
+
+
     closeForm() {
         this.caseSelect = null;
         this.empleadoSelect = null;
@@ -615,8 +624,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     async onCloseModalrecomendation() {
-        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.documento);
-
+        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.modalRecomendatios = false;
     }
     onSelectionBP(event) {
@@ -671,14 +679,14 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async modifyCase() {
-        this.caseSelect = this.casoSeleccionado;
+        this.caseSelect = this.casoSeleccionado || this.caseSelect;
         this.casoMedicoForm.patchValue(this.caseSelect);
-        console.log("selecciono un caso");
-        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
-        this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
+        console.log("selecciono un caso", this.caseSelect);
+        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
+        this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser.id);
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
@@ -686,15 +694,17 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async onLoadInit() {
-        console.log("selecciono un caso");
-        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
-        this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
-        this.casoMedicoForm.patchValue(this.caseSelect);
-        this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.fechaSeg();
-        this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
-        //console.log(this.casoMedicoForm.get("statusCaso").value);
-        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+        this.onSelection(this.caseSelect.pkUser);
+        /*   this.caseSelect = this.casoSeleccionado;
+           this.casoMedicoForm.patchValue(this.caseSelect);
+           this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
+           this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
+           this.casoMedicoForm.patchValue(this.caseSelect);
+           this.cargoDescripcion = this.caseSelect.descripcionCargo;
+           this.fechaSeg();
+           this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
+           //console.log(this.casoMedicoForm.get("statusCaso").value);
+           this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label*/
 
     }
 
