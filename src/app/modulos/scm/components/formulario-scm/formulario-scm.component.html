@@ -448,6 +448,7 @@
             </form>
         </form>
     </p-tabPanel>
+
     <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
 
 
@@ -1181,7 +1182,7 @@
 
 <p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
-    <app-recomendationsform [id]="caseSelect.pkUser" (eventClose)="onCloseModalrecomendation()">
+    <app-recomendationsform [id]="caseSelect.id" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>
 

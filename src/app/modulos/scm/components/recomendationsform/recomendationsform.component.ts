@@ -123,6 +123,7 @@ export class RecomendationsformComponent implements OnInit {
             status: status.code,
             recomendaciones,
             pkUser: this.id,
+            pkCase: this.id,
             actionPlanResponsable,
 
             actionPlan: actionPlan.code
