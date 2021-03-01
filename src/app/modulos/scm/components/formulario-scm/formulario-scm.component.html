@@ -4,11 +4,11 @@
         <div class="case-code">
             <div class="title">Caso:</div>
             <div class="number">
-                #{{caseSelect.id}}
+                No. {{caseSelect.id}}
             </div>
         </div>
         <div class="case-date">
-            {{caseSelect.fechaCreacion | date}}
+           Creado el: {{caseSelect.fechaCreacion | date: 'dd/MM/yyyy'}}
         </div>
     </div>
 </div>

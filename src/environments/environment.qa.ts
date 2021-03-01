@@ -4,10 +4,10 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 
-let protocol = 'http';
+let protocol = 'https';
 //let host = 'vps-185f4699.vps.ovh.ca';
-let host = '51.222.86.231'
-let port = '8080';
+let host = 'demo.sigess.app'
+let port = '5858';
 let path = protocol + "://" + host + ":" + port + "/sigess/api/";
 
 
