@@ -19,7 +19,12 @@
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
 							<input type="password" pInputText placeholder="Contraseña" formControlName="passwd" />
+							<button (click)="mostrar()">
+								<i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+								<i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+							  </button>
 						</div>
+						
 					</div>
 
 					<div class="ui-g-12" *ngIf="visiblePinForm == true">
@@ -35,7 +40,8 @@
 
 					<div class="ui-g-12">
 						<p-progressSpinner *ngIf="logueando == true" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
-						<button *ngIf="logueando == false" pButton type="submit" [label]="visiblePinForm == true ? 'Validar' : 'Ingresar'" [disabled]="!userform.valid"></button>
+						<button class="btn-send" *ngIf="logueando == false" pButton type="submit" [label]="visiblePinForm == true ? 'Validar' : 'Ingresar'" [disabled]="!userform.valid"></button>
+						
 					</div>
 				</div>
 			</form>
@@ -55,3 +61,5 @@
 		<label style="color:#3ba2dc;font-weight: bold;">{{relojText}}</label>
 	</div>
 </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

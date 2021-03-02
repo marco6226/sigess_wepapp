@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { MensajeUsuario } from '../../../comun/entities/mensaje-usuario';
 import { SesionService } from '../../services/sesion.service';
 
+
 @Component({
 	selector: 's-login',
 	templateUrl: './login.component.html',
@@ -17,6 +18,10 @@ export class LoginComponent implements OnInit {
 	@Input("modal") modal: boolean;
 	@Input("visible") visible: boolean = true;
 	subscription: Subscription;
+
+	password;
+
+	show = false;
 
 	logueando = false;
 	userform: FormGroup;
@@ -44,6 +49,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.password = 'password';
 		if (this.sesionService.getEmpresa() != null && this.sesionService.getUsuario() != null) {
 			this.router.navigate([this.authService.redirectUrl]);
 		} else {
@@ -151,6 +157,15 @@ export class LoginComponent implements OnInit {
 			this.visibleLnkResetPasswd = true;
 		});
 	}
+	mostrar() {
+		if (this.password === 'password') {
+		  this.password = 'text';
+		  this.show = true;
+		} else {
+		  this.password = 'password';
+		  this.show = false;
+		}
+	  }
 
 	iniciarContador(countDown: number) {
 		localStorage.setItem('countDown', '' + countDown);

@@ -25,10 +25,14 @@ input{
 	
 }
 
-.form-container{
+.form-container {
 	margin-top: 20px;
   text-align: center;
   padding: 15px;	
+}
+
+.form-container .btn-send:hover{
+	background: #2ebc99;
 }
 
 .no-box-shadow > .ui-dialog{
