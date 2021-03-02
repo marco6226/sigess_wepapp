@@ -78,7 +78,7 @@
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                     <td>{{case.id}}</td>
-                    <td>{{case.fechaCreacion | date}}</td>
+                    <td>{{case.fechaCreacion |  date: 'dd/MM/yyyy'}}</td>
                     <td>{{case.region}}</td>
                     <td>{{case.ciudad}}</td>
                     <td>{{case.pkUser.primerNombre}}</td>

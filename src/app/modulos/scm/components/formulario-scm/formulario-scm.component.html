@@ -710,7 +710,7 @@
             [paginator]="true" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">#CASO
+                    <th pSortableColumn="id">No. Caso
                         <p-sortIcon field="id"></p-sortIcon>
                     </th>
                     <th pSortableColumn="fapertura">Fecha de apertura
@@ -722,7 +722,7 @@
                     <th pSortableColumn="ciudad">Ciudad
                         <p-sortIcon field="ciudad"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="nameLastname">Apellido - Nombre
+                    <th pSortableColumn="nameLastname">Nombre - Apellido
                         <p-sortIcon field="nameLastname"></p-sortIcon>
                     </th>
                     <th pSortableColumn="documento">Documento
@@ -774,10 +774,10 @@
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                     <td>{{case.id}}</td>
-                    <td>{{case.fechaCreacion | date}}</td>
+                    <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
                     <td>{{case.region}}</td>
                     <td>{{case.ciudad}}</td>
-                    <td>{{case.names}}</td>
+                    <td>{{case.pkUser.primerNombre}} {{case.pkUser.primerApellido}}</td>
                     <td>{{case.documento}}</td>
                     <td>{{case.cargo}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
@@ -869,7 +869,7 @@
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
         <div class="card">
-            <h5>Seguimientode caso</h5>
+            <h5>Seguimiento de caso</h5>
             <p-table [value]="seguimientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
@@ -887,8 +887,9 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <p-calendar [(ngModel)]="seguimiento.fechaSeg" placeholder="mm/dd/yyyy">
+                                    <p-calendar [(ngModel)]="seguimiento.fechaSeg" placeholder="mm/dd/yyyy" [locale]="localeES">
                                     </p-calendar>
+                                   
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{seguimiento.fechaSeg | date}}
