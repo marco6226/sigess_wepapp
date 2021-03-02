@@ -626,6 +626,15 @@ export class FormularioScmComponent implements OnInit {
     async onCloseModalrecomendation() {
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.modalRecomendatios = false;
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+
+    }
+
+    async onCloseModalDianostico() {
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+        this.modalDianostico = false;
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+
     }
     onSelectionBP(event) {
         let empleado = <Empleado>event;
@@ -683,7 +692,7 @@ export class FormularioScmComponent implements OnInit {
         this.casoMedicoForm.patchValue(this.caseSelect);
         console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
-        this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser.id);
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);

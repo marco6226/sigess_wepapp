@@ -13,60 +13,64 @@
                     <th pSortableColumn="id">#CASO
                         <p-sortIcon field="id"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="fapertura">Fecha de apertura
-                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    <th pSortableColumn="fechaCreacion">Fecha de apertura
+                        <p-sortIcon field="fechaCreacion"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="regional">Regional
-                        <p-sortIcon field="regional"></p-sortIcon>
+                    <th pSortableColumn="region">Regional
+                        <p-sortIcon field="region"></p-sortIcon>
                     </th>
                     <th pSortableColumn="ciudad">Ciudad
                         <p-sortIcon field="ciudad"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="nameLastname">Apellido - Nombre
-                        <p-sortIcon field="nameLastname"></p-sortIcon>
+                    <th pSortableColumn="pkUser">Apellido - Nombre
+                        <p-sortIcon field="pkUser"></p-sortIcon>
                     </th>
                     <th pSortableColumn="documento">Documento
                         <p-sortIcon field="documento"></p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="charge">Cargo
-                        <p-sortIcon field="charge"></p-sortIcon>
+                    <th pSortableColumn="cargo">Cargo
+                        <p-sortIcon field="cargo"></p-sortIcon>
                     </th>
                     <th pSortableColumn="statusCaso">Estado de caso
                         <p-sortIcon field="statusCaso"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="saludstate">Caso de mesa laboral
-                        <p-sortIcon field="saludstate"></p-sortIcon>
+                    <th pSortableColumn="casoMedicoLaboral">Caso de mesa laboral
+                        <p-sortIcon field="casoMedicoLaboral"></p-sortIcon>
                     </th>
                 </tr>
                 <tr>
 
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'fechaCreacion', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'region', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input [disabled]="true" pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'pkUser', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'cargo', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'statusCaso', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'casoMedicoLaboral', 'contains')">
                     </td>
                 </tr>
             </ng-template>

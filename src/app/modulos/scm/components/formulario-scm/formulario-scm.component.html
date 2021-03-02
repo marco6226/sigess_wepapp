@@ -1173,7 +1173,8 @@
 <p-dialog header="Crear Diagnostico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
 
-    <app-diagnostico-form *ngIf="caseSelect" [id]="empleadoSelect.id" [caseId]="caseSelect.id">
+    <app-diagnostico-form *ngIf="caseSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id"
+        (eventClose)="onCloseModalDianostico()">
 
     </app-diagnostico-form>
 

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { FilterQuery } from "app/modulos/core/entities/filter-query";
 import { endPoints } from "environments/environment";
 
 @Injectable({
@@ -69,6 +70,53 @@ export class CasosMedicosService {
 
     getSeguimientos(documento) {
         return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`).toPromise();
+    }
+
+    findByFilter(filterQuery?: FilterQuery) {
+        // console.log(filterQuery, "filtro linea 71");
+        return this.http.get(`${endPoints.scm}` + '?' + this.buildUrlParams(filterQuery)).toPromise();
+
+
+    }
+
+    public buildUrlParams(filterQuery: FilterQuery): string {
+        let urlParam = '';
+        if (filterQuery == null) {
+            return urlParam;
+        }
+        if (filterQuery.offset != null) {
+            urlParam += 'offset=' + filterQuery.offset + '&';
+        }
+        if (filterQuery.groupBy != null) {
+            urlParam += 'groupBy=' + filterQuery.groupBy + '&';
+        }
+        if (filterQuery.rows != null) {
+            urlParam += 'rows=' + filterQuery.rows + '&';
+        }
+        if (filterQuery.count != null) {
+            urlParam += 'count=' + filterQuery.count + '&';
+        }
+        if (filterQuery.sortField != null) {
+            urlParam += 'sortField=' + filterQuery.sortField + '&';
+        }
+        if (filterQuery.sortOrder != null) {
+            urlParam += 'sortOrder=' + filterQuery.sortOrder + '&';
+        }
+        if (filterQuery.filterList != null) {
+            urlParam += 'filterList=' + encodeURIComponent(JSON.stringify(filterQuery.filterList)) + '&';
+        }
+        if (filterQuery.fieldList != null) {
+            let fieldParam = 'fieldList=';
+            filterQuery.fieldList.forEach(field => {
+                fieldParam += field + ',';
+            });
+            fieldParam.slice(0, fieldParam.length - 1);
+            urlParam += fieldParam;
+        }
+        if (urlParam[urlParam.length - 1] === '&') {
+            urlParam = urlParam.slice(0, urlParam.length - 1);
+        }
+        return urlParam;
     }
 
 }

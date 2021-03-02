@@ -1,6 +1,7 @@
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Cargo } from 'app/modulos/empresa/entities/cargo';
 import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
@@ -26,20 +27,21 @@ export class ScmComponent implements OnInit {
     form: FormGroup;
     visibleForm: boolean;
     solicitando: boolean = false;
-    loading: boolean;
+    loading: boolean = false;;
     totalRecords: number;
     fields: string[] = [
         'id',
-        'email',
-        'icon',
-        'estado',
-        'fechaModificacion',
         'fechaCreacion',
-        'ultimoLogin',
-        'ipPermitida',
-        'mfa',
-        'numeroMovil',
-        // 'usuarioEmpresaList_perfil_id'
+        'region',
+        'ciudad',
+        'names',
+        'documento',
+        'cargo',
+        'statusCaso',
+        'casoMedicoLaboral',
+        'razon',
+        'pkUser'
+
     ];
     estadosList: SelectItem[] = [
         { value: 'ACTIVO', label: 'ACTIVO' },
@@ -105,8 +107,26 @@ export class ScmComponent implements OnInit {
 
     eliminar() { }
 
-    lazyLoad(event) {
-        console.log(event);
+    async lazyLoad(event: any) {
+        let filterQuery = new FilterQuery();
+        filterQuery.sortField = event.sortField;
+        filterQuery.sortOrder = event.sortOrder;
+        filterQuery.offset = event.first;
+        filterQuery.rows = event.rows;
+        filterQuery.count = true;
+
+        filterQuery.fieldList = this.fields;
+        filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+        console.log(filterQuery);
+        try {
+            let res: any = await this.scmService.findByFilter(filterQuery);
+            this.casosList = res.data;
+            this.totalRecords = res.count;
+
+        } catch (error) {
+
+        }
+
 
     }
 }

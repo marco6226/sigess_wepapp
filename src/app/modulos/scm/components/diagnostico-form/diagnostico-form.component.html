@@ -10,7 +10,8 @@
             <div class="ui-g-12 ui-md-4">
                 <div class="input-field">
                     <label class="active">Código CIE</label>
-                    <s-cieSelector id="ccide-input" formControlName="codigoCie10"></s-cieSelector>
+                    <s-cieSelector id="ccide-input" formControlName="codigoCie10" (dateChange)="test($event)">
+                    </s-cieSelector>
                 </div>
             </div>
 
@@ -18,8 +19,8 @@
 
             <div class="ui-g-12 ui-md-4">
                 <div class="input-field">
-                    <p-dropdown [filter]="true" [options]="sistemaAfectado" formControlName="sistemaAfectado"
-                        class="select-material" styleClass="select-material">
+                    <p-dropdown [options]="sistemaAfectado" formControlName="sistemaAfectado" class="select-material"
+                        styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Sistema Afectado</label>
                 </div>

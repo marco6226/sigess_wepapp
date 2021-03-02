@@ -32,9 +32,12 @@ export class DiagnosticoFormComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.sistemaAfectado = await this.scmService.getSistemasAFectados();
-        this.sistemaAfectado.forEach((sistema, index) => {
-            this.sistemaAfectado[index] = { label: sistema.name, value: sistema.id }
+        let resp: any = await this.scmService.getSistemasAFectados();
+
+
+        this.sistemaAfectado.push({ label: '--Seleccione--', value: null });
+        resp.forEach((sistema, index) => {
+            this.sistemaAfectado.push({ label: sistema.name, value: sistema.id })
         });
         console.log(this.sistemaAfectado);
     }
@@ -42,7 +45,7 @@ export class DiagnosticoFormComponent implements OnInit {
 
     async onSubmit() {
         this.msgs = [];
-
+        console.log(this.diagnosticoForm);
         if (!this.diagnosticoForm.valid) {
             return this.markFormGroupTouched(this.diagnosticoForm);
         }
@@ -86,6 +89,11 @@ export class DiagnosticoFormComponent implements OnInit {
         }
 
 
+    }
+
+    test(event) {
+        console.log(event);
+        this.diagnosticoForm.patchValue({ diagnostico: event.nombre })
     }
 
     private markFormGroupTouched(formGroup: FormGroup) {
