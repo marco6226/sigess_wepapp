@@ -32,7 +32,7 @@ input{
 }
 
 .form-container .btn-send:hover{
-	background: #2ebc99;
+	background: #5d85f5;
 }
 
 .no-box-shadow > .ui-dialog{
@@ -53,4 +53,15 @@ input{
   width: 300px;
   padding: 15px;
   box-shadow: 2px 2px 5px #ccc;
+}
+.btn-secondary {
+    color: #ffffff;
+    background-color: #5d85f5;
+    border-color: #393cfc;
+}
+
+.btn-secondary:hover {
+    color: #ffffff;
+    background-color: #1b57fd;
+    border-color: #393cfc;
 }

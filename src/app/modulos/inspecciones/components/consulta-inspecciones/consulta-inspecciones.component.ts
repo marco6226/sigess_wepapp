@@ -5,6 +5,7 @@ import { Inspeccion } from 'app/modulos/inspecciones/entities/inspeccion'
 import { Programacion } from 'app/modulos/inspecciones/entities/programacion'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { Message } from 'primeng/primeng'
+import { SesionService } from '../../../core/services/sesion.service';
 
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
@@ -29,10 +30,12 @@ export class ConsultaInspeccionesComponent implements OnInit {
     'fechaRealizada',
     'usuarioRegistra_email',
     'programacion_listaInspeccion_nombre',
+    'programacion_area_id',
     'programacion_area_nombre',
     'fechaModificacion',
     'usuarioModifica_email'
   ];
+  areasPermiso: string;
 
   // No programadas
   inspeccionNoProgList: any[];
@@ -44,6 +47,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
     'fechaRealizada',
     'usuarioRegistra_email',
     'listaInspeccion_nombre',
+    'area_id',
     'area_nombre',
     'fechaModificacion',
     'usuarioModifica_email'
@@ -52,9 +56,12 @@ export class ConsultaInspeccionesComponent implements OnInit {
   constructor(
     private paramNav: ParametroNavegacionService,
     private inspeccionService: InspeccionService,
+    private sesionService: SesionService,
   ) { }
 
   ngOnInit() {
+    this.areasPermiso = this.sesionService.getPermisosMap()['INP_GET_INP'].areas;
+    console.log(this.areasPermiso);
     
   }
 
@@ -70,6 +77,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
     filterQuery.fieldList = this.fieldsNoProg;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({criteria:Criteria.IS_NULL, field:'programacion'});
+    filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
 
     this.inspeccionService.findByFilter(filterQuery).then(
       resp => {
@@ -94,7 +102,8 @@ export class ConsultaInspeccionesComponent implements OnInit {
 
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-    filterQuery.filterList.push({criteria:Criteria.IS_NOT_NULL, field:'programacion'});
+    //filterQuery.filterList.push({criteria:Criteria.IS_NOT_NULL, field:'programacion'});
+    filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "programacion.area.id", value1: this.areasPermiso });
 
     this.inspeccionService.findByFilter(filterQuery).then(
       resp => {
