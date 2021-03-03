@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { DesviacionService } from 'app/modulos/sec/services/desviacion.service';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { FileUtils } from '../../../comun/file-utils';
+import { SesionService } from '../../../core/services/sesion.service';
+import { Criteria } from '../../../core/entities/filter';
 @Component({
   selector: 's-consultaDesviacionInspeccion',
   templateUrl: './consulta-desviacion-inspeccion.component.html',
@@ -11,7 +13,7 @@ import { FileUtils } from '../../../comun/file-utils';
 })
 export class ConsultaDesviacionInspeccionComponent implements OnInit {
 
-
+  areasPermiso: string;
   loading: boolean;
   totalRecords: number;
   desvInpList: any[];
@@ -21,10 +23,12 @@ export class ConsultaDesviacionInspeccionComponent implements OnInit {
   lastFilterEvent: any;
   constructor(
     private desviacionService: DesviacionService,
+    private sesionService: SesionService,
   ) { }
 
 
   ngOnInit() {
+    this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESVINP'].areas;
     this.loading = true;
     this.cols = [
       { field: 'fechaRealizada', header: 'Fecha', type: 'date', width: '300px' },
@@ -48,7 +52,7 @@ export class ConsultaDesviacionInspeccionComponent implements OnInit {
       { field: 'estadoTarea', header: 'Estado', type: 'text', width: '300px' },
       { field: 'fechaVerificacion', header: 'Fecha cierre', type: 'date', width: '300px' }
     ];
-    this.numRows = 5;
+    this.numRows = 10;
     this.selectedColumns = this.cols;
   }
 
@@ -76,6 +80,7 @@ export class ConsultaDesviacionInspeccionComponent implements OnInit {
     filterQuery.rows = event.rows;
     filterQuery.count = true;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+    filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "areaInspeccionId", value1: this.areasPermiso });
     if (event.fieldList != null)
       filterQuery.fieldList = event.fieldList;
     return filterQuery;
