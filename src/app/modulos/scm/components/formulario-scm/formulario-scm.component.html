@@ -22,7 +22,7 @@
                     <h5 class="title-header p-mb-2">Datos del trabajador involucrado</h5>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
                             [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList"
@@ -49,21 +49,21 @@
                     <small *ngIf="pkUse.errors?.required && pkUse.touched" id="username2-help"
                         class="p-invalid">Requerido</small>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
                         </p-dropdown>
                         <label for="" class="active">Tipo de identificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="nameAndLastName" placeholder="Apellidos y nombres"
                             class="form-material" id="" disabled="true" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="direccion" placeholder="Dirección / Gerencia"
                             class="form-material" id="" />
@@ -78,14 +78,14 @@
                         <label for="" class="active">Cargo / Categoría</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-12">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <textarea class="textarea-material" pInputTextarea [value]="cargoDescripcion || ''"></textarea>
                         <label for="" class="active">Descripción del cargo</label>
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
                             class="form-material" id="" [disabled]="true" />
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="range || ''" placeholder="Antigüedad"
                             class="form-material" id="" [disabled]="true" />
@@ -111,7 +111,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone"
                             styleClass="form-material">
@@ -129,20 +129,13 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="email" pInputText formControlName="email" placeholder="Correo corporativo"
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText formControlName="primerNombre" placeholder="Regional"
-                            class="form-material" id="" />
-                        <label for="" class="active">Regional</label>
-                    </div>
-                </div>
+                </div>                
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Regional"
@@ -150,14 +143,14 @@
                         <label for="" class="active">Ciudad</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <area-selector formControlName="area"
                             [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required></area-selector>
                         <label for="" class="active">Ubicación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <label for="" class="active">Género</label>
                     </div>
@@ -169,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -178,7 +171,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input [disabled]="true" type="text" pInputText [value]="edad" placeholder="Edad"
                             class="form-material" id="" />
@@ -186,14 +179,14 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input [disabled]="true" type="text" pInputText formControlName="regional"
                             placeholder="regional" class="form-material" id="" />
                         <label for="" class="active">Regional</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-9">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <s-ciudadSelector formControlName="ciudad" [id]="departamento" class="select-material"
                             styleClass="select-material">
@@ -201,13 +194,13 @@
                         <label for="" class="active">Ciudad de residencia</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <textarea class="textarea-material" formControlName="direccion"></textarea>
                         <label for="" class="active">Dirección de residencia</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <label for="" class="active">Zona de residencia</label>
                     </div>
@@ -218,7 +211,7 @@
                         </p-radioButton>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-inputMask mask="(999) 999-9999" formControlName="telefono1" class="form-material"
                             styleClass="form-material">
@@ -226,7 +219,7 @@
                         <label for="" class="active">Teléfono personal</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material"
                             styleClass="form-material">
@@ -235,28 +228,28 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="email" pInputText formControlName="email" plaholder="Correo personal" />
                         <label for="" class="active">Correo personal</label>
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" class="select-material"
                             styleClass="select-material"></p-dropdown>
                         <label for="" class="active">EPS</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="afpList" formControlName="afp" class="select-material"
                             styleClass="select-material"></p-dropdown>
                         <label for="" class="active">AFP</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" class="select-material"
                             styleClass="select-material"></p-dropdown>
@@ -270,7 +263,7 @@
                         <label for="" class="active">Contacto de emergencia</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-inputMask mask="(999) 999-9999" formControlName="phoneEmergencyContact" class="form-material"
                             styleClass="form-material">
@@ -295,7 +288,7 @@
                             <h5 class="title-header p-mb-2">Datos del jefe inmediato</h5>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-4 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
                                 [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)"
@@ -309,9 +302,8 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                                    {{empleado?.segundoNombre}}
-                                                </label>
+                                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -323,14 +315,14 @@
                         </div>
 
                     </div>
-                    <div class="ui-g-12 ui-md-8 ui-lg-6">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="primerNombre"
                                 placeholder="Apellidos y nombres" class="form-material" id="" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
                                 class="select-material" styleClass="select-material">
@@ -338,14 +330,14 @@
                             <label for="" class="active">Cargo / Categoría</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-5">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="primerNombre"
                                 placeholder="Dirección / Gerencia" class="form-material" id="" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
                                 styleClass="form-material">
@@ -377,7 +369,7 @@
                             <h5 class="title-header p-mb-2">Datos del Business Partner</h5>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-4 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
                                 [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)"
@@ -391,9 +383,7 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                                    {{empleado?.segundoNombre}}
-                                                </label>
+                                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -405,14 +395,14 @@
                         </div>
 
                     </div>
-                    <div class="ui-g-12 ui-md-8 ui-lg-6">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="primerNombre"
                                 placeholder="Apellidos y nombres" class="form-material" id="" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
                                 class="select-material" styleClass="select-material">
@@ -420,14 +410,14 @@
                             <label for="" class="active">Cargo / Categoría</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-5">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="primerNombre"
                                 placeholder="Dirección / Gerencia" class="form-material" id="" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
                                 styleClass="form-material">
