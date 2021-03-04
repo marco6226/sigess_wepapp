@@ -36,9 +36,7 @@
                                         <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                             style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
-                                            <label>{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                                {{empleado?.segundoNombre}}
-                                            </label>
+                                            <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}                                            
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
                                         </div>
@@ -225,7 +223,7 @@
                         <p-inputMask mask="(999) 999-9999" formControlName="telefono1" class="form-material"
                             styleClass="form-material">
                         </p-inputMask>
-                        <label for="" class="active">Teléfono de residencia</label>
+                        <label for="" class="active">Teléfono personal</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -233,7 +231,7 @@
                         <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material"
                             styleClass="form-material">
                         </p-inputMask>
-                        <label for="" class="active">Teléfono personal</label>
+                        <label for="" class="active">Teléfono de residencia</label>
                     </div>
                 </div>
 
