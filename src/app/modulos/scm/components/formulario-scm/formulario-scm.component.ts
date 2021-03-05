@@ -133,7 +133,10 @@ export class FormularioScmComponent implements OnInit {
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
-
+    caseOptionList = [
+        { label: "Si", value: "1" },
+        { label: "No", value: "0" }
+    ]
 
     constructor(
         private empleadoService: EmpleadoService,
@@ -466,7 +469,7 @@ export class FormularioScmComponent implements OnInit {
 
         this.empleadoSelect = emp;
         this.loaded = true;
-        this.nameAndLastName = this.empleadoSelect.primerApellido + " " + this.empleadoSelect.segundoApellido + " " + this.empleadoSelect.primerNombre + " " + this.empleadoSelect.segundoNombre;
+        this.nameAndLastName = this.empleadoSelect.primerApellido || "" + " " + this.empleadoSelect.segundoApellido || "" + " " + this.empleadoSelect.primerNombre || "" + " " + this.empleadoSelect.segundoNombre || " ";
         let fecha = moment(this.empleadoSelect.fechaIngreso);
         let fechaNacimiento = moment(this.empleadoSelect.fechaNacimiento);
         let antigueMoment = fecha.diff(moment.now(), "years") * -1;
@@ -648,6 +651,8 @@ export class FormularioScmComponent implements OnInit {
             area: empleado.area,
             correoPersonal: empleado.correoPersonal,
             cargoId: empleado.cargo.id,
+            direccionGerencia: empleado.direccionGerencia,
+
             //'ipPermitida': empleado.usuario.ipPermitida,
 
             email: [empleado.usuario.email],
@@ -665,6 +670,8 @@ export class FormularioScmComponent implements OnInit {
             numeroIdentificacion: empleado.numeroIdentificacion,
             corporativePhone: empleado.corporativePhone,
             area: empleado.area,
+            direccionGerencia: empleado.direccionGerencia,
+
             correoPersonal: empleado.correoPersonal,
             cargoId: empleado.cargo.id,
             //'ipPermitida': empleado.usuario.ipPermitida,

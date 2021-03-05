@@ -133,8 +133,8 @@ export class EmpleadoFormComponent implements OnInit {
             'email': [null, { disabled: true }, Validators.required],
             direccionGerencia: [null],
             regional: [null],
-            businessPartner: [null],
-            jefeInmediato: [null],
+            businessPartner: [""],
+            jefeInmediato: [""],
             correoPersonal: [null],
             ciudadGerencia: [null],
         });
@@ -178,7 +178,7 @@ export class EmpleadoFormComponent implements OnInit {
                         'tipoVinculacion': this.empleadoSelect.tipoVinculacion,
                         'zonaResidencia': this.empleadoSelect.zonaResidencia,
                         'area': this.empleadoSelect.area,
-                        'cargoId': "",
+                        'cargoId': this.empleadoSelect.cargo.id,
                         'perfilesId': [4],
                         "corporativePhone": this.empleadoSelect.corporativePhone,
                         "emergencyContact": this.empleadoSelect.emergencyContact,
@@ -188,7 +188,7 @@ export class EmpleadoFormComponent implements OnInit {
                         regional: this.empleadoSelect.regional,
                         correoPersonal: this.empleadoSelect.correoPersonal,
                         ciudadGerencia: this.empleadoSelect.ciudadGerencia,
-
+                        jefeInmediato: this.empleadoSelect.jefeInmediato,
                         //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
                         businessPartner: this.empleadoSelect.businessPartner,
                         'email': [this.empleadoSelect.usuario.email]
@@ -274,6 +274,7 @@ export class EmpleadoFormComponent implements OnInit {
 
     onSubmit() {
         let empleado = new Empleado();
+        console.log(this.form.value, "asdlasdñad");
         empleado.id = this.form.value.id;
         empleado.primerNombre = this.form.value.primerNombre;
         empleado.segundoNombre = this.form.value.segundoNombre;
@@ -312,10 +313,16 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.ciudadGerencia = this.form.value.ciudadGerencia;
         empleado.regional = this.form.value.regional,
             empleado.correoPersonal = this.form.value.correoPersonal;
-        empleado.direccionGerencia = this.form.value.correoPersonal;
-        empleado.businessPartner = this.form.value.businessPartner;
-        empleado.jefeInmediato = this.form.value.jefeInmediato;
-        console.log(this.form.value);
+
+        if (this.form.value.businessPartner) {
+            empleado.businessPartner = this.form.value.businessPartner.id;
+        }
+        if (this.form.value.jefeInmediato) {
+            console.log("empleado existe");
+            empleado.jefeInmediato = this.form.value.jefeInmediato.id;
+        }
+        empleado.direccionGerencia = this.form.value.direccionGerencia;
+        console.log(this.form.value.jefeInmediato);
 
         // //console.log(this.form.value.ipPermitida);
         // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
@@ -379,7 +386,7 @@ export class EmpleadoFormComponent implements OnInit {
     }
     onSelectionBP(event) {
         let empleado = <Empleado>event;
-        this.form.patchValue({ businessPartner: empleado.id })
+        this.form.patchValue({ businessPartner: empleado })
         this.businessForm.patchValue({
             id: empleado.id,
             primerNombre: empleado.primerNombre,
@@ -390,6 +397,7 @@ export class EmpleadoFormComponent implements OnInit {
             correoPersonal: empleado.correoPersonal,
             cargoId: empleado.cargo.id,
             //'ipPermitida': empleado.usuario.ipPermitida,
+            direccionGerencia: empleado.direccionGerencia,
 
             email: [empleado.usuario.email],
         });
@@ -398,11 +406,13 @@ export class EmpleadoFormComponent implements OnInit {
     onSelectionJefeInmediato(event) {
 
         let empleado = <Empleado>event;
-        this.form.patchValue({ jefeInmediato: empleado.id })
+        this.form.patchValue({ jefeInmediato: empleado })
         console.log(this.form.value);
         this.jefeInmediatoForm.patchValue({
             id: empleado.id,
             primerNombre: empleado.primerNombre,
+            direccionGerencia: empleado.direccionGerencia,
+
             primerApellido: empleado.primerApellido,
             numeroIdentificacion: empleado.numeroIdentificacion,
             corporativePhone: empleado.corporativePhone,

@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="case-date">
-           creado el: {{caseSelect.fechaCreacion | date: 'dd/MM/yyyy'}}
+            creado el: {{caseSelect.fechaCreacion | date: 'dd/MM/yyyy'}}
         </div>
     </div>
 </div>
@@ -36,7 +36,8 @@
                                         <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                             style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
-                                            <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}                                            
+                                            <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                            {{empleado?.segundoNombre}}
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
                                         </div>
@@ -65,8 +66,8 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="direccion" placeholder="Dirección / Gerencia"
-                            class="form-material" id="" />
+                        <input type="text" pInputText formControlName="direccionGerencia"
+                            placeholder="Dirección / Gerencia" class="form-material" id="" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
@@ -114,17 +115,16 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                            [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaNacimiento"></p-calendar>
+                            [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy">
+                        </p-calendar>
                         <label for="" class="active">Fecha de desvinculación</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone"
-                            styleClass="form-material">
-                        </p-inputMask>
+                        <input pInputText formControlName="corporativePhone" styleClass="form-material">
+
                         <label for="" class="active">Teléfono corporativo</label>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                             class="form-material" id="" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
-                </div>                
+                </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Regional"
@@ -205,7 +205,8 @@
                         <label for="" class="active">Zona de residencia</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <p-radioButton name="zonaResidencia" value="U" label=" Urbana   ." formControlName="zonaResidencia">
+                        <p-radioButton name="zonaResidencia" value="U" label=" Urbana   ."
+                            formControlName="zonaResidencia">
                         </p-radioButton>
                         <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
                         </p-radioButton>
@@ -213,24 +214,22 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="telefono1" class="form-material"
-                            styleClass="form-material">
-                        </p-inputMask>
+                        <input pInputText formControlName="telefono1" class="form-material" styleClass="form-material">
+
                         <label for="" class="active">Teléfono personal</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="telefono2" class="form-material"
-                            styleClass="form-material">
-                        </p-inputMask>
+                        <input pInputText formControlName="telefono2" class="form-material" styleClass="form-material">
+
                         <label for="" class="active">Teléfono de residencia</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="email" pInputText formControlName="email" plaholder="Correo personal" />
+                        <input type="email" pInputText formControlName="correoPersonal" plaholder="Correo personal" />
                         <label for="" class="active">Correo personal</label>
                     </div>
                 </div>
@@ -265,9 +264,9 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-inputMask mask="(999) 999-9999" formControlName="phoneEmergencyContact" class="form-material"
+                        <input pInputText formControlName="phoneEmergencyContact" class="form-material"
                             styleClass="form-material">
-                        </p-inputMask>
+
                         <label for="" class="active">Telefono de contacto de emergencia</label>
                     </div>
                 </div>
@@ -302,8 +301,9 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                
+                                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                {{empleado?.segundoNombre}}
+
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -332,16 +332,16 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="primerNombre"
+                            <input type="text" pInputText formControlName="direccionGerencia"
                                 placeholder="Dirección / Gerencia" class="form-material" id="" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
+                            <input pInputText formControlName="corporativePhone" class="form-material"
                                 styleClass="form-material">
-                            </p-inputMask>
+
                             <label for="" class="active">Número móvil corporativo</label>
                         </div>
                     </div>
@@ -383,7 +383,8 @@
                                             <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                                 style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                {{empleado?.segundoNombre}}
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -412,16 +413,16 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="primerNombre"
+                            <input type="text" pInputText formControlName="direccionGerencia"
                                 placeholder="Dirección / Gerencia" class="form-material" id="" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-inputMask mask="(999) 999-9999" formControlName="corporativePhone" class="form-material"
+                            <input pInputText formControlName="corporativePhone" class="form-material"
                                 styleClass="form-material">
-                            </p-inputMask>
+
                             <label for="" class="active">Número móvil corporativo</label>
                         </div>
                     </div>
@@ -478,8 +479,10 @@
 
                 <div class="ui-g-12 ui-md-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="casoMedicoLaboral"
-                            placeholder="Caso de mesa laboral" class="form-material" id="" />
+
+                        <p-dropdown [options]="caseOptionList" formControlName="casoMedicoLaboral"
+                            class="select-material" styleClass="select-material">
+                        </p-dropdown>
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
@@ -591,7 +594,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="requiereIntervencion"
+                        <p-dropdown [options]="caseOptionList" formControlName="requiereIntervencion"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Requiere intervención complementaria</label>
@@ -769,7 +772,7 @@
                     <td>{{case.documento}}</td>
                     <td>{{case.cargo}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                    <td>{{case.casoMedicoLaboral}}</td>
+                    <td>{{case.casoMedicoLaboral  == 1 ? 'Si' : 'No'}}</td>
 
                 </tr>
             </ng-template>
@@ -930,9 +933,10 @@
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <p-calendar [(ngModel)]="seguimiento.fechaSeg" placeholder="mm/dd/yyyy" [locale]="localeES">
+                                    <p-calendar [(ngModel)]="seguimiento.fechaSeg" placeholder="mm/dd/yyyy"
+                                        [locale]="localeES">
                                     </p-calendar>
-                                   
+
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{seguimiento.fechaSeg | date}}
