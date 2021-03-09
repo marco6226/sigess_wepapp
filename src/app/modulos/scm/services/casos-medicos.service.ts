@@ -59,6 +59,10 @@ export class CasosMedicosService {
         return this.http.get<[]>(`${endPoints.scm}sistemaafectado/`).toPromise();
     }
 
+    getSvelist() {
+        return this.http.get<[]>(`${endPoints.scm}svelist/`).toPromise();
+    }
+
     createSeguimiento(pkCase) {
         return this.http.post(`${endPoints.scm}seguimiento/`, { pkCase }).toPromise();
 

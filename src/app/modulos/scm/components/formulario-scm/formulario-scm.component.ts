@@ -121,6 +121,7 @@ export class FormularioScmComponent implements OnInit {
     tipoVinculacionList: SelectItem[];
     epsList: SelectItem[];
     afpList: SelectItem[];
+    sveOptionList: SelectItem[] = [];
     cargoList: SelectItem[];
     caseStatus = [
         { label: "Abierto", value: 1 },
@@ -298,6 +299,12 @@ export class FormularioScmComponent implements OnInit {
             (<Afp[]>data).forEach((afp) => {
                 this.afpList.push({ label: afp.nombre, value: afp.id });
             });
+        });
+
+        let res: any = await this.scmService.getSvelist();
+        this.sveOptionList.push({ label: "--Seleccione--", value: null });
+        res.forEach((sve) => {
+            this.sveOptionList.push({ label: sve.nombre, value: sve.id });
         });
         this.comunService.findAllEps().then((data) => {
             this.epsList = [];

@@ -606,8 +606,9 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="sve" placeholder="SVE" class="form-material"
-                            id="" />
+                        <p-dropdown [options]="sveOptionList" formControlName="requiereIntervencion"
+                            class="select-material" styleClass="select-material">
+                        </p-dropdown>
                         <label for="" class="active">SVE</label>
                     </div>
                 </div>
