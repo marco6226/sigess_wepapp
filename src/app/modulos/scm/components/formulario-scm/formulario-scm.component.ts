@@ -138,6 +138,11 @@ export class FormularioScmComponent implements OnInit {
         { label: "No", value: "0" }
     ]
 
+    pclOptionList = [
+        { label: "En proceso", value: "1" },
+        { label: "Firme", value: "2" },
+        { label: "No aplica", value: "0" }
+    ]
     constructor(
         private empleadoService: EmpleadoService,
         private fb: FormBuilder,
@@ -171,6 +176,8 @@ export class FormularioScmComponent implements OnInit {
             email: { value: "", disabled: true },
             corporativePhone: [{ value: "", disabled: true }],
             cargoId: [{ value: "", disabled: true }, Validators.required],
+            direccionGerencia: [null]
+
         });
         this.jefeInmediato = fb.group({
             id: ["", Validators.required],
@@ -180,6 +187,8 @@ export class FormularioScmComponent implements OnInit {
             email: { value: "", disabled: true },
             corporativePhone: [{ value: "", disabled: true }],
             cargoId: [{ value: "", disabled: true }, Validators.required],
+            direccionGerencia: [null]
+
         });
         this.empleadoForm = fb.group({
             'id': [null],
