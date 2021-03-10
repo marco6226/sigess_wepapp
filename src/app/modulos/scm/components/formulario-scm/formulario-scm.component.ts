@@ -222,7 +222,7 @@ export class FormularioScmComponent implements OnInit {
             'cargoId': [null, Validators.required],
             'perfilesId': [null, Validators.required],
             //'ipPermitida': [null],
-            'email': [null, { disabled: true }, Validators.required],
+            'email': [{ value: "", disabled: true }, Validators.required],
             direccionGerencia: [null],
             regional: [null],
             businessPartner: [null],
