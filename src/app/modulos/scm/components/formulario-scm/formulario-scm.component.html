@@ -315,12 +315,11 @@
                         </div>
 
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
-                        <div class="input-field">
-                            <input type="text" pInputText formControlName="primerNombre"
-                                placeholder="Apellidos y nombres" class="form-material" id="" />
-                            <label for="" class="active">Apellidos y nombres</label>
-                        </div>
+                    <div class="input-field">
+                        <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
+                            class="form-material" id="" [disabled]="true" />
+                        <label for="" class="active">Apellidos y nombres</label>
+                        <label for="" class="active">Apellidos y nombres</label>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
@@ -398,8 +397,8 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="primerNombre"
-                                placeholder="Apellidos y nombres" class="form-material" id="" />
+                            <input type="text" pInputText [value]="businessNames" placeholder="Apellidos y nombres"
+                                class="form-material" id="" [disabled]="true" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -501,7 +500,6 @@
                             styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">PCL</label>
-                        {{casoMedicoForm.get('pcl').value}}
                     </div>
                 </div>
                 <div class="ui-g-6" *ngIf="casoMedicoForm.get('pcl').value != 0">
@@ -542,7 +540,7 @@
                 </div>
 
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="statusDeCalificacion"
                             class="select-material" styleClass="select-material">
@@ -550,7 +548,7 @@
                         <label for="" class="active">Estado de la calificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-2" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -558,7 +556,7 @@
                         <label for="" class="active">Fecha de la calificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-6">
+                <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteCalificacion"
                             class="select-material" styleClass="select-material">

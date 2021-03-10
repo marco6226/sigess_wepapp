@@ -131,6 +131,8 @@ export class FormularioScmComponent implements OnInit {
     loaded: boolean;
     antiguedad;
     range;
+    jefeNames = " ";
+    businessNames = "";
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
@@ -485,7 +487,7 @@ export class FormularioScmComponent implements OnInit {
 
         this.empleadoSelect = emp;
         this.loaded = true;
-        this.nameAndLastName = this.empleadoSelect.primerApellido || "" + " " + this.empleadoSelect.segundoApellido || "" + " " + this.empleadoSelect.primerNombre || "" + " " + this.empleadoSelect.segundoNombre || " ";
+        this.nameAndLastName = (this.empleadoSelect.primerApellido || "") + " " + (this.empleadoSelect.segundoApellido || "") + " " + (this.empleadoSelect.primerNombre || "") + " " + (this.empleadoSelect.segundoNombre || " ");
         let fecha = moment(this.empleadoSelect.fechaIngreso);
         let fechaNacimiento = moment(this.empleadoSelect.fechaNacimiento);
         let antigueMoment = fecha.diff(moment.now(), "years") * -1;
@@ -657,6 +659,7 @@ export class FormularioScmComponent implements OnInit {
     }
     onSelectionBP(event) {
         let empleado = <Empleado>event;
+        this.businessNames = (empleado.primerApellido || "") + " " + (empleado.segundoApellido || "") + " " + (empleado.primerNombre || "") + " " + (empleado.segundoNombre || " ");
         this.empleadoForm.patchValue({ businessPartner: empleado.id })
         this.bussinessParner.patchValue({
             id: empleado.id,
@@ -678,6 +681,7 @@ export class FormularioScmComponent implements OnInit {
     onSelectionJefeInmediato(event) {
 
         let empleado = <Empleado>event;
+        this.jefeNames = (empleado.primerApellido || "") + " " + (empleado.segundoApellido || "") + " " + (empleado.primerNombre || "") + " " + (empleado.segundoNombre || " ");
         this.empleadoForm.patchValue({ jefeInmediato: empleado.id })
         this.jefeInmediato.patchValue({
             id: empleado.id,
