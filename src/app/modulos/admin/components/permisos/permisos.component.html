@@ -60,7 +60,7 @@
                         <td>{{rowData.nombre}}</td>
                         <td>{{rowData.codigo}}</td>
                         <td>
-                            {{rowData.areas | json}}
+
                             <p-multiSelect *ngIf="rowData.validacionArea " defaultLabel="--seleccione areas--"
                                 [options]="areaList" [(ngModel)]="rowData['areas']">
                             </p-multiSelect>
