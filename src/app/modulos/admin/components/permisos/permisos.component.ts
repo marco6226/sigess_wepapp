@@ -99,10 +99,13 @@ export class PermisosComponent implements OnInit {
                     recurso.selected = permiso.valido;
                     if (recurso['validacionArea']) {
                         recurso['areas'] = permiso.areas == null ? null : permiso.areas.replace('{', '').replace('}', '').replace(' ', '').split(',');
-                        recurso['areas'].forEach((value, index) => {
+                        if (recurso['areas']) {
+                            recurso['areas'].forEach((value, index) => {
 
-                            recurso["areas"][index] = parseInt(value);
-                        });;
+                                recurso["areas"][index] = parseInt(value);
+                            });;
+                        }
+
                     }
                 }
             });
