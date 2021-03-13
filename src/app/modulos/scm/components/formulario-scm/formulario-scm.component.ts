@@ -597,7 +597,7 @@ export class FormularioScmComponent implements OnInit {
         empleado.usuario = new Usuario();
         empleado.area.id = this.empleadoForm.value.area.id;
         empleado.cargo.id = this.empleadoForm.value.cargoId;
-        empleado.usuario.email = this.empleadoForm.value.email[0];
+        empleado.usuario.email = this.empleadoForm.value.email;
         empleado.ciudadGerencia = this.empleadoForm.value.ciudadGerencia;
         empleado.regional = this.empleadoForm.value.regional,
             empleado.correoPersonal = this.empleadoForm.value.correoPersonal;
