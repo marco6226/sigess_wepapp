@@ -916,6 +916,85 @@
         </div>
 
     </p-tabPanel>
+    <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
+
+        <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
+            dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Entidad emisora
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fapertura">Tipo
+                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="regional">Estado
+                        <p-sortIcon field="regional"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ciudad">Recomendación
+                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nameLastname">Fecha inicial
+                        <p-sortIcon field="nameLastname"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="documento">Fecha final
+                        <p-sortIcon field="documento"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="charge">Recomendación generada
+                        <p-sortIcon field="charge"></p-sortIcon>
+                    </th>
+
+                </tr>
+                <tr *ngIf="false">
+
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+                    <td>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
+
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.entidadEmitRecomendaciones}}</td>
+                    <td>{{case.tipo }}</td>
+                    <td>{{case.status}}</td>
+                    <td>{{case.recomendaciones}}</td>
+                    <td>{{case.fechaInicio | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{case.fechaExpiracion | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{case.generateRecomendaciones}}</td>
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                    (click)="modalRecomendatios = true">
+
+                </button>
+
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
         <div class="card">
@@ -1033,85 +1112,7 @@
     </p-tabPanel>
 
 
-    <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
-
-        <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
-            dataKey="id" [lazy]="true">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="id">Entidad emisora
-                        <p-sortIcon field="id"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="fapertura">Tipo
-                        <p-sortIcon field="fapertura"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="regional">Estado
-                        <p-sortIcon field="regional"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="ciudad">Recomendación
-                        <p-sortIcon field="ciudad"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="nameLastname">Fecha inicial
-                        <p-sortIcon field="nameLastname"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="documento">Fecha final
-                        <p-sortIcon field="documento"></p-sortIcon>
-                    </th>
-
-                    <th pSortableColumn="charge">Recomendación generada
-                        <p-sortIcon field="charge"></p-sortIcon>
-                    </th>
-
-                </tr>
-                <tr *ngIf="false">
-
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-case>
-
-                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                    <td>{{case.entidadEmitRecomendaciones}}</td>
-                    <td>{{case.tipo }}</td>
-                    <td>{{case.status}}</td>
-                    <td>{{case.recomendaciones}}</td>
-                    <td>{{case.fechaInicio | date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{case.fechaExpiracion | date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{case.generateRecomendaciones}}</td>
-
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
-                    (click)="modalRecomendatios = true">
-
-                </button>
-
-            </ng-template>
-        </p-table>
-    </p-tabPanel>
+   
 
     <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
 
