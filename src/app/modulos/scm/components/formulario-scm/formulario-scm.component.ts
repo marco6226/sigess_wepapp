@@ -281,6 +281,8 @@ export class FormularioScmComponent implements OnInit {
 
 
         if (this.consultar) {
+            this.onLoadInit();
+            this.modifyCase()
             this.empleadoForm.disable();
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
@@ -477,6 +479,9 @@ export class FormularioScmComponent implements OnInit {
     }
     async onSelection(event) {
         this.value = event;
+        this.caseSelect = false;
+        this.empleadoSelect = null;
+        this.casoMedicoForm.reset();
         let emp = <Empleado>this.value;
 
 
@@ -718,6 +723,7 @@ export class FormularioScmComponent implements OnInit {
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         this.casoMedicoForm.patchValue(this.caseSelect);
         console.log("selecciono un caso", this.caseSelect);
+        this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.casoMedicoForm.patchValue(this.caseSelect);
@@ -726,7 +732,7 @@ export class FormularioScmComponent implements OnInit {
         this.fechaSeg()
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
-        console.log(this.casoSeleccionado);
+        console.log(this.incapacidades);
     }
 
     async onLoadInit() {
@@ -796,5 +802,7 @@ export class FormularioScmComponent implements OnInit {
             }
         })
     }
+
+
 
 }

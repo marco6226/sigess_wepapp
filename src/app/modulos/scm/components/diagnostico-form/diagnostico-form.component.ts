@@ -30,6 +30,10 @@ export class DiagnosticoFormComponent implements OnInit {
 
         });
     }
+    get codigo() { return this.diagnosticoForm.get('codigoCie10'); }
+    get diagnostico() { return this.diagnosticoForm.get('diagnostico'); }
+    get sistemaAfec() { return this.diagnosticoForm.get('sistemaAfectado'); }
+    get origen() { return this.diagnosticoForm.get('origen'); }
 
     async ngOnInit() {
         let resp: any = await this.scmService.getSistemasAFectados();
@@ -56,7 +60,7 @@ export class DiagnosticoFormComponent implements OnInit {
         } = this.diagnosticoForm.value;
 
         let body = {
-            codigoCie10: codigoCie10.id,
+            codigoCie10,
             diagnostico,
             sistemaAfectado,
             pkCase: this.caseId,
@@ -93,7 +97,7 @@ export class DiagnosticoFormComponent implements OnInit {
 
     test(event) {
         console.log(event);
-        this.diagnosticoForm.patchValue({ diagnostico: event.nombre })
+        this.diagnosticoForm.patchValue({ diagnostico: event.nombre, codigoCie10: event.codigo })
     }
 
     private markFormGroupTouched(formGroup: FormGroup) {

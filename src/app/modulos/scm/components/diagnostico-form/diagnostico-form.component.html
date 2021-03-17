@@ -12,6 +12,8 @@
                     <label class="active">Código CIE</label>
                     <s-cieSelector id="ccide-input" formControlName="codigoCie10" (dateChange)="test($event)">
                     </s-cieSelector>
+                    <small *ngIf="codigo.errors?.required && codigo.touched" id="username2-help"
+                        class="p-invalid">Requerido</small>
                 </div>
             </div>
 
@@ -23,6 +25,8 @@
                         styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Sistema Afectado</label>
+                    <small *ngIf="sistemaAfec.errors?.required && sistemaAfec.touched" id="username2-help"
+                        class="p-invalid">Requerido</small>
                 </div>
             </div>
 
@@ -30,6 +34,8 @@
                 <div class="input-field">
                     <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
                     <label for="" class="active">Diagnóstico</label>
+                    <small *ngIf="diagnostico.errors?.required && diagnostico.touched" id="username2-help"
+                        class="p-invalid">Requerido</small>
                 </div>
             </div>
 
@@ -38,6 +44,8 @@
                     <input type="text" pInputText formControlName="origen" placeholder="Origen" class="form-material"
                         id="" />
                     <label for="" class="active">Origen</label>
+                    <small *ngIf="origen.errors?.required && origen.touched" id="username2-help"
+                        class="p-invalid">Requerido</small>
                 </div>
             </div>
             <div class="ui-g-12">

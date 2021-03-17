@@ -317,9 +317,9 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                        <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
+                            <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
                                 [disabled]="true" class="form-material" id="" />
-                        <label for="" class="active">Apellidos y nombres</label>
+                            <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -439,8 +439,6 @@
     </p-tabPanel>
 
     <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
-
-
 
 
         <form *ngIf="createCase || caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
@@ -777,7 +775,7 @@
                     <td>{{case.documento}}</td>
                     <td>{{case.cargo}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                    <td>{{case.casoMedicoLaboral  == 1 ? 'Si' : 'No'}}</td>
+                    <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
 
                 </tr>
             </ng-template>
@@ -840,7 +838,7 @@
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                     <td>{{case.pkCase}}</td>
                     <td>{{case.codigoCie10 }}</td>
-                    <td>{{case.sistemaAfectado}}</td>
+                    <td>{{case.sistemaAfectado?.name || ""}}</td>
                     <td>{{case.diagnostico}}</td>
 
                 </tr>
@@ -888,7 +886,8 @@
                         </tr>
 
                     </ng-template>
-                    <ng-template pTemplate="body" let-aus *ngIf="incapacidades.length>0">
+                    {{incapacidades.length}}
+                    <ng-template pTemplate="body" let-aus *ngIf="incapacidades.length > 0">
 
                         <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
                             <td>{{aus.fechaDesde | date}}</td>
@@ -897,11 +896,11 @@
 
                             <td>{{aus.diasAusencia}}</td>
 
-                            <td>{{aus.causaAusentismo.nombre}}</td>
+                            <td>{{aus.causaAusentismo.nombre }}</td>
 
-                            <td>{{aus.cie.codigo }}</td>
+                            <td>{{false }}</td>
 
-                            <td>{{aus.cie.nombre }}</td>
+                            <td>{{true || "" }}</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="summary" let-rowData>
@@ -1064,7 +1063,7 @@
                     </th>
 
                 </tr>
-                <tr>
+                <tr *ngIf="false">
 
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
@@ -1182,5 +1181,5 @@
     </app-recomendationsform>
 </p-dialog>
 
-<button pButton *ngIf="solicitando == false" type="button" [routerLink]="['/app/scm/list']" icon="fa fa-chevron-left"
+<button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()" icon="fa fa-chevron-left"
     class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>

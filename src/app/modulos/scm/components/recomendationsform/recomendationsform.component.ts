@@ -18,9 +18,9 @@ export class RecomendationsformComponent implements OnInit {
     entit = [
         { name: '', code: '' },
 
-        { name: 'EPS', code: 'NY' },
-        { name: 'ARL', code: 'RM' },
-        { name: 'Entidad  que emite', code: 'RM' }
+        { name: 'EPS', code: 'EPS' },
+        { name: 'ARL', code: 'ARL' },
+        { name: 'Entidad  que emite', code: null }
 
     ];
 
@@ -30,16 +30,16 @@ export class RecomendationsformComponent implements OnInit {
     typeList = [
         { name: '', code: '' },
 
-        { name: 'Activo', code: 'NY' },
-        { name: 'Cerrado', code: 'NY' },
+        { name: 'Activo', code: '1' },
+        { name: 'Cerrado', code: '0' },
 
     ];
 
     statusList = [
         { name: '', code: '' },
 
-        { name: 'Activo', code: 'NY' },
-        { name: 'Cerrado', code: 'NY' },
+        { name: 'Activo', code: '1' },
+        { name: 'Cerrado', code: '0' },
 
     ];
 
@@ -140,6 +140,7 @@ export class RecomendationsformComponent implements OnInit {
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
+                    this.recomendation.reset();
                     this.eventClose.emit()
                 }, 1000);
             }
