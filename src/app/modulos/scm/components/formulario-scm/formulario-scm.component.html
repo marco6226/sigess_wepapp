@@ -627,68 +627,7 @@
                 </div>
             </div>
 
-            <!--
-           <div class="ui-g p-py-2">
-                <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Recomendaciones</h5>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input  type="text" pInputText formControlName="primerNombre"
-                            placeholder="Se generan recomendaciones" class="form-material" id="" />
-                        <label for="" class="active">Se generan recomendaciones</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-5">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                            class="select-material" styleClass="select-material" >
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite las recomendaciones</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                            class="select-material" styleClass="select-material" >
-                        </p-dropdown>
-                        <label for="" class="active">Tipo</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaNacimiento"></p-calendar>
-                        <label for="" class="active">Fecha de expedición</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaNacimiento"></p-calendar>
-                        <label for="" class="active">Fecha de vencimiento</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                            class="select-material" styleClass="select-material" >
-                        </p-dropdown>
-                        <label for="" class="active">Estado</label>
-                    </div>
-                </div>
- 
-                <div class="ui-g-12">
-                    <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="direccion"></textarea>
-                        <label for="" class="active">Recomendaciones</label>
-                    </div>
-                </div>
-            </div>-->
+            
             <div style="text-align: center; width: 100%;">
                 <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
                     style="bottom: 100px;" title="Guardar datos de empleado"></button>
@@ -1111,8 +1050,22 @@
         </div>
     </p-tabPanel>
 
+    <p-tabPanel header="Documentación" *ngIf="caseSelect">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Documentos asociados  al caso médico</h5>
+            </div>
+        </div>   
 
-   
+    </p-tabPanel>
+    <p-tabPanel header="Plan de Acción" *ngIf="caseSelect">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Plan de Acción de las recomendaciones</h5>
+            </div>
+        </div>   
+
+    </p-tabPanel>
 
     <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
 
