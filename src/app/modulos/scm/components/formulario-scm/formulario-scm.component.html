@@ -859,14 +859,14 @@
             </div>
             <div class="ui-g-12">
                 <!-- <p-table [columns]="cols" [value]="products" styleClass="p-datatable-responsive"> -->
-                <p-table styleClass="p-datatable-responsive" [value]="incapacidades" [rows]="5" [paginator]="true"
-                    dataKey="id" [lazy]="true">
+                <p-table [value]="incapacidades" dataKey="id">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="fechaDesde">Fecha Inicio
                                 <p-sortIcon field="fechaDesde"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="fechaHasta">Fecha Hasta
+                            <th pSortableColumn="fechaHasta">Fecha Hasta {{incapacidades.length}}
+
                                 <p-sortIcon field="fechaHasta"></p-sortIcon>
                             </th>
                             <th pSortableColumn="diasAusencia">Dias de incapacidad
@@ -886,8 +886,7 @@
                         </tr>
 
                     </ng-template>
-                    {{incapacidades.length}}
-                    <ng-template pTemplate="body" let-aus *ngIf="incapacidades.length > 0">
+                    <ng-template pTemplate="body" let-aus>
 
                         <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
                             <td>{{aus.fechaDesde | date}}</td>
@@ -898,9 +897,9 @@
 
                             <td>{{aus.causaAusentismo.nombre }}</td>
 
-                            <td>{{false }}</td>
+                            <td>{{aus.cie?.codigo || "No definio" }}</td>
 
-                            <td>{{true || "" }}</td>
+                            <td>{{aus.cie?.nombre || "" }}</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="summary" let-rowData>
@@ -1021,6 +1020,7 @@
                         </td>
                     </tr>
                 </ng-template>
+
                 <ng-template pTemplate="summary" let-rowData>
                     <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
                         (click)="nuevoSeguimiento()">

@@ -722,8 +722,9 @@ export class FormularioScmComponent implements OnInit {
     async modifyCase() {
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         this.casoMedicoForm.patchValue(this.caseSelect);
-        console.log("selecciono un caso", this.caseSelect);
         this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
+
+        console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.casoMedicoForm.patchValue(this.caseSelect);
