@@ -7,15 +7,7 @@
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Recomendaciones</h5>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="text" pInputText formControlName="generateRecomendaciones"
-                        placeholder="Se generan recomendaciones" class="form-material" id="" />
-                    <label for="" class="active">Se generan recomendaciones</label>
-                </div>
-                <small *ngIf="generateRecomendaciones.errors?.required && tipo.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
-            </div>
+            
             <div class="ui-g-12 ui-md-6 ui-lg-5">
                 <div class="input-field">
                     <p-dropdown formControlName="entidadEmitRecomendaciones" optionLabel="name" optionValue="name"
@@ -45,7 +37,7 @@
                         [maxDate]="fechaActual" [locale]="localeES" formControlName="fechaInicio" dateFormat="dd/mm/yy"
                         inputStyleClass="form-material">
                     </p-calendar>
-                    <label for="" class="active">Fecha de expedición</label>
+                    <label for="" class="active">Fecha Inicial</label>
                 </div>
                 <small *ngIf="fechaInicio.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
@@ -56,7 +48,7 @@
                         formControlName="fechaExpiracion" [locale]="localeES" dateFormat="dd/mm/yy"
                         inputStyleClass="form-material">
                     </p-calendar>
-                    <label for="" class="active">Fecha de vencimiento</label>
+                    <label for="" class="active">Fecha Final</label>
                 </div>
                 <small *ngIf="fechaExpiracion.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
@@ -81,12 +73,15 @@
                     class="p-invalid">Requerido</small>
 
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Plan de Acción</h5>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
                 <div class="input-field">
-                    <p-dropdown optionLabel="name" formControlName="actionPlan" optionValue="code"
-                        [options]="statusList" class="select-material" styleClass="select-material">
-                    </p-dropdown>
-                    <label for="" class="active">Plan de accion</label>
+                    
+                    <textarea formControlName="actionPlan" class="textarea-material" pInputTextarea></textarea>
+                    
+                    <label for="" class="active">Plan de acción</label>
                 </div>
                 <small *ngIf="actionPlan.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>

@@ -54,7 +54,7 @@ export class RecomendationsformComponent implements OnInit {
         private scmService: CasosMedicosService,
     ) {
         this.recomendation = fb.group({
-            generateRecomendaciones: [null, Validators.required],
+            
             entidadEmitRecomendaciones: [null, Validators.required],
 
             tipo: [null, Validators.required],
@@ -75,7 +75,7 @@ export class RecomendationsformComponent implements OnInit {
     get fechaInicio() { return this.recomendation.get('fechaInicio'); }
     get entidadEmitRecomendaciones() { return this.recomendation.get('entidadEmitRecomendaciones'); }
     get status() { return this.recomendation.get('status'); }
-    get generateRecomendaciones() { return this.recomendation.get('generateRecomendaciones'); }
+   
     get recomendaciones() { return this.recomendation.get('tipo'); }
     get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
     get actionPlanResponsable() { return this.recomendation.get('actionPlanResponsable'); }
@@ -92,7 +92,6 @@ export class RecomendationsformComponent implements OnInit {
             return this.markFormGroupTouched(this.recomendation);
         }
         let {
-            generateRecomendaciones,
 
             entidadEmitRecomendaciones,
 
@@ -111,7 +110,7 @@ export class RecomendationsformComponent implements OnInit {
         } = this.recomendation.value;
 
         let body = {
-            generateRecomendaciones: generateRecomendaciones,
+            
             entidadEmitRecomendaciones: entidadEmitRecomendaciones.code,
 
             tipo: tipo.code,
