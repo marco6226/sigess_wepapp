@@ -484,7 +484,7 @@
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
                             id="" />
@@ -493,7 +493,7 @@
                 </div>
 
 
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [options]="pclOptionList" formControlName="pcl" class="select-material"
                             styleClass="select-material">
@@ -501,19 +501,8 @@
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
-                <div class="ui-g-6" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen"
-                        [disabled]="disabled"></button>
-                    <div *ngIf="loadingImg == true" style="width: 100%;text-align: center;margin-top: 20px;">
-                        <p-progressSpinner strokeWidth="8" [style]="{width: '45px', height: '45px'}">
-                        </p-progressSpinner>
-                    </div>
-                    <s-galeria *ngIf="imagenesList.length > 0" [images]="imagenesList"
-                        (onRemove)="removerImagen($event)" [readOnly]="disabled"></s-galeria>
-                    <input name="myFile" type="file" style="visibility: hidden;" #fileInput
-                        (change)="onArchivoSelect($event)">
-                </div>
-                <div class="ui-g-12 ui-md-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
+                
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
                             class="form-material" id="" />
@@ -521,7 +510,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-2" *ngIf="casoMedicoForm.get('pcl').value != 0">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -529,7 +518,7 @@
                         <label for="" class="active">Fecha de emisión de la PCL</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-6" *ngIf="casoMedicoForm.get('pcl').value != 0">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="pclEmitEntidad"
                             class="select-material" styleClass="select-material">
@@ -547,7 +536,7 @@
                         <label for="" class="active">Estado de la calificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2" *ngIf="casoMedicoForm.get('pcl').value != 0">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -555,7 +544,7 @@
                         <label for="" class="active">Fecha de la calificación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="casoMedicoForm.get('pcl').value != 0">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteCalificacion"
                             class="select-material" styleClass="select-material">
@@ -570,7 +559,7 @@
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -578,7 +567,7 @@
                         <label for="" class="active">Fecha de concepto de rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteConcepto"
                             class="select-material" styleClass="select-material">
@@ -619,7 +608,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <textarea class="textarea-material" pInputTextarea></textarea>
                         <label for="" class="active">Justificación</label>
