@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Empleado } from "app/modulos/empresa/entities/empleado";
+import { EmpleadoService } from "app/modulos/empresa/services/empleado.service";
 import { locale_es } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
 import { SelectItem, Message } from "primeng/api";
 import { CasosMedicosService } from "../../services/casos-medicos.service";
@@ -13,6 +15,8 @@ export class RecomendationsformComponent implements OnInit {
     epsList: SelectItem[];
     afpList: SelectItem[];
     msgs: Message[];
+    responsableEmpresaNombre = "";
+    empleado: Empleado;
     @Output() eventClose = new EventEmitter<any>()
     @Input() id: any;
     entit = [
@@ -43,7 +47,7 @@ export class RecomendationsformComponent implements OnInit {
 
     ];
 
-
+    empleadosList = [];
     fechaActual = new Date();
     recomendation: FormGroup;
     tipoIdentificacionList;
@@ -52,18 +56,20 @@ export class RecomendationsformComponent implements OnInit {
 
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
+        private empleadoService: EmpleadoService
+
     ) {
         this.recomendation = fb.group({
-            
+
             entidadEmitRecomendaciones: [null, Validators.required],
 
             tipo: [null, Validators.required],
 
             fechaInicio: [null, Validators.required],
-
+            responsableExterno: [null, Validators.required],
             fechaExpiracion: [null, Validators.required],
 
-            status: [null, Validators.required],
+            status: [null],
             actionPlan: [null, Validators.required],
             actionPlanResponsable: [null, Validators.required],
             recomendaciones: [null, Validators.required],
@@ -75,7 +81,7 @@ export class RecomendationsformComponent implements OnInit {
     get fechaInicio() { return this.recomendation.get('fechaInicio'); }
     get entidadEmitRecomendaciones() { return this.recomendation.get('entidadEmitRecomendaciones'); }
     get status() { return this.recomendation.get('status'); }
-   
+
     get recomendaciones() { return this.recomendation.get('tipo'); }
     get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
     get actionPlanResponsable() { return this.recomendation.get('actionPlanResponsable'); }
@@ -110,7 +116,7 @@ export class RecomendationsformComponent implements OnInit {
         } = this.recomendation.value;
 
         let body = {
-            
+
             entidadEmitRecomendaciones: entidadEmitRecomendaciones.code,
 
             tipo: tipo.code,
@@ -155,6 +161,17 @@ export class RecomendationsformComponent implements OnInit {
 
 
     }
+
+    onSelectionResponsable(event) {
+        let empleado = <Empleado>event;
+    }
+
+    buscarEmpleado(event) {
+        this.empleadoService
+            .buscar(event.query)
+            .then((data) => (this.empleadosList = <Empleado[]>data));
+    }
+
 
     private markFormGroupTouched(formGroup: FormGroup) {
         (<any>Object).values(formGroup.controls).forEach(control => {

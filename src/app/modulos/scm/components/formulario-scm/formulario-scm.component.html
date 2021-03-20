@@ -81,7 +81,8 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea [value]="cargoDescripcion || ''"></textarea>
+                        <textarea class="textarea-material" pInputTextarea
+                            formControlName="descripcionCargo"></textarea>
                         <label for="" class="active">Descripción del cargo</label>
                     </div>
                 </div>
@@ -627,7 +628,7 @@
                 </div>
             </div>
 
-            
+
             <div style="text-align: center; width: 100%;">
                 <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
                     style="bottom: 100px;" title="Guardar datos de empleado"></button>
@@ -1053,9 +1054,9 @@
     <p-tabPanel header="Documentación" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
-                <h5 class="title-header p-mb-2">Documentos asociados  al caso médico</h5>
+                <h5 class="title-header p-mb-2">Documentos asociados al caso médico</h5>
             </div>
-        </div>   
+        </div>
 
     </p-tabPanel>
     <p-tabPanel header="Plan de Acción" *ngIf="caseSelect">
@@ -1063,7 +1064,7 @@
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Plan de Acción de las recomendaciones</h5>
             </div>
-        </div>   
+        </div>
 
     </p-tabPanel>
 

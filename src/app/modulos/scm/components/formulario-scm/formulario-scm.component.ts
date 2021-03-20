@@ -150,15 +150,13 @@ export class FormularioScmComponent implements OnInit {
         private empleadoService: EmpleadoService,
         private fb: FormBuilder,
         private sesionService: SesionService,
-        private enumeracionesService: EnumeracionesService,
         private domSanitizer: DomSanitizer,
         private comunService: ComunService,
         private cargoService: CargoService,
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
-        private directorioService: DirectorioService,
-        private router: Router,) {
+    ) {
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
         this.tipoIdentificacionList = defaultItem.concat(

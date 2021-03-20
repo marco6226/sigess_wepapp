@@ -7,7 +7,7 @@
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Recomendaciones</h5>
             </div>
-            
+
             <div class="ui-g-12 ui-md-6 ui-lg-5">
                 <div class="input-field">
                     <p-dropdown formControlName="entidadEmitRecomendaciones" optionLabel="name" optionValue="name"
@@ -53,16 +53,7 @@
                 <small *ngIf="fechaExpiracion.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <p-dropdown formControlName="status" optionLabel="name" optionValue="code" [options]="statusList"
-                        class="select-material" styleClass="select-material">
-                    </p-dropdown>
-                    <label for="" class="active">Estado</label>
-                </div>
-                <small *ngIf="status.errors?.required && tipo.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
-            </div>
+
 
             <div class="ui-g-12">
                 <div class="input-field">
@@ -78,9 +69,9 @@
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-6">
                 <div class="input-field">
-                    
+
                     <textarea formControlName="actionPlan" class="textarea-material" pInputTextarea></textarea>
-                    
+
                     <label for="" class="active">Plan de acción</label>
                 </div>
                 <small *ngIf="actionPlan.errors?.required && tipo.touched" id="username2-help"
@@ -88,9 +79,41 @@
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" formControlName="actionPlanResponsable" pInputText placeholder="Responsable"
+                    <div class="input-field">
+                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                            [style]="{'width':'100%'}" (onSelect)="onSelectionResponsable($event)"
+                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                            *ngIf="empleado?.id == null">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar />
+                                        <div style="margin-left:20px">
+                                            <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                            {{empleado?.segundoNombre}}
+
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="" class="active">responsable empresa</label>
+                    </div>
+                </div>
+                <small *ngIf="actionPlanResponsable.errors?.required && tipo.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" formControlName="responsableExterno" pInputText placeholder="Responsable"
                         class="form-material" id="" />
-                    <label for="" class="active">Responsable </label>
+                    <label for="" class="active">Responsable Externo </label>
                 </div>
                 <small *ngIf="actionPlanResponsable.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>

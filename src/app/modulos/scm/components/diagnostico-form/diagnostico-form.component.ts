@@ -80,6 +80,7 @@ export class DiagnosticoFormComponent implements OnInit {
                 });
                 setTimeout(() => {
                     this.eventClose.emit()
+                    this.diagnostico.reset()
                 }, 1000);
             }
         } catch (error) {
