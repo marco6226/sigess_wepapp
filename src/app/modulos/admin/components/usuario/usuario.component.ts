@@ -72,7 +72,7 @@ export class UsuarioComponent implements OnInit {
       'id': [null],
       'email': [null, Validators.required],
       'perfilesId': [null, Validators.required],
-      'ipPermitida': [null],
+      'ipPermitida':'{0.0.0.0/0}',
       'mfa': mfaField,
       'numeroMovil': numMovField,
       'estado': [null]
@@ -138,7 +138,7 @@ onClick(){
             'email': this.usuarioSelect.email,
             'perfilesId': perfilesId,
             'estado': this.usuarioSelect.estado,
-            'ipPermitida': this.usuarioSelect.ipPermitida,
+            'ipPermitida': '{0.0.0.0/0}',
             'mfa': this.usuarioSelect.mfa,
             'numeroMovil': this.usuarioSelect.numeroMovil
           });
@@ -197,7 +197,7 @@ onClick(){
     usuario.id = this.form.value.id;
     usuario.email = this.form.value.email;
     usuario.usuarioEmpresaList = [];
-    usuario.ipPermitida = this.form.value.ipPermitida;
+    usuario.ipPermitida =['0.0.0.0/0'];
     usuario.mfa = this.form.value.mfa;
     usuario.numeroMovil = this.form.value.numeroMovil;
     if (this.form.value.estado == 'ACTIVO' || this.form.value.estado == 'INACTIVO') {
