@@ -77,35 +77,34 @@
                 <small *ngIf="actionPlan.errors?.required && tipo.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <div class="input-field">
-                    <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                            [style]="{'width':'100%'}" (onSelect)="onSelectionResponsable($event)"
-                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                            *ngIf="empleado?.id == null">
-                            <ng-template let-empleado pTemplate="item">
-                                <div class="ui-helper-clearfix">
-                                    <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                            style="font-size: 48px;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                            style="border-radius: 50%;" #imgAvatar />
-                                        <div style="margin-left:20px">
-                                            <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                            {{empleado?.segundoNombre}}
+                    <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                        [style]="{'width':'100%'}" (onSelect)="onSelectionResponsable($event)"
+                        formControlName="responsableEmpresaNombre" [suggestions]="empleadosList"
+                        (completeMethod)="buscarEmpleado($event)" *ngIf="empleado?.id == null">
+                        <ng-template let-empleado pTemplate="item">
+                            <div class="ui-helper-clearfix">
+                                <div class="wrapper">
+                                    <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                        style="font-size: 48px;" aria-hidden="true"></i>
+                                    <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                        style="border-radius: 50%;" #imgAvatar />
+                                    <div style="margin-left:20px">
+                                        <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                        {{empleado?.segundoNombre}}
 
-                                            <br /> {{empleado?.numeroIdentificacion}}
-                                            <br /> {{empleado?.usuario.email}}
-                                        </div>
+                                        <br /> {{empleado?.numeroIdentificacion}}
+                                        <br /> {{empleado?.usuario.email}}
                                     </div>
                                 </div>
-                            </ng-template>
-                        </p-autoComplete>
-                        <label for="" class="active">responsable empresa</label>
-                    </div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <label for="" class="active">responsable empresa</label>
+
                 </div>
-                <small *ngIf="actionPlanResponsable.errors?.required && tipo.touched" id="username2-help"
+                <small *ngIf="responsableEmpresa.errors?.required && responsableEmpresa.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
             </div>
 
@@ -115,7 +114,7 @@
                         class="form-material" id="" />
                     <label for="" class="active">Responsable Externo </label>
                 </div>
-                <small *ngIf="actionPlanResponsable.errors?.required && tipo.touched" id="username2-help"
+                <small *ngIf="responsableExterno.errors?.required && responsableExterno.touched" id="username2-help"
                     class="p-invalid">Requerido</small>
             </div>
             <div class="ui-g-12">

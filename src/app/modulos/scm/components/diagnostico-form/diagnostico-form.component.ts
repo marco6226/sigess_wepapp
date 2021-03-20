@@ -24,14 +24,18 @@ export class DiagnosticoFormComponent implements OnInit {
         this.diagnosticoForm = fb.group({
             codigoCie10: [null, Validators.required],
             diagnostico: [null, Validators.required],
+            fechaDiagnostico: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
             origen: [null, Validators.required],
-
+            creadoPor: [null, Validators.required],
 
         });
     }
     get codigo() { return this.diagnosticoForm.get('codigoCie10'); }
     get diagnostico() { return this.diagnosticoForm.get('diagnostico'); }
+    get fechaDiagnostico() { return this.diagnosticoForm.get('fechaDiagnostico'); }
+    get creadoPor() { return this.diagnosticoForm.get('creadoPor'); }
+
     get sistemaAfec() { return this.diagnosticoForm.get('sistemaAfectado'); }
     get origen() { return this.diagnosticoForm.get('origen'); }
 
@@ -56,11 +60,15 @@ export class DiagnosticoFormComponent implements OnInit {
         let {
             codigoCie10,
             diagnostico,
-            sistemaAfectado
+            sistemaAfectado,
+            fechaDiagnostico,
+            creadoPor
         } = this.diagnosticoForm.value;
 
         let body = {
             codigoCie10,
+            fechaDiagnostico,
+            creadoPor,
             diagnostico,
             sistemaAfectado,
             pkCase: this.caseId,

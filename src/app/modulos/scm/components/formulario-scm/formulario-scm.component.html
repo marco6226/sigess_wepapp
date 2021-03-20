@@ -502,7 +502,7 @@
                         <label for="" class="active">PCL</label>
                     </div>
                 </div>
-                
+
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
@@ -933,7 +933,8 @@
                         <th>Fecha de seguimiento</th>
                         <th>Seguimiento</th>
                         <th>Tarea</th>
-                        <th>Responsable</th>
+                        <th>Responsable Empresa</th>
+                        <th>Responsable Externo</th>
                         <th>Resultado</th>
 
                         <th style="width:8rem"></th>
@@ -1003,6 +1004,17 @@
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{seguimiento.responsable?.primerNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="seguimiento.responsableExterno">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{seguimiento.responsableExterno}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>

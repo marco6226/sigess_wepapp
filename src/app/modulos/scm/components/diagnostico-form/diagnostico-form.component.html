@@ -30,6 +30,17 @@
                 </div>
             </div>
 
+            <div class="ui-g-12 ui-md-4 ui-lg-4">
+                <div class="input-field">
+                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true"
+                        formControlName="fechaDiagnostico" dateFormat="dd/mm/yy" inputStyleClass="form-material">
+                    </p-calendar>
+                    <label for="" class="active">Fecha Diagnostico</label>
+                </div>
+                <small *ngIf="fechaDiagnostico.errors?.required && fechaDiagnostico.touched" id="username2-help"
+                    class="p-invalid">Requerido</small>
+            </div>
+
             <div class="ui-g-12">
                 <div class="input-field">
                     <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
@@ -45,6 +56,15 @@
                         id="" />
                     <label for="" class="active">Origen</label>
                     <small *ngIf="origen.errors?.required && origen.touched" id="username2-help"
+                        class="p-invalid">Requerido</small>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <div class="input-field">
+                    <input type="text" pInputText formControlName="creadoPor" placeholder="Creado por"
+                        class="form-material" id="" />
+                    <label for="" class="active">Creado por</label>
+                    <small *ngIf="creadoPor.errors?.required && creadoPor.touched" id="username2-help"
                         class="p-invalid">Requerido</small>
                 </div>
             </div>

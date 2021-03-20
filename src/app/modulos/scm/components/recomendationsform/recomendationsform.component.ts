@@ -32,7 +32,7 @@ export class RecomendationsformComponent implements OnInit {
         'documento',
     ];
     typeList = [
-        { name: '', code: '' },
+        { name: 'Seleccione', code: null },
 
         { name: 'Activo', code: '1' },
         { name: 'Cerrado', code: '0' },
@@ -40,7 +40,7 @@ export class RecomendationsformComponent implements OnInit {
     ];
 
     statusList = [
-        { name: '', code: '' },
+        { name: 'Seleccione', code: '' },
 
         { name: 'Activo', code: '1' },
         { name: 'Cerrado', code: '0' },
@@ -62,7 +62,7 @@ export class RecomendationsformComponent implements OnInit {
         this.recomendation = fb.group({
 
             entidadEmitRecomendaciones: [null, Validators.required],
-
+            responsableEmpresaNombre: [""],
             tipo: [null, Validators.required],
 
             fechaInicio: [null, Validators.required],
@@ -71,7 +71,7 @@ export class RecomendationsformComponent implements OnInit {
 
             status: [null],
             actionPlan: [null, Validators.required],
-            actionPlanResponsable: [null, Validators.required],
+            responsableEmpresa: [null, Validators.required],
             recomendaciones: [null, Validators.required],
 
         });
@@ -81,10 +81,11 @@ export class RecomendationsformComponent implements OnInit {
     get fechaInicio() { return this.recomendation.get('fechaInicio'); }
     get entidadEmitRecomendaciones() { return this.recomendation.get('entidadEmitRecomendaciones'); }
     get status() { return this.recomendation.get('status'); }
+    get responsableExterno() { return this.recomendation.get('responsableExterno'); }
 
     get recomendaciones() { return this.recomendation.get('tipo'); }
     get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
-    get actionPlanResponsable() { return this.recomendation.get('actionPlanResponsable'); }
+    get responsableEmpresa() { return this.recomendation.get('responsableEmpresa'); }
     get actionPlan() { return this.recomendation.get('actionPlan'); }
 
     async ngOnInit() {
@@ -97,6 +98,7 @@ export class RecomendationsformComponent implements OnInit {
         if (!this.recomendation.valid) {
             return this.markFormGroupTouched(this.recomendation);
         }
+        console.log(this.recomendation.value);
         let {
 
             entidadEmitRecomendaciones,
@@ -110,7 +112,7 @@ export class RecomendationsformComponent implements OnInit {
             status,
             recomendaciones,
 
-            actionPlanResponsable,
+            responsableEmpresa,
 
             actionPlan
         } = this.recomendation.value;
@@ -124,12 +126,10 @@ export class RecomendationsformComponent implements OnInit {
             fechaInicio,
 
             fechaExpiracion,
-
-            status: status.code,
             recomendaciones,
             pkUser: this.id,
             pkCase: this.id,
-            actionPlanResponsable,
+            responsableEmpresa,
 
             actionPlan: actionPlan.code
         }
@@ -164,6 +164,8 @@ export class RecomendationsformComponent implements OnInit {
 
     onSelectionResponsable(event) {
         let empleado = <Empleado>event;
+        this.responsableEmpresaNombre = (empleado.primerApellido || "") + " " + (empleado.primerNombre || "");
+        this.recomendation.patchValue({ responsableEmpresa: empleado.id, responsableEmpresaNombre: this.responsableEmpresaNombre })
     }
 
     buscarEmpleado(event) {
