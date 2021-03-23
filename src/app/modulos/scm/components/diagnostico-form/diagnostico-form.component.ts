@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
+import { locale_es } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
+
 
 @Component({
     selector: 'app-diagnostico-form',
@@ -25,6 +27,10 @@ export class DiagnosticoFormComponent implements OnInit {
         { name: 'Enfermedad Laboral', code: 'Enfermedad Laboral' },
 
     ];
+    localeES: any = locale_es;
+    es: any;
+    fechaActual = new Date();
+    yearRange: string = "1900:" + this.fechaActual.getFullYear();
 
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,

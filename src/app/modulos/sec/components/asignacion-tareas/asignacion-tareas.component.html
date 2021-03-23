@@ -17,6 +17,9 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th></th>
+            <th pSortableColumn="modulo"> Módulo
+              <p-sortIcon field="modulo"></p-sortIcon>
+            </th>
             <th pSortableColumn="nombre"> Nombre
               <p-sortIcon field="nombre"></p-sortIcon>
             </th>
@@ -59,6 +62,9 @@
           </tr>
           <tr>
             <td></td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'modulo', 'contains')">
+            </td>
             <td>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
             </td>
@@ -112,18 +118,19 @@
                   title="Reportar verificación de tarea"></button>
               </ng-container>
             </td>
+            <td>{{tarea.modulo}}</td>
             <td>{{tarea.nombre}}</td>
             <td>{{tarea.descripcion}}</td>
             <td>{{tarea.tipoAccion}}</td>
             <td>{{tarea.jerarquia}}</td>
             <td>{{tarea.estado}}</td>
-            <td>{{tarea.fechaProyectada | date:'dd-MMM-yyyy'}}</td>
+            <td>{{tarea.fechaProyectada | date:'dd/MM/yyyy'}}</td>
             <td>{{tarea.areaResponsable?.nombre}}</td>
             <td>{{tarea.usuarioRealiza?.email}}</td>
-            <td>{{tarea.fechaRealizacion | date:'dd/MMM/yyyy'}}</td>
+            <td>{{tarea.fechaRealizacion | date:'dd/MM/yyyy'}}</td>
             <td>{{tarea.observacionesRealizacion}}</td>
             <td>{{tarea.usuarioVerifica?.email}}</td>
-            <td>{{tarea.fechaVerificacion | date:'dd-MM-yyyy'}}</td>
+            <td>{{tarea.fechaVerificacion | date:'dd/MM/yyyy'}}</td>
             <td>{{tarea.observacionesVerificacion}}</td>
           </tr>
         </ng-template>

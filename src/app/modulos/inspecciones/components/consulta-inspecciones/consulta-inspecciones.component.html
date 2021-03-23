@@ -15,7 +15,7 @@
                         <th pSortableColumn="fechaRealizada">Fecha elaboración
                             <p-sortIcon field="fechaRealizada"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="id">Codigo
+                        <th pSortableColumn="id">Código
                             <p-sortIcon field="id"></p-sortIcon>
                         </th>
                         <th pSortableColumn="usuarioRegistra.email">Usuario elabora
@@ -102,6 +102,9 @@
                         <th pSortableColumn="fechaRealizada">Fecha elaboración
                             <p-sortIcon field="fechaRealizada"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="id">Código
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="usuarioRegistra.email">Usuario elabora
                             <p-sortIcon field="usuarioRegistra.email"></p-sortIcon>
                         </th>
@@ -123,6 +126,9 @@
                             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
                         </td>
                         <td>
+                            <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
+                        </td>
+                        <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
                         </td>
                         <td>
@@ -142,7 +148,7 @@
                 <ng-template pTemplate="body" let-inspeccion>
                     <tr [pSelectableRow]="inspeccion" class="table-row table-row-selectable">
                         <td>{{inspeccion?.fechaRealizada | date:'dd/MM/yyyy HH:mm'}}</td>
-                        <td>{{inspeccion.id?.codigo}}</td>
+                        <td>INP-{{inspeccion.id}}</td>                        
                         <td>{{inspeccion.usuarioRegistra?.email}}</td>
                         <td>{{inspeccion.listaInspeccion?.nombre}}</td>
                         <td>{{inspeccion.area?.nombre}}</td>
