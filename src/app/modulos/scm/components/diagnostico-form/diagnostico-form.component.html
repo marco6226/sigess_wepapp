@@ -9,7 +9,7 @@
             </div>
             <div class="ui-g-12 ui-md-4">
                 <div class="input-field">
-                    <label class="active">Código CIE</label>
+                    <label class="active">Código CIE 10</label>
                     <s-cieSelector id="ccide-input" formControlName="codigoCie10" (dateChange)="test($event)">
                     </s-cieSelector>
                     <small *ngIf="codigo.errors?.required && codigo.touched" id="username2-help"
@@ -32,8 +32,9 @@
 
             <div class="ui-g-12 ui-md-4 ui-lg-4">
                 <div class="input-field">
-                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true"
-                        formControlName="fechaDiagnostico" dateFormat="dd/mm/yy" inputStyleClass="form-material">
+                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                        formControlName="fechaDiagnostico" [locale]="localeES" dateFormat="dd/mm/yy"
+                        inputStyleClass="form-material">
                     </p-calendar>
                     <label for="" class="active">Fecha Diagnostico</label>
                 </div>

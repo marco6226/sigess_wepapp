@@ -730,10 +730,10 @@
             dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id"># Del caso
-                        <p-sortIcon field="id"></p-sortIcon>
+                    <th pSortableColumn="fechaDiagnostico">Fecha de Diagnostico
+                        <p-sortIcon field="fechaDiagnostico"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="fapertura">CIE
+                    <th pSortableColumn="fapertura">CIE 10
                         <p-sortIcon field="fapertura"></p-sortIcon>
                     </th>
                     <th pSortableColumn="regional">Sistema Afectado
@@ -747,7 +747,7 @@
                 <tr>
 
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaDiagnostico', 'contains')">
                     </td>
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
@@ -765,7 +765,7 @@
             <ng-template pTemplate="body" let-case>
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                    <td>{{case.pkCase}}</td>
+                    <td>{{case.fechaDiagnostico | date:'dd/MM/yyyy' }}</td>
                     <td>{{case.codigoCie10 }}</td>
                     <td>{{case.sistemaAfectado?.name || ""}}</td>
                     <td>{{case.diagnostico}}</td>
