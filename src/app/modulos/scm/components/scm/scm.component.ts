@@ -40,7 +40,8 @@ export class ScmComponent implements OnInit {
         'statusCaso',
         'casoMedicoLaboral',
         'razon',
-        'pkUser'
+        'pkUser',
+        'sve',
 
     ];
     estadosList: SelectItem[] = [

@@ -34,8 +34,9 @@ export class RecomendationsformComponent implements OnInit {
     typeList = [
         { name: 'Seleccione', code: null },
 
-        { name: 'Activo', code: '1' },
-        { name: 'Cerrado', code: '0' },
+        { name: 'Cerrada', code: 'Cerrada' },
+        { name: 'Suspendida', code: 'Suspendida' },
+        { name: 'Modificada', code: 'Modificada' },
 
     ];
 
@@ -186,3 +187,20 @@ export class RecomendationsformComponent implements OnInit {
     }
 }
 
+import { Pipe, PipeTransform } from '@angular/core';
+/*
+ * Raise the value exponentially
+ * Takes an exponent argument that defaults to 1.
+ * Usage:
+ *   value | exponentialStrength:exponent
+ * Example:
+ *   {{ 2 | exponentialStrength:10 }}
+ *   formats to: 1024
+*/
+@Pipe({ name: 'recomendationstatus' })
+export class RecomendationStatusPipe implements PipeTransform {
+    transform(value: string, exponent?: string): string {
+        let status = new Date(value) >= new Date() ? 'Abierto' : 'Cerrado';
+        return status;
+    }
+}

@@ -16,7 +16,15 @@ export class DiagnosticoFormComponent implements OnInit {
     @Input() id: string;
     @Output() eventClose = new EventEmitter<any>()
 
+    origenList = [
+        { name: 'Seleccione', code: null },
 
+        { name: 'Comun', code: 'Comun' },
+        { name: 'Accidente Laboral', code: 'Accidente Laboral' },
+        { name: 'Mixto', code: 'Mixto' },
+        { name: 'Enfermedad Laboral', code: 'Enfermedad Laboral' },
+
+    ];
 
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
@@ -87,8 +95,9 @@ export class DiagnosticoFormComponent implements OnInit {
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
-                    this.eventClose.emit()
                     this.diagnostico.reset()
+
+                    this.eventClose.emit()
                 }, 1000);
             }
         } catch (error) {

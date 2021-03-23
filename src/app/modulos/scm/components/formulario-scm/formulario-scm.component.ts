@@ -72,24 +72,9 @@ export class FormularioScmComponent implements OnInit {
     logsList = []
     empleadosList: Empleado[];
     diagnosticoList = [];
-
-
-
-
-
     seguimientos = [];
-
     products2 = [];
-
     statuses: SelectItem[];
-
-
-
-
-
-
-
-
 
 
     @Input() empleadoSelect: Empleado;
@@ -100,7 +85,6 @@ export class FormularioScmComponent implements OnInit {
     @Input() show: boolean;
     @Input() consultar: boolean = false;
     @Input("disabled") disabled: boolean = false;
-
     @Input() editable: boolean;
     @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
     rangoAntiguedad = [
@@ -242,6 +226,7 @@ export class FormularioScmComponent implements OnInit {
             porcentajePcl: [null, /*Validators.required*/],
             pcl: [null, /*Validators.required*/],
             region: [null],
+
             ciudad: [null],
             cargo: [null],
             descripcionCompletaCaso: [null, /*Validators.required*/],
@@ -277,6 +262,12 @@ export class FormularioScmComponent implements OnInit {
     async ngOnInit() {
 
 
+        let res: any = await this.scmService.getSvelist();
+        this.sveOptionList.push({ label: "--Seleccione--", value: null });
+        res.forEach((sve) => {
+            this.sveOptionList.push({ label: sve.nombre, value: sve.id.toString() });
+        });
+        console.log(this.sveOptionList);
 
         if (this.consultar) {
             this.onLoadInit();
@@ -303,11 +294,7 @@ export class FormularioScmComponent implements OnInit {
             });
         });
 
-        let res: any = await this.scmService.getSvelist();
-        this.sveOptionList.push({ label: "--Seleccione--", value: null });
-        res.forEach((sve) => {
-            this.sveOptionList.push({ label: sve.nombre, value: sve.id });
-        });
+
         this.comunService.findAllEps().then((data) => {
             this.epsList = [];
             this.epsList.push({ label: "--Seleccione--", value: null });
@@ -477,7 +464,7 @@ export class FormularioScmComponent implements OnInit {
     }
     async onSelection(event) {
         this.value = event;
-        this.caseSelect = false;
+        // this.caseSelect = false;
         this.empleadoSelect = null;
         this.casoMedicoForm.reset();
         let emp = <Empleado>this.value;
@@ -553,9 +540,7 @@ export class FormularioScmComponent implements OnInit {
             regional: this.empleadoSelect.regional,
             correoPersonal: this.empleadoSelect.correoPersonal,
             ciudadGerencia: this.empleadoSelect.ciudadGerencia,
-
             //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
-            businessPartner: this.empleadoSelect.businessPartner,
             'email': [this.empleadoSelect.usuario.email]
         });
 
@@ -719,9 +704,18 @@ export class FormularioScmComponent implements OnInit {
 
     async modifyCase() {
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
-        this.casoMedicoForm.patchValue(this.caseSelect);
-        this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
+        let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
+        console.log(caseFiltered);
 
+        this.casoMedicoForm.patchValue(caseFiltered);
+
+        this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
+        this.casoMedicoForm.patchValue({
+            //  emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha),
+
+            //fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
+            //fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion)
+        });
         console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -759,7 +753,9 @@ export class FormularioScmComponent implements OnInit {
         console.log(product);
 
     }
-
+    onRowCloneInit(seg) {
+        this.seguimientos.push(seg)
+    }
     async onRowEditSave(product) {
         this.msgs = [];
         console.log(product);

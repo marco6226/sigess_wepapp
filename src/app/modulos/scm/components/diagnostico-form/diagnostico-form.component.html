@@ -52,8 +52,9 @@
 
             <div class="ui-g-12 ui-md-4">
                 <div class="input-field">
-                    <input type="text" pInputText formControlName="origen" placeholder="Origen" class="form-material"
-                        id="" />
+                    <p-dropdown [options]="origenList" formControlName="origen" class="select-material"
+                        styleClass="select-material">
+                    </p-dropdown>
                     <label for="" class="active">Origen</label>
                     <small *ngIf="origen.errors?.required && origen.touched" id="username2-help"
                         class="p-invalid">Requerido</small>

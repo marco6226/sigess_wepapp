@@ -12,14 +12,14 @@ import { EmpleadoService } from '../empresa/services/empleado.service';
 import { PerfilService } from '../admin/services/perfil.service';
 import { UsuarioService } from '../admin/services/usuario.service';
 import { CieSelectorComponent } from '../comun/components/cie-selector/cie-selector.component';
-import { RecomendationsformComponent } from './components/recomendationsform/recomendationsform.component';
+import { RecomendationsformComponent, RecomendationStatusPipe } from './components/recomendationsform/recomendationsform.component';
 import { CoreModule } from '../core/core.module';
 import { LogmodalComponent } from './components/logmodal/logmodal.component';
 import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnostico-form.component';
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe],
     imports: [
         CommonModule,
         ComunModule,
