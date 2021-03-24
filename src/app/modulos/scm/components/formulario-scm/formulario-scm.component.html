@@ -787,7 +787,7 @@
                             <th pSortableColumn="fechaDesde">Fecha Inicio
                                 <p-sortIcon field="fechaDesde"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="fechaHasta">Fecha Hasta {{incapacidades.length}}
+                            <th pSortableColumn="fechaHasta">Fecha Hasta
 
                                 <p-sortIcon field="fechaHasta"></p-sortIcon>
                             </th>
@@ -811,9 +811,9 @@
                     <ng-template pTemplate="body" let-aus>
 
                         <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
-                            <td>{{aus.fechaDesde | date: 'dd/mm/yyyy' }}</td>
+                            <td>{{aus.fechaDesde |date:'dd/MM/yyyy' }}</td>
 
-                            <td>{{aus.fechaHasta | date: 'dd/mm/yyyy'}}</td>
+                            <td>{{aus.fechaHasta | date:'dd/MM/yyyy'}}</td>
 
                             <td>{{aus.diasAusencia}}</td>
 
