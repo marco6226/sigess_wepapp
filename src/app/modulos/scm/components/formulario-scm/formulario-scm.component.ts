@@ -31,7 +31,7 @@ import { SelectItem, Message } from "primeng/api";
 import { CasosMedicosService } from "../../services/casos-medicos.service";
 import * as moment from "moment";
 import { Router, RouterLink } from "@angular/router";
-import { AutoComplete } from "primeng/primeng";
+import { AutoComplete, Calendar } from "primeng/primeng";
 import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
 import { ReporteAusentismoService } from "app/modulos/aus/services/reporte-ausentismo.service";
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
@@ -236,12 +236,13 @@ export class FormularioScmComponent implements OnInit {
             diagnostico: [null, /*Validators.required*/],
             origen: [null, /*Validators.required*/],
             fechaConceptRehabilitacion: [null, /*Validators.required*/],
+            emisionPclFecha: [null, /*Validators.required*/],
             entidadEmiteConcepto: [null, /*Validators.required*/],
             justification: [null, /*Validators.required*/],
             statusDeCalificacion: [null, /*Validators.required*/],
             casoMedicoLaboral: [null, /*Validators.required*/],
             fechaFinal: [null, /*Validators.required*/],
-            emisionPclFecha: [null, /*Validators.required*/],
+            
             sistemaAfectado: [null, /*Validators.required*/],
             fechaCreacion: [null],
             entidadEmiteCalificacion: [null, /*Validators.required*/],
@@ -628,7 +629,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     onClick() {
-        console.log(this.caseSelect);
+      //  console.log(this.caseSelect);
     }
 
 
@@ -711,10 +712,9 @@ export class FormularioScmComponent implements OnInit {
 
         this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
         this.casoMedicoForm.patchValue({
-            //  emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha),
-
-            //fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
-            //fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion)
+            fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
+            emisionPclFecha: emisionPclFecha == null ? null : new Date (emisionPclFecha),
+            fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion)
         });
         console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);

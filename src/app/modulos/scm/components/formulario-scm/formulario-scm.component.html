@@ -60,14 +60,14 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="nameAndLastName" placeholder="Apellidos y nombres"
-                            class="form-material" id="" disabled="true" />
+                            class="form-material" id="nameAndLastName" [disabled]="true" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="direccionGerencia"
-                            placeholder="Dirección / Gerencia" class="form-material" id="" />
+                            placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia1" />
                         <label for="" class="active">Dirección / Gerencia</label>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
-                            class="form-material" id="" [disabled]="true" />
+                            class="form-material" id="antiguedad" [disabled]="true" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="range || ''" placeholder="Antigüedad"
-                            class="form-material" id="" [disabled]="true" />
+                            class="form-material" id="rango" [disabled]="true" />
                         <label for="" class="active">Rango de antigüedad</label>
                     </div>
                 </div>
@@ -127,14 +127,14 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="email" pInputText formControlName="email" placeholder="Correo corporativo"
-                            class="form-material" id="" />
+                            class="form-material" id="correocorporativo" />
                         <label for="" class="active">Correo corporativo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Regional"
-                            class="form-material" id="" />
+                        <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad"
+                            class="form-material" id="ciudad" />
                         <label for="" class="active">Ciudad</label>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input [disabled]="true" type="text" pInputText [value]="edad" placeholder="Edad"
-                            class="form-material" id="" />
+                            class="form-material" id="Edad" />
                         <label for="" class="active">Edad</label>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input [disabled]="true" type="text" pInputText formControlName="regional"
-                            placeholder="regional" class="form-material" id="" />
+                            placeholder="regional" class="form-material" id="regional" />
                         <label for="" class="active">Regional</label>
                     </div>
                 </div>
@@ -253,7 +253,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
-                            class="form-material" id="" />
+                            class="form-material" id="emergencyContact" />
                         <label for="" class="active">Contacto de emergencia</label>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="email" pInputText formControlName="emailEmergencyContact"
-                            placeholder="Correo corporativo" class="form-material" id="" />
+                            placeholder="Correo corporativo" class="form-material" id="emailEmergencyContact" />
                         <label for="" class="active">Correo de contacto de emergencia</label>
                     </div>
                 </div>
@@ -313,7 +313,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
-                                [disabled]="true" class="form-material" id="" />
+                            [disabled]="true" class="form-material" id="jefeNames" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -328,7 +328,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="direccionGerencia"
-                                placeholder="Dirección / Gerencia" class="form-material" id="" />
+                                placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia2" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
@@ -343,7 +343,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
-                                class="form-material" id="" />
+                                class="form-material" id="emailjefe" />
                             <label for="" class="active">Correo corporativo</label>
                         </div>
                     </div>
@@ -394,7 +394,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText [value]="businessNames" placeholder="Apellidos y nombres"
-                                [disabled]="true" class="form-material" id="" />
+                            [disabled]="true" class="form-material" id="businessNames" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -409,7 +409,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="direccionGerencia"
-                                placeholder="Dirección / Gerencia" class="form-material" id="" />
+                                placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
@@ -424,7 +424,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
-                                class="form-material" id="" />
+                                class="form-material" id="emailbussines" />
                             <label for="" class="active">Correo corporativo</label>
                         </div>
                     </div>
@@ -440,15 +440,14 @@
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <input type="text" pInputText [value]="status" disabled="true">
+                        <input type="text" pInputText [value]="status" [disabled]="true">
                         <label for="" class="active">Estado del caso</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaFinal"></p-calendar>
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>                            
                         <label for="" class="active">Fecha de cierre</label>
                     </div>
                 </div>
@@ -489,7 +488,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
-                            id="" />
+                            id="motivo" />
                         <label for="" class="active">Motivo</label>
                     </div>
                 </div>
@@ -507,7 +506,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
-                            class="form-material" id="" />
+                            class="form-material" id="porcentajePcl" />
                         <label for="" class="active">% de la PCL</label>
                     </div>
                 </div>
@@ -515,7 +514,8 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="emisionPclFecha"></p-calendar>
                         <label for="" class="active">Fecha de emisión de la PCL</label>
                     </div>
                 </div>
@@ -556,7 +556,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText formControlName="conceptRehabilitacion"
-                            placeholder="Concepto de rehabilitación" class="form-material" id="" />
+                            placeholder="Concepto de rehabilitación" class="form-material" id="conceptRehabilitacion" />
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
@@ -651,10 +651,6 @@
                     <th pSortableColumn="documento">Documento
                         <p-sortIcon field="documento"></p-sortIcon>
                     </th>
-
-                    <th pSortableColumn="charge">Cargo
-                        <p-sortIcon field="charge"></p-sortIcon>
-                    </th>
                     <th pSortableColumn="statusCaso">Estado de caso
                         <p-sortIcon field="statusCaso"></p-sortIcon>
                     </th>
@@ -688,9 +684,7 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
                     </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
+                    
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-case>
@@ -702,7 +696,6 @@
                     <td>{{case.ciudad}}</td>
                     <td>{{case.pkUser.primerNombre}} {{case.pkUser.primerApellido}}</td>
                     <td>{{case.documento}}</td>
-                    <td>{{case.cargo}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                     <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
 
@@ -818,9 +811,9 @@
                     <ng-template pTemplate="body" let-aus>
 
                         <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
-                            <td>{{aus.fechaDesde | date}}</td>
+                            <td>{{aus.fechaDesde | date: 'dd/mm/yyyy' }}</td>
 
-                            <td>{{aus.fechaHasta | date}}</td>
+                            <td>{{aus.fechaHasta | date: 'dd/mm/yyyy'}}</td>
 
                             <td>{{aus.diasAusencia}}</td>
 
@@ -877,26 +870,27 @@
                 <tr *ngIf="false">
 
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'fapertura', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'regional', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'charge', 'contains')">
                     </td>
+                    
 
                 </tr>
             </ng-template>
@@ -951,7 +945,7 @@
 
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{seguimiento.fechaSeg | date}}
+                                    {{seguimiento.fechaSeg | date : 'dd/mm/yyyy'}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
