@@ -19,12 +19,11 @@ export class DiagnosticoFormComponent implements OnInit {
     @Output() eventClose = new EventEmitter<any>()
 
     origenList = [
-        { name: 'Seleccione', code: null },
-
-        { name: 'Comun', code: 'Comun' },
-        { name: 'Accidente Laboral', code: 'Accidente Laboral' },
-        { name: 'Mixto', code: 'Mixto' },
-        { name: 'Enfermedad Laboral', code: 'Enfermedad Laboral' },
+        { label: 'Seleccione', value: null },
+        { label: 'Comun', value: 'Comun' },
+        { label: 'Accidente Laboral', value: 'Accidente Laboral' },
+        { label: 'Mixto', value: 'Mixto' },
+        { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
 
     ];
     localeES: any = locale_es;
@@ -101,7 +100,7 @@ export class DiagnosticoFormComponent implements OnInit {
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
-                    this.diagnostico.reset()
+                    this.diagnosticoForm.reset()
 
                     this.eventClose.emit()
                 }, 1000);

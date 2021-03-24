@@ -242,7 +242,7 @@ export class FormularioScmComponent implements OnInit {
             statusDeCalificacion: [null, /*Validators.required*/],
             casoMedicoLaboral: [null, /*Validators.required*/],
             fechaFinal: [null, /*Validators.required*/],
-            
+
             sistemaAfectado: [null, /*Validators.required*/],
             fechaCreacion: [null],
             entidadEmiteCalificacion: [null, /*Validators.required*/],
@@ -629,7 +629,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     onClick() {
-      //  console.log(this.caseSelect);
+        //  console.log(this.caseSelect);
     }
 
 
@@ -706,16 +706,15 @@ export class FormularioScmComponent implements OnInit {
     async modifyCase() {
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
-        console.log(caseFiltered);
+        console.log(caseFiltered, "fila 709");
 
         this.casoMedicoForm.patchValue(caseFiltered);
+        this.casoMedicoForm.patchValue({ fechaConceptRehabilitacion: moment(fechaConceptRehabilitacion).format })
+
+
 
         this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
-        this.casoMedicoForm.patchValue({
-            fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
-            emisionPclFecha: emisionPclFecha == null ? null : new Date (emisionPclFecha),
-            fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion)
-        });
+
         console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -753,8 +752,8 @@ export class FormularioScmComponent implements OnInit {
         console.log(product);
 
     }
-    onRowCloneInit(seg) {
-        this.seguimientos.push(seg)
+    async onRowCloneInit(seg) {
+        console.log(seg);
     }
     async onRowEditSave(product) {
         this.msgs = [];

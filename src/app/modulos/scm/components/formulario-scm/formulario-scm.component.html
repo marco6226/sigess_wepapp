@@ -313,7 +313,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
-                            [disabled]="true" class="form-material" id="jefeNames" />
+                                [disabled]="true" class="form-material" id="jefeNames" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -394,7 +394,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText [value]="businessNames" placeholder="Apellidos y nombres"
-                            [disabled]="true" class="form-material" id="businessNames" />
+                                [disabled]="true" class="form-material" id="businessNames" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -447,7 +447,7 @@
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>                            
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                         <label for="" class="active">Fecha de cierre</label>
                     </div>
                 </div>
@@ -514,8 +514,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="emisionPclFecha"></p-calendar>
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                         <label for="" class="active">Fecha de emisión de la PCL</label>
                     </div>
                 </div>
@@ -540,8 +539,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaCalificacion"></p-calendar>
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                         <label for="" class="active">Fecha de la calificación</label>
                     </div>
                 </div>
@@ -684,7 +682,7 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
                     </td>
-                    
+
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-case>
@@ -740,7 +738,8 @@
                 <tr>
 
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaDiagnostico', 'contains')">
+                        <input pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'fechaDiagnostico', 'contains')">
                     </td>
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
@@ -882,7 +881,8 @@
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
+                        <input pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
                     </td>
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
@@ -890,7 +890,7 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'charge', 'contains')">
                     </td>
-                    
+
 
                 </tr>
             </ng-template>
