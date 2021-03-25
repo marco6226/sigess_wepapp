@@ -487,8 +487,10 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="razon" placeholder="Motivo" class="form-material"
-                            id="motivo" />
+                        <p-dropdown [options]="caseMotivoOptionListt[casoMedicoForm.get('casoMedicoLaboral').value]"
+                            formControlName="razon" class="select-material" styleClass="select-material"
+                            [disabled]="disableRazon">
+                        </p-dropdown>
                         <label for="" class="active">Motivo</label>
                     </div>
                 </div>
@@ -520,7 +522,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="pclEmitEntidad"
+                        <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="pclEmitEntidad"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite la PCL</label>
@@ -545,7 +547,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteCalificacion"
+                        <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmiteCalificacion"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite la calificación</label>
@@ -553,8 +555,11 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText formControlName="conceptRehabilitacion"
-                            placeholder="Concepto de rehabilitación" class="form-material" id="conceptRehabilitacion" />
+
+                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                            formControlName="conceptRehabilitacion" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
@@ -568,8 +573,8 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="entidadEmiteConcepto"
-                            class="select-material" styleClass="select-material">
+                        <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion"
+                            formControlName="entidadEmiteConcepto" class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite el concepto de
                             rehabilitación</label>
@@ -599,9 +604,10 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <textarea class="textarea-material" formControlName="professionalArea"
-                            pInputTextarea></textarea>
 
+                        <p-dropdown [options]="professionalAreaList" formControlName="professionalArea"
+                            class="select-material" styleClass="select-material">
+                        </p-dropdown>
 
                         <label for="" class="active">Área profesional</label>
                     </div>

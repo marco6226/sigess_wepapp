@@ -75,7 +75,41 @@ export class FormularioScmComponent implements OnInit {
     seguimientos = [];
     products2 = [];
     statuses: SelectItem[];
+    emitPclentity = [
+        { label: "EPS", value: "EPS" },
+        { label: "ARL", value: "ARL" },
+        { label: "Junta Regional", value: "Junta Regional" },
+        { label: "Junta Nacional", value: "Junta Nacional" }]
 
+    conceptoRehabilitacion = [
+        { label: "Reintegro laboral sin modificaciones", value: "Reintegro laboral sin modificaciones" },
+        { label: "Reintegro laboral con modificaciones", value: "Reintegro laboral con modificaciones" },
+        { label: "Reubicación laboral temporal", value: "Reubicación laboral temporal" },
+        { label: "Reubicación laboral definitiva", value: "Reubicación laboral definitiva" },
+        { label: "Reconversión de mano de obra", value: "Reconversión de mano de obra" },
+    ]
+
+    entityConceptoRehabilitacion = [
+        { label: "EPS", value: "EPS" },
+        { label: "ARL", value: "ARL" },
+    ]
+
+
+    professionalAreaList = [
+        { label: "Enfermeros", value: "Enfermeros" },
+        { label: "Farmacéuticos", value: "Farmacéuticos" },
+        { label: "Fisioterapeutas", value: "EPS" },
+        { label: "Logopedas", value: "Logopedas" },
+        { label: "Obstetricia", value: "Obstetricia" },
+        { label: "Médicos", value: "Médicos" },
+        { label: "Nutricionistas", value: "Nutricionistas" },
+        { label: "Odontólogos", value: "Odontólogos" },
+        { label: "Ópticos y optometristas", value: "Ópticos y optometristas" },
+        { label: "Podólogos", value: "Podólogos" },
+        { label: "Psicólogos", value: "Psicólogos" },
+        { label: "Terapia ocupacional", value: "Terapia ocupacional" }
+
+    ]
 
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
@@ -122,8 +156,29 @@ export class FormularioScmComponent implements OnInit {
     departamento;
     caseOptionList = [
         { label: "Si", value: "1" },
-        { label: "No", value: "0" }
+        { label: "No", value: "0" },
+        { label: "Cerrado", value: "2" },
+        { label: "No Aplica", value: "3" },
+
     ]
+
+    caseMotivoOptionListt = [
+        [
+            { label: "Fallecimiento", value: "Fallecimiento" },
+            { label: "Reintegro", value: "Reintegro" },
+            { label: "Pensíon", value: "Pensíon" },
+            { label: "Desvinculacion", value: "Desvinculacion" },
+        ],
+        [
+            { label: "Critico", value: "Critico" },
+            { label: "Seguimiento", value: "Seguimiento" },
+            { label: "Pre - Mesa", value: "Pre - Mesa" },
+            { label: "Cerrado", value: "Cerrado" },
+
+        ],
+
+    ]
+
 
     pclOptionList = [
         { label: "En proceso", value: "1" },
@@ -259,6 +314,12 @@ export class FormularioScmComponent implements OnInit {
         return this.casoMedicoForm.get("pkUser") as FormControl
     }
 
+    get disableRazon() {
+        if (this.casoMedicoForm.value.casoMedicoLaboral === 2 || this.casoMedicoForm.value.casoMedicoLaboral === 3) {
+            return true;
+        }
+        return false;
+    }
 
     async ngOnInit() {
 
@@ -706,10 +767,10 @@ export class FormularioScmComponent implements OnInit {
     async modifyCase() {
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
-        console.log(caseFiltered, "fila 709");
+        console.log(caseFiltered, "fila 709", new Date(fechaConceptRehabilitacion));
 
         this.casoMedicoForm.patchValue(caseFiltered);
-        this.casoMedicoForm.patchValue({ fechaConceptRehabilitacion: moment(fechaConceptRehabilitacion).format })
+        this.casoMedicoForm.patchValue({ fechaConceptRehabilitacion: '15/01/2022' })
 
 
 
