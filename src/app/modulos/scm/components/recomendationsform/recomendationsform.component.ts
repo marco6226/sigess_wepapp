@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Empleado } from "app/modulos/empresa/entities/empleado";
 import { EmpleadoService } from "app/modulos/empresa/services/empleado.service";
@@ -11,7 +11,7 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
     templateUrl: "./recomendationsform.component.html",
     styleUrls: ["./recomendationsform.component.scss"],
 })
-export class RecomendationsformComponent implements OnInit {
+export class RecomendationsformComponent implements OnInit, OnChanges {
     epsList: SelectItem[];
     afpList: SelectItem[];
     msgs: Message[];
@@ -19,12 +19,11 @@ export class RecomendationsformComponent implements OnInit {
     empleado: Empleado;
     @Output() eventClose = new EventEmitter<any>()
     @Input() id: any;
+    @Input() recoSelect: any;
     entit = [
-        { name: '', code: '' },
-
-        { name: 'EPS', code: 'EPS' },
-        { name: 'ARL', code: 'ARL' },
-        { name: 'Entidad  que emite', code: null }
+        { label: 'Entidad  que emite', value: null },
+        { label: 'EPS', value: 'EPS' },
+        { label: 'ARL', value: 'ARL' },
 
     ];
 
@@ -32,11 +31,11 @@ export class RecomendationsformComponent implements OnInit {
         'documento',
     ];
     typeList = [
-        { name: 'Seleccione', code: null },
+        { label: 'Seleccione', value: null },
 
-        { name: 'Cerrada', code: 'Cerrada' },
-        { name: 'Suspendida', code: 'Suspendida' },
-        { name: 'Modificada', code: 'Modificada' },
+        { label: 'Cerrada', value: 'Cerrada' },
+        { label: 'Suspendida', value: 'Suspendida' },
+        { label: 'Modificada', value: 'Modificada' },
 
     ];
 
@@ -76,7 +75,17 @@ export class RecomendationsformComponent implements OnInit {
             recomendaciones: [null, Validators.required],
 
         });
+
     }
+
+    ngOnChanges(changes: SimpleChanges) {
+
+        this.patchFormValues();
+        // You can also use categoryId.previousValue and 
+        // categoryId.firstChange for comparing old and new values
+
+    }
+
     //Aqui estan los get para las validaciones
     get tipo() { return this.recomendation.get('tipo'); }
     get fechaInicio() { return this.recomendation.get('fechaInicio'); }
@@ -84,18 +93,21 @@ export class RecomendationsformComponent implements OnInit {
     get status() { return this.recomendation.get('status'); }
     get responsableExterno() { return this.recomendation.get('responsableExterno'); }
 
-    get recomendaciones() { return this.recomendation.get('tipo'); }
+    get recomendaciones() { return this.recomendation.get('recomendaciones'); }
     get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
     get responsableEmpresa() { return this.recomendation.get('responsableEmpresa'); }
     get actionPlan() { return this.recomendation.get('actionPlan'); }
 
     async ngOnInit() {
+        if (this.recoSelect) {
+            this.patchFormValues()
+        }
 
     }
 
     async onSubmit() {
         this.msgs = [];
-
+        console.log(this.recomendation.value);
         if (!this.recomendation.valid) {
             return this.markFormGroupTouched(this.recomendation);
         }
@@ -103,26 +115,20 @@ export class RecomendationsformComponent implements OnInit {
         let {
 
             entidadEmitRecomendaciones,
-
             tipo,
-
             fechaInicio,
-
             fechaExpiracion,
-
-            status,
             recomendaciones,
-
             responsableEmpresa,
-
             actionPlan
+
         } = this.recomendation.value;
 
         let body = {
+            id: this.recoSelect.id || "",
+            entidadEmitRecomendaciones: entidadEmitRecomendaciones,
 
-            entidadEmitRecomendaciones: entidadEmitRecomendaciones.code,
-
-            tipo: tipo.code,
+            tipo: tipo,
 
             fechaInicio,
 
@@ -132,17 +138,24 @@ export class RecomendationsformComponent implements OnInit {
             pkCase: this.id,
             responsableEmpresa,
 
-            actionPlan: actionPlan.code
+            actionPlan: actionPlan
         }
 
         try {
+            let res: any;
+            if (this.recoSelect) {
+                res = await this.scmService.updateRecomendation(body);
 
-            let res = await this.scmService.createRecomendation(body);
+            } else {
+                res = await this.scmService.createRecomendation(body);
+
+            }
+
 
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: "Recomendacion creada",
+                    summary: this.recoSelect ? "Recomendacion creada" : "Recomendacion actualizada",
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
@@ -161,6 +174,24 @@ export class RecomendationsformComponent implements OnInit {
         }
 
 
+    }
+
+    patchFormValues() {
+        console.log(this.recoSelect);
+        if (this.recoSelect) {
+            this.empleado = this.recoSelect.responsableEmpresa;
+            this.recomendation.patchValue({
+                entidadEmitRecomendaciones: this.recoSelect.entidadEmitRecomendaciones,
+                responsableEmpresaNombre: [""],
+                tipo: this.recoSelect.tipo,
+                fechaInicio: this.recoSelect.fechaInicio == null ? null : new Date(this.recoSelect.fechaInicio),
+                responsableExterno: this.recoSelect.responsableExterno,
+                fechaExpiracion: this.recoSelect.fechaExpiracion == null ? null : new Date(this.recoSelect.fechaExpiracion),
+                actionPlan: this.recoSelect.actionPlan,
+                responsableEmpresa: this.recoSelect.responsableEmpresa,
+                recomendaciones: this.recoSelect.recomendaciones,
+            })
+        }
     }
 
     onSelectionResponsable(event) {

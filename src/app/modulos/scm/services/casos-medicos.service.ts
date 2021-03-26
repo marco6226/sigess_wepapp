@@ -41,6 +41,10 @@ export class CasosMedicosService {
     createRecomendation(recomendation) {
         return this.http.post(`${endPoints.scm}recomendation`, recomendation).toPromise();
     }
+    updateRecomendation(recomendation) {
+        return this.http.put(`${endPoints.scm}recomendation`, recomendation).toPromise();
+    }
+
     //DiagnosticoApi
 
     getDiagnosticos(documento) {
