@@ -30,15 +30,11 @@ import {
 import { SelectItem, Message } from "primeng/api";
 import { CasosMedicosService } from "../../services/casos-medicos.service";
 import * as moment from "moment";
-import { Router, RouterLink } from "@angular/router";
-import { AutoComplete, Calendar } from "primeng/primeng";
 import { UsuarioEmpresa } from "app/modulos/empresa/entities/usuario-empresa";
-import { ReporteAusentismoService } from "app/modulos/aus/services/reporte-ausentismo.service";
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Area } from "app/modulos/empresa/entities/area";
 import { Usuario } from "app/modulos/empresa/entities/usuario";
-import { ThrowStmt } from "@angular/compiler";
 
 @Component({
     selector: "app-formulario-scm",
@@ -133,6 +129,7 @@ export class FormularioScmComponent implements OnInit {
     fechaActual = new Date();
     logSelected;
     status;
+    recoSelect: any;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -272,7 +269,7 @@ export class FormularioScmComponent implements OnInit {
             id: [null],
             documento: [null, Validators.required],
             codigoCie10: [null, /*Validators.required*/],
-            razon: [null, /*Validators.required*/],
+            razon: [{ value: null, disabled: this.disabled }, /*Validators.required*/],
             names: [null, /*Validators.required*/],
             observaciones: [null, /*Validators.required*/],
             statusCaso: ["1", /*Validators.required*/],
@@ -770,7 +767,11 @@ export class FormularioScmComponent implements OnInit {
         console.log(caseFiltered, "fila 709", new Date(fechaConceptRehabilitacion));
 
         this.casoMedicoForm.patchValue(caseFiltered);
-        this.casoMedicoForm.patchValue({ fechaConceptRehabilitacion: '15/01/2022' })
+        this.casoMedicoForm.patchValue({
+            fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion),
+            fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
+            emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha)
+        })
 
 
 
@@ -779,7 +780,6 @@ export class FormularioScmComponent implements OnInit {
         console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
-        this.casoMedicoForm.patchValue(this.caseSelect);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
@@ -858,6 +858,10 @@ export class FormularioScmComponent implements OnInit {
         })
     }
 
+    openModalRecomendantions() {
+        this.recoSelect = false;
+        this.modalRecomendatios = true;
+    }
 
 
 }
