@@ -48,11 +48,11 @@
                         <label for="" class="active">Número de identificación</label>
                     </div>
                     <small *ngIf="pkUse.errors?.required && pkUse.touched" id="username2-help"
-                        class="p-invalid">Requerido</small>
+                        class="p-invalid">Obligatorio</small>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" [attr.disabled]="true" required>
                         </p-dropdown>
                         <label for="" class="active">Tipo de identificación</label>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="nameAndLastName" placeholder="Apellidos y nombres"
-                            class="form-material" id="nameAndLastName" [disabled]="true" />
+                            class="form-material" id="nameAndLastName" [attr.disabled]="true" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaIngreso"></p-calendar>
                         <label for="" class="active">Fecha de vinculación</label>
@@ -94,7 +94,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
-                            class="form-material" id="antiguedad" [disabled]="true" />
+                            class="form-material" id="antiguedad" [attr.disabled]="true" />
                         <label for="" class="active">Antigüedad</label>
                     </div>
                 </div>
@@ -102,14 +102,14 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText [value]="range || ''" placeholder="Antigüedad"
-                            class="form-material" id="rango" [disabled]="true" />
+                            class="form-material" id="rango" [attr.disabled]="true" />
                         <label for="" class="active">Rango de antigüedad</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy">
                         </p-calendar>
                         <label for="" class="active">Fecha de desvinculación</label>
@@ -159,7 +159,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar [disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaNacimiento"></p-calendar>
                         <label for="" class="active">Fecha de nacimiento</label>
@@ -168,7 +168,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input [disabled]="true" type="text" pInputText [value]="edad" placeholder="Edad"
+                        <input [attr.disabled]="true" type="text" pInputText [value]="edad" placeholder="Edad"
                             class="form-material" id="Edad" />
                         <label for="" class="active">Edad</label>
                     </div>
@@ -176,7 +176,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input [disabled]="true" type="text" pInputText formControlName="regional"
+                        <input [attr.disabled]="true" type="text" pInputText formControlName="regional"
                             placeholder="regional" class="form-material" id="regional" />
                         <label for="" class="active">Regional</label>
                     </div>
@@ -313,7 +313,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
-                                [disabled]="true" class="form-material" id="jefeNames" />
+                                [attr.disabled]="true" class="form-material" id="jefeNames" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -349,9 +349,9 @@
                     </div>
                 </div>
                 <div style="text-align: center; width: 100%;">
-                    <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit"
+                    <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit" [disabled]="this.consultar"
                         icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
-                        title="Guardar datos de empleado"></button>
+                        title="Guardar datos de Empleado"></button>
 
                     <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
                         [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
@@ -394,7 +394,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <input type="text" pInputText [value]="businessNames" placeholder="Apellidos y nombres"
-                                [disabled]="true" class="form-material" id="businessNames" />
+                                [attr.disabled]="true" class="form-material" id="businessNames" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
@@ -440,7 +440,7 @@
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
                     <div class="input-field">
-                        <input type="text" pInputText [value]="status" [disabled]="true">
+                        <input type="text" pInputText [value]="status" [attr.disabled]="true">
                         <label for="" class="active">Estado del caso</label>
                     </div>
                 </div>
@@ -624,8 +624,8 @@
 
 
             <div style="text-align: center; width: 100%;">
-                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
-                    style="bottom: 100px;" title="Guardar datos de empleado"></button>
+                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"  [disabled]="this.consultar"
+                    style="bottom: 100px;" title="Guardar datos medicos"></button>
 
                 <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
                     [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
@@ -713,7 +713,7 @@
                 <button *sTienePermiso="'ADM_PUT_USR'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil"
                     label="Modificar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
 
-                <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Consultar"
+                <button *sTienePermiso="'ADM_PUT_USR'" (click)="readCase()"  pButton type="button" icon="fa fa-pencil" label="Consultar"
                     class="ui-button-success" [disabled]="!casoSeleccionado"></button>
                 <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
             (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->

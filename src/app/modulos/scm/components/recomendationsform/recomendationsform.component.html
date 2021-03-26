@@ -16,7 +16,7 @@
                     <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
                 <small *ngIf="entidadEmitRecomendaciones.errors?.required && entidadEmitRecomendaciones.touched"
-                    id="username2-help" class="p-invalid">Requerido</small>
+                    id="username2-help" class="p-invalid">Obligatorio</small>
             </div>
 
             <div class="ui-g-12 ui-md-4 ui-lg-3">
@@ -28,7 +28,7 @@
                     <label for="" class="active">Tipo</label>
                 </div>
                 <small *ngIf="tipo.errors?.required && tipo.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
 
             </div>
 
@@ -41,7 +41,7 @@
                     <label for="" class="active">Fecha Inicial</label>
                 </div>
                 <small *ngIf="fechaInicio.errors?.required && fechaInicio.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-4">
                 <div class="input-field">
@@ -52,7 +52,7 @@
                     <label for="" class="active">Fecha Final</label>
                 </div>
                 <small *ngIf="fechaExpiracion.errors?.required && fechaExpiracion.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
             </div>
 
 
@@ -62,7 +62,7 @@
                     <label for="" class="active">Recomendaciones</label>
                 </div>
                 <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
 
             </div>
             <div class="ui-g-12">
@@ -76,7 +76,7 @@
                     <label for="" class="active">Plan de acción</label>
                 </div>
                 <small *ngIf="actionPlan.errors?.required && actionPlan.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <div class="input-field">
@@ -106,7 +106,7 @@
 
                 </div>
                 <small *ngIf="responsableEmpresa.errors?.required && responsableEmpresa.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -115,8 +115,7 @@
                         class="form-material" id="" />
                     <label for="" class="active">Responsable Externo </label>
                 </div>
-                <small *ngIf="responsableExterno.errors?.required && responsableExterno.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                
             </div>
             <div class="ui-g-12">
                 <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" label="Guardar" icon="fa fa-plus"

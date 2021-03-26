@@ -88,15 +88,18 @@ export class ScmComponent implements OnInit {
     onSubmit() { }
 
     openCase() {
+        this.consultar = false;
         this.visibleForm = true;
         console.log(54, this.caseSelect);
+        console.log("modificar"+this.consultar);
     }
 
     openCaseConsultar() {
         this.consultar = true;
         this.visibleForm = true;
 
-        console.log(54, this.caseSelect);
+        console.log(55, this.caseSelect);
+        console.log(this.consultar);
     }
 
 

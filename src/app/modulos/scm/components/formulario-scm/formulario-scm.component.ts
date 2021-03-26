@@ -330,7 +330,7 @@ export class FormularioScmComponent implements OnInit {
 
         if (this.consultar) {
             this.onLoadInit();
-            this.modifyCase()
+            this.readCase()
             this.empleadoForm.disable();
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
@@ -340,7 +340,7 @@ export class FormularioScmComponent implements OnInit {
         if (this.caseSelect) {
             console.log(this.caseSelect);
             this.onLoadInit();
-            this.modifyCase()
+           // this.modifyCase()
 
         }
 
@@ -762,9 +762,10 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async modifyCase() {
+        this.consultar=false;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
-        console.log(caseFiltered, "fila 709", new Date(fechaConceptRehabilitacion));
+        console.log(caseFiltered, this.consultar, new Date(fechaConceptRehabilitacion));
 
         this.casoMedicoForm.patchValue(caseFiltered);
         this.casoMedicoForm.patchValue({
@@ -786,7 +787,34 @@ export class FormularioScmComponent implements OnInit {
         //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
         console.log(this.incapacidades);
+        console.log("Solo consultar ", this.consultar);
     }
+
+    async readCase() {
+        this.consultar=true;
+        this.caseSelect = this.casoSeleccionado || this.caseSelect;
+        let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
+        console.log(caseFiltered, this.consultar, new Date(fechaConceptRehabilitacion));
+
+        this.casoMedicoForm.patchValue(caseFiltered);
+        this.casoMedicoForm.patchValue({
+            fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion),
+            fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
+            emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha)
+
+        })
+
+        this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
+
+        console.log("selecciono un caso", this.caseSelect);
+        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+        this.cargoDescripcion = this.caseSelect.descripcionCargo;
+        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+        this.fechaSeg()
+        
+    }
+
 
     async onLoadInit() {
         this.onSelection(this.caseSelect.pkUser);

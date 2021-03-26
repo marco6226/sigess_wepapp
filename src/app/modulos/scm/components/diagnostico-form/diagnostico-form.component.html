@@ -13,7 +13,7 @@
                     <s-cieSelector id="ccide-input" formControlName="codigoCie10" (dateChange)="test($event)">
                     </s-cieSelector>
                     <small *ngIf="codigo.errors?.required && codigo.touched" id="username2-help"
-                        class="p-invalid">Requerido</small>
+                        class="p-invalid">Obligatorio</small>
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
                     </p-dropdown>
                     <label for="" class="active">Sistema Afectado</label>
                     <small *ngIf="sistemaAfec.errors?.required && sistemaAfec.touched" id="username2-help"
-                        class="p-invalid">Requerido</small>
+                        class="p-invalid">Obligatorio</small>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@
                     <label for="" class="active">Fecha Diagnostico</label>
                 </div>
                 <small *ngIf="fechaDiagnostico.errors?.required && fechaDiagnostico.touched" id="username2-help"
-                    class="p-invalid">Requerido</small>
+                    class="p-invalid">Obligatorio</small>
             </div>
 
             <div class="ui-g-12">
@@ -47,7 +47,7 @@
                     <textarea class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
                     <label for="" class="active">Diagnóstico</label>
                     <small *ngIf="diagnostico.errors?.required && diagnostico.touched" id="username2-help"
-                        class="p-invalid">Requerido</small>
+                        class="p-invalid">Obligatorio</small>
                 </div>
             </div>
 
@@ -58,7 +58,7 @@
                     </p-dropdown>
                     <label for="" class="active">Origen</label>
                     <small *ngIf="origen.errors?.required && origen.touched" id="username2-help"
-                        class="p-invalid">Requerido</small>
+                        class="p-invalid">Obligatorio</small>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-4">
@@ -67,7 +67,7 @@
                         class="form-material" id="" />
                     <label for="" class="active">Creado por</label>
                     <small *ngIf="creadoPor.errors?.required && creadoPor.touched" id="username2-help"
-                        class="p-invalid">Requerido</small>
+                        class="p-invalid">Obligatorio</small>
                 </div>
             </div>
             <div class="ui-g-12">
