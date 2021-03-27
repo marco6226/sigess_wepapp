@@ -8,13 +8,16 @@ import {
     ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { Empresa } from 'app/modulos/empresa/entities/empresa';
+import { Arl } from 'app/modulos/comun/entities/arl';
 import { PerfilService } from "app/modulos/admin/services/perfil.service";
 import { UsuarioService } from "app/modulos/admin/services/usuario.service";
 import { Afp } from "app/modulos/comun/entities/afp";
 import { Eps } from "app/modulos/comun/entities/eps";
 import { ComunService } from "app/modulos/comun/services/comun.service";
 import { EnumeracionesService } from "app/modulos/comun/services/enumeraciones.service";
-import { Criteria } from "app/modulos/core/entities/filter";
+import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { FilterQuery } from "app/modulos/core/entities/filter-query";
 import { SesionService } from "app/modulos/core/services/sesion.service";
 import { Cargo } from "app/modulos/empresa/entities/cargo";
@@ -40,9 +43,11 @@ import { Usuario } from "app/modulos/empresa/entities/usuario";
     selector: "app-formulario-scm",
     templateUrl: "./formulario-scm.component.html",
     styleUrls: ["./formulario-scm.component.scss"],
-    providers: [DirectorioService]
+    providers: [DirectorioService,EmpresaService]
 })
 export class FormularioScmComponent implements OnInit {
+    empresasList: Empresa[];
+    styleMap: { [key: string]: string } = {};
     value;
     msgs: Message[];
     edad;
@@ -59,11 +64,13 @@ export class FormularioScmComponent implements OnInit {
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
     jefeInmediato: FormGroup;
-    cedula = "TANGAMANDAPIO";
+    cedula = "";
     cargoDescripcion: string;
     actualizar: boolean;
     adicionar: boolean;
     empleado: Empleado;
+    empresa: Empresa;
+    
     recomendationList = [];
     logsList = []
     empleadosList: Empleado[];
@@ -94,7 +101,7 @@ export class FormularioScmComponent implements OnInit {
     professionalAreaList = [
         { label: "Enfermeros", value: "Enfermeros" },
         { label: "Farmacéuticos", value: "Farmacéuticos" },
-        { label: "Fisioterapeutas", value: "EPS" },
+        { label: "Fisioterapeutas", value: "Fisioterapeutas" },
         { label: "Logopedas", value: "Logopedas" },
         { label: "Obstetricia", value: "Obstetricia" },
         { label: "Médicos", value: "Médicos" },
@@ -135,6 +142,7 @@ export class FormularioScmComponent implements OnInit {
     tipoIdentificacionList: SelectItem[];
     tipoVinculacionList: SelectItem[];
     epsList: SelectItem[];
+    arlList: SelectItem[];
     afpList: SelectItem[];
     sveOptionList: SelectItem[] = [];
     cargoList: SelectItem[];
@@ -145,6 +153,7 @@ export class FormularioScmComponent implements OnInit {
     perfilList: SelectItem[] = [];
     loaded: boolean;
     antiguedad;
+    arl;
     range;
     jefeNames = " ";
     businessNames = "";
@@ -192,7 +201,13 @@ export class FormularioScmComponent implements OnInit {
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
+        private empresaService: EmpresaService,
     ) {
+
+        this.empresa = this.sesionService.getEmpresa();
+    
+
+    
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
         this.tipoIdentificacionList = defaultItem.concat(
@@ -249,13 +264,13 @@ export class FormularioScmComponent implements OnInit {
             'ccf': [null],
             'ciudad': [null],
             'eps': [null],
+            'arl': [null],
             'tipoIdentificacion': [null, Validators.required],
             'tipoVinculacion': [null],
             'zonaResidencia': [null],
             'area': [null, Validators.required],
             'cargoId': [null, Validators.required],
             'perfilesId': [null, Validators.required],
-            //'ipPermitida': [null],
             'email': [{ value: "", disabled: true }, Validators.required],
             direccionGerencia: [null],
             regional: [null],
@@ -278,7 +293,6 @@ export class FormularioScmComponent implements OnInit {
             porcentajePcl: [null, /*Validators.required*/],
             pcl: [null, /*Validators.required*/],
             region: [null],
-
             ciudad: [null],
             cargo: [null],
             descripcionCompletaCaso: [null, /*Validators.required*/],
@@ -293,9 +307,7 @@ export class FormularioScmComponent implements OnInit {
             justification: [null, /*Validators.required*/],
             statusDeCalificacion: [null, /*Validators.required*/],
             casoMedicoLaboral: [null, /*Validators.required*/],
-            fechaFinal: [null, /*Validators.required*/],
-
-            sistemaAfectado: [null, /*Validators.required*/],
+            fechaFinal: [null, /*Validators.required*/],sistemaAfectado: [null, /*Validators.required*/],
             fechaCreacion: [null],
             entidadEmiteCalificacion: [null, /*Validators.required*/],
             pclEmitEntidad: [null, /*Validators.required*/],
@@ -305,6 +317,8 @@ export class FormularioScmComponent implements OnInit {
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
     }
+
+    
 
 
     get pkUse() {
@@ -326,21 +340,23 @@ export class FormularioScmComponent implements OnInit {
         res.forEach((sve) => {
             this.sveOptionList.push({ label: sve.nombre, value: sve.id.toString() });
         });
-        console.log(this.sveOptionList);
+        
+        
 
         if (this.consultar) {
             this.onLoadInit();
-            this.readCase()
+            this.modifyCase();
             this.empleadoForm.disable();
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
             this.empleadoForm.disable();
+            
         }
 
         if (this.caseSelect) {
-            console.log(this.caseSelect);
+            
             this.onLoadInit();
-           // this.modifyCase()
+            this.modifyCase();
 
         }
 
@@ -353,7 +369,6 @@ export class FormularioScmComponent implements OnInit {
             });
         });
 
-
         this.comunService.findAllEps().then((data) => {
             this.epsList = [];
             this.epsList.push({ label: "--Seleccione--", value: null });
@@ -362,13 +377,23 @@ export class FormularioScmComponent implements OnInit {
             });
         });
 
+        this.comunService.findAllArl().then((data) => {
+            this.arlList = [];
+            this.arlList.push({ label: "--Seleccione--", value: null });
+            (<Arl[]>data).forEach((arl) => {
+                this.arlList.push({ label: arl.nombre, value: arl.id });
+            });
+        });
+
+
+
         this.cargoService.findAll().then((resp) => {
             this.cargoList = [];
             this.cargoList.push({ label: "--Seleccione--", value: null });
             (<Cargo[]>resp["data"]).forEach((cargo) => {
                 this.cargoList.push({ label: cargo.nombre, value: cargo.id });
             });
-            //this.cargoList = this.cargoList.slice();
+            
         });
         this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
@@ -400,11 +425,10 @@ export class FormularioScmComponent implements OnInit {
         this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get("area").value.nombre || "",
             ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
-            // statusCaso: this.casoMedicoForm.get('statusCaso').value,
             names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
                 }`,
             cargo: this.empleadoForm.value.cargoId,
-            // cargo:  this.cargoList.find(cargos => cargos.value =this.empleadoForm.get('cargoId').value),
+            
 
             pkUser: this.empleadoForm.get("id").value || null,
             codigoCie10: this.casoMedicoForm.value.id || null,
@@ -413,15 +437,13 @@ export class FormularioScmComponent implements OnInit {
 
 
         let status;
-        console.log(this.createCase);
+        
         if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
-            //  let empleadoStatus = await this.empleadoService.update(empleado);
-            //  console.log(empleadoStatus);
+            
             status = await this.scmService.create(this.casoMedicoForm.value);
         } else {
-            //  let empleadoStatus = await this.empleadoService.update(empleado);
-            // console.log(empleadoStatus);
+            
             this.casoMedicoForm.patchValue({ id: this.caseSelect.id });
             status = await this.scmService.edit(this.casoMedicoForm.value);
         }
@@ -438,24 +460,14 @@ export class FormularioScmComponent implements OnInit {
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
-        //  this.caseSelect = elem;
-        this.imagenesList = [];
-        let elemImgs: any[] = this.imgMap[status];
-        if (elemImgs != null && elemImgs.length > 0) {
-            elemImgs.forEach(objFile => {
-                if (objFile.file != null) {
-                    let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(objFile.file));
-                    this.imagenesList.push({ source: urlData });
-                }
-            });
-            this.imagenesList = this.imagenesList.slice();
-        }
-        console.log(this.imagenesList)
+        
+        
+        
     }
 
 
     async buildPerfilesIdList() {
-        ////console.log(this.empleadoSelect.id, "181");
+        
         let filterQuery = new FilterQuery();
         filterQuery.filterList = [
             {
@@ -470,7 +482,6 @@ export class FormularioScmComponent implements OnInit {
             let perfilesId = [];
             resp["data"].forEach((ident) => perfilesId.push(ident.id));
 
-            //   console.log(resp["data"]);
             this.empleadoForm.patchValue({ perfilesId: perfilesId });
         });
     }
@@ -480,47 +491,14 @@ export class FormularioScmComponent implements OnInit {
         this.empleadoService
             .buscar(event.query)
             .then((data) => (this.empleadosList = <Empleado[]>data));
+            
+            
     }
+    
 
-    //seleccion de imagen
-    onArchivoSelect(event) {
-        let file = event.target.files[0];
-        if (file.type != "image/jpeg" && file.type != "image/png") {
-            this.msgs.push({ severity: 'warn', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
-            return;
-        }
-        if (file.size > 1_500_000) {
-            this.msgs.push({ severity: 'warn', summary: 'Tamaño máximo superado 1.5MB', detail: 'La imágen supera el tamaño máximo permitido' });
-            return;
-        }
-        this.msgs = [];
+    
+    
 
-        if (this.imagenesList == null)
-            this.imagenesList = [];
-
-        if (this.imagenesList.length >= this.numMaxImg) {
-            this.msgs.push({
-                severity: 'warn',
-                summary: 'Número maximo de fotografias alcanzado',
-                detail: 'Ha alcanzado el número máximo de fotografias (' + this.numMaxImg + ') que puede adjuntar para este hallazgo'
-            });
-            return;
-        }
-        let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-        this.imagenesList.push({ source: urlData });
-        this.imagenesList = this.imagenesList.slice();
-        /* let keyMap = this.elementoSelect.id;
-         if (this.imgMap[keyMap] == null)
-             this.imgMap[keyMap] = [];
-         this.imgMap[keyMap].push({ file: file, change: true });*/
-    }
-
-    removerImagen(event: any) {
-        /* this.imgMap[this.elementoSelect.id].splice(event.index, 1);
-         if (this.elementoSelect.calificacion.documentosList != null) {
-           this.elementoSelect.calificacion.documentosList.splice(event.index, 1);
-         }*/
-    }
     async onSelection(event) {
         this.value = event;
         // this.caseSelect = false;
@@ -555,12 +533,13 @@ export class FormularioScmComponent implements OnInit {
 
         }
         this.edad = `${fechaNacimiento.diff(moment.now(), "year") * -1}`;
+        this.arl = this.empresa.arl == null ? null : this.empresa.arl.nombre;
         this.casoMedicoForm.patchValue({
             documento: this.empleadoSelect.numeroIdentificacion,
         });
         this.casoMedicoForm.patchValue({ pkUser: this.empleadoSelect.id })
         this.departamento = this.empleadoSelect.area.id;
-        // console.log(this.empleadoSelect, "Aqui estas");
+         
 
         if (this.empleadoSelect.businessPartner) {
             this.onSelectionBP(this.empleadoSelect.businessPartner)
@@ -598,18 +577,16 @@ export class FormularioScmComponent implements OnInit {
             direccionGerencia: this.empleadoSelect.direccionGerencia,
             regional: this.empleadoSelect.regional,
             correoPersonal: this.empleadoSelect.correoPersonal,
-            ciudadGerencia: this.empleadoSelect.ciudadGerencia,
-            //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+            ciudadGerencia: this.empleadoSelect.ciudadGerencia,            
+            
             'email': [this.empleadoSelect.usuario.email]
         });
-
-        //  console.log(this.empleadoForm.value);
     }
 
 
     submitEmp() {
         let empleado = new Empleado();
-        console.log(this.empleadoForm.value);
+        
         empleado.id = this.empleadoForm.value.id;
         empleado.primerNombre = this.empleadoForm.value.primerNombre;
         empleado.segundoNombre = this.empleadoForm.value.segundoNombre;
@@ -651,10 +628,6 @@ export class FormularioScmComponent implements OnInit {
         empleado.direccionGerencia = this.empleadoForm.value.correoPersonal;
         empleado.businessPartner = this.empleadoForm.value.businessPartner;
         empleado.jefeInmediato = this.empleadoForm.value.jefeInmediato;
-        // console.log(this.empleadoForm.value);
-
-        // //console.log(this.form.value.ipPermitida);
-        // empleado.usuario.ipPermitida = this.empleadoForm.value.ipPermitida;
         empleado.usuario.usuarioEmpresaList = [];
 
         this.empleadoForm.value.perfilesId.forEach(perfilId => {
@@ -666,10 +639,9 @@ export class FormularioScmComponent implements OnInit {
         console.log(empleado, this.empleadoSelect);
         this.solicitando = true;
         empleado.usuario.id = this.empleadoSelect.usuario.id;
-        console.log(empleado.usuario);
         this.usuarioService.update(empleado.usuario)
             .then(resp => {
-                console.log(resp);
+                
                 this.solicitando = false;
             })
             .catch(err => {
@@ -687,7 +659,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     onClick() {
-        //  console.log(this.caseSelect);
+        
     }
 
 
@@ -718,9 +690,6 @@ export class FormularioScmComponent implements OnInit {
             correoPersonal: empleado.correoPersonal,
             cargoId: empleado.cargo.id,
             direccionGerencia: empleado.direccionGerencia,
-
-            //'ipPermitida': empleado.usuario.ipPermitida,
-
             email: [empleado.usuario.email],
         });
     }
@@ -758,14 +727,13 @@ export class FormularioScmComponent implements OnInit {
     }
 
     lazyLoad(event) {
-        console.log(event);
+        
     }
 
     async modifyCase() {
         this.consultar=false;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
-        console.log(caseFiltered, this.consultar, new Date(fechaConceptRehabilitacion));
 
         this.casoMedicoForm.patchValue(caseFiltered);
         this.casoMedicoForm.patchValue({
@@ -777,24 +745,20 @@ export class FormularioScmComponent implements OnInit {
 
 
         this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
-
-        console.log("selecciono un caso", this.caseSelect);
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
-        //console.log(this.casoMedicoForm.get("statusCaso").value);
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
-        console.log(this.incapacidades);
-        console.log("Solo consultar ", this.consultar);
+        
     }
 
     async readCase() {
         this.consultar=true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
-        console.log(caseFiltered, this.consultar, new Date(fechaConceptRehabilitacion));
+       
 
         this.casoMedicoForm.patchValue(caseFiltered);
         this.casoMedicoForm.patchValue({
@@ -806,7 +770,7 @@ export class FormularioScmComponent implements OnInit {
 
         this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
 
-        console.log("selecciono un caso", this.caseSelect);
+       
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
@@ -818,16 +782,7 @@ export class FormularioScmComponent implements OnInit {
 
     async onLoadInit() {
         this.onSelection(this.caseSelect.pkUser);
-        /*   this.caseSelect = this.casoSeleccionado;
-           this.casoMedicoForm.patchValue(this.caseSelect);
-           this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.pkUser);
-           this.logsList = await this.scmService.getLogs(this.caseSelect.pkUser);
-           this.casoMedicoForm.patchValue(this.caseSelect);
-           this.cargoDescripcion = this.caseSelect.descripcionCargo;
-           this.fechaSeg();
-           this.diagnosticoList = await this.scmService.getDiagnosticos(this.empleadoSelect.id);
-           //console.log(this.casoMedicoForm.get("statusCaso").value);
-           this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label*/
+        
 
     }
 
@@ -838,15 +793,15 @@ export class FormularioScmComponent implements OnInit {
     }
 
     onRowEditInit(product) {
-        console.log(product);
+        
 
     }
     async onRowCloneInit(seg) {
-        console.log(seg);
+        
     }
     async onRowEditSave(product) {
         this.msgs = [];
-        console.log(product);
+        
         if (product.responsable) {
             product.responsable = product.responsable.id;
         }
@@ -857,10 +812,10 @@ export class FormularioScmComponent implements OnInit {
                 summary: "Seguimiento",
                 detail: `Su numero de seguimiento es ${product.id}`,
             });
-            console.log(resp);
+            
             this.fechaSeg();
         } catch (error) {
-            console.log(error);
+            
         }
     }
 
@@ -870,10 +825,10 @@ export class FormularioScmComponent implements OnInit {
     async nuevoSeguimiento() {
         try {
             let resp = await this.scmService.createSeguimiento(this.caseSelect.id);
-            console.log(resp);
+            
             this.seguimientos.push(resp)
         } catch (error) {
-            console.log(error);
+           
         }
 
     }
