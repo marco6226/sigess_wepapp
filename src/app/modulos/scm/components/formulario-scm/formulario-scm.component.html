@@ -52,7 +52,8 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" [attr.disabled]="true" required>
+                        <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion"
+                            [attr.disabled]="true" required>
                         </p-dropdown>
                         <label for="" class="active">Tipo de identificación</label>
                     </div>
@@ -349,8 +350,8 @@
                     </div>
                 </div>
                 <div style="text-align: center; width: 100%;">
-                    <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit" [disabled]="this.consultar"
-                        icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
+                    <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit"
+                        [disabled]="this.consultar" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
                         title="Guardar datos de Empleado"></button>
 
                     <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
@@ -624,8 +625,8 @@
 
 
             <div style="text-align: center; width: 100%;">
-                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"  [disabled]="this.consultar"
-                    style="bottom: 100px;" title="Guardar datos medicos"></button>
+                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
+                    [disabled]="this.consultar" style="bottom: 100px;" title="Guardar datos medicos"></button>
 
                 <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
                     [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
@@ -713,8 +714,8 @@
                 <button *sTienePermiso="'ADM_PUT_USR'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil"
                     label="Modificar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
 
-                <button *sTienePermiso="'ADM_PUT_USR'" (click)="readCase()"  pButton type="button" icon="fa fa-pencil" label="Consultar"
-                    class="ui-button-success" [disabled]="!casoSeleccionado"></button>
+                <button *sTienePermiso="'ADM_PUT_USR'" (click)="readCase()" pButton type="button" icon="fa fa-pencil"
+                    label="Consultar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
                 <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
             (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
             </ng-template>
@@ -868,7 +869,10 @@
                         <p-sortIcon field="documento"></p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="charge">Recomendación generada
+                    <th pSortableColumn="charge">Responsable Empresa
+                        <p-sortIcon field="charge"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="charge">Responsable Externo
                         <p-sortIcon field="charge"></p-sortIcon>
                     </th>
 
@@ -910,7 +914,8 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy HH:mm'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{case.generateRecomendaciones}}</td>
+                    <td>{{case.responsableEmpresa?.primerNombre || ""}}</td>
+                    <td>{{case.responsableExterno}}</td>
 
 
                 </tr>
@@ -1062,6 +1067,7 @@
         <div class="ui-g">
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Documentos asociados al caso médico</h5>
+                <app-gestion-documental></app-gestion-documental>
             </div>
         </div>
 

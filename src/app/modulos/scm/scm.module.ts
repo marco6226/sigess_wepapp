@@ -16,6 +16,7 @@ import { RecomendationsformComponent, RecomendationStatusPipe } from './componen
 import { CoreModule } from '../core/core.module';
 import { LogmodalComponent } from './components/logmodal/logmodal.component';
 import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnostico-form.component';
+import { DocumentosModule } from '../ado/documentos.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnost
         CommonModule,
         ComunModule,
         CoreModule,
+        DocumentosModule
     ],
     providers: [
         UsuarioService,

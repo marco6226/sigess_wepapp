@@ -120,7 +120,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             fechaExpiracion,
             recomendaciones,
             responsableEmpresa,
-            actionPlan
+            actionPlan,
+            responsableExterno
 
         } = this.recomendation.value;
 
@@ -137,7 +138,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             pkUser: this.id,
             pkCase: this.id,
             responsableEmpresa,
-
+            responsableExterno,
             actionPlan: actionPlan
         }
 
@@ -179,18 +180,16 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     patchFormValues() {
         console.log(this.recoSelect);
         if (this.recoSelect) {
-            this.empleado = this.recoSelect.responsableEmpresa;
             this.recomendation.patchValue({
                 entidadEmitRecomendaciones: this.recoSelect.entidadEmitRecomendaciones,
-                responsableEmpresaNombre: [""],
                 tipo: this.recoSelect.tipo,
                 fechaInicio: this.recoSelect.fechaInicio == null ? null : new Date(this.recoSelect.fechaInicio),
                 responsableExterno: this.recoSelect.responsableExterno,
                 fechaExpiracion: this.recoSelect.fechaExpiracion == null ? null : new Date(this.recoSelect.fechaExpiracion),
                 actionPlan: this.recoSelect.actionPlan,
-                responsableEmpresa: this.recoSelect.responsableEmpresa,
                 recomendaciones: this.recoSelect.recomendaciones,
             })
+            this.onSelectionResponsable(this.recoSelect.responsableEmpresa)
         }
     }
 
@@ -216,6 +215,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             }
         });
     }
+
 }
 
 import { Pipe, PipeTransform } from '@angular/core';

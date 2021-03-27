@@ -8,12 +8,13 @@ import { DragDropModule } from 'primeng/dragdrop';
 import { DocumentoFormComponent } from './components/documento-form/documento-form.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DragDropModule,
-    ComunModule
-  ],
-  declarations: [GestionDocumentalComponent, DocumentoFormComponent],
-  providers: [DirectorioService]
+    imports: [
+        CommonModule,
+        DragDropModule,
+        ComunModule
+    ],
+    exports: [GestionDocumentalComponent],
+    declarations: [GestionDocumentalComponent, DocumentoFormComponent],
+    providers: [DirectorioService]
 })
 export class DocumentosModule { }

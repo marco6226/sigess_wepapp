@@ -340,7 +340,7 @@ export class FormularioScmComponent implements OnInit {
         if (this.caseSelect) {
             console.log(this.caseSelect);
             this.onLoadInit();
-           // this.modifyCase()
+            // this.modifyCase()
 
         }
 
@@ -694,6 +694,7 @@ export class FormularioScmComponent implements OnInit {
     async onCloseModalrecomendation() {
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.modalRecomendatios = false;
+        this.recoSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
     }
@@ -762,7 +763,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async modifyCase() {
-        this.consultar=false;
+        this.consultar = false;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
         console.log(caseFiltered, this.consultar, new Date(fechaConceptRehabilitacion));
@@ -791,7 +792,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async readCase() {
-        this.consultar=true;
+        this.consultar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
         console.log(caseFiltered, this.consultar, new Date(fechaConceptRehabilitacion));
@@ -812,7 +813,7 @@ export class FormularioScmComponent implements OnInit {
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
-        
+
     }
 
 

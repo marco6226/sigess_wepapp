@@ -10,6 +10,7 @@ export class LogmodalComponent implements OnInit {
     @Input() log: any;
     @Input() logList = [];
     arrayByentity = [];
+    logFile = [];
     constructor() { }
 
     ngOnInit() {
@@ -31,7 +32,7 @@ export class LogmodalComponent implements OnInit {
                 const edit = editado[key];
 
                 if (sinEditar != edit) {
-                    console.log(`Hubo cambio en ${key}, antes estaba asi : ${sinEditar} y ahora esta asi : ${edit}`);
+                    this.logFile.push(`Hubo cambio en ${key}, antes estaba asi : ${sinEditar || 'vacio'}  y ahora esta asi : ${edit || 'vacio'}`);
                 }
             }
         }
