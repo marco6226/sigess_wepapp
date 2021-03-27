@@ -73,13 +73,7 @@ export class ScmComponent implements OnInit {
         this.casosList = await this.scmService.getAll();
         this.casosList.forEach(element => {
             console.log(element);
-            let cargo = this.cargoList.find(cargo => cargo.value == element.cargo)
-            console.log(cargo);
-            if (cargo.label && cargo.value != null) {
-                element.cargo = cargo.label
-            } else {
-                element.cargo = "Sin definir";
-            }
+            
 
         });
     }
