@@ -169,7 +169,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input [attr.disabled]="true" type="text" pInputText    [value]="edad || ''" placeholder="Edad"
+                        <input [attr.disabled]="true" type="text" pInputText [value]="edad || ''" placeholder="Edad"
                             class="form-material" id="Edad" />
                         <label for="" class="active">Edad</label>
                     </div>
@@ -245,8 +245,8 @@
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">                        
-                            <input [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
+                    <div class="input-field">
+                        <input [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
                             class="form-material" id="arl" />
                         <label for="" class="active">ARL</label>
                     </div>
@@ -1067,17 +1067,40 @@
         <div class="ui-g">
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Documentos asociados al caso médico</h5>
-                <app-gestion-documental></app-gestion-documental>
+                <app-gestion-documental [caseid]="this.caseSelect.id"></app-gestion-documental>
             </div>
         </div>
 
     </p-tabPanel>
     <p-tabPanel header="Plan de Acción" *ngIf="caseSelect">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <h5 class="title-header p-mb-2">Plan de Acción de las recomendaciones</h5>
-            </div>
-        </div>
+        <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
+            [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">Plan de accion
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="charge">Responsable Empresa
+                        <p-sortIcon field="charge"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="charge">Responsable Externo
+                        <p-sortIcon field="charge"></p-sortIcon>
+                    </th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
+
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.actionPlan}}</td>
+                    <td>{{case.responsableEmpresa?.primerNombre || ""}}</td>
+                    <td>{{case.responsableExterno}}</td>
+
+
+                </tr>
+            </ng-template>
+
+        </p-table>
 
     </p-tabPanel>
 
@@ -1148,6 +1171,6 @@
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>
-
+<!--
 <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()" icon="fa fa-chevron-left"
-    class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
+    class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>-->

@@ -19,156 +19,156 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Directorio } from '../../../ado/entities/directorio';
 
 @Component({
-  selector: 's-formulario-tarjeta',
-  templateUrl: './formulario-tarjeta.component.html',
-  styleUrls: ['./formulario-tarjeta.component.scss']
+    selector: 's-formulario-tarjeta',
+    templateUrl: './formulario-tarjeta.component.html',
+    styleUrls: ['./formulario-tarjeta.component.scss']
 })
 export class FormularioTarjetaComponent implements OnInit {
 
-  @Input("tarjeta") tarjeta: Tarjeta;
-  @Input("observacion") observacion: Observacion = new Observacion();
-  @Output("onSave") onSave = new EventEmitter<Observacion>();
-  causaRaizList: TreeNode[] = [];
-  causaRaizSelectList: TreeNode[];
-  implicacionTree: TreeNode[] = [];
-  implicacionSelectList: TreeNode[] = [];
-  afectaSelectList: string[];
-  nivelRiesgoList: SelectItem[] = [{ label: '--Nivel Riesgo--', value: null }];
-  form: FormGroup;
-  visibleDlg: boolean;
-  imagenesList: any[];
-  msgs: Message[];
+    @Input("tarjeta") tarjeta: Tarjeta;
+    @Input("observacion") observacion: Observacion = new Observacion();
+    @Output("onSave") onSave = new EventEmitter<Observacion>();
+    causaRaizList: TreeNode[] = [];
+    causaRaizSelectList: TreeNode[];
+    implicacionTree: TreeNode[] = [];
+    implicacionSelectList: TreeNode[] = [];
+    afectaSelectList: string[];
+    nivelRiesgoList: SelectItem[] = [{ label: '--Nivel Riesgo--', value: null }];
+    form: FormGroup;
+    visibleDlg: boolean;
+    imagenesList: any[];
+    msgs: Message[];
 
-  constructor(
-    private directorioService: DirectorioService,
-    private domSanitizer: DomSanitizer,
-    private sistemaCausaRaizService: SistemaCausaRaizService,
-    private sistemaNivelRiesgoService: SistemaNivelRiesgoService,
-    private observacionService: ObservacionService,
-    private fb: FormBuilder,
-  ) {
-    this.form = fb.group({
-      id: null,
-      tipoObservacion: [null, Validators.required],
-      afecta: new FormControl(),
-      descripcion: [null, Validators.required],
-      recomendacion: null,
-      nivelRiesgo: null,
-      causaRaiz: null,
-      area: [null, Validators.required]
-    });
-  }
-
-  ngOnInit() {
-    this.implicacionTree = this.buildImplicacionTree(this.tarjeta.implicacionList);
-    this.sistemaNivelRiesgoService.findDefault().then(
-      data => (<SistemaNivelRiesgo>data).nivelRiesgoList.forEach(element => {
-        this.nivelRiesgoList.push({ label: element.nombre, value: element });
-      })
-    );
-    this.sistemaCausaRaizService.findDefault().then(
-      data => this.causaRaizList = this.buildTreeNode((<SistemaCausaRaiz>data).causaRaizList)
-    );
-  }
-
-  buildImplicacionTree(implicacionList: Implicacion[]) {
-    let treeNodeList: TreeNode[] = [];
-    implicacionList.forEach(implicacion => {
-      let node = {
-        id: implicacion.id,
-        label: implicacion.nombre,
-        children: implicacion.implicacionList == null || implicacion.implicacionList.length == 0 ? null : this.buildImplicacionTree(implicacion.implicacionList)
-      };
-      treeNodeList.push(node);
-    });
-    return treeNodeList;
-  }
-
-  buildTreeNode(crList: CausaRaiz[]): any {
-    let treeNodeList: TreeNode[] = [];
-    crList.forEach(cr => {
-      let node = {
-        id: cr.id,
-        label: cr.nombre,
-        children: cr.causaRaizList == null || cr.causaRaizList.length == 0 ? null : this.buildTreeNode(cr.causaRaizList)
-      };
-      treeNodeList.push(node);
-    });
-    return treeNodeList;
-  }
-
-  buildImplicacionList(impTree: any[]): Implicacion[] {
-    if (impTree == null) {
-      return null;
+    constructor(
+        private directorioService: DirectorioService,
+        private domSanitizer: DomSanitizer,
+        private sistemaCausaRaizService: SistemaCausaRaizService,
+        private sistemaNivelRiesgoService: SistemaNivelRiesgoService,
+        private observacionService: ObservacionService,
+        private fb: FormBuilder,
+    ) {
+        this.form = fb.group({
+            id: null,
+            tipoObservacion: [null, Validators.required],
+            afecta: new FormControl(),
+            descripcion: [null, Validators.required],
+            recomendacion: null,
+            nivelRiesgo: null,
+            causaRaiz: null,
+            area: [null, Validators.required]
+        });
     }
-    let impList: Implicacion[] = [];
-    impTree.forEach(imp => {
-      let impEntity = new Implicacion();
-      impEntity.id = imp.id;
-      impList.push(impEntity);
-    });
-    return impList;
-  }
 
-  buildCausaRaizList(crTree: any[]): CausaRaiz[] {
-    if (crTree == null) {
-      return null;
+    ngOnInit() {
+        this.implicacionTree = this.buildImplicacionTree(this.tarjeta.implicacionList);
+        this.sistemaNivelRiesgoService.findDefault().then(
+            data => (<SistemaNivelRiesgo>data).nivelRiesgoList.forEach(element => {
+                this.nivelRiesgoList.push({ label: element.nombre, value: element });
+            })
+        );
+        this.sistemaCausaRaizService.findDefault().then(
+            data => this.causaRaizList = this.buildTreeNode((<SistemaCausaRaiz>data).causaRaizList)
+        );
     }
-    let crList: CausaRaiz[] = [];
-    crTree.forEach(imp => {
-      let crEntity = new CausaRaiz();
-      crEntity.id = imp.id;
-      crList.push(crEntity);
-    });
-    return crList;
-  }
 
-  onSubmit() {
-    let observacion = new Observacion();
-    observacion.tipoObservacion = this.form.value.tipoObservacion;
-    observacion.descripcion = this.form.value.descripcion;
-    observacion.implicacionList = this.buildImplicacionList(this.implicacionSelectList);
-    observacion.area = this.form.value.area;
-    observacion.afecta = this.afectaSelectList;
-    observacion.recomendacion = this.form.value.recomendacion;
-    observacion.causaRaizList = this.buildCausaRaizList(this.causaRaizSelectList);
-    observacion.nivelRiesgo = this.form.value.nivelRiesgo;
-    observacion.tarjeta = new Tarjeta();
-    observacion.tarjeta.id = this.tarjeta.id;
-    this.observacionService.create(observacion).then(
-      data => {
-        observacion = <Observacion>data;
-        if (this.imagenesList != null) {
-          this.imagenesList.forEach(imgObj => {
-            this.directorioService.upload(imgObj.file, null, 'AUC', observacion.id);
-          });
+    buildImplicacionTree(implicacionList: Implicacion[]) {
+        let treeNodeList: TreeNode[] = [];
+        implicacionList.forEach(implicacion => {
+            let node = {
+                id: implicacion.id,
+                label: implicacion.nombre,
+                children: implicacion.implicacionList == null || implicacion.implicacionList.length == 0 ? null : this.buildImplicacionTree(implicacion.implicacionList)
+            };
+            treeNodeList.push(node);
+        });
+        return treeNodeList;
+    }
+
+    buildTreeNode(crList: CausaRaiz[]): any {
+        let treeNodeList: TreeNode[] = [];
+        crList.forEach(cr => {
+            let node = {
+                id: cr.id,
+                label: cr.nombre,
+                children: cr.causaRaizList == null || cr.causaRaizList.length == 0 ? null : this.buildTreeNode(cr.causaRaizList)
+            };
+            treeNodeList.push(node);
+        });
+        return treeNodeList;
+    }
+
+    buildImplicacionList(impTree: any[]): Implicacion[] {
+        if (impTree == null) {
+            return null;
         }
-        this.onSave.emit(observacion);
-      }
-    );
-  }
-
-  showDialog() {
-    this.visibleDlg = true;
-  }
-
-  onArchivoSelect(event) {
-    let file = event.target.files[0];
-    this.msgs = [];
-    if (file.type != "image/jpeg" && file.type != "image/png") {
-      this.msgs.push({ severity: 'error', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
-      return;
+        let impList: Implicacion[] = [];
+        impTree.forEach(imp => {
+            let impEntity = new Implicacion();
+            impEntity.id = imp.id;
+            impList.push(impEntity);
+        });
+        return impList;
     }
-    if (file.size > 500000) {
-      this.msgs.push({ severity: 'error', summary: 'Tamaño máximo superado 500KB', detail: 'La imágen supera el tamaño máximo permitido' });
-      return;
+
+    buildCausaRaizList(crTree: any[]): CausaRaiz[] {
+        if (crTree == null) {
+            return null;
+        }
+        let crList: CausaRaiz[] = [];
+        crTree.forEach(imp => {
+            let crEntity = new CausaRaiz();
+            crEntity.id = imp.id;
+            crList.push(crEntity);
+        });
+        return crList;
     }
-    if (this.imagenesList == null)
-      this.imagenesList = [];
-    let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-    this.imagenesList.push({ source: urlData, file: file });
-    this.imagenesList = this.imagenesList.slice();
-  }
+
+    onSubmit() {
+        let observacion = new Observacion();
+        observacion.tipoObservacion = this.form.value.tipoObservacion;
+        observacion.descripcion = this.form.value.descripcion;
+        observacion.implicacionList = this.buildImplicacionList(this.implicacionSelectList);
+        observacion.area = this.form.value.area;
+        observacion.afecta = this.afectaSelectList;
+        observacion.recomendacion = this.form.value.recomendacion;
+        observacion.causaRaizList = this.buildCausaRaizList(this.causaRaizSelectList);
+        observacion.nivelRiesgo = this.form.value.nivelRiesgo;
+        observacion.tarjeta = new Tarjeta();
+        observacion.tarjeta.id = this.tarjeta.id;
+        this.observacionService.create(observacion).then(
+            data => {
+                observacion = <Observacion>data;
+                if (this.imagenesList != null) {
+                    this.imagenesList.forEach(imgObj => {
+                        this.directorioService.upload(imgObj.file, null, 'AUC', observacion.id, null);
+                    });
+                }
+                this.onSave.emit(observacion);
+            }
+        );
+    }
+
+    showDialog() {
+        this.visibleDlg = true;
+    }
+
+    onArchivoSelect(event) {
+        let file = event.target.files[0];
+        this.msgs = [];
+        if (file.type != "image/jpeg" && file.type != "image/png") {
+            this.msgs.push({ severity: 'error', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
+            return;
+        }
+        if (file.size > 500000) {
+            this.msgs.push({ severity: 'error', summary: 'Tamaño máximo superado 500KB', detail: 'La imágen supera el tamaño máximo permitido' });
+            return;
+        }
+        if (this.imagenesList == null)
+            this.imagenesList = [];
+        let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+        this.imagenesList.push({ source: urlData, file: file });
+        this.imagenesList = this.imagenesList.slice();
+    }
 
 
 }

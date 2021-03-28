@@ -1,106 +1,115 @@
 <p-growl [value]="growlMsgs"></p-growl>
 
-<s-dataNotFound *ngIf="!directorioList || directorioList.length <= 0" icon="fa-files-o" message="Aún no se cuenta con registros de carpetas o archivos adicionados">
-  <div>
-    Adiciona un nuevo:
-    <a *sTienePermiso="'ADO_POST_DOCSUP'" (click)="abrirDlgUpload()">Archivo</a> |
-    <a *sTienePermiso="'ADO_POST_DIR'" (click)="abrirDlgNuevaCarpeta()">Carpeta</a>
-  </div>
+<s-dataNotFound *ngIf="!directorioList || directorioList.length <= 0" icon="fa-files-o"
+    message="Aún no se cuenta con registros de carpetas o archivos adicionados">
+    <div>
+        Adiciona un nuevo:
+        <a *sTienePermiso="'ADO_POST_DOCSUP'" (click)="abrirDlgUpload()">Archivo</a> |
+        <a *sTienePermiso="'ADO_POST_DIR'" (click)="abrirDlgNuevaCarpeta()">Carpeta</a>
+    </div>
 </s-dataNotFound>
 
 <p-panel [style.display]="directorioList && directorioList.length > 0 ? 'block':'none'">
-  <p-messages [(value)]="msgs" [closable]="false"></p-messages>
-  <p-header>
-    <div class="ui-inputgroup">
-      <span class="ui-inputgroup-addon">
-        <i class="fa fa-search"></i>
-      </span>
-      <input type="text" pInputText placeholder="Buscar documento" [(ngModel)]="criterioBusqueda" (keypress)="buscar($event)">
-    </div>
-  </p-header>
-  <div class="ui-g">
-    <div class="ui-g-12 ui-md-6 ui-lg-7">
-      <p-breadcrumb [model]="breadCrumbItems" [home]="homeItem"></p-breadcrumb>
-      <p-treeTable [value]="directorioList" autoLayout="true" (onNodeExpand)="onNodeExpand($event)" [lazy]="true" (onLazyLoad)="loadNodes($event)"
-        dataKey="id" [loading]="loading" selectionMode="single" [(selection)]="nodeSelect" dataKey="id">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>
-              <div pDroppable="dd" (onDrop)="drop($event, null)">Nombre</div>
-            </th>
-            <th>Tamaño</th>
-            <th>Fecha creación</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowNode let-data="rowData">
-
-          <tr [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode" (dblclick)="onDoubleClick(rowNode)">
-            <td>
-              <div pDroppable="dd" (onDrop)="drop($event, rowNode)">
-                <div pDraggable="dd" (onDragStart)="dragStart($event, rowNode)">
-                  <p-treeTableToggler [rowNode]="rowNode" [class.tree-table-toggler-invisible]="data.esDocumento"></p-treeTableToggler>
-                  <span [class]="data.extension?.icono" [style.color]="data.extension?.color"></span>
-                  {{data?.nombre}}
-                </div>
-              </div>
-            </td>
-            <td style="text-align: center">
-              <label *ngIf="!data.esDocumento">{{data.tamanio}} Elementos</label>
-              <label *ngIf="data.esDocumento">{{data.tamanio | fileSize}}</label>
-            </td>
-            <td style="text-align: center">{{data?.fechaCreacion | date:'yyyy-MM-dd HH:mm'}}</td>
-          </tr>
-
-        </ng-template>
-      </p-treeTable>
-    </div>
-
-    <div class="ui-g-12 ui-md-6 ui-lg-5 transicion" [class.panel-oculto]="nodeSelect == null" [class.panel-visible]="nodeSelect != null ">
-      <div class="header-detail separator">
+    <p-messages [(value)]="msgs" [closable]="false"></p-messages>
+    <p-header>
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon" style="background-color: #fff">
-            <i [class]="nodeSelect?.data.extension.icono"></i>
-          </span>
-          <input pInputText maxlength="100" [(ngModel)]="nodeSelect?.data.nombre" />
-          <span class="ui-inputgroup-addon check-span" title="Actualizar nombre" (click)="actualizarDirectorio(nodeSelect)">
-            <i class="fa fa-check"></i>
-          </span>
+            <span class="ui-inputgroup-addon">
+                <i class="fa fa-search"></i>
+            </span>
+            <input type="text" pInputText placeholder="Buscar documento" [(ngModel)]="criterioBusqueda"
+                (keypress)="buscar($event)">
         </div>
-      </div>
-      <p>
-        <label>Tipo: {{nodeSelect?.data.extension.nombre}}</label>
-        <a (click)="descargar(nodeSelect?.data)" style="float: right;" *ngIf="nodeSelect?.data.esDocumento">
-          <span class="fa fa-download" style="font-size: 14px;"></span>
-          Descargar
-        </a>
-      </p>
-      <ng-container *ngIf="nodeSelect?.data.esDocumento">
-        <s-documento-form [documento]="nodeSelect?.data.documento"></s-documento-form>
-        <button *sTienePermiso="'ADO_PUT_DIR'" pButton type="button" class="ui-button-success" (click)="actualizarDocumento(nodeSelect.data)"
-          label="Actualizar" icon="fa fa-pencil"></button>
-      </ng-container>
-      <button *sTienePermiso="'ADO_DELETE_DIR'" pButton type="button" (click)="confirmarEliminar()" class="ui-button-danger" label="Eliminar"
-        icon="fa fa-trash"></button>
+    </p-header>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-7">
+            <p-breadcrumb [model]="breadCrumbItems" [home]="homeItem"></p-breadcrumb>
+            <p-treeTable [value]="directorioList" autoLayout="true" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
+                (onLazyLoad)="loadNodes($event)" dataKey="id" [loading]="loading" selectionMode="single"
+                [(selection)]="nodeSelect" dataKey="id">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div pDroppable="dd" (onDrop)="drop($event, null)">Nombre</div>
+                        </th>
+                        <th>Tamaño</th>
+                        <th>Fecha creación</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowNode let-data="rowData">
+
+                    <tr [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode" (dblclick)="onDoubleClick(rowNode)">
+                        <td>
+                            <div pDroppable="dd" (onDrop)="drop($event, rowNode)">
+                                <div pDraggable="dd" (onDragStart)="dragStart($event, rowNode)">
+                                    <p-treeTableToggler [rowNode]="rowNode"
+                                        [class.tree-table-toggler-invisible]="data.esDocumento"></p-treeTableToggler>
+                                    <span [class]="data.extension?.icono" [style.color]="data.extension?.color"></span>
+                                    {{data?.nombre}}
+                                </div>
+                            </div>
+                        </td>
+                        <td style="text-align: center">
+                            <label *ngIf="!data.esDocumento">{{data.tamanio}} Elementos</label>
+                            <label *ngIf="data.esDocumento">{{data.tamanio | fileSize}}</label>
+                        </td>
+                        <td style="text-align: center">{{data?.fechaCreacion | date:'yyyy-MM-dd HH:mm'}}</td>
+                    </tr>
+
+                </ng-template>
+            </p-treeTable>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-5 transicion" [class.panel-oculto]="nodeSelect == null"
+            [class.panel-visible]="nodeSelect != null ">
+            <div class="header-detail separator">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon" style="background-color: #fff">
+                        <i [class]="nodeSelect?.data.extension.icono"></i>
+                    </span>
+                    <input pInputText maxlength="100" [(ngModel)]="nodeSelect?.data.nombre" />
+                    <span class="ui-inputgroup-addon check-span" title="Actualizar nombre"
+                        (click)="actualizarDirectorio(nodeSelect)">
+                        <i class="fa fa-check"></i>
+                    </span>
+                </div>
+            </div>
+            <p>
+                <label>Tipo: {{nodeSelect?.data.extension.nombre}}</label>
+                <a (click)="descargar(nodeSelect?.data)" style="float: right;" *ngIf="nodeSelect?.data.esDocumento">
+                    <span class="fa fa-download" style="font-size: 14px;"></span>
+                    Descargar
+                </a>
+            </p>
+            <ng-container *ngIf="nodeSelect?.data.esDocumento">
+                <s-documento-form [documento]="nodeSelect?.data.documento"></s-documento-form>
+                <button *sTienePermiso="'ADO_PUT_DIR'" pButton type="button" class="ui-button-success"
+                    (click)="actualizarDocumento(nodeSelect.data)" label="Actualizar" icon="fa fa-pencil"></button>
+            </ng-container>
+            <button *sTienePermiso="'ADO_DELETE_DIR'" pButton type="button" (click)="confirmarEliminar()"
+                class="ui-button-danger" label="Eliminar" icon="fa fa-trash"></button>
+        </div>
     </div>
-  </div>
 
-  <a style="visibility: hidden" id="dwldLink"></a>
+    <a style="visibility: hidden" id="dwldLink"></a>
 
-  <button *sTienePermiso="'ADO_POST_DOCSUP'" pButton type="button" (click)="abrirDlgUpload()" icon="fa fa-file" class="float-btn"
-    title="Subir archivo"></button>
-  <button *sTienePermiso="'ADO_POST_DIR'" pButton type="button" (click)="abrirDlgNuevaCarpeta()" icon="fa fa-folder" class="float-btn"
-    style="bottom:100px" title="Crear carpeta"></button>
+    <button *sTienePermiso="'ADO_POST_DOCSUP'" pButton type="button" (click)="abrirDlgUpload()" icon="fa fa-file"
+        class="float-btn" title="Subir archivo"></button>
+    <button *sTienePermiso="'ADO_POST_DIR'" pButton type="button" (click)="abrirDlgNuevaCarpeta()" icon="fa fa-folder"
+        class="float-btn" style="bottom:100px" title="Crear carpeta"></button>
 </p-panel>
 
 <p-contextMenu #contextMenu [model]="menuItems" appendTo="body"></p-contextMenu>
 
 <p-dialog header="Nueva carpeta" [(visible)]="visibleDlgNuevaCarpeta" modal="true">
-  <input pInputText maxlength="55" size="45" [(ngModel)]="nombreCarpeta" />
-  <p-footer>
-    <button pButton type="button" (click)="crearNuevaCarpeta()" label="Crear" [disabled]="!nombreCarpeta"></button>
-    <button pButton type="button" (click)="cerrarDlgNuevaCarpeta()" class="ui-button-secondary" label="Cancelar"></button>
-  </p-footer>
+    <input pInputText maxlength="55" size="45" [(ngModel)]="nombreCarpeta" />
+    <p-footer>
+        <button pButton type="button" (click)="crearNuevaCarpeta()" label="Crear" [disabled]="!nombreCarpeta"></button>
+        <button pButton type="button" (click)="cerrarDlgNuevaCarpeta()" class="ui-button-secondary"
+            label="Cancelar"></button>
+    </p-footer>
 </p-dialog>
 
-<s-documentoUpload [directorio]="nodeSelect == null ? null : (nodeSelect.data.esDocumento ? nodeSelect.parent?.data.id : nodeSelect.data.id)"
-  modulo="ADO" [(visible)]="visibleDlgUpload" [modParam]="null" (onUpload)="onUpload($event)"></s-documentoUpload>
+<s-documentoUpload
+    [directorio]="nodeSelect == null ? null : (nodeSelect.data.esDocumento ? nodeSelect.parent?.data.id : nodeSelect.data.id)"
+    modulo="ADO" [(visible)]="visibleDlgUpload" [modParam]="null" [caseId]="this.caseid" (onUpload)="onUpload($event)">
+</s-documentoUpload>

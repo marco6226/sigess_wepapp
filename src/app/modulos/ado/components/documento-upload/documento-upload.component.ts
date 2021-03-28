@@ -3,43 +3,51 @@ import { Directorio } from 'app/modulos/ado/entities/directorio'
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
 
 @Component({
-  selector: 's-documentoUpload',
-  templateUrl: './documento-upload.component.html',
-  styleUrls: ['./documento-upload.component.scss']
+    selector: 's-documentoUpload',
+    templateUrl: './documento-upload.component.html',
+    styleUrls: ['./documento-upload.component.scss']
 })
 export class DocumentoUploadComponent implements OnInit {
 
-  @Input("modParam") modParam: string;
-  @Input("modulo") modulo: string;
-  @Input("directorio") directorio: Directorio;
-  @Input("visible") visibleDlg: boolean;
-  @Output("visibleChange") visibleChange = new EventEmitter();
-  @Output("onUpload") onUpload = new EventEmitter();
+    @Input("modParam") modParam: string;
+    @Input("modulo") modulo: string;
+    @Input("caseId") caseId: any;
 
-  constructor(
-    private directorioService: DirectorioService
-  ) { }
+    @Input("directorio") directorio: Directorio;
+    @Input("visible") visibleDlg: boolean;
+    @Output("visibleChange") visibleChange = new EventEmitter();
+    @Output("onUpload") onUpload = new EventEmitter();
 
-  ngOnInit() {
-    
-  }
+    constructor(
+        private directorioService: DirectorioService
+    ) { }
 
-  onVisibleChange(event: boolean) {
-    this.visibleChange.emit(event);
-  }
+    ngOnInit() {
 
-  upload(event) {
-    this.directorioService.upload(
-      event.files[0],
-      (this.directorio == null ? null : this.directorio.id),
-      this.modulo,
-      this.modParam
-    ).then(
-      resp => {
-        let dir = <Directorio>resp;
-        this.onVisibleChange(false);
-        this.onUpload.emit(dir);
-      }
-    );
-  }
+    }
+
+    onVisibleChange(event: boolean) {
+        this.visibleChange.emit(event);
+    }
+
+    upload(event) {
+        console.log("caso de id", this.caseId, this.directorio);
+        if (this.caseId) {
+            // this.directorio.caseId = this.caseId
+
+        }
+        this.directorioService.upload(
+            event.files[0],
+            (this.directorio == null ? null : this.directorio.id),
+            this.modulo,
+            this.modParam,
+            this.caseId
+        ).then(
+            resp => {
+                let dir = <Directorio>resp;
+                this.onVisibleChange(false);
+                this.onUpload.emit(dir);
+            }
+        );
+    }
 }

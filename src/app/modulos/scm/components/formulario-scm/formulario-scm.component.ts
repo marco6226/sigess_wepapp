@@ -43,7 +43,7 @@ import { Usuario } from "app/modulos/empresa/entities/usuario";
     selector: "app-formulario-scm",
     templateUrl: "./formulario-scm.component.html",
     styleUrls: ["./formulario-scm.component.scss"],
-    providers: [DirectorioService,EmpresaService]
+    providers: [DirectorioService, EmpresaService]
 })
 export class FormularioScmComponent implements OnInit {
     empresasList: Empresa[];
@@ -70,7 +70,7 @@ export class FormularioScmComponent implements OnInit {
     adicionar: boolean;
     empleado: Empleado;
     empresa: Empresa;
-    
+
     recomendationList = [];
     logsList = []
     empleadosList: Empleado[];
@@ -205,9 +205,9 @@ export class FormularioScmComponent implements OnInit {
     ) {
 
         this.empresa = this.sesionService.getEmpresa();
-    
 
-    
+
+
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
         this.tipoIdentificacionList = defaultItem.concat(
@@ -307,7 +307,7 @@ export class FormularioScmComponent implements OnInit {
             justification: [null, /*Validators.required*/],
             statusDeCalificacion: [null, /*Validators.required*/],
             casoMedicoLaboral: [null, /*Validators.required*/],
-            fechaFinal: [null, /*Validators.required*/],sistemaAfectado: [null, /*Validators.required*/],
+            fechaFinal: [null, /*Validators.required*/], sistemaAfectado: [null, /*Validators.required*/],
             fechaCreacion: [null],
             entidadEmiteCalificacion: [null, /*Validators.required*/],
             pclEmitEntidad: [null, /*Validators.required*/],
@@ -318,7 +318,7 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-    
+
 
 
     get pkUse() {
@@ -340,8 +340,8 @@ export class FormularioScmComponent implements OnInit {
         res.forEach((sve) => {
             this.sveOptionList.push({ label: sve.nombre, value: sve.id.toString() });
         });
-        
-        
+
+
 
         if (this.consultar) {
             this.onLoadInit();
@@ -350,17 +350,13 @@ export class FormularioScmComponent implements OnInit {
             this.bussinessParner.disable();
             this.casoMedicoForm.disable();
             this.empleadoForm.disable();
-            
+
         }
 
         if (this.caseSelect) {
-            
+
             this.onLoadInit();
-<<<<<<< HEAD
-            // this.modifyCase()
-=======
             this.modifyCase();
->>>>>>> 05ce0c5272ec1cfad2cef567542ff28cc8cec51e
 
         }
 
@@ -397,7 +393,7 @@ export class FormularioScmComponent implements OnInit {
             (<Cargo[]>resp["data"]).forEach((cargo) => {
                 this.cargoList.push({ label: cargo.nombre, value: cargo.id });
             });
-            
+
         });
         this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
@@ -432,7 +428,7 @@ export class FormularioScmComponent implements OnInit {
             names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
                 }`,
             cargo: this.empleadoForm.value.cargoId,
-            
+
 
             pkUser: this.empleadoForm.get("id").value || null,
             codigoCie10: this.casoMedicoForm.value.id || null,
@@ -441,13 +437,13 @@ export class FormularioScmComponent implements OnInit {
 
 
         let status;
-        
+
         if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
-            
+
             status = await this.scmService.create(this.casoMedicoForm.value);
         } else {
-            
+
             this.casoMedicoForm.patchValue({ id: this.caseSelect.id });
             status = await this.scmService.edit(this.casoMedicoForm.value);
         }
@@ -464,14 +460,14 @@ export class FormularioScmComponent implements OnInit {
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
-        
-        
-        
+
+
+
     }
 
 
     async buildPerfilesIdList() {
-        
+
         let filterQuery = new FilterQuery();
         filterQuery.filterList = [
             {
@@ -495,13 +491,13 @@ export class FormularioScmComponent implements OnInit {
         this.empleadoService
             .buscar(event.query)
             .then((data) => (this.empleadosList = <Empleado[]>data));
-            
-            
-    }
-    
 
-    
-    
+
+    }
+
+
+
+
 
     async onSelection(event) {
         this.value = event;
@@ -543,7 +539,7 @@ export class FormularioScmComponent implements OnInit {
         });
         this.casoMedicoForm.patchValue({ pkUser: this.empleadoSelect.id })
         this.departamento = this.empleadoSelect.area.id;
-         
+
 
         if (this.empleadoSelect.businessPartner) {
             this.onSelectionBP(this.empleadoSelect.businessPartner)
@@ -581,8 +577,8 @@ export class FormularioScmComponent implements OnInit {
             direccionGerencia: this.empleadoSelect.direccionGerencia,
             regional: this.empleadoSelect.regional,
             correoPersonal: this.empleadoSelect.correoPersonal,
-            ciudadGerencia: this.empleadoSelect.ciudadGerencia,            
-            
+            ciudadGerencia: this.empleadoSelect.ciudadGerencia,
+
             'email': [this.empleadoSelect.usuario.email]
         });
     }
@@ -590,7 +586,7 @@ export class FormularioScmComponent implements OnInit {
 
     submitEmp() {
         let empleado = new Empleado();
-        
+
         empleado.id = this.empleadoForm.value.id;
         empleado.primerNombre = this.empleadoForm.value.primerNombre;
         empleado.segundoNombre = this.empleadoForm.value.segundoNombre;
@@ -645,7 +641,7 @@ export class FormularioScmComponent implements OnInit {
         empleado.usuario.id = this.empleadoSelect.usuario.id;
         this.usuarioService.update(empleado.usuario)
             .then(resp => {
-                
+
                 this.solicitando = false;
             })
             .catch(err => {
@@ -663,7 +659,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     onClick() {
-        
+
     }
 
 
@@ -732,7 +728,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     lazyLoad(event) {
-        
+
     }
 
     async modifyCase() {
@@ -756,14 +752,14 @@ export class FormularioScmComponent implements OnInit {
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
-        
+
     }
 
     async readCase() {
         this.consultar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
-       
+
 
         this.casoMedicoForm.patchValue(caseFiltered);
         this.casoMedicoForm.patchValue({
@@ -775,7 +771,7 @@ export class FormularioScmComponent implements OnInit {
 
         this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
 
-       
+
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
@@ -787,7 +783,7 @@ export class FormularioScmComponent implements OnInit {
 
     async onLoadInit() {
         this.onSelection(this.caseSelect.pkUser);
-        
+
 
     }
 
@@ -798,15 +794,15 @@ export class FormularioScmComponent implements OnInit {
     }
 
     onRowEditInit(product) {
-        
+
 
     }
     async onRowCloneInit(seg) {
-        
+
     }
     async onRowEditSave(product) {
         this.msgs = [];
-        
+
         if (product.responsable) {
             product.responsable = product.responsable.id;
         }
@@ -817,10 +813,10 @@ export class FormularioScmComponent implements OnInit {
                 summary: "Seguimiento",
                 detail: `Su numero de seguimiento es ${product.id}`,
             });
-            
+
             this.fechaSeg();
         } catch (error) {
-            
+
         }
     }
 
@@ -830,10 +826,10 @@ export class FormularioScmComponent implements OnInit {
     async nuevoSeguimiento() {
         try {
             let resp = await this.scmService.createSeguimiento(this.caseSelect.id);
-            
+
             this.seguimientos.push(resp)
         } catch (error) {
-           
+
         }
 
     }
