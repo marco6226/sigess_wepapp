@@ -30,9 +30,7 @@ export class DirectorioService extends ServiceCRUD<Directorio>{
         if (caseId != null)
             formData.append("caseId", caseId);
 
-        formData.forEach(data => {
-            console.log(data);
-        })
+    
         return new Promise(resolve => {
             this.httpInt.postFile(endPoint, formData)
                 .map(res => res)

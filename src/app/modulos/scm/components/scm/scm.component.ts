@@ -71,11 +71,6 @@ export class ScmComponent implements OnInit {
 
     async loadData() {
         this.casosList = await this.scmService.getAll();
-        this.casosList.forEach(element => {
-            console.log(element);
-            
-
-        });
     }
 
 
@@ -84,23 +79,18 @@ export class ScmComponent implements OnInit {
     openCase() {
         this.consultar = false;
         this.visibleForm = true;
-        console.log(54, this.caseSelect);
-        console.log("modificar"+this.consultar);
     }
 
     openCaseConsultar() {
         this.consultar = true;
         this.visibleForm = true;
 
-        console.log(55, this.caseSelect);
-        console.log(this.consultar);
     }
 
 
     async onCancel() {
         this.visibleForm = false;
         await this.loadData();
-        console.log("close form");
     }
 
     eliminar() { }
@@ -115,7 +105,6 @@ export class ScmComponent implements OnInit {
 
         filterQuery.fieldList = this.fields;
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-        console.log(filterQuery);
         try {
             let res: any = await this.scmService.findByFilter(filterQuery);
             this.casosList = res.data;
