@@ -486,7 +486,7 @@
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('casoMedicoLaboral').value < 2">
                     <div class="input-field">
                         <p-dropdown [options]="caseMotivoOptionListt[casoMedicoForm.get('casoMedicoLaboral').value]"
                             formControlName="razon" class="select-material" styleClass="select-material">
@@ -533,7 +533,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="statusDeCalificacion"
+                        <p-dropdown [filter]="true" [options]="pclCalificacionList" formControlName="statusDeCalificacion"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Estado de la calificación</label>
@@ -575,7 +575,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion"
+                        <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
                             formControlName="entidadEmiteConcepto" class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite el concepto de
@@ -590,7 +590,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [options]="caseOptionList" formControlName="requiereIntervencion"
+                        <p-dropdown [options]="IntervencionOptionList" formControlName="requiereIntervencion"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Requiere intervención complementaria</label>

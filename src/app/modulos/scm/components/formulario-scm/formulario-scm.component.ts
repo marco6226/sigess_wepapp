@@ -85,16 +85,39 @@ export class FormularioScmComponent implements OnInit {
         { label: "Junta Nacional", value: "Junta Nacional" }]
 
     conceptoRehabilitacion = [
-        { label: "Reintegro laboral sin modificaciones", value: "Reintegro laboral sin modificaciones" },
-        { label: "Reintegro laboral con modificaciones", value: "Reintegro laboral con modificaciones" },
-        { label: "Reubicación laboral temporal", value: "Reubicación laboral temporal" },
-        { label: "Reubicación laboral definitiva", value: "Reubicación laboral definitiva" },
-        { label: "Reconversión de mano de obra", value: "Reconversión de mano de obra" },
+        { label: "Reintegro laboral sin modificaciones", value: "0" },
+        { label: "Reintegro laboral con modificaciones", value: "1" },
+        { label: "Reubicación laboral temporal", value: "2" },
+        { label: "Reubicación laboral definitiva", value: "3" },
+        { label: "Reconversión de mano de obra", value: "4" },
+        { label: "No Aplica", value: "5" },
     ]
 
     entityConceptoRehabilitacion = [
+        [
         { label: "EPS", value: "EPS" },
         { label: "ARL", value: "ARL" },
+        ],
+        [
+            { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
+        ],
+        [
+                { label: "EPS", value: "EPS" },
+                { label: "ARL", value: "ARL" },                
+        ],
+        [
+                    { label: "EPS", value: "EPS" },
+                    { label: "ARL", value: "ARL" },
+        ],
+        [
+            { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
+        ],        
+        [
+        { label: "No Aplica", value: "No Aplica" },
+        
+        ],
     ]
 
 
@@ -163,8 +186,14 @@ export class FormularioScmComponent implements OnInit {
     caseOptionList = [
         { label: "Si", value: "1" },
         { label: "No", value: "0" },
-        { label: "Cerrado", value: "2" },
+        { label: "En Seguimiento", value: "2" },
         { label: "No Aplica", value: "3" },
+
+    ]
+    IntervencionOptionList = [
+        { label: "Si", value: "1" },
+        { label: "No", value: "0" },
+        
 
     ]
 
@@ -187,9 +216,15 @@ export class FormularioScmComponent implements OnInit {
 
 
     pclOptionList = [
-        { label: "En proceso", value: "1" },
-        { label: "Firme", value: "2" },
+        { label: "En Calificación", value: "1" },
+        { label: "Si", value: "2" },
         { label: "No aplica", value: "0" }
+    ]
+
+    pclCalificacionList = [
+        { label: "En Proceso", value: "1" },
+        { label: "En Firme", value: "2" },
+        { label: "En Apelación", value: "0" }
     ]
     constructor(
         private empleadoService: EmpleadoService,

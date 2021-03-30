@@ -32,7 +32,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     ];
     typeList = [
         { label: 'Seleccione', value: null },
-
+        { label: 'Vigente', value: 'Vigente' },
         { label: 'Cerrada', value: 'Cerrada' },
         { label: 'Suspendida', value: 'Suspendida' },
         { label: 'Modificada', value: 'Modificada' },
