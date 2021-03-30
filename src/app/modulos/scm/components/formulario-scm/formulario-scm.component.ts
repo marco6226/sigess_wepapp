@@ -425,8 +425,7 @@ export class FormularioScmComponent implements OnInit {
         this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get("area").value.nombre || "",
             ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
-            names: `${this.jefeInmediato.value.primerNombre} ${this.jefeInmediato.value.segundoApellido || ""
-                }`,
+            names: ``,
             cargo: this.empleadoForm.value.cargoId,
 
 
@@ -636,7 +635,6 @@ export class FormularioScmComponent implements OnInit {
             ue.perfil.id = perfilId;
             empleado.usuario.usuarioEmpresaList.push(ue);
         });
-        console.log(empleado, this.empleadoSelect);
         this.solicitando = true;
         empleado.usuario.id = this.empleadoSelect.usuario.id;
         this.usuarioService.update(empleado.usuario)
@@ -797,7 +795,24 @@ export class FormularioScmComponent implements OnInit {
 
 
     }
-    async onRowCloneInit(seg) {
+    async onRowCloneInit(pseg) {
+        this.msgs = [];
+        let { id, ...product } = pseg;
+        if (product.responsable) {
+            product.responsable = product.responsable.id;
+        }
+        try {
+            let resp = await this.scmService.createSeguimiento(product);
+            this.msgs.push({
+                severity: "success",
+                summary: "Seguimiento",
+                detail: `Se ah clonado exitosamente`,
+            });
+
+            this.fechaSeg();
+        } catch (error) {
+
+        }
 
     }
     async onRowEditSave(product) {

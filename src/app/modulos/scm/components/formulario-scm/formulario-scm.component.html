@@ -954,7 +954,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-calendar [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
-                                        placeholder="mm/dd/yyyy" [locale]="localeES">
+                                        placeholder="dd/mm/yyyy" [locale]="localeES">
                                     </p-calendar>
 
                                 </ng-template>
@@ -1039,7 +1039,7 @@
                         <td style="text-align:center">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                                 (click)="onRowEditInit(seguimiento)" class="p-button-rounded p-button-text"></button>
-                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-copy"
+                            <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
                                 (click)="onRowCloneInit(seguimiento)"
                                 class="p-button-rounded p-button-text p-mr-2"></button>
                             <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
