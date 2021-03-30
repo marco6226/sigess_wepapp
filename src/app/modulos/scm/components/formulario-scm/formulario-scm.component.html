@@ -912,8 +912,8 @@
                     <td>{{case.tipo }}</td>
                     <td>{{case.fechaExpiracion | recomendationstatus}}</td>
                     <td>{{case.recomendaciones}}</td>
-                    <td>{{case.fechaInicio | date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{case.fechaExpiracion | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
+                    <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.responsableEmpresa?.primerNombre || ""}}</td>
                     <td>{{case.responsableExterno}}</td>
 
@@ -954,12 +954,12 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-calendar [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
-                                        placeholder="mm/dd/yyyy" [locale]="localeES">
+                                        placeholder="dd/mm/yyyy" [locale]="localeES">
                                     </p-calendar>
 
                                 </ng-template>
                                 <ng-template pTemplate="output">
-                                    {{seguimiento.fechaSeg | date : 'dd/mm/yyyy'}}
+                                    {{seguimiento.fechaSeg | date : 'dd/MM/yyyy'}}
                                 </ng-template>
                             </p-cellEditor>
                         </td>
