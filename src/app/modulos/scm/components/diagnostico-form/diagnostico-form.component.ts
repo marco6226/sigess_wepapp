@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 import { locale_es } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
+import { SesionService } from "app/modulos/core/services/sesion.service";
+import { Usuario } from '../../../empresa/entities/usuario';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -30,17 +33,20 @@ export class DiagnosticoFormComponent implements OnInit {
     es: any;
     fechaActual = new Date();
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
+    usuario:Usuario;
 
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
+        private sesionService: SesionService,
     ) {
+        this.usuario = this.sesionService.getUsuario();
         this.diagnosticoForm = fb.group({
             codigoCie10: [null, Validators.required],
             diagnostico: [null, Validators.required],
             fechaDiagnostico: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
             origen: [null, Validators.required],
-            creadoPor: [null, Validators.required],
+            creadoPor: [null],
 
         });
     }
@@ -67,6 +73,7 @@ export class DiagnosticoFormComponent implements OnInit {
     async onSubmit() {
         this.msgs = [];
         console.log(this.diagnosticoForm);
+        console.log(this.usuario);
         if (!this.diagnosticoForm.valid) {
             return this.markFormGroupTouched(this.diagnosticoForm);
         }
@@ -75,20 +82,24 @@ export class DiagnosticoFormComponent implements OnInit {
             diagnostico,
             sistemaAfectado,
             fechaDiagnostico,
-            creadoPor
+            
+            origen
+            
         } = this.diagnosticoForm.value;
+        
 
         let body = {
             codigoCie10,
             fechaDiagnostico,
-            creadoPor,
+            origen,
             diagnostico,
             sistemaAfectado,
             pkCase: this.caseId,
             pkUser: this.id,
+            creadoPor: this.usuario.email,
 
         }
-
+        
         try {
 
             let res = await this.scmService.createDiagnosticos(body);

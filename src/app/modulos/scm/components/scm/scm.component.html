@@ -74,7 +74,7 @@
                     <td>{{case.fechaCreacion |  date: 'dd/MM/yyyy'}}</td>
                     <td>{{case.region}}</td>
                     <td>{{case.ciudad}}</td>
-                    <td>{{case.pkUser.primerNombre}} </td>
+                    <td>{{case.pkUser.primerApellido}} {{case.pkUser.primerNombre}} </td>
                     <td>{{case.documento}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                     <td>{{case.casoMedicoLaboral  == 1 ? 'Si' : 'No'}}</td>

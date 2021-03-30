@@ -730,37 +730,26 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="fechaDiagnostico">Fecha de Diagnostico
-                        <p-sortIcon field="fechaDiagnostico"></p-sortIcon>
+                        
                     </th>
-                    <th pSortableColumn="fapertura">CIE 10
-                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    <th pSortableColumn="codigoCie10">CIE 10 
+                        
                     </th>
-                    <th pSortableColumn="regional">Sistema Afectado
-                        <p-sortIcon field="regional"></p-sortIcon>
+                    <th pSortableColumn="sistemaAfectado">Sistema Afectado
+                       
                     </th>
-                    <th pSortableColumn="ciudad">Diagnostico
-                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    <th pSortableColumn="diagnostico">Diagnostico
+                        
+                    </th>
+                    <th pSortableColumn="case.origen">Origen
+                        
+                    </th>
+                    <th pSortableColumn="case.creadoPor">Creado por
+                        
                     </th>
 
                 </tr>
-                <tr>
-
-                    <td>
-                        <input pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'fechaDiagnostico', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-
-
-                </tr>
+                
             </ng-template>
             <ng-template pTemplate="body" let-case>
 
@@ -769,6 +758,8 @@
                     <td>{{case.codigoCie10 }}</td>
                     <td>{{case.sistemaAfectado?.name || ""}}</td>
                     <td>{{case.diagnostico}}</td>
+                    <td>{{case.origen}}</td>
+                    <td>{{case.creadoPor}}</td>
 
                 </tr>
             </ng-template>
@@ -801,13 +792,13 @@
                             <th pSortableColumn="diasAusencia">Dias de incapacidad
                                 <p-sortIcon field="diasAusencia"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="causaAusentismo">Tipo
-                                <p-sortIcon field="ausaAusentismo"></p-sortIcon>
+                            <th pSortableColumn="causaAusentismo.nombre">Tipo
+                                <p-sortIcon field="causaAusentismo"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="cie">Codigo CIE 10
+                            <th pSortableColumn="cie.codigo">Codigo CIE 10
                                 <p-sortIcon field="cie"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="documento">Diagnostico
+                            <th pSortableColumn="cie.nombre">Diagnostico
                                 <p-sortIcon field="documento"></p-sortIcon>
                             </th>
 
@@ -850,30 +841,30 @@
             [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">Entidad emisora
-                        <p-sortIcon field="id"></p-sortIcon>
+                    <th>Entidad emisora
+                        
                     </th>
-                    <th pSortableColumn="fapertura">Tipo
-                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    <th >Tipo
+                       
                     </th>
-                    <th pSortableColumn="regional">Estado
-                        <p-sortIcon field="regional"></p-sortIcon>
+                    <th >Estado
+                        
                     </th>
-                    <th pSortableColumn="ciudad">Recomendación
-                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    <th >Recomendación
+                        
                     </th>
-                    <th pSortableColumn="nameLastname">Fecha inicial
-                        <p-sortIcon field="nameLastname"></p-sortIcon>
+                    <th >Fecha inicial
+                        
                     </th>
-                    <th pSortableColumn="documento">Fecha final
-                        <p-sortIcon field="documento"></p-sortIcon>
+                    <th >Fecha final
+                        
                     </th>
 
-                    <th pSortableColumn="charge">Responsable Empresa
-                        <p-sortIcon field="charge"></p-sortIcon>
+                    <th >Responsable Empresa
+                        
                     </th>
-                    <th pSortableColumn="charge">Responsable Externo
-                        <p-sortIcon field="charge"></p-sortIcon>
+                    <th >Responsable Externo
+                        
                     </th>
 
                 </tr>
