@@ -36,13 +36,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'programacion.fecha', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'programacion.fecha', 'contains')"></s-rangoFechaSelector>
                         </td>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'contains')"></s-rangoFechaSelector>
                         </td>
                         <td>
-                            <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
+                            <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'contains')">
                         </td>
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
@@ -54,7 +54,7 @@
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'programacion.area.nombre', 'contains')">
                         </td>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'contains')"></s-rangoFechaSelector>
                         </td>                        
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
