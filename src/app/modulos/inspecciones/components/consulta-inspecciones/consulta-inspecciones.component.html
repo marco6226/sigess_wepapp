@@ -4,8 +4,9 @@
 
     <p-tabView>
         <p-tabPanel header="Programadas">
-            <p-table #dt [value]="inspeccionesList" autoLayout="true" selectionMode="single" [(selection)]="inspeccionSelect" [rows]="10"
-                [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading"
+            <p-table #dt [value]="inspeccionesList" autoLayout="true" selectionMode="single"
+                [(selection)]="inspeccionSelect" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true"
+                (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading"
                 sortField="fechaRealizada" sortOrder="1">
                 <ng-template pTemplate="header">
                     <tr>
@@ -36,28 +37,35 @@
                     </tr>
                     <tr>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'programacion.fecha', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'programacion.fecha', 'bt')">
+                            </s-rangoFechaSelector>
                         </td>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')">
+                            </s-rangoFechaSelector>
                         </td>
                         <td>
                             <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'programacion.listaInspeccion.nombre', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'programacion.listaInspeccion.nombre', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'programacion.area.nombre', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'programacion.area.nombre', 'contains')">
                         </td>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
-                        </td>                        
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')">
+                            </s-rangoFechaSelector>
+                        </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
                         </td>
                     </tr>
                 </ng-template>
@@ -74,15 +82,16 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'INP_GET_INP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="redirect(true)"
-                        [disabled]="!inspeccionSelect"></button>
-                    <button *sTienePermiso="'INP_PUT_INP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                        (click)="redirect(false)" [disabled]="!inspeccionSelect"></button>
+                    <button *sTienePermiso="'INP_GET_INP'" pButton type="button" icon="fa fa-search" label="Consultar"
+                        (click)="redirect(true)" [disabled]="!inspeccionSelect"></button>
+                    <button *sTienePermiso="'INP_PUT_INP'" pButton type="button" icon="fa fa-pencil" label="Modificar"
+                        class="ui-button-success" (click)="redirect(false)" [disabled]="!inspeccionSelect"></button>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
                         <td colspan="7">
-                            <s-dataNotFound *ngIf="!inspeccionesList || inspeccionesList.length <= 0" icon="fa-check-square" message="No se encontraron registros de inspecciones">
+                            <s-dataNotFound *ngIf="!inspeccionesList || inspeccionesList.length <= 0"
+                                icon="fa-check-square" message="No se encontraron registros de inspecciones">
                                 <div *sTienePermiso="'INP_GET_PROG'">
                                     <!-- Verifica si hay inspecciones programadas para realizar
                                             <a (click)="navegar()">aqui</a> -->
@@ -93,10 +102,13 @@
                 </ng-template>
             </p-table>
         </p-tabPanel>
+
+
         <p-tabPanel header="No programadas">
-            <p-table #dt [value]="inspeccionNoProgList" autoLayout="true" selectionMode="single" [(selection)]="inspeccionNoProgSelect"
-                [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoadNoProg($event)" [totalRecords]="totalRecordsNoProg"
-                [loading]="loadingNoProg" sortField="fechaRealizada" sortOrder="1">
+            <p-table #dtnp [value]="inspeccionNoProgList" autoLayout="true" selectionMode="single"
+                [(selection)]="inspeccionNoProgSelect" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true"
+                (onLazyLoad)="lazyLoadNoProg($event)" [totalRecords]="totalRecordsNoProg" [loading]="loadingNoProg"
+                sortField="fechaRealizada" sortOrder="1">
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="fechaRealizada">Fecha elaboración
@@ -123,32 +135,38 @@
                     </tr>
                     <tr>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaRealizada', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dtnp.filter($event, 'fechaRealizada', 'bt')">
+                            </s-rangoFechaSelector>
                         </td>
                         <td>
-                            <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
+                            <input pInputText type="number" (input)="dtnp.filter($event.target.value, 'id', 'equals')">
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dtnp.filter($event.target.value, 'usuarioRegistra.email', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'listaInspeccion.nombre', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dtnp.filter($event.target.value, 'listaInspeccion.nombre', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dtnp.filter($event.target.value, 'area.nombre', 'contains')">
                         </td>
                         <td>
-                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaModificacion', 'bt')"></s-rangoFechaSelector>
+                            <s-rangoFechaSelector (onSelect)="dtnp.filter($event, 'fechaModificacion', 'bt')">
+                            </s-rangoFechaSelector>
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuarioModifica.email', 'contains')">
+                            <input pInputText type="text"
+                                (input)="dtnp.filter($event.target.value, 'usuarioModifica.email', 'contains')">
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-inspeccion>
                     <tr [pSelectableRow]="inspeccion" class="table-row table-row-selectable">
                         <td>{{inspeccion?.fechaRealizada | date:'dd/MM/yyyy HH:mm'}}</td>
-                        <td>INP-{{inspeccion.id}}</td>                        
+                        <td>INP-{{inspeccion.id}}</td>
                         <td>{{inspeccion.usuarioRegistra?.email}}</td>
                         <td>{{inspeccion.listaInspeccion?.nombre}}</td>
                         <td>{{inspeccion.area?.nombre}}</td>
@@ -158,16 +176,18 @@
                 </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
 
-                    <button *sTienePermiso="'INP_GET_INP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="redirectNoProg(true)"
-                        [disabled]="!inspeccionNoProgSelect"></button>
+                    <button *sTienePermiso="'INP_GET_INP'" pButton type="button" icon="fa fa-search" label="Consultar"
+                        (click)="redirectNoProg(true)" [disabled]="!inspeccionNoProgSelect"></button>
 
-                    <button *sTienePermiso="'INP_PUT_INP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                        (click)="redirectNoProg(false)" [disabled]="!inspeccionNoProgSelect"></button>
+                    <button *sTienePermiso="'INP_PUT_INP'" pButton type="button" icon="fa fa-pencil" label="Modificar"
+                        class="ui-button-success" (click)="redirectNoProg(false)"
+                        [disabled]="!inspeccionNoProgSelect"></button>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
                         <td colspan="7">
-                            <s-dataNotFound *ngIf="!inspeccionNoProgList || inspeccionNoProgList.length <= 0" icon="fa-check-square" message="No se encontraron registros de inspecciones">
+                            <s-dataNotFound *ngIf="!inspeccionNoProgList || inspeccionNoProgList.length <= 0"
+                                icon="fa-check-square" message="No se encontraron registros de inspecciones">
                                 <div *sTienePermiso="'INP_GET_PROG'">
                                     <!-- Verifica si hay inspecciones programadas para realizar
                                             <a (click)="navegar()">aqui</a> -->
