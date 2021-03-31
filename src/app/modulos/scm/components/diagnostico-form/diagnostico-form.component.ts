@@ -40,14 +40,12 @@ export class DiagnosticoFormComponent implements OnInit {
             fechaDiagnostico: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
             origen: [null, Validators.required],
-            creadoPor: [null, Validators.required],
 
         });
     }
     get codigo() { return this.diagnosticoForm.get('codigoCie10'); }
     get diagnostico() { return this.diagnosticoForm.get('diagnostico'); }
     get fechaDiagnostico() { return this.diagnosticoForm.get('fechaDiagnostico'); }
-    get creadoPor() { return this.diagnosticoForm.get('creadoPor'); }
 
     get sistemaAfec() { return this.diagnosticoForm.get('sistemaAfectado'); }
     get origen() { return this.diagnosticoForm.get('origen'); }
