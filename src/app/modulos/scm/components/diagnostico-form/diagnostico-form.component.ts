@@ -33,7 +33,7 @@ export class DiagnosticoFormComponent implements OnInit {
     es: any;
     fechaActual = new Date();
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
-    usuario:Usuario;
+    usuario: Usuario;
 
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
@@ -46,14 +46,12 @@ export class DiagnosticoFormComponent implements OnInit {
             fechaDiagnostico: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
             origen: [null, Validators.required],
-            creadoPor: [null],
 
         });
     }
     get codigo() { return this.diagnosticoForm.get('codigoCie10'); }
     get diagnostico() { return this.diagnosticoForm.get('diagnostico'); }
     get fechaDiagnostico() { return this.diagnosticoForm.get('fechaDiagnostico'); }
-    get creadoPor() { return this.diagnosticoForm.get('creadoPor'); }
 
     get sistemaAfec() { return this.diagnosticoForm.get('sistemaAfectado'); }
     get origen() { return this.diagnosticoForm.get('origen'); }
@@ -82,11 +80,11 @@ export class DiagnosticoFormComponent implements OnInit {
             diagnostico,
             sistemaAfectado,
             fechaDiagnostico,
-            
+
             origen
-            
+
         } = this.diagnosticoForm.value;
-        
+
 
         let body = {
             codigoCie10,
@@ -99,7 +97,7 @@ export class DiagnosticoFormComponent implements OnInit {
             creadoPor: this.usuario.email,
 
         }
-        
+
         try {
 
             let res = await this.scmService.createDiagnosticos(body);

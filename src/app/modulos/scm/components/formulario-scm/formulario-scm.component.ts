@@ -56,7 +56,7 @@ export class FormularioScmComponent implements OnInit {
     imgMap: any = {};
     casoSeleccionado;
     createCase;
-    casosList = [];
+    casosList: any[] = [];
     numMaxImg = 3
     loadingImg = false;
     modalRecomendatios = false;

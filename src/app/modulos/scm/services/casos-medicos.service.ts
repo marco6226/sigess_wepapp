@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FilterQuery } from "app/modulos/core/entities/filter-query";
+import { SesionService } from "app/modulos/core/services/sesion.service";
 import { endPoints } from "environments/environment";
 
 @Injectable({
@@ -8,81 +9,81 @@ import { endPoints } from "environments/environment";
 })
 export class CasosMedicosService {
     headers;
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private sesionService: SesionService) {
 
     }
 
     create(casoMedico) {
-        return this.http.post(`${endPoints.scm}`, casoMedico).toPromise();
+        return this.http.post(`${endPoints.scm}`, casoMedico, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     edit(casoMedico) {
-        return this.http.put(`${endPoints.scm}`, casoMedico).toPromise();
+        return this.http.put(`${endPoints.scm}`, casoMedico, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-    getCaseList(document) {
-        return this.http.get<any[]>(`${endPoints.scm}validate/${document}`).toPromise();
+    getCaseList(document): any {
+        return this.http.get<any[]>(`${endPoints.scm}validate/${document}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     getAll() {
-        return this.http.get(`${endPoints.scm}all`).toPromise();
+        return this.http.get(`${endPoints.scm}all`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
 
-    ausentismos(documento) {
-        return this.http.get<[]>(`${endPoints.scm}scmausentismo/${documento}`).toPromise();
+    ausentismos(documento): any {
+        return this.http.get<[]>(`${endPoints.scm}scmausentismo/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
 
     }
 
     //Recomendations APis
-    getRecomendations(documento) {
-        return this.http.get<[]>(`${endPoints.scm}recomendation/${documento}`).toPromise();
+    getRecomendations(documento): any {
+        return this.http.get<[]>(`${endPoints.scm}recomendation/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
     createRecomendation(recomendation) {
-        return this.http.post(`${endPoints.scm}recomendation`, recomendation).toPromise();
+        return this.http.post(`${endPoints.scm}recomendation`, recomendation, this.getRequestHeaders(this.headers)).toPromise();
     }
     updateRecomendation(recomendation) {
-        return this.http.put(`${endPoints.scm}recomendation`, recomendation).toPromise();
+        return this.http.put(`${endPoints.scm}recomendation`, recomendation, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     //DiagnosticoApi
 
-    getDiagnosticos(documento) {
-        return this.http.get<[]>(`${endPoints.scm}diagnosticos/${documento}`).toPromise();
+    getDiagnosticos(documento): any {
+        return this.http.get<[]>(`${endPoints.scm}diagnosticos/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
     createDiagnosticos(diagnosticos) {
-        return this.http.post(`${endPoints.scm}diagnosticos`, diagnosticos).toPromise();
+        return this.http.post(`${endPoints.scm}diagnosticos`, diagnosticos, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-    getLogs(documento) {
-        return this.http.get<[]>(`${endPoints.scm}logs/${documento}`).toPromise();
+    getLogs(documento): any {
+        return this.http.get<[]>(`${endPoints.scm}logs/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
 
-    getSistemasAFectados() {
-        return this.http.get<[]>(`${endPoints.scm}sistemaafectado/`).toPromise();
+    getSistemasAFectados(): any {
+        return this.http.get<[]>(`${endPoints.scm}sistemaafectado/`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-    getSvelist() {
-        return this.http.get<[]>(`${endPoints.scm}svelist/`).toPromise();
+    getSvelist(): any {
+        return this.http.get<[]>(`${endPoints.scm}svelist/`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     createSeguimiento(seg) {
-        return this.http.post(`${endPoints.scm}seguimiento/`, seg).toPromise();
+        return this.http.post(`${endPoints.scm}seguimiento/`, seg, this.getRequestHeaders(this.headers)).toPromise();
 
     }
     updateSeguimiento(seguimientoCase) {
-        return this.http.put(`${endPoints.scm}seguimiento/`, seguimientoCase).toPromise();
+        return this.http.put(`${endPoints.scm}seguimiento/`, seguimientoCase, this.getRequestHeaders(this.headers)).toPromise();
 
     }
 
-    getSeguimientos(documento) {
-        return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`).toPromise();
+    getSeguimientos(documento): any {
+        return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     findByFilter(filterQuery?: FilterQuery) {
         // console.log(filterQuery, "filtro linea 71");
-        return this.http.get(`${endPoints.scm}` + '?' + this.buildUrlParams(filterQuery)).toPromise();
+        return this.http.get(`${endPoints.scm}` + '?' + this.buildUrlParams(filterQuery), this.getRequestHeaders(this.headers)).toPromise();
 
 
     }
@@ -127,4 +128,19 @@ export class CasosMedicosService {
         return urlParam;
     }
 
+
+
+    getRequestHeaders(headers?: HttpHeaders): any {
+        if (headers == null)
+            headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+        //if (this.sesionService.getToken() != null)
+        //headers = headers.set('Authorization', this.sesionService.getToken());
+
+        headers = headers
+            .set('Param-Emp', this.sesionService.getParamEmp())
+            .set('app-version', this.sesionService.getAppVersion())
+            .set('Authorization', this.sesionService.getBearerAuthToken());
+        return { 'headers': headers };
+    }
 }

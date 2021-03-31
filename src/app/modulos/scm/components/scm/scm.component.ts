@@ -70,7 +70,7 @@ export class ScmComponent implements OnInit {
     }
 
     async loadData() {
-        this.casosList = await this.scmService.getAll();
+
     }
 
 
