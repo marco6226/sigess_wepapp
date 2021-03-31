@@ -22,7 +22,10 @@
                     <th pSortableColumn="ciudad">Ciudad
                         <p-sortIcon field="ciudad"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="pkUser">Apellido - Nombre
+                    <th pSortableColumn="pkUser">Apellido
+                        <p-sortIcon field="pkUser"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="pkUser">Nombre
                         <p-sortIcon field="pkUser"></p-sortIcon>
                     </th>
                     <th pSortableColumn="documento">Documento
@@ -51,8 +54,12 @@
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
                     </td>
                     <td>
-                        <input [disabled]="true" pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'pkUser', 'contains')">
+                        <input  pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'pkUser.primerApellido')">
+                    </td>
+                    <td>
+                        <input  pInputText type="text"
+                            (input)="dt.filter($event.target.value, 'pkUser.primerNombre')">
                     </td>
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
@@ -74,6 +81,7 @@
                     <td>{{case.fechaCreacion |  date: 'dd/MM/yyyy'}}</td>
                     <td>{{case.region}}</td>
                     <td>{{case.ciudad}}</td>
+                    <td>{{case.pkUser.primerApellido}}</td>
                     <td>{{case.pkUser.primerNombre}} </td>
                     <td>{{case.documento}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>

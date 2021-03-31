@@ -86,12 +86,12 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
             },
             {
                 label: 'Seguimiento Casos medicos', class: 'icon-scm',
-                codigo: 'SGE',
+                codigo: 'SCM',
                 expanded: false,
                 items:
                     [
-                        { label: 'Creacion de caso', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/creacion', class: 'fa fa-medkit' },
-                        { label: 'SCM', codigo: 'ADO_GET_DIR', routerLink: '/app/scm/list', class: 'fa fa-list-alt' },
+                        { label: 'Creacion de seguimiento caso', codigo: 'SCM_CREATE_CASE', routerLink: '/app/scm/creacion', class: 'fa fa-medkit' },
+                        { label: 'Listado se seguimientos', codigo: 'SCM_LIST_CASE', routerLink: '/app/scm/list', class: 'fa fa-list-alt' },
 
                     ]
             },

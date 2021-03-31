@@ -32,7 +32,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     ];
     typeList = [
         { label: 'Seleccione', value: null },
-
+        { label: 'Vigente', value: 'Vigente' },
         { label: 'Cerrada', value: 'Cerrada' },
         { label: 'Suspendida', value: 'Suspendida' },
         { label: 'Modificada', value: 'Modificada' },
@@ -66,12 +66,12 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             tipo: [null, Validators.required],
 
             fechaInicio: [null, Validators.required],
-            responsableExterno: [null, Validators.required],
+            responsableExterno: [null],
             fechaExpiracion: [null, Validators.required],
 
             status: [null],
             actionPlan: [null, Validators.required],
-            responsableEmpresa: [null, Validators.required],
+            responsableEmpresa: [null],
             recomendaciones: [null, Validators.required],
 
         });
