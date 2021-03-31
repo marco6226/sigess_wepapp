@@ -625,6 +625,8 @@
 
 
             <div style="text-align: center; width: 100%;">
+                <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()" icon="fa fa-chevron-left"
+    class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
                 <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
                     [disabled]="this.consultar" style="bottom: 100px;" title="Guardar datos medicos"></button>
 
@@ -640,56 +642,35 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="id">No. Caso
-                        <p-sortIcon field="id"></p-sortIcon>
+                       
                     </th>
-                    <th pSortableColumn="fapertura">Fecha de apertura
-                        <p-sortIcon field="fapertura"></p-sortIcon>
+                    <th pSortableColumn="fechaCreacion">Fecha de apertura
+                        
                     </th>
-                    <th pSortableColumn="regional">Regional
-                        <p-sortIcon field="regional"></p-sortIcon>
+                    <th pSortableColumn="case.region">Regional
+                        
                     </th>
-                    <th pSortableColumn="ciudad">Ciudad
-                        <p-sortIcon field="ciudad"></p-sortIcon>
+                    <th pSortableColumn="case.ciudad">Ciudad
+                        
                     </th>
-                    <th pSortableColumn="nameLastname">Nombre - Apellido
-                        <p-sortIcon field="nameLastname"></p-sortIcon>
+                    <th pSortableColumn="pkUser.primerApellido">Apellido
+                        
                     </th>
-                    <th pSortableColumn="documento">Documento
-                        <p-sortIcon field="documento"></p-sortIcon>
+                    <th pSortableColumn="pkUser.primerNombre">Nombre
+                        
                     </th>
-                    <th pSortableColumn="statusCaso">Estado de caso
-                        <p-sortIcon field="statusCaso"></p-sortIcon>
+                    <th pSortableColumn="case.documento">No. Documento
+                        
                     </th>
-                    <th pSortableColumn="saludstate">Caso de mesa laboral
-                        <p-sortIcon field="saludstate"></p-sortIcon>
+                    <th pSortableColumn="case.statusCaso">Estado de caso
+                       
+                    </th>
+                    <th pSortableColumn="case.casoMedicoLaboral">Caso de mesa laboral
+                        
                     </th>
                 </tr>
                 <tr>
-
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
+                    
 
                 </tr>
             </ng-template>
@@ -700,7 +681,8 @@
                     <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
                     <td>{{case.region}}</td>
                     <td>{{case.ciudad}}</td>
-                    <td>{{case.pkUser.primerNombre}} {{case.pkUser.primerApellido}}</td>
+                    <td>{{case.pkUser.primerApellido}}</td>
+                    <td>{{case.pkUser.primerNombre}} 
                     <td>{{case.documento}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                     <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
@@ -793,13 +775,13 @@
                                 <p-sortIcon field="diasAusencia"></p-sortIcon>
                             </th>
                             <th pSortableColumn="causaAusentismo.nombre">Tipo
-                                <p-sortIcon field="causaAusentismo"></p-sortIcon>
+                                <p-sortIcon field="causaAusentismo.nombre"></p-sortIcon>
                             </th>
                             <th pSortableColumn="cie.codigo">Codigo CIE 10
-                                <p-sortIcon field="cie"></p-sortIcon>
+                                <p-sortIcon field="cie.codigo"></p-sortIcon>
                             </th>
                             <th pSortableColumn="cie.nombre">Diagnostico
-                                <p-sortIcon field="documento"></p-sortIcon>
+                                <p-sortIcon field="cie.nombre"></p-sortIcon>
                             </th>
 
 
@@ -1097,21 +1079,20 @@
 
     <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
 
-        <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="5" [(selection)]="logSelected"
-            [paginator]="true" dataKey="id" [lazy]="true">
+        <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true" [(selection)]="logSelected" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">Accion
-                        <p-sortIcon field="id"></p-sortIcon>
+                    <th pSortableColumn="action">Accion
+                        
                     </th>
                     <th pSortableColumn="fapertura">Fecha
-                        <p-sortIcon field="fapertura"></p-sortIcon>
+                        
                     </th>
-                    <th pSortableColumn="regional">Lugar del cambio
-                        <p-sortIcon field="regional"></p-sortIcon>
+                    <th pSortableColumn="entity">Lugar del cambio
+                        
                     </th>
                     <th pSortableColumn="ciudad">Documento de quien cambio
-                        <p-sortIcon field="ciudad"></p-sortIcon>
+                        
                     </th>
 
 
@@ -1124,7 +1105,7 @@
                     <td>{{case.action}}</td>
                     <td>{{case.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</td>
                     <td>{{case.entity}}</td>
-                    <td>{{case.recomendaciones}}</td>
+                    <td>{{case.pkUser}}</td>
 
 
 
