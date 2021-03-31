@@ -14,11 +14,11 @@ export class CasosMedicosService {
     }
 
     create(casoMedico) {
-        return this.http.post(`${endPoints.scm}`, casoMedico).toPromise();
+        return this.http.post(`${endPoints.scm}`, casoMedico, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     edit(casoMedico) {
-        return this.http.put(`${endPoints.scm}`, casoMedico).toPromise();
+        return this.http.put(`${endPoints.scm}`, casoMedico, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     getCaseList(document): any {
