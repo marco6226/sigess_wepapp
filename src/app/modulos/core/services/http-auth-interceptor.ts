@@ -27,7 +27,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log("testa", req);
 
         return next.handle(req).pipe(
             catchError(error => {
@@ -51,7 +50,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
                     reader.readAsText(error.error);
                     return observ;
                 } else {
-                    console.log("paso por aca");
                     // Por defecto se asume la respuesta como json
                     msg = error.error;
                     return this.getObservable(msg, error, req, next);
@@ -63,7 +61,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
 
     getObservable(msg: MensajeUsuario, error, req: HttpRequest<any>, next): Observable<HttpEvent<any>> {
 
-        console.log(msg, "llego aca");
 
         switch (msg.codigo) {
             case 1_001:
