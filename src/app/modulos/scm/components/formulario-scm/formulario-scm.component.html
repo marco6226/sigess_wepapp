@@ -1051,13 +1051,13 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="id">Plan de accion
-                        <p-sortIcon field="id"></p-sortIcon>
+                       
                     </th>
                     <th pSortableColumn="charge">Responsable Empresa
-                        <p-sortIcon field="charge"></p-sortIcon>
+                        
                     </th>
                     <th pSortableColumn="charge">Responsable Externo
-                        <p-sortIcon field="charge"></p-sortIcon>
+                        
                     </th>
                 </tr>
 
@@ -1066,7 +1066,7 @@
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                     <td>{{case.actionPlan}}</td>
-                    <td>{{case.responsableEmpresa?.primerNombre || ""}}</td>
+                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre || ""}}</td>
                     <td>{{case.responsableExterno}}</td>
 
 
