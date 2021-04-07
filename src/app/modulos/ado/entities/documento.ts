@@ -20,5 +20,6 @@ export class Documento {
   fechaAprobacion: Date;
   ubicacionFisica: string;
   modulo: string;
+  public: boolean;
 
 }

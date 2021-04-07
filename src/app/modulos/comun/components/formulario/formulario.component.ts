@@ -32,7 +32,7 @@ export class FormularioComponent implements OnInit {
         monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul", "Ago", "Sep", "Oct", "Nov", "Dec" ],
         today: 'Today',
         clear: 'Clear',
-        dateFormat: 'mm/dd/yy',
+        dateFormat: 'dd/MM/yyyy',
         weekHeader: 'Wk'
     };
     this.formulario.campoList.forEach(campo => {
