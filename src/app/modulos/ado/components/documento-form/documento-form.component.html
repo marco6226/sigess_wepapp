@@ -1,5 +1,16 @@
-<p-panel header="Ficha técnica">
-  <div class="ui-g">
+<div class="ui-g-12 ui-sm-12 ui-md-6">
+  <span class="ui-float-label">  
+     <div class="form-check form-check-inline">
+      <p-radioButton name="genero" value="1" label="Publico   ." formControlName="genero">
+      </p-radioButton>
+      <p-radioButton name="genero" value="0" label="privado" formControlName="genero">
+      </p-radioButton>
+  </div>
+  </span>
+</div>
+<p-panel header="Ficha técnica" *sTienePermiso="'ADO_POST_DIRo'" >
+  
+  <div class="ui-g" *sTienePermiso="'ADO_POST_DIRo'" >
     <div class="ui-g-12 ui-sm-12">
       <span class="ui-float-label">
         <input id="nombre-input" type="text" [ngModel]="documento?.nombre" (ngModelChange)="documento.nombre=$event" pInputText>
@@ -16,8 +27,8 @@
 
     <div class="ui-g-12 ui-sm-12 ui-md-6">
       <span class="ui-float-label">
-        <input id="codigo-input" type="text" [ngModel]="documento?.codigo" (ngModelChange)="documento.codigo=$event" pInputText>
-        <label for="codigo-input">Código</label>
+        <input id="codigo-input" type="text" [ngModel]="documento?.codigo" (ngModelChange)="documento.public=$event" pInputText>
+        <label for="codigo-input">Publico</label>
       </span>
     </div>
 

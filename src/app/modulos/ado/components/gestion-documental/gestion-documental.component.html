@@ -82,10 +82,10 @@
             </p>
             <ng-container *ngIf="nodeSelect?.data.esDocumento">
                 <s-documento-form [documento]="nodeSelect?.data.documento"></s-documento-form>
-                <button *sTienePermiso="'ADO_PUT_DIR'" pButton type="button" class="ui-button-success"
+                <button *sTienePermiso="'ADO_PUT_DIRo'" pButton type="button" class="ui-button-success"
                     (click)="actualizarDocumento(nodeSelect.data)" label="Actualizar" icon="fa fa-pencil"></button>
             </ng-container>
-            <button *sTienePermiso="'ADO_DELETE_DIR'" pButton type="button" (click)="confirmarEliminar()"
+            <button *sTienePermiso="'ADO_DELETE_DIRo'" pButton type="button" (click)="confirmarEliminar()"
                 class="ui-button-danger" label="Eliminar" icon="fa fa-trash"></button>
         </div>
     </div>

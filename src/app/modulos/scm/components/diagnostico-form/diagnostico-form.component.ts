@@ -23,7 +23,7 @@ export class DiagnosticoFormComponent implements OnInit {
 
     origenList = [
         { label: 'Seleccione', value: null },
-        { label: 'Comun', value: 'Comun' },
+        { label: 'Común', value: 'Común' },
         { label: 'Accidente Laboral', value: 'Accidente Laboral' },
         { label: 'Mixto', value: 'Mixto' },
         { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
@@ -105,7 +105,7 @@ export class DiagnosticoFormComponent implements OnInit {
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: "Diagnostico creado",
+                    summary: "Diagnóstico creado",
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
