@@ -95,28 +95,28 @@ export class FormularioScmComponent implements OnInit {
 
     entityConceptoRehabilitacion = [
         [
-        { label: "EPS", value: "EPS" },
-        { label: "ARL", value: "ARL" },
+            { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
         ],
         [
             { label: "EPS", value: "EPS" },
             { label: "ARL", value: "ARL" },
         ],
         [
-                { label: "EPS", value: "EPS" },
-                { label: "ARL", value: "ARL" },                
-        ],
-        [
-                    { label: "EPS", value: "EPS" },
-                    { label: "ARL", value: "ARL" },
+            { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
         ],
         [
             { label: "EPS", value: "EPS" },
             { label: "ARL", value: "ARL" },
-        ],        
+        ],
         [
-        { label: "No Aplica", value: "No Aplica" },
-        
+            { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
+        ],
+        [
+            { label: "No Aplica", value: "No Aplica" },
+
         ],
     ]
 
@@ -193,7 +193,7 @@ export class FormularioScmComponent implements OnInit {
     IntervencionOptionList = [
         { label: "Si", value: "1" },
         { label: "No", value: "0" },
-        
+
 
     ]
 
@@ -875,7 +875,8 @@ export class FormularioScmComponent implements OnInit {
     }
     async nuevoSeguimiento() {
         try {
-            let resp = await this.scmService.createSeguimiento(this.caseSelect.id);
+            let seg = { pkCase: this.caseSelect.id }
+            let resp = await this.scmService.createSeguimiento(seg);
 
             this.seguimientos.push(resp)
         } catch (error) {
