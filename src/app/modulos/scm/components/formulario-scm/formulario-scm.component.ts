@@ -81,6 +81,7 @@ export class FormularioScmComponent implements OnInit {
     emitPclentity = [
         { label: "EPS", value: "EPS" },
         { label: "ARL", value: "ARL" },
+        { label: "AFP", value: "AFP" },
         { label: "Junta Regional", value: "Junta Regional" },
         { label: "Junta Nacional", value: "Junta Nacional" }]
 
@@ -832,7 +833,7 @@ export class FormularioScmComponent implements OnInit {
     }
     async onRowCloneInit(pseg) {
         this.msgs = [];
-        let { id, ...product } = pseg;
+        let { id,... product } = pseg;
         if (product.responsable) {
             product.responsable = product.responsable.id;
         }
@@ -841,7 +842,7 @@ export class FormularioScmComponent implements OnInit {
             this.msgs.push({
                 severity: "success",
                 summary: "Seguimiento",
-                detail: `Se ah clonado exitosamente`,
+                detail: `Se ha clonado exitosamente`,
             });
 
             this.fechaSeg();

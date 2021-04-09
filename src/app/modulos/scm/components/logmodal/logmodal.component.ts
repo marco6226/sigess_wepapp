@@ -41,7 +41,7 @@ export class LogmodalComponent implements OnInit {
                     for (const t in log[key]) {
 
                         const element = log[t];
-                        this.logFile.push(` ${t},  : ${element || 'vacioa'}`);
+                        this.logFile.push(` ${t},  : ${element || 'vacio'}`);
                     }
                     this.logFile.push(` <==`);
 
@@ -63,7 +63,7 @@ export class LogmodalComponent implements OnInit {
                 const edit = editado[key];
 
                 if (sinEditar != edit) {
-                    this.logFile.push(`Hubo cambio en ${key}, antes estaba asi : ${sinEditar || 'vacio'}  y ahora esta asi : ${edit || 'vacio'}`);
+                    this.logFile.push(`Cambio en ${key}, antes  : ${sinEditar || 'vacio'} despues : ${edit || 'vacio'}`);
                 }
             }
         }

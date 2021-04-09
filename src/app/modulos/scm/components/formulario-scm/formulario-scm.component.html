@@ -904,15 +904,15 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
-    <p-tabPanel header="Seguimiento" *sTienePermiso="'SCM_GET_CASE_SEG'" >
+    <p-tabPanel header="Seguimiento" *ngIf="caseSelect" >
 
-        <div class="card"  >
+        <div class="card" *sTienePermiso="'SCM_CREATE_CASE_SEG'" >
             <h5>Seguimiento de caso</h5>
             <p-table [value]="seguimientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Fecha de seguimiento</th>
-                        <th>Seguimiento</th>
+                        <th colspan="3">Seguimiento</th>
                         <th>Tarea</th>
                         <th>Responsable Empresa</th>
                         <th>Responsable Externo</th>
@@ -936,7 +936,7 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td>
+                        <td colspan="3">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento">
