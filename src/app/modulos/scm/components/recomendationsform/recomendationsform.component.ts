@@ -71,6 +71,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
 
             status: [null],
             actionPlan: [null, Validators.required],
+            actividad: [null],
+            descripcion_act: [null],
+            fecha_proyectada: [null],
             responsableEmpresa: [null],
             recomendaciones: [null, Validators.required],
 
@@ -92,7 +95,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     get entidadEmitRecomendaciones() { return this.recomendation.get('entidadEmitRecomendaciones'); }
     get status() { return this.recomendation.get('status'); }
     get responsableExterno() { return this.recomendation.get('responsableExterno'); }
-
+    get actividad() { return this.recomendation.get('actividad'); }
+    get descripcion_act() { return this.recomendation.get('descripcion_act'); }
+    get fecha_proyectada() { return this.recomendation.get('fecha_proyectada'); }
     get recomendaciones() { return this.recomendation.get('recomendaciones'); }
     get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
     get responsableEmpresa() { return this.recomendation.get('responsableEmpresa'); }
@@ -121,6 +126,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             recomendaciones,
             responsableEmpresa,
             actionPlan,
+            actividad,
+            descripcion_act,
+            fecha_proyectada,
             responsableExterno
 
         } = this.recomendation.value;
@@ -139,7 +147,11 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             pkCase: this.id,
             responsableEmpresa,
             responsableExterno,
+            actividad,
+            descripcion_act,
+            fecha_proyectada,
             actionPlan: actionPlan
+
         }
 
         try {
@@ -187,6 +199,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
                 responsableExterno: this.recoSelect.responsableExterno,
                 fechaExpiracion: this.recoSelect.fechaExpiracion == null ? null : new Date(this.recoSelect.fechaExpiracion),
                 actionPlan: this.recoSelect.actionPlan,
+                actividad: this.recoSelect.actividad,
+                descripcion_act: this.recoSelect.descripcion_act,
+                fecha_proyectada: this.recoSelect.fecha_proyectada == null ? null : new Date(this.recoSelect.fecha_proyectada),
                 recomendaciones: this.recoSelect.recomendaciones,
             })
             this.onSelectionResponsable(this.recoSelect.responsableEmpresa)

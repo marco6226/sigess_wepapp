@@ -78,6 +78,33 @@
                 <small *ngIf="actionPlan.errors?.required && actionPlan.touched" id="username2-help"
                     class="p-invalid">Obligatorio</small>
             </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="input-field">
+
+                    <textarea formControlName="actividad" class="textarea-material" pInputTextarea></textarea>
+
+                    <label for="" class="active">Actividad</label>
+                </div>
+                
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="input-field">
+                    <textarea formControlName="descripcion_act" class="textarea-material" pInputTextarea></textarea>
+
+                    <label for="" class="active">Descripcion de la Actividad</label>
+                </div>
+                
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="input-field">
+                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                    formControlName="fecha_proyectada" [locale]="localeES" dateFormat="dd/mm/yy"
+                    inputStyleClass="form-material">
+                </p-calendar>
+                    <label for="" class="active">Fecha proyectada</label>
+                </div>
+               
+            </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <div class="input-field">
                     <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"

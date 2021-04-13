@@ -723,6 +723,9 @@
                     <th pSortableColumn="diagnostico">Diagnóstico
                         
                     </th>
+                    <th pSortableColumn="detalle">Detalle de Diagnóstico
+                        
+                    </th>
                     <th pSortableColumn="case.origen">Origen
                         
                     </th>
@@ -740,6 +743,7 @@
                     <td>{{case.codigoCie10 }}</td>
                     <td>{{case.sistemaAfectado?.name || ""}}</td>
                     <td>{{case.diagnostico}}</td>
+                    <td>{{case.detalle}}</td>
                     <td>{{case.origen}}</td>
                     <td>{{case.creadoPor}}</td>
 
@@ -841,6 +845,15 @@
                     <th >Fecha final
                         
                     </th>
+                    <th >Actividad
+                        
+                    </th>
+                    <th >Descripcion de la actividad
+                        
+                    </th>
+                    <th >Fecha proyectada
+                        
+                    </th>
 
                     <th >Responsable Empresa
                         
@@ -887,6 +900,9 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
+                    <td>{{case.actividad}}</td>
+                    <td>{{case.descripcion_act}}</td>
+                    <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre || ""}}</td>
                     <td>{{case.responsableExterno}}</td>
 
