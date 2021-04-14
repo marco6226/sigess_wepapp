@@ -350,6 +350,7 @@ export class FormularioScmComponent implements OnInit {
             conceptRehabilitacion: [null, /*Validators.required*/],
             descripcionCargo: [null]
         });
+        console.log(this.casoMedicoForm)
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
     }
@@ -446,6 +447,7 @@ export class FormularioScmComponent implements OnInit {
     closeForm() {
         this.caseSelect = null;
         this.empleadoSelect = null;
+
     }
     async onSubmit() {
         this.msgs = [];
@@ -467,6 +469,7 @@ export class FormularioScmComponent implements OnInit {
 
             pkUser: this.empleadoForm.get("id").value || null,
             codigoCie10: this.casoMedicoForm.value.id || null,
+            empresaId : this.sesionService.getEmpresa().id ,
         });
 
 
@@ -786,6 +789,8 @@ export class FormularioScmComponent implements OnInit {
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+        this.empresaId = this.sesionService.getEmpresa().id;
+        console.log(this.empresaId);
 
     }
 

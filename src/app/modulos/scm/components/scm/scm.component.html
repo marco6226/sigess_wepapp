@@ -90,13 +90,13 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
+                <button *sTienePermiso="'SCM_CREATE_CASE'" pButton type="button" icon="fa fa-plus"
                     [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
 
-                <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Modificar"
+                <button *sTienePermiso="'SCM_PUT_CASE'" pButton type="button" icon="fa fa-pencil" label="Modificar"
                     class="ui-button-success" (click)="openCase()" [disabled]="!caseSelect"></button>
 
-                <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-pencil" label="Consultar"
+                <button *sTienePermiso="'SCM_LIST_CASE'" pButton type="button" icon="fa fa-pencil" label="Consultar"
                     class="ui-button-success" (click)="openCaseConsultar()" [disabled]="!caseSelect"></button>
                 <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                 (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
