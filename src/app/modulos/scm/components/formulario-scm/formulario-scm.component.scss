@@ -243,6 +243,15 @@
         }
     }
 
+    modal {
+    max-height: 100%;
+    overflow-y: auto;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+    }
+
     .label-material {
         &.ui-radiobutton-label {
             padding-top: .75rem;

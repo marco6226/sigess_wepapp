@@ -42,8 +42,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     statusList = [
         { name: 'Seleccione', code: '' },
 
-        { name: 'Activo', code: '1' },
-        { name: 'Cerrado', code: '0' },
+        { name: 'Vigente', code: '1' },
+        { name: 'Expirado', code: '0' },
 
     ];
 
@@ -69,8 +69,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             responsableExterno: [null],
             fechaExpiracion: [null, Validators.required],
 
-            status: [null],
-            actionPlan: [null, Validators.required],
+            status: [null],            
             actividad: [null],
             descripcion_act: [null],
             fecha_proyectada: [null],
@@ -125,7 +124,6 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             fechaExpiracion,
             recomendaciones,
             responsableEmpresa,
-            actionPlan,
             actividad,
             descripcion_act,
             fecha_proyectada,
@@ -150,7 +148,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             actividad,
             descripcion_act,
             fecha_proyectada,
-            actionPlan: actionPlan
+           
 
         }
 
@@ -246,7 +244,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'recomendationstatus' })
 export class RecomendationStatusPipe implements PipeTransform {
     transform(value: string, exponent?: string): string {
-        let status = new Date(value) >= new Date() ? 'Abierto' : 'Cerrado';
+        let status = new Date(value) >= new Date() ? 'Vigente' : 'Expirado';
         return status;
     }
 }
