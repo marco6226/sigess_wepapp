@@ -91,7 +91,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                 items:
                     [
                         { label: 'Creacion de seguimiento caso', codigo: 'SCM_CREATE_CASE', routerLink: '/app/scm/creacion', class: 'fa fa-medkit' },
-                        { label: 'Listado se seguimientos', codigo: 'SCM_LIST_CASE', routerLink: '/app/scm/list', class: 'fa fa-list-alt' },
+                        { label: 'Listado de seguimientos', codigo: 'SCM_LIST_CASE', routerLink: '/app/scm/list', class: 'fa fa-list-alt' },
 
                     ]
             },
