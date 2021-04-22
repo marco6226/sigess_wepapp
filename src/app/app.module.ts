@@ -48,7 +48,6 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         BrowserModule,
         BrowserAnimationsModule,
-
         AdminModule,
         AusModule,
         CoreModule,
@@ -65,7 +64,7 @@ const appRoutes: Routes = [
         CtrModule,
         CopModule,
         AyudaModule
-        //ng g  c modulos/scm/components/formulario-scm
+        //ng g c modulos/scm/components/formulario-scm
     ],
     providers: [
         HttpInt,

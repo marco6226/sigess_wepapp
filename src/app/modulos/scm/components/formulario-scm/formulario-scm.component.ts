@@ -76,6 +76,7 @@ export class FormularioScmComponent implements OnInit {
     empleadosList: Empleado[];
     diagnosticoList = [];
     seguimientos = [];
+    tratamientos = [];
     products2 = [];
     statuses: SelectItem[];
     emitPclentity = [
@@ -170,8 +171,8 @@ export class FormularioScmComponent implements OnInit {
     sveOptionList: SelectItem[] = [];
     cargoList: SelectItem[];
     caseStatus = [
-        { label: "Abierto", value: 1 },
-        { label: "Cerrado", value: 0 },
+        { label: "Abierto", value: "1" },
+        { label: "Cerrado", value: "0" },
     ];
     perfilList: SelectItem[] = [];
     loaded: boolean;
@@ -663,7 +664,7 @@ export class FormularioScmComponent implements OnInit {
         empleado.businessPartner = this.empleadoForm.value.businessPartner;
         empleado.jefeInmediato = this.empleadoForm.value.jefeInmediato;
         empleado.usuario.usuarioEmpresaList = [];
-
+        this.msgs = [];
         this.empleadoForm.value.perfilesId.forEach(perfilId => {
             let ue = new UsuarioEmpresa();
             ue.perfil = new Perfil();
@@ -683,6 +684,11 @@ export class FormularioScmComponent implements OnInit {
         this.empleadoService.update(empleado)
             .then(data => {
                 //  this.manageUpdateResponse(<Empleado>data);
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Usuario actualizado",
+                    detail: `Ah sido actualizado el usuario ${empleado.numeroIdentificacion}`,
+                });
                 this.solicitando = false;
             })
             .catch(err => {
@@ -784,6 +790,7 @@ export class FormularioScmComponent implements OnInit {
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
+        this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id)
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
     }
@@ -826,16 +833,14 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-    onRowEditInit(product) {
+    onRowEditInit(product, type?) {
 
 
     }
-    async onRowCloneInit(pseg) {
+    async onRowCloneInit(pseg, type?) {
         this.msgs = [];
-        let { id, ...product } = pseg;
-        if (product.responsable) {
-            product.responsable = product.responsable.id;
-        }
+        let { id, tarea, responsable, resultado, responsableExterno, ...product } = pseg;
+
         try {
             let resp = await this.scmService.createSeguimiento(product);
             this.msgs.push({
@@ -850,13 +855,23 @@ export class FormularioScmComponent implements OnInit {
         }
 
     }
-    async onRowEditSave(product) {
+    async onRowEditSave(product, type?) {
         this.msgs = [];
 
         if (product.responsable) {
             product.responsable = product.responsable.id;
         }
         try {
+            if (type == "tratamiento") {
+                let resp = await this.scmService.updateTratamiento(product);
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Seguimiento",
+                    detail: `Su numero de Tratamiento es ${product.id}`,
+                });
+                return this.fechaTrat()
+            }
+
             let resp = await this.scmService.updateSeguimiento(product);
             this.msgs.push({
                 severity: "success",
@@ -884,11 +899,33 @@ export class FormularioScmComponent implements OnInit {
         }
 
     }
+
+    async nuevoTratamiento() {
+        try {
+            let seg = { pkCase: this.caseSelect.id }
+            let resp = await this.scmService.createTratamiento(seg);
+
+            this.tratamientos.push(resp)
+        } catch (error) {
+
+        }
+
+    }
+
     async fechaSeg() {
         this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
         this.seguimientos.map((seg, idx) => {
             if (seg.fechaSeg) {
                 this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()
+            }
+        })
+    }
+
+    async fechaTrat() {
+        this.seguimientos = await this.scmService.getTratamientos(this.caseSelect.id);
+        this.tratamientos.map((trat, idx) => {
+            if (trat.fecha) {
+                this.tratamientos[idx].fecha = moment(trat.fecha).toDate()
             }
         })
     }

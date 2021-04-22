@@ -6,8 +6,8 @@
         </p-header>
 
         <p-table #dt [value]="casosList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect" [rows]="10"
-            [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
-            [loading]="loading">
+            [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion"
+            sortOrder="1" [totalRecords]="totalRecords" [loading]="loading">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="id">#CASO
@@ -31,7 +31,7 @@
                     <th pSortableColumn="documento">Documento
                         <p-sortIcon field="documento"></p-sortIcon>
                     </th>
-                     <th pSortableColumn="statusCaso">Estado de caso
+                    <th pSortableColumn="statusCaso">Estado de caso
                         <p-sortIcon field="statusCaso"></p-sortIcon>
                     </th>
                     <th pSortableColumn="casoMedicoLaboral">Caso de mesa laboral
@@ -54,12 +54,10 @@
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
                     </td>
                     <td>
-                        <input  pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'pkUser.primerApellido')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerApellido')">
                     </td>
                     <td>
-                        <input  pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'pkUser.primerNombre')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerNombre')">
                     </td>
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
@@ -78,14 +76,14 @@
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
                     <td>{{case.id}}</td>
-                    <td>{{case.fechaCreacion |  date: 'dd/MM/yyyy'}}</td>
+                    <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
                     <td>{{case.region}}</td>
                     <td>{{case.ciudad}}</td>
                     <td>{{case.pkUser.primerApellido}}</td>
                     <td>{{case.pkUser.primerNombre}} </td>
                     <td>{{case.documento}}</td>
                     <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                    <td>{{case.casoMedicoLaboral  == 1 ? 'Si' : 'No'}}</td>
+                    <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
 
                 </tr>
             </ng-template>

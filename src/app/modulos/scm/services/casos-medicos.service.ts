@@ -80,6 +80,20 @@ export class CasosMedicosService {
     getSeguimientos(documento): any {
         return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
+    /// Tratamientos
+    createTratamiento(seg) {
+        return this.http.post(`${endPoints.scm}tratamiento/`, seg, this.getRequestHeaders(this.headers)).toPromise();
+
+    }
+    updateTratamiento(seguimientoCase) {
+        return this.http.put(`${endPoints.scm}tratamiento/`, seguimientoCase, this.getRequestHeaders(this.headers)).toPromise();
+
+    }
+
+    getTratamientos(documento): any {
+        return this.http.get<any[]>(`${endPoints.scm}tratamiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
 
     findByFilter(filterQuery?: FilterQuery) {
         // console.log(filterQuery, "filtro linea 71");
