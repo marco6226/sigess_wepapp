@@ -24,7 +24,7 @@
         <div class="ui-g-12 ui-md-6 ui-lg-7">
             <p-breadcrumb [model]="breadCrumbItems" [home]="homeItem"></p-breadcrumb>
             <p-treeTable [value]="directorioList" autoLayout="true" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
-                (onLazyLoad)="loadNodes($event)" dataKey="id" [loading]="loading" selectionMode="single"  [paginator]="true"  [rows]="20" [totalRecords]="totalRecords" [(selection)]="nodeSelect" dataKey="id" sortField="fechaCreacion" sortOrder="1">
+                (onLazyLoad)="loadNodes($event)" dataKey="id" [loading]="loading" selectionMode="single"  [paginator]="true"  [rows]="40" [totalRecords]="totalRecords" [(selection)]="nodeSelect" dataKey="id" sortField="fechaCreacion" sortOrder="1">
                 <ng-template pTemplate="header">
                    
                     <tr>
@@ -85,10 +85,10 @@
             </p>
             <ng-container *ngIf="nodeSelect?.data.esDocumento">
                 <s-documento-form [documento]="nodeSelect?.data.documento"></s-documento-form>
-                <button *sTienePermiso="'ADO_PUT_DIRo'" pButton type="button" class="ui-button-success"
+                <button *sTienePermiso="'ADO_PUT_DIR'" pButton type="button" class="ui-button-success"
                     (click)="actualizarDocumento(nodeSelect.data)" label="Actualizar" icon="fa fa-pencil"></button>
             </ng-container>
-            <button *sTienePermiso="'ADO_DELETE_DIRo'" pButton type="button" (click)="confirmarEliminar()"
+            <button *sTienePermiso="'ADO_DELETE_DIR'" pButton type="button" (click)="confirmarEliminar()"
                 class="ui-button-danger" label="Eliminar" icon="fa fa-trash"></button>
         </div>
     </div>
