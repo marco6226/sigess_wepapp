@@ -14,9 +14,15 @@
             <strong>Tipo de reportes</strong>
             <br/> 
             <br/>
-            <p-radioButton name="tipoReporte " label="Accidente " value="ACCIDENTE" [(ngModel)]="tipoReporte " [disabled]="reporteSelect "></p-radioButton>
-            <p-radioButton name="tipoReporte " label="Incidente " value="INCIDENTE" [(ngModel)]="tipoReporte " [disabled]="reporteSelect "></p-radioButton>
+            <p-radioButton name="tipoReporte " label="Accidente " value="ACCIDENTE" [(ngModel)]="tipoReporte " [disabled]="reporteSelect"></p-radioButton>
+            <p-radioButton name="tipoReporte " label="Incidente " value="INCIDENTE" [(ngModel)]="tipoReporte " [disabled]="reporteSelect"></p-radioButton>
+           
+            
+             
         </div>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ">
+        <label class="single-line"   *ngIf="reporteSelect" ><strong> Reporte No. RAI-{{reporteSelect.id}} </strong> </label>
     </div>
     <br/>
     <br/>

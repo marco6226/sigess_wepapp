@@ -11,7 +11,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-5">
                 <div class="input-field">
                     <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material"
-                        styleClass="select-material">
+                        styleClass="select-material" required>
                     </p-dropdown>
                     <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="input-field">
 
                     <p-dropdown [options]="typeList" formControlName="tipo" class="select-material"
-                        styleClass="select-material">
+                        styleClass="select-material" required>
                     </p-dropdown>
                     <label for="" class="active">Tipo</label>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="input-field">
                     <p-calendar [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true" [yearRange]="yearRange"
                         [locale]="localeES" formControlName="fechaInicio" dateFormat="dd/mm/yy"
-                        inputStyleClass="form-material">
+                        inputStyleClass="form-material" required>
                     </p-calendar>
                     <label for="" class="active">Fecha Inicial</label>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="input-field">
                     <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
                         formControlName="fechaExpiracion" [locale]="localeES" dateFormat="dd/mm/yy"
-                        inputStyleClass="form-material">
+                        inputStyleClass="form-material" required>
                     </p-calendar>
                     <label for="" class="active">Fecha Final</label>
                 </div>
@@ -58,7 +58,7 @@
 
             <div class="ui-g-12">
                 <div class="input-field">
-                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea></textarea>
+                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea required></textarea>
                     <label for="" class="active">Recomendaciones</label>
                 </div>
                 <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help"
@@ -67,16 +67,33 @@
             </div>
             <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Plan de Acción</h5>
-            </div>
+            </div>            
             <div class="ui-g-12 ui-md-6 ui-lg-6">
                 <div class="input-field">
 
-                    <textarea formControlName="actionPlan" class="textarea-material" pInputTextarea></textarea>
+                    <textarea formControlName="actividad" class="textarea-material" pInputTextarea required></textarea>
 
-                    <label for="" class="active">Plan de acción</label>
+                    <label for="" class="active">Actividad</label>
                 </div>
-                <small *ngIf="actionPlan.errors?.required && actionPlan.touched" id="username2-help"
-                    class="p-invalid">Obligatorio</small>
+                
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="input-field">
+                    <textarea formControlName="descripcion_act" class="textarea-material" pInputTextarea></textarea>
+
+                    <label for="" class="active">Descripcion de la Actividad</label>
+                </div>
+                
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="input-field">
+                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                    formControlName="fecha_proyectada" [locale]="localeES" dateFormat="dd/mm/yy"
+                    inputStyleClass="form-material">
+                </p-calendar>
+                    <label for="" class="active">Fecha proyectada</label>
+                </div>
+               
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <div class="input-field">
@@ -117,7 +134,7 @@
                 
             </div>
             <div class="ui-g-12">
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" label="Guardar" icon="fa fa-plus"
+                <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" label="Guardar" icon="fa fa-plus"
                     (click)="onSubmit()">
 
                 </button>

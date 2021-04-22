@@ -80,24 +80,24 @@ export class FormularioScmComponent implements OnInit {
     products2 = [];
     statuses: SelectItem[];
     emitPclentity = [
+        { label: "--Seleccione--", value: null },
         { label: "EPS", value: "EPS" },
         { label: "ARL", value: "ARL" },
+        { label: "AFP", value: "AFP" },
         { label: "Junta Regional", value: "Junta Regional" },
         { label: "Junta Nacional", value: "Junta Nacional" }]
 
     conceptoRehabilitacion = [
-        { label: "Reintegro laboral sin modificaciones", value: "0" },
-        { label: "Reintegro laboral con modificaciones", value: "1" },
-        { label: "Reubicación laboral temporal", value: "2" },
-        { label: "Reubicación laboral definitiva", value: "3" },
-        { label: "Reconversión de mano de obra", value: "4" },
-        { label: "No Aplica", value: "5" },
+        { label: "--Seleccione--", value: null },
+        { label: "Favorable", value: "1" },
+        { label: "No favorable", value: "2" },
+        { label: "No Aplica", value: "3" },
     ]
 
     entityConceptoRehabilitacion = [
         [
-            { label: "EPS", value: "EPS" },
-            { label: "ARL", value: "ARL" },
+            { label: "--Seleccione--", value: null },
+
         ],
         [
             { label: "EPS", value: "EPS" },
@@ -107,14 +107,7 @@ export class FormularioScmComponent implements OnInit {
             { label: "EPS", value: "EPS" },
             { label: "ARL", value: "ARL" },
         ],
-        [
-            { label: "EPS", value: "EPS" },
-            { label: "ARL", value: "ARL" },
-        ],
-        [
-            { label: "EPS", value: "EPS" },
-            { label: "ARL", value: "ARL" },
-        ],
+
         [
             { label: "No Aplica", value: "No Aplica" },
 
@@ -123,6 +116,7 @@ export class FormularioScmComponent implements OnInit {
 
 
     professionalAreaList = [
+        { label: "--Seleccione--", value: null },
         { label: "Enfermeros", value: "Enfermeros" },
         { label: "Farmacéuticos", value: "Farmacéuticos" },
         { label: "Fisioterapeutas", value: "Fisioterapeutas" },
@@ -185,6 +179,7 @@ export class FormularioScmComponent implements OnInit {
     solicitando: boolean = false;
     departamento;
     caseOptionList = [
+        { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
         { label: "No", value: "0" },
         { label: "En Seguimiento", value: "2" },
@@ -192,6 +187,7 @@ export class FormularioScmComponent implements OnInit {
 
     ]
     IntervencionOptionList = [
+        { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
         { label: "No", value: "0" },
 
@@ -217,12 +213,14 @@ export class FormularioScmComponent implements OnInit {
 
 
     pclOptionList = [
+        { label: "--Seleccione--", value: null },
         { label: "En Calificación", value: "1" },
         { label: "Si", value: "2" },
         { label: "No aplica", value: "0" }
     ]
 
     pclCalificacionList = [
+        { label: "--Seleccione--", value: null },
         { label: "En Proceso", value: "1" },
         { label: "En Firme", value: "2" },
         { label: "En Apelación", value: "0" }
@@ -350,6 +348,7 @@ export class FormularioScmComponent implements OnInit {
             conceptRehabilitacion: [null, /*Validators.required*/],
             descripcionCargo: [null]
         });
+        console.log(this.casoMedicoForm)
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
     }
@@ -446,6 +445,7 @@ export class FormularioScmComponent implements OnInit {
     closeForm() {
         this.caseSelect = null;
         this.empleadoSelect = null;
+
     }
     async onSubmit() {
         this.msgs = [];
@@ -467,6 +467,7 @@ export class FormularioScmComponent implements OnInit {
 
             pkUser: this.empleadoForm.get("id").value || null,
             codigoCie10: this.casoMedicoForm.value.id || null,
+            empresaId: this.sesionService.getEmpresa().id,
         });
 
 
@@ -792,6 +793,8 @@ export class FormularioScmComponent implements OnInit {
         this.fechaSeg()
         this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id)
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+        this.empresaId = this.sesionService.getEmpresa().id;
+        console.log(this.empresaId);
 
     }
 
@@ -846,7 +849,7 @@ export class FormularioScmComponent implements OnInit {
             this.msgs.push({
                 severity: "success",
                 summary: "Seguimiento",
-                detail: `Se ah clonado exitosamente`,
+                detail: `Se ha clonado exitosamente`,
             });
 
             this.fechaSeg();

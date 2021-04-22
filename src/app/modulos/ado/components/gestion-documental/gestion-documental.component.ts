@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 import { Modulo } from 'app/modulos/core/enums/enumeraciones'
 import { Directorio } from 'app/modulos/ado/entities/directorio'
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
 import { Message, MenuItem, ConfirmationService } from 'primeng/primeng'
+import { PaginatorModule } from 'primeng/paginator';
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
@@ -20,6 +21,7 @@ export class GestionDocumentalComponent implements OnInit {
     growlMsgs: Message[];
     msgs: Message[];
     @Input() caseid: any;
+    totalRecords: number;
     nombreCarpeta: string;
     visibleDlgNuevaCarpeta: boolean;
     visibleDlgUpload: boolean;
@@ -41,6 +43,7 @@ export class GestionDocumentalComponent implements OnInit {
     loading: boolean;
     draggedNode: TreeNode;
     criterioBusqueda: string;
+    
 
     constructor(
         private directorioService: DirectorioService,
@@ -52,6 +55,7 @@ export class GestionDocumentalComponent implements OnInit {
     ngOnInit() {
         //this.cargarRaiz();
         this.loading = true;
+        
     }
 
     loadNodes(event: any) {
@@ -67,6 +71,8 @@ export class GestionDocumentalComponent implements OnInit {
         filterEliminado.criteria = Criteria.EQUALS;
         filterEliminado.field = "eliminado";
         filterEliminado.value1 = "false";
+        
+        filterQuery.count = true;
 
         let filterPadre = new Filter();
         filterPadre.criteria = Criteria.IS_NULL;
@@ -89,11 +95,14 @@ export class GestionDocumentalComponent implements OnInit {
 
         return this.directorioService.findByFilter(filterQuery).then(
             data => {
+                this.totalRecords = data['count'];
                 this.directorioList = this.generarModelo(<Directorio[]>data, null);
                 this.inicializarFechas();
                 this.loading = false;
             }
+            
         );
+        console.log(this.totalRecords);
     }
 
     generarModelo(dirList: Directorio[], nodoPadre: TreeNode) {
@@ -283,6 +292,8 @@ export class GestionDocumentalComponent implements OnInit {
             filterPadre.criteria = Criteria.EQUALS;
             filterPadre.field = "eliminado";
             filterPadre.value1 = "false";
+            filterQuery.rows = event.rows;
+            filterQuery.count = true;
 
             let filterEliminado = new Filter();
             filterEliminado.criteria = Criteria.EQUALS;
@@ -307,6 +318,7 @@ export class GestionDocumentalComponent implements OnInit {
             this.directorioService.findByFilter(filterQuery).then(
                 data => {
                     this.directorioList = this.generarModelo(<Directorio[]>data, this.nodoPadre);
+                    this.totalRecords = data['count'];
                 }
             );
         }
@@ -499,6 +511,8 @@ export class GestionDocumentalComponent implements OnInit {
             this.loading = true;
             let filterQuery = new FilterQuery();
             filterQuery.filterList = [];
+            filterQuery.count = true;
+            filterQuery.rows = event.rows;
 
             let filtEliminado = new Filter();
             filtEliminado.criteria = Criteria.EQUALS;
@@ -513,7 +527,7 @@ export class GestionDocumentalComponent implements OnInit {
                 filterQuery.filterList.push(filtPadre);
             } else {
                 let filterValue = new Filter();
-                filterValue.criteria = Criteria.LIKE;
+                filterValue.criteria = Criteria.CONTAINS;
                 filterValue.field = "nombre";
                 filterValue.value1 = this.criterioBusqueda;
                 filterQuery.filterList.push(filterValue);
@@ -533,6 +547,7 @@ export class GestionDocumentalComponent implements OnInit {
 
             return this.directorioService.findByFilter(filterQuery).then(
                 data => {
+                    this.totalRecords = data['count'];
                     this.directorioList = this.generarModelo(<Directorio[]>data, null);
                     this.inicializarFechas();
                     this.loading = false;

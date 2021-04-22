@@ -38,7 +38,7 @@ async  ngOnInit() {
       this.modificar = this.paramNav.getAccion<string>() == 'PUT';
 
       let filterQuery = new FilterQuery();
-      filterQuery.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1: null, value2: null }];
+      filterQuery.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1:  repParam.id.toString(), value2: null }];
     await  this.reporteService.findByFilter(filterQuery).then(
         resp => {
           this.reporteSelect = <Reporte>(resp['data'][0]);

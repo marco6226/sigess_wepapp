@@ -46,11 +46,13 @@ export class DiagnosticoFormComponent implements OnInit {
             fechaDiagnostico: [null, Validators.required],
             sistemaAfectado: [null, Validators.required],
             origen: [null, Validators.required],
+            detalle: [null, Validators.required],
 
         });
     }
     get codigo() { return this.diagnosticoForm.get('codigoCie10'); }
     get diagnostico() { return this.diagnosticoForm.get('diagnostico'); }
+    get detalle() { return this.diagnosticoForm.get('detalle'); }
     get fechaDiagnostico() { return this.diagnosticoForm.get('fechaDiagnostico'); }
 
     get sistemaAfec() { return this.diagnosticoForm.get('sistemaAfectado'); }
@@ -80,6 +82,7 @@ export class DiagnosticoFormComponent implements OnInit {
             diagnostico,
             sistemaAfectado,
             fechaDiagnostico,
+            detalle,
 
             origen
 
@@ -91,6 +94,7 @@ export class DiagnosticoFormComponent implements OnInit {
             fechaDiagnostico,
             origen,
             diagnostico,
+            detalle,
             sistemaAfectado,
             pkCase: this.caseId,
             pkUser: this.id,

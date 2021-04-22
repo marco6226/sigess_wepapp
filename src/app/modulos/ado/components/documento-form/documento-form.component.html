@@ -1,16 +1,13 @@
 <div class="ui-g-12 ui-sm-12 ui-md-6">
   <span class="ui-float-label">  
      <div class="form-check form-check-inline">
-      <p-radioButton name="public" value="1" label="Publico   ." formControlName="public">
-      </p-radioButton>
-      <p-radioButton name="public" value="0" label="privado" formControlName="public">
-      </p-radioButton>
+      
   </div>
   </span>
 </div>
-<p-panel header="Ficha técnica" *sTienePermiso="'ADO_POST_DIRo'" >
+<p-panel header="Ficha técnica" *ngIf="router.url === '/app/ado/gestionDocumental'" >
   
-  <div class="ui-g" *sTienePermiso="'ADO_POST_DIRo'" >
+  <div class="ui-g" *sTienePermiso="'ADO_POST_DIR'" >
     <div class="ui-g-12 ui-sm-12">
       <span class="ui-float-label">
         <input id="nombre-input" type="text" [ngModel]="documento?.nombre" (ngModelChange)="documento.nombre=$event" pInputText>

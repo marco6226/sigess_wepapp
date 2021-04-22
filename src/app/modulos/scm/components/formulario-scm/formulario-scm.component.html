@@ -536,7 +536,7 @@
                         <p-dropdown [filter]="true" [options]="pclCalificacionList"
                             formControlName="statusDeCalificacion" class="select-material" styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Estado de la calificación</label>
+                        <label for="" class="active">Estado de calificación origen</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
@@ -544,7 +544,7 @@
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" formControlName="fechaCalificacion" [locale]="localeES"
                             dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha de la calificación</label>
+                        <label for="" class="active">Fecha de calificación origen</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
@@ -552,7 +552,7 @@
                         <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmiteCalificacion"
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Entidad que emite la calificación</label>
+                        <label for="" class="active">Entidad que emite la calificación origen</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -597,7 +597,7 @@
                         <label for="" class="active">Requiere intervención complementaria</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('requiereIntervencion').value != 0">
                     <div class="input-field">
                         <p-dropdown [options]="sveOptionList" formControlName="sve" class="select-material"
                             styleClass="select-material">
@@ -605,7 +605,7 @@
                         <label for="" class="active">SVE</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('requiereIntervencion').value != 0">
                     <div class="input-field">
 
                         <p-dropdown [options]="professionalAreaList" formControlName="professionalArea"
@@ -692,13 +692,13 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" (click)="createCaso()" pButton type="button" icon="fa fa-plus"
-                    [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
+                <button *sTienePermiso="'SCM_CREATE_CASE'" (click)="createCaso()" pButton type="button"
+                    icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
 
-                <button *sTienePermiso="'ADM_PUT_USR'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil"
+                <button *sTienePermiso="'SCM_PUT_CASE'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil"
                     label="Modificar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
 
-                <button *sTienePermiso="'ADM_PUT_USR'" (click)="readCase()" pButton type="button" icon="fa fa-pencil"
+                <button *sTienePermiso="'SCM_LIST_CASE'" (click)="readCase()" pButton type="button" icon="fa fa-pencil"
                     label="Consultar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
                 <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
             (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
@@ -725,6 +725,9 @@
                     <th pSortableColumn="diagnostico">Diagnóstico
 
                     </th>
+                    <th pSortableColumn="detalle">Detalle de Diagnóstico
+
+                    </th>
                     <th pSortableColumn="case.origen">Origen
 
                     </th>
@@ -742,14 +745,15 @@
                     <td>{{case.codigoCie10 }}</td>
                     <td>{{case.sistemaAfectado?.name || ""}}</td>
                     <td>{{case.diagnostico}}</td>
+                    <td>{{case.detalle}}</td>
                     <td>{{case.origen}}</td>
                     <td>{{case.creadoPor}}</td>
 
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
-                    (click)="modalDianostico = true">
+                <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton type="button" icon="fa fa-plus"
+                    label="Crear Diagnóstico" (click)="modalDianostico = true">
 
                 </button>
 
@@ -808,7 +812,7 @@
                     </ng-template>
                     <ng-template pTemplate="summary" let-rowData>
                         <button pButton type="button" [queryParams]="{case: caseSelect.id}"
-                            [routerLink]="['/app/aus/reporteAusentismo']" icon="fa fa-plus">
+                            [routerLink]="['/app/aus/reporteAusentismo']" icon="fa fa-plus" label="Crear Incapacidad ">
 
                         </button>
 
@@ -841,6 +845,15 @@
 
                     </th>
                     <th>Fecha final
+
+                    </th>
+                    <th>Actividad
+
+                    </th>
+                    <th>Descripcion de la actividad
+
+                    </th>
+                    <th>Fecha proyectada
 
                     </th>
 
@@ -889,16 +902,24 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
+                    <<<<<<< HEAD <td>{{case.responsableEmpresa?.primerApellido || ""}}
+                        {{case.responsableEmpresa?.primerNombre ||
                         ""}}</td>
-                    <td>{{case.responsableExterno}}</td>
+                        =======
+                        <td>{{case.actividad}}</td>
+                        <td>{{case.descripcion_act}}</td>
+                        <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
+                        <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
+                            ""}}</td>
+                        >>>>>>> 483ed1894374eae2f91bed14e02acd8af6d98492
+                        <td>{{case.responsableExterno}}</td>
 
 
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'ADM_POST_USR'" pButton type="button" icon="fa fa-plus"
-                    (click)="openModalRecomendantions()">
+                <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus"
+                    label="Crear recomendación" (click)="openModalRecomendantions()">
                 </button>
 
                 <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
@@ -907,15 +928,15 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
-    <p-tabPanel header="Seguimiento" *sTienePermiso="'SCM_GET_CASE_SEG'">
+    <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
-        <div class="card">
+        <div class="card" *sTienePermiso="'SCM_CREATE_CASE_SEG'">
             <h5>Seguimiento de caso</h5>
             <p-table [value]="seguimientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Fecha de seguimiento</th>
-                        <th>Seguimiento</th>
+                        <th colspan="3">Seguimiento</th>
                         <th>Tarea</th>
                         <th>Responsable Empresa</th>
                         <th>Responsable Externo</th>
@@ -939,7 +960,7 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td>
+                        <td colspan="3">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento">
@@ -1031,7 +1052,7 @@
 
                 <ng-template pTemplate="summary" let-rowData>
                     <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
-                        (click)="nuevoSeguimiento()">
+                        label="Crear Seguimiento" (click)="nuevoSeguimiento()">
 
                     </button>
 
@@ -1211,7 +1232,7 @@
 </p-dialog>
 
 
-<p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '50vw'}"
+<p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}"
     [baseZIndex]="10000">
 
     <app-diagnostico-form *ngIf="caseSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id"
@@ -1222,8 +1243,8 @@
 </p-dialog>
 
 
-<p-dialog header="Crear Recomendacion" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '50vw'}"
-    [baseZIndex]="10000">
+<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios"
+    [style]="{width: '75vw'}" [baseZIndex]="10000">
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>

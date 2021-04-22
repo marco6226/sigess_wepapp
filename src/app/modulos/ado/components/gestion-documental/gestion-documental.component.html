@@ -24,15 +24,16 @@
         <div class="ui-g-12 ui-md-6 ui-lg-7">
             <p-breadcrumb [model]="breadCrumbItems" [home]="homeItem"></p-breadcrumb>
             <p-treeTable [value]="directorioList" autoLayout="true" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
-                (onLazyLoad)="loadNodes($event)" dataKey="id" [loading]="loading" selectionMode="single"
-                [(selection)]="nodeSelect" dataKey="id">
+                (onLazyLoad)="loadNodes($event)" dataKey="id" [loading]="loading" selectionMode="single"  [paginator]="true"  [rows]="20" [totalRecords]="totalRecords" [(selection)]="nodeSelect" dataKey="id" sortField="fechaCreacion" sortOrder="1">
                 <ng-template pTemplate="header">
+                   
                     <tr>
                         <th>
                             <div pDroppable="dd" (onDrop)="drop($event, null)">Nombre</div>
                         </th>
                         <th>Tamaño</th>
                         <th>Fecha creación</th>
+                        <th>Subido  por</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowNode let-data="rowData">
@@ -52,8 +53,10 @@
                             <label *ngIf="!data.esDocumento">{{data.tamanio}} Elementos</label>
                             <label *ngIf="data.esDocumento">{{data.tamanio | fileSize}}</label>
                         </td>
-                        <td style="text-align: center">{{data?.fechaCreacion | date:'yyyy-MM-dd HH:mm'}}</td>
+                        <td style="text-align: center">{{data?.fechaCreacion | date:'yyyy-MM-dd HH:mm'}}</td>                    
+                        <td style="text-align: center">{{data?.usuario.email}}</td>
                     </tr>
+                
 
                 </ng-template>
             </p-treeTable>
