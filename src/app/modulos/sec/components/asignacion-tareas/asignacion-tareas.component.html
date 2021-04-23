@@ -11,55 +11,55 @@
 <p-panel header="Listado de tareas" [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
 
   <div style="overflow: auto;">
-    <div style="min-width: 100%;">
+    <div style="min-width: 170%;">
 
-      <p-table #dt [value]="tareasList" autoLayout="true" [paginator]="true" [rows]="10">
+      <p-table #dt [value]="tareasList"  [paginator]="true" [rows]="10">
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th></th>
-            <th pSortableColumn="codigo"> Código
+            <th style="width: 3%"> </th>
+            <th pSortableColumn="codigo" style="width: 7%"> Código
               <p-sortIcon field="codigo"></p-sortIcon>
             </th>
-            <th pSortableColumn="modulo"> Módulo
+            <th pSortableColumn="modulo"style="width: 6%"> Módulo
               <p-sortIcon field="modulo"></p-sortIcon>
             </th>
-            <th pSortableColumn="nombre"> Nombre
+            <th pSortableColumn="nombre" style="width: 10%"> Nombre
               <p-sortIcon field="nombre"></p-sortIcon>
             </th>
-            <th pSortableColumn="descripcion">Descripción
+            <th pSortableColumn="descripcion"  style="width: 10%">Descripción
               <p-sortIcon field="descripcion"></p-sortIcon>
             </th>
-            <th pSortableColumn="tipoAccion">Tipo acción
+            <th pSortableColumn="tipoAccion" style="width: 7%">Tipo acción
               <p-sortIcon field="tipoAccion"></p-sortIcon>
             </th>
-            <th pSortableColumn="jerarquia">Jerarquia de control
+            <th pSortableColumn="jerarquia" style="width: 6%">Jerarquia de control
               <p-sortIcon field="jerarquia"></p-sortIcon>
             </th>
-            <th pSortableColumn="estado">Estado
+            <th pSortableColumn="estado" style="width: 6%">Estado
               <p-sortIcon field="estado"></p-sortIcon>
             </th>
-            <th pSortableColumn="fechaProyectada">Fecha proyectada
+            <th pSortableColumn="fechaProyectada" style="width: 6%">Fecha proyectada
               <p-sortIcon field="fechaProyectada"></p-sortIcon>
             </th>
-            <th pSortableColumn="areaResponsable.nombre">Area
+            <th pSortableColumn="areaResponsable.nombre" style="width: 6%">Area
               <p-sortIcon field="areaResponsable.nombre"></p-sortIcon>
             </th>
-            <th pSortableColumn="usuarioRealiza.email">Usuario realiza
+            <th pSortableColumn="usuarioRealiza.email" style="width: 14%">Usuario realiza
               <p-sortIcon field="usuarioRealiza.email"></p-sortIcon>
             </th>
-            <th pSortableColumn="fechaRealizacion">Fecha realización
+            <th pSortableColumn="fechaRealizacion" style="width: 6%">Fecha realización
               <p-sortIcon field="fechaRealizacion"></p-sortIcon>
             </th>
-            <th pSortableColumn="observacionesRealizacion">Observación realizador
+            <th pSortableColumn="observacionesRealizacion"  style="width: 6%">Observación realizador
               <p-sortIcon field="observacionesRealizacion"></p-sortIcon>
             </th>
-            <th pSortableColumn="usuarioVerifica.email">Usuario verifica
+            <th pSortableColumn="usuarioVerifica.email" style="width: 14%">Usuario verifica
               <p-sortIcon field="usuarioVerifica.email"></p-sortIcon>
             </th>
-            <th pSortableColumn="fechaVerificacion">Fecha verificación
+            <th pSortableColumn="fechaVerificacion" style="width: 6%">Fecha verificación
               <p-sortIcon field="fechaVerificacion"></p-sortIcon>
             </th>
-            <th pSortableColumn="observacionesVerificacion">Observación verificador
+            <th pSortableColumn="observacionesVerificacion" style="width: 6%">Observación verificador
               <p-sortIcon field="observacionesVerificacion"></p-sortIcon>
             </th>
           </tr>
