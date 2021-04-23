@@ -902,16 +902,10 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                    <<<<<<< HEAD <td>{{case.responsableEmpresa?.primerApellido || ""}}
-                        {{case.responsableEmpresa?.primerNombre ||
-                        ""}}</td>
-                        =======
                         <td>{{case.actividad}}</td>
                         <td>{{case.descripcion_act}}</td>
                         <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
-                        <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
-                            ""}}</td>
-                        >>>>>>> 483ed1894374eae2f91bed14e02acd8af6d98492
+                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre || ""}}</td>
                         <td>{{case.responsableExterno}}</td>
 
 
@@ -1061,7 +1055,7 @@
         </div>
     </p-tabPanel>
 
-    <p-tabPanel header="Tratamientos" *sTienePermiso="'SCM_GET_CASE_SEG'">
+    <p-tabPanel header="Tratamientos" *sTienePermiso="'SCM_GET_CASE_TRAT'">
 
         <div class="card">
             <h5>Tratamientos en el caso</h5>
@@ -1127,7 +1121,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
+                    <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
                         (click)="nuevoTratamiento()">
 
                     </button>
