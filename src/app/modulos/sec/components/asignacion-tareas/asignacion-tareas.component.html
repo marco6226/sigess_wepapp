@@ -17,6 +17,9 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th></th>
+            <th pSortableColumn="codigo"> Código
+              <p-sortIcon field="codigo"></p-sortIcon>
+            </th>
             <th pSortableColumn="modulo"> Módulo
               <p-sortIcon field="modulo"></p-sortIcon>
             </th>
@@ -62,6 +65,9 @@
           </tr>
           <tr>
             <td></td>
+            <td>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+            </td>
             <td>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'modulo', 'contains')">
             </td>
@@ -118,6 +124,7 @@
                   title="Reportar verificación de tarea"></button>
               </ng-container>
             </td>
+            <td>{{tarea.codigo}}</td>
             <td>{{tarea.modulo}}</td>
             <td>{{tarea.nombre}}</td>
             <td>{{tarea.descripcion}}</td>
