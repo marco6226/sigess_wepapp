@@ -902,17 +902,15 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                    <<<<<<< HEAD <td>{{case.responsableEmpresa?.primerApellido || ""}}
-                        {{case.responsableEmpresa?.primerNombre ||
+                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
                         ""}}</td>
-                        =======
-                        <td>{{case.actividad}}</td>
-                        <td>{{case.descripcion_act}}</td>
-                        <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
-                        <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
-                            ""}}</td>
-                        >>>>>>> 483ed1894374eae2f91bed14e02acd8af6d98492
-                        <td>{{case.responsableExterno}}</td>
+
+                    <td>{{case.actividad}}</td>
+                    <td>{{case.descripcion_act}}</td>
+                    <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
+                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
+                        ""}}</td>
+                    <td>{{case.responsableExterno}}</td>
 
 
                 </tr>
@@ -921,6 +919,9 @@
                 <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus"
                     label="Crear recomendación" (click)="openModalRecomendantions()">
                 </button>
+
+                <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-success"
+                    (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
 
                 <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
                     (click)="modalRecomendatios = true" [disabled]="!recoSelect"></button>
@@ -1046,6 +1047,10 @@
                             <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                                 (click)="onRowEditCancel(seguimiento, ri)"
                                 class="p-button-rounded p-button-text p-button-danger"></button>
+
+                            <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash"
+                                (click)="deleteSeguimiento(seguimiento.id)"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -1061,7 +1066,7 @@
         </div>
     </p-tabPanel>
 
-    <p-tabPanel header="Tratamientos" *sTienePermiso="'SCM_GET_CASE_SEG'">
+    <p-tabPanel header="Tratamientos" *ngIf="caseSelect">
 
         <div class="card">
             <h5>Tratamientos en el caso</h5>
@@ -1076,6 +1081,7 @@
                         <th style="width:8rem"></th>
                     </tr>
                 </ng-template>
+
                 <ng-template pTemplate="body" let-tratamiento let-editing="editing" let-ri="rowIndex">
                     <tr [pEditableRow]="tratamiento">
 

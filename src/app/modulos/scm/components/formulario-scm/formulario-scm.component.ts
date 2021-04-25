@@ -368,7 +368,12 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async ngOnInit() {
+        //console.log(this.caseSelect.id, "wenas");
+        if (this.caseSelect) {
 
+            this.caseSelect = await this.scmService.getCase(this.caseSelect.id);
+
+        }
 
         let res: any = await this.scmService.getSvelist();
         this.sveOptionList.push({ label: "--Seleccione--", value: null });
@@ -799,6 +804,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async readCase() {
+
         this.consultar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
@@ -891,6 +897,46 @@ export class FormularioScmComponent implements OnInit {
     onRowEditCancel(product, index: number) {
 
     }
+
+    async deleteRecomendation(id) {
+        this.msgs = [];
+        try {
+            let resp = await this.scmService.deleteRecomendation(id);
+            if (resp) {
+                this.msgs.push({
+                    severity: "error",
+                    summary: "Recomendacion",
+                    detail: `Su Recomendacion fue eliminada`,
+                });
+                this.onCloseModalrecomendation();
+
+            }
+
+        } catch (error) {
+
+        }
+    }
+
+    async deleteSeguimiento(id) {
+        this.msgs = [];
+        try {
+            let resp = await this.scmService.deleteSeguimiento(id);
+            if (resp) {
+                this.msgs.push({
+                    severity: "error",
+                    summary: "Seguimiento",
+                    detail: `Su Seguimiento fue eliminado`,
+                });
+                this.fechaSeg()
+
+            }
+
+        } catch (error) {
+
+        }
+    }
+
+
     async nuevoSeguimiento() {
         try {
             let seg = { pkCase: this.caseSelect.id }

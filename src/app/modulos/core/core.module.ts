@@ -258,17 +258,18 @@ const appRoutes: Routes = [
         RouterModule.forChild(appRoutes),
         //CommonModule,
         ComunModule,
-		CardModule,
-		NgCircleProgressModule.forRoot({
-			"backgroundColor": "#F1F1F1",
-			"backgroundPadding": -18,
-			"showSubtitle":false,
-			"outerStrokeWidth": 10,
-			"outerStrokeColor": "#FF6347",
-			"innerStrokeColor": "#32CD32",
-			"innerStrokeWidth": 1,
-			"responsive":false,
-			"startFromZero": false})
+        CardModule,
+        NgCircleProgressModule.forRoot({
+            "backgroundColor": "#F1F1F1",
+            "backgroundPadding": -18,
+            "showSubtitle": false,
+            "outerStrokeWidth": 10,
+            "outerStrokeColor": "#FF6347",
+            "innerStrokeColor": "#32CD32",
+            "innerStrokeWidth": 1,
+            "responsive": false,
+            "startFromZero": false
+        })
     ],
     declarations: [
         InicioComponent,

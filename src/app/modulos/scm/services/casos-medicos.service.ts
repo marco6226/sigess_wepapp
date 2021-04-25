@@ -21,6 +21,10 @@ export class CasosMedicosService {
         return this.http.put(`${endPoints.scm}`, casoMedico, this.getRequestHeaders(this.headers)).toPromise();
     }
 
+    getCase(id) {
+        return this.http.get(`${endPoints.scm}case/${id}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
     getCaseList(document): any {
         return this.http.get<any[]>(`${endPoints.scm}validate/${document}`, this.getRequestHeaders(this.headers)).toPromise();
     }
@@ -45,7 +49,9 @@ export class CasosMedicosService {
     updateRecomendation(recomendation) {
         return this.http.put(`${endPoints.scm}recomendation`, recomendation, this.getRequestHeaders(this.headers)).toPromise();
     }
-
+    deleteRecomendation(id) {
+        return this.http.put(`${endPoints.scm}recomendation/${id}`, {}, this.getRequestHeaders(this.headers)).toPromise();
+    }
     //DiagnosticoApi
 
     getDiagnosticos(documento): any {
@@ -76,6 +82,11 @@ export class CasosMedicosService {
         return this.http.put(`${endPoints.scm}seguimiento/`, seguimientoCase, this.getRequestHeaders(this.headers)).toPromise();
 
     }
+
+    deleteSeguimiento(id) {
+        return this.http.put(`${endPoints.scm}seguimiento/${id}`, {}, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
 
     getSeguimientos(documento): any {
         return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();

@@ -105,6 +105,7 @@
 </div>
 
 <div>
-    <app-formulario-scm *ngIf="visibleForm" (onCancel)="onCancel()" [consultar]="consultar" [caseSelect]="caseSelect">
+    <app-formulario-scm *ngIf="visibleForm && caseSelect" (onCancel)="onCancel()" [consultar]="consultar"
+        [caseSelect]="caseSelect">
     </app-formulario-scm>
 </div>
