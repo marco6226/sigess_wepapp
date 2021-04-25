@@ -18,4 +18,6 @@ export class Tarea {
   usuarioRealiza: Usuario;
   usuarioVerifica: Usuario;
   analisisDesviacionList: AnalisisDesviacion[];
+  modulo: string;
+  codigo: string;
 }

@@ -902,15 +902,24 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
+                    <<<<<<< HEAD <td>{{case.responsableEmpresa?.primerApellido || ""}}
+                        {{case.responsableEmpresa?.primerNombre ||
                         ""}}</td>
 
-                    <td>{{case.actividad}}</td>
-                    <td>{{case.descripcion_act}}</td>
-                    <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
-                        ""}}</td>
-                    <td>{{case.responsableExterno}}</td>
+                        <td>{{case.actividad}}</td>
+                        <td>{{case.descripcion_act}}</td>
+                        <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
+                        <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
+                            ""}}</td>
+                        <td>{{case.responsableExterno}}</td>
+                        =======
+                        <td>{{case.actividad}}</td>
+                        <td>{{case.descripcion_act}}</td>
+                        <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
+                        <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
+                            ""}}</td>
+                        <td>{{case.responsableExterno}}</td>
+                        >>>>>>> db70c04078e185af08e313cad0ae5484790a19ce
 
 
                 </tr>
@@ -1133,7 +1142,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
+                    <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
                         (click)="nuevoTratamiento()">
 
                     </button>

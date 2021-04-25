@@ -3,6 +3,7 @@ import { Area } from 'app/modulos/empresa/entities/area'
 import { Tarea } from 'app/modulos/sec/entities/tarea'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ConfirmationService } from 'primeng/api';
+import { Desviacion } from 'app/modulos/sec/entities/desviacion';
 
 @Component({
   selector: 's-gestionTareas',
@@ -34,7 +35,8 @@ export class GestionTareasComponent implements OnInit {
       'tipoAccion': [null, Validators.required],
       'jerarquia': [null, Validators.required],
       'fechaProyectada': [null, Validators.required],
-      'areaResponsable': [null, Validators.required]
+      'areaResponsable': [null, Validators.required],
+      'modulo': [null],
     });
     this.es = {
       firstDayOfWeek: 1,
@@ -79,6 +81,7 @@ export class GestionTareasComponent implements OnInit {
       descripcion: tarea.descripcion,
       tipoAccion: tarea.tipoAccion,
       jerarquia: tarea.jerarquia,
+      modulo:  tarea.modulo,
       fechaProyectada: new Date(tarea.fechaProyectada),
       areaResponsable: tarea.areaResponsable
     });

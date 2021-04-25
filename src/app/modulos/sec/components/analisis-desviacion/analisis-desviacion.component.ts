@@ -180,7 +180,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.documentos = analisis.documentosList;
         this.causaInmediataAnalisisList = analisis.causaInmediataList;
         this.tareasList = analisis.tareaDesviacionList;
-        this.jerarquia = analisis.jerarquia;
+        this.jerarquia = analisis.jerarquia;      
         console.log(jerarquia);
         this.sistCausAdminService.findDefault()
           .then((resp: SistemaCausaAdministrativa) =>
@@ -210,8 +210,8 @@ export class AnalisisDesviacionComponent implements OnInit {
   }
 
   guardarAnalisis() {
-    let ad = new AnalisisDesviacion();
-    ad.causaRaizList = this.buildList(this.causaRaizListSelect);
+    let ad = new AnalisisDesviacion();   
+    ad.causaRaizList = this.buildList(this.causaRaizListSelect);    
     ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
     ad.causasAdminList = this.buildList(this.causaAdminListSelect);
     ad.desviacionesList = this.desviacionesList;
@@ -219,8 +219,11 @@ export class AnalisisDesviacionComponent implements OnInit {
     ad.observacion = this.observacion;
     ad.participantes = JSON.stringify(this.participantes);
     ad.tareaDesviacionList = this.tareasList;
+    ad.tareaDesviacionList[0].modulo = this.desviacionesList[0].modulo;
+    ad.tareaDesviacionList[0].codigo = this.desviacionesList[0].hashId;
+    
     ad.jerarquia = ad.jerarquia;
-    console.log(ad.tareaDesviacionList);
+    
     this.analisisDesviacionService.create(ad)
       .then(data => {
         let analisisDesviacion = <AnalisisDesviacion>data;

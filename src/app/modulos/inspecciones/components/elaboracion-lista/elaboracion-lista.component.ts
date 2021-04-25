@@ -36,11 +36,28 @@ export class ElaboracionListaComponent implements OnInit {
     finalizado: boolean = false;
     perfilList: SelectItem[] = [];
     tipoListaOpts: SelectItem[] = [
-        { label: 'Maquinaria', value: 'Maquinaria' },
-        { label: 'Instalaciones', value: 'Infraestructura' },
-        { label: 'Emergencias', value: 'Emergencias' },
-        { label: 'Equipos', value: 'Equipos' },
-        { label: 'Transporte', value: 'Transporte' },
+        
+{ label: 'Bioseguridad', value: 'Bioseguridad' },
+{ label: 'COPASST', value: 'COPASST' },
+{ label: 'Eléctrico', value: 'Eléctrico' },
+{ label: 'Emergencias', value: 'Emergencias' },
+{ label: 'EPP', value: 'EPP' },
+{ label: 'Equipos', value: 'Equipos' },
+{ label: 'Ergonomía', value: 'Ergonomía' },
+{ label: 'Higiene Industrial', value: 'Higiene Industrial' },
+{ label: 'Instalaciones', value: 'Instalaciones' },
+{ label: 'Legal', value: 'Legal' },
+{ label: 'Mantenimiento', value: 'Mantenimiento' },
+{ label: 'Maquinaria', value: 'Maquinaria' },
+{ label: 'Medicina', value: 'Medicina' },
+{ label: 'Orden y Aseo', value: 'Orden y Aseo' },
+{ label: 'Primeros Auxilios', value: 'Primeros Auxilios' },
+{ label: 'Psicosocial', value: 'Psicosocial' },
+{ label: 'Químicos', value: 'Químicos' },
+{ label: 'Seguridad', value: 'Seguridad' },
+{ label: 'Teletrabajo', value: 'Teletrabajo' },
+{ label: 'Transporte', value: 'Transporte' },
+
     ];
 
     constructor(
