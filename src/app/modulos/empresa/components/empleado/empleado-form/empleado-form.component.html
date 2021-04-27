@@ -83,11 +83,35 @@
                         <input type="text" pInputText formControlName="telefono2" />
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        Telefono Laboral
+                        Género
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="corporativePhone" />
+                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
+                        </p-radioButton>
+                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
+                        </p-radioButton>
                     </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Fecha de nacimiento
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaNacimiento"></p-calendar>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Correo personal
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="correoPersonal" placeholder="Email personal" />
+                    </div>
+                </div>
+            </p-panel>
+            <br />
+            <p-panel header="EMERGENCIA">
+                <div class="ui-g">                    
+                    
                     <div class="ui-g-12 ui-md-2">
                         Contacto de emergencia
                     </div>
@@ -112,60 +136,7 @@
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="emailEmergencyContact"
                             placeholder="Email de emergencia" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Fecha de nacimiento
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaNacimiento"></p-calendar>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Género
-                    </div>
-                    <div class="ui-g-12 ui-md-4">
-                        <p-radioButton name="genero" value="M" label="Masculino " formControlName="genero">
-                        </p-radioButton>
-                        <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
-                        </p-radioButton>
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Correo personal
-                    </div>
-
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="correoPersonal" placeholder="Email personal" />
-                    </div>
-
-
-                    <div class="ui-g-12 ui-md-2">
-                        Direccion gerencia
-                    </div>
-
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="direccionGerencia"
-                            placeholder="Direccion Gerencia" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Regional
-                    </div>
-
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="regional" placeholder="Regional" />
-                    </div>
-
-                    <div class="ui-g-12 ui-md-2">
-                        Ciudad
-                    </div>
-
-                    <div class="ui-g-12 ui-md-4">
-                        <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad" />
-                    </div>
+                    </div>                 
 
 
                 </div>
@@ -186,28 +157,24 @@
                         <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--"
                             required></p-multiSelect>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         Código
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="codigo" />
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         AFP
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-dropdown [filter]="true" [options]="afpList" formControlName="afp"></p-dropdown>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         EPS
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"></p-dropdown>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         Fecha de ingreso
                     </div>
@@ -216,14 +183,12 @@
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaIngreso" required></p-calendar>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         Tipo vinculación
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-dropdown [options]="tipoVinculacionList" formControlName="tipoVinculacion"></p-dropdown>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         Ubicación
                     </div>
@@ -231,13 +196,37 @@
                         <area-selector formControlName="area"
                             [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required></area-selector>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         Cargo
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" required>
                         </p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                    Telefono Laboral
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                    <input type="text" pInputText formControlName="corporativePhone" />
+                    </div>                  
+                    <div class="ui-g-12 ui-md-2">
+                        Regional
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="regional" placeholder="Regional" />
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Direccion gerencia
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="direccionGerencia"
+                            placeholder="Direccion Gerencia" />
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        Ciudad
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad" />
                     </div>
                 </div>
             </p-panel>
