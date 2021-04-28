@@ -934,7 +934,7 @@
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
         <div class="card" *sTienePermiso="'SCM_CREATE_CASE_SEG'">
-            <h5>Seguimiento de caso</h5>
+            <h5 class="title-header p-mb-2">Seguimiento de caso</h5>
             <p-table [value]="seguimientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
