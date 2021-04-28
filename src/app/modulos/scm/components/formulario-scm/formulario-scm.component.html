@@ -902,17 +902,14 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}}
-                        {{case.responsableEmpresa?.primerNombre ||
+                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
                         ""}}</td>
-
                     <td>{{case.actividad}}</td>
                     <td>{{case.descripcion_act}}</td>
                     <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
                         ""}}</td>
                     <td>{{case.responsableExterno}}</td>
-
                     <td>{{case.actividad}}</td>
                     <td>{{case.descripcion_act}}</td>
                     <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
@@ -940,7 +937,7 @@
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
         <div class="card" *sTienePermiso="'SCM_CREATE_CASE_SEG'">
-            <h5>Seguimiento de caso</h5>
+            <h5 class="title-header p-mb-2">Seguimiento de caso</h5>
             <p-table [value]="seguimientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
@@ -1077,7 +1074,7 @@
     <p-tabPanel header="Tratamientos" *ngIf="caseSelect">
 
         <div class="card">
-            <h5>Tratamientos en el caso</h5>
+            <h5 class="title-header p-mb-2">Tratamientos en el caso</h5>
             <p-table [value]="tratamientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
