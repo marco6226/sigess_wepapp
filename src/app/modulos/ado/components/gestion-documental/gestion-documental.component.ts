@@ -43,7 +43,7 @@ export class GestionDocumentalComponent implements OnInit {
     loading: boolean;
     draggedNode: TreeNode;
     criterioBusqueda: string;
-    
+
 
     constructor(
         private directorioService: DirectorioService,
@@ -55,23 +55,28 @@ export class GestionDocumentalComponent implements OnInit {
     ngOnInit() {
         //this.cargarRaiz();
         this.loading = true;
-        
+
     }
 
     loadNodes(event: any) {
-        this.cargarRaiz();
+        this.cargarRaiz(event);
     }
 
-    cargarRaiz() {
+    cargarRaiz(event) {
         this.nodoPadre = null;
         // Busca los directorios del directorio seleccionado
 
         let filterQuery = new FilterQuery();
+        filterQuery.sortField = event.sortField;
+        filterQuery.sortOrder = event.sortOrder;
+        filterQuery.offset = event.first;
+        filterQuery.rows = event.rows;
+
         let filterEliminado = new Filter();
         filterEliminado.criteria = Criteria.EQUALS;
         filterEliminado.field = "eliminado";
         filterEliminado.value1 = "false";
-        
+
         filterQuery.count = true;
 
         let filterPadre = new Filter();
@@ -96,11 +101,12 @@ export class GestionDocumentalComponent implements OnInit {
         return this.directorioService.findByFilter(filterQuery).then(
             data => {
                 this.totalRecords = data['count'];
-                this.directorioList = this.generarModelo(<Directorio[]>data, null);
+                console.log(data);
+                this.directorioList = this.generarModelo(<Directorio[]>data['data'], null);
                 this.inicializarFechas();
                 this.loading = false;
             }
-            
+
         );
         console.log(this.totalRecords);
     }
@@ -282,7 +288,7 @@ export class GestionDocumentalComponent implements OnInit {
         this.nodeSelect = null;
         if (event.item.nodo == null) {
             this.breadCrumbItems.splice(0);
-            this.cargarRaiz();
+            this.cargarRaiz(event);
         } else {
             this.breadCrumbItems.splice(event.item.indice + 1);
             this.nodoPadre = <TreeNode>event.item.nodo;

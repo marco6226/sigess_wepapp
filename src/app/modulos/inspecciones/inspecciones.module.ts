@@ -15,24 +15,26 @@ import { InspeccionService } from 'app/modulos/inspecciones/services/inspeccion.
 import { ConsultaInspeccionesComponent } from './components/consulta-inspecciones/consulta-inspecciones.component'
 import { PanelFlotanteComponent } from 'app/modulos/comun/components/panel-flotante/panel-flotante.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
-  imports: [
-    ComunModule,
-    InspeccionesRoutingModule,
-  ],
-  declarations: [
-    InspeccionesComponent,
-    ListasInspeccionComponent,
-    ProgramacionComponent,
-    InspeccionesComponent,
-    ElaboracionInspeccionesComponent,
-    ElaboracionListaComponent,
-    ListaInspeccionFormComponent,
-    ElementoInspeccionNodeComponent,
-    ConsultaInspeccionesComponent
-  ],
-  providers: [ListaInspeccionService, ProgramacionService, InspeccionService]
+    imports: [
+        ComunModule,
+        CoreModule,
+        InspeccionesRoutingModule,
+    ],
+    declarations: [
+        InspeccionesComponent,
+        ListasInspeccionComponent,
+        ProgramacionComponent,
+        InspeccionesComponent,
+        ElaboracionInspeccionesComponent,
+        ElaboracionListaComponent,
+        ListaInspeccionFormComponent,
+        ElementoInspeccionNodeComponent,
+        ConsultaInspeccionesComponent
+    ],
+    providers: [ListaInspeccionService, ProgramacionService, InspeccionService]
 })
 export class InspeccionesModule { }

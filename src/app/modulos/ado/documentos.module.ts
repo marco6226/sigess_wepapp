@@ -6,12 +6,15 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
 import { DragDropModule } from 'primeng/dragdrop';
 
 import { DocumentoFormComponent } from './components/documento-form/documento-form.component';
+import { TreeModule } from 'primeng/primeng';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
     imports: [
         CommonModule,
         DragDropModule,
-        ComunModule
+        ComunModule,
+        CoreModule,
     ],
     exports: [GestionDocumentalComponent],
     declarations: [GestionDocumentalComponent, DocumentoFormComponent],
