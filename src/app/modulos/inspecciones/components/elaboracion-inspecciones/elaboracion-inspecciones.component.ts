@@ -230,11 +230,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 if (arrayFile != null) {
                     arrayFile.forEach(objFile => {
                         if (objFile != null && objFile.change == true)
-<<<<<<< HEAD
-                            this.solicitando = false;
-=======
-                        this.directorioService.upload(objFile.file, null, 'INP', calificacion.id, null);
->>>>>>> 3d1a910c193555765a2ffd042244fd0287ce0a4d
+                            this.directorioService.upload(objFile.file, null, 'INP', calificacion.id, null);
                     });
                 }
             });
@@ -316,7 +312,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             template.querySelector('#P_lista_nombre').textContent = this.listaInspeccion.nombre;
             template.querySelector('#P_codigo').textContent = this.listaInspeccion.codigo;
             template.querySelector('#P_version').textContent = '' + this.listaInspeccion.listaInspeccionPK.version;
-           // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
+            // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
 
