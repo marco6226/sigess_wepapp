@@ -13,6 +13,7 @@ import { CasosMedicosService } from '../../services/casos-medicos.service';
     templateUrl: './scm.component.html',
     styleUrls: ['./scm.component.scss'],
 })
+
 export class ScmComponent implements OnInit {
     empresaId: string;
     casosList: any;

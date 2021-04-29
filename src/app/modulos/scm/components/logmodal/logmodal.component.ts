@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+
 @Component({
     selector: 'app-logmodal',
     templateUrl: './logmodal.component.html',
@@ -11,12 +12,14 @@ export class LogmodalComponent implements OnInit {
     @Input() logList = [];
     arrayByentity = [];
     logFile = [];
+    Entity = {
+        fechaCreacion: { name: "Fecha de crecion", type: "Date" },
+        fechaSeg: { name: "Fecha de seguimiento", type: "Date" }
+    }
     constructor() { }
 
     ngOnInit() {
-        //  console.log(this.log, "aja", this.log.entity)
         if ((this.log.action as string).includes("Creacion")) {
-
             this.isCreation(this.log.json)
             return
         }
@@ -30,14 +33,16 @@ export class LogmodalComponent implements OnInit {
 
     isCreation(log) {
         log = JSON.parse(log)
+        console.log(log);
         for (const key in log) {
             if (Object.prototype.hasOwnProperty.call(log, key)) {
-                const l = log[key];
+                const info = log[key];
 
-                console.log(typeof log[key]);
-                if (typeof log[key] == 'object' && l != null) {
+                this.verifyDataType(log[key], key);
+
+
+                if (typeof log[key] == 'object' && info != null) {
                     this.logFile.push(` ${key}  ==> `);
-
                     for (const t in log[key]) {
 
                         const element = log[t];
@@ -47,7 +52,8 @@ export class LogmodalComponent implements OnInit {
 
                     continue
                 }
-                this.logFile.push(` ${key},  : ${l || 'vacio'}`);
+                console.log(this.Entity[key]);
+                this.logFile.push(`${this.verifyDataType(key, info)}`);
 
             }
         }
@@ -55,17 +61,43 @@ export class LogmodalComponent implements OnInit {
 
     comparador(anterior, editado) {
         anterior = JSON.parse(anterior.json); editado = JSON.parse(editado.json)
-        console.log(anterior, editado);
-
         for (const key in anterior) {
             if (Object.prototype.hasOwnProperty.call(anterior, key)) {
                 const sinEditar = anterior[key];
                 const edit = editado[key];
 
                 if (sinEditar != edit) {
-                    this.logFile.push(`Cambio en ${key}, antes  : ${sinEditar || 'vacio'} despues : ${edit || 'vacio'}`);
+                    this.logFile.push(`Cambio en ${this.Entity[key] || key}, antes  : ${sinEditar || 'vacio'} despues : ${edit || 'vacio'}`);
                 }
             }
         }
     }
+
+    verifyDataType(key, info) {
+
+        if (this.Entity[key]) {
+
+
+            switch (this.Entity[key].type) {
+                case "Date":
+                    info = new Date(info);
+                    break;
+
+                default:
+                    break;
+            }
+
+
+
+            return `${key},  : ${info || 'vacio'}`
+        };
+
+
+        return `${key},  : ${info || 'vacio'}`
+
+
+    }
+
 }
+
+
