@@ -19,9 +19,11 @@ import * as moment from 'moment';
 export class HomeComponent implements OnInit {
     data: any;
     options: any;
-    desde: String;
+    desde: Date;
+    desdes: String;
+    hastas: String;
     arrayIds = [];
-    hasta: String;
+    hasta: Date;
     options2: any;
     options3: any;
     options4: any;
@@ -55,14 +57,26 @@ export class HomeComponent implements OnInit {
     show = false;
     mostrar = 2000;
     localeES = locale_es;
+    value: Date;
     constructor(
         private usuarioService: UsuarioService,
         private indicadorService: ModeloGraficaService,
         private areaService: AreaService
     ) {
-        let date = new Date();
-        this.desde = moment(new Date()).subtract(6,"months").utc().format().slice(0,10);
-        this.hasta = moment(new Date()).utc().format().slice(0,10);
+         
+        var date = new Date();
+        date.setFullYear( date.getFullYear() - 1 );
+
+       
+
+        this.desde = date;
+        
+        this.hasta = new Date;
+
+        this.desdes=moment(this.desde).format('DD-MM-YYYY');
+        this.hastas=moment(this.hasta).format('DD-MM-YYYY');
+
+        
         
         this.data = {
             labels: ['CENTRAL', 'CARIBE', 'NOROCCIDENTAL', 'EJE CAFETERO', 'CENTRO SUR', 'NORORIENTAL', 'DEL PACIFICO', 'ORINOQUIA'],
@@ -459,7 +473,7 @@ export class HomeComponent implements OnInit {
             resp => this.evtLogList = resp['data']
         );
         
-        console.log(this.desde, this.hasta, this.arrayIds);  
+        console.log(this.desdes, this.hastas, this.arrayIds);  
     }
    
      actualizarArea(areas) {
@@ -482,7 +496,7 @@ export class HomeComponent implements OnInit {
             this.testing = true;
         }, 1000); 
         
-        console.log(this.desde, this.hasta, this.arrayIds);     
+        console.log(this.desdes, this.hastas, this.arrayIds);     
         
     }
    
@@ -493,7 +507,7 @@ export class HomeComponent implements OnInit {
             this.data.datasets[index].data = [];
         });
         
-        let data: any = await this.indicadorService.findInpN(this.arrayIds, this.desde, this.hasta)
+        let data: any = await this.indicadorService.findInpN(this.arrayIds, this.desdes, this.hastas)
         let date = new Date();
         
         if(data.length < 0) return false;
@@ -509,7 +523,7 @@ export class HomeComponent implements OnInit {
     }
     async cumplimientoinp() {
         
-        let data7: any = await this.indicadorService.findInptotal(this.arrayIds, this.desde, this.hasta)
+        let data7: any = await this.indicadorService.findInptotal(this.arrayIds, this.desdes, this.hastas)
         
        
       if(data7[0][0] != null)
@@ -523,7 +537,7 @@ export class HomeComponent implements OnInit {
     }
     async cumplimientoAT() {
         
-        let data8: any = await this.indicadorService.findAttotal(this.arrayIds, this.desde, this.hasta)
+        let data8: any = await this.indicadorService.findAttotal(this.arrayIds, this.desdes, this.hastas)
         
        
       if(data8[0][0] != null) 
@@ -540,7 +554,7 @@ export class HomeComponent implements OnInit {
     }
     async cumplimientoauc() {
         
-        let data9: any = await this.indicadorService.findAuctotal(this.arrayIds, this.desde, this.hasta)
+        let data9: any = await this.indicadorService.findAuctotal(this.arrayIds, this.desdes, this.hastas)
        
      
       if(data9[0][0] != null) {
@@ -561,7 +575,7 @@ export class HomeComponent implements OnInit {
             this.data2.datasets[index].data = [];
         });
        
-        let data2: any = await  this.indicadorService.findInpCobertura(this.arrayIds, this.desde, this.hasta)
+        let data2: any = await  this.indicadorService.findInpCobertura(this.arrayIds, this.desdes, this.hastas)
         
 
         if(data2.length < 0) return false;
@@ -580,7 +594,7 @@ export class HomeComponent implements OnInit {
             this.data3.datasets[index].data = [];
        });
         
-       let data3: any = await  this.indicadorService.findInpEfectividad(this.arrayIds, this.desde, this.hasta)
+       let data3: any = await  this.indicadorService.findInpEfectividad(this.arrayIds, this.desdes, this.hastas)
       
 
        if(data3.length < 0) return false;
@@ -601,7 +615,7 @@ export class HomeComponent implements OnInit {
         this.data4.datasets[index].data = [];
    });
     
-   let data4 : any = await  this.indicadorService.findInpCoberturaAt(this.arrayIds, this.desde, this.hasta)
+   let data4 : any = await  this.indicadorService.findInpCoberturaAt(this.arrayIds, this.desdes, this.hastas)
    
    if(data4.length < 0) return false;
    for (const iterator of data4) {
@@ -614,6 +628,7 @@ export class HomeComponent implements OnInit {
   
    this.showData = true;
 }
+console.log(data4)
 }
 async updateCharts5() {
     this.showData = false;
@@ -622,7 +637,7 @@ async updateCharts5() {
         this.data5.datasets[index].data = [];
    });
     
-   let data5: any = await  this.indicadorService.findInpEficaciaAuc(this.arrayIds, this.desde, this.hasta)
+   let data5: any = await  this.indicadorService.findInpEficaciaAuc(this.arrayIds, this.desdes, this.hastas)
    
   
 
@@ -645,7 +660,7 @@ async updateCharts6() {
         this.data6.datasets[index].data = [];
    });
     
-   let data6: any = await  this.indicadorService.findInpEfectividadAt(this.arrayIds, this.desde, this.hasta)
+   let data6: any = await  this.indicadorService.findInpEfectividadAt(this.arrayIds, this.desdes, this.hastas)
   
    if(data6.length < 0) return false;
    for (const iterator of data6) {
@@ -662,13 +677,13 @@ async updateCharts6() {
   
 
     selecFromDate(date: Date) {
-        this.desde = date.toISOString().slice(0, 10)
+        this.desdes = date.toISOString().slice(0, 10)
         date.toISOString().slice(.1)
         console.log(date.toISOString().slice(0, 10));
     }
 
     selectToDate(date: Date) {
-        this.hasta = date.toISOString().slice(0, 10);
+        this.hastas = date.toISOString().slice(0, 10);
         console.log(date.toISOString().slice(0, 10));
         this.testing = false;
         this.updateCharts();

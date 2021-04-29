@@ -312,6 +312,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             template.querySelector('#P_lista_nombre').textContent = this.listaInspeccion.nombre;
             template.querySelector('#P_codigo').textContent = this.listaInspeccion.codigo;
             template.querySelector('#P_version').textContent = '' + this.listaInspeccion.listaInspeccionPK.version;
+           // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
 

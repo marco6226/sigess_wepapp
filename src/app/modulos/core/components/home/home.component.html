@@ -59,12 +59,12 @@
                 <div class="p-d-flex"><p class="p-m-0">Area : </p> <area-selectorind  *ngIf="show" [(ngModel)]="areaSelected" (onAreaSelect)="actualizarArea($event)"   ></area-selectorind></div>
               <div class="p-d-flex">  
                   <i style="font-size:24px" class="fa">&#xf073;</i>   
-                  <p-calendar [locale]="localeES" (onSelect)="selecFromDate($event)"  dateFormat="dd/mm/yy" value="this.desde"   placeholder="Desde" appendTo="body" > </p-calendar> 
+                  <p-calendar [locale]="localeES" (onSelect)="selecFromDate($event)"  dateFormat="dd/mm/yy" value="this.desde"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desde"  > </p-calendar> 
                 </div>
                  
                 <div class="p-d-flex"> 
                   <i style="font-size:24px" class="fa">&#xf073;</i> 
-                  <p-calendar [locale]="localeES" (onSelect)="selectToDate($event)"   dateFormat="dd/mm/yy" value="this.hasta"   placeholder="Hasta" appendTo="body" > </p-calendar>
+                  <p-calendar [locale]="localeES" (onSelect)="selectToDate($event)"   dateFormat="dd/mm/yy" value="this.hasta"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hasta"> </p-calendar>
 
                 </div>
                 
