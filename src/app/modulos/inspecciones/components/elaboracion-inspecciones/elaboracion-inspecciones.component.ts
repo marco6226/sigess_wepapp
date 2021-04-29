@@ -172,7 +172,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
             let inspeccion = new Inspeccion();
             inspeccion.area = this.area;
-            inspeccion.listaInspeccion= this.listaInspeccion;
+            inspeccion.listaInspeccion = this.listaInspeccion;
             inspeccion.programacion = this.programacion;
             inspeccion.calificacionList = calificacionList;
             inspeccion.respuestasCampoList = [];
@@ -230,7 +230,11 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 if (arrayFile != null) {
                     arrayFile.forEach(objFile => {
                         if (objFile != null && objFile.change == true)
+<<<<<<< HEAD
+                            this.solicitando = false;
+=======
                         this.directorioService.upload(objFile.file, null, 'INP', calificacion.id, null);
+>>>>>>> 3d1a910c193555765a2ffd042244fd0287ce0a4d
                     });
                 }
             });

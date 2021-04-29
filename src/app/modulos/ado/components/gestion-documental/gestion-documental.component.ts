@@ -323,7 +323,7 @@ export class GestionDocumentalComponent implements OnInit {
 
             this.directorioService.findByFilter(filterQuery).then(
                 data => {
-                    this.directorioList = this.generarModelo(<Directorio[]>data, this.nodoPadre);
+                    this.directorioList = this.generarModelo(<Directorio[]>data["data"], this.nodoPadre);
                     this.totalRecords = data['count'];
                 }
             );
@@ -444,7 +444,7 @@ export class GestionDocumentalComponent implements OnInit {
         this.consultarNodos(nodo).then(
             data => {
                 let children = [];
-                (<Directorio[]>data).forEach(dir => {
+                (<Directorio[]>data["data"]).forEach(dir => {
                     children.push(this.generarNodo(dir, this.nodeSelect));
                 });
                 nodo.children = children;
@@ -554,7 +554,7 @@ export class GestionDocumentalComponent implements OnInit {
             return this.directorioService.findByFilter(filterQuery).then(
                 data => {
                     this.totalRecords = data['count'];
-                    this.directorioList = this.generarModelo(<Directorio[]>data, null);
+                    this.directorioList = this.generarModelo(<Directorio[]>data["data"], null);
                     this.inicializarFechas();
                     this.loading = false;
                 }
