@@ -218,7 +218,7 @@ export class GestionDocumentalComponent implements OnInit {
             this.consultarNodos(nodeSelect).then(
                 data => {
                     // Asigna el resultado al dataTable
-                    this.directorioList = this.generarModelo(<Directorio[]>data, nodeSelect);
+                    this.directorioList = this.generarModelo(<Directorio[]>data["data"], nodeSelect);
                     // Crea el item para añadir al breadcrumb
                     this.breadCrumbItems = [];
                     let parents = [nodeSelect];
