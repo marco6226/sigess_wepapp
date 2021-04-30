@@ -72,9 +72,9 @@ export class HomeComponent implements OnInit {
         this.desde = date;
         
         this.hasta = new Date;
-
-        this.desdes=moment(this.desde).format('DD-MM-YYYY');
-        this.hastas=moment(this.hasta).format('DD-MM-YYYY');
+        
+        this.desdes=moment(this.desde).utc().format('YYYY-MM-DD');
+        this.hastas=moment(this.hasta).utc().format('YYYY-MM-DD');
 
         
         
