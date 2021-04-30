@@ -9,7 +9,14 @@
 
 <div *ngIf="!finalizado">
 
-    <div class="ui-g" style="margin-bottom: 250px;">
+    
+        
+    <p-header class="ui-panel-title"> 
+        
+        <h2>Elaboración listas de inspeccion</h2>
+    </p-header>
+            
+
         <div class="ui-g-12 ui-sm-12 ui-md-6">
             <form [formGroup]="form">
                 <p-panel>
@@ -89,7 +96,7 @@
         <div class="ui-g-12 ui-sm-12 ui-md-12">
             <s-lista-inspeccion-form [value]="elementoInspeccionList" [editable]="!consultar"></s-lista-inspeccion-form>
         </div>
-    </div>
+        
 
 
     <div *ngIf="adicionar">
@@ -103,4 +110,5 @@
     <div *ngIf="modificar">
         <button *sTienePermiso="'INP_PUT_LISTINP'" class="float-btn" pButton type="button" (click)="actualizar(false)" icon="fa fa-pencil" title="Actualizar datos" style="bottom: 100px;" [disabled]="!form.valid"></button>
     </div>
+
 </div>
