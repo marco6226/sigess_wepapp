@@ -5,18 +5,19 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones'
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 's-documento-form',
-  templateUrl: './documento-form.component.html',
-  styleUrls: ['./documento-form.component.scss']
+    selector: 's-documento-form',
+    templateUrl: './documento-form.component.html',
+    styleUrls: ['./documento-form.component.scss']
 })
 export class DocumentoFormComponent implements OnInit {
 
-  @Input("documento") documento: Documento;
-  localeES = locale_es;
+    @Input("documento") documento: Documento;
+    localeES = locale_es;
 
-  constructor(public router: Router) { }
+    constructor(public router: Router) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        console.log(this.documento);
+    }
 
 }

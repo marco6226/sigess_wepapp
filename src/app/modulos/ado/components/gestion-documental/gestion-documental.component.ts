@@ -101,9 +101,15 @@ export class GestionDocumentalComponent implements OnInit {
         return this.directorioService.findByFilter(filterQuery).then(
             data => {
                 this.totalRecords = data['count'];
-                console.log(data);
-                this.directorioList = this.generarModelo(<Directorio[]>data['data'], null);
-                this.inicializarFechas();
+                let dirList = this.inicializarFechas(<Directorio[]>data['data']);;
+                console.log(1);
+
+                console.log(2);
+
+
+                console.log(dirList);
+                this.directorioList = this.generarModelo(dirList, null);
+
                 this.loading = false;
             }
 
@@ -137,16 +143,16 @@ export class GestionDocumentalComponent implements OnInit {
     /**
      * Método que inicializa a un objeto Date las fechas recibidas como long
      */
-    inicializarFechas() {
-        /*
-        this.directorioList.forEach(dir => {
-          if (dir.documento != null) {
-            dir.documento.fechaAprobacion = dir.documento.fechaAprobacion == null ? null : new Date(dir.documento.fechaAprobacion);
-            dir.documento.fechaElaboracion = dir.documento.fechaElaboracion == null ? null : new Date(dir.documento.fechaElaboracion);
-            dir.documento.fechaVerificacion = dir.documento.fechaVerificacion == null ? null : new Date(dir.documento.fechaVerificacion);
-          }
-        });
-        */
+    inicializarFechas(data: Directorio[]) {
+
+        data.map(dir => {
+            if (dir.documento) {
+                dir.documento.fechaAprobacion = dir.documento.fechaAprobacion == null ? null : new Date(dir.documento.fechaAprobacion);
+                dir.documento.fechaElaboracion = dir.documento.fechaElaboracion == null ? null : new Date(dir.documento.fechaElaboracion);
+                dir.documento.fechaVerificacion = dir.documento.fechaVerificacion == null ? null : new Date(dir.documento.fechaVerificacion);
+            }
+        })
+        return data;
     }
 
     nuevoDocumento() {
@@ -218,7 +224,9 @@ export class GestionDocumentalComponent implements OnInit {
             this.consultarNodos(nodeSelect).then(
                 data => {
                     // Asigna el resultado al dataTable
-                    this.directorioList = this.generarModelo(<Directorio[]>data["data"], nodeSelect);
+                    let dirList = this.inicializarFechas(<Directorio[]>data['data']);;
+
+                    this.directorioList = this.generarModelo(dirList, nodeSelect);
                     // Crea el item para añadir al breadcrumb
                     this.breadCrumbItems = [];
                     let parents = [nodeSelect];
@@ -234,7 +242,6 @@ export class GestionDocumentalComponent implements OnInit {
                         this.breadCrumbItems.splice(0, 0, item);
                     });
                     // Inicializa las fechas de la ficha técnica
-                    this.inicializarFechas();
                 }
             );
         } else {
@@ -323,7 +330,9 @@ export class GestionDocumentalComponent implements OnInit {
 
             this.directorioService.findByFilter(filterQuery).then(
                 data => {
-                    this.directorioList = this.generarModelo(<Directorio[]>data["data"], this.nodoPadre);
+                    let dirList = this.inicializarFechas(<Directorio[]>data['data']);;
+
+                    this.directorioList = this.generarModelo(dirList, this.nodoPadre);
                     this.totalRecords = data['count'];
                 }
             );
@@ -444,7 +453,9 @@ export class GestionDocumentalComponent implements OnInit {
         this.consultarNodos(nodo).then(
             data => {
                 let children = [];
-                (<Directorio[]>data["data"]).forEach(dir => {
+                let dirList = this.inicializarFechas(<Directorio[]>data['data']);;
+
+                (dirList).forEach(dir => {
                     children.push(this.generarNodo(dir, this.nodeSelect));
                 });
                 nodo.children = children;
@@ -554,8 +565,9 @@ export class GestionDocumentalComponent implements OnInit {
             return this.directorioService.findByFilter(filterQuery).then(
                 data => {
                     this.totalRecords = data['count'];
-                    this.directorioList = this.generarModelo(<Directorio[]>data["data"], null);
-                    this.inicializarFechas();
+                    let dirList = this.inicializarFechas(<Directorio[]>data['data']);;
+
+                    this.directorioList = this.generarModelo(dirList, null);
                     this.loading = false;
                 }
             );
