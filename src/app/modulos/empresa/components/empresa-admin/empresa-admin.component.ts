@@ -37,6 +37,11 @@ export class EmpresaAdminComponent implements OnInit {
     'razonSocial',
     'nombreComercial',
     'nit',
+    'direccion',
+    'telefono',
+    //'numero_sedes',
+    'email',
+    'web',
     'arl_id',
     'arl_nombre',
     'ciiu_codigo',
@@ -54,6 +59,11 @@ export class EmpresaAdminComponent implements OnInit {
       'nombreComercial': [null, Validators.required],
       'razonSocial': [null, Validators.required],
       'nit': [null],
+      'direccion': [null],
+      'telefono': [null],
+      'numero_sedes': [null],
+      'email': [null],
+      'web': [null],
       'arlId': [null],
       'ciiuId': [null]
     });
@@ -117,6 +127,11 @@ export class EmpresaAdminComponent implements OnInit {
       'nombreComercial': this.empresaSelect.nombreComercial,
       'razonSocial': this.empresaSelect.razonSocial,
       'nit': this.empresaSelect.nit,
+      'direccion': this.empresaSelect.direccion,
+      'telefono': this.empresaSelect.telefono,
+      'numero_sedes': this.empresaSelect.numero_sedes,
+      'email': this.empresaSelect.email,
+      'web': this.empresaSelect.web,
       'arlId': this.empresaSelect.arl == null ? null : this.empresaSelect.arl.id,
       'ciiuId': this.empresaSelect.ciiu == null ? null : this.empresaSelect.ciiu.id
     });
@@ -131,7 +146,13 @@ export class EmpresaAdminComponent implements OnInit {
     empresa.id = this.form.value.id;
     empresa.nombreComercial = this.form.value.nombreComercial;
     empresa.razonSocial = this.form.value.razonSocial;
-    empresa.nit = this.form.value.nit;
+    empresa.nit = this.form.value.nit;    
+    empresa.direccion = this.form.value.direccion;
+    empresa.telefono = this.form.value.telefono;
+    empresa.numero_sedes = this.form.value.numero_sedes;
+    empresa.email = this.form.value.email;
+    empresa.web = this.form.value.web;
+
     if (this.form.value.arlId != null) {
       empresa.arl = new Arl();
       empresa.arl.id = this.form.value.arlId;
@@ -160,6 +181,12 @@ export class EmpresaAdminComponent implements OnInit {
       for (let i = 0; i < this.empresasList.length; i++) {
         if (this.empresasList[i].id == empresa.id) {
           this.empresasList[i].nit = empresa.nit;
+          this.empresasList[i].direccion = empresa.direccion;
+          this.empresasList[i].telefono = empresa.telefono;
+          this.empresasList[i].numero_sedes = empresa.numero_sedes;
+          this.empresasList[i].email = empresa.email;
+          this.empresasList[i].web = empresa.web;
+
           this.empresasList[i].nombreComercial = empresa.nombreComercial;
           this.empresasList[i].razonSocial = empresa.razonSocial;
           this.empresasList[i].arl = empresa.arl;

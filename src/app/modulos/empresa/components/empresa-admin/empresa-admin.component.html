@@ -15,20 +15,20 @@
         <th pSortableColumn="nit">Nit
           <p-sortIcon field="nit"></p-sortIcon>
         </th>
-        <th pSortableColumn="nit">Dirección
-          <p-sortIcon field="nit"></p-sortIcon>
+        <th pSortableColumn="direccion">Dirección
+          <p-sortIcon field="direccion"></p-sortIcon>
         </th>
-        <th pSortableColumn="nit">Telefono
-          <p-sortIcon field="nit"></p-sortIcon>
+        <th pSortableColumn="telefono">Telefono
+          <p-sortIcon field="telefono"></p-sortIcon>
         </th>
-        <th pSortableColumn="nit">Número de sede
-          <p-sortIcon field="nit"></p-sortIcon>
+        <th pSortableColumn="numero_sedes">Número de sedes
+          <p-sortIcon field="numero_sedes"></p-sortIcon>
         </th>
-        <th pSortableColumn="nit">Email
-          <p-sortIcon field="nit"></p-sortIcon>
+        <th pSortableColumn="email">Email
+          <p-sortIcon field="email"></p-sortIcon>
         </th>
-        <th pSortableColumn="nit">Pagina web
-          <p-sortIcon field="nit"></p-sortIcon>
+        <th pSortableColumn="web">Pagina web
+          <p-sortIcon field="web"></p-sortIcon>
         </th>
         <th pSortableColumn="arl.nombre">ARL
           <p-sortIcon field="arl.nombre"></p-sortIcon>
@@ -51,19 +51,19 @@
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'direccion', 'contains')">
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'telefono', 'contains')">
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+          <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'numero_sedes', 'equals')">
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'web', 'contains')">
         </td>
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'arl.nombre', 'contains')">
@@ -81,11 +81,11 @@
         <td>{{empresa.razonSocial}}</td>
         <td>{{empresa.nombreComercial}}</td>
         <td>{{empresa.nit}}</td>
-        <td>{{empresa.nit}}</td>
-        <td>{{empresa.nit}}</td>
-        <td>{{empresa.nit}}</td>
-        <td>{{empresa.nit}}</td>
-        <td>{{empresa.nit}}</td>
+        <td>{{empresa.direccion}}</td>
+        <td>{{empresa.telefono}}</td>
+        <td>{{empresa.numero_sedes}}</td>
+        <td>{{empresa.email}}</td>
+        <td>{{empresa.web}}</td>
         <td>{{empresa.arl?.nombre}}</td>
         <td>{{empresa.ciiu?.codigo}}</td>
         <td>{{empresa.ciiu?.nombre}}</td>
@@ -127,6 +127,37 @@
       <div class="ui-g-12 ui-md-9">
         <input type="text" pInputText formControlName="nit" required maxlength="45" />
       </div>
+      <div class="ui-g-12 ui-md-3">
+        Direccion
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <input type="text" pInputText formControlName="direccion" required maxlength="45" />
+      </div>
+      <div class="ui-g-12 ui-md-3">
+        Telefono
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <input type="text" pInputText formControlName="telefono" required maxlength="45" />
+      </div>
+      <div class="ui-g-12 ui-md-3">
+        Numero  de sedes
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <input type="number" pInputText formControlName="numero_sedes" required maxlength="45" />
+      </div>
+      <div class="ui-g-12 ui-md-3">
+        Email
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <input type="text" pInputText formControlName="email" required maxlength="45" />
+      </div>
+      <div class="ui-g-12 ui-md-3">
+        Web
+      </div>
+      <div class="ui-g-12 ui-md-9">
+        <input type="text" pInputText formControlName="web" required maxlength="45" />
+      </div>
+      
 
       <div class="ui-g-12 ui-md-3">
         ARL

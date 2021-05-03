@@ -7,6 +7,11 @@ export class Empresa {
   nombreComercial: string;
   razonSocial: string;
   nit: string;
+  direccion: string;
+  telefono: string;
+  email: string;
+  web: string;
+  numero_sedes: Number;
   arl: Arl;
   ciiu: Ciiu;
   logo:string;
