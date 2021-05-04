@@ -2,188 +2,194 @@
 
 <p-panel header="Empresas">
 
-  <p-table #dt [value]="empresasList" [(selection)]="empresaSelect" autoLayout="true" selectionMode="single"  [rows]="10" [paginator]="true"
-    dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="razonSocial">Razón Social
-          <p-sortIcon field="razonSocial"></p-sortIcon>
-        </th>
-        <th pSortableColumn="nombreComercial">Nombre Comercial
-          <p-sortIcon field="nombreComercial"></p-sortIcon>
-        </th>
-        <th pSortableColumn="nit">Nit
-          <p-sortIcon field="nit"></p-sortIcon>
-        </th>
-        <th pSortableColumn="direccion">Dirección
-          <p-sortIcon field="direccion"></p-sortIcon>
-        </th>
-        <th pSortableColumn="telefono">Telefono
-          <p-sortIcon field="telefono"></p-sortIcon>
-        </th>
-        <th pSortableColumn="numero_sedes">Número de sedes
-          <p-sortIcon field="numero_sedes"></p-sortIcon>
-        </th>
-        <th pSortableColumn="email">Email
-          <p-sortIcon field="email"></p-sortIcon>
-        </th>
-        <th pSortableColumn="web">Pagina web
-          <p-sortIcon field="web"></p-sortIcon>
-        </th>
-        <th pSortableColumn="arl.nombre">ARL
-          <p-sortIcon field="arl.nombre"></p-sortIcon>
-        </th>
-        <th pSortableColumn="ciiu.codigo">Código CIIU
-          <p-sortIcon field="arl.nombre"></p-sortIcon>
-        </th>
-        <th pSortableColumn="ciiu.nombre">Nombre IIU
-          <p-sortIcon field="ciiu.nombre"></p-sortIcon>
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'razonSocial', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombreComercial', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'direccion', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'telefono', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'numero_sedes', 'equals')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'web', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'arl.nombre', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciiu.codigo', 'contains')">
-        </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciiu.nombre', 'contains')">
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-empresa>
-      <tr [pSelectableRow]="empresa">
-        <td>{{empresa.razonSocial}}</td>
-        <td>{{empresa.nombreComercial}}</td>
-        <td>{{empresa.nit}}</td>
-        <td>{{empresa.direccion}}</td>
-        <td>{{empresa.telefono}}</td>
-        <td>{{empresa.numero_sedes}}</td>
-        <td>{{empresa.email}}</td>
-        <td>{{empresa.web}}</td>
-        <td>{{empresa.arl?.nombre}}</td>
-        <td>{{empresa.ciiu?.codigo}}</td>
-        <td>{{empresa.ciiu?.nombre}}</td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="summary" let-rowData>
-      <button *sTienePermiso="'EMP_POST_EMPS'" pButton type="button" icon="fa fa-plus" label="Adicionar" (click)="showAddForm()"></button>
-      <button *sTienePermiso="'EMP_PUT_EMPS'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success" label="Modificar"
-        (click)="showUpdateForm()" [disabled]="!empresaSelect"></button>
-      <button *sTienePermiso="'EMP_DELETE_EMPS'" pButton type="button" icon="fa fa-trash" class="ui-button-danger" label="Eliminar"
-        (click)="onDelete()" [disabled]="!empresaSelect"></button>
-    </ng-template>
-  </p-table>
+    <p-table #dt [value]="empresasList" [(selection)]="empresaSelect" autoLayout="true" selectionMode="single"
+        [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)"
+        [totalRecords]="totalRecords" [loading]="loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="razonSocial">Razón Social
+                    <p-sortIcon field="razonSocial"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nombreComercial">Nombre Comercial
+                    <p-sortIcon field="nombreComercial"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nit">Nit
+                    <p-sortIcon field="nit"></p-sortIcon>
+                </th>
+                <th pSortableColumn="direccion">Dirección
+                    <p-sortIcon field="direccion"></p-sortIcon>
+                </th>
+                <th pSortableColumn="telefono">Telefono
+                    <p-sortIcon field="telefono"></p-sortIcon>
+                </th>
+                <th pSortableColumn="numeroSedes">Número de sedes
+                    <p-sortIcon field="numeroSedes"></p-sortIcon>
+                </th>
+                <th pSortableColumn="email">Email
+                    <p-sortIcon field="email"></p-sortIcon>
+                </th>
+                <th pSortableColumn="web">Pagina web
+                    <p-sortIcon field="web"></p-sortIcon>
+                </th>
+                <th pSortableColumn="arl.nombre">ARL
+                    <p-sortIcon field="arl.nombre"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ciiu.codigo">Código CIIU
+                    <p-sortIcon field="arl.nombre"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ciiu.nombre">Nombre IIU
+                    <p-sortIcon field="ciiu.nombre"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'razonSocial', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'nombreComercial', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'nit', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'direccion', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'telefono', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="number" min="0"
+                        (input)="dt.filter($event.target.value, 'numeroSedes', 'equals')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'web', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'arl.nombre', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciiu.codigo', 'contains')">
+                </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciiu.nombre', 'contains')">
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-empresa>
+            <tr [pSelectableRow]="empresa">
+                <td>{{empresa.razonSocial}}</td>
+                <td>{{empresa.nombreComercial}}</td>
+                <td>{{empresa.nit}}</td>
+                <td>{{empresa.direccion}}</td>
+                <td>{{empresa.telefono}}</td>
+                <td>{{empresa.numeroSedes}}</td>
+                <td>{{empresa.email}}</td>
+                <td>{{empresa.web}}</td>
+                <td>{{empresa.arl?.nombre}}</td>
+                <td>{{empresa.ciiu?.codigo}}</td>
+                <td>{{empresa.ciiu?.nombre}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <button *sTienePermiso="'EMP_POST_EMPS'" pButton type="button" icon="fa fa-plus" label="Adicionar"
+                (click)="showAddForm()"></button>
+            <button *sTienePermiso="'EMP_PUT_EMPS'" pButton type="button" icon="fa fa-pencil-square-o"
+                class="ui-button-success" label="Modificar" (click)="showUpdateForm()"
+                [disabled]="!empresaSelect"></button>
+            <button *sTienePermiso="'EMP_DELETE_EMPS'" pButton type="button" icon="fa fa-trash" class="ui-button-danger"
+                label="Eliminar" (click)="onDelete()" [disabled]="!empresaSelect"></button>
+        </ng-template>
+    </p-table>
 
 </p-panel>
 
 
 <p-dialog [(visible)]="visibleForm" width="380" modal="true" responsive="true" header="Datos de empresa">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="ui-g">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="ui-g">
 
-      <div class="ui-g-12 ui-md-3">
-        Razón social
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="razonSocial" required maxlength="100" />
-      </div>
+            <div class="ui-g-12 ui-md-3">
+                Razón social
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="razonSocial" required maxlength="100" />
+            </div>
 
-      <div class="ui-g-12 ui-md-3">
-        Nombre comercial
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="nombreComercial" required maxlength="100" />
-      </div>
+            <div class="ui-g-12 ui-md-3">
+                Nombre comercial
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="nombreComercial" required maxlength="100" />
+            </div>
 
-      <div class="ui-g-12 ui-md-3">
-        Nit
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="nit" required maxlength="45" />
-      </div>
-      <div class="ui-g-12 ui-md-3">
-        Direccion
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="direccion" required maxlength="45" />
-      </div>
-      <div class="ui-g-12 ui-md-3">
-        Telefono
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="telefono" required maxlength="45" />
-      </div>
-      <div class="ui-g-12 ui-md-3">
-        Numero  de sedes
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="number" pInputText formControlName="numero_sedes" required maxlength="45" />
-      </div>
-      <div class="ui-g-12 ui-md-3">
-        Email
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="email" required maxlength="45" />
-      </div>
-      <div class="ui-g-12 ui-md-3">
-        Web
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <input type="text" pInputText formControlName="web" required maxlength="45" />
-      </div>
-      
+            <div class="ui-g-12 ui-md-3">
+                Nit
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="nit" required maxlength="45" />
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                Direccion
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="direccion" required maxlength="45" />
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                Telefono
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="telefono" required maxlength="45" />
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                Numero de sedes
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="number" pInputText formControlName="numero_sedes" required maxlength="45" />
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                Email
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="email" required maxlength="45" />
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                Web
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <input type="text" pInputText formControlName="web" required maxlength="45" />
+            </div>
 
-      <div class="ui-g-12 ui-md-3">
-        ARL
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <p-dropdown [options]="arlList" formControlName="arlId" appendTo="body"></p-dropdown>
-      </div>
 
-      <div class="ui-g-12 ui-md-3">
-        CIIU
-      </div>
-      <div class="ui-g-12 ui-md-9">
-        <p-dropdown [options]="ciiuList" formControlName="ciiuId" appendTo="body" filter="true">
-          <ng-template let-item pTemplate="selectedItem">
-            <div style="max-width: 200px;" [title]="item.label">{{item?.label}}</div>
-          </ng-template>
-          <ng-template let-ciiu pTemplate="item">
-            <div style="max-width: 200px;">{{ciiu?.label}}</div>
-          </ng-template>
-        </p-dropdown>
-      </div>
+            <div class="ui-g-12 ui-md-3">
+                ARL
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <p-dropdown [options]="arlList" formControlName="arlId" appendTo="body"></p-dropdown>
+            </div>
 
-    </div>
-    <footer>
-      <button pButton type="submit" icon="fa fa-floppy-o" label="Guardar" [disabled]="!form.valid"></button>
-      <button pButton type="button" icon="fa fa-ban" class="ui-button-secondary" label="Cancelar" (click)="closeForm()"></button>
-    </footer>
-  </form>
+            <div class="ui-g-12 ui-md-3">
+                CIIU
+            </div>
+            <div class="ui-g-12 ui-md-9">
+                <p-dropdown [options]="ciiuList" formControlName="ciiuId" appendTo="body" filter="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <div style="max-width: 200px;" [title]="item.label">{{item?.label}}</div>
+                    </ng-template>
+                    <ng-template let-ciiu pTemplate="item">
+                        <div style="max-width: 200px;">{{ciiu?.label}}</div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+        </div>
+        <footer>
+            <button pButton type="submit" icon="fa fa-floppy-o" label="Guardar" [disabled]="!form.valid"></button>
+            <button pButton type="button" icon="fa fa-ban" class="ui-button-secondary" label="Cancelar"
+                (click)="closeForm()"></button>
+        </footer>
+    </form>
 </p-dialog>

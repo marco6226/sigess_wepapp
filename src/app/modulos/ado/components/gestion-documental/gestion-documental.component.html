@@ -30,11 +30,11 @@
                 <ng-template pTemplate="header">
 
                     <tr>
-                        <th>
+                        <th [ttSortableColumn]="'nombre'">
                             <div pDroppable="dd" (onDrop)="drop($event, null)">Nombre</div>
                         </th>
-                        <th>Tamaño</th>
-                        <th >Fecha creación</th>
+                        <th [ttSortableColumn]="'tamanio'">Tamaño</th>
+                        <th [ttSortableColumn]="'fechaCreacion'">Fecha creación</th>
                         <th>Subido por</th>
                     </tr>
                 </ng-template>
