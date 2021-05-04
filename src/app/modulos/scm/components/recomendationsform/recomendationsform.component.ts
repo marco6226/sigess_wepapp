@@ -53,7 +53,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     tipoIdentificacionList;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
-
+    tratamientos = [];
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
         private empleadoService: EmpleadoService
@@ -69,7 +69,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             responsableExterno: [null],
             fechaExpiracion: [null, Validators.required],
 
-            status: [null],            
+            status: [null],
             actividad: [null],
             descripcion_act: [null],
             fecha_proyectada: [null],
@@ -148,7 +148,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             actividad,
             descripcion_act,
             fecha_proyectada,
-           
+
 
         }
 
@@ -228,6 +228,67 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             }
         });
     }
+
+
+    onRowEditInit(product, type?) {
+
+
+    }
+    async onRowCloneInit(pseg, type?) {
+        this.msgs = [];
+        let { id, tarea, responsable, resultado, responsableExterno, ...product } = pseg;
+
+        try {
+            let resp = await this.scmService.createSeguimiento(product);
+            this.msgs.push({
+                severity: "success",
+                summary: "Seguimiento",
+                detail: `Se ha clonado exitosamente`,
+            });
+
+            //  this.fechaSeg();
+        } catch (error) {
+
+        }
+
+    }
+    async onRowEditSave(product, type?) {
+        this.msgs = [];
+
+        if (product.responsable) {
+            product.responsable = product.responsable.id;
+        }
+        try {
+            if (type == "tratamiento") {
+                let resp = await this.scmService.updateTratamiento(product);
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Seguimiento",
+                    detail: `Su numero de Tratamiento es ${product.id}`,
+                });
+                // return this.fechaTrat()
+            }
+
+            let resp = await this.scmService.updateSeguimiento(product);
+            this.msgs.push({
+                severity: "success",
+                summary: "Seguimiento",
+                detail: `Su numero de seguimiento es ${product.id}`,
+            });
+
+            //this.fechaSeg();
+        } catch (error) {
+
+        }
+    }
+    nuevoTratamiento() {
+        this.tratamientos.push({})
+    }
+
+    onRowEditCancel(product, index: number) {
+
+    }
+
 
 }
 

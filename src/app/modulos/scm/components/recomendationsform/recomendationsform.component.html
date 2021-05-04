@@ -58,14 +58,91 @@
 
             <div class="ui-g-12">
                 <div class="input-field">
-                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea required></textarea>
+                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea
+                        required></textarea>
                     <label for="" class="active">Recomendaciones</label>
                 </div>
                 <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help"
                     class="p-invalid">Obligatorio</small>
 
             </div>
-            <div class="ui-g-12">
+
+
+            <div class="card">
+                <h5 class="title-header p-mb-2">Plan de acción</h5>
+                <p-table [value]="tratamientos" dataKey="id" editMode="row">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Tipo de intervencion</th>
+                            <th>Descripcion</th>
+                            <th>Fecha</th>
+
+
+                            <th style="width:8rem"></th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-tratamiento let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="tratamiento">
+
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="tratamiento.tipoIntervencion">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{tratamiento.tipoIntervencion}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="tratamiento.descripcion">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{tratamiento.descripcion}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fecha"
+                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                        </p-calendar>
+
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td style="text-align:center">
+                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                    icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
+                                    class="p-button-rounded p-button-text"> </button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                    icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')"
+                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                    icon="pi pi-times" (click)="onRowEditCancel(tratamiento, ri)"
+                                    class="p-button-rounded p-button-text p-button-danger"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="summary" let-rowData>
+                        <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
+                            (click)="nuevoTratamiento()">
+
+                        </button>
+
+                    </ng-template>
+                </p-table>
+            </div>
+            <!-- <div class="ui-g-12">
                 <h5 class="title-header p-mb-2">Plan de Acción</h5>
             </div>            
             <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -114,7 +191,7 @@
 
                                         <br /> {{empleado?.numeroIdentificacion}}
                                         <br /> {{empleado?.usuario.email}}
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
                         </ng-template>
@@ -132,7 +209,7 @@
                     <label for="" class="active">Responsable Externo </label>
                 </div>
                 
-            </div>
+            </div> -->
             <div class="ui-g-12">
                 <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" label="Guardar" icon="fa fa-plus"
                     (click)="onSubmit()">
