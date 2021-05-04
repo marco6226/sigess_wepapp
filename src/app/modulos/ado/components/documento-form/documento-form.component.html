@@ -24,8 +24,8 @@
 
     <div class="ui-g-12 ui-sm-12 ui-md-6">
       <span class="ui-float-label">
-        <input id="codigo-input" type="text" [ngModel]="documento?.codigo" (ngModelChange)="documento.public=$event" pInputText>
-        <label for="codigo-input">Publico</label>
+        <input id="codigo-input" type="text" [ngModel]="documento?.codigo" (ngModelChange)="documento.codigo=$event" pInputText>
+        <label for="codigo-input">Código</label>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
     </div>
     <div class="ui-g-12 ui-sm-12 ui-md-6">
       <span class="ui-float-label">
-        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [ngModel]="documento?.fechaElaboracion" (ngModelChange)="documento.fechaElaboracion=$event"
+        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [ngModel]="documento.fechaElaboracion" [monthNavigator]="true" (ngModelChange)="documento.fechaElaboracion=$event"
           appendTo="body"></p-calendar>
         <label for="fechaElaboracion-input">Fecha elaboración</label>
       </span>

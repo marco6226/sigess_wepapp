@@ -102,7 +102,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                 expanded: false,
                 items:
                     [
-                        { label: 'Elaboracion SGE', codigo: 'SGE_POST_SGE', routerLink: '/app/sg/sgeForm', class: 'fa fa-columns' },
+                        { label: 'Elaboración SGE', codigo: 'SGE_POST_SGE', routerLink: '/app/sg/sgeForm', class: 'fa fa-columns' },
                         { label: 'Sistemas de Gestión', codigo: 'SGE_GET_SGE', routerLink: '/app/sg/sistemasGestion', class: 'fa fa-th' },
                         { label: 'Consulta Evaluacion', codigo: 'SGE_GET_EVAL', routerLink: '/app/sg/consultaEvaluaciones', class: 'fa fa-list-ul' }
                     ]
