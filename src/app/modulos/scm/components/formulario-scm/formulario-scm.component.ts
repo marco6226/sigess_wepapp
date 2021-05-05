@@ -693,7 +693,7 @@ export class FormularioScmComponent implements OnInit {
                 this.msgs.push({
                     severity: "success",
                     summary: "Usuario actualizado",
-                    detail: `Ah sido actualizado el usuario ${empleado.numeroIdentificacion}`,
+                    detail: `Empleado con  identificación  ${empleado.numeroIdentificacion} fue actualizado`,
                 });
                 this.solicitando = false;
             })

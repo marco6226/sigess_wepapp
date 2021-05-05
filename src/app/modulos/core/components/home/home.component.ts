@@ -247,7 +247,7 @@ export class HomeComponent implements OnInit {
             type: 'horizontalBar',
         };
         this.data2 = {
-            labels: ['Cobertura'],
+            labels: [''],
             datasets: [
                 {
                     label: 'Sedes programadas',
