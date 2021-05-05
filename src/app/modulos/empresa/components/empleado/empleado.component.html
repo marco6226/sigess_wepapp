@@ -2,14 +2,9 @@
 
 <div *ngIf="!visibleForm">
 
-    <s-dataNotFound *ngIf="!empleadosList || empleadosList.length <= 0" icon="fa-users" message="Aún no se han registrado empleados">
-        <div *sTienePermiso="'EMP_POST_EMPL'">
-            Inicia agregandolos haciendo click
-            <a (click)="showAddForm()">aqui</a>
-        </div>
-    </s-dataNotFound>
+   
 
-    <p-panel header="Administración de empleados" [style.display]="empleadosList && empleadosList.length > 0 ? 'block':'none'">
+    <p-panel header="Administración de empleados">
 
         <p-table #dt [value]="empleadosList" [(selection)]="empleadoSelect" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
             <ng-template pTemplate="header">
@@ -104,6 +99,13 @@
     </p-panel>
 
 </div>
+
+<s-dataNotFound *ngIf="!empleadosList || empleadosList.length <= 0" icon="fa-users" message="Aún no se han registrado empleados con esos criterios">
+    <div *sTienePermiso="'EMP_POST_EMPL'">
+        Inicia agregandolos haciendo click
+        <a (click)="showAddForm()">aqui</a>
+    </div>
+</s-dataNotFound>
 
 <div>
     <s-empleadoForm *ngIf="visibleForm" (onEmpleadoCreate)="onEmpleadoCreate($event)" (onEmpleadoUpdate)="onEmpleadoUpdate($event)" (onCancel)="onCancel()" [isUpdate]="isUpdate" [editable]="isEditable" [show]="show" [empleadoSelect]="empleadoSelect"></s-empleadoForm>
