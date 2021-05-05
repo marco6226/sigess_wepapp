@@ -62,11 +62,11 @@
         <ng-template pTemplate="summary" let-rowData>
 
             <button *sTienePermiso="'INP_GET_LISTINP'" pButton type="button" icon="fa fa-search" label="Consultar" (click)="consultar()" [disabled]="!listaInpSelect"></button>
-
-            <button *sTienePermiso="'INP_PUT_LISTINP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modificar()" [disabled]="!listaInpSelect"></button>
-
+            
+            <button    *sTienePermiso="'INP_PUT_LISTINP'"  pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modificar()" [disabled]="listaInpSelect?.estado == 'inactivo'"></button>
+            
             <button pButton type="button" icon="fa fa-trash" label="Eliminar" title="Eliminar lista de inspección seleccionada" class="ui-button-danger" (click)="eliminar()" [disabled]="!listaInpSelect"></button>
-
+            
             <button *sTienePermiso="'INP_GET_CONSINP'" pButton type="button" icon="fa fa-download" label="Inspecciones" title="Descarga consolidado de inspecciones de la lista seleccionada" class="ui-button-secondary" (click)="abrirDlg()" [disabled]="!listaInpSelect"></button>
         </ng-template>
     </p-table>
