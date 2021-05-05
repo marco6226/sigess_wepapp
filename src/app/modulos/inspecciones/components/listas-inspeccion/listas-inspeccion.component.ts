@@ -30,6 +30,7 @@ export class ListasInspeccionComponent implements OnInit {
     'nombre',
     'tipoLista',
     'descripcion',
+    'estado',
     'fkPerfilId'
   ];
 

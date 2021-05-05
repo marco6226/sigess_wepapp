@@ -82,7 +82,8 @@ export class ElaboracionListaComponent implements OnInit {
             'nombre': [null, Validators.required],
             'tipoLista': [null, Validators.required],
             'descripcion': [null],
-            'perfilesId': [null, Validators.required]
+            'perfilesId': [null, Validators.required],
+            'estado': [null]
         });
 
         switch (this.paramNav.getAccion<string>()) {
@@ -250,6 +251,7 @@ export class ElaboracionListaComponent implements OnInit {
         listInp.nombre = this.form.value.nombre;
         listInp.codigo = this.form.value.codigo;
         listInp.fkPerfilId = JSON.stringify(this.form.value.perfilesId);
+        
 
         listInp.descripcion = this.form.value.descripcion;
         listInp.tipoLista = this.form.value.tipoLista;
@@ -257,6 +259,11 @@ export class ElaboracionListaComponent implements OnInit {
         listInp.elementoInspeccionList = this.elementoInspeccionList;
         listInp.formulario = this.formularioConstructor.formulario;
         let param = (actualizarVersion == false ? null : 'actualizarVersion=true');
+        if(actualizarVersion=true){
+            listInp.estado = 'inactivo';
+            this.listaInspeccionService.update(listInp,'actualizarVersion=false')
+        }
+        listInp.estado = 'activo'
         this.listaInspeccionService.update(listInp, param).then(
             data => {
                 this.msgs = [];
@@ -264,6 +271,7 @@ export class ElaboracionListaComponent implements OnInit {
                 this.msgs.push({ severity: 'success', summary: 'Lista de inspección actualizada', detail: detalle + listInp.nombre });
             }
         );
+        console.log(listInp.estado)
     }
 
 

@@ -33,9 +33,10 @@
                         <th [ttSortableColumn]="'nombre'">
                             <div pDroppable="dd" (onDrop)="drop($event, null)">Nombre</div>
                         </th>
-                        <th [ttSortableColumn]="'tamanio'">Tamaño</th>
+                        <th>Tamaño</th>
                         <th [ttSortableColumn]="'fechaCreacion'">Fecha creación</th>
-                        <th>Subido por</th>
+                        <th [ttSortableColumn]="'usuario.email'">Subido por</th>
+                        
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowNode let-data="rowData">

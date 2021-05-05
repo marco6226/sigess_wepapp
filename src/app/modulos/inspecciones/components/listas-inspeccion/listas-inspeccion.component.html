@@ -24,6 +24,9 @@
                 <th pSortableColumn="descripcion">Descripción
                     <p-sortIcon field="descripcion"></p-sortIcon>
                 </th>
+                <th pSortableColumn="estado">Estado
+                    <p-sortIcon field="estado"></p-sortIcon>
+                </th>
             </tr>
             <tr>
                 <td>
@@ -41,6 +44,9 @@
                 <td>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
                 </td>
+                <td>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-listInp>
@@ -50,6 +56,7 @@
                 <td>{{listInp.nombre}}</td>
                 <td>{{listInp.tipoLista}}</td>
                 <td>{{listInp.descripcion}}</td>
+                <td>{{listInp.estado}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
