@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Usuario } from 'app/modulos/empresa/entities/usuario'
 import { ServiceCRUD } from 'app/modulos/core/services/service-crud.service'
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class UsuarioService extends ServiceCRUD<Usuario>{
@@ -68,6 +69,28 @@ export class UsuarioService extends ServiceCRUD<Usuario>{
           }
           ,
           err => this.manageError(err)
+        )
+    });
+  }
+
+  consultarConsolidado(): any {
+    
+    return new Promise((resolve, reject) => {
+      let options: any = {
+        responseType: 'blob',
+        headers: new HttpHeaders()
+          .set('Param-Emp', this.httpInt.getSesionService().getParamEmp())
+          .set('app-version', this.httpInt.getSesionService().getAppVersion())
+          .set('Authorization', this.httpInt.getSesionService().getBearerAuthToken())
+      };
+      this.httpInt.http.get(this.end_point + "consusuarios/", options)
+        .map(res => res)
+        .subscribe(
+          res => resolve(res),
+          err => {
+            reject(err);
+            this.manageBlobError(err)
+          }
         )
     });
   }

@@ -31,6 +31,7 @@ export class UsuarioComponent implements OnInit {
 
   solicitando: boolean = false;
   loading: boolean;
+  downloading: boolean;
   totalRecords: number;
   fields: string[] = [
     'id',
@@ -254,6 +255,25 @@ onClick(){
     }];
     this.visibleDlg = false;
     this.form.reset();
+  }
+
+  descargarInvs() {
+    this.downloading = true;
+    this.usuarioService.consultarConsolidado()
+      .then(resp => {
+        if (resp != null) {
+          var blob = new Blob([<any>resp], { type: 'text/csv;charset=utf-8;' });
+          let url = URL.createObjectURL(blob);
+          let dwldLink = document.getElementById("dwldLink");
+          dwldLink.setAttribute("href", url);
+          dwldLink.setAttribute("download", "Consolidado usuarios_" + new Date().getTime() + ".csv");
+          dwldLink.click();
+          this.downloading = false;
+        }
+      })
+      .catch(err => {
+        this.downloading = false;
+      });
   }
 
 }
