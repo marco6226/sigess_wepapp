@@ -242,13 +242,13 @@
 
     </p-tabPanel>
 
-    <p-tabPanel header="Jornada">
+    <p-tabPanel header="Jornada" *ngIf="empleadoSelect">
         <s-jornadaForm [value]="empleadoSelect" *ngIf="loaded"></s-jornadaForm>
     </p-tabPanel>
-    <p-tabPanel header="Horas extra">
+    <p-tabPanel header="Horas extra" *ngIf="empleadoSelect">
         <s-horasExtraForm [value]="empleadoSelect" *ngIf="loaded"></s-horasExtraForm>
     </p-tabPanel>
-    <p-tabPanel header="Documentación">
+    <p-tabPanel header="Documentación" *ngIf="empleadoSelect">
         <s-documentosEmpleadoForm *ngIf="loaded" [value]="empleadoSelect"></s-documentosEmpleadoForm>
     </p-tabPanel>
 
@@ -257,7 +257,7 @@
             <div class="ui-g" [formGroup]="jefeInmediatoForm">
 
 
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
                             [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)"
@@ -271,8 +271,8 @@
                                         <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                             style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
-                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                {{empleado?.primerApellido}}</label>
+                                            <br />{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
                                         </div>
@@ -280,43 +280,53 @@
                                 </div>
                             </ng-template>
                         </p-autoComplete>
-                        <label for="" class="active">Número de identificación</label>
+
+                        <label class="active" for="" >Número de identificación</label>
                     </div>
                     <small *ngIf="3>4" id="username2-help" class="p-invalid">Obligatorio</small>
-                </div>
+               
+                
+                    </div>
+           
+                
 
-                <div class="ui-g-12 ui-md-2">
-                    Primer nombre
-                </div>
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
                     <input type="text" pInputText formControlName="primerNombre" required />
+                    <label for="" class="active">Primer nombre</label>
+                    </div>
                 </div>
 
+               
 
-                <div class="ui-g-12 ui-md-2">
-                    Primer Apellido
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerApellido" required />
+                        <label for="" class="active">Primer Apellido</label>
+                    
+                    </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="primerApellido" required />
-                </div>
+                
 
-
-                <div class="ui-g-12 ui-md-2">
-                    Dirección / Gerencia
-                </div>
-
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="direccionGerencia" />
-                </div>
-
-
-                <div class="ui-g-12 ui-md-2">
-                    Correo corporativo
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="direccionGerencia" />
+                        <label for="" class="active">Dirección / Gerencia</label>
+                    
+                    </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="email" placeholder="Correo corporativo" />
+               
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="email" placeholder="Correo corporativo" />
+                        <label for="" class="active">Correo corporativo</label>
+                    
+                    </div>
                 </div>
+
+               
             </div>
         </p-panel>
         <br>
@@ -326,12 +336,12 @@
             <div class="ui-g" [formGroup]="businessForm">
 
 
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                            [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)" [suggestions]="empleadosList"
-                            (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
-                            *ngIf="empleado?.id == null">
+                            [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)"
+                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                            formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
                             <ng-template let-empleado pTemplate="item">
                                 <div class="ui-helper-clearfix">
                                     <div class="wrapper">
@@ -340,8 +350,8 @@
                                         <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
                                             style="border-radius: 50%;" #imgAvatar />
                                         <div style="margin-left:20px">
-                                            <label>{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
-                                                {{empleado?.primerApellido}}</label>
+                                            <br />{{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}}
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
                                         </div>
@@ -349,43 +359,53 @@
                                 </div>
                             </ng-template>
                         </p-autoComplete>
-                        <label for="" class="active">Número de identificación</label>
+
+                        <label class="active" for="" >Número de identificación</label>
                     </div>
                     <small *ngIf="3>4" id="username2-help" class="p-invalid">Obligatorio</small>
-                </div>
+               
+                
+                    </div>
+           
+                
 
-                <div class="ui-g-12 ui-md-2">
-                    Primer nombre
-                </div>
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
                     <input type="text" pInputText formControlName="primerNombre" required />
+                    <label for="" class="active">Primer nombre</label>
+                    </div>
                 </div>
 
+               
 
-                <div class="ui-g-12 ui-md-2">
-                    Primer Apellido
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="primerApellido" required />
+                        <label for="" class="active">Primer Apellido</label>
+                    
+                    </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="primerApellido" required />
-                </div>
+                
 
-
-                <div class="ui-g-12 ui-md-2">
-                    Dirección / Gerencia
-                </div>
-
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="direccionGerencia" />
-                </div>
-
-
-                <div class="ui-g-12 ui-md-2">
-                    Correo corporativo
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="direccionGerencia" />
+                        <label for="" class="active">Dirección / Gerencia</label>
+                    
+                    </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText formControlName="email" placeholder="Correo corporativo" />
+               
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText formControlName="email" placeholder="Correo corporativo" />
+                        <label for="" class="active">Correo corporativo</label>
+                    
+                    </div>
                 </div>
+
+               
             </div>
         </p-panel>
     </p-tabPanel>
