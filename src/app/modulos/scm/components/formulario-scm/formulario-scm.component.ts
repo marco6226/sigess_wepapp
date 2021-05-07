@@ -897,6 +897,24 @@ export class FormularioScmComponent implements OnInit {
     onRowEditCancel(product, index: number) {
 
     }
+    async deleteDiagnostico(id) {
+        this.msgs = [];
+        try {
+            let resp = await this.scmService.deleteDiagnosticos(id);
+            if (resp) {
+                this.msgs.push({
+                    severity: "error",
+                    summary: "Diagnostico",
+                    detail: `Su Diagnostico fue eliminada`,
+                });
+                this.onCloseModalDianostico();
+
+            }
+
+        } catch (error) {
+
+        }
+    }
 
     async deleteRecomendation(id) {
         this.msgs = [];

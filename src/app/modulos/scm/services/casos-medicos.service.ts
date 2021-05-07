@@ -54,6 +54,9 @@ export class CasosMedicosService {
     }
     //DiagnosticoApi
 
+    deleteDiagnosticos(id) {
+        return this.http.put(`${endPoints.scm}diagnosticos/${id}`, {}, this.getRequestHeaders(this.headers)).toPromise();
+    }
     getDiagnosticos(documento): any {
         return this.http.get<[]>(`${endPoints.scm}diagnosticos/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }

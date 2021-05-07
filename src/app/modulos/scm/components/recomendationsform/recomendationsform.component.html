@@ -1,107 +1,112 @@
 <p-growl [value]="msgs"></p-growl>
 
 
-<form [formGroup]="recomendation">
+<div>
+
     <div class="ui-g">
         <div class="ui-g p-py-2">
-            <div class="ui-g-12">
-                <h5 class="title-header p-mb-2">Recomendaciones</h5>
-            </div>
+            <form [formGroup]="recomendation">
 
-            <div class="ui-g-12 ui-md-6 ui-lg-5">
-                <div class="input-field">
-                    <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material"
-                        styleClass="select-material" required>
-                    </p-dropdown>
-                    <label for="" class="active">Entidad que emite las recomendaciones</label>
+                <div class="ui-g-12">
+                    <h5 class="title-header p-mb-2">Recomendaciones</h5>
                 </div>
-                <small *ngIf="entidadEmitRecomendaciones.errors?.required && entidadEmitRecomendaciones.touched"
-                    id="username2-help" class="p-invalid">Obligatorio</small>
-            </div>
 
-            <div class="ui-g-12 ui-md-4 ui-lg-3">
-                <div class="input-field">
-
-                    <p-dropdown [options]="typeList" formControlName="tipo" class="select-material"
-                        styleClass="select-material" required>
-                    </p-dropdown>
-                    <label for="" class="active">Tipo</label>
+                <div class="ui-g-12 ui-md-6 ui-lg-5">
+                    <div class="input-field">
+                        <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones"
+                            class="select-material" styleClass="select-material" required>
+                        </p-dropdown>
+                        <label for="" class="active">Entidad que emite las recomendaciones</label>
+                    </div>
+                    <small *ngIf="entidadEmitRecomendaciones.errors?.required && entidadEmitRecomendaciones.touched"
+                        id="username2-help" class="p-invalid">Obligatorio</small>
                 </div>
-                <small *ngIf="tipo.errors?.required && tipo.touched" id="username2-help"
-                    class="p-invalid">Obligatorio</small>
 
-            </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                    <div class="input-field">
 
-            <div class="ui-g-12 ui-md-4 ui-lg-4">
-                <div class="input-field">
-                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true" [yearRange]="yearRange"
-                        [locale]="localeES" formControlName="fechaInicio" dateFormat="dd/mm/yy"
-                        inputStyleClass="form-material" required>
-                    </p-calendar>
-                    <label for="" class="active">Fecha Inicial</label>
+                        <p-dropdown [options]="typeList" formControlName="tipo" class="select-material"
+                            styleClass="select-material" required>
+                        </p-dropdown>
+                        <label for="" class="active">Tipo</label>
+                    </div>
+                    <small *ngIf="tipo.errors?.required && tipo.touched" id="username2-help"
+                        class="p-invalid">Obligatorio</small>
+
                 </div>
-                <small *ngIf="fechaInicio.errors?.required && fechaInicio.touched" id="username2-help"
-                    class="p-invalid">Obligatorio</small>
-            </div>
-            <div class="ui-g-12 ui-md-4 ui-lg-4">
-                <div class="input-field">
-                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                        formControlName="fechaExpiracion" [locale]="localeES" dateFormat="dd/mm/yy"
-                        inputStyleClass="form-material" required>
-                    </p-calendar>
-                    <label for="" class="active">Fecha Final</label>
+
+                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                    <div class="input-field">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true"
+                            [yearRange]="yearRange" [locale]="localeES" formControlName="fechaInicio"
+                            dateFormat="dd/mm/yy" inputStyleClass="form-material" required>
+                        </p-calendar>
+                        <label for="" class="active">Fecha Inicial</label>
+                    </div>
+                    <small *ngIf="fechaInicio.errors?.required && fechaInicio.touched" id="username2-help"
+                        class="p-invalid">Obligatorio</small>
                 </div>
-                <small *ngIf="fechaExpiracion.errors?.required && fechaExpiracion.touched" id="username2-help"
-                    class="p-invalid">Obligatorio</small>
-            </div>
-
-
-            <div class="ui-g-12">
-                <div class="input-field">
-                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea
-                        required></textarea>
-                    <label for="" class="active">Recomendaciones</label>
+                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                    <div class="input-field">
+                        <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true"
+                            [yearRange]="yearRange" formControlName="fechaExpiracion" [locale]="localeES"
+                            dateFormat="dd/mm/yy" inputStyleClass="form-material" required>
+                        </p-calendar>
+                        <label for="" class="active">Fecha Final</label>
+                    </div>
+                    <small *ngIf="fechaExpiracion.errors?.required && fechaExpiracion.touched" id="username2-help"
+                        class="p-invalid">Obligatorio</small>
                 </div>
-                <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help"
-                    class="p-invalid">Obligatorio</small>
 
-            </div>
 
+                <div class="ui-g-12">
+                    <div class="input-field">
+                        <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea
+                            required></textarea>
+                        <label for="" class="active">Recomendaciones</label>
+                    </div>
+                    <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help"
+                        class="p-invalid">Obligatorio</small>
+
+                </div>
+            </form>
 
             <div class="card">
                 <h5 class="title-header p-mb-2">Plan de acción</h5>
-                <p-table [value]="tratamientos" dataKey="id" editMode="row">
+                <p-table [value]="accions" dataKey="id" editMode="row">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Tipo de intervencion</th>
+                            <th>Actividad</th>
                             <th>Descripcion</th>
-                            <th>Fecha</th>
+                            <th>Fecha Proyectada</th>
+                            <th>Responsable externo</th>
+                            <th>Responsable Empresa</th>
 
 
                             <th style="width:8rem"></th>
                         </tr>
                     </ng-template>
 
-                    <ng-template pTemplate="body" let-tratamiento let-editing="editing" let-ri="rowIndex">
-                        <tr [pEditableRow]="tratamiento">
+                    <ng-template pTemplate="body" let-pAccion let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="pAccion">
 
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="tratamiento.tipoIntervencion">
+                                        <input pInputText type="text" [(ngModel)]="pAccion.actividad">
                                     </ng-template>
                                     <ng-template pTemplate="output">
-                                        {{tratamiento.tipoIntervencion}}
+                                        {{pAccion.actividad}}
                                     </ng-template>
                                 </p-cellEditor>
                             </td>
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="tratamiento.descripcion">
+                                        <input pInputText type="text" [(ngModel)]="pAccion.descripcionAct">
                                     </ng-template>
                                     <ng-template pTemplate="output">
-                                        {{tratamiento.descripcion}}
+                                        {{pAccion.descripcionAct}}
                                     </ng-template>
                                 </p-cellEditor>
                             </td>
@@ -109,33 +114,81 @@
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fecha"
+                                        <p-calendar [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada"
                                             dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
                                         </p-calendar>
 
                                     </ng-template>
                                     <ng-template pTemplate="output">
-                                        {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
+                                        {{pAccion.fechaProyectada | date : 'dd/MM/yyyy'}}
                                     </ng-template>
                                 </p-cellEditor>
                             </td>
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
+                                            placeholder="Digite" [style]="{'width':'100%'}"
+                                            (onSelect)="pAccion.responsableEmpresa = $event"
+                                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                                            field="numeroIdentificacion" [(ngModel)]="pAccion.responsableEmpresa"
+                                            *ngIf="empleado?.id == null">
+                                            <ng-template let-empleado pTemplate="item">
+                                                <div class="ui-helper-clearfix">
+                                                    <div class="wrapper">
+                                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                                            style="font-size: 48px;" aria-hidden="true"></i>
+                                                        <img *ngIf="empleado.usuario?.icon"
+                                                            [src]="empleado.usuario?.icon" style="border-radius: 50%;"
+                                                            #imgAvatar />
+                                                        <div style="margin-left:20px">
+                                                            <label>{{empleado?.primerApellido}}
+                                                                {{empleado?.primerNombre}}
+                                                                {{empleado?.segundoNombre}}
+                                                            </label>
+                                                            <br /> {{empleado?.numeroIdentificacion}}
+                                                            <br /> {{empleado?.usuario.email}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-autoComplete>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{pAccion.responsableEmpresa?.primerApellido }}
+                                        {{pAccion.responsableEmpresa?.primerNombre
+                                        }}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="pAccion.responsableExterno">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{pAccion.responsableExterno}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+
                             <td style="text-align:center">
                                 <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                    icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
+                                    icon="pi pi-pencil" (click)="onRowEditInit(pAccion)"
                                     class="p-button-rounded p-button-text"> </button>
                                 <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                    icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')"
+                                    icon="pi pi-check" (click)="onRowEditSave(pAccion,ri)"
                                     class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                                 <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                    icon="pi pi-times" (click)="onRowEditCancel(tratamiento, ri)"
+                                    icon="pi pi-times" (click)="onRowEditCancel(pAccion, ri)"
                                     class="p-button-rounded p-button-text p-button-danger"></button>
                             </td>
                         </tr>
                     </ng-template>
 
                     <ng-template pTemplate="summary" let-rowData>
-                        <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
-                            (click)="nuevoTratamiento()">
+                        <button pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()">
 
                         </button>
 
@@ -218,4 +271,4 @@
             </div>
         </div>
     </div>
-</form>
+</div>
