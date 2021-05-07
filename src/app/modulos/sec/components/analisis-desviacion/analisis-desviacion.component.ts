@@ -219,8 +219,12 @@ export class AnalisisDesviacionComponent implements OnInit {
     ad.observacion = this.observacion;
     ad.participantes = JSON.stringify(this.participantes);
     ad.tareaDesviacionList = this.tareasList;
-    ad.tareaDesviacionList[0].modulo = this.desviacionesList[0].modulo;
-    ad.tareaDesviacionList[0].codigo = this.desviacionesList[0].hashId;
+    for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
+      ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
+      ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;        
+      }  
+
+    
     
     ad.jerarquia = ad.jerarquia;
     
@@ -233,6 +237,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.modificar = true;
         this.adicionar = false;
       });
+
+      console.log( ad.tareaDesviacionList);
   }
 
 
@@ -248,6 +254,13 @@ export class AnalisisDesviacionComponent implements OnInit {
     ad.participantes = JSON.stringify(this.participantes);
     ad.tareaDesviacionList = this.tareasList;
     ad.jerarquia = this.jerarquia;
+    for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
+      ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
+      ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+       
+      } 
+      
+
     this.analisisDesviacionService.update(ad).then(
       data => {
         this.manageResponse(<AnalisisDesviacion>data);
@@ -255,6 +268,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.adicionar = false;
       }
     );
+    console.log( ad.tareaDesviacionList);
   }
 
   manageResponse(ad: AnalisisDesviacion) {

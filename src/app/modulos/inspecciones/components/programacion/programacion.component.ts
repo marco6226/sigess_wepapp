@@ -14,6 +14,7 @@ import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { SesionService } from '../../../core/services/sesion.service';
 import { PerfilService } from 'app/modulos/admin/services/perfil.service';
+import {Observable} from 'rxjs/Rx'  
 
 @Component({
   selector: 'app-programacion',
@@ -96,7 +97,8 @@ export class ProgramacionComponent implements OnInit {
 
 
  async ngOnInit() {   
-     let permiso = this.sesionService.getPermisosMap()['INP_PUT_PROG'];    
+     let permiso = this.sesionService.getPermisosMap()['INP_PUT_PROG'];  
+     let empresa = this.sesionService.getEmpresa();     
 
     if (permiso != null && permiso.valido == true) {
       this.permiso = true;
@@ -122,14 +124,22 @@ export class ProgramacionComponent implements OnInit {
     this.fechaMaxima.setMonth(11);
     this.fechaMaxima.setFullYear(this.fechaMaxima.getFullYear() + 1);
 
-    this.listaInspeccionService.findAll()
+    let j = new FilterQuery();
+    j.filterList= [{
+      field: 'estado',
+      criteria: Criteria.NOT_EQUALS,
+      value1: 'inactivo',
+      value2: null
+    }];
+
+    this.listaInspeccionService.findByFilter(j)
       .then(data => {
         console.log(data);
         (<ListaInspeccion[]>data['data']).forEach(lista => {
           try {
             for (const profile of userParray.data) {
              console.log(profile.id)
- 
+            
              if (lista.fkPerfilId.includes(`${profile.id}`)) {
               this.listasInspeccionList.push({ label: lista.codigo + ' - ' + lista.nombre + ' v' + lista.listaInspeccionPK.version, value: lista.listaInspeccionPK });
               break;
@@ -141,7 +151,7 @@ export class ProgramacionComponent implements OnInit {
             
           } 
         });
-        console.log(this.listasInspeccionList[this.listasInspeccionList.length-1]);
+        console.log(this.listasInspeccionList);
         this.listasInspeccionList = this.listasInspeccionList.slice();
         //this.listasInspeccionList = this.listasInspeccionList[this.listasInspeccionList.length-1];
       });

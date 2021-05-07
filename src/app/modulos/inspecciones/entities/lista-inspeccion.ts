@@ -10,6 +10,7 @@ export class ListaInspeccion {
   codigo: string;
   fkPerfilId: string;
   tipoLista:string;
+  estado:string;
   descripcion: string;
   elementoInspeccionList: ElementoInspeccion[];
   opcionCalificacionList: OpcionCalificacion[] = [];
