@@ -64,7 +64,7 @@
                 (click)="abrirDlg(true)" [disabled]="!usuarioSelect"></button>
             <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                 (click)="eliminar()" [disabled]="!usuarioSelect"></button>
-                <button *sTienePermiso="'ADM_PUT_USR'" pButton type="button" icon="fa fa-download" label="Usuarios" title="Descarga consolidado de usuarios" (click)="visibleDlg = true" class="ui-button-secondary"></button>
+                <button *sTienePermiso="'ADM_GET_USER_CONS'" pButton type="button" icon="fa fa-download" label="Usuarios" title="Descarga consolidado de usuarios" (click)="visibleDlg = true" class="ui-button-secondary"></button>
         </ng-template>
     </p-table>
 

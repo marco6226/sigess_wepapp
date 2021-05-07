@@ -28,6 +28,7 @@ import { HttpAuthInterceptor } from './modulos/core/services/http-auth-intercept
 import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
 import { ScmModule } from './modulos/scm/scm.module';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
         IndModule,
         CtrModule,
         CopModule,
-        AyudaModule
+        AyudaModule,
+        MDBBootstrapModule.forRoot()
         //ng g c modulos/scm/components/formulario-scm
     ],
     providers: [
