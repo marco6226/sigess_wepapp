@@ -709,8 +709,8 @@
 
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
-        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [rows]="5" [paginator]="true"
-            dataKey="id" [lazy]="true">
+        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
+            [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="fechaDiagnostico">Fecha de Diagnóstico
@@ -756,6 +756,9 @@
                     label="Crear Diagnóstico" (click)="modalDianostico = true">
 
                 </button>
+                <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-success"
+                    (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
+
 
             </ng-template>
         </p-table>
