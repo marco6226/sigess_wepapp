@@ -1,7 +1,7 @@
 
-<p-card class="ui-g-12 " *ngIf="testing" >
+<p-card class="ui-g-12"  *ngIf="testing" >
    
-    <div class="p-grid  p-mt-3 p-jc-evenly colorsitos">
+    <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="padding: 2px 2px;">
     
 <circle-progress
   [percent]="this.inptotal"
@@ -13,6 +13,7 @@
   [animation]="true"
   [animationDuration]="300"
   *sTienePermiso="'INP'"
+  
 ></circle-progress>
 
 <circle-progress
@@ -41,12 +42,12 @@
 
 
 <div class="p-col-12 p-mt-3 mid-border">
-    <div class="p-d-flex p-jc-evenly">
+    <div class="p-grid p-jc-evenly">
         
        
-        <div class="p-d-flex" *sTienePermiso="'INP'"><p class=".col-md-4" [style.background-color]="'#8fb56f'" style="color:rgb(7, 7, 7);font-size:15px;"><strong>Cumplimiento Inspecciones</strong></p></div>       
-        <div class="p-d-flex" *sTienePermiso="'RAI'"><p class=".col-md-4" [style.background-color]="'#65afc4'" style="color:rgb(7, 7, 7);font-size:15px;"><strong>Cumplimiento Investigación de AT/IT</strong></p></div>
-        <div class="p-d-flex" *sTienePermiso="'AUC'"><p class=".col-md-4" [style.background-color]="'#a4719b'" style="color:rgb(7, 7, 7);font-size:15px;"><strong>Cumplimiento Reporte de condiciones</strong></p></div>
+        <div class="p-grid"  *sTienePermiso="'INP'"><p class=".col-md-4" [style.background-color]="'#8fb56f'" style="color:rgb(7, 7, 7);font-size:15px; border-radius: 40px; padding: 10px 10px;">Cumplimiento Inspecciones</p></div>     
+        <div class="p-grid"  *sTienePermiso="'RAI'"><p class=".col-md-4" [style.background-color]="'#65afc4'" style="color:rgb(7, 7, 7);font-size:15px; border-radius: 40px; padding: 10px 10px;">Cumplimiento Investigación de AT/IT</p></div>
+        <div class="p-grid"  *sTienePermiso="'AUC'"><p class=".col-md-4" [style.background-color]="'#a4719b'" style="color:rgb(7, 7, 7);font-size:15px; border-radius: 40px; padding: 10px 10px;">Cumplimiento Reporte de condiciones</p></div>
 
 
     </div>

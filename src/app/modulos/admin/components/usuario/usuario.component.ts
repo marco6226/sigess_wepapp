@@ -25,6 +25,7 @@ export class UsuarioComponent implements OnInit {
   usuarioSelect: Usuario;
   perfilList: SelectItem[] = [];
   visibleDlg: boolean;
+  Dlg: boolean;
   msgs: Message[] = [];
   isUpdate: boolean;
   form: FormGroup;
