@@ -709,7 +709,7 @@
 
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
-        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
+        <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="diagSelect"
             [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
                 <tr>
@@ -757,9 +757,11 @@
 
                 </button>
                 <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-success"
-                    (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
+                    (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
 
 
+                <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                    (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
             </ng-template>
         </p-table>
     </p-tabPanel>
@@ -1249,8 +1251,8 @@
 <p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}"
     [baseZIndex]="10000">
 
-    <app-diagnostico-form *ngIf="caseSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id"
-        (eventClose)="onCloseModalDianostico()">
+    <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id"
+        [caseId]="caseSelect.id" (eventClose)="onCloseModalDianostico()">
 
     </app-diagnostico-form>
 

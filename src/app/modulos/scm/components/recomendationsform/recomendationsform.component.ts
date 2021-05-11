@@ -81,11 +81,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
         this.patchFormValues();
         // You can also use categoryId.previousValue and 
         // categoryId.firstChange for comparing old and new values
-
     }
 
     //Aqui estan los get para las validaciones
