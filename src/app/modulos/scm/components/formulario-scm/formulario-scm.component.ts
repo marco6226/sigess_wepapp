@@ -155,6 +155,7 @@ export class FormularioScmComponent implements OnInit {
     logSelected;
     status;
     recoSelect: any;
+    diagSelect: any;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -905,7 +906,7 @@ export class FormularioScmComponent implements OnInit {
                 this.msgs.push({
                     severity: "error",
                     summary: "Diagnostico",
-                    detail: `Su Diagnostico fue eliminada`,
+                    detail: `Su Diagnostico fue eliminado`,
                 });
                 this.onCloseModalDianostico();
 

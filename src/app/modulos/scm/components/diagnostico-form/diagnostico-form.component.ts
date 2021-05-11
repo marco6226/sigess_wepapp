@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
@@ -13,13 +13,14 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
     templateUrl: './diagnostico-form.component.html',
     styleUrls: ['./diagnostico-form.component.scss']
 })
-export class DiagnosticoFormComponent implements OnInit {
+export class DiagnosticoFormComponent implements OnInit, OnChanges {
     diagnosticoForm: FormGroup;
     sistemaAfectado = [];
     msgs: Message[];
     @Input() caseId: string;
     @Input() id: string;
     @Output() eventClose = new EventEmitter<any>()
+    @Input() diagSelect: any;
 
     origenList = [
         { label: 'Seleccione', value: null },
@@ -68,8 +69,26 @@ export class DiagnosticoFormComponent implements OnInit {
         });
         console.log(this.sistemaAfectado);
     }
+    ngOnChanges(changes: SimpleChanges) {
+        this.patchFormValues();
+        // You can also use categoryId.previousValue and 
+        // categoryId.firstChange for comparing old and new values
+    }
 
+    patchFormValues() {
+        console.log(this.diagSelect);
+        if (this.diagSelect) {
+            this.diagnosticoForm.patchValue({
+                codigoCie10: this.diagSelect.codigoCie10,
+                diagnostico: this.diagSelect.diagnostico,
+                fechaDiagnostico: this.diagSelect.fechaDiagnostico == null ? null : new Date(this.diagSelect.fechaDiagnostico),
+                sistemaAfectado: this.diagSelect.sistemaAfectado,
+                origen: this.diagSelect.origen,
+                detalle: this.diagSelect.detalle
 
+            })
+        }
+    }
     async onSubmit() {
         this.msgs = [];
         console.log(this.diagnosticoForm);
@@ -90,6 +109,8 @@ export class DiagnosticoFormComponent implements OnInit {
 
 
         let body = {
+            id: this.diagSelect.id || "",
+
             codigoCie10,
             fechaDiagnostico,
             origen,
@@ -104,12 +125,19 @@ export class DiagnosticoFormComponent implements OnInit {
 
         try {
 
-            let res = await this.scmService.createDiagnosticos(body);
+            let res: any;
+            if (this.diagSelect) {
+                res = await this.scmService.updateDiagnosticos(body);
+
+            } else {
+                res = await this.scmService.createDiagnosticos(body);
+
+            }
 
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: "Diagnóstico creado",
+                    summary: this.diagSelect ? "Diagnóstico creado" : 'Diagnóstico Actualizado',
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {

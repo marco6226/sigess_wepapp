@@ -63,6 +63,9 @@ export class CasosMedicosService {
     createDiagnosticos(diagnosticos) {
         return this.http.post(`${endPoints.scm}diagnosticos`, diagnosticos, this.getRequestHeaders(this.headers)).toPromise();
     }
+    updateDiagnosticos(diagnosticos) {
+        return this.http.put(`${endPoints.scm}diagnosticos`, diagnosticos, this.getRequestHeaders(this.headers)).toPromise();
+    }
 
     getLogs(documento): any {
         return this.http.get<[]>(`${endPoints.scm}logs/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
