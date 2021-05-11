@@ -486,14 +486,7 @@
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('casoMedicoLaboral').value < 2">
-                    <div class="input-field">
-                        <p-dropdown [options]="caseMotivoOptionListt[casoMedicoForm.get('casoMedicoLaboral').value]"
-                            formControlName="razon" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Motivo</label>
-                    </div>
-                </div>
+                
 
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -852,22 +845,7 @@
                     <th>Fecha final
 
                     </th>
-                    <th>Actividad
-
-                    </th>
-                    <th>Descripcion de la actividad
-
-                    </th>
-                    <th>Fecha proyectada
-
-                    </th>
-
-                    <th>Responsable Empresa
-
-                    </th>
-                    <th>Responsable Externo
-
-                    </th>
+                   
 
                 </tr>
                 <tr *ngIf="false">
@@ -891,9 +869,7 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
                     </td>
-                    <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'charge', 'contains')">
-                    </td>
+                    
 
 
                 </tr>
@@ -907,20 +883,7 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
-                        ""}}</td>
-                    <td>{{case.actividad}}</td>
-                    <td>{{case.descripcion_act}}</td>
-                    <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
-                        ""}}</td>
-                    <td>{{case.responsableExterno}}</td>
-                    <td>{{case.actividad}}</td>
-                    <td>{{case.descripcion_act}}</td>
-                    <td>{{case.fecha_proyectada | date:'dd/MM/yyyy'}}</td>
-                    <td>{{case.responsableEmpresa?.primerApellido || ""}} {{case.responsableEmpresa?.primerNombre ||
-                        ""}}</td>
-                    <td>{{case.responsableExterno}}</td>
+                   
 
 
                 </tr>

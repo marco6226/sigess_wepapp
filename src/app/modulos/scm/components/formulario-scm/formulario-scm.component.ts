@@ -490,7 +490,7 @@ export class FormularioScmComponent implements OnInit {
             status = await this.scmService.edit(this.casoMedicoForm.value);
         }
 
-        if (status) {
+        if (this.adicionar) {
             this.msgs.push({
                 severity: "success",
                 summary: "Caso medico creado",
@@ -502,6 +502,16 @@ export class FormularioScmComponent implements OnInit {
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
+        
+        else if (this.actualizar) {
+            this.msgs.push({
+              severity: 'success',
+              summary: 'Caso medico actualizado',
+              detail: `Se ha actualizado correctamente el Caso medico  ${status}`
+              
+            });
+           
+          }
 
 
 
@@ -779,6 +789,7 @@ export class FormularioScmComponent implements OnInit {
 
     async modifyCase() {
         this.consultar = false;
+        this.actualizar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
 
@@ -838,7 +849,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     createCaso() {
-
+        this.adicionar = true;
         this.createCase = true;
 
     }
