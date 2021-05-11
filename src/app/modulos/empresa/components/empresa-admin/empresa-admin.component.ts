@@ -61,7 +61,7 @@ export class EmpresaAdminComponent implements OnInit {
             'nit': [null],
             'direccion': [null],
             'telefono': [null],
-            'numero_sedes': [null],
+            'numeroSedes': [null],
             'email': [null],
             'web': [null],
             'arlId': [null],
@@ -129,7 +129,7 @@ export class EmpresaAdminComponent implements OnInit {
             'nit': this.empresaSelect.nit,
             'direccion': this.empresaSelect.direccion,
             'telefono': this.empresaSelect.telefono,
-            'numero_sedes': this.empresaSelect.numero_sedes,
+            'numeroSedes': this.empresaSelect.numeroSedes,
             'email': this.empresaSelect.email,
             'web': this.empresaSelect.web,
             'arlId': this.empresaSelect.arl == null ? null : this.empresaSelect.arl.id,
@@ -149,7 +149,7 @@ export class EmpresaAdminComponent implements OnInit {
         empresa.nit = this.form.value.nit;
         empresa.direccion = this.form.value.direccion;
         empresa.telefono = this.form.value.telefono;
-        empresa.numero_sedes = this.form.value.numero_sedes;
+        empresa.numeroSedes = this.form.value.numeroSedes;
         empresa.email = this.form.value.email;
         empresa.web = this.form.value.web;
 
@@ -183,7 +183,7 @@ export class EmpresaAdminComponent implements OnInit {
                     this.empresasList[i].nit = empresa.nit;
                     this.empresasList[i].direccion = empresa.direccion;
                     this.empresasList[i].telefono = empresa.telefono;
-                    this.empresasList[i].numero_sedes = empresa.numero_sedes;
+                    this.empresasList[i].numeroSedes = empresa.numeroSedes;
                     this.empresasList[i].email = empresa.email;
                     this.empresasList[i].web = empresa.web;
 

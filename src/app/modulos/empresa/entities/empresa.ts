@@ -11,7 +11,7 @@ export class Empresa {
   telefono: string;
   email: string;
   web: string;
-  numero_sedes: Number;
+  numeroSedes: Number;
   arl: Arl;
   ciiu: Ciiu;
   logo:string;
