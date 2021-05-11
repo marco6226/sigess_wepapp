@@ -251,13 +251,13 @@ export class HomeComponent implements OnInit {
             datasets: [
                 {
                     label: 'Sedes programadas',
-                    backgroundColor: '#283593',
+                    backgroundColor: '#efb810',
                     borderColor: '#1E88E5',
                     data: []
                 },
                 {
                     label: 'Sedes Inspeccionadas',
-                    backgroundColor: '#E91E63',
+                    backgroundColor: '#81D8D0',
                     borderColor: '#7CB342',
                     data: []
                 }

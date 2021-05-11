@@ -953,7 +953,7 @@
                         <th>Responsable Externo</th>
                         <th>Resultado</th>
 
-                        <th style="width:8rem"></th>
+                        <th style="width:10rem"></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-seguimiento let-editing="editing" let-ri="rowIndex">
@@ -1047,9 +1047,9 @@
                         </td>
                         <td style="text-align:center">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                                (click)="onRowEditInit(seguimiento)" class="p-button-rounded p-button-text"></button>
+                                (click)="onRowEditInit(seguimiento)"  title="Editar Seguimiento" class="p-button-rounded p-button-text"></button>
                             <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                                (click)="onRowCloneInit(seguimiento)"
+                                (click)="onRowCloneInit(seguimiento)"  title="Clonar Seguimiento"
                                 class="p-button-rounded p-button-text p-mr-2"></button>
                             <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                                 (click)="onRowEditSave(seguimiento)"
@@ -1059,7 +1059,7 @@
                                 class="p-button-rounded p-button-text p-button-danger"></button>
 
                             <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash"
-                                (click)="deleteSeguimiento(seguimiento.id)"
+                                (click)="deleteSeguimiento(seguimiento.id)" title="Borrar Seguimiento"
                                 class="p-button-rounded p-button-text p-button-danger"></button>
                         </td>
                     </tr>
@@ -1133,7 +1133,7 @@
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                                 (click)="onRowEditInit(tratamiento)" class="p-button-rounded p-button-text"> </button>
                             <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                                (click)="onRowEditSave(tratamiento,'tratamiento')"
+                                (click)="onRowEditSave(tratamiento,'tratamiento')" title="Editar Tratamiento" 
                                 class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                             <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                                 (click)="onRowEditCancel(tratamiento, ri)"
@@ -1144,7 +1144,7 @@
 
                 <ng-template pTemplate="summary" let-rowData>
                     <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
-                        (click)="nuevoTratamiento()">
+                        (click)="nuevoTratamiento()" label="Nuevo Tratamiento">
 
                     </button>
 
