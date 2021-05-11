@@ -90,7 +90,7 @@ export class FormularioScmComponent implements OnInit {
     conceptoRehabilitacion = [
         { label: "--Seleccione--", value: null },
         { label: "Favorable", value: "1" },
-        { label: "No favorable", value: "2" },
+        { label: "Desfavorable", value: "2" },
         { label: "No Aplica", value: "3" },
     ]
 
