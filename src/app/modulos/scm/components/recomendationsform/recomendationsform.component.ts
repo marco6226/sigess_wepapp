@@ -146,7 +146,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             actividad,
             descripcion_act,
             fecha_proyectada,
-
+            test: [{ name: "leonardo" }, { name: "marco" }]
 
         }
 

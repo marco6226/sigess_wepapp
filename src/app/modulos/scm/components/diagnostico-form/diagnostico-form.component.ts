@@ -109,7 +109,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
 
 
         let body = {
-            id: this.diagSelect.id || "",
+            id: "",
 
             codigoCie10,
             fechaDiagnostico,
@@ -127,6 +127,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
 
             let res: any;
             if (this.diagSelect) {
+                body.id = this.diagSelect.id;
                 res = await this.scmService.updateDiagnosticos(body);
 
             } else {
