@@ -73,9 +73,9 @@ export class FormularioScmComponent implements OnInit {
     empresa: Empresa;
     tipoTratamientos: SelectItem[] = [
         { value: 0, label: "Otros" },
-        { value: 1, label: "Cirujia" },
-        { value: 2, label: "Conceptos Medicos" },
-        { value: 3, label: "Otros" },
+        { value: 1, label: "Cirugía" },
+        { value: 2, label: "Conceptos Médicos" },
+        { value: 3, label: "Paraclínicos" },
         { value: 4, label: "Medicamentos" }];
     recomendationList = [];
     logsList = []
