@@ -17,10 +17,11 @@ import { CoreModule } from '../core/core.module';
 import { LogmodalComponent } from './components/logmodal/logmodal.component';
 import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnostico-form.component';
 import { DocumentosModule } from '../ado/documentos.module';
+import { PclComponent } from './components/pcl/pcl.component';
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe, PclComponent],
     imports: [
         CommonModule,
         ComunModule,

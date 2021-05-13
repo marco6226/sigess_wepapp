@@ -330,6 +330,7 @@ export class FormularioScmComponent implements OnInit {
             region: [null],
             ciudad: [null],
             entidadEmitida: [null],
+            entidadEmitidaTwo: [null],
             cargo: [null],
             descripcionCompletaCaso: [null, /*Validators.required*/],
             fechaCalificacion: [null, /*Validators.required*/],
@@ -338,8 +339,10 @@ export class FormularioScmComponent implements OnInit {
             diagnostico: [null, /*Validators.required*/],
             origen: [null, /*Validators.required*/],
             fechaConceptRehabilitacion: [null, /*Validators.required*/],
+            fechaConceptRehabilitacionTwo: [null, /*Validators.required*/],
             emisionPclFecha: [null, /*Validators.required*/],
             entidadEmiteConcepto: [null, /*Validators.required*/],
+            entidadEmiteConceptoTwo: [null, /*Validators.required*/],
             justification: [null, /*Validators.required*/],
             statusDeCalificacion: [null, /*Validators.required*/],
             casoMedicoLaboral: [null, /*Validators.required*/],
@@ -348,6 +351,8 @@ export class FormularioScmComponent implements OnInit {
             entidadEmiteCalificacion: [null, /*Validators.required*/],
             pclEmitEntidad: [null, /*Validators.required*/],
             conceptRehabilitacion: [null, /*Validators.required*/],
+            conceptRehabilitacionTwo: [null, /*Validators.required*/],
+
             descripcionCargo: [null]
         });
         console.log(this.casoMedicoForm)
@@ -796,11 +801,13 @@ export class FormularioScmComponent implements OnInit {
         this.consultar = false;
         this.actualizar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
-        let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
+        let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, fechaConceptRehabilitacionTwo, ...caseFiltered } = this.caseSelect
 
         this.casoMedicoForm.patchValue(caseFiltered);
         this.casoMedicoForm.patchValue({
             fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion),
+            fechaConceptRehabilitacionTwo: fechaConceptRehabilitacionTwo == null ? null : new Date(fechaConceptRehabilitacionTwo),
+
             fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
             emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha)
         })

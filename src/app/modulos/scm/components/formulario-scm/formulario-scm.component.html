@@ -584,6 +584,45 @@
                         <label for="" class="active">Entidad</label>
                     </div>
                 </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-12">
+                    <div class="input-field">
+
+                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                            formControlName="conceptRehabilitacionTwo" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Concepto de rehabilitación2</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
+                        <label for="" class="active">Fecha de concepto de rehabilitación2</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true"
+                            [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
+                            formControlName="entidadEmiteConceptoTwo" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad que emite el concepto de
+                            rehabilitación2</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true"
+                            [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
+                            formControlName="entidadEmitidaTwo" class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad2</label>
+                    </div>
+                </div>
             </div>
 
             <div class="ui-g p-py-2">
@@ -1229,7 +1268,9 @@
         </p-table>
     </p-tabPanel>
 
-
+    <p-tabPanel header="PCL" *ngIf="caseSelect">
+        <app-pcl [diagnosticos]="this.diagnosticoList"> </app-pcl>
+    </p-tabPanel>
 
 </p-tabView>
 
