@@ -38,6 +38,7 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Area } from "app/modulos/empresa/entities/area";
 import { Usuario } from "app/modulos/empresa/entities/usuario";
+import { epsorarl } from "../../entities/eps-or-arl";
 
 @Component({
     selector: "app-formulario-scm",
@@ -179,6 +180,7 @@ export class FormularioScmComponent implements OnInit {
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
+    entity: epsorarl = { EPS: [], ARL: [] };
     caseOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
@@ -228,15 +230,13 @@ export class FormularioScmComponent implements OnInit {
     ]
     constructor(
         private empleadoService: EmpleadoService,
-        private fb: FormBuilder,
+        fb: FormBuilder,
         private sesionService: SesionService,
-        private domSanitizer: DomSanitizer,
         private comunService: ComunService,
         private cargoService: CargoService,
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
-        private empresaService: EmpresaService,
     ) {
 
         this.empresa = this.sesionService.getEmpresa();
@@ -329,6 +329,7 @@ export class FormularioScmComponent implements OnInit {
             pcl: [null, /*Validators.required*/],
             region: [null],
             ciudad: [null],
+            entidadEmitida: [null],
             cargo: [null],
             descripcionCompletaCaso: [null, /*Validators.required*/],
             fechaCalificacion: [null, /*Validators.required*/],
@@ -415,7 +416,9 @@ export class FormularioScmComponent implements OnInit {
             this.epsList.push({ label: "--Seleccione--", value: null });
             (<Eps[]>data).forEach((eps) => {
                 this.epsList.push({ label: eps.nombre, value: eps.id });
+
             });
+            this.entity.EPS = this.epsList;
         });
 
         this.comunService.findAllArl().then((data) => {
@@ -424,10 +427,12 @@ export class FormularioScmComponent implements OnInit {
             (<Arl[]>data).forEach((arl) => {
                 this.arlList.push({ label: arl.nombre, value: arl.id });
             });
+            this.entity.ARL = this.arlList;
+
         });
 
 
-
+        console.log(this.entity);
         this.cargoService.findAll().then((resp) => {
             this.cargoList = [];
             this.cargoList.push({ label: "--Seleccione--", value: null });
@@ -502,16 +507,16 @@ export class FormularioScmComponent implements OnInit {
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
-        
+
         else if (this.actualizar) {
             this.msgs.push({
-              severity: 'success',
-              summary: 'Caso medico actualizado',
-              detail: `Se ha actualizado correctamente el Caso medico  ${status}`
-              
+                severity: 'success',
+                summary: 'Caso medico actualizado',
+                detail: `Se ha actualizado correctamente el Caso medico  ${status}`
+
             });
-           
-          }
+
+        }
 
 
 

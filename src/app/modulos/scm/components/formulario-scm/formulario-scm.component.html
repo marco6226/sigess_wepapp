@@ -486,7 +486,7 @@
                         <label for="" class="active">Caso de mesa laboral</label>
                     </div>
                 </div>
-                
+
 
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -574,6 +574,14 @@
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite el concepto de
                             rehabilitación</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
+                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad</label>
                     </div>
                 </div>
             </div>
@@ -845,7 +853,7 @@
                     <th>Fecha final
 
                     </th>
-                   
+
 
                 </tr>
                 <tr *ngIf="false">
@@ -869,7 +877,7 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
                     </td>
-                    
+
 
 
                 </tr>
@@ -883,7 +891,7 @@
                     <td>{{case.recomendaciones}}</td>
                     <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
                     <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-                   
+
 
 
                 </tr>
@@ -1010,9 +1018,10 @@
                         </td>
                         <td style="text-align:center">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                                (click)="onRowEditInit(seguimiento)"  title="Editar Seguimiento" class="p-button-rounded p-button-text"></button>
+                                (click)="onRowEditInit(seguimiento)" title="Editar Seguimiento"
+                                class="p-button-rounded p-button-text"></button>
                             <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                                (click)="onRowCloneInit(seguimiento)"  title="Clonar Seguimiento"
+                                (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento"
                                 class="p-button-rounded p-button-text p-mr-2"></button>
                             <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                                 (click)="onRowEditSave(seguimiento)"
@@ -1046,9 +1055,10 @@
             <p-table [value]="tratamientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Tipo de intervencion</th>
-                        <th>Descripcion</th>
-                        <th>Fecha</th>
+                        <th pSortableColumn="tipoIntervencion">Tipo de intervencion</th>
+                        <th pSortableColumn="descripcion">Descripcion</th>
+                        <th pSortableColumn="fecha">Fecha</th>
+                        <th pSortableColumn="tipo">Tipo</th>
 
 
                         <th style="width:8rem"></th>
@@ -1091,12 +1101,34 @@
                                     {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
                                 </ng-template>
                             </p-cellEditor>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <div class="input-field">
+
+                                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                                            class="select-material" styleClass="select-material">
+                                        </p-dropdown>
+                                        <label for="" class="active">Concepto de rehabilitación</label>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+
+                                    <div class="input-field">
+
+                                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                                            class="select-material" styleClass="select-material">
+                                        </p-dropdown>
+                                        <label for="" class="active">Concepto de rehabilitación</label>
+                                    </div>
+                                </ng-template>
+
+                            </p-cellEditor>
                         </td>
                         <td style="text-align:center">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                                 (click)="onRowEditInit(tratamiento)" class="p-button-rounded p-button-text"> </button>
                             <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                                (click)="onRowEditSave(tratamiento,'tratamiento')" title="Editar Tratamiento" 
+                                (click)="onRowEditSave(tratamiento,'tratamiento')" title="Editar Tratamiento"
                                 class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                             <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                                 (click)="onRowEditCancel(tratamiento, ri)"
