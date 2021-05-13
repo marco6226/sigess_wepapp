@@ -1140,27 +1140,28 @@
                                     {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
                                 </ng-template>
                             </p-cellEditor>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <div class="input-field">
 
-                                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
-                                            class="select-material" styleClass="select-material">
+                        </td>
+                        <td>
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+
+                                    <div class="input-field">
+                                        <p-dropdown [filter]="true" [options]="tipoTratamientos" class="select-material"
+                                            [(ngModel)]="tratamiento.tipo" styleClass="select-material">
                                         </p-dropdown>
-                                        <label for="" class="active">Concepto de rehabilitación</label>
                                     </div>
                                 </ng-template>
                                 <ng-template pTemplate="output">
 
                                     <div class="input-field">
-
-                                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
-                                            class="select-material" styleClass="select-material">
+                                        <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos"
+                                            class="select-material" [(ngModel)]="tratamiento.tipo"
+                                            styleClass="select-material">
                                         </p-dropdown>
-                                        <label for="" class="active">Concepto de rehabilitación</label>
                                     </div>
                                 </ng-template>
-
                             </p-cellEditor>
                         </td>
                         <td style="text-align:center">
