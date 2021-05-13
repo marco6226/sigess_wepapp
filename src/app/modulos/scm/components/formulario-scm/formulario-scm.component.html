@@ -552,7 +552,12 @@
                 <div class="ui-g-12 p-mb-2">
                     <h5 class="title-header">Conceptos de rehabilitación</h5>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-1">                    
+                        
+                        <h2> 1. </h2>
+                    
+                </div>
+                <div class="ui-g-2">
                     <div class="input-field">
 
                         <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
@@ -562,6 +567,7 @@
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
+                <div class="dropdown-divider"></div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
@@ -588,15 +594,19 @@
                         <label for="" class="active">Entidad</label>
                     </div>
                 </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g-1">
+                    
+                    <h2> 2. </h2>
+                
+            </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <div class="input-field">
 
                         <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
                             formControlName="conceptRehabilitacionTwo" class="select-material"
                             styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Concepto de rehabilitación2</label>
+                        <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
@@ -604,7 +614,7 @@
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
-                        <label for="" class="active">Fecha de concepto de rehabilitación2</label>
+                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
@@ -615,7 +625,7 @@
                             styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite el concepto de
-                            rehabilitación2</label>
+                            rehabilitación</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
@@ -624,7 +634,7 @@
                             [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
                             formControlName="entidadEmitidaTwo" class="select-material" styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Entidad2</label>
+                        <label for="" class="active">Entidad</label>
                     </div>
                 </div>
             </div>
