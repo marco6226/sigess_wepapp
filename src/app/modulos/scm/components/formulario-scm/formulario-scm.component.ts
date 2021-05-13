@@ -72,6 +72,7 @@ export class FormularioScmComponent implements OnInit {
     empleado: Empleado;
     empresa: Empresa;
     tipoTratamientos: SelectItem[] = [
+        { label: "--Seleccione--", value: null },
         { value: 0, label: "Otros" },
         { value: 1, label: "Cirugía" },
         { value: 2, label: "Conceptos Médicos" },
@@ -106,10 +107,12 @@ export class FormularioScmComponent implements OnInit {
 
         ],
         [
+            { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
             { label: "ARL", value: "ARL" },
         ],
         [
+            { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
             { label: "ARL", value: "ARL" },
         ],
