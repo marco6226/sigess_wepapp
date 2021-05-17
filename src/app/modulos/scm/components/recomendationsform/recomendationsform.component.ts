@@ -19,6 +19,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     empleado: Empleado;
     @Output() eventClose = new EventEmitter<any>()
     @Input() id: any;
+    @Input() entity: epsorarl;
     @Input() recoSelect: any;
     entit = [
         { label: 'Entidad  que emite', value: null },
@@ -70,7 +71,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             fechaInicio: [null, Validators.required],
             responsableExterno: [null],
             fechaExpiracion: [null, Validators.required],
-
+            entidadEmitida: [null],
             status: [null],
             actividad: [null],
             descripcionAct: [null],
@@ -127,8 +128,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             actividad,
             descripcionAct,
             fechaProyectada,
-            responsableExterno
-
+            responsableExterno,
+            entidadEmitida
         } = this.recomendation.value;
 
         let body = {
@@ -136,7 +137,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             entidadEmitRecomendaciones: entidadEmitRecomendaciones,
 
             tipo: tipo,
-
+            entidadEmitida,
             fechaInicio,
             actionPlanList: this.accions,
             fechaExpiracion,
@@ -165,7 +166,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: this.recoSelect ? "Recomendacion creada" : "Recomendacion actualizada",
+                    summary: this.recoSelect ? "Recomendacion actualizada" : "Recomendacion Creada",
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
@@ -200,6 +201,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
                 actionPlanList: this.recoSelect.actionPlanList,
                 actividad: this.recoSelect.actividad,
                 descripcionAct: this.recoSelect.descripcionAct,
+                entidadEmitida: this.recoSelect.entidadEmitida,
                 fechaProyectada: this.recoSelect.fechaProyectada == null ? null : new Date(this.recoSelect.fecha_proyectada),
                 recomendaciones: this.recoSelect.recomendaciones,
             })
@@ -273,6 +275,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
 }
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { epsorarl } from "../../entities/eps-or-arl";
 /*
  * Raise the value exponentially
  * Takes an exponent argument that defaults to 1.

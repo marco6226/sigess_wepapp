@@ -56,6 +56,7 @@ export class FormularioScmComponent implements OnInit {
     styleMap: { [key: string]: string } = {};
     value;
     msgs: Message[];
+    recoClick: boolean = false;
     edad;
     incapacidades = [];
     imagenesList = [];

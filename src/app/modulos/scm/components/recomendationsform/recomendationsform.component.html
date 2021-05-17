@@ -11,7 +11,7 @@
                     <h5 class="title-header p-mb-2">Recomendaciones</h5>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-5">
+                <div class="ui-g-12 ui-md-6 ui-lg-6">
                     <div class="input-field">
                         <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones"
                             class="select-material" styleClass="select-material" required>
@@ -22,7 +22,17 @@
                         id="username2-help" class="p-invalid">Obligatorio</small>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-6" *ngIf="entity">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true"
+                            [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]"
+                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad</label>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-4 ui-lg-4">
                     <div class="input-field">
 
                         <p-dropdown [options]="typeList" formControlName="tipo" class="select-material"
@@ -188,7 +198,8 @@
                     </ng-template>
 
                     <ng-template pTemplate="summary" let-rowData>
-                        <button pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()" label="Crear Plan de Acción">
+                        <button pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()"
+                            label="Crear Plan de Acción">
 
                         </button>
 
