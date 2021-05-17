@@ -82,7 +82,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
                 codigoCie10: this.diagSelect.codigoCie10,
                 diagnostico: this.diagSelect.diagnostico,
                 fechaDiagnostico: this.diagSelect.fechaDiagnostico == null ? null : new Date(this.diagSelect.fechaDiagnostico),
-                sistemaAfectado: this.diagSelect.sistemaAfectado,
+                sistemaAfectado: this.diagSelect.sistemaAfectado.id,
                 origen: this.diagSelect.origen,
                 detalle: this.diagSelect.detalle
 
