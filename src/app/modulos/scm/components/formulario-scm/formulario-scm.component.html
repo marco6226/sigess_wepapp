@@ -548,7 +548,16 @@
                         <label for="" class="active">Entidad que emite la calificación origen</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+
+                <div class="ui-g-12 p-mb-2">
+                    <h5 class="title-header">Conceptos de rehabilitación</h5>
+                </div>
+                <div class="ui-g-1">                    
+                        
+                        <h2> 1. </h2>
+                    
+                </div>
+                <div class="ui-g-2">
                     <div class="input-field">
 
                         <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
@@ -558,7 +567,8 @@
                         <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="dropdown-divider"></div>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
@@ -566,7 +576,7 @@
                         <label for="" class="active">Fecha de concepto de rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-dropdown [filter]="true"
                             [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
@@ -576,7 +586,7 @@
                             rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
                             formControlName="entidadEmitida" class="select-material" styleClass="select-material">
@@ -584,26 +594,30 @@
                         <label for="" class="active">Entidad</label>
                     </div>
                 </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-12">
+                <div class="ui-g-1">
+                    
+                    <h2> 2. </h2>
+                
+            </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <div class="input-field">
 
                         <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
                             formControlName="conceptRehabilitacionTwo" class="select-material"
                             styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Concepto de rehabilitación2</label>
+                        <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
-                        <label for="" class="active">Fecha de concepto de rehabilitación2</label>
+                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-dropdown [filter]="true"
                             [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
@@ -611,16 +625,16 @@
                             styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite el concepto de
-                            rehabilitación2</label>
+                            rehabilitación</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <div class="input-field">
                         <p-dropdown [filter]="true"
                             [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
                             formControlName="entidadEmitidaTwo" class="select-material" styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Entidad2</label>
+                        <label for="" class="active">Entidad</label>
                     </div>
                 </div>
             </div>
@@ -745,6 +759,10 @@
             </ng-template>
         </p-table>
 
+    </p-tabPanel>
+
+    <p-tabPanel header="PCL" *ngIf="caseSelect">
+        <app-pcl [diagnosticos]="this.diagnosticoList"> </app-pcl>
     </p-tabPanel>
 
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
@@ -1094,10 +1112,11 @@
             <p-table [value]="tratamientos" dataKey="id" editMode="row">
                 <ng-template pTemplate="header">
                     <tr>
+                        <th pSortableColumn="tipo">Tipo</th>
                         <th pSortableColumn="tipoIntervencion">Tipo de intervencion</th>
                         <th pSortableColumn="descripcion">Descripcion</th>
                         <th pSortableColumn="fecha">Fecha</th>
-                        <th pSortableColumn="tipo">Tipo</th>
+                        
 
 
                         <th style="width:8rem"></th>
@@ -1107,6 +1126,28 @@
                 <ng-template pTemplate="body" let-tratamiento let-editing="editing" let-ri="rowIndex">
                     <tr [pEditableRow]="tratamiento">
 
+                        <td>
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+
+                                    <div class="input-field">
+                                        <p-dropdown [filter]="true" [options]="tipoTratamientos" class="select-material"
+                                            [(ngModel)]="tratamiento.tipo" styleClass="select-material">
+                                        </p-dropdown>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+
+                                    <div class="input-field">
+                                        <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos"
+                                            class="select-material" [(ngModel)]="tratamiento.tipo"
+                                            styleClass="select-material">
+                                        </p-dropdown>
+                                    </div>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
                         <td>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
@@ -1142,28 +1183,7 @@
                             </p-cellEditor>
 
                         </td>
-                        <td>
-                            <p-cellEditor>
-
-                                <ng-template pTemplate="input">
-
-                                    <div class="input-field">
-                                        <p-dropdown [filter]="true" [options]="tipoTratamientos" class="select-material"
-                                            [(ngModel)]="tratamiento.tipo" styleClass="select-material">
-                                        </p-dropdown>
-                                    </div>
-                                </ng-template>
-                                <ng-template pTemplate="output">
-
-                                    <div class="input-field">
-                                        <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos"
-                                            class="select-material" [(ngModel)]="tratamiento.tipo"
-                                            styleClass="select-material">
-                                        </p-dropdown>
-                                    </div>
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
+                        
                         <td style="text-align:center">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                                 (click)="onRowEditInit(tratamiento)" class="p-button-rounded p-button-text"> </button>
@@ -1304,9 +1324,7 @@
         </p-table>
     </p-tabPanel>
 
-    <p-tabPanel header="PCL" *ngIf="caseSelect">
-        <app-pcl [diagnosticos]="this.diagnosticoList"> </app-pcl>
-    </p-tabPanel>
+    
 
 </p-tabView>
 
