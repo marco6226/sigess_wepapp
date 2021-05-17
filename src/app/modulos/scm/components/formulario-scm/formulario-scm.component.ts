@@ -39,7 +39,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Area } from "app/modulos/empresa/entities/area";
 import { Usuario } from "app/modulos/empresa/entities/usuario";
 import { epsorarl } from "../../entities/eps-or-arl";
-
+export interface TreeNode {
+    data?: any;
+    children?: TreeNode[];
+    leaf?: boolean;
+    expanded?: boolean;
+}
 @Component({
     selector: "app-formulario-scm",
     templateUrl: "./formulario-scm.component.html",
@@ -58,6 +63,7 @@ export class FormularioScmComponent implements OnInit {
     casoSeleccionado;
     createCase;
     casosList: any[] = [];
+    colsActionList: any[];
     numMaxImg = 3
     loadingImg = false;
     modalRecomendatios = false;
@@ -78,7 +84,7 @@ export class FormularioScmComponent implements OnInit {
         { value: 2, label: "Conceptos Médicos" },
         { value: 3, label: "Paraclínicos" },
         { value: 4, label: "Medicamentos" }];
-    recomendationList = [];
+    recomendationList: TreeNode[];
     logsList = []
     empleadosList: Empleado[];
     diagnosticoList = [];
@@ -383,6 +389,12 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.colsActionList = [
+            { field: 'status', header: 'Estado' },
+            { field: 'recomendaciones', header: 'Nombre de la recomendacion' },
+            { field: 'fechaExpiracion', header: 'Fecha Finalizacion' }
+        ];
+
         //console.log(this.caseSelect.id, "wenas");
         if (this.caseSelect) {
 
@@ -946,6 +958,10 @@ export class FormularioScmComponent implements OnInit {
         } catch (error) {
 
         }
+    }
+
+    test(t) {
+        console.log(t);
     }
 
     async deleteRecomendation(id) {

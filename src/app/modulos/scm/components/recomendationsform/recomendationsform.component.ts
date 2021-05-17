@@ -66,15 +66,15 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             entidadEmitRecomendaciones: [null, Validators.required],
             responsableEmpresaNombre: [""],
             tipo: [null, Validators.required],
-            actionPlan: [null],
+            actionPlanList: [null],
             fechaInicio: [null, Validators.required],
             responsableExterno: [null],
             fechaExpiracion: [null, Validators.required],
 
             status: [null],
             actividad: [null],
-            descripcion_act: [null],
-            fecha_proyectada: [null],
+            descripcionAct: [null],
+            fechaProyectada: [null],
             responsableEmpresa: [null],
             recomendaciones: [null, Validators.required],
 
@@ -95,12 +95,12 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     get status() { return this.recomendation.get('status'); }
     get responsableExterno() { return this.recomendation.get('responsableExterno'); }
     get actividad() { return this.recomendation.get('actividad'); }
-    get descripcion_act() { return this.recomendation.get('descripcion_act'); }
-    get fecha_proyectada() { return this.recomendation.get('fecha_proyectada'); }
+    get descripcionAct() { return this.recomendation.get('descripcionAct'); }
+    get fechaProyectada() { return this.recomendation.get('fechaProyectada'); }
     get recomendaciones() { return this.recomendation.get('recomendaciones'); }
     get fechaExpiracion() { return this.recomendation.get('fechaExpiracion'); }
     get responsableEmpresa() { return this.recomendation.get('responsableEmpresa'); }
-    get actionPlan() { return this.recomendation.get('actionPlan'); }
+    get actionPlanList() { return this.recomendation.get('actionPlanList'); }
 
     async ngOnInit() {
         if (this.recoSelect) {
@@ -125,8 +125,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             recomendaciones,
             responsableEmpresa,
             actividad,
-            descripcion_act,
-            fecha_proyectada,
+            descripcionAct,
+            fechaProyectada,
             responsableExterno
 
         } = this.recomendation.value;
@@ -138,7 +138,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             tipo: tipo,
 
             fechaInicio,
-            actionPlan: this.accions,
+            actionPlanList: this.accions,
             fechaExpiracion,
             recomendaciones,
             pkUser: this.id,
@@ -146,9 +146,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             responsableEmpresa,
             responsableExterno,
             actividad,
-            descripcion_act,
-            fecha_proyectada,
-            test: [{ name: "leonardo" }, { name: "marco" }]
+            descripcionAct,
+            fechaProyectada,
 
         }
 
@@ -170,6 +169,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
+                    this.accions = [];
                     this.recomendation.reset();
                     this.eventClose.emit()
                 }, 1000);
@@ -190,16 +190,17 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     patchFormValues() {
         console.log(this.recoSelect);
         if (this.recoSelect) {
+            this.accions = this.recoSelect.actionPlanList;
             this.recomendation.patchValue({
                 entidadEmitRecomendaciones: this.recoSelect.entidadEmitRecomendaciones,
                 tipo: this.recoSelect.tipo,
                 fechaInicio: this.recoSelect.fechaInicio == null ? null : new Date(this.recoSelect.fechaInicio),
                 responsableExterno: this.recoSelect.responsableExterno,
                 fechaExpiracion: this.recoSelect.fechaExpiracion == null ? null : new Date(this.recoSelect.fechaExpiracion),
-                actionPlan: this.recoSelect.actionPlan,
+                actionPlanList: this.recoSelect.actionPlanList,
                 actividad: this.recoSelect.actividad,
-                descripcion_act: this.recoSelect.descripcion_act,
-                fecha_proyectada: this.recoSelect.fecha_proyectada == null ? null : new Date(this.recoSelect.fecha_proyectada),
+                descripcionAct: this.recoSelect.descripcionAct,
+                fechaProyectada: this.recoSelect.fechaProyectada == null ? null : new Date(this.recoSelect.fecha_proyectada),
                 recomendaciones: this.recoSelect.recomendaciones,
             })
             this.onSelectionResponsable(this.recoSelect.responsableEmpresa)
@@ -207,6 +208,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     }
 
     onSelectionResponsable(event) {
+        console.log(event)
+        if (!event) return;
         let empleado = <Empleado>event;
         this.responsableEmpresaNombre = (empleado.primerApellido || "") + " " + (empleado.primerNombre || "");
         this.recomendation.patchValue({ responsableEmpresa: empleado.id, responsableEmpresaNombre: this.responsableEmpresaNombre })
