@@ -761,6 +761,7 @@ export class FormularioScmComponent implements OnInit {
     async onCloseModalDianostico() {
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.modalDianostico = false;
+        this.diagSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
     }

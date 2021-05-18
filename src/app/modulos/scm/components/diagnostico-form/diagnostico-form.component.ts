@@ -6,6 +6,8 @@ import { locale_es } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
 import { SesionService } from "app/modulos/core/services/sesion.service";
 import { Usuario } from '../../../empresa/entities/usuario';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ComunService } from 'app/modulos/comun/services/comun.service';
+import { Cie } from 'app/modulos/comun/entities/cie';
 
 
 @Component({
@@ -35,10 +37,11 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
     fechaActual = new Date();
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     usuario: Usuario;
-
+    cieTipo: String = "";
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
         private sesionService: SesionService,
+        private comunService: ComunService,
     ) {
         this.usuario = this.sesionService.getUsuario();
         this.diagnosticoForm = fb.group({
@@ -75,7 +78,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
         // categoryId.firstChange for comparing old and new values
     }
 
-    patchFormValues() {
+    async patchFormValues() {
         console.log(this.diagSelect);
         if (this.diagSelect) {
             this.diagnosticoForm.patchValue({
@@ -87,7 +90,14 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
                 detalle: this.diagSelect.detalle
 
             })
+            this.comunService.buscarCie(this.diagSelect.codigoCie10).then(
+                data => this.cieTipo = data[0].tipo
+            );
+        } else {
+            this.clearInputs();
+            console.log(this.diagnosticoForm.value);
         }
+
     }
     async onSubmit() {
         this.msgs = [];
@@ -138,12 +148,11 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: this.diagSelect ? "Diagnóstico creado" : 'Diagnóstico Actualizado',
+                    summary: this.diagSelect ? "Diagnóstico Actualizado" : 'Diagnóstico Creado',
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
-                    this.diagnosticoForm.reset()
-
+                    this.clearInputs();
                     this.eventClose.emit()
                 }, 1000);
             }
@@ -160,9 +169,15 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
 
     }
 
+    clearInputs() {
+        this.diagnosticoForm.reset()
+        this.cieTipo = "";
+    }
+
     test(event) {
         console.log(event);
         this.diagnosticoForm.patchValue({ diagnostico: event.nombre, codigoCie10: event.codigo })
+        this.cieTipo = event.tipo;
     }
 
     private markFormGroupTouched(formGroup: FormGroup) {

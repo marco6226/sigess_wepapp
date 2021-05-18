@@ -798,7 +798,8 @@
             </ng-template>
             <ng-template pTemplate="body" let-case>
 
-                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                <tr [pSelectableRowDisabled]="modalDianostico" [pSelectableRow]="case"
+                    class="table-row table-row-selectable">
                     <td>{{case.fechaDiagnostico | date:'dd/MM/yyyy' }}</td>
                     <td>{{case.codigoCie10 }}</td>
                     <td>{{case.sistemaAfectado?.name || ""}}</td>
@@ -810,8 +811,8 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton type="button" icon="fa fa-plus"
-                    label="Crear Diagnóstico" (click)="modalDianostico = true">
+                <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect" type="button"
+                    icon="fa fa-plus" label="Crear Diagnóstico" (click)="diagSelect = null; modalDianostico = true">
 
                 </button>
                 <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-success"

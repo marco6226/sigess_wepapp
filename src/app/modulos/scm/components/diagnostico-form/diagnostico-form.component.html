@@ -19,11 +19,10 @@
 
 
 
-            <div class="ui-g-12 ui-md-4">
+            <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <p-dropdown [options]="sistemaAfectado" formControlName="sistemaAfectado" class="select-material"
-                        styleClass="select-material">
-                    </p-dropdown>
+                    <input pInputText type="text" [value]="cieTipo">
+
                     <label for="" class="active">Sistema Afectado</label>
                     <small *ngIf="sistemaAfec.errors?.required && sistemaAfec.touched" id="username2-help"
                         class="p-invalid">Obligatorio</small>
