@@ -887,8 +887,7 @@
         </div>
 
     </p-tabPanel>
-    <p-tabPanel header="Recomendaciones" *ngIf="caseSelect" (onChange)="recoClick = !recoClick">
-        {{recoClick}}
+    <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
         <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
             [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
@@ -943,7 +942,8 @@
             </ng-template>
             <ng-template pTemplate="body" let-case>
 
-                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                <tr [pSelectableRowDisabled]="modalRecomendatios" [pSelectableRow]="case"
+                    class="table-row table-row-selectable">
                     <td>{{case.entidadEmitRecomendaciones}}</td>
                     <td>{{case.tipo }}</td>
                     <td>{{case.fechaExpiracion | recomendationstatus}}</td>
@@ -1351,7 +1351,7 @@
 </p-dialog>
 
 
-<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect && recoSelect" [(visible)]="modalRecomendatios"
+<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios"
     [style]="{width: '75vw'}" [baseZIndex]="10000">
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity"
         (eventClose)="onCloseModalrecomendation()">

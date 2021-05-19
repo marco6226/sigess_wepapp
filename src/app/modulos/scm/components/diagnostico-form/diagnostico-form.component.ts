@@ -48,7 +48,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             codigoCie10: [null, Validators.required],
             diagnostico: [null, Validators.required],
             fechaDiagnostico: [null, Validators.required],
-            sistemaAfectado: [null, Validators.required],
+            sistemaAfectado: [null],
             origen: [null, Validators.required],
             detalle: [null, Validators.required],
 

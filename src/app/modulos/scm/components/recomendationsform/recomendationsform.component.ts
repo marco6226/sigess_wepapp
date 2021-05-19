@@ -106,10 +106,17 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     async ngOnInit() {
         if (this.recoSelect) {
             this.patchFormValues()
+        } else {
+            this.clearInputs();
         }
 
     }
 
+
+    clearInputs() {
+        this.recomendation.reset()
+        this.accions = [];
+    }
     async onSubmit() {
         this.msgs = [];
         console.log(this.recomendation.value);
@@ -206,6 +213,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
                 recomendaciones: this.recoSelect.recomendaciones,
             })
             this.onSelectionResponsable(this.recoSelect.responsableEmpresa)
+        } else {
+            this.clearInputs();
         }
     }
 
