@@ -123,7 +123,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         if (!this.recomendation.valid) {
             return this.markFormGroupTouched(this.recomendation);
         }
-        console.log(this.recomendation.value);
+        this.accions.map(act => act.responsableEmpresa = act.responsableEmpresa.id)
+        console.log(this.accions);
         let {
 
             entidadEmitRecomendaciones,
@@ -199,6 +200,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         console.log(this.recoSelect);
         if (this.recoSelect) {
             this.accions = this.recoSelect.actionPlanList;
+            this.accions.map(act => act.responsableEmpresa = this.onSelectionResponsable(act.responsableEmpresa))
             this.recomendation.patchValue({
                 entidadEmitRecomendaciones: this.recoSelect.entidadEmitRecomendaciones,
                 tipo: this.recoSelect.tipo,
@@ -212,7 +214,6 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
                 fechaProyectada: this.recoSelect.fechaProyectada == null ? null : new Date(this.recoSelect.fecha_proyectada),
                 recomendaciones: this.recoSelect.recomendaciones,
             })
-            this.onSelectionResponsable(this.recoSelect.responsableEmpresa)
         } else {
             this.clearInputs();
         }
@@ -223,7 +224,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         if (!event) return;
         let empleado = <Empleado>event;
         this.responsableEmpresaNombre = (empleado.primerApellido || "") + " " + (empleado.primerNombre || "");
-        this.recomendation.patchValue({ responsableEmpresa: empleado.id, responsableEmpresaNombre: this.responsableEmpresaNombre })
+        return empleado;
     }
 
     buscarEmpleado(event) {
