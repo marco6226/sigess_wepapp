@@ -85,7 +85,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
                 codigoCie10: this.diagSelect.codigoCie10,
                 diagnostico: this.diagSelect.diagnostico,
                 fechaDiagnostico: this.diagSelect.fechaDiagnostico == null ? null : new Date(this.diagSelect.fechaDiagnostico),
-                sistemaAfectado: this.diagSelect.sistemaAfectado.id,
+                sistemaAfectado: this.diagSelect.sistemaAfectado,
                 origen: this.diagSelect.origen,
                 detalle: this.diagSelect.detalle
 
@@ -112,7 +112,6 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             sistemaAfectado,
             fechaDiagnostico,
             detalle,
-
             origen
 
         } = this.diagnosticoForm.value;
@@ -126,7 +125,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             origen,
             diagnostico,
             detalle,
-            sistemaAfectado,
+            sistemaAfectado: this.cieTipo,
             pkCase: this.caseId,
             pkUser: this.id,
             creadoPor: this.usuario.email,

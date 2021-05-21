@@ -802,7 +802,7 @@
                     class="table-row table-row-selectable">
                     <td>{{case.fechaDiagnostico | date:'dd/MM/yyyy' }}</td>
                     <td>{{case.codigoCie10 }}</td>
-                    <td>{{case.sistemaAfectado?.name || ""}}</td>
+                    <td>{{case.sistemaAfectado || ""}}</td>
                     <td>{{case.diagnostico}}</td>
                     <td>{{case.detalle}}</td>
                     <td>{{case.origen}}</td>
