@@ -761,8 +761,9 @@
 
     </p-tabPanel>
 
-    <p-tabPanel header="PCL" *ngIf="caseSelect">
-        <app-pcl [diagnosticos]="this.diagnosticoList"> </app-pcl>
+    <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
+        <app-pcl [diagnosticos]="this.diagnosticoList" [emitPclentity]="emitPclentity" [pclOptionList]="pclOptionList">
+        </app-pcl>
     </p-tabPanel>
 
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">

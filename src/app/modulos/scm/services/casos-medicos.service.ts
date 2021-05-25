@@ -111,6 +111,13 @@ export class CasosMedicosService {
         return this.http.get<any[]>(`${endPoints.scm}tratamiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
+    //pcl
+    createPcl(pcl): any {
+        return this.http.post<[]>(`${endPoints.pcl}`, pcl, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
+
+
 
     findByFilter(filterQuery?: FilterQuery) {
         // console.log(filterQuery, "filtro linea 71");
