@@ -762,7 +762,8 @@
     </p-tabPanel>
 
     <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
-        <app-pcl [diagnosticos]="this.diagnosticoList" [emitPclentity]="emitPclentity" [pclOptionList]="pclOptionList">
+        <app-pcl [diagnosticos]="this.diagnosticoList" [emitPclentity]="emitPclentity" [pclOptionList]="pclOptionList"
+            (eventClose)="onCloseModalDianostico()">
         </app-pcl>
     </p-tabPanel>
 

@@ -39,6 +39,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Area } from "app/modulos/empresa/entities/area";
 import { Usuario } from "app/modulos/empresa/entities/usuario";
 import { epsorarl } from "../../entities/eps-or-arl";
+import { Subject } from "rxjs";
 export interface TreeNode {
     data?: any;
     children?: TreeNode[];
@@ -52,6 +53,7 @@ export interface TreeNode {
     providers: [DirectorioService, EmpresaService]
 })
 export class FormularioScmComponent implements OnInit {
+
     empresasList: Empresa[];
     styleMap: { [key: string]: string } = {};
     value;
@@ -763,7 +765,6 @@ export class FormularioScmComponent implements OnInit {
         this.modalDianostico = false;
         this.diagSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
-
     }
     onSelectionBP(event) {
         let empleado = <Empleado>event;

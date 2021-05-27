@@ -113,10 +113,18 @@ export class CasosMedicosService {
 
     //pcl
     createPcl(pcl): any {
-        return this.http.post<[]>(`${endPoints.pcl}`, pcl, this.getRequestHeaders(this.headers)).toPromise();
+        return this.http.post<[]>(`${endPoints.scm}pcl/`, pcl, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-
+    getListPcl(): any {
+        return this.http.get<[]>(`${endPoints.scm}pcl/`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+    updatePcl(Pcl) {
+        return this.http.put(`${endPoints.scm}pcl/`, Pcl, this.getRequestHeaders(this.headers)).toPromise();
+    }
+    deletePcl(pcl) {
+        return this.http.put(`${endPoints.scm}pcl/delete`, pcl, this.getRequestHeaders(this.headers)).toPromise();
+    }
 
 
     findByFilter(filterQuery?: FilterQuery) {

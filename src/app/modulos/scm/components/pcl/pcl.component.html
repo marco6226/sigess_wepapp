@@ -1,5 +1,10 @@
+<p-growl [value]="msgs"></p-growl>
+
+
 <div class="card">
-    <h5 class="title-header p-mb-2">Tratamientos en el caso</h5>
+    <h5 class="title-header p-mb-2">PCL de Diagnosticos</h5>
+    <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-rounded p-button-text"
+        (click)="resetDiags()"> </button>
     <p-table [value]="pclList" dataKey="id" editMode="row">
         <ng-template pTemplate="header">
             <tr>
@@ -28,7 +33,7 @@
                         <ng-template pTemplate="input">
 
                             <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="diagnosticos" class="select-material"
+                                <p-dropdown [filter]="true" [options]="diagList" class="select-material"
                                     [(ngModel)]="pcl.diag" styleClass="select-material">
                                 </p-dropdown>
                             </div>
@@ -36,29 +41,30 @@
                         <ng-template pTemplate="output">
 
                             <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos"
-                                    class="select-material" [(ngModel)]="pcl.tipo" styleClass="select-material">
+                                <p-dropdown readonly="true" [filter]="true" [options]="diagList" class="select-material"
+                                    [(ngModel)]="pcl.diag" styleClass="select-material">
                                 </p-dropdown>
                             </div>
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
+
                 <td>
                     <p-cellEditor>
-
                         <ng-template pTemplate="input">
 
                             <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="tipoTratamientos" class="select-material"
-                                    [(ngModel)]="pcl.tipo" styleClass="select-material">
+                                <p-dropdown [filter]="true" [options]="pclOptionList" class="select-material"
+                                    [(ngModel)]="pcl.pcl" styleClass="select-material">
                                 </p-dropdown>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="output">
 
                             <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos"
-                                    class="select-material" [(ngModel)]="pcl.tipo" styleClass="select-material">
+                                <p-dropdown readonly="true" [filter]="true" [options]="pclOptionList"
+                                    class="select-material" [(ngModel)]="pcl.pcl" styleClass="select-material">
                                 </p-dropdown>
                             </div>
                         </ng-template>
@@ -67,41 +73,59 @@
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="pcl.tipoIntervencion">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{pcl.tipoIntervencion}}
+                            <input pInputText type="text" [(ngModel)]="pcl.porcentajePcl">
                         </ng-template>
                     </p-cellEditor>
-                </td>
-                <td>
+
                     <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="pcl.descripcion">
-                        </ng-template>
                         <ng-template pTemplate="output">
-                            {{pcl.descripcion}}
+                            <input pInputText type="text" [(ngModel)]="pcl.porcentajePcl">
                         </ng-template>
+
                     </p-cellEditor>
                 </td>
+
 
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-calendar [touchUI]="true" [(ngModel)]="pcl.fecha" dateFormat="dd/mm/yy"
+                            <p-calendar [touchUI]="true" [(ngModel)]="pcl.emisionPclFecha" dateFormat="dd/mm/yy"
                                 placeholder="dd/MM/yyyy" [locale]="localeES">
                             </p-calendar>
 
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{pcl.fecha | date : 'dd/MM/yyyy'}}
+                            {{pcl.emisionPclFecha | date : 'dd/MM/yyyy'}}
                         </ng-template>
                     </p-cellEditor>
 
                 </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
 
+                            <div class="input-field">
+                                <p-dropdown [filter]="true" [options]="emitPclentity" class="select-material"
+                                    [(ngModel)]="pcl.entidadEmitePcl" styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div class="input-field">
+                                <p-dropdown readonly="true" [filter]="true" [options]="emitPclentity"
+                                    class="select-material" [(ngModel)]="pcl.entidadEmitePcl"
+                                    styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
                 <td style="text-align:center">
-
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"> </button>
+                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        class="p-button-rounded p-button-text" (click)="onRowDelete(pcl)"> </button>
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                         (click)="onRowEditSave(pcl,'tratamiento')" title="Editar Tratamiento"
                         class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
@@ -112,12 +136,11 @@
             </tr>
         </ng-template>
 
+
+
         <ng-template pTemplate="summary" let-rowData>
-            <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
-                (click)="nuevoTratamiento()" label="Nuevo Tratamiento">
-
+            <button pButton type="button" icon="fa fa-plus" (click)="nuevoTratamiento()" label="Nueva Pcl">
             </button>
-
         </ng-template>
     </p-table>
 </div>
