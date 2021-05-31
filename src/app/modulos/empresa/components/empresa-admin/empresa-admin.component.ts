@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-
-import { Empresa } from './../../entities/empresa'
-import { SesionService } from 'app/modulos/core/services/sesion.service'
-import { config } from 'app/config'
+import { Component, OnInit,ViewChild  } from '@angular/core';
+import { Empresa } from './../../entities/empresa';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { config } from 'app/config';
 import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { Arl } from 'app/modulos/comun/entities/arl';
 import { Ciiu } from 'app/modulos/comun/entities/ciiu';
-import { EmpresaService } from './../../services/empresa.service'
-import { ComunService } from 'app/modulos/comun/services/comun.service'
-import { FilterQuery } from 'app/modulos/core/entities/filter-query'
-
-import { SelectItem, Message } from 'primeng/primeng'
-
+import { EmpresaService } from './../../services/empresa.service';
+import { ComunService } from 'app/modulos/comun/services/comun.service';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { SelectItem, Message } from 'primeng/primeng';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -21,6 +19,11 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class EmpresaAdminComponent implements OnInit {
 
+    @ViewChild('imgAvatar', { static: false }) imgAvatar: HTMLImageElement;
+    @ViewChild('inputFile', { static: false }) inputFile: HTMLInputElement;
+    imageChangedEvent: any = '';
+    croppedImage: any = '';
+    visibleDlg: boolean;
     msgs: Message[] = [];
     empresaSelect: Empresa;
     arlList: SelectItem[] = [];
@@ -29,10 +32,12 @@ export class EmpresaAdminComponent implements OnInit {
     visibleForm: boolean;
     form: FormGroup;
     isUpdate: boolean;
+    canvas: any;
 
     loading: boolean;
     totalRecords: number;
     fields: string[] = [
+        'logo',
         'id',
         'razonSocial',
         'nombreComercial',
@@ -54,7 +59,11 @@ export class EmpresaAdminComponent implements OnInit {
         private comunService: ComunService,
         private sesionService: SesionService,
     ) {
+        this.canvas = document.createElement('canvas');
+    this.canvas.width = 48;
+    this.canvas.height = 48;
         this.form = fb.group({
+            'logo': [null],
             'id': [null],
             'nombreComercial': [null, Validators.required],
             'razonSocial': [null, Validators.required],
@@ -90,6 +99,32 @@ export class EmpresaAdminComponent implements OnInit {
 
     }
 
+    abrirDlg() {
+        this.visibleDlg = true;
+        setTimeout(() => {
+            console.log(this.inputFile);
+          }, 1000);
+        (<any>this.inputFile).nativeElement.click();
+      }
+    
+      aceptarImg() {
+        this.visibleDlg = false;
+        if (this.isUpdate) {
+        this.empresaSelect.logo = this.croppedImage;
+        }
+        else{
+            let empresa = new Empresa();
+            empresa.logo = this.croppedImage;
+        }
+      }
+    
+      fileChangeEvent(event: any): void {
+        this.imageChangedEvent = event;
+      }
+      imageCropped(event: ImageCroppedEvent) {
+        this.croppedImage = event.base64;
+      }
+
     lazyLoad(event: any) {
         this.loading = true;
         let filterQuery = new FilterQuery();
@@ -120,9 +155,14 @@ export class EmpresaAdminComponent implements OnInit {
     }
 
     showUpdateForm() {
+        
         this.visibleForm = true;
         this.isUpdate = true;
+        let ctx = this.canvas.getContext("2d");
+        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 100, 100);
+        this.empresaSelect.logo = this.canvas.toDataURL();
         this.form.patchValue({
+            'logo': this.empresaSelect.logo,
             'id': this.empresaSelect.id,
             'nombreComercial': this.empresaSelect.nombreComercial,
             'razonSocial': this.empresaSelect.razonSocial,
@@ -135,6 +175,8 @@ export class EmpresaAdminComponent implements OnInit {
             'arlId': this.empresaSelect.arl == null ? null : this.empresaSelect.arl.id,
             'ciiuId': this.empresaSelect.ciiu == null ? null : this.empresaSelect.ciiu.id
         });
+        console.log(this.empresaSelect.logo);
+       // console.log(this.canvas.toDataURL());
     }
 
     closeForm() {
@@ -143,6 +185,10 @@ export class EmpresaAdminComponent implements OnInit {
 
     onSubmit() {
         let empresa = new Empresa();
+        console.log(empresa);
+        let ctx = this.canvas.getContext("2d");
+        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 100, 100);
+        empresa.logo = this.canvas.toDataURL();
         empresa.id = this.form.value.id;
         empresa.nombreComercial = this.form.value.nombreComercial;
         empresa.razonSocial = this.form.value.razonSocial;
@@ -163,6 +209,9 @@ export class EmpresaAdminComponent implements OnInit {
         }
 
         if (this.isUpdate) {
+            let ctx = this.canvas.getContext("2d");
+        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
+        empresa.logo = this.canvas.toDataURL();
             this.empresaService.update(empresa).then(
                 resp => this.manageResponse(<Empresa>resp)
             );
@@ -171,6 +220,8 @@ export class EmpresaAdminComponent implements OnInit {
                 resp => this.manageResponse(<Empresa>resp)
             );
         }
+        console.log(this.canvas.toDataURL());
+        console.log(empresa);
     }
 
     manageResponse(empresa: Empresa) {
@@ -179,14 +230,14 @@ export class EmpresaAdminComponent implements OnInit {
             this.empresasList = this.empresasList.slice();
         } else {
             for (let i = 0; i < this.empresasList.length; i++) {
-                if (this.empresasList[i].id == empresa.id) {
+                if (this.empresasList[i].id === empresa.id) {
                     this.empresasList[i].nit = empresa.nit;
                     this.empresasList[i].direccion = empresa.direccion;
                     this.empresasList[i].telefono = empresa.telefono;
                     this.empresasList[i].numeroSedes = empresa.numeroSedes;
                     this.empresasList[i].email = empresa.email;
                     this.empresasList[i].web = empresa.web;
-
+                    this.empresasList[i].logo = empresa.logo;
                     this.empresasList[i].nombreComercial = empresa.nombreComercial;
                     this.empresasList[i].razonSocial = empresa.razonSocial;
                     this.empresasList[i].arl = empresa.arl;
@@ -194,6 +245,7 @@ export class EmpresaAdminComponent implements OnInit {
                     break;
                 }
             }
+            console.log(this.empresasList);
         }
         this.msgs = [];
         this.msgs.push({

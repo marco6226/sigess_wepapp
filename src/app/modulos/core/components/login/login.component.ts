@@ -161,9 +161,11 @@ export class LoginComponent implements OnInit {
 		if (this.password === 'password') {
 		  this.password = 'text';
 		  this.show = true;
+		  console.log(this.password);
 		} else {
 		  this.password = 'password';
 		  this.show = false;
+		  console.log(this.password);
 		}
 	  }
 

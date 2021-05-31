@@ -92,6 +92,9 @@ export class UsuarioPreferenciasComponent implements OnInit {
 
   abrirDlg() {
     this.visibleDlg = true;
+    setTimeout(() => {
+      console.log(this.inputFile);
+    }, 1000);
     (<any>this.inputFile).nativeElement.click();
   }
 
