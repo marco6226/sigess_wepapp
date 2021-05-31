@@ -94,8 +94,8 @@
                 <button *sTienePermiso="'SCM_PUT_CASE'" pButton type="button" icon="fa fa-pencil" label="Modificar"
                     class="ui-button-success" (click)="openCase()" [disabled]="!caseSelect"></button>
 
-                <button *sTienePermiso="'SCM_LIST_CASE'" pButton type="button" icon="fa fa-pencil" label="Consultar"
-                    class="ui-button-success" (click)="openCaseConsultar()" [disabled]="!caseSelect"></button>
+                <button *sTienePermiso="'SCM_LIST_CASE'" pButton type="button" icon="fa fa-search" label="Consultar"
+                    class="ui-button-warning" (click)="openCaseConsultar()" [disabled]="!caseSelect"></button>
                 <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                 (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
             </ng-template>
