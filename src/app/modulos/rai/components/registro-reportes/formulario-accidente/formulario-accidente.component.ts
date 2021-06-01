@@ -20,6 +20,7 @@ import {
 } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones'
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { Empresa } from 'app/modulos/empresa/entities/empresa';
 
 @Component({
     selector: 's-form-accidente',
@@ -71,7 +72,8 @@ export class FormularioAccidenteComponent implements OnInit {
         this.tipoAccidenteList = defaultItem.concat(<SelectItem[]>tipoAccidente);
     }
 
-    async ngOnInit() {
+    ngOnInit() {
+        this.infoEmpresa()
         this.form = this.fb.group({
             id: this.reporte.id,
             tipo: this.reporte.tipo,
@@ -159,7 +161,9 @@ export class FormularioAccidenteComponent implements OnInit {
             cargoResponsable: this.reporte.cargoResponsable,
             fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte)
         });
-        console.log(this.reporte.areaAccidente);
+
+
+
         if (this.reporte.testigoReporteList != null) {
             this.testigoReporteList = [];
             for (let i = 0; i < this.reporte.testigoReporteList.length; i++) {
@@ -170,9 +174,21 @@ export class FormularioAccidenteComponent implements OnInit {
             this.testigoReporteList = this.testigoReporteList.slice();
         }
 
-        console.log(await this.empresaService.findSelected());
         this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
         this.cdRef.detectChanges();
+
+    }
+
+    async infoEmpresa() {
+
+        let empresa = await this.empresaService.findSelected() as Empresa;
+        this.form.patchValue({
+            tipoIdentificacionEmpresa: "NI",
+            identificacionEmpresa: empresa.nit,
+            direccionEmpresa: empresa.direccion,
+            telefonoEmpresa: empresa.telefono,
+            emailEmpresa: empresa.email
+        })
 
     }
 
