@@ -817,7 +817,7 @@
                     icon="fa fa-plus" label="Crear Diagnóstico" (click)="diagSelect = null; modalDianostico = true">
 
                 </button>
-                <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-success"
+                <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                     (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
 
 
@@ -962,7 +962,7 @@
                     label="Crear recomendación" (click)="openModalRecomendantions()">
                 </button>
 
-                <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-success"
+                <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                     (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
 
                 <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
@@ -1093,7 +1093,7 @@
 
                             <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash"
                                 (click)="deleteSeguimiento(seguimiento.id)" title="Borrar Seguimiento"
-                                class="p-button-rounded p-button-text p-button-danger"></button>
+                                class="ui-button-danger"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -1226,10 +1226,10 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 3rem"></th>
-                    <th pSortableColumn="name">Nombre de la recomendacion <p-sortIcon field="name"></p-sortIcon>
+                    <th pSortableColumn="name">Recomendación <p-sortIcon field="name"></p-sortIcon>
                     </th>
-                    <th>Fecha de Finalizacion</th>
                     <th>Estado</th>
+                    <th>Fecha de Finalización</th>
 
                 </tr>
             </ng-template>

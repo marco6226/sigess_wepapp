@@ -298,7 +298,7 @@ import { epsorarl } from "../../entities/eps-or-arl";
 @Pipe({ name: 'recomendationstatus' })
 export class RecomendationStatusPipe implements PipeTransform {
     transform(value: string, exponent?: string): string {
-        let status = new Date(value) < new Date() ? 'Vigente' : 'Expirado';
+        let status = new Date(value) > new Date() ? 'Vigente' : 'Expirado';
         return status;
     }
 }
