@@ -532,8 +532,9 @@ export class HomeComponent implements OnInit {
          this.planeadas = data7[0][1];
          this.inptotal = (this.ejecutadas / this.planeadas) * 100;
         
-    }else
+    } else
              this.data7 == null;
+             console.log(this.ejecutadas,this.planeadas)
     }
     async cumplimientoAT() {
         

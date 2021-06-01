@@ -7,6 +7,7 @@
         [totalRecords]="totalRecords" [loading]="loading">
         <ng-template pTemplate="header">
             <tr>
+                <th rowspan="2"></th>
                 <th pSortableColumn="razonSocial">Razón Social
                     <p-sortIcon field="razonSocial"></p-sortIcon>
                 </th>
@@ -81,6 +82,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-empresa>
             <tr [pSelectableRow]="empresa">
+                <td class="td-avatar">
+                    <i *ngIf="!empresa.logo" class="fa fa-user-circle" aria-hidden="true"></i>
+                    <img *ngIf="empresa.logo" [src]="empresa.logo" style="border-radius: 50%;width: 100px;
+                    height: 100px;" />
+                </td>
                 <td>{{empresa.razonSocial}}</td>
                 <td>{{empresa.nombreComercial}}</td>
                 <td>{{empresa.nit}}</td>
@@ -111,7 +117,18 @@
 <p-dialog [(visible)]="visibleForm" width="380" modal="true" responsive="true" header="Datos de empresa">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="ui-g">
-
+            
+            <div class="flex-container">
+                <div>
+                  <i *ngIf="!empresaSelect?.logo" class="fa fa-user-circle" style="font-size: 128px;color:#3ba2dc;" aria-hidden="true"></i>
+                  <img *ngIf="empresaSelect?.logo" [src]="empresaSelect?.logo" style="border-radius: 50%;max-width: 200px" #imgAvatar/>
+                  <div class="img-select" (click)="abrirDlg()">
+                    <div>
+                      <i class="fa fa-camera" style="font-size: 32px; color:#aaa;" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+            </div>
             <div class="ui-g-12 ui-md-3">
                 Razón social
             </div>
@@ -193,3 +210,17 @@
         </footer>
     </form>
 </p-dialog>
+<p-dialog [(visible)]="visibleDlg" modal="true">
+    <p-header>
+      <button (click)="inputFile.click()" pButton label="Subir foto" icon="fa fa-upload" class="ui-button-secondary"></button>
+      <button (click)="aceptarImg()" icon="fa fa-check" pButton label="Aceptar"></button>
+      <input type="file" #inputFile style="visibility: hidden;width: 0px;height: 0px;" (change)="fileChangeEvent($event)" />
+    </p-header>
+    <div style="width: 600px;height: 600px">
+      <div class="previsual-crop">
+        <img [src]="croppedImage" />
+      </div>
+      <image-cropper *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
+        height="480" [resizeToWidth]="128" format="jpg" (imageCropped)="imageCropped($event)"></image-cropper>
+    </div>
+  </p-dialog>

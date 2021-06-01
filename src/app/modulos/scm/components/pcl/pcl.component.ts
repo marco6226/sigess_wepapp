@@ -45,7 +45,7 @@ export class PclComponent implements OnInit {
 
     async ngOnInit() {
         this.diagnosticos.map(diag => {
-            this.diagList.push({ value: diag.id.toString(), label: diag.detalle });
+            this.diagList.push({ value: diag.id.toString(), label: diag.diagnostico });
         })
         console.log(this.diagnosticos);
         this.pclList = await this.scmService.getListPcl();
@@ -93,7 +93,7 @@ export class PclComponent implements OnInit {
     async resetDiags() {
         this.diagList = [];
         this.diagnosticos.map(diag => {
-            this.diagList.push({ value: diag.id.toString(), label: diag.detalle });
+            this.diagList.push({ value: diag.id.toString(), label: diag.diagnostico });
         }).every
         console.log(this.diagnosticos);
         this.pclList = await this.scmService.getListPcl();

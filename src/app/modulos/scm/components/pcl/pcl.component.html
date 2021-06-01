@@ -2,13 +2,13 @@
 
 
 <div class="card">
-    <h5 class="title-header p-mb-2">PCL de Diagnosticos</h5>
+    <h5 class="title-header p-mb-2">PCL de Diagnósticos</h5>
     <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-rounded p-button-text"
         (click)="resetDiags()"> </button>
     <p-table [value]="pclList" dataKey="id" editMode="row">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="tipo">Diagnostico</th>
+                <th pSortableColumn="tipo">Diagnóstico</th>
                 <th pSortableColumn="tipoIntervencion">Pcl</th>
                 <th pSortableColumn="descripcion">% de la PCL</th>
                 <th pSortableColumn="fecha">Fecha de emisión de la PCL</th>
@@ -125,13 +125,13 @@
                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                         class="p-button-rounded p-button-text"> </button>
                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                        class="p-button-rounded p-button-text" (click)="onRowDelete(pcl)"> </button>
+                        class="ui-button-danger" (click)="onRowDelete(pcl)"> </button>
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                         (click)="onRowEditSave(pcl,'tratamiento')" title="Editar Tratamiento"
                         class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                     <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                         (click)="onRowEditCancel(pcl, ri)"
-                        class="p-button-rounded p-button-text p-button-danger"></button>
+                        class="ui-button-danger"></button>
                 </td>
             </tr>
         </ng-template>
