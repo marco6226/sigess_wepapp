@@ -1,137 +1,147 @@
 <p-growl [value]="msgs"></p-growl>
 
 <p-panel header="Datos de usuario">
-  <div class="flex-container">
-    <div>
-      <i *ngIf="!usuario.avatar" class="fa fa-user-circle" style="font-size: 128px;color:#3ba2dc;" aria-hidden="true"></i>
-      <img *ngIf="usuario.avatar" [src]="usuario.avatar" style="border-radius: 50%;" #imgAvatar/>
-      <div class="img-select" (click)="abrirDlg()">
+    <div class="flex-container">
         <div>
-          <i class="fa fa-camera" style="font-size: 32px; color:#aaa;" aria-hidden="true"></i>
+            <i *ngIf="!usuario.avatar" class="fa fa-user-circle" style="font-size: 128px;color:#3ba2dc;"
+                aria-hidden="true"></i>
+            <img *ngIf="usuario.avatar" [src]="usuario.avatar" style="border-radius: 50%;" #imgAvatar />
+            <div class="img-select" (click)="abrirDlg()">
+                <div>
+                    <i class="fa fa-camera" style="font-size: 32px; color:#aaa;" aria-hidden="true"></i>
+                </div>
+            </div>
         </div>
-      </div>
+        <div style="width: 100%;">
+            <input class="email-input" type="text" pInputText [(ngModel)]="usuario.email" disabled="true" />
+            <br /><br />
+            <a style="margin-left: 10px;" (click)="abrirCambioPasswd()">Cambiar contraseña</a>
+        </div>
     </div>
-    <div style="width: 100%;">
-      <input class="email-input" type="text" pInputText [(ngModel)]="usuario.email" disabled="true" />
-      <br/><br/>
-      <a style="margin-left: 10px;" (click)="abrirCambioPasswd()">Cambiar contraseña</a>
-    </div>
-  </div>
-  <p-footer>
-    <button *sTienePermiso="'ADM_PUT_UPDATEUSR'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success"
-      label="Actualizar" [disabled]="!usuario.email" (click)="actualizarUsuario()"></button>
-  </p-footer>
+    <p-footer>
+        <button *sTienePermiso="'ADM_PUT_UPDATEUSR'" pButton type="button" icon="fa fa-pencil-square-o"
+            class="ui-button-success" label="Actualizar" [disabled]="!usuario.email"
+            (click)="actualizarUsuario()"></button>
+    </p-footer>
 </p-panel>
 
 
 
-<br/>
+<br />
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
-  <p-panel header="Datos de empleado">
-    <div class="ui-g">
+<form [formGroup]="form" *ngIf="form">
+    <p-panel header="Datos de empleado">
+        <div class="ui-g">
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="pnombre-input" type="text" pInputText formControlName="primerNombre" required/>
-          <label for="pnombre-input">Primer nombre</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="pnombre-input" type="text" pInputText formControlName="primerNombre" required />
+                    <label for="pnombre-input">Primer nombre</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="snombre-input" type="text" pInputText formControlName="segundoNombre" />
-          <label for="snombre-input">Segundo nombre</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="snombre-input" type="text" pInputText formControlName="segundoNombre" />
+                    <label for="snombre-input">Segundo nombre</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="papellido-input" type="text" pInputText formControlName="primerApellido" required/>
-          <label for="papellido-input">Primer Apellido</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="papellido-input" type="text" pInputText formControlName="primerApellido" required />
+                    <label for="papellido-input">Primer Apellido</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="sapellido-input" type="text" pInputText formControlName="segundoApellido" />
-          <label for="sapellido-input">Segundo Apellido</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="sapellido-input" type="text" pInputText formControlName="segundoApellido" />
+                    <label for="sapellido-input">Segundo Apellido</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <p-dropdown id="tidentificacion" [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required></p-dropdown>
-          <label for="tidentificacion-input">Tipo identificación</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <p-dropdown id="tidentificacion" [options]="tipoIdentificacionList"
+                        formControlName="tipoIdentificacion" required></p-dropdown>
+                    <label for="tidentificacion-input">Tipo identificación</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="nident-input" type="text" pInputText formControlName="numeroIdentificacion" required/>
-          <label for="nident-input">Número identificación</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="nident-input" type="text" pInputText formControlName="numeroIdentificacion" required />
+                    <label for="nident-input">Número identificación</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="dirresdi-input" type="text" pInputText formControlName="direccion" />
-          <label for="dirresdi-input">Dirección residencia</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="dirresdi-input" type="text" pInputText formControlName="direccion" />
+                    <label for="dirresdi-input">Dirección residencia</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="telefono-input" type="text" pInputText formControlName="telefono1" />
-          <label for="telefono-input">Teléfono</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="telefono-input" type="text" pInputText formControlName="telefono1" />
+                    <label for="telefono-input">Teléfono</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <input id="telefono2-input" type="text" pInputText formControlName="telefono2" />
-          <label for="telefono2-input">Teléfono 2</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <input id="telefono2-input" type="text" pInputText formControlName="telefono2" />
+                    <label for="telefono2-input">Teléfono 2</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3">
-        <span class="ui-float-label">
-          <p-calendar id="fnacimiento-input" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual"
-            [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
-          <label for="fnacimiento-input">Fecha de nacimiento</label>
-        </span>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                <span class="ui-float-label">
+                    <p-calendar id="fnacimiento-input" [monthNavigator]="true" [yearNavigator]="true"
+                        [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                        formControlName="fechaNacimiento"></p-calendar>
+                    <label for="fnacimiento-input">Fecha de nacimiento</label>
+                </span>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3" style="padding-top: 16px;">
-        <s-ciudadSelector id="cresidenc" formControlName="ciudad"></s-ciudadSelector>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3" style="padding-top: 16px;">
+                <s-ciudadSelector id="cresidenc" formControlName="ciudad"></s-ciudadSelector>
+            </div>
 
-      <div class="ui-g-12 ui-md-4 ui-lg-3" style="padding-top: 20px;">
-        <p-radioButton id="genero" name="genero" value="M" label="Masculino" formControlName="genero"></p-radioButton>
-        <p-radioButton id="genero" name="genero" value="F" label="Femenino" formControlName="genero"></p-radioButton>
-      </div>
+            <div class="ui-g-12 ui-md-4 ui-lg-3" style="padding-top: 20px;">
+                <p-radioButton id="genero" name="genero" value="M" label="Masculino" formControlName="genero">
+                </p-radioButton>
+                <p-radioButton id="genero" name="genero" value="F" label="Femenino" formControlName="genero">
+                </p-radioButton>
+            </div>
 
-    </div>
+        </div>
 
-    <p-footer>
-      <button *sTienePermiso="'ADM_PUT_UPDATEEMP'" pButton type="button" icon="fa fa-pencil-square-o" class="ui-button-success"
-        label="Actualizar" [disabled]="!form.valid" (click)="actualizarEmpleado()"></button>
-    </p-footer>
-  </p-panel>
+        <p-footer>
+            <button *sTienePermiso="'ADM_PUT_UPDATEEMP'" pButton type="button" icon="fa fa-pencil-square-o"
+                class="ui-button-success" label="Actualizar" [disabled]="!form.valid"
+                (click)="actualizarEmpleado()"></button>
+        </p-footer>
+    </p-panel>
 </form>
 
 
 <p-dialog [(visible)]="visibleDlg" modal="true">
-  <p-header>
-    <button (click)="inputFile.click()" pButton label="Subir foto" icon="fa fa-upload" class="ui-button-secondary"></button>
-    <button (click)="aceptarImg()" icon="fa fa-check" pButton label="Aceptar"></button>
-    <input type="file" #inputFile style="visibility: hidden;width: 0px;height: 0px;" (change)="fileChangeEvent($event)" />
-  </p-header>
-  <div style="width: 600px;height: 600px">
-    <div class="previsual-crop">
-      <img [src]="croppedImage" />
+    <p-header>
+        <button (click)="inputFile.click()" pButton label="Subir foto" icon="fa fa-upload"
+            class="ui-button-secondary"></button>
+        <button (click)="aceptarImg()" icon="fa fa-check" pButton label="Aceptar"></button>
+        <input type="file" #inputFile style="visibility: hidden;width: 0px;height: 0px;"
+            (change)="fileChangeEvent($event)" />
+    </p-header>
+    <div style="width: 600px;height: 600px">
+        <div class="previsual-crop">
+            <img [src]="croppedImage" />
+        </div>
+        <image-cropper *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 4" height="480" [resizeToWidth]="128" format="jpg" (imageCropped)="imageCropped($event)">
+        </image-cropper>
     </div>
-    <image-cropper *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
-      height="480" [resizeToWidth]="128" format="jpg" (imageCropped)="imageCropped($event)"></image-cropper>
-  </div>
 </p-dialog>

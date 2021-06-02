@@ -1,0 +1,62 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    height: 128px;
+    align-items: center;
+}
+
+.flex-container>div {
+    margin: 10px;
+}
+
+.email-input {
+    font-size: 24px;
+    border: none;
+    border-bottom: solid thin #ccc;
+}
+
+.avatar {
+    width: 128px;
+}
+
+.img-select {
+    position: relative;
+    width: 0px;
+    height: 0px;
+    ;
+}
+
+.img-select>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    cursor: pointer;
+    width: 128px;
+    height: 64px;
+    top: -64px;
+    border-radius: 0% 0% 64px 64px;
+    background-color: #222;
+    transition: opacity 0.5s;
+    opacity: 0;
+}
+
+.img-select:hover>div {
+    opacity: 0.8;
+    height: 64px;
+}
+
+.previsual-crop {
+    position: relative;
+    width: 0px;
+    height: 20px;
+}
+
+.previsual-crop img {
+    border-radius: 50%;
+    position: absolute;
+    left: -10px;
+    z-index: 1;
+    border: solid 5px #fff;
+}

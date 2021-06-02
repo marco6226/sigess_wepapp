@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Empresa } from './../../entities/empresa';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { config } from 'app/config';
@@ -60,8 +60,8 @@ export class EmpresaAdminComponent implements OnInit {
         private sesionService: SesionService,
     ) {
         this.canvas = document.createElement('canvas');
-    this.canvas.width = 48;
-    this.canvas.height = 48;
+        this.canvas.width = 48;
+        this.canvas.height = 48;
         this.form = fb.group({
             'logo': [null],
             'id': [null],
@@ -103,27 +103,27 @@ export class EmpresaAdminComponent implements OnInit {
         this.visibleDlg = true;
         setTimeout(() => {
             console.log(this.inputFile);
-          }, 1000);
+        }, 1000);
         (<any>this.inputFile).nativeElement.click();
-      }
-    
-      aceptarImg() {
+    }
+
+    aceptarImg() {
         this.visibleDlg = false;
         if (this.isUpdate) {
-        this.empresaSelect.logo = this.croppedImage;
+            this.empresaSelect.logo = this.croppedImage;
         }
-        else{
+        else {
             let empresa = new Empresa();
             empresa.logo = this.croppedImage;
         }
-      }
-    
-      fileChangeEvent(event: any): void {
+    }
+
+    fileChangeEvent(event: any): void {
         this.imageChangedEvent = event;
-      }
-      imageCropped(event: ImageCroppedEvent) {
+    }
+    imageCropped(event: ImageCroppedEvent) {
         this.croppedImage = event.base64;
-      }
+    }
 
     lazyLoad(event: any) {
         this.loading = true;
@@ -155,12 +155,12 @@ export class EmpresaAdminComponent implements OnInit {
     }
 
     showUpdateForm() {
-        
+
         this.visibleForm = true;
         this.isUpdate = true;
-        let ctx = this.canvas.getContext("2d");
-        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 100, 100);
-        this.empresaSelect.logo = this.canvas.toDataURL();
+        //let ctx = this.canvas.getContext("2d");
+        //ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
+        //this.empresaSelect.logo = this.canvas.toDataURL();
         this.form.patchValue({
             'logo': this.empresaSelect.logo,
             'id': this.empresaSelect.id,
@@ -176,7 +176,7 @@ export class EmpresaAdminComponent implements OnInit {
             'ciiuId': this.empresaSelect.ciiu == null ? null : this.empresaSelect.ciiu.id
         });
         console.log(this.empresaSelect.logo);
-       // console.log(this.canvas.toDataURL());
+        // console.log(this.canvas.toDataURL());
     }
 
     closeForm() {
@@ -210,8 +210,8 @@ export class EmpresaAdminComponent implements OnInit {
 
         if (this.isUpdate) {
             let ctx = this.canvas.getContext("2d");
-        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
-        empresa.logo = this.canvas.toDataURL();
+            ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
+            empresa.logo = this.canvas.toDataURL();
             this.empresaService.update(empresa).then(
                 resp => this.manageResponse(<Empresa>resp)
             );
