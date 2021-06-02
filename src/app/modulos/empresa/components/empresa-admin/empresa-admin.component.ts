@@ -60,8 +60,8 @@ export class EmpresaAdminComponent implements OnInit {
         private sesionService: SesionService,
     ) {
         this.canvas = document.createElement('canvas');
-        this.canvas.width = 48;
-        this.canvas.height = 48;
+        this.canvas.width = 256;
+        this.canvas.height = 256;
         this.form = fb.group({
             'logo': [null],
             'id': [null],
@@ -187,7 +187,7 @@ export class EmpresaAdminComponent implements OnInit {
         let empresa = new Empresa();
         console.log(empresa);
         let ctx = this.canvas.getContext("2d");
-        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 100, 100);
+        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 256, 256);
         empresa.logo = this.canvas.toDataURL();
         empresa.id = this.form.value.id;
         empresa.nombreComercial = this.form.value.nombreComercial;
@@ -210,7 +210,7 @@ export class EmpresaAdminComponent implements OnInit {
 
         if (this.isUpdate) {
             let ctx = this.canvas.getContext("2d");
-            ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
+            ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 256, 256);
             empresa.logo = this.canvas.toDataURL();
             this.empresaService.update(empresa).then(
                 resp => this.manageResponse(<Empresa>resp)

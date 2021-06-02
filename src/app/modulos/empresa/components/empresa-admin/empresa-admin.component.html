@@ -84,8 +84,8 @@
             <tr [pSelectableRow]="empresa">
                 <td class="td-avatar">
                     <i *ngIf="!empresa.logo" class="fa fa-user-circle" aria-hidden="true"></i>
-                    <img *ngIf="empresa.logo" [src]="empresa.logo" style="border-radius: 50%;width: 100px;
-                    height: 100px;" />
+                    <img *ngIf="empresa.logo" [src]="empresa.logo" style="border-radius: 50%;width: 128px;
+                    height: 128px;" />
                 </td>
                 <td>{{empresa.razonSocial}}</td>
                 <td>{{empresa.nombreComercial}}</td>
@@ -225,8 +225,13 @@
         <div class="previsual-crop">
             <img [src]="croppedImage" />
         </div>
-        <image-cropper *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-            [aspectRatio]="4 / 4" height="480" [resizeToWidth]="128" format="jpg" (imageCropped)="imageCropped($event)">
-        </image-cropper>
+        <image-cropper 
+            [imageChangedEvent]="imageChangedEvent" 
+            [maintainAspectRatio]="true" 
+            [aspectRatio]="45/17"
+            [resizeToWidth]="256" 
+            format="png" 
+            (imageCropped)="imageCropped($event)" 
+            ></image-cropper>
     </div>
 </p-dialog>

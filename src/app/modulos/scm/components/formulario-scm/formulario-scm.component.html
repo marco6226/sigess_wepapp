@@ -488,67 +488,6 @@
                 </div>
 
 
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [options]="pclOptionList" formControlName="pcl" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">PCL</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <div class="input-field">
-                        <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
-                            class="form-material" id="porcentajePcl" />
-                        <label for="" class="active">% de la PCL</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" formControlName="emisionPclFecha"
-                            dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha de emisión de la PCL</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="pclEmitEntidad"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite la PCL</label>
-                    </div>
-                </div>
-
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="pclCalificacionList"
-                            formControlName="statusDeCalificacion" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Estado de calificación origen</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" formControlName="fechaCalificacion" [locale]="localeES"
-                            dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha de calificación origen</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('pcl').value != 0">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmiteCalificacion"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite la calificación origen</label>
-                    </div>
-                </div>
-
                 <div class="ui-g-12 p-mb-2">
                     <h5 class="title-header">Conceptos de rehabilitación</h5>
                 </div>
