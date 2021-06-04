@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { SelectItem } from 'primeng/primeng';
 import { Observable, Subscription } from 'rxjs';
+import { epsorarl } from '../../entities/eps-or-arl';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class PclComponent implements OnInit {
     @Input() pclOptionList: any[];
     @Input() emitPclentity: any[];
     @Output() eventClose = new EventEmitter<any>()
+    @Input() entity: epsorarl;
 
 
 

@@ -124,14 +124,13 @@
                 <td style="text-align:center">
                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                         class="p-button-rounded p-button-text"> </button>
-                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                        class="ui-button-danger" (click)="onRowDelete(pcl)"> </button>
+                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" class="ui-button-danger"
+                        (click)="onRowDelete(pcl)"> </button>
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                         (click)="onRowEditSave(pcl,'tratamiento')" title="Editar Tratamiento"
                         class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                     <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-                        (click)="onRowEditCancel(pcl, ri)"
-                        class="ui-button-danger"></button>
+                        (click)="onRowEditCancel(pcl, ri)" class="ui-button-danger"></button>
                 </td>
             </tr>
         </ng-template>
@@ -201,6 +200,15 @@
                             class="select-material" styleClass="select-material">
                         </p-dropdown>
                         <label for="" class="active">Entidad que emite la PCL</label>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-6" *ngIf="entity">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true" [options]="entity[pclForm.get('entidadEmitePcl').value]"
+                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad</label>
                     </div>
                 </div>
 
