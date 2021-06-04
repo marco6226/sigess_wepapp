@@ -19,7 +19,12 @@ export class PclComponent implements OnInit {
     @Output() eventClose = new EventEmitter<any>()
     @Input() entity: epsorarl;
 
-
+    pclCalificacionList = [
+        { label: "--Seleccione--", value: null },
+        { label: "En Proceso", value: "1" },
+        { label: "En Firme", value: "2" },
+        { label: "En Apelación", value: "0" }
+    ]
 
     diagList: SelectItem[] = [{ label: "--Seleccione--", value: null }];
     localeES: any = locale_es;
@@ -40,6 +45,10 @@ export class PclComponent implements OnInit {
             pcl: [null, /*Validators.required*/],
             emisionPclFecha: [null, /*Validators.required*/],
             entidadEmitePcl: [null, /*Validators.required*/],
+            entidadEmiteCalificacion: [null, /*Validators.required*/],
+            statusDeCalificacion: [null, /*Validators.required*/],
+            fechaCalificacion: [null, /*Validators.required*/],
+            entidadEmitida: [null, /*Validators.required*/],
 
         });
 
