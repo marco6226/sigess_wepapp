@@ -13,7 +13,10 @@
                 <th pSortableColumn="descripcion">% de la PCL</th>
                 <th pSortableColumn="fecha">Fecha de emisión de la PCL</th>
                 <th pSortableColumn="fecha">Entidad que emite la PCL</th>
-
+                <th pSortableColumn="fecha">Entidad</th>
+                <th pSortableColumn="fecha">Fecha de calificación origen</th>
+                <th pSortableColumn="fecha">Estado de calificación origen</th>
+                <th pSortableColumn="fecha">Entidad que emite la calificación origen</th>
 
 
 
@@ -115,6 +118,83 @@
                             <div class="input-field">
                                 <p-dropdown readonly="true" [filter]="true" [options]="emitPclentity"
                                     class="select-material" [(ngModel)]="pcl.entidadEmitePcl"
+                                    styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+
+                            <div class="input-field">
+                                <p-dropdown [filter]="true" [options]="entity[pcl.entidadEmitePcl]"
+                                    class="select-material" [(ngModel)]="pcl.entidadEmitida"
+                                    styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div class="input-field">
+                                <p-dropdown readonly="true" [filter]="true" [options]="entity[pcl.entidadEmitePcl]"
+                                    class="select-material" [(ngModel)]="pcl.entidadEmitida"
+                                    styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-calendar [touchUI]="true" [(ngModel)]="pcl.fechaCalificacion" dateFormat="dd/mm/yy"
+                                placeholder="dd/MM/yyyy" [locale]="localeES">
+                            </p-calendar>
+
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{pcl.fechaCalificacion | date : 'dd/MM/yyyy'}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+
+                            <div class="input-field">
+                                <p-dropdown [filter]="true" [options]="pclCalificacionList" class="select-material"
+                                    [(ngModel)]="pcl.statusDeCalificacion" styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div class="input-field">
+                                <p-dropdown readonly="true" [filter]="true" [options]="pclCalificacionList"
+                                    class="select-material" [(ngModel)]="pcl.statusDeCalificacion"
+                                    styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+
+                            <div class="input-field">
+                                <p-dropdown [filter]="true" [options]="emitPclentity" class="select-material"
+                                    [(ngModel)]="pcl.entidadEmitida" styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div class="input-field">
+                                <p-dropdown readonly="true" [filter]="true" [options]="emitPclentity"
+                                    class="select-material" [(ngModel)]="pcl.entidadEmitida"
                                     styleClass="select-material">
                                 </p-dropdown>
                             </div>
