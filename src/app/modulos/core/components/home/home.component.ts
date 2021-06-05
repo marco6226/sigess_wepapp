@@ -531,10 +531,14 @@ export class HomeComponent implements OnInit {
          this.ejecutadas = data7[0][0];
          this.planeadas = data7[0][1];
          this.inptotal = (this.ejecutadas / this.planeadas) * 100;
+         console.log(this.ejecutadas,this.planeadas);
         
-    } else
+    } else {
              this.data7 == null;
-             console.log(this.ejecutadas,this.planeadas)
+             this.inptotal = 0;
+             console.log("el cumplimiento de inp es 0");
+            }
+             
     }
     async cumplimientoAT() {
         
