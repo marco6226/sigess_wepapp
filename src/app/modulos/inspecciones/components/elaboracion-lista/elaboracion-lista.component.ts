@@ -215,7 +215,7 @@ export class ElaboracionListaComponent implements OnInit {
         listInp.descripcion = this.form.value.descripcion;
         listInp.tipoLista = this.form.value.tipoLista;
         listInp.opcionCalificacionList = this.opcionesCalifList;
-
+        listInp.estado = 'activo';
         listInp.elementoInspeccionList = this.elementoInspeccionList;
         listInp.formulario = this.formularioConstructor.formulario;
         await this.verifyIntegrity(listInp);
@@ -259,11 +259,11 @@ export class ElaboracionListaComponent implements OnInit {
         listInp.elementoInspeccionList = this.elementoInspeccionList;
         listInp.formulario = this.formularioConstructor.formulario;
         let param = (actualizarVersion == false ? null : 'actualizarVersion=true');
-        if(actualizarVersion=true){
+        if(actualizarVersion==true){
             listInp.estado = 'inactivo';
             this.listaInspeccionService.update(listInp,'actualizarVersion=false')
         }
-        listInp.estado = 'activo'
+        listInp.estado = 'activo';
         this.listaInspeccionService.update(listInp, param).then(
             data => {
                 this.msgs = [];
