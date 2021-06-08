@@ -197,7 +197,7 @@ export class FormularioScmComponent implements OnInit {
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
-    entity: epsorarl = { EPS: [], ARL: [] };
+    entity: epsorarl = { EPS: [], ARL: [], AFP: [] };
     caseOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
@@ -437,6 +437,8 @@ export class FormularioScmComponent implements OnInit {
             (<Afp[]>data).forEach((afp) => {
                 this.afpList.push({ label: afp.nombre, value: afp.id });
             });
+            this.entity.AFP = this.afpList;
+
         });
 
         this.comunService.findAllEps().then((data) => {
