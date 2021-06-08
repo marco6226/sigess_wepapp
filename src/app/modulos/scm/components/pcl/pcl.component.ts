@@ -47,6 +47,7 @@ export class PclComponent implements OnInit {
             entidadEmitePcl: [null, /*Validators.required*/],
             entidadEmiteCalificacion: [null, /*Validators.required*/],
             statusDeCalificacion: [null, /*Validators.required*/],
+            entidadEmitidaCalificacion: [null, /*Validators.required*/],
             fechaCalificacion: [null, /*Validators.required*/],
             entidadEmitida: [null, /*Validators.required*/],
 
@@ -58,10 +59,8 @@ export class PclComponent implements OnInit {
         this.diagnosticos.map(diag => {
             this.diagList.push({ value: diag.id.toString(), label: diag.diagnostico });
         })
-        console.log(this.diagnosticos);
-        this.pclList = await this.scmService.getListPcl();
 
-
+        this.iniciarPcl();
     }
 
     onRowEditSave(pcl) {
@@ -70,6 +69,15 @@ export class PclComponent implements OnInit {
     }
     onRowEditCancel() { }
 
+    async iniciarPcl() {
+        this.pclList = await this.scmService.getListPcl();
+        this.pclList.map(pcl => {
+            console.log(pcl);
+            pcl.emisionPclFecha = pcl.emisionPclFecha == null ? null : new Date(pcl.emisionPclFecha);
+            pcl.fechaCalificacion = pcl.fechaCalificacion == null ? null : new Date(pcl.fechaCalificacion);
+            pcl.entidadEmitida = parseInt(pcl.entidadEmitida);
+        })
+    }
     async onRowDelete(pcl) {
         this.msgs = [];
         try {
@@ -107,7 +115,7 @@ export class PclComponent implements OnInit {
             this.diagList.push({ value: diag.id.toString(), label: diag.diagnostico });
         }).every
         console.log(this.diagnosticos);
-        this.pclList = await this.scmService.getListPcl();
+        this.iniciarPcl();
 
 
     }

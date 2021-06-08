@@ -6,6 +6,20 @@
     <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-rounded p-button-text"
         (click)="resetDiags()"> </button>
     <p-table [value]="pclList" dataKey="id" editMode="row">
+        <!--  <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col style="width:250px">
+                <col style="width:250px">
+                <col style="width:250px">
+                <col style="width:150px">
+                <col style="width:250px">
+                <col style="width:250px">
+                <col style="width:250px">
+                <col style="width:250px">
+                <col style="width:250px">
+                <col style="width:50px">
+            </colgroup>
+        </ng-template>-->
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="tipo">Diagnóstico</th>
@@ -17,6 +31,7 @@
                 <th pSortableColumn="fecha">Fecha de calificación origen</th>
                 <th pSortableColumn="fecha">Estado de calificación origen</th>
                 <th pSortableColumn="fecha">Entidad que emite la calificación origen</th>
+                <th pSortableColumn="fecha">Entidad </th>
 
 
 
@@ -52,7 +67,6 @@
                     </p-cellEditor>
                 </td>
 
-
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -73,6 +87,7 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -87,7 +102,6 @@
 
                     </p-cellEditor>
                 </td>
-
 
                 <td>
                     <p-cellEditor>
@@ -103,6 +117,7 @@
                     </p-cellEditor>
 
                 </td>
+                <!--Entidad emitida pcl-->
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -124,6 +139,7 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -146,6 +162,7 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -159,6 +176,7 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -180,13 +198,14 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
                 <td>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
 
                             <div class="input-field">
                                 <p-dropdown [filter]="true" [options]="emitPclentity" class="select-material"
-                                    [(ngModel)]="pcl.entidadEmitida" styleClass="select-material">
+                                    [(ngModel)]="pcl.entidadEmiteCalificacion" styleClass="select-material">
                                 </p-dropdown>
                             </div>
                         </ng-template>
@@ -194,13 +213,37 @@
 
                             <div class="input-field">
                                 <p-dropdown readonly="true" [filter]="true" [options]="emitPclentity"
-                                    class="select-material" [(ngModel)]="pcl.entidadEmitida"
+                                    class="select-material" [(ngModel)]="pcl.entidadEmiteCalificacion"
                                     styleClass="select-material">
                                 </p-dropdown>
                             </div>
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+
+                            <div class="input-field">
+                                <p-dropdown [filter]="true" [options]="entity[pcl.entidadEmiteCalificacion]"
+                                    class="select-material" [(ngModel)]="pcl.entidadEmitidaCalificacion"
+                                    styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+
+                            <div class="input-field">
+                                <p-dropdown readonly="true" [filter]="true"
+                                    [options]="entity[pcl.entidadEmiteCalificacion]" class="select-material"
+                                    [(ngModel)]="pcl.entidadEmitidaCalificacion" styleClass="select-material">
+                                </p-dropdown>
+                            </div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
                 <td style="text-align:center">
                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                         class="p-button-rounded p-button-text"> </button>
