@@ -131,7 +131,7 @@ export class FormularioAccidenteComponent implements OnInit {
             realizandoLaborHabitual: this.reporte.realizandoLaborHabitual,
             nombreLaborHabitual: this.reporte.nombreLaborHabitual,
             codigoLaborHabitual: this.reporte.codigoLaborHabitual,
-            horaInicioLabor: this.reporte.horaInicioLabor,
+            horaInicioLabor:  this.reporte.horaInicioLabor == null ? null : new Date(this.reporte.horaInicioLabor),
             tipoAccidente: this.reporte.tipoAccidente,
             causoMuerte: this.reporte.causoMuerte,
             zonaAccidente: this.reporte.zonaAccidente,

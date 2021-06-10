@@ -74,7 +74,7 @@ export class CiudadSelectorComponent implements OnInit, ControlValueAccessor {
     loadDepartamentosItems(departamentos: Departamento[]) {
         this.departamentosItems.splice(1, this.ciudadesItems.length);
         departamentos.forEach(depto => {
-            this.departamentosItems.push({ label: depto.nombre, value: depto.id.toString() });
+      this.departamentosItems.push({ label: depto.nombre, value: depto.id });
         });
     }
 

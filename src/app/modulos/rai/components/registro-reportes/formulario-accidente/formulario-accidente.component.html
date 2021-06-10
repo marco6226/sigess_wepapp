@@ -412,10 +412,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Hora de inicio de labores
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <input pInputText formControlName="horaInicioLabor" />
-                    </div>
-
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [timeOnly]="true"
+                            formControlName="horaInicioLabor"></p-calendar>
+                        </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Tipo {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
