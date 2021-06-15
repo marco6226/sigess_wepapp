@@ -802,26 +802,20 @@
                     <ng-template pTemplate="body" let-aus>
 
                         <tr [pSelectableRow]="aus" class="table-row table-row-selectable">
-                            <td>{{aus.fechaDesde |date:'dd/MM/yyyy' }}</td>
+                            <td>{{aus.finicio |date:'dd/MM/yyyy' }}</td>
 
-                            <td>{{aus.fechaHasta | date:'dd/MM/yyyy'}}</td>
+                            <td>{{aus.ffinal | date:'dd/MM/yyyy'}}</td>
 
-                            <td>{{aus.diasAusencia}}</td>
+                            <td>{{aus.tdias}}</td>
 
-                            <td>{{aus.causaAusentismo.nombre }}</td>
+                            <td>{{aus.tipo }}</td>
 
-                            <td>{{aus.cie?.codigo || "No definio" }}</td>
+                            <td>{{aus.codigocie || "No definio" }}</td>
 
-                            <td>{{aus.cie?.nombre || "" }}</td>
+                            <td>{{aus.diagnostico || "" }}</td>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="summary" let-rowData>
-                        <button pButton type="button" [queryParams]="{case: caseSelect.id}"
-                            [routerLink]="['/app/aus/reporteAusentismo']" icon="fa fa-plus" label="Crear Incapacidad ">
 
-                        </button>
-
-                    </ng-template>
                 </p-table>
             </div>
 

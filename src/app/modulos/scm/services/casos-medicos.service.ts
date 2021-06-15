@@ -133,6 +133,14 @@ export class CasosMedicosService {
 
 
     }
+    //aon
+    getTokenAon() {
+        return this.http.get<[]>(`${endPoints.scm}aon/`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
+    getRegistersAon(token, cc?, fechai?, fechafi?,) {
+        return this.http.get<[]>(`${endPoints.scm}aon/registers/${token}/${cc}/${fechai}/${fechafi}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
 
     public buildUrlParams(filterQuery: FilterQuery): string {
         let urlParam = '';

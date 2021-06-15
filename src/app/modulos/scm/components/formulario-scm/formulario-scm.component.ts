@@ -480,8 +480,16 @@ export class FormularioScmComponent implements OnInit {
                     this.buildPerfilesIdList();
                 }, 500);
         });
+        this.aonRegisters();
     }
 
+    async aonRegisters() {
+        let token: any = await this.scmService.getTokenAon();
+        console.log(token.message.Authorization);
+
+        let res: any = await this.scmService.getRegistersAon(token.message.Authorization, this.empleadoSelect.numeroIdentificacion, "2010-01-01", "2021-12-31");
+        this.incapacidades = res.message.data;
+    }
 
     closeForm() {
         this.caseSelect = null;
@@ -839,7 +847,6 @@ export class FormularioScmComponent implements OnInit {
 
 
 
-        this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
@@ -867,7 +874,6 @@ export class FormularioScmComponent implements OnInit {
 
         })
 
-        this.incapacidades = await this.scmService.ausentismos(this.caseSelect.pkUser.id)
 
 
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
