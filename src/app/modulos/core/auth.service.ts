@@ -28,7 +28,7 @@ export class AuthService {
     jwtHelper: JwtHelper = new JwtHelper();
     authEndPoint = endPoints.auth;
     // store the URL so we can redirect after logging in
-    redirectUrl: string = '/app/scm/list';
+    redirectUrl: string = '/app/home';
 
     constructor(
         public httpInt: HttpInt,
