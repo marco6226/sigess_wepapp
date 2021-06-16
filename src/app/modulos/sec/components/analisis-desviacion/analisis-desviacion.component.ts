@@ -23,284 +23,285 @@ import { Criteria } from '../../../core/entities/filter';
 import { jerarquia } from '../../entities/jerarquia';
 
 @Component({
-  selector: 's-analisisDesviacion',
-  templateUrl: './analisis-desviacion.component.html',
-  styleUrls: ['./analisis-desviacion.component.scss'],
-  providers: [SistemaCausaInmediataService, SistemaCausaAdministrativaService]
+    selector: 's-analisisDesviacion',
+    templateUrl: './analisis-desviacion.component.html',
+    styleUrls: ['./analisis-desviacion.component.scss'],
+    providers: [SistemaCausaInmediataService, SistemaCausaAdministrativaService]
 })
 export class AnalisisDesviacionComponent implements OnInit {
 
-  @Input('collapsed') collapsed: boolean;
-  @Input('value') value: AnalisisDesviacion;
+    @Input('collapsed') collapsed: boolean;
+    @Input('value') value: AnalisisDesviacion;
 
-  tareasList: Tarea[];
+    tareasList: Tarea[];
 
-  causaAdminList: TreeNode[] = [];
-  causaAdminListSelect: TreeNode[] = [];
-  causaAdminAnalisisList: CausaAdministrativa[];
+    causaAdminList: TreeNode[] = [];
+    causaAdminListSelect: TreeNode[] = [];
+    causaAdminAnalisisList: CausaAdministrativa[];
 
-  causaRaizList: TreeNode[] = [];
-  causaRaizListSelect: TreeNode[] = [];
-  causaRaizAnalisisList: CausaRaiz[];
+    causaRaizList: TreeNode[] = [];
+    causaRaizListSelect: TreeNode[] = [];
+    causaRaizAnalisisList: CausaRaiz[];
 
-  causaInmediataList: TreeNode[] = [];
-  causaInmediataListSelect: TreeNode[] = [];
-  causaInmediataAnalisisList: CausaInmediata[];
-  
-  desviacionesList: Desviacion[];
-  analisisCosto: AnalisisCosto = new AnalisisCosto();
-  participantes: any[];
-  documentos: Documento[];
-  observacion: string;
-  jerarquia: string;
-  analisisId: string;
-  msgs: Message[] = [];
-  consultar: boolean = false;
-  modificar: boolean = false;
-  adicionar: boolean = false;
+    causaInmediataList: TreeNode[] = [];
+    causaInmediataListSelect: TreeNode[] = [];
+    causaInmediataAnalisisList: CausaInmediata[];
 
-  constructor(
-    private sistCausAdminService: SistemaCausaAdministrativaService,
-    private analisisDesviacionService: AnalisisDesviacionService,
-    private sistemaCausaInmdService: SistemaCausaInmediataService,
-    private sistemaCausaRaizService: SistemaCausaRaizService,
-    private paramNav: ParametroNavegacionService,
-  ) { }
+    desviacionesList: Desviacion[];
+    analisisCosto: AnalisisCosto = new AnalisisCosto();
+    participantes: any[];
+    documentos: Documento[];
+    observacion: string;
+    jerarquia: string;
+    analisisId: string;
+    msgs: Message[] = [];
+    consultar: boolean = false;
+    modificar: boolean = false;
+    adicionar: boolean = false;
 
-  ngOnInit() {
-    if (this.value == null) {
+    constructor(
+        private sistCausAdminService: SistemaCausaAdministrativaService,
+        private analisisDesviacionService: AnalisisDesviacionService,
+        private sistemaCausaInmdService: SistemaCausaInmediataService,
+        private sistemaCausaRaizService: SistemaCausaRaizService,
+        private paramNav: ParametroNavegacionService,
+    ) { }
 
-      switch (this.paramNav.getAccion<string>()) {
-        case 'GET':
-          this.consultar = true;
-          this.consultarAnalisis(this.paramNav.getParametro<Desviacion>().analisisId);
-          break;
-        case 'POST':
-          this.sistCausAdminService.findDefault()
-            .then((resp: SistemaCausaAdministrativa) => {
-              //console.log(resp);
-              this.causaAdminList = this.buildTreeNode(resp.causaAdminList, null, 'causaAdminList');
+    ngOnInit() {
+        if (this.value == null) {
+
+            switch (this.paramNav.getAccion<string>()) {
+                case 'GET':
+                    this.consultar = true;
+                    this.consultarAnalisis(this.paramNav.getParametro<Desviacion>().analisisId);
+                    break;
+                case 'POST':
+                    this.sistCausAdminService.findDefault()
+                        .then((resp: SistemaCausaAdministrativa) => {
+                            //console.log(resp);
+                            this.causaAdminList = this.buildTreeNode(resp.causaAdminList, null, 'causaAdminList');
+                        });
+                    this.sistemaCausaInmdService.findDefault()
+                        .then((data: SistemaCausaInmediata) => {
+                            this.causaInmediataList = this.buildTreeNode(data.causaInmediataList, null, 'causaInmediataList');
+                        });
+                    this.sistemaCausaRaizService.findDefault()
+                        .then((data: SistemaCausaRaiz) => {
+                            this.causaRaizList = this.buildTreeNode(data.causaRaizList, null, 'causaRaizList');
+                            this.desviacionesList = this.paramNav.getParametro<Desviacion[]>();
+                            this.adicionar = true;
+                        });
+                    break;
+                case 'PUT':
+                    this.modificar = true;
+                    this.consultarAnalisis(this.paramNav.getParametro<Desviacion>().analisisId);
+                    break;
+            }
+
+
+        } else {
+            this.consultar = true;
+            this.consultarAnalisis(this.value.id);
+        }
+
+    }
+
+    removeDesv(desviacion: Desviacion) {
+        if (this.desviacionesList.length == 1) {
+            this.msgs = [];
+            this.msgs.push({ severity: 'warn', detail: 'El análisis realizado debe contener al menos una desviación' });
+            return;
+        }
+        let auxList = this.desviacionesList;
+        this.desviacionesList = [];
+        for (let i = 0; i < auxList.length; i++) {
+            if (auxList[i].hashId != desviacion.hashId) {
+                this.desviacionesList.push(auxList[i]);
+            }
+        }
+    }
+
+    buildTreeNode(list: any[], parentNode: any, listField: string, causasList?: any[], causasSelectList?: any[]): any {
+        let treeNodeList: TreeNode[] = [];
+        list.forEach(ci => {
+            let node: any = {
+                id: ci.id,
+                label: ci.nombre,
+                selectable: !this.consultar,
+                parent: parentNode
+            };
+            if (ci[listField] == null || ci[listField].length == 0) {
+                node.children = null
+            } else {
+                node.children = this.buildTreeNode(ci[listField], node, listField, causasList, causasSelectList);
+            }
+            if (causasList != null) {
+                this.adicionarSelect(node, causasList, causasSelectList);
+            }
+            treeNodeList.push(node);
+        });
+        return treeNodeList;
+    }
+
+    adicionarSelect(node: any, list: any[], listselec: any[]) {
+        if (list == null) {
+            return;
+        }
+        for (let i = 0; i < list.length; i++) {
+            let itemAnalisis = list[i];
+            if (itemAnalisis.id === node.id) {
+                this.expandParent(node);
+                listselec.push(node);
+                return;
+            }
+        }
+    }
+
+    expandParent(node: any) {
+        if (node.parent != null) {
+            this.expandParent(node.parent);
+        }
+        node.expanded = true;
+    }
+
+    consultarAnalisis(analisisId: string) {
+        let fq = new FilterQuery();
+        fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: analisisId }];
+        this.analisisDesviacionService.findByFilter(fq)
+            .then(resp => {
+                let analisis = <AnalisisDesviacion>(resp['data'][0]);
+                this.desviacionesList = analisis.desviacionesList;
+                this.observacion = analisis.observacion;
+                this.analisisId = analisis.id;
+                this.analisisCosto = analisis.analisisCosto == null ? new AnalisisCosto() : analisis.analisisCosto;
+                this.causaRaizAnalisisList = analisis.causaRaizList;
+                this.causaAdminAnalisisList = analisis.causasAdminList;
+                this.participantes = JSON.parse(analisis.participantes);
+                this.documentos = analisis.documentosList;
+                this.causaInmediataAnalisisList = analisis.causaInmediataList;
+                this.tareasList = analisis.tareaDesviacionList;
+                this.jerarquia = analisis.jerarquia;
+                console.log(jerarquia);
+                this.sistCausAdminService.findDefault()
+                    .then((resp: SistemaCausaAdministrativa) =>
+                        this.causaAdminList = this.buildTreeNode(resp.causaAdminList, null, 'causaAdminList', this.causaAdminAnalisisList, this.causaAdminListSelect)
+                    );
+                this.sistemaCausaRaizService.findDefault()
+                    .then((scr: SistemaCausaRaiz) =>
+                        this.causaRaizList = this.buildTreeNode(scr.causaRaizList, null, 'causaRaizList', this.causaRaizAnalisisList, this.causaRaizListSelect)
+                    );
+                this.sistemaCausaInmdService.findDefault()
+                    .then((scr: SistemaCausaInmediata) =>
+                        this.causaInmediataList = this.buildTreeNode(scr.causaInmediataList, null, 'causaInmediataList', this.causaInmediataAnalisisList, this.causaInmediataListSelect)
+                    );
             });
-          this.sistemaCausaInmdService.findDefault()
-            .then((data: SistemaCausaInmediata) => {
-              this.causaInmediataList = this.buildTreeNode(data.causaInmediataList, null, 'causaInmediataList');
+    }
+
+    buildList(list: any[]): any[] {
+        if (list == null) {
+            return null;
+        }
+        let crList: any[] = [];
+        list.forEach(imp => {
+            let crEntity = { id: imp.id, nombre: imp.label };
+            crList.push(crEntity);
+        });
+        return crList;
+    }
+
+    guardarAnalisis() {
+        let ad = new AnalisisDesviacion();
+        ad.causaRaizList = this.buildList(this.causaRaizListSelect);
+        ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
+        ad.causasAdminList = this.buildList(this.causaAdminListSelect);
+        ad.desviacionesList = this.desviacionesList;
+        ad.analisisCosto = this.analisisCosto;
+        ad.observacion = this.observacion;
+        ad.participantes = JSON.stringify(this.participantes);
+        ad.tareaDesviacionList = this.tareasList;
+        for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
+            ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
+            ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+        }
+
+
+
+        ad.jerarquia = ad.jerarquia;
+
+        this.analisisDesviacionService.create(ad)
+            .then(data => {
+                let analisisDesviacion = <AnalisisDesviacion>data;
+                this.manageResponse(analisisDesviacion);
+                this.analisisId = analisisDesviacion.id;
+                this.documentos = [];
+                this.modificar = true;
+                this.adicionar = false;
             });
-          this.sistemaCausaRaizService.findDefault()
-            .then((data: SistemaCausaRaiz) => {
-              this.causaRaizList = this.buildTreeNode(data.causaRaizList, null, 'causaRaizList');
-              this.desviacionesList = this.paramNav.getParametro<Desviacion[]>();
-              this.adicionar = true;
-            });
-          break;
-        case 'PUT':
-          this.modificar = true;
-          this.consultarAnalisis(this.paramNav.getParametro<Desviacion>().analisisId);
-          break;
-      }
 
-
-    } else {
-      this.consultar = true;
-      this.consultarAnalisis(this.value.id);
+        console.log(ad.tareaDesviacionList);
     }
 
-  }
 
-  removeDesv(desviacion: Desviacion) {
-    if (this.desviacionesList.length == 1) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'warn', detail: 'El análisis realizado debe contener al menos una desviación' });
-      return;
+    modificarAnalisis() {
+        let ad = new AnalisisDesviacion();
+        ad.id = this.analisisId;
+        ad.causaRaizList = this.buildList(this.causaRaizListSelect);
+        ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
+        ad.causasAdminList = this.buildList(this.causaAdminListSelect);
+        ad.desviacionesList = this.desviacionesList;
+        ad.analisisCosto = this.analisisCosto;
+        ad.observacion = this.observacion;
+        ad.participantes = JSON.stringify(this.participantes);
+        ad.tareaDesviacionList = this.tareasList;
+        ad.jerarquia = this.jerarquia;
+        for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
+            ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
+            ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+
+        }
+
+
+        this.analisisDesviacionService.update(ad).then(
+            data => {
+                this.manageResponse(<AnalisisDesviacion>data);
+                this.modificar = true;
+                this.adicionar = false;
+            }
+        );
+        console.log(ad.tareaDesviacionList);
     }
-    let auxList = this.desviacionesList;
-    this.desviacionesList = [];
-    for (let i = 0; i < auxList.length; i++) {
-      if (auxList[i].hashId != desviacion.hashId) {
-        this.desviacionesList.push(auxList[i]);
-      }
+
+    manageResponse(ad: AnalisisDesviacion) {
+        this.msgs = [];
+        this.msgs.push({
+            severity: 'success',
+            summary: 'Investigación de desviación ' + (this.modificar ? 'actualizada' : 'registrada'),
+            detail: 'Se ha ' + (this.modificar ? 'actualizado' : 'generado') + ' correctamente la investigación'
+        });
     }
-  }
 
-  buildTreeNode(list: any[], parentNode: any, listField: string, causasList?: any[], causasSelectList?: any[]): any {
-    let treeNodeList: TreeNode[] = [];
-    list.forEach(ci => {
-      let node: any = {
-        id: ci.id,
-        label: ci.nombre,
-        selectable: !this.consultar,
-        parent: parentNode
-      };
-      if (ci[listField] == null || ci[listField].length == 0) {
-        node.children = null
-      } else {
-        node.children = this.buildTreeNode(ci[listField], node, listField, causasList, causasSelectList);
-      }
-      if (causasList != null) {
-        this.adicionarSelect(node, causasList, causasSelectList);
-      }
-      treeNodeList.push(node);
-    });
-    return treeNodeList;
-  }
-
-  adicionarSelect(node: any, list: any[], listselec: any[]) {
-    if (list == null) {
-      return;
+    confirmarActualizacion(event: Documento) {
+        this.msgs = [];
+        this.msgs.push({
+            severity: 'success',
+            summary: 'Descripción actualizada',
+            detail: 'Se ha actualizado la descripción del documento'
+        });
     }
-    for (let i = 0; i < list.length; i++) {
-      let itemAnalisis = list[i];
-      if (itemAnalisis.id === node.id) {
-        this.expandParent(node);
-        listselec.push(node);
-        return;
-      }
+
+    adicionarParticipante() {
+        if (this.participantes == null)
+            this.participantes = [];
+        this.participantes.push({});
     }
-  }
 
-  expandParent(node: any) {
-    if (node.parent != null) {
-      this.expandParent(node.parent);
+    removeParti(index: number) {
+        this.participantes.splice(index, 1);
     }
-    node.expanded = true;
-  }
 
-  consultarAnalisis(analisisId: string) {
-    let fq = new FilterQuery();
-    fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: analisisId }];
-    this.analisisDesviacionService.findByFilter(fq)
-      .then(resp => {
-        let analisis = <AnalisisDesviacion>(resp['data'][0]);
-        this.desviacionesList = analisis.desviacionesList;
-        this.observacion = analisis.observacion;
-        this.analisisId = analisis.id;
-        this.analisisCosto = analisis.analisisCosto == null ? new AnalisisCosto() : analisis.analisisCosto;
-        this.causaRaizAnalisisList = analisis.causaRaizList;
-        this.causaAdminAnalisisList = analisis.causasAdminList;
-        this.participantes = JSON.parse(analisis.participantes);
-        this.documentos = analisis.documentosList;
-        this.causaInmediataAnalisisList = analisis.causaInmediataList;
-        this.tareasList = analisis.tareaDesviacionList;
-        this.jerarquia = analisis.jerarquia;      
-        console.log(jerarquia);
-        this.sistCausAdminService.findDefault()
-          .then((resp: SistemaCausaAdministrativa) =>
-            this.causaAdminList = this.buildTreeNode(resp.causaAdminList, null, 'causaAdminList', this.causaAdminAnalisisList, this.causaAdminListSelect)
-          );
-        this.sistemaCausaRaizService.findDefault()
-          .then((scr: SistemaCausaRaiz) =>
-            this.causaRaizList = this.buildTreeNode(scr.causaRaizList, null, 'causaRaizList', this.causaRaizAnalisisList, this.causaRaizListSelect)
-          );
-        this.sistemaCausaInmdService.findDefault()
-          .then((scr: SistemaCausaInmediata) =>
-            this.causaInmediataList = this.buildTreeNode(scr.causaInmediataList, null, 'causaInmediataList', this.causaInmediataAnalisisList, this.causaInmediataListSelect)
-          );
-      });
-  }
-
-  buildList(list: any[]): any[] {
-    if (list == null) {
-      return null;
+    /************************ TAREAS ***************************** */
+    onEvent(event) {
+        this.tareasList = event.data;
+        console.log(this.tareasList, ": Las tareas");
     }
-    let crList: any[] = [];
-    list.forEach(imp => {
-      let crEntity = { id: imp.id, nombre: imp.label };
-      crList.push(crEntity);
-    });
-    return crList;
-  }
-
-  guardarAnalisis() {
-    let ad = new AnalisisDesviacion();   
-    ad.causaRaizList = this.buildList(this.causaRaizListSelect);    
-    ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
-    ad.causasAdminList = this.buildList(this.causaAdminListSelect);
-    ad.desviacionesList = this.desviacionesList;
-    ad.analisisCosto = this.analisisCosto;
-    ad.observacion = this.observacion;
-    ad.participantes = JSON.stringify(this.participantes);
-    ad.tareaDesviacionList = this.tareasList;
-    for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
-      ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
-      ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;        
-      }  
-
-    
-    
-    ad.jerarquia = ad.jerarquia;
-    
-    this.analisisDesviacionService.create(ad)
-      .then(data => {
-        let analisisDesviacion = <AnalisisDesviacion>data;
-        this.manageResponse(analisisDesviacion);
-        this.analisisId = analisisDesviacion.id;
-        this.documentos = [];
-        this.modificar = true;
-        this.adicionar = false;
-      });
-
-      console.log( ad.tareaDesviacionList);
-  }
-
-
-  modificarAnalisis() {
-    let ad = new AnalisisDesviacion();
-    ad.id = this.analisisId;
-    ad.causaRaizList = this.buildList(this.causaRaizListSelect);
-    ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
-    ad.causasAdminList = this.buildList(this.causaAdminListSelect);
-    ad.desviacionesList = this.desviacionesList;
-    ad.analisisCosto = this.analisisCosto;
-    ad.observacion = this.observacion;
-    ad.participantes = JSON.stringify(this.participantes);
-    ad.tareaDesviacionList = this.tareasList;
-    ad.jerarquia = this.jerarquia;
-    for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
-      ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
-      ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
-       
-      } 
-      
-
-    this.analisisDesviacionService.update(ad).then(
-      data => {
-        this.manageResponse(<AnalisisDesviacion>data);
-        this.modificar = true;
-        this.adicionar = false;
-      }
-    );
-    console.log( ad.tareaDesviacionList);
-  }
-
-  manageResponse(ad: AnalisisDesviacion) {
-    this.msgs = [];
-    this.msgs.push({
-      severity: 'success',
-      summary: 'Investigación de desviación ' + (this.modificar ? 'actualizada' : 'registrada'),
-      detail: 'Se ha ' + (this.modificar ? 'actualizado' : 'generado') + ' correctamente la investigación'
-    });
-  }
-
-  confirmarActualizacion(event: Documento) {
-    this.msgs = [];
-    this.msgs.push({
-      severity: 'success',
-      summary: 'Descripción actualizada',
-      detail: 'Se ha actualizado la descripción del documento'
-    });
-  }
-
-  adicionarParticipante() {
-    if (this.participantes == null)
-      this.participantes = [];
-    this.participantes.push({});
-  }
-
-  removeParti(index: number) {
-    this.participantes.splice(index, 1);
-  }
-
-  /************************ TAREAS ***************************** */
-  onEvent(event) {
-    this.tareasList = event.data;
-  }
 }

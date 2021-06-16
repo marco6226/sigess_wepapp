@@ -323,6 +323,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
 
             let camposForm = template.querySelector('#L_campos_formulario');
+            let tr = camposForm.cloneNode(true);
+            tr.childNodes[0].textContent = "Ubicacion"
+            tr.childNodes[1].textContent = this.programacion ? this.programacion.area.nombre : "";
+            camposForm.parentElement.appendChild(tr)
             this.listaInspeccion.formulario.campoList.forEach(campo => {
                 let tr = camposForm.cloneNode(true);
                 tr.childNodes[0].textContent = campo.nombre;
@@ -336,6 +340,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 camposForm.parentElement.appendChild(tr);
                 console.log(this.inspeccion.respuestasCampoList);
             });
+
 
             let elemList = template.querySelector('#L_elementos_lista');
             this.agregarElementos(<HTMLElement>elemList, this.listaInspeccion.elementoInspeccionList);
