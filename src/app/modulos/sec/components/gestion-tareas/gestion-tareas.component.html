@@ -1,97 +1,121 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!readOnly">
-  <div class="ui-g">
+    <div class="ui-g">
 
-    <div class="ui-g-12 ui-md-2">
-      <label for="nombre">Actividad</label>
-    </div>
-    <div class="ui-g-12 ui-md-10">
-      <input pInputText id="nombre" formControlName="nombre" maxlength="254" required/>
-    </div>
+        <div class="ui-g-12 ui-md-2">
+            <label for="nombre">Actividad</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <input pInputText id="nombre" formControlName="nombre" maxlength="254" required />
+        </div>
 
-    <div class="ui-g-12 ui-md-2">
-      <label for="descripcion">Descripción</label>
-    </div>
-    <div class="ui-g-12 ui-md-10">
-      <textarea pInputTextarea id="descripcion" formControlName="descripcion" maxlength="1022" required></textarea>
-    </div>
+        <div class="ui-g-12 ui-md-2">
+            <label for="descripcion">Descripción</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <textarea pInputTextarea id="descripcion" formControlName="descripcion" maxlength="1022"
+                required></textarea>
+        </div>
 
-    <div class="ui-g-12 ui-md-2">
-      <label for="tipoAccion">Tipo Acción</label>
-    </div>
-    <div class="ui-g-12 ui-md-10">
-      <p-radioButton required name="tipoAccion" value="Mejoramiento" label="Mejoramiento" formControlName="tipoAccion"></p-radioButton>
-      <p-radioButton required name="tipoAccion" value="Preventiva" label="Preventiva" formControlName="tipoAccion"></p-radioButton>
-      <p-radioButton required name="tipoAccion" value="Correctiva" label="Correctiva" formControlName="tipoAccion"></p-radioButton>
-    </div>
-    <div class="ui-g-12 ui-md-2">
-      <label for="jerarquia">Jerarquía de control</label>
-    </div>    
-    <div class="ui-g-12 ui-md-10">
-      <p-radioButton required name="jerarquia" value="Eliminación" label="Eliminación" formControlName="jerarquia"></p-radioButton>
-      <p-radioButton required name="jerarquia" value="Sustitución" label="Sustitución" formControlName="jerarquia"></p-radioButton>
-      <p-radioButton required name="jerarquia" value="Control de ingeniería" label="Control de ingeniería" formControlName="jerarquia"></p-radioButton>
-      <p-radioButton required name="jerarquia" value="Controles administrativos" label="Controles administrativos" formControlName="jerarquia"></p-radioButton>
-      <p-radioButton required name="jerarquia" value="Elementos de protección personal" label="Elementos de protección personal" formControlName="jerarquia"></p-radioButton>
-    </div>
-    <div class="ui-g-12 ui-md-2">
-      <label for="fechaProyectada">Fecha Proyectada</label>
-    </div>
-    <div class="ui-g-12 ui-md-10">
-      <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
-        dateFormat="dd/mm/yy" id="fechaProyectada" formControlName="fechaProyectada" required></p-calendar>
-    </div>
+        <div class="ui-g-12 ui-md-2">
+            <label for="tipoAccion">Tipo Acción</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <p-radioButton required name="tipoAccion" value="Mejoramiento" label="Mejoramiento"
+                formControlName="tipoAccion"></p-radioButton>
+            <p-radioButton required name="tipoAccion" value="Preventiva" label="Preventiva"
+                formControlName="tipoAccion"></p-radioButton>
+            <p-radioButton required name="tipoAccion" value="Correctiva" label="Correctiva"
+                formControlName="tipoAccion"></p-radioButton>
+        </div>
+        <div class="ui-g-12 ui-md-2">
+            <label for="jerarquia">Jerarquía de control</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <p-radioButton required name="jerarquia" value="Eliminación" label="Eliminación"
+                formControlName="jerarquia"></p-radioButton>
+            <p-radioButton required name="jerarquia" value="Sustitución" label="Sustitución"
+                formControlName="jerarquia"></p-radioButton>
+            <p-radioButton required name="jerarquia" value="Control de ingeniería" label="Control de ingeniería"
+                formControlName="jerarquia"></p-radioButton>
+            <p-radioButton required name="jerarquia" value="Controles administrativos" label="Controles administrativos"
+                formControlName="jerarquia"></p-radioButton>
+            <p-radioButton required name="jerarquia" value="Elementos de protección personal"
+                label="Elementos de protección personal" formControlName="jerarquia"></p-radioButton>
+        </div>
+        <div class="ui-g-12 ui-md-2">
+            <label for="fechaProyectada">Fecha Proyectada</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
+                dateFormat="dd/mm/yy" id="fechaProyectada" formControlName="fechaProyectada" required></p-calendar>
+        </div>
 
-    <div class="ui-g-12 ui-md-2">
-      <label for="areaResponsable">Area Responsable</label>
-    </div>
-    <div class="ui-g-12 ui-md-10">
-      <area-selector formControlName="areaResponsable" required></area-selector>
-    </div>
+        <div class="ui-g-12 ui-md-2">
+            <label for="areaResponsable">Area Responsable</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <area-selector formControlName="areaResponsable"></area-selector>
+        </div>
 
-  </div>
-  <p-footer>
-    <div>
-      <ng-container *ngIf="adicionar">
-        <button *sTienePermiso="'SEC_POST_TAR'" pButton type="submit" icon="fa fa-plus" [disabled]="!form.valid" label="Adicionar actividad"></button>
-      </ng-container>
-      <ng-container *ngIf="modificar">
-        <button *sTienePermiso="'SEC_PUT_TAR'" pButton type="submit" icon="fa fa-pencil" [disabled]="!form.valid" label="Actualizar actividad"></button>
-      </ng-container>
-      <button pButton type="button" icon="fa fa-close" *ngIf="modificar" class="ui-button-danger" (click)="resetModificar()" style="left: -10px; border-radius: 0px 5px 5px 0px;"></button>
+        <div class="ui-g-12 ui-md-2">
+            <label for="empResponsable">Empleado Responsable</label>
+        </div>
+        <div class="ui-g-12 ui-md-10">
+            <s-empleadoSelector formControlName="empResponsable" required></s-empleadoSelector>
+        </div>
     </div>
-  </p-footer>
+    <p-footer>
+        <div>
+            <ng-container *ngIf="adicionar">
+                <button *sTienePermiso="'SEC_POST_TAR'" pButton type="submit" icon="fa fa-plus" [disabled]="!form.valid"
+                    label="Adicionar actividad"></button>
+            </ng-container>
+            <ng-container *ngIf="modificar">
+                <button *sTienePermiso="'SEC_PUT_TAR'" pButton type="submit" icon="fa fa-pencil"
+                    [disabled]="!form.valid" label="Actualizar actividad"></button>
+            </ng-container>
+            <button pButton type="button" icon="fa fa-close" *ngIf="modificar" class="ui-button-danger"
+                (click)="resetModificar()" style="left: -10px; border-radius: 0px 5px 5px 0px;"></button>
+        </div>
+    </p-footer>
 </form>
-<br/>
-<p-table [value]="tareasList" autoLayout="true" *ngIf="tareasList != null && tareasList.length > 0" [style]="{'margin-bottom':'15px'}">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Actividad</th>
-      <th>Descripción</th>
-      <th>Tipo acción</th>
-      <th>Jerarquía de control</th>
-      <th>Estado</th>
-      <th>Fecha proyectada</th>
-      <th>Area responsable</th>
-      <th style="width: 7em;" *ngIf="!readOnly"></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-tarea>
-    <tr>
-      <td>{{tarea.nombre}}</td>
-      <td>{{tarea.descripcion}}</td>
-      <td>{{tarea.tipoAccion}}</td>
-      <td>{{tarea.jerarquia}}</td>
-      <td>{{tarea.estado}}</td>
-      <td>{{tarea.fechaProyectada | date:'yyyy-MM-dd'}}</td>
-      <td>{{tarea.areaResponsable.nombre}}</td>
-      <td *ngIf="!readOnly">
-        <button *sTienePermiso="'SEC_DELETE_TAR'" pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removeTarea(tarea)"
-          [disabled]="tarea.estado != 'NUEVO'" [title]="tarea.estado != 'NUEVO' ? 'La tarea solo puede ser eliminada cuando su estado es NUEVO': 'Eliminar tarea'"></button>
+<br />
+<p-table [value]="tareasList" autoLayout="true" *ngIf="tareasList != null && tareasList.length > 0"
+    [style]="{'margin-bottom':'15px'}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Actividad</th>
+            <th>Descripción</th>
+            <th>Tipo acción</th>
+            <th>Jerarquía de control</th>
+            <th>Estado</th>
+            <th>Fecha proyectada</th>
+            <th>Area responsable</th>
+            <th>Emp responsable</th>
 
-        <button style="margin-left: 3px;" *sTienePermiso="'SEC_PUT_TAR'" pButton type="button" icon="fa fa-pencil" class="soft-icon"
-          (click)="cargarTarea(tarea)" [title]="tarea.estado != 'NUEVO' ? 'La tarea solo puede ser alterada cuando su estado es NUEVO': 'Modificar tarea'"
-          [disabled]="tarea.estado != 'NUEVO'"></button>
-      </td>
-    </tr>
-  </ng-template>
+            <th style="width: 7em;" *ngIf="!readOnly"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tarea>
+        <tr>
+            <td>{{tarea.nombre}}</td>
+            <td>{{tarea.descripcion}}</td>
+            <td>{{tarea.tipoAccion}}</td>
+            <td>{{tarea.jerarquia}}</td>
+            <td>{{tarea.estado}}</td>
+            <td>{{tarea.fechaProyectada | date:'yyyy-MM-dd'}}</td>
+            <td>{{tarea?.areaResponsable.nombre}}</td>
+            <td>{{tarea?.empResponsable | json}}</td>
+            <td *ngIf="!readOnly">
+                <button *sTienePermiso="'SEC_DELETE_TAR'" pButton type="button" icon="fa fa-close" class="soft-icon"
+                    (click)="removeTarea(tarea)" [disabled]="tarea.estado != 'NUEVO'"
+                    [title]="tarea.estado != 'NUEVO' ? 'La tarea solo puede ser eliminada cuando su estado es NUEVO': 'Eliminar tarea'"></button>
+
+                <button style="margin-left: 3px;" *sTienePermiso="'SEC_PUT_TAR'" pButton type="button"
+                    icon="fa fa-pencil" class="soft-icon" (click)="cargarTarea(tarea)"
+                    [title]="tarea.estado != 'NUEVO' ? 'La tarea solo puede ser alterada cuando su estado es NUEVO': 'Modificar tarea'"
+                    [disabled]="tarea.estado != 'NUEVO'"></button>
+            </td>
+        </tr>
+    </ng-template>
 </p-table>
