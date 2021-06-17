@@ -104,8 +104,8 @@
             <td>{{tarea.jerarquia}}</td>
             <td>{{tarea.estado}}</td>
             <td>{{tarea.fechaProyectada | date:'yyyy-MM-dd'}}</td>
-            <td>{{tarea?.areaResponsable.nombre}}</td>
-            <td>{{tarea?.empResponsable | json}}</td>
+            <td>{{tarea?.areaResponsable?.nombre}}</td>
+            <td>{{tarea?.empResponsable?.primerNombre}} {{tarea?.empResponsable?.primerApellido}}</td>
             <td *ngIf="!readOnly">
                 <button *sTienePermiso="'SEC_DELETE_TAR'" pButton type="button" icon="fa fa-close" class="soft-icon"
                     (click)="removeTarea(tarea)" [disabled]="tarea.estado != 'NUEVO'"

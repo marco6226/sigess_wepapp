@@ -1,135 +1,147 @@
 <p-growl [value]="msgs"></p-growl>
 
 <p-panel header="DESVIACIONES">
-  <p-table [value]="desviacionesList" *ngIf="desviacionesList" autoLayout="true">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Módulo</th>
-        <th>Código</th>
-        <th>Area origen</th>
-        <th>Concepto</th>
-        <th>Aspecto causante</th>
-        <th style="width:3em;"></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData>
-      <tr>
-        <td>
-          {{rowData.modulo}}
-        </td>
-        <td>
-          {{rowData.hashId}}
-        </td>
-        <td>
-          {{rowData.area_nombre}}
-        </td>
-        <td>
-          {{rowData.concepto}}
-        </td>
-        <td>
-          {{rowData.aspectoCausante}}
-        </td>
-        <td>
-          <button *ngIf="!consultar" pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removeDesv(rowData)"></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <p-table [value]="desviacionesList" *ngIf="desviacionesList" autoLayout="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Módulo</th>
+                <th>Código</th>
+                <th>Area origen</th>
+                <th>Concepto</th>
+                <th>Aspecto causante</th>
+                <th style="width:3em;"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>
+                    {{rowData.modulo}}
+                </td>
+                <td>
+                    {{rowData.hashId}}
+                </td>
+                <td>
+                    {{rowData.area_nombre}}
+                </td>
+                <td>
+                    {{rowData.concepto}}
+                </td>
+                <td>
+                    {{rowData.aspectoCausante}}
+                </td>
+                <td>
+                    <button *ngIf="!consultar" pButton type="button" icon="fa fa-close" class="soft-icon"
+                        (click)="removeDesv(rowData)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </p-panel>
-<br/>
+<br />
 
 <p-tabView>
-  <p-tabPanel header="INVESTIGACIÓN">
-    <div class="ui-g">
-      <div class="ui-g-12 ui-sm-12">
-        <p-tabView>
-          <p-tabPanel header="Establecimiento de causas">
-            <div class="ui-g">
-              <div class="ui-g-12 ui-sm-12 ui-xl-4">
-                <h4 style="margin-bottom: 20px;">Causas inmediatas</h4>
-                <p-tree [value]="causaInmediataList" selectionMode="checkbox" [(selection)]="causaInmediataListSelect" [style]="{'width':'100%'}"></p-tree>
-              </div>
-              <div class="ui-g-12 ui-sm-12 ui-xl-4">
-                <h4 style="margin-bottom: 20px;">Causas básicas (raíz) </h4>
-                <p-tree [value]="causaRaizList" selectionMode="checkbox" [(selection)]="causaRaizListSelect" [style]="{'width':'100%'}"></p-tree>
-              </div>
-              <div class="ui-g-12 ui-sm-12 ui-xl-4">
-                <h4 style="margin-bottom: 20px;">Causas administrativas</h4>
-                <p-tree [value]="causaAdminList" selectionMode="checkbox" [(selection)]="causaAdminListSelect" [style]="{'width':'100%'}"></p-tree>
-              </div>
+    <p-tabPanel header="INVESTIGACIÓN">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-sm-12">
+                <p-tabView>
+                    <p-tabPanel header="Establecimiento de causas">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                                <h4 style="margin-bottom: 20px;">Causas inmediatas</h4>
+                                <p-tree [value]="causaInmediataList" selectionMode="checkbox"
+                                    [(selection)]="causaInmediataListSelect" [style]="{'width':'100%'}"></p-tree>
+                            </div>
+                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                                <h4 style="margin-bottom: 20px;">Causas básicas (raíz) </h4>
+                                <p-tree [value]="causaRaizList" selectionMode="checkbox"
+                                    [(selection)]="causaRaizListSelect" [style]="{'width':'100%'}"></p-tree>
+                            </div>
+                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                                <h4 style="margin-bottom: 20px;">Causas administrativas</h4>
+                                <p-tree [value]="causaAdminList" selectionMode="checkbox"
+                                    [(selection)]="causaAdminListSelect" [style]="{'width':'100%'}"></p-tree>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Costos" *sConfig="'FORM_COSTOS_INVST'">
+                        <s-analisisCostos *ngIf="analisisCosto" [analisisCosto]="analisisCosto" [readOnly]="consultar">
+                        </s-analisisCostos>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Participantes" *sConfig="'FORM_PART_INVST'">
+                        <table style="width: 100%;table-layout: fixed">
+                            <thead style="background: #efefef;">
+                                <th class="th">Nombres y apellidos</th>
+                                <th class="th">Cargo</th>
+                                <th class="th">Tipo identificación</th>
+                                <th class="th">Número identificación</th>
+                                <th style="width: 2.5em;"></th>
+                            </thead>
+                            <ng-template ngFor let-parti [ngForOf]="participantes" let-i="index">
+                                <tr>
+                                    <td>
+                                        <input pInputText type="text" [(ngModel)]="parti.nombresApellidos"
+                                            [disabled]="consultar" maxlength="128" />
+                                    </td>
+                                    <td>
+                                        <input pInputText type="text" [(ngModel)]="parti.cargo" [disabled]="consultar"
+                                            maxlength="128" />
+                                    </td>
+                                    <td>
+                                        <select class="select-option" [(ngModel)]="parti.tipoIdentificacion"
+                                            [disabled]="consultar">
+                                            <option value="Cedula de ciudadanía">Cedula de ciudadanía</option>
+                                            <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                            <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+                                            <option value="Pasaporte">Pasaporte</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input pInputText type="text" [(ngModel)]="parti.numeroIdentificacion"
+                                            [disabled]="consultar" maxlength="45" />
+                                    </td>
+                                    <td>
+                                        <button pButton type="button" icon="fa fa-close" class="soft-icon"
+                                            (click)="removeParti(i)" *ngIf="!consultar"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </table>
+                        <button *ngIf="!consultar" style="margin-top: 10px;" pButton type="button" icon="fa fa-plus"
+                            label="Adicionar participante" (click)="adicionarParticipante()"></button>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Documentación" [disabled]="adicionar">
+                        <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
+                            [documentos]="documentos" (onUpdate)="confirmarActualizacion($event)"
+                            [readOnly]="consultar"></s-documentosAnalisisDesviacion>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Observaciones">
+                        <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="7"
+                            placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
+                        <div *ngIf="consultar">
+                            {{observacion}}
+                        </div>
+                    </p-tabPanel>
+
+                </p-tabView>
             </div>
-          </p-tabPanel>
-
-          <p-tabPanel header="Costos" *sConfig="'FORM_COSTOS_INVST'">
-            <s-analisisCostos *ngIf="analisisCosto" [analisisCosto]="analisisCosto" [readOnly]="consultar"></s-analisisCostos>
-          </p-tabPanel>
-
-          <p-tabPanel header="Participantes" *sConfig="'FORM_PART_INVST'">
-            <table style="width: 100%;table-layout: fixed">
-              <thead style="background: #efefef;">
-                <th class="th">Nombres y apellidos</th>
-                <th class="th">Cargo</th>
-                <th class="th">Tipo identificación</th>
-                <th class="th">Número identificación</th>
-                <th style="width: 2.5em;"></th>
-              </thead>
-              <ng-template ngFor let-parti [ngForOf]="participantes" let-i="index">
-                <tr>
-                  <td>
-                    <input pInputText type="text" [(ngModel)]="parti.nombresApellidos" [disabled]="consultar" maxlength="128" />
-                  </td>
-                  <td>
-                    <input pInputText type="text" [(ngModel)]="parti.cargo" [disabled]="consultar" maxlength="128" />
-                  </td>
-                  <td>
-                    <select class="select-option" [(ngModel)]="parti.tipoIdentificacion" [disabled]="consultar">
-                      <option value="Cedula de ciudadanía">Cedula de ciudadanía</option>
-                      <option value="Cédula de extranjería">Cédula de extranjería</option>
-                      <option value="Tarjeta de identidad">Tarjeta de identidad</option>
-                      <option value="Pasaporte">Pasaporte</option>
-                    </select>
-                  </td>
-                  <td>
-                    <input pInputText type="text" [(ngModel)]="parti.numeroIdentificacion" [disabled]="consultar" maxlength="45" />
-                  </td>
-                  <td>
-                    <button pButton type="button" icon="fa fa-close" class="soft-icon" (click)="removeParti(i)" *ngIf="!consultar"></button>
-                  </td>
-                </tr>
-              </ng-template>
-            </table>
-            <button *ngIf="!consultar" style="margin-top: 10px;" pButton type="button" icon="fa fa-plus" label="Adicionar participante"
-              (click)="adicionarParticipante()"></button>
-          </p-tabPanel>
-
-          <p-tabPanel header="Documentación" [disabled]="adicionar">
-            <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId" [documentos]="documentos" (onUpdate)="confirmarActualizacion($event)"
-              [readOnly]="consultar"></s-documentosAnalisisDesviacion>
-          </p-tabPanel>
-
-          <p-tabPanel header="Observaciones">
-            <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="7" placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
-            <div *ngIf="consultar">
-              {{observacion}}
-            </div>
-          </p-tabPanel>
-
-        </p-tabView>
-      </div>
-    </div>
-  </p-tabPanel>
-  <p-tabPanel header="PLAN DE TRABAJO">
-    <s-gestionTareas (onEvent)="onEvent($event)" [tareasList]="tareasList" [readOnly]="consultar"></s-gestionTareas>
-  </p-tabPanel>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="PLAN DE TRABAJO">
+        <s-gestionTareas (onEvent)="onEvent($event)" [tareasList]="tareasList" [readOnly]="consultar"></s-gestionTareas>
+    </p-tabPanel>
 </p-tabView>
 <ng-container *ngIf="adicionar && !consultar">
-  <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Análisis" (click)="guardarAnalisis()"
-    class="float-btn"></button>
+    <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Análisis"
+        (click)="guardarAnalisis()" class="float-btn"></button>
 </ng-container>
 
 <ng-container *ngIf="modificar && !consultar">
-  <button *sTienePermiso="'SEC_PUT_ANADESV'" pButton type="button" icon="fa fa-pencil" title="Modificar Análisis" (click)="modificarAnalisis()"
-    class="ui-button-success float-btn"></button>
+    <button *sTienePermiso="'SEC_PUT_ANADESV'" pButton type="button" icon="fa fa-pencil" title="Modificar Análisis"
+        (click)="modificarAnalisis()" class="ui-button-success float-btn"></button>
 </ng-container>
 
 <div style="height: 100px;;"></div>

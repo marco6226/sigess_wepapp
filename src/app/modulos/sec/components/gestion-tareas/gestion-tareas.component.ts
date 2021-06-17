@@ -63,7 +63,7 @@ export class GestionTareasComponent implements OnInit {
         tarea.jerarquia = this.form.value.jerarquia;
         tarea.fechaProyectada = this.form.value.fechaProyectada;
         tarea.estado = this.form.value.estado;
-        console.log(this.form.value);
+
         if (this.form.value.areaResponsable != null) {
             tarea.areaResponsable = new Area();
             tarea.areaResponsable.id = this.form.value.areaResponsable.id;
@@ -74,7 +74,7 @@ export class GestionTareasComponent implements OnInit {
             tarea.empResponsable.id = this.form.value.empResponsable.id;
             tarea.empResponsable.primerNombre = this.form.value.empResponsable.primerNombre;
         }
-
+        console.log(tarea);
         if (this.modificar) {
             tarea.id = this.form.value.id;
         } else if (this.adicionar) {
