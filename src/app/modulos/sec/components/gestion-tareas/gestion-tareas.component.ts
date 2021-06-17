@@ -92,7 +92,7 @@ export class GestionTareasComponent implements OnInit {
             modulo: tarea.modulo,
             fechaProyectada: new Date(tarea.fechaProyectada),
             areaResponsable: tarea.areaResponsable,
-            empResponsable: tarea.empResponsable
+            empResponsable: tarea.empResponsable.primerNombre + tarea.empResponsable.primerApellido,
         });
         this.modificar = true;
         this.adicionar = false;
