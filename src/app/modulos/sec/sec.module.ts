@@ -21,6 +21,7 @@ import { AnalisisCostosComponent } from './components/analisis-costos/analisis-c
 import { DocumentosAnalisisDesviacionComponent } from './components/documentos-analisis-desviacion/documentos-analisis-desviacion.component';
 import { ConsultaDesviacionInspeccionComponent } from './components/consulta-desviacion-inspeccion/consulta-desviacion-inspeccion.component';
 import { TooltipModule } from 'primeng/primeng';
+import { TareaComponent } from './components/tarea/tarea.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { TooltipModule } from 'primeng/primeng';
     ConsultaAnalisisDesviacionComponent,
     AnalisisCostosComponent,
     DocumentosAnalisisDesviacionComponent,
-    ConsultaDesviacionInspeccionComponent
+    ConsultaDesviacionInspeccionComponent,
+    TareaComponent
   ],
   providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService]
 })

@@ -5,25 +5,25 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) { }
+    constructor(private authService: AuthService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let url: string = state.url;
-
-    return this.checkLogin(url);
-  }
-
-  checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn()) {
-      return true;
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        let url: string = state.url;
+        console.log(this.checkLogin(url));
+        return this.checkLogin(url);
     }
 
-    // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+    checkLogin(url: string): boolean {
+        if (this.authService.isLoggedIn()) {
+            return true;
+        }
 
-    // Navigate to the login page with extras
-    this.router.navigate(['/login']);
-    return false;
-  }
+        // Store the attempted URL for redirecting
+        this.authService.redirectUrl = url;
+
+        // Navigate to the login page with extras
+        this.router.navigate(['/login']);
+        return false;
+    }
 
 }

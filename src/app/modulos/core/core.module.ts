@@ -88,6 +88,7 @@ import { FormularioScmComponent } from '../scm/components/formulario-scm/formula
 import { ScmComponent } from '../scm/components/scm/scm.component';
 import { RecomendationsformComponent } from '../scm/components/recomendationsform/recomendationsform.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { TareaComponent } from '../sec/components/tarea/tarea.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -166,7 +167,8 @@ const appRoutes: Routes = [
                     // { path: 'consultaAnalisisDesviaciones', component: ConsultaAnalisisDesviacionComponent },
                     { path: 'analisisDesviacion', component: AnalisisDesviacionComponent },
                     { path: 'tareas', component: GestionTareasComponent },
-                    { path: 'tareasAsignadas', component: AsignacionTareasComponent }
+                    { path: 'tareasAsignadas', component: AsignacionTareasComponent },
+                    { path: 'tarea/:id', component: TareaComponent }
                 ]
             },
             {

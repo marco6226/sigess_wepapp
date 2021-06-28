@@ -28,7 +28,7 @@ export class AuthService {
     jwtHelper: JwtHelper = new JwtHelper();
     authEndPoint = endPoints.auth;
     // store the URL so we can redirect after logging in
-    redirectUrl: string = '/app/home';
+    redirectUrl: string = '/app/sec/tareasAsignadas';
 
     constructor(
         public httpInt: HttpInt,
@@ -92,6 +92,7 @@ export class AuthService {
 
     requestRefresh(token: string) {
         let body = token;
+        console.log("paso por aca");
         let endpoint = this.authEndPoint + 'refrescarToken';
         return new Promise((resolve, reject) => {
             this.httpInt.post(endpoint, body)
