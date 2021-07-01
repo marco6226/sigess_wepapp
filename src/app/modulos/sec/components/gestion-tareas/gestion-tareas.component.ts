@@ -73,6 +73,8 @@ export class GestionTareasComponent implements OnInit {
             tarea.empResponsable = new Empleado();
             tarea.empResponsable.id = this.form.value.empResponsable.id;
             tarea.empResponsable.primerNombre = this.form.value.empResponsable.primerNombre;
+            tarea.empResponsable.primerApellido = this.form.value.empResponsable.primerApellido;
+
         }
         console.log(tarea);
         if (this.modificar) {
@@ -92,7 +94,7 @@ export class GestionTareasComponent implements OnInit {
             modulo: tarea.modulo,
             fechaProyectada: new Date(tarea.fechaProyectada),
             areaResponsable: tarea.areaResponsable,
-            empResponsable: tarea.empResponsable.primerNombre + tarea.empResponsable.primerApellido,
+            empResponsable: tarea.empResponsable
         });
         this.modificar = true;
         this.adicionar = false;
