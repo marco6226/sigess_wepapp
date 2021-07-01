@@ -5,21 +5,22 @@
     <h5 class="title-header p-mb-2">PCL de Diagnósticos</h5>
     <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-rounded p-button-text"
         (click)="resetDiags()"> </button>
-    <p-table [value]="pclList" dataKey="id" editMode="row">
-        <!--  <ng-template pTemplate="colgroup" let-columns>
+    <p-table [value]="pclList" dataKey="id" editMode="row"    [scrollable]="true">
+         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
+                <col style="width:380px">
+                <col style="width:190px">
+                <col style="width:100px">
+                <col style="width:100px">
+                <col style="width:190px">
                 <col style="width:250px">
+                <col style="width:100px">
+                <col style="width:190px">
+                <col style="width:190px">
                 <col style="width:250px">
-                <col style="width:250px">
-                <col style="width:150px">
-                <col style="width:250px">
-                <col style="width:250px">
-                <col style="width:250px">
-                <col style="width:250px">
-                <col style="width:250px">
-                <col style="width:50px">
+                <col style="width:100px">
             </colgroup>
-        </ng-template>-->
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="tipo">Diagnóstico</th>
@@ -51,16 +52,16 @@
                         <ng-template pTemplate="input">
 
                             <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="diagList" class="select-material"
-                                    [(ngModel)]="pcl.diag" styleClass="select-material">
+                                <p-dropdown [filter]="true" [options]="diagList" 
+                                    [(ngModel)]="pcl.diag" >
                                 </p-dropdown>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="output">
 
                             <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="diagList" class="select-material"
-                                    [(ngModel)]="pcl.diag" styleClass="select-material">
+                                <p-dropdown readonly="true" [filter]="true" [options]="diagList" 
+                                    [(ngModel)]="pcl.diag" >
                                 </p-dropdown>
                             </div>
                         </ng-template>
@@ -73,7 +74,7 @@
 
                             <div class="input-field">
                                 <p-dropdown [filter]="true" [options]="pclOptionList" class="select-material"
-                                    [(ngModel)]="pcl.pcl" styleClass="select-material">
+                                    [(ngModel)]="pcl.pcl" styleClass="select-material" [autoWidth]="false" >
                                 </p-dropdown>
                             </div>
                         </ng-template>
@@ -81,7 +82,7 @@
 
                             <div class="input-field">
                                 <p-dropdown readonly="true" [filter]="true" [options]="pclOptionList"
-                                    class="select-material" [(ngModel)]="pcl.pcl" styleClass="select-material">
+                                     [(ngModel)]="pcl.pcl"   [autoWidth]="false">
                                 </p-dropdown>
                             </div>
                         </ng-template>
