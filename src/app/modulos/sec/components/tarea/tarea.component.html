@@ -3,61 +3,34 @@
     <p-tabPanel header="Información General">
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
-                <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Datos del trabajador involucrado</h5>
-                </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
-                            [style]="{'width':'100%'}">
-                            <ng-template let-empleado pTemplate="item">
-                                <div class="ui-helper-clearfix">
-                                    <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                            style="font-size: 48px;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                            style="border-radius: 50%;" #imgAvatar />
-                                        <div style="margin-left:20px">
-                                            <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                            {{empleado?.segundoNombre}}
-                                            <br /> {{empleado?.numeroIdentificacion}}
-                                            <br /> {{empleado?.usuario.email}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-autoComplete>
-                        <label for="" class="active">Número de identificación</label>
-                    </div>
-                    <small id="username2-help" class="p-invalid">Obligatorio</small>
-                </div>
+
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [attr.disabled]="true" required>
                         </p-dropdown>
-                        <label for="" class="active">Tipo de identificación</label>
+                        <label for="" class="active">Modulo</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material"
                             id="nameAndLastName" [attr.disabled]="true" />
-                        <label for="" class="active">Apellidos y nombres</label>
+                        <label for="" class="active">Fecha INP</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText placeholder="Dirección / Gerencia" class="form-material"
                             id="direccionGerencia1" />
-                        <label for="" class="active">Dirección / Gerencia</label>
+                        <label for="" class="active">Regional</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-dropdown [filter]="true" class="select-material" styleClass="select-material">
                         </p-dropdown>
-                        <label for="" class="active">Cargo / Categoría</label>
+                        <label for="" class="active">Sede</label>
                     </div>
                 </div>
 
@@ -66,7 +39,7 @@
                     <div class="input-field">
                         <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                             dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha de vinculación</label>
+                        <label for="" class="active">Codigo Desv</label>
 
                     </div>
                 </div>
@@ -75,32 +48,17 @@
                     <div class="input-field">
                         <input type="text" pInputText placeholder="Antigüedad" class="form-material" id="antiguedad"
                             [attr.disabled]="true" />
-                        <label for="" class="active">Antigüedad</label>
+                        <label for="" class="active">Concepto</label>
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Antigüedad" class="form-material" id="rango"
-                            [attr.disabled]="true" />
-                        <label for="" class="active">Rango de antigüedad</label>
-                    </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                            dateFormat="dd/mm/yy">
-                        </p-calendar>
-                        <label for="" class="active">Fecha de desvinculación</label>
-                    </div>
-                </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input pInputText styleClass="form-material">
 
-                        <label for="" class="active">Teléfono corporativo</label>
+                        <label for="" class="active">Descripcion Dev</label>
                     </div>
                 </div>
 
@@ -108,46 +66,28 @@
                     <div class="input-field">
                         <input type="email" pInputText placeholder="Correo corporativo" class="form-material"
                             id="correocorporativo" />
-                        <label for="" class="active">Correo corporativo</label>
+                        <label for="" class="active">Actv Nombre</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText placeholder="Ciudad" class="form-material" id="ciudad" />
-                        <label for="" class="active">Ciudad</label>
+                        <label for="" class="active">Actv Descripcion</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <area-selector required></area-selector>
-                        <label for="" class="active">Ubicación</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <label for="" class="active">Género</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <p-radioButton name="genero" value="M" label=" Masculino   .">
-                        </p-radioButton>
-                        <p-radioButton name="genero" value="F" label="Femenino">
-                        </p-radioButton>
+                        <label for="" class="active">Tipo de Accion</label>
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                            dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha de nacimiento</label>
-                    </div>
-                </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input [attr.disabled]="true" type="text" pInputText placeholder="Edad" class="form-material"
                             id="Edad" />
-                        <label for="" class="active">Edad</label>
+                        <label for="" class="active">Jerarquia de control</label>
                     </div>
                 </div>
 
@@ -155,96 +95,97 @@
                     <div class="input-field">
                         <input [attr.disabled]="true" type="text" pInputText placeholder="regional"
                             class="form-material" id="regional" />
-                        <label for="" class="active">Regional</label>
+                        <label for="" class="active">Responsable</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <s-ciudadSelector class="select-material" styleClass="select-material">
-                        </s-ciudadSelector>
-                        <label for="" class="active">Ciudad de residencia</label>
-                    </div>
-                </div>
+
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input pInputText class="form-material" styleClass="form-material">
-                        <label for="" class="active">Dirección de residencia</label>
+                        <label for="" class="active">Correo Electronico</label>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <label for="" class="active">Zona de residencia</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <p-radioButton name="zonaResidencia" value="U" label=" Urbana   .">
-                        </p-radioButton>
-                        <p-radioButton name="zonaResidencia" value="R" label="Rural">
-                        </p-radioButton>
-                    </div>
-                </div>
+
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input pInputText class="form-material" styleClass="form-material">
-
-                        <label for="" class="active">Teléfono personal</label>
+                        <label for="" class="active">Fecha Proyectada de cierre</label>
                     </div>
                 </div>
+
+            </div>
+
+        </form>
+    </p-tabPanel>
+
+    <p-tabPanel header="Gestion">
+        <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
+            <div class="ui-g">
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-dropdown [attr.disabled]="true" required>
+                        </p-dropdown>
+                        <label for="" class="active">Fecha de seg</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material"
+                            id="nameAndLastName" [attr.disabled]="true" />
+                        <label for="" class="active">Descript del seg</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText placeholder="Dirección / Gerencia" class="form-material"
+                            id="direccionGerencia1" />
+                        <label for="" class="active">img</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-dropdown [filter]="true" class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Estado</label>
+                    </div>
+                </div>
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            dateFormat="dd/mm/yy"></p-calendar>
+                        <label for="" class="active">Fecha de cierre</label>
+
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input type="text" pInputText placeholder="Antigüedad" class="form-material" id="antiguedad"
+                            [attr.disabled]="true" />
+                        <label for="" class="active">Descripcion accion realizada</label>
+                    </div>
+                </div>
+
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input pInputText styleClass="form-material">
+
+                        <label for="" class="active">Usuario que gestion</label>
+                    </div>
+                </div>
+
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input pInputText class="form-material" styleClass="form-material">
-
-                        <label for="" class="active">Teléfono de residencia</label>
+                        <label for="" class="active">Fecha Proyectada de cierre</label>
                     </div>
                 </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="email" pInputText plaholder="Correo personal" />
-                        <label for="" class="active">Correo personal</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" class="select-material" styleClass="select-material"></p-dropdown>
-                        <label for="" class="active">EPS</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" class="select-material" styleClass="select-material"></p-dropdown>
-                        <label for="" class="active">AFP</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input [attr.disabled]="true" type="text" pInputText placeholder="Arl" class="form-material"
-                            id="arl" />
-                        <label for="" class="active">ARL</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Regional" class="form-material"
-                            id="emergencyContact" />
-                        <label for="" class="active">Contacto de emergencia</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input pInputText class="form-material" styleClass="form-material">
-
-                        <label for="" class="active">Telefono de contacto de emergencia</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="email" pInputText placeholder="Correo corporativo" class="form-material"
-                            id="emailEmergencyContact" />
-                        <label for="" class="active">Correo de contacto de emergencia</label>
-                    </div>
-                </div>
-
 
             </div>
 
