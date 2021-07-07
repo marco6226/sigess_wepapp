@@ -158,8 +158,8 @@ export class EmpresaAdminComponent implements OnInit {
 
         this.visibleForm = true;
         this.isUpdate = true;
-        //let ctx = this.canvas.getContext("2d");
-        //ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
+       // let ctx = this.canvas.getContext("2d");
+       // ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 48, 48);
         //this.empresaSelect.logo = this.canvas.toDataURL();
         this.form.patchValue({
             'logo': this.empresaSelect.logo,
