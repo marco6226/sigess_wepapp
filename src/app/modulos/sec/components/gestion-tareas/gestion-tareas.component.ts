@@ -100,6 +100,7 @@ export class GestionTareasComponent implements OnInit {
         this.adicionar = false;
     }
 
+
     resetModificar() {
         this.form.reset();
         this.modificar = false;
