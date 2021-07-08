@@ -491,7 +491,7 @@
                 <div class="ui-g-12 p-mb-2">
                     <h5 class="title-header">Conceptos de rehabilitación</h5>
                 </div>
-                <div >
+                <div>
 
                     <h2> 1. </h2>
 
@@ -1228,12 +1228,8 @@
 
     </p-tabPanel>
 
-<<<<<<< HEAD
-    <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
-=======
-    <p-tabPanel header="Trazabilidad"  *sTienePermiso="'SCM_GET_CASE_LOG'">
+    <p-tabPanel header="Trazabilidad" *sTienePermiso="'SCM_GET_CASE_LOG'">
 
->>>>>>> 8b0e4eece474294da11857917b5a71c25792831b
         <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true"
             [(selection)]="logSelected" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">
