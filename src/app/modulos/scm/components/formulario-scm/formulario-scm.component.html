@@ -765,6 +765,7 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
+
     <p-tabPanel header="Incapacidades" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
@@ -822,6 +823,7 @@
         </div>
 
     </p-tabPanel>
+
     <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
         <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
@@ -904,6 +906,8 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
+
+
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
         <div class="card" *sTienePermiso="'SCM_CREATE_CASE_SEG'">
@@ -1154,6 +1158,8 @@
         </div>
 
     </p-tabPanel>
+
+
     <p-tabPanel header="Plan de Acción" *ngIf="caseSelect">
         <p-table [value]="this.recomendationList" dataKey="id">
             <ng-template pTemplate="header">

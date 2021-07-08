@@ -1,121 +1,119 @@
 <p-tabView styleClass="custom-panel">
 
     <p-tabPanel header="Información General">
-        <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
-            <div class="ui-g">
+        <div class="ui-g">
 
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [attr.disabled]="true" required>
-                        </p-dropdown>
-                        <label for="" class="active">Modulo</label>
-                    </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo"
+                        [attr.disabled]="true" [value]="tarea.module" />
+                    <label for="" class="active">Modulo</label>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material"
-                            id="nameAndLastName" [attr.disabled]="true" />
-                        <label for="" class="active">Fecha INP</label>
-                    </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Fecha INP" class="form-material"
+                        [value]="tarea.fecha_realizacion" [attr.disabled]="true" />
+                    <label for="" class="active">Fecha INP</label>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Dirección / Gerencia" class="form-material"
-                            id="direccionGerencia1" />
-                        <label for="" class="active">Regional</label>
-                    </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Regional" class="form-material"
+                        [value]="tarea.regional" />
+                    <label for="" class="active">Regional</label>
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Sede</label>
-                    </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea.area" />
+                    <label for="" class="active">Sede</label>
                 </div>
-
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                            dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Codigo Desv</label>
-
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Antigüedad" class="form-material" id="antiguedad"
-                            [attr.disabled]="true" />
-                        <label for="" class="active">Concepto</label>
-                    </div>
-                </div>
-
-
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input pInputText styleClass="form-material">
-
-                        <label for="" class="active">Descripcion Dev</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="email" pInputText placeholder="Correo corporativo" class="form-material"
-                            id="correocorporativo" />
-                        <label for="" class="active">Actv Nombre</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Ciudad" class="form-material" id="ciudad" />
-                        <label for="" class="active">Actv Descripcion</label>
-                    </div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <area-selector required></area-selector>
-                        <label for="" class="active">Tipo de Accion</label>
-                    </div>
-                </div>
-
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input [attr.disabled]="true" type="text" pInputText placeholder="Edad" class="form-material"
-                            id="Edad" />
-                        <label for="" class="active">Jerarquia de control</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input [attr.disabled]="true" type="text" pInputText placeholder="regional"
-                            class="form-material" id="regional" />
-                        <label for="" class="active">Responsable</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input pInputText class="form-material" styleClass="form-material">
-                        <label for="" class="active">Correo Electronico</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input pInputText class="form-material" styleClass="form-material">
-                        <label for="" class="active">Fecha Proyectada de cierre</label>
-                    </div>
-                </div>
-
             </div>
 
-        </form>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                        dateFormat="dd/mm/yy"></p-calendar>
+                    <label for="" class="active">Codigo Desv</label>
+
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Antigüedad" class="form-material" id="antiguedad"
+                        [attr.disabled]="true" />
+                    <label for="" class="active">Concepto</label>
+                </div>
+            </div>
+
+
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input pInputText styleClass="form-material">
+
+                    <label for="" class="active">Descripcion Dev</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material"
+                        id="correocorporativo" />
+                    <label for="" class="active">Actv Nombre</label>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Ciudad" class="form-material" id="ciudad" />
+                    <label for="" class="active">Actv Descripcion</label>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <area-selector required></area-selector>
+                    <label for="" class="active">Tipo de Accion</label>
+                </div>
+            </div>
+
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input [attr.disabled]="true" type="text" pInputText placeholder="Edad" class="form-material"
+                        id="Edad" />
+                    <label for="" class="active">Jerarquia de control</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input [attr.disabled]="true" type="text" pInputText placeholder="regional" class="form-material"
+                        id="regional" />
+                    <label for="" class="active">Responsable</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input pInputText class="form-material" styleClass="form-material">
+                    <label for="" class="active">Correo Electronico</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input pInputText class="form-material" styleClass="form-material">
+                    <label for="" class="active">Fecha Proyectada de cierre</label>
+                </div>
+            </div>
+
+        </div>
+
+        m>
     </p-tabPanel>
 
     <p-tabPanel header="Gestion">
