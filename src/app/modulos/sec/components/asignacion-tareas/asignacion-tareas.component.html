@@ -23,14 +23,14 @@
                         <th pSortableColumn="modulo"> Módulo
                             <p-sortIcon field="modulo"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="fechaProyectada">Fecha
-                            <p-sortIcon field="fechaProyectada"></p-sortIcon>
+                        <th pSortableColumn="fechaReporte">Fecha
+                            <p-sortIcon field="fechaReporte"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="codigo"> Regional
-                            <p-sortIcon field="codigo"></p-sortIcon>
+                        <th pSortableColumn="regional"> Regional
+                            <p-sortIcon field="regional"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="codigo"> Sede
-                            <p-sortIcon field="codigo"></p-sortIcon>
+                        <th pSortableColumn="sede"> Sede
+                            <p-sortIcon field="sede"></p-sortIcon>
                         </th>
                         <th pSortableColumn="codigo"> Código
                             <p-sortIcon field="codigo"></p-sortIcon>
@@ -38,12 +38,12 @@
                         <th pSortableColumn="descripcion" style="width: 10%">Descripción
                             <p-sortIcon field="descripcion"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="codigo"> Emp responsable
-                            <p-sortIcon field="codigo"></p-sortIcon>
+                        <th pSortableColumn="responsable"> Responsable
+                            <p-sortIcon field="responsable"></p-sortIcon>
                         </th>
 
-                        <th pSortableColumn="nombre"> Fecha proyectada de cierre
-                            <p-sortIcon field="nombre"></p-sortIcon>
+                        <th pSortableColumn="fechaProyectada"> Fecha proyectada de cierre
+                            <p-sortIcon field="fechaProyectada"></p-sortIcon>
                         </th>
 
                         <th pSortableColumn="estado">Estado
@@ -55,7 +55,19 @@
                         <td></td>
                         <td>
                             <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                                (input)="dt.filter($event.target.value, 'modulo', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'fechaReporte', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'regional', 'contains')">
+                        </td>
+                        <td>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'sede', 'contains')">
                         </td>
                         <td>
                             <input pInputText type="text"
@@ -63,32 +75,21 @@
                         </td>
                         <td>
                             <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                                (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
                         </td>
                         <td>
                             <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                                (input)="dt.filter($event.target.value, 'responsable', 'contains')">
                         </td>
                         <td>
                             <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                                (input)="dt.filter($event.target.value, 'fechaProyectada','contains')">
                         </td>
                         <td>
                             <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                                (input)="dt.filter($event.target.value, 'estado', 'contains')">
                         </td>
-                        <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
-                        </td>
+                        
 
                     </tr>
                 </ng-template>
@@ -109,13 +110,13 @@
                         </td>
 
                         <td>{{tarea.modulo}}</td>
+                        <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
+                        <td>{{tarea.areaResponsable?.nombre}}</td>                                              
+                        <td>{{tarea.areaResponsable?.nombre}}</td>
                         <td>{{tarea.codigo}}</td>
+                        <td>{{tarea.nombre}}</td>                       
                         <td>{{tarea?.empResponsable?.primerNombre}} {{tarea?.empResponsable?.primerApellido}}</td>
-                        <td>{{tarea.nombre}}</td>
-                        <td>{{tarea.descripcion}}</td>
-                        <td>{{tarea.tipoAccion}}</td>
-                        <td>{{tarea.jerarquia}}</td>
-                        <td>{{tarea.estado}}</td>
+                        <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
                         <td>{{tarea.estado}}</td>
 
 
