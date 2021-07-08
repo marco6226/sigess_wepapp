@@ -1229,7 +1229,6 @@
     </p-tabPanel>
 
     <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
-
         <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true"
             [(selection)]="logSelected" dataKey="id" [lazy]="true">
             <ng-template pTemplate="header">

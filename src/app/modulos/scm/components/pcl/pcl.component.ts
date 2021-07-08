@@ -115,6 +115,7 @@ export class PclComponent implements OnInit {
         this.diagnosticos.map(diag => {
             this.diagList.push({ value: diag.id.toString(), label: diag.diagnostico });
         }).every
+
         console.log(this.diagnosticos);
         this.iniciarPcl();
 

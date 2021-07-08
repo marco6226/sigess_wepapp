@@ -848,7 +848,6 @@ export class FormularioScmComponent implements OnInit {
 
 
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
-        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
@@ -857,6 +856,7 @@ export class FormularioScmComponent implements OnInit {
         console.log(this.empresaId);
         this.aonRegisters();
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
 
     }
@@ -879,11 +879,11 @@ export class FormularioScmComponent implements OnInit {
 
 
         this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
-        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
         this.aonRegisters();
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
     }
 
