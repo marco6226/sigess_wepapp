@@ -480,7 +480,7 @@ export class FormularioScmComponent implements OnInit {
                     this.buildPerfilesIdList();
                 }, 500);
         });
-        this.aonRegisters();
+
     }
 
     async aonRegisters() {
@@ -853,9 +853,11 @@ export class FormularioScmComponent implements OnInit {
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
         this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id)
-        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
         this.empresaId = this.sesionService.getEmpresa().id;
         console.log(this.empresaId);
+        this.aonRegisters();
+        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+
 
     }
 
@@ -881,6 +883,7 @@ export class FormularioScmComponent implements OnInit {
         this.cargoDescripcion = this.caseSelect.descripcionCargo;
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.fechaSeg()
+        this.aonRegisters();
 
     }
 

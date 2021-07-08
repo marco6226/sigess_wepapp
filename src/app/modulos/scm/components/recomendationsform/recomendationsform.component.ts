@@ -123,7 +123,10 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         if (!this.recomendation.valid) {
             return this.markFormGroupTouched(this.recomendation);
         }
-        this.accions.map(act => act.responsableEmpresa = act.responsableEmpresa.id)
+        this.accions.map(act => {
+            if (act.responsableEmpresa)
+                act.responsableEmpresa = act.responsableEmpresa.id;
+        })
         console.log(this.accions);
         let {
 

@@ -12,7 +12,7 @@ export class TareaComponent implements OnInit {
 
     tareaForm: FormGroup;
     routeSub;
-
+    tarea: any;
     constructor(fb: FormBuilder,
         private route: ActivatedRoute,
         private tareaService: TareaService,
@@ -22,7 +22,7 @@ export class TareaComponent implements OnInit {
 
     async ngOnInit() {
         let id = this.route.snapshot.paramMap.get('id');
-        console.log(await this.tareaService.find(id));
+        this.tarea = await this.tareaService.findByDetailId(id);
     }
 
     onSubmit() {

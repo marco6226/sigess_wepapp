@@ -182,6 +182,7 @@ export class GestionDocumentalComponent implements OnInit {
             dir.directorioPadre = nodoPadre.data.id;
         }
         dir.nombre = this.nombreCarpeta;
+        dir.caseId = this.caseid
         this.directorioService.create(dir).then(
             data => this.gestionarRespuesta(<Directorio>data)
         );
