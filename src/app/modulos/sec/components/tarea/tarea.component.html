@@ -45,7 +45,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
                     
-                        <textarea pInputTextarea formControlName="tarea.concepto" rows="4" required></textarea>
+                        <textarea pInputTextarea [(ngModel)]="tarea.concepto" rows="3" required></textarea>
 
                     <label for="" class="active">Concepto</label>
                 </div>
@@ -55,7 +55,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input pInputText styleClass="form-material" [value]="tarea.aspecto_causante">
+                    <textarea pInputTextarea [(ngModel)]="tarea.aspecto_causante" rows="3" required></textarea>
 
                     <label for="" class="active">Descripción de la desviación</label>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="input-field">                    
                     <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true"
                             [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="tarea.fecha_proyectada"></p-calendar>
+                            [(ngModel)]="tarea.fecha_proyectada"></p-calendar>
                     <label for="" class="active">Fecha Proyectada de cierre</label>
                 </div>
             </div>
