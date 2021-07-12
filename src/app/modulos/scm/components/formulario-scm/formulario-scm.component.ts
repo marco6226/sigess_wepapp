@@ -846,23 +846,26 @@ export class FormularioScmComponent implements OnInit {
         })
 
 
+        try {
+            this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
+            this.cargoDescripcion = this.caseSelect.descripcionCargo;
+            this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+            this.fechaSeg()
+            this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id)
+            this.empresaId = this.sesionService.getEmpresa().id;
+            this.aonRegisters();
+            this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+            this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+        } catch (error) {
+            console.log(error);
+        }
 
-        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
-        this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
-        this.fechaSeg()
-        this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id)
-        this.empresaId = this.sesionService.getEmpresa().id;
-        console.log(this.empresaId);
-        this.aonRegisters();
-        this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
-        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
 
     }
 
     async readCase() {
-
+        console.log("aquu oiii");
         this.consultar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
         let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, ...caseFiltered } = this.caseSelect
@@ -877,13 +880,19 @@ export class FormularioScmComponent implements OnInit {
         })
 
 
+        try {
+            this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
+            this.cargoDescripcion = this.caseSelect.descripcionCargo;
+            this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
+            this.fechaSeg()
+            this.aonRegisters();
+            this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
-        this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
-        this.cargoDescripcion = this.caseSelect.descripcionCargo;
-        this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
-        this.fechaSeg()
-        this.aonRegisters();
-        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+        } catch (error) {
+            console.log(error);
+        }
+        this.empleadoForm.disable();
+        this.casoMedicoForm.disable()
 
     }
 

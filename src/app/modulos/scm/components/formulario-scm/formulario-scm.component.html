@@ -349,9 +349,9 @@
                         </div>
                     </div>
                 </div>
-                <div style="text-align: center; width: 100%;">
+                <div *ngIf="!this.consultar" style="text-align: center; width: 100%;">
                     <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit"
-                        [disabled]="this.consultar" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
+                        icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
                         title="Guardar datos de Empleado"></button>
 
                     <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
@@ -622,8 +622,9 @@
                 <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()"
                     icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()"
                     title="Volver a listado de empleados"></button>
-                <button pButton *ngIf="solicitando == false" type="submit" icon="fa fa-floppy-o" class="float-btn"
-                    [disabled]="this.consultar" style="bottom: 100px;" title="Guardar datos medicos"></button>
+                <button pButton *ngIf="solicitando == false || !this.consultar" type="submit" icon="fa fa-floppy-o"
+                    class="float-btn" [disabled]="this.consultar" style="bottom: 100px;"
+                    title="Guardar datos medicos"></button>
 
                 <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
                     [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
@@ -700,11 +701,14 @@
 
     </p-tabPanel>
 
-    <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
-        <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
-            [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
-        </app-pcl>
-    </p-tabPanel>
+    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
+        <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
+            <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
+                [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
+            </app-pcl>
+        </p-tabPanel>
+    </ng-container>
+
 
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
@@ -1014,7 +1018,8 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td style="text-align:center">
+                        {{this.consultar}}
+                        <td style="text-align:center" *ngIf="this.consultar">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                                 (click)="onRowEditInit(seguimiento)" title="Editar Seguimiento"
                                 class="p-button-rounded p-button-text"></button>
