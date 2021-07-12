@@ -45,7 +45,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
                     
-                        <textarea pInputTextarea [(ngModel)]="tarea.concepto" rows="3" required></textarea>
+                        <textarea pInputTextarea [(ngModel)]="tarea.concepto" rows="2" required></textarea>
 
                     <label for="" class="active">Concepto</label>
                 </div>
@@ -55,7 +55,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <textarea pInputTextarea [(ngModel)]="tarea.aspecto_causante" rows="3" required></textarea>
+                    <textarea pInputTextarea [(ngModel)]="tarea.aspecto_causante" rows="5" required></textarea>
 
                     <label for="" class="active">Descripción de la desviación</label>
                 </div>
@@ -124,29 +124,104 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [attr.disabled]="true" required>
-                        </p-dropdown>
-                        <label for="" class="active">Fecha de seg</label>
+                        <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            dateFormat="dd/mm/yy"></p-calendar>
+                        <label for="" class="active">Fecha seguimiento</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material"
                             id="nameAndLastName" [attr.disabled]="true" />
-                        <label for="" class="active">Descript del seg</label>
+                        <label for="" class="active">Descripción del seguimiento</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <input type="text" pInputText placeholder="Dirección / Gerencia" class="form-material"
                             id="direccionGerencia1" />
-                        <label for="" class="active">img</label>
+                        <label for="" class="active">Evidencias de seguimiento</label>
+                    </div>
+                </div>
+                <div
+  id="carouselExampleCrossfade"
+  class="carousel slide carousel-fade"
+  data-mdb-ride="carousel"
+>
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-mdb-target="#carouselExampleCrossfade"
+      data-mdb-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-mdb-target="#carouselExampleCrossfade"
+      data-mdb-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-mdb-target="#carouselExampleCrossfade"
+      data-mdb-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="https://mdbootstrap.com/img/new/slides/041.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://mdbootstrap.com/img/new/slides/042.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://mdbootstrap.com/img/new/slides/043.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-mdb-target="#carouselExampleCrossfade"
+    data-mdb-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-mdb-target="#carouselExampleCrossfade"
+    data-mdb-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input pInputText styleClass="form-material">
+
+                        <label for="" class="active">Usuario que realiza el seguimiento</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-dropdown [filter]="true" class="select-material" styleClass="select-material">
-                        </p-dropdown>
+                        <input type="text" pInputText placeholder="Ciudad" class="form-material" [value]="tarea.estado" />
                         <label for="" class="active">Estado</label>
                     </div>
                 </div>
@@ -163,9 +238,16 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText placeholder="Antigüedad" class="form-material" id="antiguedad"
+                        <input type="text-area" pInputText placeholder="Antigüedad" class="form-material" id="antiguedad"
                             [attr.disabled]="true" />
-                        <label for="" class="active">Descripcion accion realizada</label>
+                        <label for="" class="active">Descripción de la acción realizada</label>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                        <input pInputText class="form-material" styleClass="form-material">
+                        <label for="" class="active">Evidencias de cierre</label>
                     </div>
                 </div>
 
@@ -175,7 +257,7 @@
                     <div class="input-field">
                         <input pInputText styleClass="form-material">
 
-                        <label for="" class="active">Usuario que gestion</label>
+                        <label for="" class="active">Usuario que gestiona</label>
                     </div>
                 </div>
 
