@@ -89,6 +89,7 @@ import { ScmComponent } from '../scm/components/scm/scm.component';
 import { RecomendationsformComponent } from '../scm/components/recomendationsform/recomendationsform.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TareaComponent } from '../sec/components/tarea/tarea.component';
+import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -203,6 +204,7 @@ const appRoutes: Routes = [
                 children: [
                     { path: 'creacion', component: FormularioScmComponent },
                     { path: 'list', component: ScmComponent },
+                    { path: 'permisos', component: ScmpermisosComponent },
 
                 ]
             },

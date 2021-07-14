@@ -18,15 +18,20 @@ import { LogmodalComponent } from './components/logmodal/logmodal.component';
 import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnostico-form.component';
 import { DocumentosModule } from '../ado/documentos.module';
 import { PclComponent } from './components/pcl/pcl.component';
+import { ScmpermisosComponent } from './components/scmpermisos/scmpermisos.component';
+import { AdminModule } from '../admin/admin.module';
+import { PermisoService } from '../admin/services/permiso.service';
+import { RecursoService } from '../admin/services/recurso.service';
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe, PclComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe, PclComponent, ScmpermisosComponent],
     imports: [
         CommonModule,
         ComunModule,
         CoreModule,
-        DocumentosModule
+        DocumentosModule,
+        AdminModule
     ],
     providers: [
         UsuarioService,
@@ -34,6 +39,8 @@ import { PclComponent } from './components/pcl/pcl.component';
         SedeService,
         AreaService,
         TipoAreaService,
+        PermisoService,
+        RecursoService,
         CargoService,
         EmpleadoService,
         PerfilService

@@ -701,13 +701,7 @@
 
     </p-tabPanel>
 
-    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
-        <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
-            <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
-                [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
-            </app-pcl>
-        </p-tabPanel>
-    </ng-container>
+
 
 
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
@@ -769,7 +763,13 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
-
+    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
+        <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
+            <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
+                [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
+            </app-pcl>
+        </p-tabPanel>
+    </ng-container>
     <p-tabPanel header="Incapacidades" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
