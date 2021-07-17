@@ -12,6 +12,7 @@ import { SelectItem } from 'primeng/primeng'
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { AreaService } from '../../../empresa/services/area.service';
 import { Area } from '../../../empresa/entities/area';
+import { Filter } from 'app/modulos/core/entities/filter';
 
 @Component({
     selector: 's-permisos',
@@ -51,7 +52,16 @@ export class PermisosComponent implements OnInit {
         filterQuery.sortOrder = -1;
         this.recursoService.findByFilter(filterQuery).then(
             data => {
-                this.recursosList = <Recurso[]>data['data'];
+
+                let scm = [];
+                let tmpArray = <Recurso[]>data['data'];
+                for (let idx = 0; idx < tmpArray.length; idx++) {
+                    if (tmpArray[idx].modulo == "Seguimiento de casos medicos" && tmpArray[idx].codigo == "SCM_PERF_SCM") {
+                        scm.push(tmpArray[idx]);
+                    }
+                }
+                tmpArray = tmpArray.filter(rcs => rcs.modulo != "Seguimiento de casos medicos");
+                this.recursosList = [...tmpArray, ...scm];
                 this.updateRowGroupMetaData();
             }
         );
