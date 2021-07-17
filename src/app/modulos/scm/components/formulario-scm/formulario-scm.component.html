@@ -14,7 +14,7 @@
 </div>
 
 <p-tabView styleClass="custom-panel">
-
+    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
     <p-tabPanel header="Información General">
         <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
@@ -433,7 +433,8 @@
             </form>
         </form>
     </p-tabPanel>
-
+    </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
     <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
 
 
@@ -700,10 +701,10 @@
         </p-table>
 
     </p-tabPanel>
+    </ng-container>
 
 
-
-
+    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
     <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
         <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="diagSelect"
@@ -763,6 +764,7 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
+    </ng-container>
     <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
         <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
             <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
@@ -770,6 +772,7 @@
             </app-pcl>
         </p-tabPanel>
     </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
     <p-tabPanel header="Incapacidades" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
@@ -827,7 +830,8 @@
         </div>
 
     </p-tabPanel>
-
+    </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
     <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
         <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
@@ -910,8 +914,8 @@
             </ng-template>
         </p-table>
     </p-tabPanel>
-
-
+    </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
     <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
 
         <div class="card" *sTienePermiso="'SCM_CREATE_CASE_SEG'">
@@ -1050,7 +1054,8 @@
             </p-table>
         </div>
     </p-tabPanel>
-
+    </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
     <p-tabPanel header="Tratamientos" *ngIf="caseSelect">
 
         <div class="card">
@@ -1153,7 +1158,8 @@
             </p-table>
         </div>
     </p-tabPanel>
-
+    </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
     <p-tabPanel header="Documentación" *ngIf="caseSelect">
         <div class="ui-g">
             <div class="ui-g-12">
@@ -1163,8 +1169,8 @@
         </div>
 
     </p-tabPanel>
-
-
+    </ng-container>
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
     <p-tabPanel header="Plan de Acción" *ngIf="caseSelect">
         <p-table [value]="this.recomendationList" dataKey="id">
             <ng-template pTemplate="header">
@@ -1232,7 +1238,7 @@
         </p-table>
 
     </p-tabPanel>
-
+    </ng-container>
     <p-tabPanel header="Trazabilidad" *sTienePermiso="'SCM_GET_CASE_LOG'">
 
         <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true"
