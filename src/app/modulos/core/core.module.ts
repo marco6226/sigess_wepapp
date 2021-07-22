@@ -90,6 +90,7 @@ import { RecomendationsformComponent } from '../scm/components/recomendationsfor
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TareaComponent } from '../sec/components/tarea/tarea.component';
 import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.component';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -279,7 +280,11 @@ const appRoutes: Routes = [
         InicioComponent,
         AreaSelectorIndComponent,
         HomeComponent,
-        TerminosCondicionesComponent
+        TerminosCondicionesComponent,
+        FileUploaderComponent
+    ],
+    exports: [
+        FileUploaderComponent
     ],
     providers: [AuthGuardService, AuthService, ModeloGraficaService],
 })

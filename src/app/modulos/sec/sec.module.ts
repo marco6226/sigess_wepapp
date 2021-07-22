@@ -22,27 +22,29 @@ import { DocumentosAnalisisDesviacionComponent } from './components/documentos-a
 import { ConsultaDesviacionInspeccionComponent } from './components/consulta-desviacion-inspeccion/consulta-desviacion-inspeccion.component';
 import { TooltipModule } from 'primeng/primeng';
 import { TareaComponent } from './components/tarea/tarea.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SecRoutingModule,
-    ComunModule,
-    TreeTableModule,
-    TooltipModule
-  ],
-  declarations: [
-    SecComponent,
-    ConsultaDesviacionComponent,
-    GestionTareasComponent,
-    AsignacionTareasComponent,
-    AnalisisDesviacionComponent,
-    ConsultaAnalisisDesviacionComponent,
-    AnalisisCostosComponent,
-    DocumentosAnalisisDesviacionComponent,
-    ConsultaDesviacionInspeccionComponent,
-    TareaComponent
-  ],
-  providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService]
+    imports: [
+        CoreModule,
+        CommonModule,
+        SecRoutingModule,
+        ComunModule,
+        TreeTableModule,
+        TooltipModule
+    ],
+    declarations: [
+        SecComponent,
+        ConsultaDesviacionComponent,
+        GestionTareasComponent,
+        AsignacionTareasComponent,
+        AnalisisDesviacionComponent,
+        ConsultaAnalisisDesviacionComponent,
+        AnalisisCostosComponent,
+        DocumentosAnalisisDesviacionComponent,
+        ConsultaDesviacionInspeccionComponent,
+        TareaComponent
+    ],
+    providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService]
 })
 export class SecModule { }
