@@ -78,6 +78,7 @@ export class ElaboracionListaComponent implements OnInit {
         );
         this.form = this.fb.group({
             'id': null,
+            'version': [null, Validators.required],
             'codigo': [null, Validators.required],
             'nombre': [null, Validators.required],
             'tipoLista': [null, Validators.required],
@@ -147,6 +148,7 @@ export class ElaboracionListaComponent implements OnInit {
             id: listaInsp.listaInspeccionPK,
             codigo: listaInsp.codigo,
             nombre: listaInsp.nombre,
+            version: listaInsp.listaInspeccionPK.version,
             tipoLista: listaInsp.tipoLista,
             descripcion: listaInsp.descripcion
         });
@@ -210,6 +212,7 @@ export class ElaboracionListaComponent implements OnInit {
         let listInp = new ListaInspeccion();
         listInp.nombre = this.form.value.nombre;
         listInp.codigo = this.form.value.codigo;
+        listInp.listaInspeccionPK.version = this.form.value.version;
         listInp.tipoLista = this.form.value.tipoLista;
         listInp.fkPerfilId = JSON.stringify(this.form.value.perfilesId);
         listInp.descripcion = this.form.value.descripcion;
