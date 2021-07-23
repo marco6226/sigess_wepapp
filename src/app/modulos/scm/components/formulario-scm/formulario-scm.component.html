@@ -492,7 +492,7 @@
                 <div class="ui-g-12 p-mb-2">
                     <h5 class="title-header">Conceptos de rehabilitación</h5>
                 </div>
-                <div>
+                <div class="ui-g-1">
 
                     <h2> 1. </h2>
 
@@ -509,7 +509,7 @@
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaConceptRehabilitacion"></p-calendar>
@@ -517,7 +517,7 @@
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
                         <p-dropdown [filter]="true"
                             [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
                             formControlName="entidadEmiteConcepto" class="select-material" styleClass="select-material">
@@ -527,7 +527,7 @@
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
                         <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
                             formControlName="entidadEmitida" class="select-material" styleClass="select-material">
                         </p-dropdown>
@@ -539,7 +539,7 @@
                     <h2> 2. </h2>
 
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-2">
                     <div class="input-field">
 
                         <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
@@ -550,7 +550,7 @@
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                             [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                             formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
@@ -558,7 +558,7 @@
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
                         <p-dropdown [filter]="true"
                             [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
                             formControlName="entidadEmiteConceptoTwo" class="select-material"
@@ -569,7 +569,7 @@
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <div class="input-field">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
                         <p-dropdown [filter]="true"
                             [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
                             formControlName="entidadEmitidaTwo" class="select-material" styleClass="select-material">
