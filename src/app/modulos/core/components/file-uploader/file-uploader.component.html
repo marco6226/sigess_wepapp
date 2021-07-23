@@ -1,0 +1,12 @@
+<div class="image-item" [ngClass]="{'upload': !imgURL}">
+
+    <!-- Start file uploader -->
+    <input #file type="file" accept='image/*, application/*' (change)="preview(file.files)" class="file-upload">
+    <div class="image" *ngIf="imgURL">
+        <img [src]="imgURL" class="img img-fluid" alt="Image uploaded" (click)="download()">
+    </div>
+    <div class="add">
+        <em class="pi pi-plus"></em>
+    </div>
+    <!-- End file uploader -->
+</div>
