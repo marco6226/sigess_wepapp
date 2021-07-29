@@ -15,6 +15,7 @@ import { PerfilService } from "app/modulos/admin/services/perfil.service";
 import { UsuarioService } from "app/modulos/admin/services/usuario.service";
 import { Afp } from "app/modulos/comun/entities/afp";
 import { Eps } from "app/modulos/comun/entities/eps";
+import { Prepagadas } from "app/modulos/comun/entities/prepagadas";
 import { ComunService } from "app/modulos/comun/services/comun.service";
 import { EnumeracionesService } from "app/modulos/comun/services/enumeraciones.service";
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
@@ -181,6 +182,7 @@ export class FormularioScmComponent implements OnInit {
     epsList: SelectItem[];
     arlList: SelectItem[];
     afpList: SelectItem[];
+    prepagadasList: SelectItem[];
     sveOptionList: SelectItem[] = [];
     cargoList: SelectItem[];
     caseStatus = [
@@ -197,7 +199,7 @@ export class FormularioScmComponent implements OnInit {
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
-    entity: epsorarl = { EPS: [], ARL: [], AFP: [] };
+    entity: epsorarl = { EPS: [], ARL: [], AFP: [], PREPAGADAS: [] };
     caseOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
@@ -459,6 +461,15 @@ export class FormularioScmComponent implements OnInit {
             });
             this.entity.ARL = this.arlList;
 
+        });
+
+        this.comunService.findAllPrepagadas().then((data) => {
+            this.prepagadasList = [];
+            this.prepagadasList.push({ label: "--Seleccione--", value: null });
+            (<Prepagadas[]>data).forEach((prepagadas) => {
+                this.prepagadasList.push({ label: prepagadas.nombre, value: prepagadas.id });
+            });
+            this.entity.PREPAGADAS = this.prepagadasList;
         });
 
 

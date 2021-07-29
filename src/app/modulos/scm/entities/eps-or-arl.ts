@@ -5,4 +5,6 @@ export class epsorarl {
     EPS: SelectItem[]
     ARL: SelectItem[]
     AFP: SelectItem[]
+    PREPAGADAS: SelectItem[]
+
 }

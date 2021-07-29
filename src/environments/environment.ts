@@ -52,6 +52,7 @@ export const endPoints = {
     com_arl: path + "arl/",
     com_afp: path + "afp/",
     com_eps: path + "eps/",
+    com_prepagadas: path + "prepagadas/",
     com_ccf: path + "ccf/",
     com_pais: path + "pais/",
     com_cie: path + "cie/",

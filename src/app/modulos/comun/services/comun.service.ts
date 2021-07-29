@@ -55,6 +55,20 @@ export class ComunService {
     });
   }
 
+  findAllPrepagadas() {
+    return new Promise(resolve => {
+      this.httpInt.get(endPoints.com_prepagadas)
+        .map(res => res)
+        .subscribe(
+          res => {
+            resolve(res);
+          }
+          ,
+          err => this.manageError(err)
+        )
+    });
+  }
+
   findAllCcf() {
     return new Promise(resolve => {
       this.httpInt.get(endPoints.com_ccf)

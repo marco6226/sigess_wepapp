@@ -22,8 +22,8 @@
                         id="username2-help" class="p-invalid">Obligatorio</small>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-6" *ngIf="entity">
-                    <div class="input-field">
+                <div class="ui-g-12 ui-md-6 ui-lg-6" >
+                    <div class="input-field" *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' ">
                         <p-dropdown [filter]="true"
                             [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]"
                             formControlName="entidadEmitida" class="select-material" styleClass="select-material">
