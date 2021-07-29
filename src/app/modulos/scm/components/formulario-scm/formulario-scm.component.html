@@ -1021,9 +1021,8 @@
                                     {{seguimiento.resultado}}
                                 </ng-template>
                             </p-cellEditor>
-                        </td>
-                        {{this.consultar}}
-                        <td style="text-align:center" *ngIf="this.consultar">
+                        </td>                        
+                        <td style="text-align:center" *ngIf="!this.consultar">
                             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                                 (click)="onRowEditInit(seguimiento)" title="Editar Seguimiento"
                                 class="p-button-rounded p-button-text"></button>
