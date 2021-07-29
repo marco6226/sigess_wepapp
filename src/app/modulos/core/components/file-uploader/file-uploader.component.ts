@@ -1,4 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+import { Message } from 'primeng/primeng';
 
 @Component({
     selector: 'app-file-uploader',
@@ -10,14 +13,21 @@ export class FileUploaderComponent implements OnInit {
 
     /* Variables */
     public imagePath;
+    numMaxImg = 1;
     imgURL: any;
     @Input() file = false;
     @Input() fileRoute = '';
-
+    imagenesList: any[] = [];
+    imgMap: any = {};
+    msgs: Message[] = [];
     @Input() index: number;
     @Output() loadedImage: EventEmitter<any> = new EventEmitter();
 
-    constructor() { }
+    constructor(private directorioService: DirectorioService,
+
+        private domSanitizer: DomSanitizer,
+
+    ) { }
 
     ngOnInit() {
     }
@@ -51,6 +61,37 @@ export class FileUploaderComponent implements OnInit {
         }
 
     };
+
+    async onArchivoSelect(event) {
+        let file = event.target.files[0];
+        if (file.type != "image/jpeg" && file.type != "image/png") {
+            this.msgs.push({ severity: 'warn', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
+            return;
+        }
+        if (file.size > 1_500_000) {
+            this.msgs.push({ severity: 'warn', summary: 'Tamaño máximo superado 1.5MB', detail: 'La imágen supera el tamaño máximo permitido' });
+            return;
+        }
+        this.msgs = [];
+
+        if (this.imagenesList == null)
+            this.imagenesList = [];
+
+        if (this.imagenesList.length >= this.numMaxImg) {
+            this.msgs.push({
+                severity: 'warn',
+                summary: 'Número maximo de fotografias alcanzado',
+                detail: 'Ha alcanzado el número máximo de fotografias (' + this.numMaxImg + ') que puede adjuntar para este hallazgo'
+            });
+            return;
+        }
+        let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+        this.imgURL = urlData;
+
+        console.log(await this.directorioService.uploadv2(file, "Test"));
+
+    }
+
 
     download() {
         if (this.file) {

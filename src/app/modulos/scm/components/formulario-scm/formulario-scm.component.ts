@@ -484,11 +484,16 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async aonRegisters() {
-        let token: any = await this.scmService.getTokenAon();
-        console.log(token.message.Authorization);
+        try {
+            let token: any = await this.scmService.getTokenAon();
+            console.log(token.message.Authorization);
 
-        let res: any = await this.scmService.getRegistersAon(token.message.Authorization, this.empleadoSelect.numeroIdentificacion, "2010-01-01", "2021-12-31");
-        this.incapacidades = res.message.data;
+            let res: any = await this.scmService.getRegistersAon(token.message.Authorization, this.empleadoSelect.numeroIdentificacion, "2010-01-01", "2021-12-31");
+            this.incapacidades = res.message.data;
+        } catch (error) {
+            console.log(error.message);
+        }
+
     }
 
     closeForm() {
