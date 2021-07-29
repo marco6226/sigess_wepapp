@@ -14,7 +14,7 @@
 </div>
 
 <p-tabView styleClass="custom-panel">
-    <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
+    <ng-container *sTienePermiso="'SCM_GET_PERSONAL'">
     <p-tabPanel header="Información General">
         <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
@@ -1239,7 +1239,8 @@
 
     </p-tabPanel>
     </ng-container>
-    <p-tabPanel header="Trazabilidad" *sTienePermiso="'SCM_GET_CASE_LOG'">
+    <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
+    <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
 
         <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true"
             [(selection)]="logSelected" dataKey="id" [lazy]="true">
@@ -1277,10 +1278,12 @@
 
         </p-table>
     </p-tabPanel>
+</ng-container>
 
 
 
 </p-tabView>
+
 
 
 
