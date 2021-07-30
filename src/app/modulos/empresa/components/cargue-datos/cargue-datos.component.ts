@@ -93,18 +93,22 @@ export class CargueDatosComponent implements OnInit {
             { label: 'Genero', nombre: 'genero', opciones: this.defaultItem.concat(genero) },
             { label: 'Número identificación', nombre: 'numeroIdentificacion' },
             { label: 'Perfil', nombre: 'usuario.usuarioEmpresaList', data: 'perfilData' }, // 22
-            { label: 'Numero de contacto emergencia', nombre: 'phoneEmergencyContact' },
-
-            { label: 'Primer apellido', nombre: 'primerApellido' },
+            { label: 'Numero de contacto emergencia', nombre: 'phoneEmergencyContact' },            
             { label: 'Primer nombre', nombre: 'primerNombre' },
-            { label: 'Segundo apellido', nombre: 'segundoApellido' },
             { label: 'Segundo nombre', nombre: 'segundoNombre' },
+            { label: 'Primer apellido', nombre: 'primerApellido' },
+            { label: 'Segundo apellido', nombre: 'segundoApellido' },
+            
             { label: 'Teléfono 1', nombre: 'telefono1' },
             { label: 'Teléfono 2', nombre: 'telefono2' },
             { label: 'Tipo identificación', nombre: 'tipoIdentificacion', opciones: this.defaultItem.concat(tipo_identificacion) },
 
             { label: 'Tipo vinculación', nombre: 'tipoVinculacion', opciones: this.defaultItem.concat(tipo_vinculacion) },
             { label: 'Zona residencia', nombre: 'zonaResidencia', opciones: this.defaultItem.concat(zona) },
+            { label: 'Dirección Gerencia', nombre: 'direccion_gerencia' },
+            { label: 'Regional', nombre: 'regional' },
+
+
         ],
         CARGO: [
             { label: 'Nombre', nombre: 'nombre' },
