@@ -103,7 +103,7 @@ export class CargueDatosComponent implements OnInit {
             { label: 'Tipo identificación', nombre: 'tipoIdentificacion', opciones: this.defaultItem.concat(tipo_identificacion) },
             { label: 'Tipo vinculación', nombre: 'tipoVinculacion', opciones: this.defaultItem.concat(tipo_vinculacion) },
             { label: 'Zona residencia', nombre: 'zonaResidencia', opciones: this.defaultItem.concat(zona) },
-            { label: 'Dirección Gerencia', nombre: 'direccion_gerencia' },
+            { label: 'Dirección Gerencia', nombre: 'direccionGerencia' },
             { label: 'Regional', nombre: 'regional' },
 
         ],
