@@ -275,8 +275,17 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
 
         this.accions[index] = product;
     }
+
+    deleteFromArray(array, index) {
+
+    }
+
+    onRowDelete(index) {
+        this.accions.splice(index, 1);
+
+    }
     nuevaActividad() {
-        let actv = { actividad: "", descripcionAct: "", responsableExterno: " ", responsableEmpresa: "", fechaProyectada: new Date() }
+        let actv = { actividad: "", descripcionAct: "", responsableExterno: null, responsableEmpresa: null, fechaProyectada: new Date() }
         this.accions.push(actv)
     }
 
