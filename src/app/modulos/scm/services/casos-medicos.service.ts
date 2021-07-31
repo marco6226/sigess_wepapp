@@ -116,8 +116,8 @@ export class CasosMedicosService {
         return this.http.post<[]>(`${endPoints.scm}pcl/`, pcl, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-    getListPcl(): any {
-        return this.http.get<[]>(`${endPoints.scm}pcl/`, this.getRequestHeaders(this.headers)).toPromise();
+    getListPcl(pkcase): any {
+        return this.http.get<[]>(`${endPoints.scm}pcl/${pkcase}`, this.getRequestHeaders(this.headers)).toPromise();
     }
     updatePcl(Pcl) {
         return this.http.put(`${endPoints.scm}pcl/`, Pcl, this.getRequestHeaders(this.headers)).toPromise();

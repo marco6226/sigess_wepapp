@@ -76,13 +76,13 @@ export class CargueDatosComponent implements OnInit {
     defaultItem = <SelectItem[]>[{ label: '', value: '' }];
     modelo: any = {
         EMPLEADO: [
-            { label: 'Ciudad', nombre: 'ciudad', data: 'ciudadData' }, // 20
             { label: 'AFP', nombre: 'afp', data: 'afpData' },// 18
             { label: 'Área', nombre: 'area', data: 'areaData' }, //15
             { label: 'Cargo', nombre: 'cargo', data: 'cargoData' },// 16
             { label: 'CCF', nombre: 'ccf', data: 'ccfData' }, // 19
             { label: 'Codigo', nombre: 'codigo' },
             { label: 'Cel corporativo ', nombre: 'corporativePhone' }, // 20
+            { label: 'Ciudad', nombre: 'ciudad', data: 'ciudadData' }, // 20
             { label: 'Dirección', nombre: 'direccion' },
             { label: 'E-Mail', nombre: 'usuario.email' },
             { label: 'Email de emergencia', nombre: 'emailEmergencyContact' },
@@ -93,21 +93,18 @@ export class CargueDatosComponent implements OnInit {
             { label: 'Genero', nombre: 'genero', opciones: this.defaultItem.concat(genero) },
             { label: 'Número identificación', nombre: 'numeroIdentificacion' },
             { label: 'Perfil', nombre: 'usuario.usuarioEmpresaList', data: 'perfilData' }, // 22
-            { label: 'Numero de contacto emergencia', nombre: 'phoneEmergencyContact' },            
+            { label: 'Numero de contacto emergencia', nombre: 'phoneEmergencyContact' },
             { label: 'Primer nombre', nombre: 'primerNombre' },
             { label: 'Segundo nombre', nombre: 'segundoNombre' },
             { label: 'Primer apellido', nombre: 'primerApellido' },
             { label: 'Segundo apellido', nombre: 'segundoApellido' },
-            
             { label: 'Teléfono 1', nombre: 'telefono1' },
             { label: 'Teléfono 2', nombre: 'telefono2' },
             { label: 'Tipo identificación', nombre: 'tipoIdentificacion', opciones: this.defaultItem.concat(tipo_identificacion) },
-
             { label: 'Tipo vinculación', nombre: 'tipoVinculacion', opciones: this.defaultItem.concat(tipo_vinculacion) },
             { label: 'Zona residencia', nombre: 'zonaResidencia', opciones: this.defaultItem.concat(zona) },
             { label: 'Dirección Gerencia', nombre: 'direccion_gerencia' },
             { label: 'Regional', nombre: 'regional' },
-
 
         ],
         CARGO: [
@@ -171,10 +168,10 @@ export class CargueDatosComponent implements OnInit {
         this.areaData = response.data;
 
         response = await this.comunService.findAllAfp();
-         this.afpData = response;
+        this.afpData = response;
 
-        response  = await this.comunService.findAllEps();
-        this.epsData  = response;
+        response = await this.comunService.findAllEps();
+        this.epsData = response;
 
         response = await this.ciudadService.findByFilter(ciudadfiltQuery);
         this.ciudadData = response.data;
@@ -188,13 +185,6 @@ export class CargueDatosComponent implements OnInit {
         response = await this.perfilService.findAll();
         this.perfilData = response.data;
 
-        console.log(this.afpData,
-            this.epsData,
-            this.cargoData,
-            this.perfilData,
-            this.areaData,
-            this.ciudadData,
-            this.ccfData);
     }
 
     onArchivoSelect(ev) {
@@ -203,12 +193,12 @@ export class CargueDatosComponent implements OnInit {
         const reader = new FileReader();
         const file = ev.target.files[0];
         reader.onload = (event) => {
-            console.log(event);
             const data = reader.result;
             workBook = XLSX.read(data, { type: 'binary' });
             jsonData = workBook.SheetNames.reduce((initial, name) => {
                 const sheet = workBook.Sheets[name];
                 initial = XLSX.utils.sheet_to_json(sheet);
+                console.log(initial);
                 return initial;
             }, {});
             this.workbookExcel = jsonData;
@@ -262,20 +252,18 @@ export class CargueDatosComponent implements OnInit {
             empleado.usuario.email = json.email;
             empleado.usuario.ipPermitida = [];
             //empleado.usuario.id = this.empleadoSelect.usuario.id;
-            // //console.log(json.ipPermitida);
             // empleado.usuario.ipPermitida = json.ipPermitida;
             empleado.usuario.usuarioEmpresaList = [];
-            let empleadoValidado =  this.validateEmployeeCampos(empleado,json.perfil);
+            let empleadoValidado = this.validateEmployeeCampos(empleado, json.perfil);
             if (empleadoValidado.error) {
                 json.error = empleadoValidado.error;
-                    this.fallidosArray.push(json)
-                    return;
+                this.fallidosArray.push(json)
+                return;
             }
 
             this.empleadosArray.push(empleadoValidado);
-        
+
         });
-        console.log(this.empleadosArray,this.fallidosArray);
 
     }
 
@@ -284,47 +272,46 @@ export class CargueDatosComponent implements OnInit {
         this.optDragged = opt;
     }
 
-    validateEmployeeCampos(employe:Empleado,perfilName):any {
+    validateEmployeeCampos(employe: Empleado, perfilName): any {
         let error;
         let eps = this.epsData.find(eps => employe.eps.nombre == eps.nombre);
-        let perfil = this.perfilData.find(perfil=> perfilName == perfil.nombre);
-        let afp = this.afpData.find(afp=> employe.afp.nombre == afp.nombre);
-        let cargo = this.cargoData.find(cargo=> employe.cargo.nombre == cargo.nombre);
-        let area = this.areaData.find(area=> employe.area.nombre == area.nombre);
+        let perfil = this.perfilData.find(perfil => perfilName == perfil.nombre);
+        let afp = this.afpData.find(afp => employe.afp.nombre == afp.nombre);
+        let cargo = this.cargoData.find(cargo => employe.cargo.nombre == cargo.nombre);
+        let area = this.areaData.find(area => employe.area.nombre == area.nombre);
 
-        console.log(this.epsData,employe.eps.nombre);
-         if(eps){
-           employe.eps = eps; 
-         }else{
-            return {error:"Eps no existe o nula", employe}
-         }
+        if (eps) {
+            employe.eps = eps;
+        } else {
+            return { error: "Eps no existe o nula", employe }
+        }
 
-         if(afp){
-            employe.afp = afp; 
-          }else{
-             return {error:"afp no existe o nula", employe}
-          }
-          if(area){
-            employe.area = area; 
-          }else{
-             return {error:"area no existe o nula", employe}
-          }
+        if (afp) {
+            employe.afp = afp;
+        } else {
+            return { error: "afp no existe o nula", employe }
+        }
+        if (area) {
+            employe.area = area;
+        } else {
+            return { error: "area no existe o nula", employe }
+        }
 
-         if(cargo){
-            employe.cargo = cargo; 
-          }else{
-             return {error:"cargo no existe o nula", employe}
-          }
+        if (cargo) {
+            employe.cargo = cargo;
+        } else {
+            return { error: "cargo no existe o nula", employe }
+        }
 
-         if(perfil){
+        if (perfil) {
             let ue = new UsuarioEmpresa();
             ue.perfil = new Perfil();
             ue.perfil.id = perfil.id;
-            employe.usuario.usuarioEmpresaList.push(ue);          
-        }else{
-             return {error:"Perfil no existe o nula", employe}
-          }
-         return employe;
+            employe.usuario.usuarioEmpresaList.push(ue);
+        } else {
+            return { error: "Perfil no existe o nula", employe }
+        }
+        return employe;
     }
 
     drop(e: any, cell: any) {
@@ -362,10 +349,10 @@ export class CargueDatosComponent implements OnInit {
     }
 
     descargarFallidos() {
-        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.fallidosArray);  
-        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };  
-        const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });  
-        this.saveAsExcelFile(excelBuffer, 'Empleados con fallas');  
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.fallidosArray);
+        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, 'Empleados con fallas');
     }
     generarObjetos() {
         let empleadosList = [];
@@ -384,7 +371,7 @@ export class CargueDatosComponent implements OnInit {
     private saveAsExcelFile(buffer: any, fileName: string): void {
         const data: Blob = new Blob([buffer], {
             type: EXCEL_TYPE
-        }); 
+        });
         FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
     }
     cargarValor(objeto: any, campo: string, valor: string) {
@@ -399,7 +386,7 @@ export class CargueDatosComponent implements OnInit {
     }
 
     validarDatos() {
-    
+
         for (let i = 0; i < this.modelo[this.opcionSelect].length; i++) {
             let element = (this.modelo[this.opcionSelect])[i];
             if (element['selected'] == false) {

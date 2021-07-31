@@ -15,6 +15,8 @@ export class PclComponent implements OnInit {
 
     @Input() diagnosticos: any[];
     @Input() pclOptionList: any[];
+    @Input() pkCase: any[];
+
     @Input() emitPclentity: any[];
     @Output() eventClose = new EventEmitter<any>()
     @Input() entity: epsorarl;
@@ -71,7 +73,7 @@ export class PclComponent implements OnInit {
     onRowEditCancel() { }
 
     async iniciarPcl() {
-        this.pclList = await this.scmService.getListPcl();
+        this.pclList = await this.scmService.getListPcl(this.pkCase);
         this.pclList.map(pcl => {
             console.log(pcl);
             pcl.emisionPclFecha = pcl.emisionPclFecha == null ? null : new Date(pcl.emisionPclFecha);
