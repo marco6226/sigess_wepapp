@@ -222,6 +222,7 @@ export class CargueDatosComponent implements OnInit {
             empleado.segundoApellido = json.segundoApellido;
             empleado.codigo = json.codigo;
             empleado.direccion = json.direccion;
+            empleado.direccion = json.direccion;
             empleado.fechaIngreso = json.fechaIngreso;
             empleado.emergencyContact = json.emergencyContact;
             empleado.corporativePhone = json.corporativePhone;
@@ -232,7 +233,7 @@ export class CargueDatosComponent implements OnInit {
             empleado.numeroIdentificacion = json.numeroIdentificacion;
             empleado.telefono1 = json.telefono1;
             empleado.telefono2 = json.telefono2;
-            empleado.direccionGerencia = json.direcciongerencia;
+            empleado.direccionGerencia = json.direccionGerencia;
             empleado.regional = json.regional;
             empleado.ciudad = json.ciudad == null ? null : json.ciudad.id;
             if (json.afp != null) {
