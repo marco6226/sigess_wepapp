@@ -79,11 +79,12 @@ export class CargueDatosComponent implements OnInit {
             { label: 'AFP', nombre: 'afp', data: 'afpData' },// 18
             { label: 'Área', nombre: 'area', data: 'areaData' }, //15
             { label: 'Cargo', nombre: 'cargo', data: 'cargoData' },// 16
-            { label: 'CCF', nombre: 'ccf', data: 'ccfData' }, // 19
-            { label: 'Codigo', nombre: 'codigo' },
-            { label: 'Cel corporativo ', nombre: 'corporativePhone' }, // 20
+            { label: 'CCF', nombre: 'ccf', data: 'ccfData' }, // 19 
             { label: 'Ciudad', nombre: 'ciudad', data: 'ciudadData' }, // 20
+            { label: 'Codigo', nombre: 'codigo' },
+            { label: 'Corporativo Cel', nombre: 'corporativePhone' }, // 20
             { label: 'Dirección', nombre: 'direccion' },
+            { label: 'Dirección Gerencia', nombre: 'direccionGerencia' },
             { label: 'E-Mail', nombre: 'usuario.email' },
             { label: 'Email de emergencia', nombre: 'emailEmergencyContact' },
             { label: 'Contacto de emergencia ', nombre: 'emergencyContact' },
@@ -94,17 +95,18 @@ export class CargueDatosComponent implements OnInit {
             { label: 'Número identificación', nombre: 'numeroIdentificacion' },
             { label: 'Perfil', nombre: 'usuario.usuarioEmpresaList', data: 'perfilData' }, // 22
             { label: 'Numero de contacto emergencia', nombre: 'phoneEmergencyContact' },
-            { label: 'Primer nombre', nombre: 'primerNombre' },
-            { label: 'Segundo nombre', nombre: 'segundoNombre' },
             { label: 'Primer apellido', nombre: 'primerApellido' },
+            { label: 'Primer nombre', nombre: 'primerNombre' },                       
+            { label: 'Regional', nombre: 'regional' },
             { label: 'Segundo apellido', nombre: 'segundoApellido' },
+            { label: 'Segundo nombre', nombre: 'segundoNombre' },             
             { label: 'Teléfono 1', nombre: 'telefono1' },
             { label: 'Teléfono 2', nombre: 'telefono2' },
             { label: 'Tipo identificación', nombre: 'tipoIdentificacion', opciones: this.defaultItem.concat(tipo_identificacion) },
             { label: 'Tipo vinculación', nombre: 'tipoVinculacion', opciones: this.defaultItem.concat(tipo_vinculacion) },
             { label: 'Zona residencia', nombre: 'zonaResidencia', opciones: this.defaultItem.concat(zona) },
-            { label: 'Dirección Gerencia', nombre: 'direccionGerencia' },
-            { label: 'Regional', nombre: 'regional' },
+            
+            
 
         ],
         CARGO: [
