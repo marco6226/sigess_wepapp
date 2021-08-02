@@ -25,7 +25,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         { label: 'Entidad  que emite', value: null },
         { label: 'EPS', value: 'EPS' },
         { label: 'ARL', value: 'ARL' },
-        { label: 'Proveedor de salud', value: 'Proveedor de salud' },
+        { label: 'Proveedor de salud', value: 'PROVSALUD' },
         { label: 'Medicina prepagada', value: 'PREPAGADAS' },
 
     ];

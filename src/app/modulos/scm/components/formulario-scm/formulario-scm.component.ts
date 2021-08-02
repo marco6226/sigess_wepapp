@@ -200,7 +200,7 @@ export class FormularioScmComponent implements OnInit {
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
-    entity: epsorarl = { EPS: [], ARL: [], AFP: [], PREPAGADAS: [] };
+    entity: epsorarl = { EPS: [], ARL: [], AFP: [], PREPAGADAS: [], PROVSALUD: [] };
     caseOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
@@ -479,7 +479,8 @@ export class FormularioScmComponent implements OnInit {
             (<Prepagadas[]>data).forEach((prov) => {
                 this.provsaludList.push({ label: prov.nombre, value: prov.id });
             });
-            this.entity.PREPAGADAS = this.provsaludList;
+            console.log(this.provsaludList);
+            this.entity.PROVSALUD = this.provsaludList;
         });
 
 

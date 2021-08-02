@@ -6,5 +6,5 @@ export class epsorarl {
     ARL: SelectItem[]
     AFP: SelectItem[]
     PREPAGADAS: SelectItem[]
-
+    PROVSALUD: SelectItem[]
 }

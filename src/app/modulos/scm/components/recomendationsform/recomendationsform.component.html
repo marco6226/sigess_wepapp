@@ -24,7 +24,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
                     <div class="input-field"
-                        *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'PREPAGADAS' ">
+                        *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'PROVSALUD' || recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'PREPAGADAS' ">
                         <p-dropdown [filter]="true"
                             [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]"
                             formControlName="entidadEmitida" class="select-material" styleClass="select-material">
