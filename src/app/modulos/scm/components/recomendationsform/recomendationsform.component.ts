@@ -26,7 +26,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         { label: 'EPS', value: 'EPS' },
         { label: 'ARL', value: 'ARL' },
         { label: 'Proveedor de salud', value: 'Proveedor de salud' },
-        { label: 'Medicina prepagada', value: 'Medicina prepagada' },
+        { label: 'Medicina prepagada', value: 'PREPAGADAS' },
 
     ];
 
