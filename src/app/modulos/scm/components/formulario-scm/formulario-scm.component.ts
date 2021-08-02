@@ -183,6 +183,7 @@ export class FormularioScmComponent implements OnInit {
     arlList: SelectItem[];
     afpList: SelectItem[];
     prepagadasList: SelectItem[];
+    provsaludList: SelectItem[];
     sveOptionList: SelectItem[] = [];
     cargoList: SelectItem[];
     caseStatus = [
@@ -470,6 +471,15 @@ export class FormularioScmComponent implements OnInit {
                 this.prepagadasList.push({ label: prepagadas.nombre, value: prepagadas.id });
             });
             this.entity.PREPAGADAS = this.prepagadasList;
+        });
+
+        this.comunService.findAllProvSalud().then((data) => {
+            this.provsaludList = [];
+            this.provsaludList.push({ label: "--Seleccione--", value: null });
+            (<Prepagadas[]>data).forEach((prov) => {
+                this.provsaludList.push({ label: prov.nombre, value: prov.id });
+            });
+            this.entity.PREPAGADAS = this.provsaludList;
         });
 
 

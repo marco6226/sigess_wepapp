@@ -270,11 +270,12 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         }
 
     }
+
     async onRowEditSave(product, index) {
         console.log(product, index);
-
         this.accions[index] = product;
     }
+
 
     deleteFromArray(array, index) {
 
