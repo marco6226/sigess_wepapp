@@ -364,7 +364,7 @@
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="pclForm.get('entidadEmiteCalificacion').value == 'EPS' || pclForm.get('entidadEmiteCalificacion').value == 'ARL' || pclForm.get('entidadEmiteCalificacion').value == 'AFP'">
                     <div class="input-field">
                         <p-dropdown [filter]="true" [options]="entity[pclForm.get('entidadEmiteCalificacion').value]"
                             formControlName="entidadEmitidaCalificacion" class="select-material"
