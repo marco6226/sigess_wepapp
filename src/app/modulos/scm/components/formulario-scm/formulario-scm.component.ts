@@ -940,6 +940,14 @@ export class FormularioScmComponent implements OnInit {
 
 
     }
+
+    onRowDelete(product, index) {
+        product.eliminado = true;
+        console.log(product);
+        this.tratamientos.slice(index, 1);
+        this.onRowEditSave(product, "tratamiento");
+
+    }
     async onRowCloneInit(pseg, type?) {
         this.msgs = [];
         let { id, tarea, responsable, resultado, responsableExterno, ...product } = pseg;
@@ -1087,7 +1095,7 @@ export class FormularioScmComponent implements OnInit {
     }
 
     async fechaTrat() {
-        this.seguimientos = await this.scmService.getTratamientos(this.caseSelect.id);
+        this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id);
         this.tratamientos.map((trat, idx) => {
             if (trat.fecha) {
                 this.tratamientos[idx].fecha = moment(trat.fecha).toDate()

@@ -143,6 +143,14 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             entidadEmitida
         } = this.recomendation.value;
 
+        if (this.accions.length > 0) {
+            this.accions.map(act => {
+                if (act.responsableEmpresa.trim() == '') {
+                    act.responsableEmpresa = null;
+                }
+            })
+        }
+
         let body = {
             id: this.recoSelect.id || "",
             entidadEmitRecomendaciones: entidadEmitRecomendaciones,
@@ -163,6 +171,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
 
         }
 
+
+
         try {
             let res: any;
             if (this.recoSelect) {
@@ -172,7 +182,6 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
                 res = await this.scmService.createRecomendation(body);
 
             }
-
 
             if (res) {
                 this.msgs.push({
