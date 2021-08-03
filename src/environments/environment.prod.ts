@@ -53,6 +53,7 @@ export const endPoints = {
   com_ciiu: path + "ciiu/",
   com_arl: path + "arl/",
   com_prepagadas: path + "prepagadas/",
+  com_provsalud: path + "provsalud/",
   com_afp: path + "afp/",
   com_eps: path + "eps/",
   com_ccf: path + "ccf/",
