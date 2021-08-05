@@ -96,17 +96,17 @@ export class CargueDatosComponent implements OnInit {
             { label: 'Perfil', nombre: 'usuario.usuarioEmpresaList', data: 'perfilData' }, // 22
             { label: 'Numero de contacto emergencia', nombre: 'phoneEmergencyContact' },
             { label: 'Primer apellido', nombre: 'primerApellido' },
-            { label: 'Primer nombre', nombre: 'primerNombre' },                       
+            { label: 'Primer nombre', nombre: 'primerNombre' },
             { label: 'Regional', nombre: 'regional' },
             { label: 'Segundo apellido', nombre: 'segundoApellido' },
-            { label: 'Segundo nombre', nombre: 'segundoNombre' },             
+            { label: 'Segundo nombre', nombre: 'segundoNombre' },
             { label: 'Teléfono 1', nombre: 'telefono1' },
             { label: 'Teléfono 2', nombre: 'telefono2' },
             { label: 'Tipo identificación', nombre: 'tipoIdentificacion', opciones: this.defaultItem.concat(tipo_identificacion) },
             { label: 'Tipo vinculación', nombre: 'tipoVinculacion', opciones: this.defaultItem.concat(tipo_vinculacion) },
             { label: 'Zona residencia', nombre: 'zonaResidencia', opciones: this.defaultItem.concat(zona) },
-            
-            
+
+
 
         ],
         CARGO: [
@@ -180,7 +180,7 @@ export class CargueDatosComponent implements OnInit {
 
         response = await this.comunService.findAllCcf();
         this.ccfData = response;
-
+        console.log(this.ccfData);
         response = await this.cargoService.findByFilter(cargofiltQuery);
         this.cargoData = response.data;
 
@@ -212,8 +212,14 @@ export class CargueDatosComponent implements OnInit {
 
     }
 
+    splitDate(date) {
+        let real = date.split('-')
+
+        return new Date(real[2] + '/' + real[1] + '/' + real[0]);
+    }
     createEmployeArray(arrayOfEmployees) {
         arrayOfEmployees.forEach(json => {
+
 
             let empleado = new Empleado();
             empleado.primerNombre = json.primerNombre;
@@ -223,19 +229,23 @@ export class CargueDatosComponent implements OnInit {
             empleado.codigo = json.codigo;
             empleado.direccion = json.direccion;
             empleado.direccion = json.direccion;
-            empleado.fechaIngreso = json.fechaIngreso;
+            empleado.fechaIngreso = this.splitDate(json.fechaIngreso);
             empleado.emergencyContact = json.emergencyContact;
             empleado.corporativePhone = json.corporativePhone;
             empleado.phoneEmergencyContact = json.phoneEmergencyContact;
             empleado.emailEmergencyContact = json.emailEmergencyContact;
-            empleado.fechaNacimiento = json.fechaNacimiento;
+            empleado.fechaNacimiento = this.splitDate(json.fechaNacimiento);
             empleado.genero = json.genero;
             empleado.numeroIdentificacion = json.numeroIdentificacion;
             empleado.telefono1 = json.telefono1;
             empleado.telefono2 = json.telefono2;
             empleado.direccionGerencia = json.direccionGerencia;
             empleado.regional = json.regional;
-            empleado.ciudad = json.ciudad == null ? null : json.ciudad.id;
+            if (json.ciudad) {
+                empleado.ciudad = new Ciudad();
+                empleado.ciudad.nombre = json.ciudad;
+            }
+
             if (json.afp != null) {
                 empleado.afp = new Afp();
                 empleado.afp.nombre = json.afp;
@@ -243,6 +253,10 @@ export class CargueDatosComponent implements OnInit {
             if (json.eps != null) {
                 empleado.eps = new Eps();
                 empleado.eps.nombre = json.eps || "";
+            }
+            if (json.ccf != null) {
+                empleado.ccf = new Ccf();
+                empleado.ccf.nombre = json.ccf;
             }
             empleado.tipoIdentificacion = json.tipoIdentificacion;
             empleado.tipoVinculacion = json.tipoVinculacion;
@@ -282,11 +296,24 @@ export class CargueDatosComponent implements OnInit {
         let afp = this.afpData.find(afp => employe.afp.nombre == afp.nombre);
         let cargo = this.cargoData.find(cargo => employe.cargo.nombre == cargo.nombre);
         let area = this.areaData.find(area => employe.area.nombre == area.nombre);
+        let ccf = this.ccfData.find(ccf => employe.ccf.nombre == ccf.nombre);
+        let ciudad = this.ciudadData.find(ciudad => employe.ciudad.nombre == ciudad.nombre);
+
+        if (ciudad) {
+            employe.ciudad = ciudad;
+        } else {
+            return { error: "El empleado no tiene ciudad asignada" };
+        }
 
         if (eps) {
             employe.eps = eps;
         } else {
             return { error: "Eps no existe o nula", employe }
+        }
+        if (ccf) {
+            employe.ccf = ccf;
+        } else {
+            return { error: "CCF no existe o nula", employe }
         }
 
         if (afp) {

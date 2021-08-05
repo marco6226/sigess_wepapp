@@ -144,8 +144,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         } = this.recomendation.value;
 
         if (this.accions.length > 0) {
-            this.accions.map(act => {
+            this.accions.forEach(act => {
                 if (typeof act.responsableEmpresa != 'number') {
+                    console.log("Aqui entro");
                     act.responsableEmpresa = null;
                 }
             })
