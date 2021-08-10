@@ -1,15 +1,18 @@
-<div class="image-item" [ngClass]="{'upload': !imgURL}">
+<div class="image-item" [ngClass]="{'upload': !imgURL, 'with-download': imgURL}">
 
     <!-- Start file uploader -->
     <input #file type="file" accept='image/*, application/*' (change)="onArchivoSelect($event)" class="file-upload">
     <div class="image" *ngIf="imgURL">
-        <img [src]="imgURL" class="img img-fluid" alt="Image uploaded" (click)="download()">
+        <img [src]="imgURL" class="img img-fluid" alt="Image uploaded">
         <button type="button" class="btn-rounded shadow-none" (click)="removeImg()" *ngIf="imgURL" [ngClass]="{'show': imgURL}">
             <em class="pi pi-times"></em>
         </button>
     </div>
     <div class="add">
         <em class="pi pi-plus"></em>
+    </div>
+    <div class="download" (click)="download()">
+        <em class="pi pi-download"></em>
     </div>
     <!-- End file uploader -->
 </div>

@@ -108,6 +108,7 @@ export class FileUploaderComponent implements OnInit {
 
 
     download() {
+        console.log('Inicia la descarga')
         if (this.file) {
             /* TODO: Acción para ir a la url externa */
         }
