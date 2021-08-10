@@ -91,7 +91,18 @@ export class FileUploaderComponent implements OnInit {
         let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
         this.imgURL = urlData;
 
-        console.log(await this.directorioService.uploadv2(file, "Test"));
+        try {
+            console.log(await this.directorioService.uploadv2(file, "Test"));
+            let res = await this.directorioService.uploadv2(file, "Test");
+
+            if(res) {
+                this.loadedImage.emit(res);
+            }
+            
+        } catch(e) {
+            console.log(e);
+        }
+
 
     }
 

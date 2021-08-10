@@ -319,3 +319,26 @@
     grid-template-columns: repeat(3, 1fr);
     padding: .5em;
 }
+
+.error-msg {
+    font-size: .75rem;
+    color: red;
+    margin-left: .3rem;
+    margin-top: -.5rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+:host ::ng-deep {
+    /*  Select */
+    .select-material {
+        width: 100% !important;
+        &.ui-dropdown {
+            border: none;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: -1rem;
+        }
+    }
+}
