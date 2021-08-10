@@ -4,6 +4,9 @@
     <input #file type="file" accept='image/*, application/*' (change)="onArchivoSelect($event)" class="file-upload">
     <div class="image" *ngIf="imgURL">
         <img [src]="imgURL" class="img img-fluid" alt="Image uploaded" (click)="download()">
+        <button type="button" class="btn-rounded shadow-none" (click)="removeImg()" *ngIf="imgURL" [ngClass]="{'show': imgURL}">
+            <em class="pi pi-times"></em>
+        </button>
     </div>
     <div class="add">
         <em class="pi pi-plus"></em>

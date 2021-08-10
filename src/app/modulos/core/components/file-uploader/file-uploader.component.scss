@@ -34,7 +34,6 @@
         }
     }
     .image {
-        margin: -3px;
         height: inherit;
         width: 100%;
         z-index: 10;
@@ -46,6 +45,32 @@
             z-index: 2;
             position: relative;
             border-radius: 3px;
+        }
+        .btn-rounded {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            background-color: #ed1f24;
+            border-radius: 100%;
+            width: 20px !important;
+            height: 20px !important;
+            color: #ffffff;
+            opacity: 0;
+            cursor: pointer;
+            &:focus {
+                outline: none;
+            }
+            &.show {
+                position: absolute;
+                top: -0.5rem;
+                right: -0.5rem;
+                opacity: 1;
+                z-index: 5;
+            }
+            em {
+                font-size: 0.85rem;
+            }
         }
     }
 }

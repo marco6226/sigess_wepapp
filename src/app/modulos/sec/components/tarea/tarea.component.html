@@ -191,7 +191,9 @@
                     <h5 class="title-header p-mb-2">Evidencias</h5>
                 </div>
 
-                <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i"></app-file-uploader>
+                <div class="uploaders">
+                    <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i"></app-file-uploader>
+                </div>
 
             </div>
 

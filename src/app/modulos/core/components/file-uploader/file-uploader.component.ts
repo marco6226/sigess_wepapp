@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { Message } from 'primeng/primeng';
@@ -22,6 +22,7 @@ export class FileUploaderComponent implements OnInit {
     msgs: Message[] = [];
     @Input() index: number;
     @Output() loadedImage: EventEmitter<any> = new EventEmitter();
+    @ViewChild('file', { static: false }) input: ElementRef;
 
     constructor(private directorioService: DirectorioService,
 
@@ -44,6 +45,8 @@ export class FileUploaderComponent implements OnInit {
             return;
         }
 
+        console.log('Está cargando')
+
         let reader = new FileReader();
         this.imagePath = files;
         reader.readAsDataURL(files[0]);
@@ -60,7 +63,7 @@ export class FileUploaderComponent implements OnInit {
             }
         }
 
-    };
+    }
 
     async onArchivoSelect(event) {
         let file = event.target.files[0];
@@ -97,5 +100,10 @@ export class FileUploaderComponent implements OnInit {
         if (this.file) {
             /* TODO: Acción para ir a la url externa */
         }
+    }
+
+    removeImg() {
+        this.input.nativeElement.value = "";
+        this.imgURL = '';
     }
 }
