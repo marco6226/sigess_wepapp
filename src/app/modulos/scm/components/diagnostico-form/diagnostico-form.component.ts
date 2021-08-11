@@ -27,7 +27,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
     origenList = [
         { label: 'Seleccione', value: null },
         { label: 'Común', value: 'Común' },
-        { label: 'Accidente Laboral', value: 'Accidente Laboral' },
+        { label: 'Accidente De Trabajo', value: 'Accidente Laboral' },
         { label: 'Mixto', value: 'Mixto' },
         { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
 

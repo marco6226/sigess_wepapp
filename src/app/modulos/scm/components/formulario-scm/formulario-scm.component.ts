@@ -119,12 +119,10 @@ export class FormularioScmComponent implements OnInit {
         [
             { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
-            { label: "ARL", value: "ARL" },
         ],
         [
             { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
-            { label: "ARL", value: "ARL" },
         ],
 
         [

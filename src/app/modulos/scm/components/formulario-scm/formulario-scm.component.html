@@ -260,7 +260,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="emergencyContact" placeholder="Regional"
+                            <input type="text" pInputText formControlName="emergencyContact" placeholder="Contacto de emergencia"
                                 class="form-material" id="emergencyContact" />
                             <label for="" class="active">Contacto de emergencia</label>
                         </div>
@@ -1233,6 +1233,10 @@
                                 field="descripcionAct">
                             </p-sortIcon>
                         </th>
+                        <th pSortableColumn="responsableEmpresa">Responsable Empresa<p-sortIcon
+                            field="responsableEmpresa">
+                        </p-sortIcon>
+                    </th>
                         <th pSortableColumn="fechaProyectada">Fecha proyectada<p-sortIcon field="fechaProyectada">
                             </p-sortIcon>
                         </th>
@@ -1242,6 +1246,7 @@
                     <tr>
                         <td>{{plan.actividad}}</td>
                         <td>{{plan.descripcionAct}}</td>
+                        <td>{{empleado.primerApellido}}</td>
                         <td>{{plan.fechaProyectada | date:'dd/MM/yyyy'}}</td>
 
                         <!-- <td>
