@@ -14,24 +14,19 @@
 
 .case-data {
     width: 18rem;
-
     @media only screen and (min-width: 768px) {
         width: 16rem;
     }
-
     .case-code {
         display: flex;
-
         .title {
             margin-right: .25rem;
             font-weight: 600;
         }
-
         .number {
             font-style: italic;
         }
     }
-
     .case-date {
         font-weight: 600;
     }
@@ -46,7 +41,6 @@
     margin-block-end: 0;
     position: relative;
     margin: .25rem 0;
-
     &:before {
         content: "";
         position: absolute;
@@ -62,7 +56,6 @@
     margin-block-start: 0;
     margin-block-end: 0;
     position: relative;
-
     &:before {
         content: "";
         position: absolute;
@@ -83,7 +76,6 @@
     align-items: center;
     height: 100%;
     margin-top: -1rem;
-
     @media only screen and (min-width: 768px) {
         margin-top: 0;
         margin-bottom: 0;
@@ -100,7 +92,6 @@
     margin-bottom: 1rem;
     display: flex;
     align-items: flex-start;
-
     .form-material {
         background-color: transparent;
         border: none;
@@ -121,26 +112,21 @@
         transition: border .3s, -webkit-box-shadow .3s;
         transition: box-shadow .3s, border .3s;
         transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
-
         &:focus {
             border-bottom: 1px solid #007ad9 !important;
         }
-
         &::-webkit-input-placeholder {
             /* Edge */
             color: #d1d1d1;
         }
-
         &:-ms-input-placeholder {
             /* Internet Explorer 10-11 */
             color: #d1d1d1;
         }
-
         &::placeholder {
             color: #d1d1d1;
         }
     }
-
     label {
         flex: 1;
         color: #007ad9;
@@ -158,7 +144,6 @@
         text-align: initial;
         -webkit-transform: translateY(12px);
         transform: translateY(12px);
-
         &.active {
             -webkit-transform: translateY(-14px) scale(0.8);
             transform: translateY(-14px) scale(0.8);
@@ -189,7 +174,6 @@
         transition: border .3s, -webkit-box-shadow .3s;
         transition: box-shadow .3s, border .3s;
         transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
-
         &:focus {
             border-bottom: 1px solid #007ad9 !important;
         }
@@ -198,8 +182,8 @@
 
 .p-invalid {
     color: #f44336;
-
 }
+
 
 /* Textarea  */
 
@@ -224,25 +208,21 @@
             }
         }
     }
-
     /*  Select */
     .select-material {
         width: 100% !important;
-
         &.ui-dropdown {
             border: none;
             border-bottom: 1px solid #dee2e6;
             margin-bottom: -1rem;
         }
     }
-
     /*   Radio buttons */
     .radio-material {
         &.ui-radiobutton {
             padding-top: .75rem;
         }
     }
-
     modal {
         max-height: 100%;
         overflow-y: auto;
@@ -251,52 +231,43 @@
         right: 25px;
         display: none;
     }
-
     .label-material {
         &.ui-radiobutton-label {
             padding-top: .75rem;
         }
     }
-
     /* Panel */
     .custom-panel {
         &.ui-tabview {
             &.ui-tabview-top {
                 .ui-tabview-nav {
                     border-bottom: 1px solid #dee2e6;
-
                     li {
                         margin-right: 0;
                         border: 0;
                         top: 1px;
                         line-height: 1;
                         transition: all cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
                         &:focus {
                             outline: 0;
                         }
-
                         &:not(.ui-state-active):not(.ui-state-disabled):hover {
                             background-color: transparent;
                             border: none;
-
                             a {
                                 margin-bottom: -1px;
                                 color: #000;
                                 border-bottom: 1px solid #007ad9;
                             }
                         }
-
                         &.ui-state-active {
                             background-color: transparent;
                             border: none;
-
                             a {
                                 color: #007ad9;
                                 border-bottom: 1px solid #007ad9;
                                 margin-bottom: -1px;
                             }
-
                             &:hover {
                                 a {
                                     color: darken(#007ad9, 5);
@@ -307,23 +278,19 @@
                     }
                 }
             }
-
             .ui-tabview-panels {
                 margin-top: 1rem;
                 border-radius: .75rem;
             }
         }
     }
-
     /* Table responsive */
     .p-datatable {
         &.p-datatable-responsive {
-
             .p-datatable-thead>tr>th,
             .p-datatable-tfoot>tr>td {
                 display: none !important;
             }
-
             .p-datatable-tbody>tr>td {
                 text-align: left;
                 display: block;
@@ -331,7 +298,6 @@
                 float: left;
                 clear: left;
                 border: 0 none;
-
                 .p-column-title {
                     padding: .4rem;
                     min-width: 30%;
@@ -339,11 +305,40 @@
                     margin: -.4em 1em -.4em -.4rem;
                     font-weight: bold;
                 }
-
                 &:last-child {
                     border-bottom: 1px solid var(--surface-d);
                 }
             }
+        }
+    }
+}
+
+.uploaders {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(3, 1fr);
+    padding: .5em;
+}
+
+.error-msg {
+    font-size: .75rem;
+    color: red;
+    margin-left: .3rem;
+    margin-top: -.5rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+:host ::ng-deep {
+    /*  Select */
+    .select-material {
+        width: 100% !important;
+        &.ui-dropdown {
+            border: none;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: -1rem;
         }
     }
 }
