@@ -16,6 +16,54 @@
   </div>
 
 </p-panel>
+<div class="ui-g-12 ui-sm-12 ui-md-6" *ngIf="ethus">
+  <form >
+      <p-panel>
+          <p-header>
+              <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno supervision / Ingenieria
+          </p-header>
+          <label class="s-float-label">Nombre</label>
+          <input type="text" pInputText formControlName="codigo" required/>
+
+          <label class="s-float-label">Cargo</label>
+          <input type="text" pInputText formControlName="nombre" required/>
+          <label class="s-float-label">Identificación</label>
+          <input type="number" pInputText formControlName="version" required/>
+
+          <label class="s-float-label">Fecha de Validación</label>
+          <input type="text" pInputText formControlName="version" required/>
+          
+          <div >
+              <button  pButton type="button" (click)="(false)" icon="fa fa-check"  title="Validar como  supervision / Ingenieria" ></button>
+          </div>
+          
+      </p-panel>
+  </form>
+</div>
+<div class="ui-g-12 ui-sm-12 ui-md-6" *ngIf="ethus">
+  <form id='2' >
+      <p-panel>
+          <p-header>
+              <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno HSE
+          </p-header>
+          <label class="s-float-label">Nombre</label>
+          <input type="text" pInputText formControlName="codigo" required/>
+
+          <label class="s-float-label">Cargo</label>
+          <input type="text" pInputText formControlName="nombre" required/>
+          <label class="s-float-label">Identificación</label>
+          <input type="number" pInputText formControlName="version" required/>
+
+          <label class="s-float-label">Fecha de Validación</label>
+          <input type="number" pInputText formControlName="version" required/>
+          
+          <div >
+              <button  pButton type="button" (click)="(false)" icon="fa fa-check" title="Validar como hse" ></button>
+          </div>
+          
+      </p-panel>
+  </form>
+</div>
 
 <p-dialog [(visible)]="visibleDlg" [draggable]="true" [resizable]="true" [responsive]="true" appendTo="body" [maximizable]="true"
   [modal]="false" [width]="540">

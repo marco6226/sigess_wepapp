@@ -34,6 +34,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     visibleDlg: boolean;
 
     contadorElem: number = 0;
+    ethus: boolean = false;
     elementoSelect: ElementoInspeccion;
     imagenesList: any[] = [];
     imgMap: any = {};

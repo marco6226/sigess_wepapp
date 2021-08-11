@@ -804,6 +804,9 @@
                                 <th pSortableColumn="diasAusencia">Dias de incapacidad
                                     <p-sortIcon field="diasAusencia"></p-sortIcon>
                                 </th>
+                                <th pSortableColumn="causaAusentismo.nombre">Clase
+                                    <p-sortIcon field="causaAusentismo.nombre"></p-sortIcon>
+                                </th>
                                 <th pSortableColumn="causaAusentismo.nombre">Tipo
                                     <p-sortIcon field="causaAusentismo.nombre"></p-sortIcon>
                                 </th>
@@ -826,6 +829,8 @@
                                 <td>{{aus.ffinal | date:'dd/MM/yyyy'}}</td>
 
                                 <td>{{aus.tdias}}</td>
+
+                                <td>{{aus.clase}}</td>
 
                                 <td>{{aus.tipo }}</td>
 
