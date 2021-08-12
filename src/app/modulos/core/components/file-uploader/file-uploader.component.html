@@ -1,7 +1,7 @@
 <!-- Start file uploader -->
 <div class="image-item" [ngClass]="{'upload': !imgURL, 'with-download': imgURL}">
 
-    <input #file type="file" accept='image/*, application/*' (change)="onArchivoSelect($event)" class="file-upload">
+    <input #file type="file" accept='image/*, application/*' (change)="onArchivoSelect($event)" class="file-upload" *ngIf="!show">
 
     <!-- Start loader -->
     <div class="loader" *ngIf="loading">
