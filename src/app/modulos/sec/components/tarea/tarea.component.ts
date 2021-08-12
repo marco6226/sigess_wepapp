@@ -68,9 +68,7 @@ export class TareaComponent implements OnInit {
 
     removeImage(index) {
         let evidences = this.tareaForm.get('evidencias').value;
-        if (index > -1) {
-            evidences.splice(index, 1);
-        }
+        if (index > -1) evidences.splice(index, 1);
     }
 
     onSubmit() {

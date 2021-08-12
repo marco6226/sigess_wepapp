@@ -33,7 +33,7 @@
 
 <!-- Start create tarea modal -->
 
-<p-dialog header="Crear nuevo seguimiento" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [draggable]="false" [resizable]="false">
+<p-dialog header="Crear nuevo seguimiento" styleClass="dialog-create" [(visible)]="displayModal" [modal]="true" [draggable]="false" [resizable]="false">
 
     <!-- Start content -->
     <form [formGroup]="trackingForm">
@@ -80,8 +80,8 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <textarea pInputTextarea formControlName="descripcion" placeholder="Descripción de la acción realizada" class="form-material" rows="3" required></textarea>
-                    <label for="" class="active">Descripción de la acción realizada</label>
+                    <textarea pInputTextarea formControlName="descripcion" class="form-material" rows="3" required></textarea>
+                    <label for="" class="active">Descripción del seguimiento</label>
                 </div>
 
                 <!-- Start validations -->
@@ -106,8 +106,8 @@
 
     <!-- Start footer -->
     <p-footer>
-        <p-button [icon]="(!cargando) ? 'pi pi-save' : 'pi pi-spinner pi-spin'" (click)="onSubmit()" [label]="(!cargando) ? 'Crear' : 'Creando'" styleClass="ui-button-success ui-button-text" [disabled]="cargando"></p-button>
-        <p-button icon="pi pi-times" (click)="displayModal=false" label="Cancelar" styleClass="ui-button-danger ui-button-text" [disabled]="cargando"></p-button>
+        <p-button [icon]="(!cargando) ? 'pi pi-save' : 'pi pi-spinner pi-spin'" (click)="onSubmit()" [label]="(!cargando) ? 'Crear' : 'Creando'" styleClass="ui-button-rounded ui-button-text" [disabled]="cargando"></p-button>
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="Cancelar" styleClass="ui-button-rounded ui-button-secondary ui-button-text" [disabled]="cargando"></p-button>
     </p-footer>
     <!-- End footer -->
 
@@ -117,7 +117,7 @@
 
 <!-- Start evidences modal -->
 
-<p-dialog header="Evidencias" [(visible)]="displayEvidences" [modal]="true" [style]="{width: '25vw'}" [closable]="false" [draggable]="false" [resizable]="false">
+<p-dialog header="Evidencias" styleClass="dialog-evidences" [(visible)]="displayEvidences" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
 
     <div class="uploaders-flex">
         <app-file-uploader *ngFor="let evidence of evidences; let i = index" [imgURL]="evidence" [show]="true"></app-file-uploader>
