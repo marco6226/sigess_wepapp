@@ -181,8 +181,11 @@ footer {
 
 /* Estilos personalizados para el componente Calendar */
 
-.ui-calendar {
+p-calendar {
     width: 100%;
+    .ui-calendar {
+        width: inherit;
+    }
 }
 
 
@@ -579,5 +582,13 @@ table .ui-table-thead>tr>th {
         width: 100%;
     }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

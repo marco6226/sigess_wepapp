@@ -12,16 +12,22 @@ export class FileUploaderComponent implements OnInit {
 
 
     /* Variables */
-    public imagePath;
-    numMaxImg = 1;
-    imgURL: any;
-    @Input() file = false;
-    @Input() fileRoute = '';
+    imagePath;
     imagenesList: any[] = [];
     imgMap: any = {};
+    loading = false;
     msgs: Message[] = [];
+    numMaxImg = 1;
+
+    @Input() imgURL: any;
+    @Input() file = false;
+    @Input() fileRoute = '';
     @Input() index: number;
+    @Input() show: boolean = false;
+
     @Output() loadedImage: EventEmitter<any> = new EventEmitter();
+    @Output() removeImage: EventEmitter<any> = new EventEmitter();
+
     @ViewChild('file', { static: false }) input: ElementRef;
 
     constructor(private directorioService: DirectorioService,
@@ -89,13 +95,15 @@ export class FileUploaderComponent implements OnInit {
             return;
         }
         let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-        this.imgURL = urlData;
-
+        this.loading = true;
+        
         try {
-            console.log(await this.directorioService.uploadv2(file, "Test"));
+            // console.log(await this.directorioService.uploadv2(file, "Test"));
             let res = await this.directorioService.uploadv2(file, "Test");
 
             if(res) {
+                this.loading = false;
+                this.imgURL = urlData;
                 this.loadedImage.emit(res);
             }
             
@@ -117,5 +125,6 @@ export class FileUploaderComponent implements OnInit {
     removeImg() {
         this.input.nativeElement.value = "";
         this.imgURL = '';
+        this.removeImage.emit(this.index);
     }
 }

@@ -110,6 +110,12 @@
 
     </p-tabPanel>
 
+    <p-tabPanel header="Seguimiento">
+
+        <app-seguimientos-tareas></app-seguimientos-tareas>
+
+    </p-tabPanel>
+
     <p-tabPanel header="Gestion">
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
@@ -120,28 +126,7 @@
                     <h5 class="title-header p-mb-2">General</h5>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input pInputText formControlName="usuarioSeguimiento" styleClass="form-material">
-                        <label for="" class="active">Usuario que realiza el seguimiento</label>
-                    </div>
-
-                    <!-- Start validations -->
-                    <div *ngIf="submitted && f.usuarioSeguimiento.hasError('required')" class="error-msg ">
-                        <span>Debe buscar un usuario válido.</span>
-                    </div>
-                    <!-- End validations -->
-
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material" id="nameAndLastName" [attr.disabled]="true" />
-                        <label for="" class="active">Apellidos y nombres</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-3">
                     <div class="input-field">
                         <input pInputText formControlName="usuarioGestion" styleClass="form-material">
                         <label for="" class="active">Usuario que gestiona</label>
@@ -155,6 +140,14 @@
 
                 </div>
 
+                <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-3">
+                    <div class="input-field">
+                        <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material" id="nameAndLastName" [attr.disabled]="true" />
+                        <label for="" class="active">Apellidos y nombres</label>
+                    </div>
+                </div>
+
+
                 <div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
                     <div class="input-field">
                         <p-dropdown [options]="estadoList" formControlName="estado" class="select-material" styleClass="select-material">
@@ -165,34 +158,6 @@
                     <!-- Start validations -->
                     <div *ngIf="submitted && f.estado.hasError('required')" class="error-msg mt-4 ">
                         <span>Debe buscar un usuario válido.</span>
-                    </div>
-                    <!-- End validations -->
-
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-                    <div class="input-field">
-                        <p-calendar formControlName="fechaSeguimiento" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha seguimiento</label>
-                    </div>
-
-                    <!-- Start validations -->
-                    <div *ngIf="submitted && f.fechaSeguimiento.hasError('required')" class="error-msg ">
-                        <span>Debe seleccionar una fecha de seguimiento.</span>
-                    </div>
-                    <!-- End validations -->
-
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-                    <div class="input-field">
-                        <p-calendar formControlName="fechaProyectadaCierre" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha Proyectada de cierre</label>
-                    </div>
-
-                    <!-- Start validations -->
-                    <div *ngIf="submitted && f.fechaProyectadaCierre.hasError('required')" class="error-msg ">
-                        <span>Debe seleccionar una fecha factible de cierre.</span>
                     </div>
                     <!-- End validations -->
 
@@ -212,9 +177,9 @@
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <textarea pInputTextarea formControlName="descripcion" placeholder="Descripción de la acción realizada" class="form-material" rows="3" required></textarea>
+                        <textarea pInputTextarea formControlName="descripcion" class="form-material" rows="5" required></textarea>
                         <label for="" class="active">Descripción de la acción realizada</label>
                     </div>
 
@@ -235,7 +200,7 @@
                 </div>
 
                 <div class="uploaders">
-                    <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)"></app-file-uploader>
+                    <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
                 </div>
 
                 <!-- End evidences -->

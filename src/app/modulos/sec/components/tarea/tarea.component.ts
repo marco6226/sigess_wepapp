@@ -17,6 +17,7 @@ export class TareaComponent implements OnInit {
 
     /* Variables */
     estadoList = [];
+
     cargando = false;
     tareaForm: FormGroup;
     routeSub;
@@ -25,17 +26,17 @@ export class TareaComponent implements OnInit {
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     submitted = false;
+    loading: boolean;
 
-    constructor(fb: FormBuilder,
+
+    constructor(
+        fb: FormBuilder,
         private route: ActivatedRoute,
         private tareaService: TareaService,
     ) {
         this.tareaForm = fb.group({
-            usuarioSeguimiento: ["", Validators.required],
             usuarioGestion: ["", Validators.required],
             estado: ["", Validators.required],
-            fechaSeguimiento: ["", Validators.required],
-            fechaProyectadaCierre: ["", Validators.required],
             fechaCierre: ["", Validators.required],
             descripcion: ["", Validators.required],
             evidencias: [[]],
@@ -65,14 +66,22 @@ export class TareaComponent implements OnInit {
         this.tareaForm.patchValue({ evidencias: evidences });
     }
 
+    removeImage(index) {
+        let evidences = this.tareaForm.get('evidencias').value;
+        if (index > -1) {
+            evidences.splice(index, 1);
+        }
+    }
+
     onSubmit() {
         this.submitted = true;
         this.cargando = true;
 
-        // if (!this.tareaForm.valid) {
-        //     this.cargando = false;
-        //     return;
-        // }
+        if (!this.tareaForm.valid) {
+            console.log('Data: ', this.tareaForm.value);
+            this.cargando = false;
+            return;
+        }
 
         console.log('Data: ', this.tareaForm.value);
     }
