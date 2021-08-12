@@ -120,7 +120,7 @@
 <p-dialog header="Evidencias" [(visible)]="displayEvidences" [modal]="true" [style]="{width: '25vw'}" [closable]="false" [draggable]="false" [resizable]="false">
 
     <div class="uploaders-flex">
-        <app-file-uploader *ngFor="let evidence of evidences; let i = index" [show]="true"></app-file-uploader>
+        <app-file-uploader *ngFor="let evidence of evidences; let i = index" [imgURL]="evidence" [show]="true"></app-file-uploader>
     </div>
 
     <!-- Start footer -->

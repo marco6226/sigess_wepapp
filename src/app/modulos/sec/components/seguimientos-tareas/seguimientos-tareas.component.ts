@@ -35,9 +35,9 @@ export class SeguimientosTareasComponent implements OnInit {
                 description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
                 date: '2021-03-15T14:51:06.157Z',
                 evidences: [
-                    '1233432',
-                    '544324234',
-                    '6324832848324'
+                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
+                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                    '../../../../../assets/images/file.png'
                 ],
             }
         ]
