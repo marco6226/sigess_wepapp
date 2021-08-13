@@ -1,17 +1,17 @@
 <div class="ui-g">
-    <div class="ui-g-12 p-d-flex p-jc-between">
+    <div class="ui-g-12 p-d-flex p-jc-between p-mb-3">
         <h5 class="title-header p-mb-2">Listado de seguimientos</h5>
-        <button pButton type="button" (click)="showModalDialog('create')" label="Crear" class="ui-button-sm"></button>
+        <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm"></button>
     </div>
 
-    <div class="ui-g-12">
-        <p-table [value]="trackings">
+    <div class="ui-g-12 p-mb-3">
+        <p-table [value]="trackings" styleClass="material-table">
             <ng-template pTemplate="header">
                 <tr>
                     <th scope="col">Usuario</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Fecha de seguimiento</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Evidencias</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-tracking>
