@@ -23,6 +23,7 @@ import { ConsultaDesviacionInspeccionComponent } from './components/consulta-des
 import { TooltipModule } from 'primeng/primeng';
 import { TareaComponent } from './components/tarea/tarea.component';
 import { CoreModule } from '../core/core.module';
+import { SeguimientosTareasComponent } from './components/seguimientos-tareas/seguimientos-tareas.component';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { CoreModule } from '../core/core.module';
         AnalisisCostosComponent,
         DocumentosAnalisisDesviacionComponent,
         ConsultaDesviacionInspeccionComponent,
-        TareaComponent
+        TareaComponent,
+        SeguimientosTareasComponent
     ],
     providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService]
 })
