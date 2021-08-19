@@ -187,7 +187,7 @@ export class EmpresaAdminComponent implements OnInit {
         let empresa = new Empresa();
         console.log(empresa);
         let ctx = this.canvas.getContext("2d");
-        ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 256, 256);
+       // ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 256, 256);
         empresa.logo = this.canvas.toDataURL();
         empresa.id = this.form.value.id;
         empresa.nombreComercial = this.form.value.nombreComercial;
