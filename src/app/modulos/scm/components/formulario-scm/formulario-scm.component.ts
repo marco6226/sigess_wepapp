@@ -41,6 +41,9 @@ import { Area } from "app/modulos/empresa/entities/area";
 import { Usuario } from "app/modulos/empresa/entities/usuario";
 import { epsorarl } from "../../entities/eps-or-arl";
 import { Subject } from "rxjs";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmService } from "app/modulos/scm/components/formulario-scm/confirm.service";
+
 export interface TreeNode {
     data?: any;
     children?: TreeNode[];
@@ -255,6 +258,8 @@ export class FormularioScmComponent implements OnInit {
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
+        private confirmationService: ConfirmationService,
+        private confirmService: ConfirmService
     ) {
 
         this.empresa = this.sesionService.getEmpresa();
@@ -441,6 +446,8 @@ export class FormularioScmComponent implements OnInit {
             this.entity.AFP = this.afpList;
 
         });
+
+       
 
         this.comunService.findAllEps().then((data) => {
             this.epsList = [];
@@ -939,6 +946,21 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
+   
+
+    async confirm(product, index) {        
+        if  (await this.confirmService.confirm())
+          this.msgs = [
+            { severity: "info", summary: "Confirmado", detail: "El tratamiento ha sido eliminado"}
+          ],this.onRowDelete(product, index);      
+        else {
+          this.msgs = [
+            { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación"}
+          ];
+        }
+        
+      }
+    
     onRowDelete(product, index) {
         product.eliminado = true;
         console.log(product);
@@ -954,7 +976,7 @@ export class FormularioScmComponent implements OnInit {
             let resp = await this.scmService.createSeguimiento(product);
             this.msgs.push({
                 severity: "success",
-                summary: "Seguimiento",
+                summary: "Información",
                 detail: `Se ha clonado exitosamente`,
             });
 
@@ -975,7 +997,7 @@ export class FormularioScmComponent implements OnInit {
                 let resp = await this.scmService.updateTratamiento(product);
                 this.msgs.push({
                     severity: "success",
-                    summary: "Seguimiento",
+                    summary: "Información",
                     detail: `Su numero de Tratamiento es ${product.id}`,
                 });
                 return this.fechaTrat()

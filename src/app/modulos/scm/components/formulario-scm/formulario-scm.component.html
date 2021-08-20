@@ -1163,7 +1163,7 @@
                                     icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
                                     class="p-button-rounded p-button-text"> </button>
                                 <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                                    (click)="onRowDelete(tratamiento,ri)" class="p-button-rounded p-button-text">
+                                    (click)="confirm(tratamiento,ri)" class="p-button-rounded p-button-text">
                                 </button>
                                 <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
                                     icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')"
