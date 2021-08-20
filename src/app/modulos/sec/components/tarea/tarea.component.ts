@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { TareaService } from '../../services/tarea.service';
 import {
     locale_es,
-    tipo_identificacion,
-    tipo_vinculacion,
 } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
+import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
 
 @Component({
     selector: 'app-tarea',
@@ -27,16 +27,19 @@ export class TareaComponent implements OnInit {
     localeES: any = locale_es;
     submitted = false;
     loading: boolean;
+    fullName = '';
+    empleado: Empleado;
+    empleadosList: Empleado[];
 
 
     constructor(
         fb: FormBuilder,
         private route: ActivatedRoute,
         private tareaService: TareaService,
+        private empleadoService: EmpleadoService,
     ) {
         this.tareaForm = fb.group({
-            usuarioGestion: ["", Validators.required],
-            estado: ["", Validators.required],
+            userId: ["", Validators.required],
             fechaCierre: ["", Validators.required],
             descripcion: ["", Validators.required],
             evidencias: [[]],
@@ -60,9 +63,19 @@ export class TareaComponent implements OnInit {
         return this.tareaForm.controls;
     }
 
+    buscarEmpleado(event) {
+        this.empleadoService
+            .buscar(event.query)
+            .then((data) => (this.empleadosList = <Empleado[]>data));
+    }
+
     addImage(file) {
         let evidences = this.tareaForm.get('evidencias').value;
-        evidences.push(file);
+        let obj = {
+            ruta: file,
+            
+        }
+        evidences.push(obj);
         this.tareaForm.patchValue({ evidencias: evidences });
     }
 
@@ -82,6 +95,17 @@ export class TareaComponent implements OnInit {
         }
 
         console.log('Data: ', this.tareaForm.value);
+    }
+
+    async onSelection(event) {
+        console.log(event);
+        // this.caseSelect = false;
+        this.fullName = null;
+        this.empleado = null;
+        let emp = <Empleado>event;
+        this.empleado = emp;
+        this.fullName = this.empleado.primerNombre + ' ' + this.empleado.primerApellido;
+        this.tareaForm.patchValue({userId: this.empleado.id});
     }
 
 }

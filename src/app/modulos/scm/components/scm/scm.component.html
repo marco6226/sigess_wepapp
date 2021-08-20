@@ -5,7 +5,7 @@
             Casos médicos
         </p-header>
 
-        <p-table #dt [value]="casosList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect" [rows]="10"
+        <p-table #dt [value]="casosList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect" [rows]="11"
             [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion"
             sortOrder="1" [totalRecords]="totalRecords" [loading]="loading">
             <ng-template pTemplate="header">

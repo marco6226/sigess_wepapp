@@ -24,20 +24,15 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
-                                [style]="{'width':'100%'}" (onSelect)="onSelection($event)"
-                                [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                                formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                            <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                                *ngIf="empleado?.id == null">
                                 <ng-template let-empleado pTemplate="item">
                                     <div class="ui-helper-clearfix">
                                         <div class="wrapper">
-                                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                                style="font-size: 48px;" aria-hidden="true"></i>
-                                            <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                                style="border-radius: 50%;" #imgAvatar />
+                                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                            <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
                                             <div style="margin-left:20px">
-                                                <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                                {{empleado?.segundoNombre}}
+                                                <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
                                                 <br /> {{empleado?.numeroIdentificacion}}
                                                 <br /> {{empleado?.usuario.email}}
                                             </div>
@@ -47,35 +42,30 @@
                             </p-autoComplete>
                             <label for="" class="active">Número de identificación</label>
                         </div>
-                        <small *ngIf="pkUse.errors?.required && pkUse.touched" id="username2-help"
-                            class="p-invalid">Obligatorio</small>
+                        <small *ngIf="pkUse.errors?.required && pkUse.touched" id="username2-help" class="p-invalid">Obligatorio</small>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion"
-                                [attr.disabled]="true" required>
+                            <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" [attr.disabled]="true" required>
                             </p-dropdown>
                             <label for="" class="active">Tipo de identificación</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText [value]="nameAndLastName" placeholder="Apellidos y nombres"
-                                class="form-material" id="nameAndLastName" [attr.disabled]="true" />
+                            <input type="text" pInputText [value]="nameAndLastName" placeholder="Apellidos y nombres" class="form-material" id="nameAndLastName" [attr.disabled]="true" />
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="direccionGerencia"
-                                placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia1" />
+                            <input type="text" pInputText formControlName="direccionGerencia" placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia1" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                                class="select-material" styleClass="select-material">
+                            <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" class="select-material" styleClass="select-material">
                             </p-dropdown>
                             <label for="" class="active">Cargo / Categoría</label>
                         </div>
@@ -84,9 +74,7 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
-                                dateFormat="dd/mm/yy" formControlName="fechaIngreso"></p-calendar>
+                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngreso"></p-calendar>
                             <label for="" class="active">Fecha de vinculación</label>
 
                         </div>
@@ -94,25 +82,21 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad"
-                                class="form-material" id="antiguedad" [attr.disabled]="true" />
+                            <input type="text" pInputText [value]="antiguedad || ''" placeholder="Antigüedad" class="form-material" id="antiguedad" [attr.disabled]="true" />
                             <label for="" class="active">Antigüedad</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText [value]="range || ''" placeholder="Antigüedad"
-                                class="form-material" id="rango" [attr.disabled]="true" />
+                            <input type="text" pInputText [value]="range || ''" placeholder="Antigüedad" class="form-material" id="rango" [attr.disabled]="true" />
                             <label for="" class="active">Rango de antigüedad</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
-                                dateFormat="dd/mm/yy">
+                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy">
                             </p-calendar>
                             <label for="" class="active">Fecha de desvinculación</label>
                         </div>
@@ -128,22 +112,19 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="email" pInputText formControlName="email" placeholder="Correo corporativo"
-                                class="form-material" id="correocorporativo" />
+                            <input type="email" pInputText formControlName="email" placeholder="Correo corporativo" class="form-material" id="correocorporativo" />
                             <label for="" class="active">Correo corporativo</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad"
-                                class="form-material" id="ciudad" />
+                            <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad" class="form-material" id="ciudad" />
                             <label for="" class="active">Ciudad</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <area-selector formControlName="area"
-                                [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required>
+                            <area-selector formControlName="area" [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required>
                             </area-selector>
                             <label for="" class="active">Ubicación</label>
                         </div>
@@ -162,40 +143,34 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
-                                [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
-                                dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
                             <label for="" class="active">Fecha de nacimiento</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input [attr.disabled]="true" type="text" pInputText [value]="edad || ''" placeholder="Edad"
-                                class="form-material" id="Edad" />
+                            <input [attr.disabled]="true" type="text" pInputText [value]="edad || ''" placeholder="Edad" class="form-material" id="Edad" />
                             <label for="" class="active">Edad</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input [attr.disabled]="true" type="text" pInputText formControlName="regional"
-                                placeholder="regional" class="form-material" id="regional" />
+                            <input [attr.disabled]="true" type="text" pInputText formControlName="regional" placeholder="regional" class="form-material" id="regional" />
                             <label for="" class="active">Regional</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <s-ciudadSelector formControlName="ciudad" [id]="departamento" class="select-material"
-                                styleClass="select-material">
+                            <s-ciudadSelector formControlName="ciudad" [id]="departamento" class="select-material" styleClass="select-material">
                             </s-ciudadSelector>
                             <label for="" class="active">Ciudad de residencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText class="form-material" formControlName="direccion"
-                                styleClass="form-material">
+                            <input pInputText class="form-material" formControlName="direccion" styleClass="form-material">
                             <label for="" class="active">Dirección de residencia</label>
                         </div>
                     </div>
@@ -204,26 +179,22 @@
                             <label for="" class="active">Zona de residencia</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <p-radioButton name="zonaResidencia" value="U" label=" Urbana   ."
-                                formControlName="zonaResidencia">
+                            <p-radioButton name="zonaResidencia" value="U" label=" Urbana   ." formControlName="zonaResidencia">
                             </p-radioButton>
-                            <p-radioButton name="zonaResidencia" value="R" label="Rural"
-                                formControlName="zonaResidencia">
+                            <p-radioButton name="zonaResidencia" value="R" label="Rural" formControlName="zonaResidencia">
                             </p-radioButton>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="telefono1" class="form-material"
-                                styleClass="form-material">
+                            <input pInputText formControlName="telefono1" class="form-material" styleClass="form-material">
 
                             <label for="" class="active">Teléfono personal</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="telefono2" class="form-material"
-                                styleClass="form-material">
+                            <input pInputText formControlName="telefono2" class="form-material" styleClass="form-material">
 
                             <label for="" class="active">Teléfono de residencia</label>
                         </div>
@@ -231,52 +202,45 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="email" pInputText formControlName="correoPersonal"
-                                plaholder="Correo personal" />
+                            <input type="email" pInputText formControlName="correoPersonal" plaholder="Correo personal" />
                             <label for="" class="active">Correo personal</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"
-                                class="select-material" styleClass="select-material"></p-dropdown>
+                            <p-dropdown [filter]="true" [options]="epsList" formControlName="eps" class="select-material" styleClass="select-material"></p-dropdown>
                             <label for="" class="active">EPS</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [filter]="true" [options]="afpList" formControlName="afp"
-                                class="select-material" styleClass="select-material"></p-dropdown>
+                            <p-dropdown [filter]="true" [options]="afpList" formControlName="afp" class="select-material" styleClass="select-material"></p-dropdown>
                             <label for="" class="active">AFP</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
-                                class="form-material" id="arl" />
+                            <input [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl" class="form-material" id="arl" />
                             <label for="" class="active">ARL</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="emergencyContact" placeholder="Contacto de emergencia"
-                                class="form-material" id="emergencyContact" />
+                            <input type="text" pInputText formControlName="emergencyContact" placeholder="Contacto de emergencia" class="form-material" id="emergencyContact" />
                             <label for="" class="active">Contacto de emergencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="phoneEmergencyContact" class="form-material"
-                                styleClass="form-material">
+                            <input pInputText formControlName="phoneEmergencyContact" class="form-material" styleClass="form-material">
 
                             <label for="" class="active">Telefono de contacto de emergencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="email" pInputText formControlName="emailEmergencyContact"
-                                placeholder="Correo corporativo" class="form-material" id="emailEmergencyContact" />
+                            <input type="email" pInputText formControlName="emailEmergencyContact" placeholder="Correo corporativo" class="form-material" id="emailEmergencyContact" />
                             <label for="" class="active">Correo de contacto de emergencia</label>
                         </div>
                     </div>
@@ -292,20 +256,15 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                                    [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)"
-                                    [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                                    formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                                <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                                    *ngIf="empleado?.id == null">
                                     <ng-template let-empleado pTemplate="item">
                                         <div class="ui-helper-clearfix">
                                             <div class="wrapper">
-                                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                                    style="font-size: 48px;" aria-hidden="true"></i>
-                                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                                    style="border-radius: 50%;" #imgAvatar />
+                                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
                                                 <div style="margin-left:20px">
-                                                    <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                                    {{empleado?.segundoNombre}}
+                                                    <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
 
                                                     <br /> {{empleado?.numeroIdentificacion}}
                                                     <br /> {{empleado?.usuario.email}}
@@ -320,49 +279,41 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres"
-                                    [attr.disabled]="true" class="form-material" id="jefeNames" />
+                                <input type="text" pInputText [value]="jefeNames" placeholder="Apellidos y nombres" [attr.disabled]="true" class="form-material" id="jefeNames" />
                                 <label for="" class="active">Apellidos y nombres</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                                    class="select-material" styleClass="select-material">
+                                <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Cargo / Categoría</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText formControlName="direccionGerencia"
-                                    placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia2" />
+                                <input type="text" pInputText formControlName="direccionGerencia" placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia2" />
                                 <label for="" class="active">Dirección / Gerencia</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input pInputText formControlName="corporativePhone" class="form-material"
-                                    styleClass="form-material">
+                                <input pInputText formControlName="corporativePhone" class="form-material" styleClass="form-material">
 
                                 <label for="" class="active">Número móvil corporativo</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
-                                    class="form-material" id="emailjefe" />
+                                <input type="text" pInputText formControlName="email" placeholder="Correo corporativo" class="form-material" id="emailjefe" />
                                 <label for="" class="active">Correo corporativo</label>
                             </div>
                         </div>
                     </div>
                     <div *ngIf="!this.consultar" style="text-align: center; width: 100%;">
-                        <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit"
-                            icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
-                            title="Guardar datos de Empleado"></button>
+                        <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar datos de Empleado"></button>
 
-                        <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
-                            [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+                        <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                     </div>
                 </form>
                 <form [formGroup]="bussinessParner">
@@ -374,20 +325,14 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                                    [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)"
-                                    [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                                    formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
+                                <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
                                     <ng-template let-empleado pTemplate="item">
                                         <div class="ui-helper-clearfix">
                                             <div class="wrapper">
-                                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                                    style="font-size: 48px;" aria-hidden="true"></i>
-                                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                                    style="border-radius: 50%;" #imgAvatar />
+                                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
                                                 <div style="margin-left:20px">
-                                                    <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                                    {{empleado?.segundoNombre}}
+                                                    <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
                                                     <br /> {{empleado?.numeroIdentificacion}}
                                                     <br /> {{empleado?.usuario.email}}
                                                 </div>
@@ -401,38 +346,33 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText [value]="businessNames" placeholder="Apellidos y nombres"
-                                    [attr.disabled]="true" class="form-material" id="businessNames" />
+                                <input type="text" pInputText [value]="businessNames" placeholder="Apellidos y nombres" [attr.disabled]="true" class="form-material" id="businessNames" />
                                 <label for="" class="active">Apellidos y nombres</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
-                                    class="select-material" styleClass="select-material">
+                                <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId" class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Cargo / Categoría</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText formControlName="direccionGerencia"
-                                    placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia" />
+                                <input type="text" pInputText formControlName="direccionGerencia" placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia" />
                                 <label for="" class="active">Dirección / Gerencia</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input pInputText formControlName="corporativePhone" class="form-material"
-                                    styleClass="form-material">
+                                <input pInputText formControlName="corporativePhone" class="form-material" styleClass="form-material">
 
                                 <label for="" class="active">Número móvil corporativo</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
-                                    class="form-material" id="emailbussines" />
+                                <input type="text" pInputText formControlName="email" placeholder="Correo corporativo" class="form-material" id="emailbussines" />
                                 <label for="" class="active">Correo corporativo</label>
                             </div>
                         </div>
@@ -442,77 +382,72 @@
         </p-tabPanel>
     </ng-container>
 
-        <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
+    <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
 
 
-            <form *ngIf="createCase || caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <div class="input-field">
-                            <input type="text" pInputText [value]="status" [attr.disabled]="true">
-                            <label for="" class="active">Estado del caso</label>
-                        </div>
+        <form *ngIf="createCase || caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <div class="input-field">
+                        <input type="text" pInputText [value]="status" [attr.disabled]="true">
+                        <label for="" class="active">Estado del caso</label>
                     </div>
-                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <div class="input-field">
-                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                                [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-                            <label for="" class="active">Fecha de cierre</label>
-                        </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <div class="input-field">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+                        <label for="" class="active">Fecha de cierre</label>
                     </div>
-                    <div class="ui-g-12 ui-md-4 ui-lg-8">
-                        <div class="input-field">
-                            <textarea class="textarea-material" pInputTextarea
-                                formControlName="observaciones"></textarea>
-                            <label for="" class="active">Observaciones</label>
-                        </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-8">
+                    <div class="input-field">
+                        <textarea class="textarea-material" pInputTextarea formControlName="observaciones"></textarea>
+                        <label for="" class="active">Observaciones</label>
                     </div>
+                </div>
 
-                
-            <div *sTienePermiso="'SCM_GET_CASE_INFO'">
+
+                <div *sTienePermiso="'SCM_GET_CASE_INFO'">
                     <div class="ui-g-12 p-mb-2">
                         <h5 class="title-header">Información del caso</h5>
                     </div>
 
                     <div class="ui-g-12">
-                        <div class="input-field">                        
-                                <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5" required></textarea>
+                        <div class="input-field">
+                            <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5" required></textarea>
                             <label for="" class="active">Descripción completa del caso</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
-                        <div class="input-field">                            
-                                <textarea pInputTextarea formControlName="descripcionCargo" rows="4" required></textarea>
+                        <div class="input-field">
+                            <textarea pInputTextarea formControlName="descripcionCargo" rows="4" required></textarea>
                             <label for="" class="active">Descripción del cargo</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <div class="input-field">
 
-                            <p-dropdown [options]="caseOptionList" formControlName="casoMedicoLaboral"
-                                class="select-material" styleClass="select-material">
+                            <p-dropdown [options]="caseOptionList" formControlName="casoMedicoLaboral" class="select-material" styleClass="select-material">
                             </p-dropdown>
                             <label for="" class="active">Caso de mesa laboral</label>
                         </div>
-                    </div>      
-                                   
-                            
+                    </div>
+
+
                     <div class="ui-g-12">
                         <h5 class="title-header p-mb-2">Intervención complementaria</h5>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [options]="IntervencionOptionList" formControlName="requiereIntervencion"
-                                class="select-material" styleClass="select-material">
+                            <p-dropdown [options]="IntervencionOptionList" formControlName="requiereIntervencion" class="select-material" styleClass="select-material">
                             </p-dropdown>
                             <label for="" class="active">Requiere intervención complementaria</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('requiereIntervencion').value != 0">
                         <div class="input-field">
-                            <p-dropdown [options]="sveOptionList" formControlName="sve" class="select-material"
-                                styleClass="select-material">
+                            <p-dropdown [options]="sveOptionList" formControlName="sve" class="select-material" styleClass="select-material">
                             </p-dropdown>
                             <label for="" class="active">SVE</label>
                         </div>
@@ -520,8 +455,7 @@
                     <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="casoMedicoForm.get('requiereIntervencion').value != 0">
                         <div class="input-field">
 
-                            <p-dropdown [options]="professionalAreaList" formControlName="professionalArea"
-                                class="select-material" styleClass="select-material">
+                            <p-dropdown [options]="professionalAreaList" formControlName="professionalArea" class="select-material" styleClass="select-material">
                             </p-dropdown>
 
                             <label for="" class="active">Área profesional</label>
@@ -534,191 +468,159 @@
                             <label for="" class="active">Justificación</label>
                         </div>
                     </div>
-                
-            </div>
-            <div class="principal"  *sTienePermiso="'SCM_GET_REHABILITA'">
+
+                </div>
+                <div class="principal" *sTienePermiso="'SCM_GET_REHABILITA'">
                     <h5 class="title-header">Conceptos de rehabilitación</h5>
-                
-                <div class="id">
 
-                    <h2> 1. </h2>
+                    <div class="id">
 
-                </div>
-                <div class="concepto">
-                    <div class="input-field">
+                        <h2> 1. </h2>
 
-                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
-                            formControlName="conceptRehabilitacion" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Concepto de rehabilitación</label>
                     </div>
-                </div>                
-                <div class="fecha">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaConceptRehabilitacion"></p-calendar>
-                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                    <div class="concepto">
+                        <div class="input-field">
+
+                            <p-dropdown [filter]="true" [options]="conceptoRehabilitacion" formControlName="conceptRehabilitacion" class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidadp">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                        <p-dropdown [filter]="true"
-                            [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
-                            formControlName="entidadEmiteConcepto" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite el concepto de
+                    <div class="fecha">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaConceptRehabilitacion"></p-calendar>
+                            <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                        </div>
+                    </div>
+                    <div class="entidadp">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                            <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]" formControlName="entidadEmiteConcepto" class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad que emite el concepto de
                             rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidad">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                        <p-dropdown [filter]="true"
-                            [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
-                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad</label>
+                    <div class="entidad">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                            <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad</label>
+                        </div>
                     </div>
-                </div>
-                <div class="id">
+                    <div class="id">
 
-                    <h2> 2. </h2>
+                        <h2> 2. </h2>
 
-                </div>
-                <div class="concepto">
-                    <div class="input-field">
+                    </div>
+                    <div class="concepto">
+                        <div class="input-field">
 
-                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
-                            formControlName="conceptRehabilitacionTwo" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Concepto de rehabilitación</label>
+                            <p-dropdown [filter]="true" [options]="conceptoRehabilitacion" formControlName="conceptRehabilitacionTwo" class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="fecha">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                            formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
-                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                    <div class="fecha">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
+                            <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidadp">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                        <p-dropdown [filter]="true"
-                            [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
-                            formControlName="entidadEmiteConceptoTwo" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite el concepto de
+                    <div class="entidadp">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                            <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]" formControlName="entidadEmiteConceptoTwo" class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad que emite el concepto de
                             rehabilitación</label>
+                        </div>
+                    </div>
+                    <div class="entidad">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                            <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]" formControlName="entidadEmitidaTwo" class="select-material" styleClass="select-material">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad</label>
+                        </div>
                     </div>
                 </div>
-                <div class="entidad">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                        <p-dropdown [filter]="true"
-                            [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
-                            formControlName="entidadEmitidaTwo" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad</label>
-                    </div>
-                </div>
+
             </div>
-               
-        </div>
-                <div style="text-align: center; width: 100%;">
-                    <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()"
-                        icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()"
-                        title="Volver a listado de empleados"></button>
-                    <button pButton *ngIf="solicitando == false || !this.consultar" type="submit" icon="fa fa-floppy-o"
-                        class="float-btn" [disabled]="this.consultar" style="bottom: 100px;"
-                        title="Guardar datos medicos"></button>
+            <div style="text-align: center; width: 100%;">
+                <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()" icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
+                <button pButton *ngIf="solicitando == false || !this.consultar" type="submit" icon="fa fa-floppy-o" class="float-btn" [disabled]="this.consultar" style="bottom: 100px;" title="Guardar datos medicos"></button>
 
-                    <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8"
-                        [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
-                </div>
-            </form>
+                <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+            </div>
+        </form>
 
 
-            <p-table *ngIf="!caseSelect && !createCase" #dt [value]="casosList" (click)="onClick()" autoLayout="true"
-                selectionMode="single" [(selection)]="casoSeleccionado" [rows]="10" (onLazyLoad)="lazyLoad($event)"
-                [paginator]="true" dataKey="id" [lazy]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="id">No. Caso
+        <p-table *ngIf="!caseSelect && !createCase" #dt [value]="casosList" (click)="onClick()" autoLayout="true" selectionMode="single" [(selection)]="casoSeleccionado" [rows]="10" (onLazyLoad)="lazyLoad($event)" [paginator]="true" dataKey="id" [lazy]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">No. Caso
 
-                        </th>
-                        <th pSortableColumn="fechaCreacion">Fecha de apertura
+                    </th>
+                    <th pSortableColumn="fechaCreacion">Fecha de apertura
 
-                        </th>
-                        <th pSortableColumn="case.region">Regional
+                    </th>
+                    <th pSortableColumn="case.region">Regional
 
-                        </th>
-                        <th pSortableColumn="case.ciudad">Ciudad
+                    </th>
+                    <th pSortableColumn="case.ciudad">Ciudad
 
-                        </th>
-                        <th pSortableColumn="pkUser.primerApellido">Apellido
+                    </th>
+                    <th pSortableColumn="pkUser.primerApellido">Apellido
 
-                        </th>
-                        <th pSortableColumn="pkUser.primerNombre">Nombre
+                    </th>
+                    <th pSortableColumn="pkUser.primerNombre">Nombre
 
-                        </th>
-                        <th pSortableColumn="case.documento">No. Documento
+                    </th>
+                    <th pSortableColumn="case.documento">No. Documento
 
-                        </th>
-                        <th pSortableColumn="case.statusCaso">Estado de caso
+                    </th>
+                    <th pSortableColumn="case.statusCaso">Estado de caso
 
-                        </th>
-                        <th pSortableColumn="case.casoMedicoLaboral">Caso de mesa laboral
+                    </th>
+                    <th pSortableColumn="case.casoMedicoLaboral">Caso de mesa laboral
 
-                        </th>
-                    </tr>
-                    <tr>
+                    </th>
+                </tr>
+                <tr>
 
 
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-case>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
 
-                    <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                        <td>{{case.id}}</td>
-                        <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{case.region}}</td>
-                        <td>{{case.ciudad}}</td>
-                        <td>{{case.pkUser.primerApellido}}</td>
-                        <td>{{case.pkUser.primerNombre}}
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.id}}</td>
+                    <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{case.region}}</td>
+                    <td>{{case.ciudad}}</td>
+                    <td>{{case.pkUser.primerApellido}}</td>
+                    <td>{{case.pkUser.primerNombre}}
                         <td>{{case.documento}}</td>
                         <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                         <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
 
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE'" (click)="createCaso()" pButton type="button"
-                        icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button *sTienePermiso="'SCM_CREATE_CASE'" (click)="createCaso()" pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
 
-                    <button *sTienePermiso="'SCM_PUT_CASE'" (click)="modifyCase()" pButton type="button"
-                        icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                        [disabled]="!casoSeleccionado"></button>
+                <button *sTienePermiso="'SCM_PUT_CASE'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
 
-                    <button *sTienePermiso="'SCM_LIST_CASE'" (click)="readCase()" pButton type="button"
-                        icon="fa fa-pencil" label="Consultar" class="ui-button-success"
-                        [disabled]="!casoSeleccionado"></button>
-                    <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+                <button *sTienePermiso="'SCM_LIST_CASE'" (click)="readCase()" pButton type="button" icon="fa fa-pencil" label="Consultar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
+                <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
             (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
-                </ng-template>
-            </p-table>
+            </ng-template>
+        </p-table>
 
-        </p-tabPanel>
-    
+    </p-tabPanel>
+
     <ng-container *sTienePermiso="'SCM_GET_CASE_DIAG'">
         <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
-            <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="diagSelect"
-                [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
+            <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="diagSelect" [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="fechaDiagnostico">Fecha de Diagnóstico
@@ -748,8 +650,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-case>
 
-                    <tr [pSelectableRowDisabled]="modalDianostico" [pSelectableRow]="case"
-                        class="table-row table-row-selectable">
+                    <tr [pSelectableRowDisabled]="modalDianostico" [pSelectableRow]="case" class="table-row table-row-selectable">
                         <td>{{case.fechaDiagnostico | date:'dd/MM/yyyy' }}</td>
                         <td>{{case.codigoCie10 }}</td>
                         <td>{{case.sistemaAfectado || ""}}</td>
@@ -761,24 +662,20 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect" type="button"
-                        icon="fa fa-plus" label="Crear Diagnóstico" (click)="diagSelect = null; modalDianostico = true">
+                    <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect" type="button" icon="fa fa-plus" label="Crear Diagnóstico" (click)="diagSelect = null; modalDianostico = true">
 
                     </button>
-                    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
-                        (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
+                    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger" (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
 
 
-                    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                        (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
+                    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
                 </ng-template>
             </p-table>
         </p-tabPanel>
     </ng-container>
     <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
         <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
-            <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
-                [pkCase]="caseSelect.id" [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
+            <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity" [pkCase]="caseSelect.id" [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
             </app-pcl>
         </p-tabPanel>
     </ng-container>
@@ -804,7 +701,7 @@
                                     <p-sortIcon field="diasAusencia"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="causaAusentismo.nombre">Clase
-                                    
+
                                     <p-sortIcon field="causaAusentismo.nombre"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="causaAusentismo.nombre">Tipo
@@ -850,8 +747,7 @@
     <ng-container *sTienePermiso="'SCM_LIST_CASE_RECO'">
         <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
-            <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect"
-                [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
+            <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect" [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Entidad emisora
@@ -881,24 +777,19 @@
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'fapertura', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'fapertura', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'regional', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'regional', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'documento', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
                         </td>
 
 
@@ -907,8 +798,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-case>
 
-                    <tr [pSelectableRowDisabled]="modalRecomendatios" [pSelectableRow]="case"
-                        class="table-row table-row-selectable">
+                    <tr [pSelectableRowDisabled]="modalRecomendatios" [pSelectableRow]="case" class="table-row table-row-selectable">
                         <td>{{case.entidadEmitRecomendaciones}}</td>
                         <td>{{case.tipo }}</td>
                         <td>{{case.fechaExpiracion | recomendationstatus}}</td>
@@ -921,15 +811,12 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus"
-                        label="Crear recomendación" (click)="openModalRecomendantions()">
+                    <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus" label="Crear recomendación" (click)="openModalRecomendantions()">
                     </button>
 
-                    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
-                        (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
+                    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger" (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
 
-                    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                        (click)="modalRecomendatios = true" [disabled]="!recoSelect"></button>
+                    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modalRecomendatios = true" [disabled]="!recoSelect"></button>
 
                 </ng-template>
             </p-table>
@@ -958,8 +845,7 @@
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <p-calendar [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
-                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                        <p-calendar [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg" dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
                                         </p-calendar>
 
                                     </ng-template>
@@ -991,19 +877,13 @@
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
-                                            placeholder="Digite" [style]="{'width':'100%'}"
-                                            (onSelect)="seguimiento.responsable = $event" [suggestions]="empleadosList"
-                                            (completeMethod)="buscarEmpleado($event)" field="numeroIdentificacion"
+                                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="seguimiento.responsable = $event" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" field="numeroIdentificacion"
                                             [(ngModel)]="seguimiento.responsable" *ngIf="empleado?.id == null">
                                             <ng-template let-empleado pTemplate="item">
                                                 <div class="ui-helper-clearfix">
                                                     <div class="wrapper">
-                                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                                            style="font-size: 48px;" aria-hidden="true"></i>
-                                                        <img *ngIf="empleado.usuario?.icon"
-                                                            [src]="empleado.usuario?.icon" style="border-radius: 50%;"
-                                                            #imgAvatar />
+                                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
                                                         <div style="margin-left:20px">
                                                             <label>{{empleado?.primerApellido}}
                                                                 {{empleado?.primerNombre}}
@@ -1018,9 +898,7 @@
                                         </p-autoComplete>
                                     </ng-template>
                                     <ng-template pTemplate="output">
-                                        {{seguimiento.responsable?.primerApellido }}
-                                        {{seguimiento.responsable?.primerNombre
-                                        }}
+                                        {{seguimiento.responsable?.primerApellido }} {{seguimiento.responsable?.primerNombre }}
                                     </ng-template>
                                 </p-cellEditor>
                             </td>
@@ -1046,29 +924,18 @@
                                 </p-cellEditor>
                             </td>
                             <td style="text-align:center" *ngIf="!this.consultar">
-                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                    icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)" title="Editar Seguimiento"
-                                    class="p-button-rounded p-button-text"></button>
-                                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                                    (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento"
-                                    class="p-button-rounded p-button-text p-mr-2"></button>
-                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                    icon="pi pi-check" (click)="onRowEditSave(seguimiento)"
-                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                    icon="pi pi-times" (click)="onRowEditCancel(seguimiento, ri)"
-                                    class="p-button-rounded p-button-text p-button-danger"></button>
+                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)" title="Editar Seguimiento" class="p-button-rounded p-button-text"></button>
+                                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy" (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" class="p-button-rounded p-button-text p-mr-2"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(seguimiento)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(seguimiento, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
 
-                                <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow
-                                    icon="pi pi-trash" (click)="deleteSeguimiento(seguimiento.id)"
-                                    title="Borrar Seguimiento" class="ui-button-danger"></button>
+                                <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash" (click)="deleteSeguimiento(seguimiento.id)" title="Borrar Seguimiento" class="ui-button-danger"></button>
                             </td>
                         </tr>
                     </ng-template>
 
                     <ng-template pTemplate="summary" let-rowData>
-                        <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
-                            label="Crear Seguimiento" (click)="nuevoSeguimiento()">
+                        <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus" label="Crear Seguimiento" (click)="nuevoSeguimiento()">
 
                         </button>
 
@@ -1105,18 +972,14 @@
                                     <ng-template pTemplate="input">
 
                                         <div class="input-field">
-                                            <p-dropdown [filter]="true" [options]="tipoTratamientos"
-                                                class="select-material" [(ngModel)]="tratamiento.tipo"
-                                                styleClass="select-material">
+                                            <p-dropdown [filter]="true" [options]="tipoTratamientos" class="select-material" [(ngModel)]="tratamiento.tipo" styleClass="select-material">
                                             </p-dropdown>
                                         </div>
                                     </ng-template>
                                     <ng-template pTemplate="output">
 
                                         <div class="input-field">
-                                            <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos"
-                                                class="select-material" [(ngModel)]="tratamiento.tipo"
-                                                styleClass="select-material">
+                                            <p-dropdown readonly="true" [filter]="true" [options]="tipoTratamientos" class="select-material" [(ngModel)]="tratamiento.tipo" styleClass="select-material">
                                             </p-dropdown>
                                         </div>
                                     </ng-template>
@@ -1146,8 +1009,7 @@
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fecha"
-                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fecha" dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
                                         </p-calendar>
 
                                     </ng-template>
@@ -1159,26 +1021,17 @@
                             </td>
 
                             <td style="text-align:center">
-                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                    icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
-                                    class="p-button-rounded p-button-text"> </button>
-                                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                                    (click)="confirm(tratamiento,ri)" class="p-button-rounded p-button-text">
+                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)" class="p-button-rounded p-button-text"> </button>
+                                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" (click)="confirm(tratamiento,ri)" class="p-button-rounded p-button-text">
                                 </button>
-                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                    icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')"
-                                    title="Editar Tratamiento"
-                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                    icon="pi pi-times" (click)="onRowEditCancel(tratamiento, ri)"
-                                    class="p-button-rounded p-button-text p-button-danger"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')" title="Editar Tratamiento" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(tratamiento, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
                             </td>
                         </tr>
                     </ng-template>
 
                     <ng-template pTemplate="summary" let-rowData>
-                        <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
-                            (click)="nuevoTratamiento()" label="Nuevo Tratamiento">
+                        <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus" (click)="nuevoTratamiento()" label="Nuevo Tratamiento">
 
                         </button>
 
@@ -1204,7 +1057,8 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem"></th>
-                        <th pSortableColumn="name">Recomendación <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="name">Recomendación
+                            <p-sortIcon field="name"></p-sortIcon>
                         </th>
                         <th>Estado</th>
                         <th>Fecha de Finalización</th>
@@ -1214,9 +1068,7 @@
                 <ng-template pTemplate="body" let-product let-expanded="expanded">
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple [pRowToggler]="product"
-                                class="p-button-text p-button-rounded p-button-plain"
-                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
                         <td>{{product.recomendaciones}}</td>
                         <td>{{product.fechaExpiracion | recomendationstatus}}</td>
@@ -1231,50 +1083,51 @@
                             <div class="p-p-3">
                                 <p-table [value]="product.actionPlanList" dataKey="id">
                                     <ng-template pTemplate="header">
-                    <tr *ngIf="product.actionPlanList.length > 0">
-                        <th pSortableColumn="actividad">Actividad <p-sortIcon field="actividad"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="descripcionAct">Descripcion de la actividad <p-sortIcon
-                                field="descripcionAct">
-                            </p-sortIcon>
-                        </th>
-                        <th pSortableColumn="responsableEmpresa">Responsable Empresa<p-sortIcon
-                            field="responsableEmpresa">
-                        </p-sortIcon>
-                        <th pSortableColumn="responsableExterno">Responsable Externo<p-sortIcon
-                            field="responsableExterno">
-                        </p-sortIcon>
-                    </th>
-                        <th pSortableColumn="fechaProyectada">Fecha proyectada<p-sortIcon field="fechaProyectada">
-                            </p-sortIcon>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-plan>
-                    <tr>
-                        <td>{{plan.actividad}}</td>
-                        <td>{{plan.descripcionAct}}</td>
-                        <td>{{plan.responsableEmpresa?.primerApellido }}
-                            {{plan.responsableEmpresa?.primerNombre
-                            }}</td>
-                        <td>{{plan.responsableExterno}}</td>
-                        <td>{{plan.fechaProyectada | date:'dd/MM/yyyy'}}</td>
+                                        <tr *ngIf="product.actionPlanList.length > 0">
+                                            <th pSortableColumn="actividad">Actividad
+                                                <p-sortIcon field="actividad"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="descripcionAct">Descripcion de la actividad
+                                                <p-sortIcon field="descripcionAct">
+                                                </p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="responsableEmpresa">Responsable Empresa
+                                                <p-sortIcon field="responsableEmpresa">
+                                                </p-sortIcon>
+                                                <th pSortableColumn="responsableExterno">Responsable Externo
+                                                    <p-sortIcon field="responsableExterno">
+                                                    </p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="fechaProyectada">Fecha proyectada
+                                                    <p-sortIcon field="fechaProyectada">
+                                                    </p-sortIcon>
+                                                </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-plan>
+                                        <tr>
+                                            <td>{{plan.actividad}}</td>
+                                            <td>{{plan.descripcionAct}}</td>
+                                            <td>{{plan.responsableEmpresa?.primerApellido }} {{plan.responsableEmpresa?.primerNombre }}
+                                            </td>
+                                            <td>{{plan.responsableExterno}}</td>
+                                            <td>{{plan.fechaProyectada | date:'dd/MM/yyyy'}}</td>
 
-                        <!-- <td>
+                                            <!-- <td>
                         <p-button type="button" icon="pi pi-search"></p-button>
                     </td>-->
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="6">No Existen planes de accion para esta recomendacion.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="6">No Existen planes de accion para esta recomendacion.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            </div>
-            </td>
-            </tr>
-            </ng-template>
             </p-table>
 
         </p-tabPanel>
@@ -1282,8 +1135,7 @@
     <ng-container *sTienePermiso="'SCM_GET_CASE_LOG'">
         <p-tabPanel header="Trazabilidad" *ngIf="caseSelect">
 
-            <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true"
-                [(selection)]="logSelected" dataKey="id" [lazy]="true">
+            <p-table #dt [value]="logsList" autoLayout="true" selectionMode="single" [rows]="10" [paginator]="true" [(selection)]="logSelected" dataKey="id" [lazy]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="action">Accion
@@ -1328,28 +1180,23 @@
 
 
 
-<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}"
-    [baseZIndex]="10000">
+<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}" [baseZIndex]="10000">
     <app-logmodal *ngIf="logsList" [log]="logSelected" [logList]="logsList">
     </app-logmodal>
 </p-dialog>
 
 
-<p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}"
-    [baseZIndex]="10000">
+<p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [baseZIndex]="10000">
 
-    <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id"
-        [caseId]="caseSelect.id" (eventClose)="onCloseModalDianostico()">
+    <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id" (eventClose)="onCloseModalDianostico()">
 
     </app-diagnostico-form>
 
 </p-dialog>
 
 
-<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios"
-    [style]="{width: '75vw'}" [baseZIndex]="10000">
-    <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity"
-        (eventClose)="onCloseModalrecomendation()">
+<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [baseZIndex]="10000">
+    <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>
 <!--

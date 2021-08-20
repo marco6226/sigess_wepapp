@@ -197,6 +197,14 @@
     box-sizing: border-box;
 }
 
+p-autoComplete {
+    width: 100%;
+    .wrapper {
+        display: flex;
+        align-items: center;
+    }
+}
+
 :host ::ng-deep {
     .form-material-autocomplete {
         &.ui-autocomplete {

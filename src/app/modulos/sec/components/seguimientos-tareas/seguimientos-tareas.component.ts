@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 
@@ -18,19 +19,24 @@ export class SeguimientosTareasComponent implements OnInit {
     trackingForm: FormGroup;
     submitted = false;
     evidences = [];
+    fullName = '';
     empleado: Empleado;
     empleadosList: Empleado[];
 
     constructor(
         private empleadoService: EmpleadoService,
         fb: FormBuilder,
+        private route: ActivatedRoute
     ) {
         this.trackingForm = fb.group({
-            usuarioSeguimiento: ["", Validators.required],
+            tareaId: ["", Validators.required],
+            userId: ["", Validators.required],
             fechaSeguimiento: ["", Validators.required],
             descripcion: ["", Validators.required],
             evidencias: [[]],
-        })
+        });
+
+        this.trackingForm.patchValue({ tareaId: parseInt(this.route.snapshot.paramMap.get('id')) })
     }
 
     ngOnInit() {
@@ -72,8 +78,14 @@ export class SeguimientosTareasComponent implements OnInit {
         return this.trackingForm.controls;
     }
 
-    addImage($event) {
-        console.log(event);
+    addImage(file) {
+        let evidences = this.trackingForm.get('evidencias').value;
+        let obj = {
+            ruta: file,
+
+        }
+        evidences.push(obj);
+        this.trackingForm.patchValue({ evidencias: evidences });
     }
 
     buscarEmpleado(event) {
@@ -89,6 +101,7 @@ export class SeguimientosTareasComponent implements OnInit {
         setTimeout(() => {
             if (!this.trackingForm.valid) {
                 this.cargando = false;
+                console.log('Data: ', this.trackingForm.value);
                 return;
             }
 
@@ -113,13 +126,23 @@ export class SeguimientosTareasComponent implements OnInit {
         this.evidences = [];
         this.displayEvidences = false;
     }
+
+    closeCreate() {
+        this.empleado = null;
+        this.fullName = null;
+        this.trackingForm.reset();
+        this.displayModal = false;
+    }
+
     async onSelection(event) {
         console.log(event);
         // this.caseSelect = false;
+        this.fullName = null;
         this.empleado = null;
         let emp = <Empleado>event;
         this.empleado = emp;
-
+        this.fullName = this.empleado.primerNombre + ' ' + this.empleado.primerApellido;
+        this.trackingForm.patchValue({ userId: this.empleado.id });
     }
 
 }

@@ -1,3 +1,10 @@
+<div class="ui-g">
+    <div class="ui-g-12 p-d-flex p-jc-end">
+        <span class="p-text-bold p-mr-2">Estado:</span>
+        <span> N/A</span>
+    </div>
+</div>
+
 <p-tabView styleClass="custom-panel">
 
     <p-tabPanel header="Información General">
@@ -126,44 +133,44 @@
                     <h5 class="title-header p-mb-2">General</h5>
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input pInputText formControlName="usuarioGestion" styleClass="form-material">
+                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
+                            <ng-template let-empleado pTemplate="item">
+                                <div class="ui-helper-clearfix">
+                                    <div class="wrapper">
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar alt="" />
+                                        <div style="margin-left:20px">
+                                            <span class="p-text-capitalize">
+                                                {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                            </span>
+                                            <br /> {{empleado?.numeroIdentificacion}}
+                                            <br /> {{empleado?.usuario.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
                         <label for="" class="active">Usuario que gestiona</label>
                     </div>
 
                     <!-- Start validations -->
-                    <div *ngIf="submitted && f.usuarioGestion.hasError('required')" class="error-msg ">
-                        <span>Debe buscar un usuario válido.</span>
+                    <div *ngIf="submitted && f.userId.hasError('required')" class="error-msg ">
+                        <span>Debe buscar un empleado válido.</span>
                     </div>
                     <!-- End validations -->
 
                 </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText placeholder="Apellidos y nombres" class="form-material" id="nameAndLastName" [attr.disabled]="true" />
+                        <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName" class="form-material" [attr.disabled]="true" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
 
-
-                <div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
-                    <div class="input-field">
-                        <p-dropdown [options]="estadoList" formControlName="estado" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Estado</label>
-                    </div>
-
-                    <!-- Start validations -->
-                    <div *ngIf="submitted && f.estado.hasError('required')" class="error-msg mt-4 ">
-                        <span>Debe buscar un usuario válido.</span>
-                    </div>
-                    <!-- End validations -->
-
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-3 ui-xl-3">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
                         <p-calendar formControlName="fechaCierre" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
                         <label for="" class="active">Fecha de cierre</label>

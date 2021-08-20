@@ -157,7 +157,9 @@ export class PclComponent implements OnInit {
             });
         }
     }
-
+    reset() {
+        this.pclForm.reset();
+            }
 
     private markFormGroupTouched(formGroup: FormGroup) {
         (<any>Object).values(formGroup.controls).forEach(control => {
