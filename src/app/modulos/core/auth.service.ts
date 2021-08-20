@@ -28,7 +28,7 @@ export class AuthService {
     jwtHelper: JwtHelper = new JwtHelper();
     authEndPoint = endPoints.auth;
     // store the URL so we can redirect after logging in
-    redirectUrl: string = '/app/home';
+    redirectUrl: string = '/app/sec/tarea/7';
 
     constructor(
         public httpInt: HttpInt,

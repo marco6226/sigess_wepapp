@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
+import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 
 @Component({
     selector: 'app-seguimientos-tareas',
@@ -16,8 +18,11 @@ export class SeguimientosTareasComponent implements OnInit {
     trackingForm: FormGroup;
     submitted = false;
     evidences = [];
+    empleado: Empleado;
+    empleadosList: Empleado[];
 
     constructor(
+        private empleadoService: EmpleadoService,
         fb: FormBuilder,
     ) {
         this.trackingForm = fb.group({
@@ -66,6 +71,15 @@ export class SeguimientosTareasComponent implements OnInit {
     get f() {
         return this.trackingForm.controls;
     }
+    addImage($event) {
+        console.log(event);
+    }
+
+    buscarEmpleado(event) {
+        this.empleadoService
+            .buscar(event.query)
+            .then((data) => (this.empleadosList = <Empleado[]>data));
+    }
 
     onSubmit() {
         this.submitted = true;
@@ -76,7 +90,7 @@ export class SeguimientosTareasComponent implements OnInit {
                 this.cargando = false;
                 return;
             }
-    
+
             console.log('Data: ', this.trackingForm.value);
         }, 3000);
 
@@ -97,6 +111,14 @@ export class SeguimientosTareasComponent implements OnInit {
     closeEvidences() {
         this.evidences = [];
         this.displayEvidences = false;
+    }
+    async onSelection(event) {
+        console.log(event);
+        // this.caseSelect = false;
+        this.empleado = null;
+        let emp = <Empleado>event;
+        this.empleado = emp;
+
     }
 
 }
