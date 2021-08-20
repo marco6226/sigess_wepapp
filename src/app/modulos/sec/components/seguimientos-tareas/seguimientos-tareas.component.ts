@@ -71,6 +71,7 @@ export class SeguimientosTareasComponent implements OnInit {
     get f() {
         return this.trackingForm.controls;
     }
+
     addImage($event) {
         console.log(event);
     }
