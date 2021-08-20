@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
 
 @Component({
     selector: 'app-seguimientos-tareas',
@@ -16,7 +17,7 @@ export class SeguimientosTareasComponent implements OnInit {
     trackingForm: FormGroup;
     submitted = false;
     evidences = [];
-
+    empleado: Empleado;
     constructor(
         fb: FormBuilder,
     ) {
@@ -76,7 +77,7 @@ export class SeguimientosTareasComponent implements OnInit {
                 this.cargando = false;
                 return;
             }
-    
+
             console.log('Data: ', this.trackingForm.value);
         }, 3000);
 
@@ -97,6 +98,14 @@ export class SeguimientosTareasComponent implements OnInit {
     closeEvidences() {
         this.evidences = [];
         this.displayEvidences = false;
+    }
+    async onSelection(event) {
+        console.log(event);
+        // this.caseSelect = false;
+        //this.empleadoSelect = null;
+        let emp = <Empleado>event;
+
+
     }
 
 }
