@@ -110,7 +110,7 @@
                             <p-calendar [touchUI]="true"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2010:2030" [(ngModel)]="pcl.emisionPclFecha" dateFormat="dd/mm/yy"
                                 placeholder="dd/MM/yyyy" [locale]="localeES">
                             </p-calendar>
-
+                            <button (click)="reset()">Limpiar</button>
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{pcl.emisionPclFecha | date : 'dd/MM/yyyy'}}
@@ -170,6 +170,7 @@
                             <p-calendar [touchUI]="true" [(ngModel)]="pcl.fechaCalificacion" dateFormat="dd/mm/yy"
                                 placeholder="dd/MM/yyyy" [locale]="localeES" [monthNavigator]="true" [yearNavigator]="true" yearRange="2010:2030">
                             </p-calendar>
+                            
 
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -310,10 +311,12 @@
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field">
+                    <div class="input-field ">
                         <p-calendar [monthNavigator]="true" [touchUI]="true"  [yearNavigator]="true" yearRange="2010:2030"
                             [maxDate]="fechaActual" [locale]="localeES" formControlName="emisionPclFecha"
                             dateFormat="dd/mm/yy" inputStyleClass="form-material"></p-calendar>
+                            
+                            <button  (click)="reset()" class="ui-g-3  red"  pRipple  >Limpiar</button>
                         <label for="" class="active">Fecha de emisión de la PCL</label>
                     </div>
                 </div>
