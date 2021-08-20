@@ -7,6 +7,7 @@ import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
 import { SelectItem } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
+import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 
 @Component({
     selector: 'app-scm',
@@ -52,6 +53,7 @@ export class ScmComponent implements OnInit {
 
     constructor(private scmService: CasosMedicosService,
         private cargoService: CargoService,
+        private paramNav: ParametroNavegacionService,
     ) { }
 
     async ngOnInit() {
@@ -80,7 +82,13 @@ export class ScmComponent implements OnInit {
     openCase() {
         this.consultar = false;
         this.visibleForm = true;
+        this.paramNav.redirect('/app/scm/list/');
+        // + this.caseSelect.id);
+
     }
+
+    
+
 
     openCaseConsultar() {
         this.consultar = true;
