@@ -236,8 +236,8 @@ export class FormularioScmComponent implements OnInit {
     pclOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "En Calificación", value: "1" },
-        { label: "Si", value: "2" },
-        { label: "No aplica", value: "0" }
+        { label: "En Firme", value: "2" },
+        { label: "En Apelación", value: "0" }
     ]
 
     pclCalificacionList = [

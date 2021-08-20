@@ -441,7 +441,7 @@
             </form>
         </p-tabPanel>
     </ng-container>
-    <ng-container *sTienePermiso="'SCM_GET_CASE_INFO'">
+
         <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
 
 
@@ -467,22 +467,23 @@
                             <label for="" class="active">Observaciones</label>
                         </div>
                     </div>
+
+                
+            <div *sTienePermiso="'SCM_GET_CASE_INFO'">
                     <div class="ui-g-12 p-mb-2">
                         <h5 class="title-header">Información del caso</h5>
                     </div>
 
                     <div class="ui-g-12">
-                        <div class="input-field">
-                            <textarea class="textarea-material" pInputTextarea
-                                formControlName="descripcionCompletaCaso"></textarea>
+                        <div class="input-field">                        
+                                <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5" required></textarea>
                             <label for="" class="active">Descripción completa del caso</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
-                        <div class="input-field">
-                            <textarea class="textarea-material" pInputTextarea
-                                formControlName="descripcionCargo"></textarea>
+                        <div class="input-field">                            
+                                <textarea pInputTextarea formControlName="descripcionCargo" rows="4" required></textarea>
                             <label for="" class="active">Descripción del cargo</label>
                         </div>
                     </div>
@@ -494,103 +495,9 @@
                             </p-dropdown>
                             <label for="" class="active">Caso de mesa laboral</label>
                         </div>
-                    </div>
-
-
-                    <div class="ui-g-12 p-mb-2">
-                        <h5 class="title-header">Conceptos de rehabilitación</h5>
-                    </div>
-                    <div class="ui-g-1">
-
-                        <h2> 1. </h2>
-
-                    </div>
-                    <div class="ui-g-2">
-                        <div class="input-field">
-
-                            <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
-                                formControlName="conceptRehabilitacion" class="select-material"
-                                styleClass="select-material">
-                            </p-dropdown>
-                            <label for="" class="active">Concepto de rehabilitación</label>
-                        </div>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                                [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                                formControlName="fechaConceptRehabilitacion"></p-calendar>
-                            <label for="" class="active">Fecha de concepto de rehabilitación</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                            <p-dropdown [filter]="true"
-                                [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
-                                formControlName="entidadEmiteConcepto" class="select-material"
-                                styleClass="select-material">
-                            </p-dropdown>
-                            <label for="" class="active">Entidad que emite el concepto de
-                                rehabilitación</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                            <p-dropdown [filter]="true"
-                                [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
-                                formControlName="entidadEmitida" class="select-material" styleClass="select-material">
-                            </p-dropdown>
-                            <label for="" class="active">Entidad</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-1">
-
-                        <h2> 2. </h2>
-
-                    </div>
-                    <div class="ui-g-2">
-                        <div class="input-field">
-
-                            <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
-                                formControlName="conceptRehabilitacionTwo" class="select-material"
-                                styleClass="select-material">
-                            </p-dropdown>
-                            <label for="" class="active">Concepto de rehabilitación</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                                [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
-                                formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
-                            <label for="" class="active">Fecha de concepto de rehabilitación</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                            <p-dropdown [filter]="true"
-                                [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
-                                formControlName="entidadEmiteConceptoTwo" class="select-material"
-                                styleClass="select-material">
-                            </p-dropdown>
-                            <label for="" class="active">Entidad que emite el concepto de
-                                rehabilitación</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                            <p-dropdown [filter]="true"
-                                [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
-                                formControlName="entidadEmitidaTwo" class="select-material"
-                                styleClass="select-material">
-                            </p-dropdown>
-                            <label for="" class="active">Entidad</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ui-g p-py-2">
+                    </div>      
+                                   
+                            
                     <div class="ui-g-12">
                         <h5 class="title-header p-mb-2">Intervención complementaria</h5>
                     </div>
@@ -627,9 +534,101 @@
                             <label for="" class="active">Justificación</label>
                         </div>
                     </div>
+                
+            </div>
+            <div class="principal"  *sTienePermiso="'SCM_GET_REHABILITA'">
+                    <h5 class="title-header">Conceptos de rehabilitación</h5>
+                
+                <div class="id">
+
+                    <h2> 1. </h2>
+
                 </div>
+                <div class="concepto">
+                    <div class="input-field">
 
+                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                            formControlName="conceptRehabilitacion" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Concepto de rehabilitación</label>
+                    </div>
+                </div>                
+                <div class="fecha">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaConceptRehabilitacion"></p-calendar>
+                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                    </div>
+                </div>
+                <div class="entidadp">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                        <p-dropdown [filter]="true"
+                            [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
+                            formControlName="entidadEmiteConcepto" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad que emite el concepto de
+                            rehabilitación</label>
+                    </div>
+                </div>
+                <div class="entidad">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                        <p-dropdown [filter]="true"
+                            [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
+                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad</label>
+                    </div>
+                </div>
+                <div class="id">
 
+                    <h2> 2. </h2>
+
+                </div>
+                <div class="concepto">
+                    <div class="input-field">
+
+                        <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                            formControlName="conceptRehabilitacionTwo" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Concepto de rehabilitación</label>
+                    </div>
+                </div>
+                <div class="fecha">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                            formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
+                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                    </div>
+                </div>
+                <div class="entidadp">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                        <p-dropdown [filter]="true"
+                            [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
+                            formControlName="entidadEmiteConceptoTwo" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad que emite el concepto de
+                            rehabilitación</label>
+                    </div>
+                </div>
+                <div class="entidad">
+                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                        <p-dropdown [filter]="true"
+                            [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
+                            formControlName="entidadEmitidaTwo" class="select-material"
+                            styleClass="select-material">
+                        </p-dropdown>
+                        <label for="" class="active">Entidad</label>
+                    </div>
+                </div>
+            </div>
+               
+        </div>
                 <div style="text-align: center; width: 100%;">
                     <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()"
                         icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()"
@@ -714,7 +713,7 @@
             </p-table>
 
         </p-tabPanel>
-    </ng-container>
+    
     <ng-container *sTienePermiso="'SCM_GET_CASE_DIAG'">
         <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
@@ -1242,6 +1241,9 @@
                         <th pSortableColumn="responsableEmpresa">Responsable Empresa<p-sortIcon
                             field="responsableEmpresa">
                         </p-sortIcon>
+                        <th pSortableColumn="responsableExterno">Responsable Externo<p-sortIcon
+                            field="responsableExterno">
+                        </p-sortIcon>
                     </th>
                         <th pSortableColumn="fechaProyectada">Fecha proyectada<p-sortIcon field="fechaProyectada">
                             </p-sortIcon>
@@ -1252,7 +1254,10 @@
                     <tr>
                         <td>{{plan.actividad}}</td>
                         <td>{{plan.descripcionAct}}</td>
-                        <td>{{empleado.primerApellido}}</td>
+                        <td>{{plan.responsableEmpresa?.primerApellido }}
+                            {{plan.responsableEmpresa?.primerNombre
+                            }}</td>
+                        <td>{{plan.responsableExterno}}</td>
                         <td>{{plan.fechaProyectada | date:'dd/MM/yyyy'}}</td>
 
                         <!-- <td>
