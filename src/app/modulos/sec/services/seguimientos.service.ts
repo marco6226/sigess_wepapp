@@ -22,6 +22,10 @@ export class SeguimientosService {
         return this.http.post(`${endPoints.tareaService}follow`, seg, this.getRequestHeaders(this.headers)).toPromise();
     }
 
+    public getEvidences(id) {
+        return this.http.get(`${endPoints.tareaService}follow/download/${id}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
     getRequestHeaders(headers?: HttpHeaders): any {
         if (headers == null)
             headers = new HttpHeaders().set('Content-Type', 'application/json');

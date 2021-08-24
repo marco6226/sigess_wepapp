@@ -14,12 +14,13 @@ export class FileUploaderComponent implements OnInit {
     /* Variables */
     imagePath;
     imagenesList: any[] = [];
+    imgURL: any;
     imgMap: any = {};
     loading = false;
     msgs: Message[] = [];
     numMaxImg = 1;
 
-    @Input() imgURL: any;
+    @Input() img: any;
     @Input() file = false;
     @Input() fileRoute = '';
     @Input() index: number;
@@ -37,6 +38,9 @@ export class FileUploaderComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        if (this.img) {
+            this.imgURL = 'data:image/png;base64,' + this.img;
+        }
     }
 
     async preview(files) {
@@ -114,12 +118,20 @@ export class FileUploaderComponent implements OnInit {
 
     }
 
-
     download() {
-        console.log('Inicia la descarga')
-        if (this.file) {
-            /* TODO: Acción para ir a la url externa */
+        // console.log('Inicia la descarga')
+        // console.log(this.img);
+        if (this.img) {
+            this.downloadImage(this.img,"evidence" + this.index);
         }
+    }
+
+    downloadImage(base64String, fileName) {
+        const source = `data:application/png;base64,${base64String}`;
+        const link = document.createElement("a");
+        link.href = source;
+        link.download = `${fileName}.png`
+        link.click();
     }
 
     removeImg() {

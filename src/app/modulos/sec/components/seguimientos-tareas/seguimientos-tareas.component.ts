@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { Message } from "primeng/api";
 import { SeguimientosService } from '../../services/seguimientos.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class SeguimientosTareasComponent implements OnInit {
     /* Variables */
     @Input() status;
 
+    msgs: Message[];
     tareaId;
     cargando = false;
     trackings;
@@ -22,7 +24,7 @@ export class SeguimientosTareasComponent implements OnInit {
     displayEvidences: boolean;
     trackingForm: FormGroup;
     submitted = false;
-    evidences = [];
+    evidences;
     fullName = '';
     empleado: Empleado;
     empleadosList: Empleado[];
@@ -85,9 +87,14 @@ export class SeguimientosTareasComponent implements OnInit {
     async onSubmit() {
         this.submitted = true;
         this.cargando = true;
+        this.msgs = [];
 
         if (!this.trackingForm.valid) {
             this.cargando = false;
+            this.msgs.push({
+                severity: "error",
+                summary: "Por favor revise todos los campos",
+            });
             console.log('Data: ', this.trackingForm.value);
             return;
         }
@@ -97,13 +104,22 @@ export class SeguimientosTareasComponent implements OnInit {
 
             if (res) {
                 this.cargando = false;
-                alert('¡Se ha creado exitosamente el seguimiento!');
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Mensaje del sistema",
+                    detail: "¡Se ha creado exitosamente el seguimiento!",
+                });
                 this.closeCreate();
                 this.getSeg();
             }
         } catch (e) {
             console.log(e);
             this.cargando = false;
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al crear el seguimiento",
+            });
         }
 
     }
@@ -115,8 +131,22 @@ export class SeguimientosTareasComponent implements OnInit {
                 break;
             case 'evidence':
                 this.displayEvidences = true;
-                this.evidences = data.evidences;
+                this.getEvidences(data);
                 break;
+        }
+    }
+
+    async getEvidences(id) {
+        try {
+            this.evidences = await this.seguimientoService.getEvidences(id);
+
+        }catch (e) {
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
+            });
+            console.log(e);
         }
     }
 
@@ -134,12 +164,11 @@ export class SeguimientosTareasComponent implements OnInit {
 
     async onSelection(event) {
         console.log(event);
-        // this.caseSelect = false;
         this.fullName = null;
         this.empleado = null;
         let emp = <Empleado>event;
         this.empleado = emp;
-        this.fullName = this.empleado.primerNombre + ' ' + this.empleado.primerApellido;
+        this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
         this.trackingForm.patchValue({ pkUser: this.empleado.id });
     }
 
