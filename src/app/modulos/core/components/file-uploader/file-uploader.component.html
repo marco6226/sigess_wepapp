@@ -25,7 +25,7 @@
     <!-- End add image -->
 
     <!-- Start download button -->
-    <div class="download" (click)="download()">
+    <div class="download" (click)="download()" *ngIf="show">
         <em class="pi pi-download"></em>
     </div>
     <!-- End download button -->

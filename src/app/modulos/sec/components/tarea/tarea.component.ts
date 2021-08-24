@@ -19,6 +19,7 @@ export class TareaComponent implements OnInit {
     /* Variables */
     estadoList = [];
 
+    tareaId;
     cargando = false;
     tareaForm: FormGroup;
     routeSub;
@@ -41,6 +42,7 @@ export class TareaComponent implements OnInit {
         private empleadoService: EmpleadoService,
     ) {
         this.tareaForm = fb.group({
+            tareaId: ["", Validators.required],
             userId: ["", Validators.required],
             fechaCierre: ["", Validators.required],
             descripcion: ["", Validators.required],
@@ -49,8 +51,11 @@ export class TareaComponent implements OnInit {
     }
 
     async ngOnInit() {
-        let id = this.route.snapshot.paramMap.get('id');
-        this.tarea = await this.tareaService.findByDetailId(id);
+        this.tareaId = this.route.snapshot.paramMap.get('id');
+
+        this.tareaForm.patchValue({ tareaId: this.tareaId });
+
+        this.tarea = await this.tareaService.findByDetailId(this.tareaId);
 
         if (this.tarea) {
             this.status = this.verifyStatus();
@@ -72,7 +77,7 @@ export class TareaComponent implements OnInit {
             4: 'Vencido'
         }
 
-        console.log(this.statuses[this.status])
+        // console.log(this.statuses[this.status])
     }
 
     verifyStatus() {
@@ -113,7 +118,7 @@ export class TareaComponent implements OnInit {
         if (index > -1) evidences.splice(index, 1);
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.submitted = true;
         this.cargando = true;
 
@@ -132,7 +137,7 @@ export class TareaComponent implements OnInit {
         this.empleado = null;
         let emp = <Empleado>event;
         this.empleado = emp;
-        this.fullName = this.empleado.primerNombre + ' ' + this.empleado.primerApellido;
+        this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
         this.tareaForm.patchValue({ userId: this.empleado.id });
     }
 

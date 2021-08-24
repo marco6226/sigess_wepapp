@@ -119,11 +119,12 @@
 
     <p-tabPanel header="Seguimientos">
 
-        <app-seguimientos-tareas [status]="status"></app-seguimientos-tareas>
+        <app-seguimientos-tareas [status]="status" [tareaId]="tareaId"></app-seguimientos-tareas>
 
     </p-tabPanel>
 
-    <p-tabPanel header="Cierre" [disabled]="status !== 1">
+    <!-- <p-tabPanel header="Cierre" [disabled]="status !== 1"> -->
+    <p-tabPanel header="Cierre">
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
 
