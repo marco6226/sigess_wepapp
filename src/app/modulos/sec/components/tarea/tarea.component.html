@@ -157,7 +157,7 @@
                     </div>
 
                     <!-- Start validations -->
-                    <div *ngIf="submitted && f.userId.hasError('required')" class="error-msg ">
+                    <div *ngIf="submitted && f.usuarioCierre.hasError('required')" class="error-msg ">
                         <span>Debe buscar un empleado válido.</span>
                     </div>
                     <!-- End validations -->
@@ -187,12 +187,12 @@
 
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <textarea pInputTextarea formControlName="descripcion" class="form-material" rows="5" required></textarea>
+                        <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5" required></textarea>
                         <label for="" class="active">Descripción de la acción realizada</label>
                     </div>
 
                     <!-- Start validations -->
-                    <div *ngIf="submitted && f.descripcion.hasError('required')" class="error-msg ">
+                    <div *ngIf="submitted && f.descripcionCierre.hasError('required')" class="error-msg ">
                         <span>Debe describir la acción realizada.</span>
                     </div>
                     <!-- End validations -->

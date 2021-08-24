@@ -26,6 +26,10 @@ export class SeguimientosService {
         return this.http.get(`${endPoints.tareaService}follow/download/${id}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
+    public closeTarea(tarea) {
+        return this.http.put(`${endPoints.tareaService}tarea/close`, tarea, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
     getRequestHeaders(headers?: HttpHeaders): any {
         if (headers == null)
             headers = new HttpHeaders().set('Content-Type', 'application/json');

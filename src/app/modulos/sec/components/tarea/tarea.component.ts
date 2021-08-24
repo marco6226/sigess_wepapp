@@ -8,6 +8,8 @@ import {
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import * as moment from "moment";
+import { SeguimientosService } from '../../services/seguimientos.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-tarea',
@@ -18,7 +20,7 @@ export class TareaComponent implements OnInit {
 
     /* Variables */
     estadoList = [];
-
+    msgs: Message[] = [];
     tareaId;
     cargando = false;
     tareaForm: FormGroup;
@@ -40,26 +42,21 @@ export class TareaComponent implements OnInit {
         private route: ActivatedRoute,
         private tareaService: TareaService,
         private empleadoService: EmpleadoService,
+        private seguimientoService: SeguimientosService,
     ) {
         this.tareaForm = fb.group({
-            tareaId: ["", Validators.required],
-            userId: ["", Validators.required],
+            id: ["", Validators.required],
+            usuarioCierre: ["", Validators.required],
             fechaCierre: ["", Validators.required],
-            descripcion: ["", Validators.required],
-            evidencias: [[]],
+            descripcionCierre: ["", Validators.required],
+            evidences: [[]],
         })
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         this.tareaId = this.route.snapshot.paramMap.get('id');
-
-        this.tareaForm.patchValue({ tareaId: this.tareaId });
-
-        this.tarea = await this.tareaService.findByDetailId(this.tareaId);
-
-        if (this.tarea) {
-            this.status = this.verifyStatus();
-        }
+        this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
+        this.getTarea();
 
         /* Preload data */
         this.estadoList = [
@@ -78,6 +75,14 @@ export class TareaComponent implements OnInit {
         }
 
         // console.log(this.statuses[this.status])
+    }
+
+    async getTarea() {
+        this.tarea = await this.tareaService.findByDetailId(this.tareaId);
+
+        if (this.tarea) {
+            this.status = this.verifyStatus();
+        }
     }
 
     verifyStatus() {
@@ -104,23 +109,24 @@ export class TareaComponent implements OnInit {
     }
 
     addImage(file) {
-        let evidences = this.tareaForm.get('evidencias').value;
+        let evidences = this.tareaForm.get('evidences').value;
         let obj = {
             ruta: file,
 
         }
         evidences.push(obj);
-        this.tareaForm.patchValue({ evidencias: evidences });
+        this.tareaForm.patchValue({ evidences: evidences });
     }
 
     removeImage(index) {
-        let evidences = this.tareaForm.get('evidencias').value;
+        let evidences = this.tareaForm.get('evidences').value;
         if (index > -1) evidences.splice(index, 1);
     }
 
     async onSubmit() {
         this.submitted = true;
         this.cargando = true;
+        this.msgs = [];
 
         if (!this.tareaForm.valid) {
             console.log('Data: ', this.tareaForm.value);
@@ -128,7 +134,29 @@ export class TareaComponent implements OnInit {
             return;
         }
 
-        console.log('Data: ', this.tareaForm.value);
+        try {
+            let res = await this.seguimientoService.closeTarea(this.tareaForm.value);
+
+            if (res) {
+                this.cargando = false;
+                this.getTarea();
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Mensaje del sistema",
+                    detail: "¡Se ha cerrado exitosamente esta tarea!",
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+            this.cargando = false;
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ocurrió un inconveniente al cerrar la tarea",
+            });
+        }
+
     }
 
     async onSelection(event) {
@@ -138,7 +166,7 @@ export class TareaComponent implements OnInit {
         let emp = <Empleado>event;
         this.empleado = emp;
         this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
-        this.tareaForm.patchValue({ userId: this.empleado.id });
+        this.tareaForm.patchValue({ usuarioCierre: { 'id': this.empleado.id } });
     }
 
 }
