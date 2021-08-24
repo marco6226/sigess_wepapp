@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { Message } from "primeng/api";
+import { SeguimientosService } from '../../services/seguimientos.service';
 
 @Component({
     selector: 'app-seguimientos-tareas',
@@ -11,68 +14,65 @@ import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 export class SeguimientosTareasComponent implements OnInit {
 
     /* Variables */
+    @Input() status;
+    @Input() tareaId;
+
+    msgs: Message[];
     cargando = false;
-    trackings = [];
+    trackings;
     displayModal: boolean;
     displayEvidences: boolean;
     trackingForm: FormGroup;
     submitted = false;
-    evidences = [];
+    evidences;
+    fullName = '';
     empleado: Empleado;
     empleadosList: Empleado[];
 
     constructor(
-        private empleadoService: EmpleadoService,
         fb: FormBuilder,
+        private empleadoService: EmpleadoService,
+        private route: ActivatedRoute,
+        private seguimientoService: SeguimientosService,
     ) {
         this.trackingForm = fb.group({
-            usuarioSeguimiento: ["", Validators.required],
-            fechaSeguimiento: ["", Validators.required],
-            descripcion: ["", Validators.required],
-            evidencias: [[]],
-        })
+            tareaId: ["", Validators.required],
+            pkUser: ["", Validators.required],
+            followDate: ["", Validators.required],
+            description: ["", Validators.required],
+            evidences: [[]],
+        });
     }
 
     ngOnInit() {
-        this.trackings = [
-            {
-                user: 'harrysongil@lerprevencion.com',
-                description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
-                date: '2021-03-15T14:51:06.157Z',
-                evidences: [
-                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
-                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                    '../../../../../assets/images/file.png'
-                ],
-            },
-            {
-                user: 'harrysongil@lerprevencion.com',
-                description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
-                date: '2021-03-15T14:51:06.157Z',
-                evidences: [
-                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
-                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                    '../../../../../assets/images/file.png'
-                ],
-            },
-            {
-                user: 'harrysongil@lerprevencion.com',
-                description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
-                date: '2021-03-15T14:51:06.157Z',
-                evidences: [
-                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
-                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                    '../../../../../assets/images/file.png'
-                ],
-            },
-        ]
+        this.trackingForm.patchValue({ tareaId: this.tareaId })
+
+        this.getSeg();
+    }
+
+    async getSeg() {
+        try {
+            this.trackings = await this.seguimientoService.getSegByTareaID(this.tareaId);
+
+            console.log(this.trackings);
+            // this.trackings = [];
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     get f() {
         return this.trackingForm.controls;
     }
-    addImage($event) {
-        console.log(event);
+
+    addImage(file) {
+        let evidences = this.trackingForm.get('evidences').value;
+        let obj = {
+            ruta: file,
+
+        }
+        evidences.push(obj);
+        this.trackingForm.patchValue({ evidences: evidences });
     }
 
     buscarEmpleado(event) {
@@ -81,18 +81,43 @@ export class SeguimientosTareasComponent implements OnInit {
             .then((data) => (this.empleadosList = <Empleado[]>data));
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.submitted = true;
         this.cargando = true;
+        this.msgs = [];
 
-        setTimeout(() => {
-            if (!this.trackingForm.valid) {
-                this.cargando = false;
-                return;
-            }
-
+        if (!this.trackingForm.valid) {
+            this.cargando = false;
+            this.msgs.push({
+                severity: "error",
+                summary: "Por favor revise todos los campos",
+            });
             console.log('Data: ', this.trackingForm.value);
-        }, 3000);
+            return;
+        }
+
+        try {
+            let res = await this.seguimientoService.createSeg(this.trackingForm.value);
+
+            if (res) {
+                this.cargando = false;
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Mensaje del sistema",
+                    detail: "¡Se ha creado exitosamente el seguimiento!",
+                });
+                this.closeCreate();
+                this.getSeg();
+            }
+        } catch (e) {
+            console.log(e);
+            this.cargando = false;
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al crear el seguimiento",
+            });
+        }
 
     }
 
@@ -103,8 +128,22 @@ export class SeguimientosTareasComponent implements OnInit {
                 break;
             case 'evidence':
                 this.displayEvidences = true;
-                this.evidences = data.evidences;
+                this.getEvidences(data);
                 break;
+        }
+    }
+
+    async getEvidences(id) {
+        try {
+            this.evidences = await this.seguimientoService.getEvidences(id);
+
+        }catch (e) {
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
+            });
+            console.log(e);
         }
     }
 
@@ -112,13 +151,22 @@ export class SeguimientosTareasComponent implements OnInit {
         this.evidences = [];
         this.displayEvidences = false;
     }
+
+    closeCreate() {
+        this.empleado = null;
+        this.fullName = null;
+        this.trackingForm.reset();
+        this.displayModal = false;
+    }
+
     async onSelection(event) {
         console.log(event);
-        // this.caseSelect = false;
+        this.fullName = null;
         this.empleado = null;
         let emp = <Empleado>event;
         this.empleado = emp;
-
+        this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
+        this.trackingForm.patchValue({ pkUser: this.empleado.id });
     }
 
 }

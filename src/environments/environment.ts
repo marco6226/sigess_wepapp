@@ -6,7 +6,7 @@
 let protocol = "http";
 let host = "localhost";
 let port = "8080";
-let path = protocol + "://" + host + ":" + port + "/sigess/api/";
+let path = protocol + "://" + host + ":" + port + "/sigess/api/"; 
 
 export const environment = {
     production: false,
@@ -111,4 +111,5 @@ export const endPoints = {
     ContactoService: path + "contacto/",
 
     ManualService: path + "manual/",
+    tareaService: path,
 };

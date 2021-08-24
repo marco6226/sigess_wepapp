@@ -4,9 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TareaService } from '../../services/tarea.service';
 import {
     locale_es,
-    tipo_identificacion,
-    tipo_vinculacion,
 } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
+import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
+import * as moment from "moment";
+import { SeguimientosService } from '../../services/seguimientos.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-tarea',
@@ -17,7 +20,8 @@ export class TareaComponent implements OnInit {
 
     /* Variables */
     estadoList = [];
-
+    msgs: Message[] = [];
+    tareaId;
     cargando = false;
     tareaForm: FormGroup;
     routeSub;
@@ -27,25 +31,32 @@ export class TareaComponent implements OnInit {
     localeES: any = locale_es;
     submitted = false;
     loading: boolean;
-
+    fullName = '';
+    empleado: Empleado;
+    empleadosList: Empleado[];
+    status = 0;
+    statuses;
 
     constructor(
         fb: FormBuilder,
         private route: ActivatedRoute,
         private tareaService: TareaService,
+        private empleadoService: EmpleadoService,
+        private seguimientoService: SeguimientosService,
     ) {
         this.tareaForm = fb.group({
-            usuarioGestion: ["", Validators.required],
-            estado: ["", Validators.required],
+            id: ["", Validators.required],
+            usuarioCierre: ["", Validators.required],
             fechaCierre: ["", Validators.required],
-            descripcion: ["", Validators.required],
-            evidencias: [[]],
+            descripcionCierre: ["", Validators.required],
+            evidences: [[]],
         })
     }
 
-    async ngOnInit() {
-        let id = this.route.snapshot.paramMap.get('id');
-        this.tarea = await this.tareaService.findByDetailId(id);
+    ngOnInit() {
+        this.tareaId = this.route.snapshot.paramMap.get('id');
+        this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
+        this.getTarea();
 
         /* Preload data */
         this.estadoList = [
@@ -54,26 +65,68 @@ export class TareaComponent implements OnInit {
             { label: 'Cerrado fuera de tiempo', value: 'cft' },
             { label: 'Vencido', value: 'vencido' },
         ];
+
+        this.statuses = {
+            0: 'N/A',
+            1: 'Abierto',
+            2: 'Cerrada en el tiempo',
+            3: 'Cerrada fuera de tiempo',
+            4: 'Vencido'
+        }
+
+        // console.log(this.statuses[this.status])
+    }
+
+    async getTarea() {
+        this.tarea = await this.tareaService.findByDetailId(this.tareaId);
+
+        if (this.tarea) {
+            this.status = this.verifyStatus();
+        }
+    }
+
+    verifyStatus() {
+        /* Vars */
+        let fecha_cierre = moment(this.tarea.fecha_cierre);
+        let fecha_proyectada = moment(this.tarea.fecha_proyectada);
+
+        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(moment.now())) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(moment.now())) return 4;
+        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(moment.now())) return 3;
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(moment.now())) return 2;
+
+        return 0;
     }
 
     get f() {
         return this.tareaForm.controls;
     }
 
+    buscarEmpleado(event) {
+        this.empleadoService
+            .buscar(event.query)
+            .then((data) => (this.empleadosList = <Empleado[]>data));
+    }
+
     addImage(file) {
-        let evidences = this.tareaForm.get('evidencias').value;
-        evidences.push(file);
-        this.tareaForm.patchValue({ evidencias: evidences });
+        let evidences = this.tareaForm.get('evidences').value;
+        let obj = {
+            ruta: file,
+
+        }
+        evidences.push(obj);
+        this.tareaForm.patchValue({ evidences: evidences });
     }
 
     removeImage(index) {
-        let evidences = this.tareaForm.get('evidencias').value;
+        let evidences = this.tareaForm.get('evidences').value;
         if (index > -1) evidences.splice(index, 1);
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.submitted = true;
         this.cargando = true;
+        this.msgs = [];
 
         if (!this.tareaForm.valid) {
             console.log('Data: ', this.tareaForm.value);
@@ -81,7 +134,39 @@ export class TareaComponent implements OnInit {
             return;
         }
 
-        console.log('Data: ', this.tareaForm.value);
+        try {
+            let res = await this.seguimientoService.closeTarea(this.tareaForm.value);
+
+            if (res) {
+                this.cargando = false;
+                this.getTarea();
+                this.msgs.push({
+                    severity: "success",
+                    summary: "Mensaje del sistema",
+                    detail: "¡Se ha cerrado exitosamente esta tarea!",
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+            this.cargando = false;
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ocurrió un inconveniente al cerrar la tarea",
+            });
+        }
+
+    }
+
+    async onSelection(event) {
+        console.log(event);
+        this.fullName = null;
+        this.empleado = null;
+        let emp = <Empleado>event;
+        this.empleado = emp;
+        this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
+        this.tareaForm.patchValue({ usuarioCierre: { 'id': this.empleado.id } });
     }
 
 }

@@ -105,29 +105,6 @@
 
 /* Form material design */
 
-:host ::ng-deep .form-material {
-    &.ui-inputtext {
-        outline: none;
-        height: 2rem;
-        width: 100%;
-        font-size: 16px;
-        margin: 0 0 8px 0;
-        padding: 0;
-        padding-left: 0.25rem;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        -webkit-box-sizing: content-box;
-        box-sizing: content-box;
-        -webkit-transition: border 0.3s, -webkit-box-shadow 0.3s;
-        transition: border 0.3s, -webkit-box-shadow 0.3s;
-        transition: box-shadow 0.3s, border 0.3s;
-        transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
-        &:focus {
-            border-bottom: 1px solid #007ad9 !important;
-        }
-    }
-}
-
 .p-invalid {
     color: #f44336;
 }
@@ -145,7 +122,37 @@
     box-sizing: border-box;
 }
 
+p-autoComplete {
+    width: 100%;
+    .wrapper {
+        display: flex;
+        align-items: center;
+    }
+}
+
 :host ::ng-deep {
+    .form-material {
+        &.ui-inputtext {
+            outline: none;
+            height: 2rem;
+            width: 100%;
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            padding: 0;
+            padding-left: 0.25rem;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            -webkit-transition: border 0.3s, -webkit-box-shadow 0.3s;
+            transition: border 0.3s, -webkit-box-shadow 0.3s;
+            transition: box-shadow 0.3s, border 0.3s;
+            transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
+            &:focus {
+                border-bottom: 1px solid #007ad9 !important;
+            }
+        }
+    }
     .form-material-autocomplete {
         &.ui-autocomplete {
             .ui-autocomplete-input {
@@ -266,7 +273,7 @@
         &.dialog-create {
             width: 60vw;
             @media only screen and (min-width: 1280px) {
-                width: 40vw;
+                width: 45vw;
             }
         }
         &.dialog-evidences {
@@ -321,7 +328,7 @@
                 border: none;
             }
             tr {
-                transition: all .3s ease-in-out;
+                transition: all 0.3s ease-in-out;
                 &:hover {
                     background-color: #f9f9f9 !important;
                 }
