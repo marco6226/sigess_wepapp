@@ -15,9 +15,9 @@ export class SeguimientosTareasComponent implements OnInit {
 
     /* Variables */
     @Input() status;
+    @Input() tareaId;
 
     msgs: Message[];
-    tareaId;
     cargando = false;
     trackings;
     displayModal: boolean;
@@ -45,12 +45,9 @@ export class SeguimientosTareasComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.tareaId = parseInt(this.route.snapshot.paramMap.get('id'))
-
         this.trackingForm.patchValue({ tareaId: this.tareaId })
 
         this.getSeg();
-
     }
 
     async getSeg() {
