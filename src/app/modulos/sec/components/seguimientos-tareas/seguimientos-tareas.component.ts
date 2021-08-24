@@ -17,7 +17,7 @@ export class SeguimientosTareasComponent implements OnInit {
 
     tareaId;
     cargando = false;
-    trackings = [];
+    trackings;
     displayModal: boolean;
     displayEvidences: boolean;
     trackingForm: FormGroup;
@@ -42,20 +42,24 @@ export class SeguimientosTareasComponent implements OnInit {
         });
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         this.tareaId = parseInt(this.route.snapshot.paramMap.get('id'))
 
         this.trackingForm.patchValue({ tareaId: this.tareaId })
 
-        try {
-            // this.trackings = await this.seguimientoService.getSegByTareaID(this.tareaId) as [];
+        this.getSeg();
 
-            // console.log(this.trackings);
-            this.trackings = [];
+    }
+
+    async getSeg() {
+        try {
+            this.trackings = await this.seguimientoService.getSegByTareaID(this.tareaId);
+
+            console.log(this.trackings);
+            // this.trackings = [];
         } catch (e) {
             console.log(e);
         }
-        
     }
 
     get f() {
@@ -92,9 +96,10 @@ export class SeguimientosTareasComponent implements OnInit {
             let res = await this.seguimientoService.createSeg(this.trackingForm.value);
 
             if (res) {
+                this.cargando = false;
                 alert('¡Se ha creado exitosamente el seguimiento!');
                 this.closeCreate();
-                this.cargando = false;
+                this.getSeg();
             }
         } catch (e) {
             console.log(e);
@@ -135,7 +140,7 @@ export class SeguimientosTareasComponent implements OnInit {
         let emp = <Empleado>event;
         this.empleado = emp;
         this.fullName = this.empleado.primerNombre + ' ' + this.empleado.primerApellido;
-        this.trackingForm.patchValue({pkUser: this.empleado.id});
+        this.trackingForm.patchValue({ pkUser: this.empleado.id });
     }
 
 }
