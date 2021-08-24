@@ -1,6 +1,7 @@
 <div class="ui-g">
     <div class="ui-g-12 p-d-flex p-jc-between p-mb-3">
         <h5 class="title-header p-mb-2">Listado de seguimientos</h5>
+        <!-- <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm" *ngIf="status === 1"></button> -->
         <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm"></button>
     </div>
 
@@ -16,9 +17,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-tracking>
                 <tr>
-                    <td class="p-text-center">{{ tracking.user }}</td>
+                    <td class="p-text-center">{{ tracking.pkUser.usuario.email }}</td>
                     <td>{{ tracking.description }}</td>
-                    <td class="p-text-center">{{ tracking.date | date:'shortDate' }}</td>
+                    <td class="p-text-center">{{ tracking.followDate | date:'shortDate' }}</td>
                     <td class="p-text-center">
                         <div pTooltip="Ver evidencias" style="display:inline-block;">
                             <button pButton type="button" (click)="showModalDialog('evidence', tracking)" icon="pi pi-eye" iconPos="left" class="ui-button-sm"></button>
@@ -66,7 +67,7 @@
                 </div>
 
                 <!-- Start validations -->
-                <div *ngIf="submitted && f.userId.hasError('required')" class="error-msg ">
+                <div *ngIf="submitted && f.pkUser.hasError('required')" class="error-msg ">
                     <span>Debe buscar un empleado válido.</span>
                 </div>
                 <!-- End validations -->
@@ -82,12 +83,12 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <p-calendar formControlName="fechaSeguimiento" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    <p-calendar formControlName="followDate" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
                     <label for="" class="active">Fecha del seguimiento</label>
                 </div>
 
                 <!-- Start validations -->
-                <div *ngIf="submitted && f.fechaSeguimiento.hasError('required')" class="error-msg ">
+                <div *ngIf="submitted && f.followDate.hasError('required')" class="error-msg ">
                     <span>Debe seleccionar una fecha de seguimiento.</span>
                 </div>
                 <!-- End validations -->
@@ -96,12 +97,12 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <textarea pInputTextarea formControlName="descripcion" class="form-material" rows="3" required></textarea>
+                    <textarea pInputTextarea formControlName="description" class="form-material" rows="3" required></textarea>
                     <label for="" class="active">Descripción del seguimiento</label>
                 </div>
 
                 <!-- Start validations -->
-                <div *ngIf="submitted && f.descripcion.hasError('required')" class="error-msg ">
+                <div *ngIf="submitted && f.description.hasError('required')" class="error-msg ">
                     <span>Debe describir la acción realizada.</span>
                 </div>
                 <!-- End validations -->

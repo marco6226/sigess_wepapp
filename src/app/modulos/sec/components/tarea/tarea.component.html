@@ -1,7 +1,7 @@
 <div class="ui-g">
     <div class="ui-g-12 p-d-flex p-jc-end">
         <span class="p-text-bold p-mr-2">Estado:</span>
-        <span> N/A</span>
+        <span>{{ statuses[status] }}</span>
     </div>
 </div>
 
@@ -117,13 +117,13 @@
 
     </p-tabPanel>
 
-    <p-tabPanel header="Seguimiento">
+    <p-tabPanel header="Seguimientos">
 
-        <app-seguimientos-tareas></app-seguimientos-tareas>
+        <app-seguimientos-tareas [status]="status"></app-seguimientos-tareas>
 
     </p-tabPanel>
 
-    <p-tabPanel header="Cierre">
+    <p-tabPanel header="Cierre" [disabled]="status !== 1">
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
             <div class="ui-g">
 
