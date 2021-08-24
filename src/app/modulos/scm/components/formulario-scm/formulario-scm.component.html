@@ -765,11 +765,12 @@
                         icon="fa fa-plus" label="Crear Diagnóstico" (click)="diagSelect = null; modalDianostico = true">
 
                     </button>
-                    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
-                        (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
+                    
+                    <button *sTienePermiso="'SCM_DEL_CASE_DIAG'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+                        (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>                    
 
 
-                    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+                    <button   *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
                         (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
                 </ng-template>
             </p-table>

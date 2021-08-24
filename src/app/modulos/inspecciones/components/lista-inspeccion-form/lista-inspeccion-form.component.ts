@@ -42,7 +42,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     tipoHallazgoList: TipoHallazgo[];
 
     loadingImg: boolean;
-    numMaxImg = 1;
+    numMaxImg = 3;
 
     constructor(
         private sessionService: SesionService,

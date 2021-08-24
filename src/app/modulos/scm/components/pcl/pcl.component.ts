@@ -28,6 +28,15 @@ export class PclComponent implements OnInit {
         { label: "En Apelación", value: "0" }
     ]
 
+    origenList = [
+        { label: 'Seleccione', value: null },
+        { label: 'Común', value: 'Común' },
+        { label: 'Accidente De Trabajo', value: 'Accidente De Trabajo' },
+        { label: 'Mixto', value: 'Mixto' },
+        { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
+
+    ];
+
     diagList: SelectItem[] = [{ label: "--Seleccione--", value: null }];
     localeES: any = locale_es;
     tipoTratamientos: SelectItem[] = [];
