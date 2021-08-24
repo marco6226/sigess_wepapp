@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { SeguimientosService } from '../../services/seguimientos.service';
 
 @Component({
     selector: 'app-seguimientos-tareas',
@@ -12,6 +13,9 @@ import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 export class SeguimientosTareasComponent implements OnInit {
 
     /* Variables */
+    @Input() status;
+
+    tareaId;
     cargando = false;
     trackings = [];
     displayModal: boolean;
@@ -24,54 +28,34 @@ export class SeguimientosTareasComponent implements OnInit {
     empleadosList: Empleado[];
 
     constructor(
-        private empleadoService: EmpleadoService,
         fb: FormBuilder,
-        private route: ActivatedRoute
+        private empleadoService: EmpleadoService,
+        private route: ActivatedRoute,
+        private seguimientoService: SeguimientosService,
     ) {
         this.trackingForm = fb.group({
             tareaId: ["", Validators.required],
-            userId: ["", Validators.required],
-            fechaSeguimiento: ["", Validators.required],
-            descripcion: ["", Validators.required],
-            evidencias: [[]],
+            pkUser: ["", Validators.required],
+            followDate: ["", Validators.required],
+            description: ["", Validators.required],
+            evidences: [[]],
         });
-
-        this.trackingForm.patchValue({ tareaId: parseInt(this.route.snapshot.paramMap.get('id')) })
     }
 
-    ngOnInit() {
-        this.trackings = [
-            {
-                user: 'harrysongil@lerprevencion.com',
-                description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
-                date: '2021-03-15T14:51:06.157Z',
-                evidences: [
-                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
-                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                    '../../../../../assets/images/file.png'
-                ],
-            },
-            {
-                user: 'harrysongil@lerprevencion.com',
-                description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
-                date: '2021-03-15T14:51:06.157Z',
-                evidences: [
-                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
-                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                    '../../../../../assets/images/file.png'
-                ],
-            },
-            {
-                user: 'harrysongil@lerprevencion.com',
-                description: 'Se realiza consecución de presupuesto en comité ejecutivo y se encuentra pendiente la aprobación.',
-                date: '2021-03-15T14:51:06.157Z',
-                evidences: [
-                    'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1128&q=80',
-                    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                    '../../../../../assets/images/file.png'
-                ],
-            },
-        ]
+    async ngOnInit() {
+        this.tareaId = parseInt(this.route.snapshot.paramMap.get('id'))
+
+        this.trackingForm.patchValue({ tareaId: this.tareaId })
+
+        try {
+            // this.trackings = await this.seguimientoService.getSegByTareaID(this.tareaId) as [];
+
+            // console.log(this.trackings);
+            this.trackings = [];
+        } catch (e) {
+            console.log(e);
+        }
+        
     }
 
     get f() {
@@ -79,13 +63,13 @@ export class SeguimientosTareasComponent implements OnInit {
     }
 
     addImage(file) {
-        let evidences = this.trackingForm.get('evidencias').value;
+        let evidences = this.trackingForm.get('evidences').value;
         let obj = {
             ruta: file,
 
         }
         evidences.push(obj);
-        this.trackingForm.patchValue({ evidencias: evidences });
+        this.trackingForm.patchValue({ evidences: evidences });
     }
 
     buscarEmpleado(event) {
@@ -94,19 +78,28 @@ export class SeguimientosTareasComponent implements OnInit {
             .then((data) => (this.empleadosList = <Empleado[]>data));
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.submitted = true;
         this.cargando = true;
 
-        setTimeout(() => {
-            if (!this.trackingForm.valid) {
-                this.cargando = false;
-                console.log('Data: ', this.trackingForm.value);
-                return;
-            }
-
+        if (!this.trackingForm.valid) {
+            this.cargando = false;
             console.log('Data: ', this.trackingForm.value);
-        }, 3000);
+            return;
+        }
+
+        try {
+            let res = await this.seguimientoService.createSeg(this.trackingForm.value);
+
+            if (res) {
+                alert('¡Se ha creado exitosamente el seguimiento!');
+                this.closeCreate();
+                this.cargando = false;
+            }
+        } catch (e) {
+            console.log(e);
+            this.cargando = false;
+        }
 
     }
 
@@ -142,7 +135,7 @@ export class SeguimientosTareasComponent implements OnInit {
         let emp = <Empleado>event;
         this.empleado = emp;
         this.fullName = this.empleado.primerNombre + ' ' + this.empleado.primerApellido;
-        this.trackingForm.patchValue({userId: this.empleado.id});
+        this.trackingForm.patchValue({pkUser: this.empleado.id});
     }
 
 }

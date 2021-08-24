@@ -113,5 +113,6 @@ export const endPoints = {
   ContactoService: path + 'contacto/',
 
   ManualService: path + 'manual/',
+  tareaService: path,
 };
 
