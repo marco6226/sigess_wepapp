@@ -214,7 +214,7 @@
                 <!-- End evidences -->
 
                 <!-- Start send button -->
-                <button pButton *ngIf="cargando == false" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
+                <button pButton *ngIf="cargando == false && tarea.fecha_cierre === null" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
                 <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                 <!-- End send button -->
 
