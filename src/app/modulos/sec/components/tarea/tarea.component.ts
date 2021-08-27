@@ -51,7 +51,7 @@ export class TareaComponent implements OnInit {
             fechaCierre: ["", Validators.required],
             descripcionCierre: ["", Validators.required],
             evidences: [[]],
-        })        
+        })
     }
 
     ngOnInit() {
@@ -88,7 +88,7 @@ export class TareaComponent implements OnInit {
                 this.tareaClose = true;
                 this.tareaForm.patchValue(
                     {
-                        fechaCierre: this.tarea.fecha_cierre,
+                        fechaCierre: new Date(this.tarea.fecha_cierre),
                         descripcionCierre: this.tarea.descripcion_cierre
                     }
                 );
