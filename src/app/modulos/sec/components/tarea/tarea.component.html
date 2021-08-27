@@ -1,3 +1,5 @@
+<p-growl [value]="msgs"></p-growl>
+
 <div class="ui-g">
     <div class="ui-g-12 p-d-flex p-jc-end">
         <span class="p-text-bold p-mr-2">Estado:</span>
@@ -13,19 +15,22 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo" [attr.disabled]="true" [value]="tarea.module" />
+                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo"
+                        [attr.disabled]="true" [value]="tarea.module" />
                     <label for="" class="active">Modulo</label>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea.fecha_reporte" [attr.disabled]="true" />
+                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material"
+                        [value]="tarea.fecha_reporte" [attr.disabled]="true" />
                     <label for="" class="active">Fecha de realización del reporte</label>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea.regional" />
+                    <input type="text" pInputText placeholder="Regional" class="form-material"
+                        [value]="tarea.regional" />
                     <label for="" class="active">Regional</label>
                 </div>
             </div>
@@ -39,7 +44,8 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea.hash_id" [attr.disabled]="true" />
+                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material"
+                        [value]="tarea.hash_id" [attr.disabled]="true" />
                     <label for="" class="active">Código de la desviación</label>
 
                 </div>
@@ -66,19 +72,22 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material" [value]="tarea.nombre" />
+                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material"
+                        [value]="tarea.nombre" />
                     <label for="" class="active">Nombre de la actividad</label>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Descripción de la actividad" class="form-material" [value]="tarea.descripcion" />
+                    <input type="text" pInputText placeholder="Descripción de la actividad" class="form-material"
+                        [value]="tarea.descripcion" />
                     <label for="" class="active">Descripción de la actividad</label>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Tipo de Accion" class="form-material" [value]="tarea.tipo_accion" />
+                    <input type="text" pInputText placeholder="Tipo de Accion" class="form-material"
+                        [value]="tarea.tipo_accion" />
                     <label for="" class="active">Tipo de Accion</label>
                 </div>
             </div>
@@ -86,28 +95,33 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Jerarquia de control" class="form-material" [value]="tarea.jerarquia" />
+                    <input type="text" pInputText placeholder="Jerarquia de control" class="form-material"
+                        [value]="tarea.jerarquia" />
                     <label for="" class="active">Jerarquia de control</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Responsable" class="form-material" [value]="tarea.primer_nombre" />
+                    <input type="text" pInputText placeholder="Responsable" class="form-material"
+                        [value]="tarea.primer_nombre" />
                     <label for="" class="active">Responsable</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="tarea.email" />
+                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material"
+                        [value]="tarea.email" />
                     <label for="" class="active">Correo Electronico</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" [(ngModel)]="tarea.fecha_proyectada"></p-calendar>
+                    <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true"
+                        [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
+                        [(ngModel)]="tarea.fecha_proyectada"></p-calendar>
                     <label for="" class="active">Fecha Proyectada de cierre</label>
                 </div>
             </div>
@@ -136,15 +150,20 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
+                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
+                            field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)"
+                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
                             <ng-template let-empleado pTemplate="item">
                                 <div class="ui-helper-clearfix">
                                     <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar alt="" />
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar alt="" />
                                         <div style="margin-left:20px">
                                             <span class="p-text-capitalize">
-                                                {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                                {{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                                {{empleado?.segundoNombre}}
                                             </span>
                                             <br /> {{empleado?.numeroIdentificacion}}
                                             <br /> {{empleado?.usuario.email}}
@@ -166,14 +185,16 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName" class="form-material" [attr.disabled]="true" />
+                        <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName"
+                            class="form-material" [attr.disabled]="true" />
                         <label for="" class="active">Apellidos y nombres</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar formControlName="fechaCierre" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                        <p-calendar formControlName="fechaCierre" [attr.disabled]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
                         <label for="" class="active">Fecha de cierre</label>
                     </div>
 
@@ -187,7 +208,8 @@
 
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5" required></textarea>
+                        <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5"
+                            required></textarea>
                         <label for="" class="active">Descripción de la acción realizada</label>
                     </div>
 
@@ -208,14 +230,17 @@
                 </div>
 
                 <div class="uploaders">
-                    <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
+                    <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i"
+                        (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
                 </div>
 
                 <!-- End evidences -->
 
                 <!-- Start send button -->
-                <button pButton *ngIf="cargando == false && tarea.fecha_cierre === null" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
-                <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+                <button pButton *ngIf="cargando == false && tarea.fecha_cierre === null" type="submit"
+                    icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
+                <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8"
+                    [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                 <!-- End send button -->
 
             </div>

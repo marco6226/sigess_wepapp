@@ -22,8 +22,8 @@ export class SeguimientosService {
         return this.http.post(`${endPoints.tareaService}follow`, seg, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-    public getEvidences(id) {
-        return this.http.get(`${endPoints.tareaService}follow/download/${id}`, this.getRequestHeaders(this.headers)).toPromise();
+    public getEvidences(id, type) {
+        return this.http.get(`${endPoints.tareaService}follow/download/${id}/${type}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     public closeTarea(tarea) {

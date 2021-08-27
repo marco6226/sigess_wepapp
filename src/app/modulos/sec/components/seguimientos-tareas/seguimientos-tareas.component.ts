@@ -135,9 +135,10 @@ export class SeguimientosTareasComponent implements OnInit {
 
     async getEvidences(id) {
         try {
-            this.evidences = await this.seguimientoService.getEvidences(id);
 
-        }catch (e) {
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkSegId");
+
+        } catch (e) {
             this.msgs.push({
                 severity: "error",
                 summary: "Mensaje del sistema",

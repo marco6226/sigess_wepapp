@@ -1,8 +1,12 @@
+<p-growl [value]="msgs"></p-growl>
+
 <div class="ui-g">
     <div class="ui-g-12 p-d-flex p-jc-between p-mb-3">
         <h5 class="title-header p-mb-2">Listado de seguimientos</h5>
-        <!-- <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm" *ngIf="status === 1"></button> -->
-        <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm"></button>
+        <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento"
+            class="ui-button-sm" *ngIf="status === 1"></button>
+        <!--  <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento"
+            class="ui-button-sm"></button>-->
     </div>
 
     <div class="ui-g-12 p-mb-3">
@@ -22,7 +26,8 @@
                     <td class="p-text-center">{{ tracking.followDate | date:'shortDate' }}</td>
                     <td class="p-text-center">
                         <div pTooltip="Ver evidencias" style="display:inline-block;">
-                            <button pButton type="button" (click)="showModalDialog('evidence', tracking.id)" icon="pi pi-eye" iconPos="left" class="ui-button-sm"></button>
+                            <button pButton type="button" (click)="showModalDialog('evidence', tracking.id)"
+                                icon="pi pi-eye" iconPos="left" class="ui-button-sm"></button>
                         </div>
                     </td>
                 </tr>
@@ -39,7 +44,8 @@
 
 <!-- Start create tarea modal -->
 
-<p-dialog header="Crear nuevo seguimiento" styleClass="dialog-create" [(visible)]="displayModal" [modal]="true" [draggable]="false" [resizable]="false">
+<p-dialog header="Crear nuevo seguimiento" styleClass="dialog-create" [(visible)]="displayModal" [modal]="true"
+    [draggable]="false" [resizable]="false">
 
     <!-- Start content -->
     <form [formGroup]="trackingForm">
@@ -51,15 +57,20 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
+                    <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
+                        field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)"
+                        [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
                         <ng-template let-empleado pTemplate="item">
                             <div class="ui-helper-clearfix">
                                 <div class="wrapper">
-                                    <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
-                                    <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar alt="" />
+                                    <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                        style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
+                                    <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                        style="border-radius: 50%;" #imgAvatar alt="" />
                                     <div style="margin-left:20px">
                                         <span class="p-text-capitalize">
-                                            {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                            {{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                            {{empleado?.segundoNombre}}
                                         </span>
                                         <br /> {{empleado?.numeroIdentificacion}}
                                         <br /> {{empleado?.usuario.email}}
@@ -81,14 +92,16 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName" class="form-material" id="nameAndLastName" [attr.disabled]="true" />
+                    <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName"
+                        class="form-material" id="nameAndLastName" [attr.disabled]="true" />
                     <label for="" class="active">Apellidos y nombres</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <p-calendar formControlName="followDate" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    <p-calendar formControlName="followDate" [attr.disabled]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
                     <label for="" class="active">Fecha del seguimiento</label>
                 </div>
 
@@ -102,7 +115,8 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <textarea pInputTextarea formControlName="description" class="form-material" rows="3" required></textarea>
+                    <textarea pInputTextarea formControlName="description" class="form-material" rows="3"
+                        required></textarea>
                     <label for="" class="active">Descripción del seguimiento</label>
                 </div>
 
@@ -119,7 +133,8 @@
             </div>
 
             <div class="uploaders">
-                <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)"></app-file-uploader>
+                <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i"
+                    (loadedImage)="addImage($event)"></app-file-uploader>
             </div>
 
         </div>
@@ -128,8 +143,11 @@
 
     <!-- Start footer -->
     <p-footer>
-        <p-button [icon]="(!cargando) ? 'pi pi-save' : 'pi pi-spinner pi-spin'" (click)="onSubmit()" [label]="(!cargando) ? 'Crear' : 'Creando'" styleClass="ui-button-rounded ui-button-text" [disabled]="cargando"></p-button>
-        <p-button icon="pi pi-times" (click)="closeCreate()" label="Cancelar" styleClass="ui-button-rounded ui-button-secondary ui-button-text" [disabled]="cargando"></p-button>
+        <p-button [icon]="(!cargando) ? 'pi pi-save' : 'pi pi-spinner pi-spin'" (click)="onSubmit()"
+            [label]="(!cargando) ? 'Crear' : 'Creando'" styleClass="ui-button-rounded ui-button-text"
+            [disabled]="cargando"></p-button>
+        <p-button icon="pi pi-times" (click)="closeCreate()" label="Cancelar"
+            styleClass="ui-button-rounded ui-button-secondary ui-button-text" [disabled]="cargando"></p-button>
     </p-footer>
     <!-- End footer -->
 
@@ -139,10 +157,12 @@
 
 <!-- Start evidences modal -->
 
-<p-dialog header="Evidencias" styleClass="dialog-evidences" [(visible)]="displayEvidences" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
+<p-dialog header="Evidencias" styleClass="dialog-evidences" [(visible)]="displayEvidences" [modal]="true"
+    [closable]="false" [draggable]="false" [resizable]="false">
 
     <div class="uploaders-flex">
-        <app-file-uploader *ngFor="let evidence of evidences?.files; let i = index" [img]="evidence" [index]="i" [show]="true">
+        <app-file-uploader *ngFor="let evidence of evidences?.files; let i = index" [img]="evidence" [index]="i"
+            [show]="true">
         </app-file-uploader>
     </div>
 
