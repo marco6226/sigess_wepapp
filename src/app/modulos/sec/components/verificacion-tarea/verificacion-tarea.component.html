@@ -31,7 +31,7 @@
             </div>
 
             <!-- Start validations -->
-            <div *ngIf="submitted && f.usuarioCierre.hasError('required')" class="error-msg ">
+            <div *ngIf="submitted && f.fkUsuarioVerificaId.hasError('required')" class="error-msg ">
                 <span>Debe buscar un empleado válido.</span>
             </div>
             <!-- End validations -->
@@ -47,13 +47,13 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <div class="input-field">
-                <p-calendar formControlName="fechaCierre" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
-                <label for="" class="active">Fecha de cierre</label>
+                <p-calendar formControlName="fechaVerificacion" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                <label for="" class="active">Fecha de verificación</label>
             </div>
 
             <!-- Start validations -->
-            <div *ngIf="submitted && f.fechaCierre.hasError('required')" class="error-msg ">
-                <span>Debe seleccionar una fecha de cierre.</span>
+            <div *ngIf="submitted && f.fechaVerificacion.hasError('required')" class="error-msg ">
+                <span>Debe seleccionar una fecha de verificación.</span>
             </div>
             <!-- End validations -->
 
@@ -61,12 +61,12 @@
 
         <div class="ui-g-12 ui-md-6">
             <div class="input-field">
-                <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5" required></textarea>
+                <textarea pInputTextarea formControlName="descripcionVerificacion" class="form-material" rows="5" required></textarea>
                 <label for="" class="active">Descripción de la acción realizada</label>
             </div>
 
             <!-- Start validations -->
-            <div *ngIf="submitted && f.descripcionCierre.hasError('required')" class="error-msg ">
+            <div *ngIf="submitted && f.descripcionVerificacion.hasError('required')" class="error-msg ">
                 <span>Debe describir la acción realizada.</span>
             </div>
             <!-- End validations -->

@@ -78,7 +78,7 @@ export class TareaComponent implements OnInit {
         // console.log(this.statuses[this.status])
     }
 
-    async getTarea() {
+    async getTarea(event?) {
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
 
         if (this.tarea) {
