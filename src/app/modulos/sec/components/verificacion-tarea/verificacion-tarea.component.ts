@@ -33,7 +33,7 @@ export class VerificacionTareaComponent implements OnInit {
             fkUsuarioVerificaId: ["", Validators.required],
             fechaVerificacion: ["", Validators.required],
             descripcionVerificacion: ["", Validators.required],
-            evidences: [[]],
+            evidencesV: [[]],
         })
     }
 

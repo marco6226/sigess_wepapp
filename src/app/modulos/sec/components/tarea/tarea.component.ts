@@ -10,6 +10,8 @@ import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import * as moment from "moment";
 import { SeguimientosService } from '../../services/seguimientos.service';
 import { Message } from 'primeng/api';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
+import { Criteria } from 'app/modulos/core/entities/filter';
 
 @Component({
     selector: 'app-tarea',
@@ -51,7 +53,7 @@ export class TareaComponent implements OnInit {
             fechaCierre: ["", Validators.required],
             descripcionCierre: ["", Validators.required],
             evidences: [[]],
-        })        
+        })
     }
 
     ngOnInit() {
@@ -86,12 +88,27 @@ export class TareaComponent implements OnInit {
 
             if (this.status === 2 || this.status === 3) {
                 this.tareaClose = true;
-                this.tareaForm.patchValue(
-                    {
-                        fechaCierre: this.tarea.fecha_cierre,
-                        descripcionCierre: this.tarea.descripcion_cierre
-                    }
-                );
+                try {
+                    let fq = new FilterQuery();
+                    fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_cierre, value2: null }];
+                    this.empleadoService.findByFilter(fq).then(
+                        resp => {
+                            console.log(resp)
+                            let empleado = resp['data'][0];
+                            this.fullName = (empleado.primerNombre || '') + ' ' + (empleado.primerApellido || '');
+                            this.tareaForm.patchValue(
+                                {
+                                    usuarioCierre: this.tarea.fk_usuario_cierre,
+                                    fechaCierre: this.tarea.fecha_cierre,
+                                    descripcionCierre: this.tarea.descripcion_cierre
+                                }
+                            );
+                        }
+                    );
+                } catch (e) {
+                    console.log(e);
+                }
+                
             }
         }
     }
