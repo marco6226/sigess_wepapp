@@ -22,8 +22,10 @@ export class TareaComponent implements OnInit {
 
     /* Variables */
     estadoList = [];
+    evidences = [];
     msgs: Message[] = [];
     tareaClose: boolean = false;
+    tareaVerify: boolean = false;
     tareaId;
     cargando = false;
     tareaForm: FormGroup;
@@ -95,11 +97,12 @@ export class TareaComponent implements OnInit {
                         resp => {
                             console.log(resp)
                             let empleado = resp['data'][0];
-                            this.fullName = (empleado.primerNombre || '') + ' ' + (empleado.primerApellido || '');
+                            this.onSelection(empleado);
+                            this.getEvidences(this.tarea.id);
                             this.tareaForm.patchValue(
                                 {
                                     usuarioCierre: this.tarea.fk_usuario_cierre,
-                                    fechaCierre: this.tarea.fecha_cierre,
+                                    fechaCierre: new Date(this.tarea.fecha_cierre),
                                     descripcionCierre: this.tarea.descripcion_cierre
                                 }
                             );
@@ -194,6 +197,21 @@ export class TareaComponent implements OnInit {
             });
         }
 
+    }
+
+    async getEvidences(id) {
+        try {
+
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkTareaCierre") as any;
+
+        } catch (e) {
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
+            });
+            console.log(e);
+        }
     }
 
     async onSelection(event) {

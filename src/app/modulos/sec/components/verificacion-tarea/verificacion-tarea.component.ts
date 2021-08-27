@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
@@ -13,6 +13,7 @@ import { SeguimientosService } from '../../services/seguimientos.service';
 export class VerificacionTareaComponent implements OnInit {
 
     /* Variables */
+    evidences;
     cargando = false;
     submitted = false;
     msgs: Message[] = [];
@@ -20,7 +21,8 @@ export class VerificacionTareaComponent implements OnInit {
     empleado: Empleado;
     empleadosList: Empleado[];
     fullName = '';
-
+    
+    @Input() tareaVerify;
     @Output () loadTareas: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
@@ -86,6 +88,36 @@ export class VerificacionTareaComponent implements OnInit {
         this.empleadoService
             .buscar(event.query)
             .then((data) => (this.empleadosList = <Empleado[]>data));
+    }
+
+    async getEvidences(id) {
+        try {
+
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkVerificacion") as any;
+
+        } catch (e) {
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
+            });
+            console.log(e);
+        }
+    }
+
+    addImage(file) {
+        let evidences = this.verificationForm.get('evidences').value;
+        let obj = {
+            ruta: file,
+
+        }
+        evidences.push(obj);
+        this.verificationForm.patchValue({ evidences: evidences });
+    }
+
+    removeImage(index) {
+        let evidences = this.verificationForm.get('evidences').value;
+        if (index > -1) evidences.splice(index, 1);
     }
 
     async onSelection(event) {
