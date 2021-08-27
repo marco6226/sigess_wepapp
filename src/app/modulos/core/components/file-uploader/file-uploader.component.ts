@@ -18,7 +18,7 @@ export class FileUploaderComponent implements OnInit {
     imgMap: any = {};
     loading = false;
     msgs: Message[] = [];
-    numMaxImg = 1;
+    numMaxImg = 3;
 
     @Input() img: any;
     @Input() file = false;
