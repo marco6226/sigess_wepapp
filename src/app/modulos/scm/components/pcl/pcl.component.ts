@@ -61,6 +61,8 @@ export class PclComponent implements OnInit {
             entidadEmitidaCalificacion: [null, /*Validators.required*/],
             fechaCalificacion: [null, /*Validators.required*/],
             entidadEmitida: [null, /*Validators.required*/],
+            origen: [null, /*Validators.required*/],
+            observaciones: [null, /*Validators.required*/],
 
         });
 
