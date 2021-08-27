@@ -1,0 +1,96 @@
+<form [formGroup]="verificationForm" (ngSubmit)="onSubmit()">
+    <div class="ui-g">
+
+        <!-- Start general info -->
+
+        <div class="ui-g-12">
+            <h5 class="title-header p-mb-2">Verificación</h5>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="input-field">
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
+                    <ng-template let-empleado pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div class="wrapper">
+                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
+                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar alt="" />
+                                <div style="margin-left:20px">
+                                    <span class="p-text-capitalize">
+                                        {{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                        {{empleado?.segundoNombre}}
+                                    </span>
+                                    <br /> {{empleado?.numeroIdentificacion}}
+                                    <br /> {{empleado?.usuario.email}}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+                <label for="" class="active">Usuario que gestiona</label>
+            </div>
+
+            <!-- Start validations -->
+            <div *ngIf="submitted && f.usuarioCierre.hasError('required')" class="error-msg ">
+                <span>Debe buscar un empleado válido.</span>
+            </div>
+            <!-- End validations -->
+
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="input-field">
+                <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName" class="form-material" [attr.disabled]="true" />
+                <label for="" class="active">Apellidos y nombres</label>
+            </div>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="input-field">
+                <p-calendar formControlName="fechaCierre" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                <label for="" class="active">Fecha de cierre</label>
+            </div>
+
+            <!-- Start validations -->
+            <div *ngIf="submitted && f.fechaCierre.hasError('required')" class="error-msg ">
+                <span>Debe seleccionar una fecha de cierre.</span>
+            </div>
+            <!-- End validations -->
+
+        </div>
+
+        <div class="ui-g-12 ui-md-6">
+            <div class="input-field">
+                <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5" required></textarea>
+                <label for="" class="active">Descripción de la acción realizada</label>
+            </div>
+
+            <!-- Start validations -->
+            <div *ngIf="submitted && f.descripcionCierre.hasError('required')" class="error-msg ">
+                <span>Debe describir la acción realizada.</span>
+            </div>
+            <!-- End validations -->
+
+        </div>
+
+        <!-- End general info -->
+
+        <!-- Start evidences -->
+
+        <div class="ui-g-12">
+            <h5 class="title-header p-mb-2">Evidencias</h5>
+        </div>
+
+        <div class="uploaders">
+            <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
+        </div>
+
+        <!-- End evidences -->
+
+        <!-- Start send button -->
+        <button pButton *ngIf="cargando == false && tarea.fecha_cierre === null" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
+        <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+        <!-- End send button -->
+
+    </div>
+</form>

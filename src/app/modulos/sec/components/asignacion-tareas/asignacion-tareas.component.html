@@ -1,7 +1,6 @@
 <p-growl [value]="msgs"></p-growl>
 
-<s-dataNotFound *ngIf="!tareasList || tareasList.length <= 0" icon="fa-tasks"
-    message="No se cuenta con registros de tareas generadas">
+<s-dataNotFound *ngIf="!tareasList || tareasList.length <= 0" icon="fa-tasks" message="No se cuenta con registros de tareas generadas">
     <div *sTienePermiso="'SEC_GET_ANADESV'">
         Genera nuevas tareas a partir de un análisis de desviación
         <a (click)="navegar()">aqui</a>
@@ -9,14 +8,12 @@
 </s-dataNotFound>
 
 
-<p-panel header="Listado de tareas" styleClass="material-panel"
-    [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
+<p-panel header="Listado de tareas" styleClass="material-panel" [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
 
-    <div style="overflow: auto;">
-        <div>
+    <div class="ui-g">
+        <div class="ui-g-12 p-mb-3">
 
-            <p-table #dt styleClass="material-panel" autoLayout="true" selectionMode="single"
-                [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
+            <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th style="width: 3%"> </th>
@@ -54,42 +51,33 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'modulo', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'modulo', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'fechaReporte', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaReporte', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'regional', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'regional', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'sede', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'sede', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'codigo', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'codigo', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'responsable', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'responsable', 'contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'fechaProyectada','contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaProyectada','contains')">
                         </td>
                         <td>
-                            <input pInputText type="text"
-                                (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
                         </td>
-                        
+
 
                     </tr>
                 </ng-template>
@@ -97,24 +85,19 @@
                     <tr [pSelectableRow]="tarea" [style.color]="tarea.estado == 'FINALIZADA' ? '#008800' : null">
                         <td style="width:55px;text-align: center;">
                             <ng-container *ngIf="tarea.estado == 'NUEVO'">
-                                <button *sTienePermiso="'SEC_PUT_CUMP_TAR'" pButton type="button"
-                                    icon="fa fa-check-circle" class="soft-icon"
-                                    (click)="selectTarea(tarea);opCump.toggle($event)"
-                                    title="Reportar cumplimiento de tarea"></button>
+                                <button *sTienePermiso="'SEC_PUT_CUMP_TAR'" pButton type="button" icon="fa fa-check-circle" class="soft-icon" (click)="selectTarea(tarea);opCump.toggle($event)" title="Reportar cumplimiento de tarea"></button>
                             </ng-container>
                             <ng-container *ngIf="tarea.estado == 'REALIZADA'">
-                                <button *sTienePermiso="'SEC_PUT_VERF_TAR'" pButton type="button" icon="fa fa-thumbs-up"
-                                    class="soft-icon" (click)="selectTarea(tarea);opVerf.toggle($event)"
-                                    title="Reportar verificación de tarea"></button>
+                                <button *sTienePermiso="'SEC_PUT_VERF_TAR'" pButton type="button" icon="fa fa-thumbs-up" class="soft-icon" (click)="selectTarea(tarea);opVerf.toggle($event)" title="Reportar verificación de tarea"></button>
                             </ng-container>
                         </td>
 
                         <td>{{tarea.modulo}}</td>
                         <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
-                        <td>{{tarea.areaResponsable?.nombre}}</td>                                              
+                        <td>{{tarea.areaResponsable?.nombre}}</td>
                         <td>{{tarea.areaResponsable?.nombre}}</td>
                         <td>{{tarea.codigo}}</td>
-                        <td>{{tarea.nombre}}</td>                       
+                        <td>{{tarea.nombre}}</td>
                         <td>{{tarea?.empResponsable?.primerNombre}} {{tarea?.empResponsable?.primerApellido}}</td>
                         <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
                         <td>{{tarea.estado}}</td>
@@ -123,9 +106,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
-                    <button pButton type="button" icon="fa fa-search" label="Consultar" (click)="onClick()"
-                        routerLinkActive="router-link-active" class="ui-button-warning"
-                        [disabled]="!tareaSelect"></button>
+                    <button pButton type="button" icon="fa fa-search" label="Consultar" (click)="onClick()" routerLinkActive="router-link-active" class="ui-button-primary" [disabled]="!tareaSelect"></button>
                 </ng-template>
             </p-table>
         </div>
@@ -138,8 +119,7 @@
 <p-overlayPanel #opCump appendTo="body">
     <div *ngIf="tareaSelect">
         <h4>{{tareaSelect.nombre}}</h4>
-        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesRealizacion"
-            placeholder="Observaciones de cumplimiento"></textarea>
+        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesRealizacion" placeholder="Observaciones de cumplimiento"></textarea>
         <br />
         <br />
         <button pButton type="button" (click)="reportarCumplimiento()" label="Reportar cumplimiento de tarea"></button>
@@ -150,8 +130,7 @@
 <p-overlayPanel #opVerf appendTo="body">
     <div *ngIf="tareaSelect">
         <h4>{{tareaSelect.nombre}}</h4>
-        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesVerificacion"
-            placeholder="Observaciones de verificación"></textarea>
+        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesVerificacion" placeholder="Observaciones de verificación"></textarea>
         <br />
         <br />
         <button pButton type="button" (click)="reportarVerificacion()" label="Reportar verificación de tarea"></button>

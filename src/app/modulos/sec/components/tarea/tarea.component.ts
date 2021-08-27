@@ -21,6 +21,7 @@ export class TareaComponent implements OnInit {
     /* Variables */
     estadoList = [];
     msgs: Message[] = [];
+    tareaClose: boolean = false;
     tareaId;
     cargando = false;
     tareaForm: FormGroup;
@@ -50,7 +51,7 @@ export class TareaComponent implements OnInit {
             fechaCierre: ["", Validators.required],
             descripcionCierre: ["", Validators.required],
             evidences: [[]],
-        })
+        })        
     }
 
     ngOnInit() {
@@ -82,18 +83,31 @@ export class TareaComponent implements OnInit {
 
         if (this.tarea) {
             this.status = this.verifyStatus();
+
+            if (this.status === 2 || this.status === 3) {
+                this.tareaClose = true;
+                this.tareaForm.patchValue(
+                    {
+                        fechaCierre: this.tarea.fecha_cierre,
+                        descripcionCierre: this.tarea.descripcion_cierre
+                    }
+                );
+            }
         }
     }
 
     verifyStatus() {
         /* Vars */
+        let now = moment({});
         let fecha_cierre = moment(this.tarea.fecha_cierre);
         let fecha_proyectada = moment(this.tarea.fecha_proyectada);
 
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(moment.now())) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(moment.now())) return 4;
-        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(moment.now())) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(moment.now())) return 2;
+        console.log('¿Es la fecha proyectada anterior la fecha actual? ', fecha_proyectada.isBefore(now));
+
+        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
+        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 2;
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 3;
 
         return 0;
     }
@@ -131,6 +145,11 @@ export class TareaComponent implements OnInit {
         if (!this.tareaForm.valid) {
             console.log('Data: ', this.tareaForm.value);
             this.cargando = false;
+            this.msgs.push({
+                severity: "info",
+                summary: "Mensaje del sistema",
+                detail: "Debe completar todos los campos",
+            });
             return;
         }
 
@@ -138,6 +157,7 @@ export class TareaComponent implements OnInit {
             let res = await this.seguimientoService.closeTarea(this.tareaForm.value);
 
             if (res) {
+                this.tareaForm.reset();
                 this.cargando = false;
                 this.getTarea();
                 this.msgs.push({
