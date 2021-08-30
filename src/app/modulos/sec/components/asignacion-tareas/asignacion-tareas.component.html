@@ -81,14 +81,6 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-tarea>
                     <tr [pSelectableRow]="tarea" [style.color]="tarea.estado == 'FINALIZADA' ? '#008800' : null">
-                        <td style="width:55px;text-align: center;">
-                            <ng-container *ngIf="tarea.estado == 'NUEVO'">
-                                <button *sTienePermiso="'SEC_PUT_CUMP_TAR'" pButton type="button" icon="fa fa-check-circle" class="soft-icon" (click)="selectTarea(tarea);opCump.toggle($event)" title="Reportar cumplimiento de tarea"></button>
-                            </ng-container>
-                            <ng-container *ngIf="tarea.estado == 'REALIZADA'">
-                                <button *sTienePermiso="'SEC_PUT_VERF_TAR'" pButton type="button" icon="fa fa-thumbs-up" class="soft-icon" (click)="selectTarea(tarea);opVerf.toggle($event)" title="Reportar verificación de tarea"></button>
-                            </ng-container>
-                        </td>
 
                         <td>{{tarea.modulo}}</td>
                         <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>

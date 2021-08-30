@@ -60,7 +60,6 @@ export class TareaComponent implements OnInit {
 
     ngOnInit() {
         this.tareaId = this.route.snapshot.paramMap.get('id');
-        this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
         this.getTarea();
 
         /* Preload data */
@@ -84,13 +83,14 @@ export class TareaComponent implements OnInit {
     }
 
     async getTarea(event?) {
+        this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
 
         if (this.tarea) {
             this.status = this.verifyStatus();
             let fecha_cierre = moment(this.tarea.fecha_cierre);
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
-            
+
             this.tareaVerify = (fecha_cierre.isValid() && fecha_verificacion.isValid()) ? true : false;
 
             if (this.status === 3 || this.status === 4) {

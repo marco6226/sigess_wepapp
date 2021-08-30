@@ -18,7 +18,7 @@ export class SeguimientosTareasComponent implements OnInit {
     @Input() tareaId;
     @Output() isFollowExist: EventEmitter<boolean> = new EventEmitter();
 
-    msgs: Message[];
+    msgs: Message[] = [];
     cargando = false;
     trackings;
     displayModal: boolean;
@@ -98,7 +98,8 @@ export class SeguimientosTareasComponent implements OnInit {
             this.cargando = false;
             this.msgs.push({
                 severity: "error",
-                summary: "Por favor revise todos los campos",
+                summary: "Mensaje del sistema",
+                detail: "Por favor revise todos los campos",
             });
             console.log('Data: ', this.trackingForm.value);
             return;

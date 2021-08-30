@@ -43,6 +43,9 @@ export class VerificacionTareaComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.verificationForm.patchValue({ id: parseInt(this.tarea.id) });
+
         if (this.tareaVerify) {
             let fq = new FilterQuery();
             fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_cierre, value2: null }];
@@ -119,30 +122,30 @@ export class VerificacionTareaComponent implements OnInit {
     async getEvidences(id) {
         try {
 
-            this.evidences = await this.seguimientoService.getEvidences(id, "fkVerificacion") as any;
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkVerify") as any;
 
         } catch (e) {
             this.msgs.push({
                 severity: "error",
                 summary: "Mensaje del sistema",
-                detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
+                detail: "Ha ocurrido un error al obtener las evidencias de verificación de esta tarea",
             });
             console.log(e);
         }
     }
 
     addImage(file) {
-        let evidences = this.verificationForm.get('evidences').value;
+        let evidences = this.verificationForm.get('evidencesV').value;
         let obj = {
             ruta: file,
 
         }
         evidences.push(obj);
-        this.verificationForm.patchValue({ evidences: evidences });
+        this.verificationForm.patchValue({ evidencesV: evidences });
     }
 
     removeImage(index) {
-        let evidences = this.verificationForm.get('evidences').value;
+        let evidences = this.verificationForm.get('evidencesV').value;
         if (index > -1) evidences.splice(index, 1);
     }
 
