@@ -19,7 +19,6 @@ import { Criteria } from 'app/modulos/core/entities/filter';
     styleUrls: ['./tarea.component.scss']
 })
 export class TareaComponent implements OnInit {
-
     /* Variables */
     estadoList = [];
     evidences = [];
@@ -52,6 +51,7 @@ export class TareaComponent implements OnInit {
         this.tareaForm = fb.group({
             id: ["", Validators.required],
             usuarioCierre: ["", Validators.required],
+            email: ["", null],
             fechaCierre: ["", Validators.required],
             descripcionCierre: ["", Validators.required],
             evidences: [[]],
@@ -118,7 +118,7 @@ export class TareaComponent implements OnInit {
     }
 
     verifyStatus(isFollowsExist = false) {
-        
+
         /* Vars */
         let now = moment({});
         let fecha_cierre = moment(this.tarea.fecha_cierre);
@@ -129,7 +129,7 @@ export class TareaComponent implements OnInit {
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
         if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
-        
+
         return 0;
     }
 
@@ -227,9 +227,10 @@ export class TareaComponent implements OnInit {
         this.fullName = null;
         this.empleado = null;
         let emp = <Empleado>event;
+
         this.empleado = emp;
         this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
-        this.tareaForm.patchValue({ usuarioCierre: { 'id': this.empleado.id } });
+        this.tareaForm.patchValue({ usuarioCierre: { 'id': this.empleado.id }, email: this.empleado.usuario.email });
     }
 
 }
