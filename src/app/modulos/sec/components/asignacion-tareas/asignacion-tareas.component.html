@@ -80,17 +80,22 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tarea>
-                    <tr [pSelectableRow]="tarea" [style.color]="tarea.estado == 'FINALIZADA' ? '#008800' : null">
+                    <tr [pSelectableRow]="tarea">
 
-                        <td>{{tarea.modulo}}</td>
-                        <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
+                        <td class="p-text-center">{{tarea.modulo}}</td>
+                        <td class="p-text-center">{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
                         <td>{{tarea.areaResponsable?.nombre}}</td>
                         <td>{{tarea.areaResponsable?.nombre}}</td>
                         <td>{{tarea.codigo}}</td>
                         <td>{{tarea.nombre}}</td>
                         <td>{{tarea?.empResponsable?.primerNombre}} {{tarea?.empResponsable?.primerApellido}}</td>
-                        <td>{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
-                        <td>{{tarea.estado}}</td>
+                        <td class="p-text-center">{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
+                        <td class="p-text-center status" [ngClass]="{
+                            'status--danger': tarea.estado === 'Vencida' || tarea.estado === 'Cerrada fuera de tiempo', 
+                            'status--success': tarea.estado === 'Abierta' || tarea.estado === 'Cerrada en el tiempo',
+                            'status--info': tarea.estado === 'En seguimiento',
+                            'status--warning': tarea.estado === 'N/A'
+                        }">{{tarea.estado}}</td>
 
 
                     </tr>

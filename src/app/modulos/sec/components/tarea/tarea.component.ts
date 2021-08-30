@@ -73,10 +73,10 @@ export class TareaComponent implements OnInit {
         this.statuses = {
             0: 'N/A',
             1: 'En seguimiento',
-            2: 'Abierto',
+            2: 'Abierta',
             3: 'Cerrada en el tiempo',
             4: 'Cerrada fuera de tiempo',
-            5: 'Vencido',
+            5: 'Vencida',
         }
 
         // console.log(this.statuses[this.status])
@@ -98,11 +98,11 @@ export class TareaComponent implements OnInit {
                 let fq = new FilterQuery();
                 fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_cierre, value2: null }];
                 this.empleadoService.findByFilter(fq).then(
-                    resp => {
+                    async resp => {
                         console.log(resp)
                         let empleado = resp['data'][0];
                         this.onSelection(empleado);
-                        this.getEvidences(this.tarea.id);
+                        await this.getEvidences(this.tarea.id);
                         this.tareaForm.patchValue(
                             {
                                 usuarioCierre: this.tarea.fk_usuario_cierre,

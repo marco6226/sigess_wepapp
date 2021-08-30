@@ -7,6 +7,8 @@ import { Message } from 'primeng/primeng';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Filter, Criteria } from '../../../core/entities/filter';
 import { Permiso } from '../../../empresa/entities/permiso';
+import * as moment from "moment";
+import { SeguimientosService } from '../../services/seguimientos.service';
 
 @Component({
     selector: 'app-asignacion-tareas',
@@ -24,23 +26,56 @@ export class AsignacionTareasComponent implements OnInit {
         private tareaService: TareaService,
         private sesionService: SesionService,
         private paramNav: ParametroNavegacionService,
+        private seguimientoService: SeguimientosService,
     ) { }
 
     ngOnInit() {
+
+        let statuses = {
+            0: 'N/A',
+            1: 'En seguimiento',
+            2: 'Abierta',
+            3: 'Cerrada en el tiempo',
+            4: 'Cerrada fuera de tiempo',
+            5: 'Vencida',
+        }
+
         let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
         let fq = new FilterQuery();
         fq.filterList = [{ field: 'areaResponsable.id', value1: areas, criteria: Criteria.CONTAINS }];
         this.tareaService.findByFilter(fq).then(
-            resp => {
+            async resp => {
                 this.tareasList = resp['data']
-                this.tareasList = this.tareasList.map(tarea => {
+                this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
+                    let status = await this.verifyStatus(tarea);
+                    tarea.estado = statuses[status];
+
                     tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
                     return tarea;
-                })
+                }));
             }
 
         );
 
+    }
+
+    async verifyStatus(tarea) {
+
+        let trackings = await this.seguimientoService.getSegByTareaID(tarea.id) as any;
+        let isFollow = (trackings.length > 0) ? true : false;
+
+        /* Vars */
+        let now = moment({});
+        let fecha_cierre = moment(tarea.fechaCierre);
+        let fecha_proyectada = moment(tarea.fechaProyectada);
+
+        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 2;
+        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
+
+        return 0;
     }
 
     selectTarea(tarea: Tarea) {

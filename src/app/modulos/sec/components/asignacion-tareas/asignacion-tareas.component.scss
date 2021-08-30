@@ -124,3 +124,19 @@
         }
     }
 }
+
+.status {
+    font-weight: 400;
+    &--success {
+        color: #10A935;
+    }
+    &--info {
+        color: #145FEE;
+    }
+    &--danger {
+        color: #ED1F24;
+    }
+    &--warning {
+        color: #FFDD00;
+    }
+}

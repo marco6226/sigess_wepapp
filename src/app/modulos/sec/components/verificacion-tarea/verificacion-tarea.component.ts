@@ -38,13 +38,17 @@ export class VerificacionTareaComponent implements OnInit {
             email: ["", null],
             fkUsuarioVerificaId: ["", Validators.required],
             fechaVerificacion: ["", Validators.required],
-            descripcionVerificacion: ["", Validators.required],
+            observacionesVerificacion: ["", Validators.required],
             evidencesV: [[]],
         })
     }
 
     ngOnInit() {
 
+        this.checkVerify();
+    }
+
+    checkVerify() {
         this.verificationForm.patchValue({ id: parseInt(this.tarea.id) });
 
         if (this.tareaVerify) {
@@ -60,7 +64,7 @@ export class VerificacionTareaComponent implements OnInit {
                         {
                             fkUsuarioVerificaId: this.tarea.fk_usuario_verifica_id,
                             fechaVerificacion: new Date(this.tarea.fecha_verificacion),
-                            descripcionVerificacion: this.tarea.descripcion_verificacion
+                            observacionesVerificacion: this.tarea.observaciones_verificacion
                         }
                     );
                 }
@@ -94,6 +98,7 @@ export class VerificacionTareaComponent implements OnInit {
             if (res) {
                 this.verificationForm.reset();
                 this.cargando = false;
+                this.checkVerify();
                 this.loadTareas.emit(true);
                 this.msgs.push({
                     severity: "success",
@@ -157,7 +162,7 @@ export class VerificacionTareaComponent implements OnInit {
         let emp = <Empleado>event;
         this.empleado = emp;
         this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
-        this.verificationForm.patchValue({ fkUsuarioVerificaId: { 'id': this.empleado.id } });
+        this.verificationForm.patchValue({ fkUsuarioVerificaId: { 'id': this.empleado.id }, email: this.empleado.usuario.email });
     }
 
 

@@ -10,8 +10,7 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <div class="input-field">
-                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" formControlName="email" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                    [readonly]="tareaVerify">
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" formControlName="email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [readonly]="tareaVerify">
                     <ng-template let-empleado pTemplate="item">
                         <div class="ui-helper-clearfix">
                             <div class="wrapper">
@@ -63,12 +62,12 @@
 
         <div class="ui-g-12 ui-md-6">
             <div class="input-field">
-                <textarea pInputTextarea formControlName="descripcionVerificacion" class="form-material" rows="5" required [readOnly]="tareaVerify"></textarea>
+                <textarea pInputTextarea formControlName="observacionesVerificacion" class="form-material" rows="5" required [readOnly]="tareaVerify"></textarea>
                 <label for="" class="active">Descripción de la acción realizada</label>
             </div>
 
             <!-- Start validations -->
-            <div *ngIf="submitted && f.descripcionVerificacion.hasError('required')" class="error-msg ">
+            <div *ngIf="submitted && f.observacionesVerificacion.hasError('required')" class="error-msg ">
                 <span>Debe describir la acción realizada.</span>
             </div>
             <!-- End validations -->
