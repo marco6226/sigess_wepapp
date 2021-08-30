@@ -15,7 +15,7 @@ import { Permiso } from '../../../empresa/entities/permiso';
 })
 export class AsignacionTareasComponent implements OnInit {
 
-    tareasList: Tarea[];
+    tareasList: any;
     tareaSelect: Tarea;
     msgs: Message[] = [];
     observacionesRealizacion: string;
@@ -31,8 +31,17 @@ export class AsignacionTareasComponent implements OnInit {
         let fq = new FilterQuery();
         fq.filterList = [{ field: 'areaResponsable.id', value1: areas, criteria: Criteria.CONTAINS }];
         this.tareaService.findByFilter(fq).then(
-            resp => this.tareasList = resp['data']
+            resp => {
+                this.tareasList = resp['data']
+                this.tareasList = this.tareasList.map(tarea => {
+                    tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
+                    console.log(tarea.fechaProyectada);
+                    return tarea;
+                })
+            }
+
         );
+
     }
 
     selectTarea(tarea: Tarea) {
