@@ -35,6 +35,7 @@ export class VerificacionTareaComponent implements OnInit {
     ) {
         this.verificationForm = fb.group({
             id: ["", Validators.required],
+            email: ["", null],
             fkUsuarioVerificaId: ["", Validators.required],
             fechaVerificacion: ["", Validators.required],
             descripcionVerificacion: ["", Validators.required],
@@ -48,7 +49,7 @@ export class VerificacionTareaComponent implements OnInit {
 
         if (this.tareaVerify) {
             let fq = new FilterQuery();
-            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_cierre, value2: null }];
+            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_verifica_id, value2: null }];
             this.empleadoService.findByFilter(fq).then(
                 resp => {
                     console.log(resp)

@@ -10,7 +10,8 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <div class="input-field">
-                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [readonly]="tareaVerify">
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" formControlName="email" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                    [readonly]="tareaVerify">
                     <ng-template let-empleado pTemplate="item">
                         <div class="ui-helper-clearfix">
                             <div class="wrapper">
