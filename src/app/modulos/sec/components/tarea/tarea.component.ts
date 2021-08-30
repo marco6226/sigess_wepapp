@@ -10,6 +10,8 @@ import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import * as moment from "moment";
 import { SeguimientosService } from '../../services/seguimientos.service';
 import { Message } from 'primeng/api';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
+import { Criteria } from 'app/modulos/core/entities/filter';
 
 @Component({
     selector: 'app-tarea',
@@ -20,8 +22,10 @@ export class TareaComponent implements OnInit {
 
     /* Variables */
     estadoList = [];
+    evidences = [];
     msgs: Message[] = [];
     tareaClose: boolean = false;
+    tareaVerify: boolean = false;
     tareaId;
     cargando = false;
     tareaForm: FormGroup;
@@ -86,12 +90,28 @@ export class TareaComponent implements OnInit {
 
             if (this.status === 2 || this.status === 3) {
                 this.tareaClose = true;
-                this.tareaForm.patchValue(
-                    {
-                        fechaCierre: new Date(this.tarea.fecha_cierre),
-                        descripcionCierre: this.tarea.descripcion_cierre
-                    }
-                );
+                try {
+                    let fq = new FilterQuery();
+                    fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_cierre, value2: null }];
+                    this.empleadoService.findByFilter(fq).then(
+                        resp => {
+                            console.log(resp)
+                            let empleado = resp['data'][0];
+                            this.onSelection(empleado);
+                            this.getEvidences(this.tarea.id);
+                            this.tareaForm.patchValue(
+                                {
+                                    usuarioCierre: this.tarea.fk_usuario_cierre,
+                                    fechaCierre: new Date(this.tarea.fecha_cierre),
+                                    descripcionCierre: this.tarea.descripcion_cierre
+                                }
+                            );
+                        }
+                    );
+                } catch (e) {
+                    console.log(e);
+                }
+                
             }
         }
     }
@@ -177,6 +197,21 @@ export class TareaComponent implements OnInit {
             });
         }
 
+    }
+
+    async getEvidences(id) {
+        try {
+
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkTareaCierre") as any;
+
+        } catch (e) {
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
+            });
+            console.log(e);
+        }
     }
 
     async onSelection(event) {
