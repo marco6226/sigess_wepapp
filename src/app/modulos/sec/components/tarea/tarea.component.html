@@ -121,11 +121,10 @@
 
     <p-tabPanel header="Seguimientos">
 
-        <app-seguimientos-tareas [status]="status" [tareaId]="tareaId"></app-seguimientos-tareas>
+        <app-seguimientos-tareas [status]="status" [tareaId]="tareaId" (isFollowExist)="isFollows($event)"></app-seguimientos-tareas>
 
     </p-tabPanel>
 
-    <!-- <p-tabPanel header="Cierre" [disabled]="status !== 1"> -->
     <p-tabPanel header="Cierre">
 
         <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
@@ -171,8 +170,8 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName" class="form-material" [attr.disabled]="true" />
-                        <label for="" class="active">Apellidos y nombres</label>
+                        <input type="text" pInputText placeholder="Nombres y apellidos" [value]="fullName" class="form-material" [attr.disabled]="true" />
+                        <label for="" class="active">Nombres y apellidos</label>
                     </div>
                 </div>
 
@@ -230,7 +229,7 @@
                 <!-- End evidences -->
 
                 <!-- Start send button -->
-                <button pButton *ngIf="cargando == false && tareaCierre" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
+                <button pButton *ngIf="cargando == false && !tareaClose" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
                 <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                 <!-- End send button -->
 
@@ -241,6 +240,6 @@
     </p-tabPanel>
 
     <p-tabPanel header="Verificación" *ngIf="tareaClose">
-        <app-verificacion-tarea [tareaVerify]="tareaVerify" (loadTareas)="getTarea($event)"></app-verificacion-tarea>
+        <app-verificacion-tarea [tarea]="tarea" [tareaVerify]="tareaVerify" (loadTareas)="getTarea($event)"></app-verificacion-tarea>
     </p-tabPanel>
 </p-tabView>

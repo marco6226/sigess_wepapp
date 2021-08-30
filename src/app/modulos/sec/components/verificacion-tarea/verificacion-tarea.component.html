@@ -9,7 +9,7 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <div class="input-field">
-                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [readonly]="tareaVerify">
                     <ng-template let-empleado pTemplate="item">
                         <div class="ui-helper-clearfix">
                             <div class="wrapper">
@@ -40,14 +40,14 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <div class="input-field">
-                <input type="text" pInputText placeholder="Apellidos y nombres" [value]="fullName" class="form-material" [attr.disabled]="true" />
-                <label for="" class="active">Apellidos y nombres</label>
+                <input type="text" pInputText placeholder="Nombres y apellidos" [value]="fullName" class="form-material" [attr.disabled]="true" />
+                <label for="" class="active">Nombres y apellidos</label>
             </div>
         </div>
 
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <div class="input-field">
-                <p-calendar formControlName="fechaVerificacion" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                <p-calendar formControlName="fechaVerificacion" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy" [disabled]="tareaVerify"></p-calendar>
                 <label for="" class="active">Fecha de verificación</label>
             </div>
 
@@ -61,7 +61,7 @@
 
         <div class="ui-g-12 ui-md-6">
             <div class="input-field">
-                <textarea pInputTextarea formControlName="descripcionVerificacion" class="form-material" rows="5" required></textarea>
+                <textarea pInputTextarea formControlName="descripcionVerificacion" class="form-material" rows="5" required [readOnly]="tareaVerify"></textarea>
                 <label for="" class="active">Descripción de la acción realizada</label>
             </div>
 
@@ -99,7 +99,7 @@
         <!-- End evidences -->
 
         <!-- Start send button -->
-        <button pButton *ngIf="cargando == false" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar verificación"></button>
+        <button pButton *ngIf="cargando == false && !tareaVerify" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar verificación"></button>
         <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
         <!-- End send button -->
 

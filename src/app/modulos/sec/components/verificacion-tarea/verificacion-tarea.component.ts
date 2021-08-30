@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Criteria } from 'app/modulos/core/entities/filter';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { Message } from 'primeng/primeng';
@@ -21,9 +23,10 @@ export class VerificacionTareaComponent implements OnInit {
     empleado: Empleado;
     empleadosList: Empleado[];
     fullName = '';
-    
+
+    @Input() tarea;
     @Input() tareaVerify;
-    @Output () loadTareas: EventEmitter<boolean> = new EventEmitter();
+    @Output() loadTareas: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
         fb: FormBuilder,
@@ -40,6 +43,29 @@ export class VerificacionTareaComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.tareaVerify) {
+            let fq = new FilterQuery();
+            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_cierre, value2: null }];
+            this.empleadoService.findByFilter(fq).then(
+                resp => {
+                    console.log(resp)
+                    let empleado = resp['data'][0];
+                    this.onSelection(empleado);
+                    this.getEvidences(this.tarea.id);
+                    this.verificationForm.patchValue(
+                        {
+                            fkUsuarioVerificaId: this.tarea.fk_usuario_verifica_id,
+                            fechaVerificacion: new Date(this.tarea.fecha_verificacion),
+                            descripcionVerificacion: this.tarea.descripcion_verificacion
+                        }
+                    );
+                }
+            );
+        }
+    }
+
+    get f() {
+        return this.verificationForm.controls;
     }
 
     async onSubmit() {

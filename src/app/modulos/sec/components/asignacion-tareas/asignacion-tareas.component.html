@@ -16,7 +16,6 @@
             <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                        <th style="width: 3%"> </th>
                         <th pSortableColumn="modulo"> Módulo
                             <p-sortIcon field="modulo"></p-sortIcon>
                         </th>
@@ -49,7 +48,6 @@
 
                     </tr>
                     <tr>
-                        <td></td>
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'modulo', 'contains')">
                         </td>
