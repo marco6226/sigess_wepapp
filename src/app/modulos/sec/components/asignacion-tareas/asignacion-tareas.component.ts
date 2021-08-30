@@ -35,7 +35,6 @@ export class AsignacionTareasComponent implements OnInit {
                 this.tareasList = resp['data']
                 this.tareasList = this.tareasList.map(tarea => {
                     tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
-                    console.log(tarea.fechaProyectada);
                     return tarea;
                 })
             }
