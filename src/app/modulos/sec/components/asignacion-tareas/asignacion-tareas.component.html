@@ -145,6 +145,11 @@
 
                     </tr>
                 </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="9" class="p-text-center">No hay registro de tareas asignadas o con los términos de filtro usados</td>
+                    </tr>
+                </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
                     <button pButton type="button" icon="fa fa-search" label="Consultar" (click)="onClick()" routerLinkActive="router-link-active" class="ui-button-primary" [disabled]="!tareaSelect"></button>
                 </ng-template>
