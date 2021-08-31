@@ -21,6 +21,7 @@ import { Tarea } from '../../entities/tarea';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Criteria } from '../../../core/entities/filter';
 import { jerarquia } from '../../entities/jerarquia';
+import { AuthService } from 'app/modulos/core/auth.service';
 
 @Component({
     selector: 's-analisisDesviacion',
@@ -58,6 +59,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     consultar: boolean = false;
     modificar: boolean = false;
     adicionar: boolean = false;
+    visibleLnkResetPasswd = true;
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
@@ -65,6 +67,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         private sistemaCausaInmdService: SistemaCausaInmediataService,
         private sistemaCausaRaizService: SistemaCausaRaizService,
         private paramNav: ParametroNavegacionService,
+        private authService: AuthService,
     ) { }
 
     ngOnInit() {
@@ -257,7 +260,26 @@ export class AnalisisDesviacionComponent implements OnInit {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
-
+            console.log( ad.tareaDesviacionList);
+            let email = ad.tareaDesviacionList[i].empResponsable.usuario.email;
+            if (email == null || email == '') {
+                this.msgs = [];
+                this.msgs.push({ severity: 'warn', summary: 'Correo electrónico requerido', detail: 'Debe especificar el correo electrónico de la cuenta de usuario' });
+                return;
+            }
+            this.visibleLnkResetPasswd = false;
+            this.authService.sendNotification(email).then(
+                resp => {
+                    this.msgs = [];
+                    this.msgs.push({ severity: resp['tipoMensaje'], detail: resp['detalle'], summary: resp['mensaje'] });
+                    this.visibleLnkResetPasswd = true;
+                }
+            ).catch(err => {
+                this.msgs = [];
+                this.msgs.push({ severity: err.error['tipoMensaje'], detail: err.error['detalle'], summary: err.error['mensaje'] });
+                this.visibleLnkResetPasswd = true;
+            });
+            console.log(email,ad.tareaDesviacionList[i]);
         }
 
 
@@ -270,6 +292,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         );
         console.log(ad.tareaDesviacionList);
     }
+
+    
 
     manageResponse(ad: AnalisisDesviacion) {
         this.msgs = [];

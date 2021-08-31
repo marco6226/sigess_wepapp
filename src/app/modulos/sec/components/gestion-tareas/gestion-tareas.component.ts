@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ConfirmationService } from 'primeng/api';
 import { Desviacion } from 'app/modulos/sec/entities/desviacion';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
+import { Usuario } from 'app/modulos/empresa/entities/usuario';
 
 @Component({
     selector: 's-gestionTareas',
@@ -74,6 +75,7 @@ export class GestionTareasComponent implements OnInit {
             tarea.empResponsable.id = this.form.value.empResponsable.id;
             tarea.empResponsable.primerNombre = this.form.value.empResponsable.primerNombre;
             tarea.empResponsable.primerApellido = this.form.value.empResponsable.primerApellido;
+            tarea.empResponsable.usuario= this.form.value.empResponsable.usuario;
 
         }
         console.log(tarea);

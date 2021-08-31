@@ -90,6 +90,18 @@ export class AuthService {
         });
     }
 
+    sendNotification(email: string) {
+        return new Promise((resolve, reject) => {
+            this.httpInt.get(this.authEndPoint + 'enviarCorreo/' + email)
+                .map(res => res)
+                .subscribe(
+                    res => resolve(res),
+                    err => reject(err)
+                );
+        });
+        console.log(email)
+    }
+
     requestRefresh(token: string) {
         let body = token;
         console.log("paso por aca");
