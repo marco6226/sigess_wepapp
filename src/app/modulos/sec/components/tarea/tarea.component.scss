@@ -20,7 +20,7 @@
     .case-code {
         display: flex;
         .title {
-            margin-right: .25rem;
+            margin-right: 0.25rem;
             font-weight: 600;
         }
         .number {
@@ -40,9 +40,9 @@
     margin-block-start: 0;
     margin-block-end: 0;
     position: relative;
-    margin: .25rem 0;
+    margin: 0.25rem 0;
     &:before {
-        content: "";
+        content: '';
         position: absolute;
         bottom: -4px;
         height: 2px;
@@ -57,7 +57,7 @@
     margin-block-end: 0;
     position: relative;
     &:before {
-        content: "";
+        content: '';
         position: absolute;
         bottom: -4px;
         height: 2px;
@@ -103,15 +103,15 @@
         font-size: 16px;
         margin: 0 0 8px 0;
         padding: 0;
-        padding-left: .25rem;
+        padding-left: 0.25rem;
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-box-sizing: content-box;
         box-sizing: content-box;
-        -webkit-transition: border .3s, -webkit-box-shadow .3s;
-        transition: border .3s, -webkit-box-shadow .3s;
-        transition: box-shadow .3s, border .3s;
-        transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+        -webkit-transition: border 0.3s, -webkit-box-shadow 0.3s;
+        transition: border 0.3s, -webkit-box-shadow 0.3s;
+        transition: box-shadow 0.3s, border 0.3s;
+        transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
         &:focus {
             border-bottom: 1px solid #007ad9 !important;
         }
@@ -132,13 +132,13 @@
         color: #007ad9;
         position: absolute;
         top: 0;
-        left: .3rem;
+        left: 0.3rem;
         font-size: 1rem;
         cursor: text;
-        -webkit-transition: color .2s ease-out, -webkit-transform .2s ease-out;
-        transition: color .2s ease-out, -webkit-transform .2s ease-out;
-        transition: transform .2s ease-out, color .2s ease-out;
-        transition: transform .2s ease-out, color .2s ease-out, -webkit-transform .2s ease-out;
+        -webkit-transition: color 0.2s ease-out, -webkit-transform 0.2s ease-out;
+        transition: color 0.2s ease-out, -webkit-transform 0.2s ease-out;
+        transition: transform 0.2s ease-out, color 0.2s ease-out;
+        transition: transform 0.2s ease-out, color 0.2s ease-out, -webkit-transform 0.2s ease-out;
         -webkit-transform-origin: 0% 100%;
         transform-origin: 0% 100%;
         text-align: initial;
@@ -165,15 +165,15 @@
         font-size: 16px;
         margin: 0 0 8px 0;
         padding: 0;
-        padding-left: .25rem;
+        padding-left: 0.25rem;
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-box-sizing: content-box;
         box-sizing: content-box;
-        -webkit-transition: border .3s, -webkit-box-shadow .3s;
-        transition: border .3s, -webkit-box-shadow .3s;
-        transition: box-shadow .3s, border .3s;
-        transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+        -webkit-transition: border 0.3s, -webkit-box-shadow 0.3s;
+        transition: border 0.3s, -webkit-box-shadow 0.3s;
+        transition: box-shadow 0.3s, border 0.3s;
+        transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
         &:focus {
             border-bottom: 1px solid #007ad9 !important;
         }
@@ -184,13 +184,68 @@
     color: #f44336;
 }
 
+.p-divider-horizontal.p-divider-center {
+    justify-content: center;
+}
+
+.p-divider.p-divider-horizontal {
+    margin: 1rem 0;
+    padding: 0 1rem;
+}
+
+.p-divider-horizontal {
+    display: flex;
+    width: 100%;
+    position: relative;
+    align-items: center;
+}
+
+.p-divider-dashed.p-divider-horizontal:before {
+    border-top-style: dashed;
+}
+
+// .p-divider.p-divider-horizontal:before {
+//     border-top: 1px #dee2e6;
+// }
+.p-divider-horizontal:before {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    content: '';
+}
+
+.p-divider.p-divider-horizontal .p-divider-content {
+    padding: 0 0.5rem;
+}
+
+.p-divider .p-divider-content {
+    background-color: #ffffff;
+}
+
+.p-divider-content {
+    z-index: 1;
+}
+
+.p-component,
+.p-component * {
+    box-sizing: border-box;
+}
+
+.p-component {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-size: 1rem;
+    font-weight: normal;
+}
+
 
 /* Textarea  */
 
 .textarea-material {
     line-height: normal;
     overflow-y: hidden;
-    padding: .8rem 0 .8rem 0;
+    padding: 0.8rem 0 0.8rem 0;
     resize: none;
     height: 2rem;
     -webkit-box-sizing: border-box;
@@ -228,7 +283,7 @@ p-autoComplete {
     /*   Radio buttons */
     .radio-material {
         &.ui-radiobutton {
-            padding-top: .75rem;
+            padding-top: 0.75rem;
         }
     }
     modal {
@@ -241,7 +296,7 @@ p-autoComplete {
     }
     .label-material {
         &.ui-radiobutton-label {
-            padding-top: .75rem;
+            padding-top: 0.75rem;
         }
     }
     /* Panel */
@@ -288,7 +343,7 @@ p-autoComplete {
             }
             .ui-tabview-panels {
                 margin-top: 1rem;
-                border-radius: .75rem;
+                border-radius: 0.75rem;
             }
         }
     }
@@ -307,10 +362,10 @@ p-autoComplete {
                 clear: left;
                 border: 0 none;
                 .p-column-title {
-                    padding: .4rem;
+                    padding: 0.4rem;
                     min-width: 30%;
                     display: inline-block;
-                    margin: -.4em 1em -.4em -.4rem;
+                    margin: -0.4em 1em -0.4em -0.4rem;
                     font-weight: bold;
                 }
                 &:last-child {
@@ -325,14 +380,14 @@ p-autoComplete {
     display: grid;
     grid-gap: 1em;
     grid-template-columns: repeat(3, 1fr);
-    padding: .5em;
+    padding: 0.5em;
 }
 
 .error-msg {
-    font-size: .75rem;
+    font-size: 0.75rem;
     color: red;
-    margin-left: .3rem;
-    margin-top: -.5rem;
+    margin-left: 0.3rem;
+    margin-top: -0.5rem;
 }
 
 .mt-4 {
@@ -350,7 +405,7 @@ p-autoComplete {
         }
     }
     .p-button {
-        margin: 0 .5rem 0 0;
+        margin: 0 0.5rem 0 0;
         min-width: 10rem;
     }
     .p-dialog .p-button {

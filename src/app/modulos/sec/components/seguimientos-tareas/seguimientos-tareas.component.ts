@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
@@ -16,8 +16,9 @@ export class SeguimientosTareasComponent implements OnInit {
     /* Variables */
     @Input() status;
     @Input() tareaId;
+    @Output() isFollowExist: EventEmitter<boolean> = new EventEmitter();
 
-    msgs: Message[];
+    msgs: Message[] = [];
     cargando = false;
     trackings;
     displayModal: boolean;
@@ -54,10 +55,17 @@ export class SeguimientosTareasComponent implements OnInit {
         try {
             this.trackings = await this.seguimientoService.getSegByTareaID(this.tareaId);
 
-            console.log(this.trackings);
-            // this.trackings = [];
+            if (this.trackings.length > 0) {
+                console.log('Se ejecuta el emit')
+                this.isFollowExist.emit(true);
+            }
         } catch (e) {
             console.log(e);
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ocurrió un inconveniente al obtener el listado de seguimientos",
+            });
         }
     }
 
@@ -90,7 +98,8 @@ export class SeguimientosTareasComponent implements OnInit {
             this.cargando = false;
             this.msgs.push({
                 severity: "error",
-                summary: "Por favor revise todos los campos",
+                summary: "Mensaje del sistema",
+                detail: "Por favor revise todos los campos",
             });
             console.log('Data: ', this.trackingForm.value);
             return;

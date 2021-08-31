@@ -24,6 +24,7 @@ import { TooltipModule } from 'primeng/primeng';
 import { TareaComponent } from './components/tarea/tarea.component';
 import { CoreModule } from '../core/core.module';
 import { SeguimientosTareasComponent } from './components/seguimientos-tareas/seguimientos-tareas.component';
+import { VerificacionTareaComponent } from './components/verificacion-tarea/verificacion-tarea.component';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { SeguimientosTareasComponent } from './components/seguimientos-tareas/se
         DocumentosAnalisisDesviacionComponent,
         ConsultaDesviacionInspeccionComponent,
         TareaComponent,
-        SeguimientosTareasComponent
+        SeguimientosTareasComponent,
+        VerificacionTareaComponent
     ],
     providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService]
 })

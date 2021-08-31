@@ -1,12 +1,10 @@
 :host ::ng-deep {
-
     /* Panel material design */
     .material-panel {
         &.ui-panel {
-            border-radius: .75rem;
+            border-radius: 0.75rem;
             background-color: #ffffff;
         }
-
         .ui-panel-titlebar {
             font-size: 1.25rem;
             margin-block-start: 0;
@@ -14,9 +12,8 @@
             position: relative;
             background-color: transparent;
             border: none;
-
             &:before {
-                content: "";
+                content: '';
                 position: absolute;
                 bottom: 4px;
                 height: 2px;
@@ -24,14 +21,12 @@
                 background-color: #007ad9;
             }
         }
-
         .ui-panel-content {
             border: none;
             background-color: transparent;
-            padding: 1rem .75rem;
+            padding: 1rem 0.75rem;
         }
     }
-
     .table-material {
         .ui-table {
             .ui-table-wrapper {
@@ -40,28 +35,22 @@
                     height: 6px;
                     width: 8px;
                 }
-
                 &::-webkit-scrollbar-track {
                     background-color: #fff;
                 }
-
                 &::-webkit-scrollbar-track:hover {
                     background-color: #f4f4f4;
                 }
-
                 &::-webkit-scrollbar-thumb {
                     background-color: #3ba2dc;
                     border-radius: 16px;
                     border: 1px solid #fff;
                 }
-
                 &::-webkit-scrollbar-button {
                     display: none;
                 }
             }
-
             .ui-table-thead {
-
                 tr,
                 th {
                     border: none;
@@ -71,28 +60,141 @@
                     padding: 0.571em 0.157em;
                     font-weight: 700 !important;
                 }
-
                 td {
                     font-weight: 500;
                     border: 1px solid rgba(0, 0, 0, 0.12);
                     border-top: 1px solid transparent;
                 }
-
                 .ui-inputtext {
                     border: none !important;
                 }
             }
-
             .ui-paginator {
                 margin: 1rem 0;
                 border: 1px solid transparent;
                 background-color: transparent;
             }
-
             .ui-table-summary {
                 border: 1px solid transparent;
                 background-color: transparent;
             }
         }
+    }
+    .material-table {
+        border-radius: 8px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+        .ui-table-wrapper {
+            border: 1px solid transparent;
+            border-radius: inherit;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .ui-table-thead {
+            tr>th {
+                padding: 1rem;
+                padding-bottom: 0.25rem;
+                border: none;
+                background-color: unset;
+                &:hover {
+                    background-color: unset;
+                }
+            }
+            tr>td {
+                border: none;
+            }
+            .filters {
+                border-bottom: 1px solid #e0e1e0;
+                td {
+                    padding: 0.25rem 0.75rem;
+                    padding-bottom: 0.5rem;
+                }
+                .ui-inputgroup-addon {
+                    background-color: transparent;
+                    border-color: #353c44;
+                    border-right: 0;
+                    padding: 0.25rem 0.429em;
+                    &:first-child {
+                        border-top-left-radius: 6px;
+                        border-bottom-left-radius: 6px;
+                    }
+                }
+                .ui-inputtext {
+                    border: 1px solid #353c44 !important;
+                    border-left: 0px !important;
+                    border-radius: 6px;
+                    padding: 0.25rem 0.429em;
+                    border-top-left-radius: 0 !important;
+                    border-bottom-left-radius: 0 !important;
+                }
+            }
+        }
+        .ui-table-tbody {
+            tr>td {
+                border: none;
+            }
+            tr {
+                color: #75777c;
+                transition: all 0.3s ease-in-out;
+                &:hover {
+                    background-color: #f9f9f9 !important;
+                }
+                &:nth-child(even) {
+                    background-color: #fff;
+                }
+                &:not(:last-child) {
+                    border-bottom: 1px solid #eff3f8;
+                }
+                &.ui-state-highlight {
+                    color: #000 !important;
+                    font-weight: 400;
+                    background-color: #efefef !important;
+                    &:hover {
+                        background-color: #efefef !important;
+                    }
+                }
+            }
+        }
+        .ui-paginator-bottom {
+            padding: 0.5rem;
+            background-color: #fff;
+            border: 1px solid transparent;
+            .ui-paginator-pages>.ui-paginator-page {
+                border-radius: 4px;
+            }
+            .ui-paginator-first>.pi-step-backward::before {
+                content: '\e92d';
+            }
+            .ui-paginator-prev>.pi-caret-left::before {
+                content: "\e931";
+            }
+            .ui-paginator-next>.pi-caret-right::before {
+                content: "\e932";
+            }
+            .ui-paginator-last>.pi-step-forward::before {
+                content: '\e92e';
+            }
+        }
+        .ui-table-summary {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    }
+}
+
+.status {
+    font-weight: 400;
+    &--success {
+        color: #10a935;
+    }
+    &--info {
+        color: #145fee;
+    }
+    &--danger {
+        color: #ed1f24;
+    }
+    &--warning {
+        color: #ffdd00;
     }
 }
