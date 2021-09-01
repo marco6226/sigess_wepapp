@@ -15,6 +15,7 @@ export class SeguimientosTareasComponent implements OnInit {
 
     /* Variables */
     @Input() status;
+    @Input() tareaClose: boolean = false;
     @Input() tareaId;
     @Output() isFollowExist: EventEmitter<boolean> = new EventEmitter();
 
