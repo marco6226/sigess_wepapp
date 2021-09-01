@@ -3,7 +3,7 @@
 <div class="ui-g">
     <div class="ui-g-12 p-d-flex p-jc-between p-mb-3">
         <h5 class="title-header p-mb-2">Listado de seguimientos</h5>
-        <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm" *ngIf="status === 1 || status === 2"></button>
+        <button pButton type="button" icon="pi pi-plus" (click)="showModalDialog('create')" label="Crear seguimiento" class="ui-button-sm" *ngIf="!tareaClose"></button>
     </div>
 
     <div class="ui-g-12 p-mb-3">
