@@ -12,116 +12,110 @@
     <p-tabPanel header="Información General">
         <div class="ui-g">
 
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea?.hash_id" readonly="true" />
+                    <label for="" class="active">Código de la desviación</label>
+                </div>
+            </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo" [attr.disabled]="true" [value]="tarea.module" />
-                    <label for="" class="active">Modulo</label>
+                    <label for="" class="active">Módulo</label>
+                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo" readonly="true" [value]="tarea?.module" />
                 </div>
             </div>
+
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea.fecha_reporte" [attr.disabled]="true" />
-                    <label for="" class="active">Fecha de realización del reporte</label>
+                    <input type="text" pInputText placeholder="Tipo de Accion" class="form-material" [value]="tarea?.tipo_accion" readonly="true" />
+                    <label for="" class="active">Tipo de Acción</label>
                 </div>
             </div>
+
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea.regional" />
-                    <label for="" class="active">Regional</label>
+                    <input type="text" pInputText placeholder="Zona" class="form-material" [value]="tarea?.regional" readonly="true" />
+                    <label for="" class="active">Zona</label>
                 </div>
             </div>
+
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea.area" />
+                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea?.area" readonly="true" />
                     <label for="" class="active">Sede</label>
                 </div>
             </div>
 
-
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea.hash_id" [attr.disabled]="true" />
-                    <label for="" class="active">Código de la desviación</label>
-
-                </div>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-
-                    <textarea *ngIf="tarea?.concepto !== undefined" pInputTextarea [(ngModel)]="tarea.concepto" rows="2" required></textarea>
-
-                    <label for="" class="active">Concepto</label>
-                </div>
-            </div>
-
-
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <textarea pInputTextarea [(ngModel)]="tarea.aspecto_causante" rows="5" required></textarea>
-
-                    <label for="" class="active">Descripción de la desviación</label>
-                </div>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material" [value]="tarea.nombre" />
-                    <label for="" class="active">Nombre de la actividad</label>
-                </div>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="text" pInputText placeholder="Descripción de la actividad" class="form-material" [value]="tarea.descripcion" />
-                    <label for="" class="active">Descripción de la actividad</label>
-                </div>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="text" pInputText placeholder="Tipo de Accion" class="form-material" [value]="tarea.tipo_accion" />
-                    <label for="" class="active">Tipo de Accion</label>
-                </div>
-            </div>
-
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="text" pInputText placeholder="Jerarquia de control" class="form-material" [value]="tarea.jerarquia" />
+                    <input type="text" pInputText placeholder="Jerarquia de control" class="form-material" [value]="tarea?.jerarquia" readonly="true" />
                     <label for="" class="active">Jerarquia de control</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Responsable" class="form-material" [value]="tarea.primer_nombre" />
+                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material" [value]="tarea?.nombre" readonly="true" />
+                    <label for="" class="active">Nombre de la actividad</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea?.date_close" readonly="true" />
+                    <label for="" class="active">Fecha del reporte</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="tarea?.fecha_proyectada" readonly="true" />
+                    <label for="" class="active">Fecha proyectada de cierre</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.concepto }}</textarea>
+                    <label for="" class="active">Concepto</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.descripcion }}</textarea>
+                    <label for="" class="active">Descripción de la actividad</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.aspecto_causante }}</textarea>
+                    <label for="" class="active">Descripción de la desviación</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Responsable" class="form-material" [value]="tarea?.responsable" readonly="true" />
                     <label for="" class="active">Responsable</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="tarea.email" />
-                    <label for="" class="active">Correo Electronico</label>
-                </div>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" [(ngModel)]="tarea.fecha_proyectada"></p-calendar>
-                    <label for="" class="active">Fecha Proyectada de cierre</label>
+                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="tarea?.email" readonly="true" />
+                    <label for="" class="active">Correo electrónico del responsable</label>
                 </div>
             </div>
 
         </div>
-
-
     </p-tabPanel>
 
     <p-tabPanel header="Seguimientos">
 
-        <app-seguimientos-tareas [tareaClose]="tareaClose" [status]="status" [tareaId]="tareaId" (isFollowExist)="isFollows($event)">
+        <app-seguimientos-tareas [tarea]="tarea" [tareaClose]="tareaClose" [status]="status" [tareaId]="tareaId" (isFollowExist)="isFollows($event)">
         </app-seguimientos-tareas>
 
     </p-tabPanel>

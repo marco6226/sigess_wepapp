@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { SecRoutingModule } from './sec-routing.module';
 import { ComunModule } from 'app/modulos/comun/comun.module'
 import { SecComponent } from './sec.component';
@@ -25,6 +25,7 @@ import { TareaComponent } from './components/tarea/tarea.component';
 import { CoreModule } from '../core/core.module';
 import { SeguimientosTareasComponent } from './components/seguimientos-tareas/seguimientos-tareas.component';
 import { VerificacionTareaComponent } from './components/verificacion-tarea/verificacion-tarea.component';
+import { CapitalizePipe } from './utils/pipes/capitalize.pipe';
 
 @NgModule({
     imports: [
@@ -47,8 +48,9 @@ import { VerificacionTareaComponent } from './components/verificacion-tarea/veri
         ConsultaDesviacionInspeccionComponent,
         TareaComponent,
         SeguimientosTareasComponent,
-        VerificacionTareaComponent
+        VerificacionTareaComponent,
+        CapitalizePipe
     ],
-    providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService]
+    providers: [SistemaCausaRaizService, DesviacionService, AnalisisDesviacionService, TareaService, CapitalizePipe]
 })
 export class SecModule { }
