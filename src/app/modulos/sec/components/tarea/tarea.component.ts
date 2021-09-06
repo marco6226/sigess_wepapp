@@ -23,7 +23,7 @@ import { CapitalizePipe } from '../../utils/pipes/capitalize.pipe';
 export class TareaComponent implements OnInit {
     /* Variables */
     estadoList = [];
-    evidences = [];
+    evidences:any = [];
     msgs: Message[] = [];
     tareaClose: boolean = false;
     tareaVerify: boolean = false;
@@ -234,7 +234,7 @@ export class TareaComponent implements OnInit {
     async getEvidences(id) {
         try {
 
-            this.evidences = await this.seguimientoService.getEvidences(id, "fkTareaCierre") as any;
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkTareaCierre") as any || [];
 
         } catch (e) {
             this.msgs.push({
