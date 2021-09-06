@@ -36,7 +36,7 @@ export class VerificacionTareaComponent implements OnInit {
         this.verificationForm = fb.group({
             id: ["", Validators.required],
             email: ["", null],
-            fkUsuarioVerificaId: ["", Validators.required],
+            usuarioVerifica: ["", Validators.required],
             fechaVerificacion: ["", Validators.required],
             observacionesVerificacion: ["", Validators.required],
             evidencesV: [[]],
@@ -96,19 +96,23 @@ export class VerificacionTareaComponent implements OnInit {
             let res = await this.seguimientoService.closeTarea(this.verificationForm.value);
 
             if (res) {
-                this.verificationForm.reset();
-                this.cargando = false;
-                this.checkVerify();
-                this.loadTareas.emit(true);
                 this.msgs.push({
                     severity: "success",
                     summary: "Mensaje del sistema",
                     detail: "¡Se ha registrado la verificación de esta tarea exitosamente!",
                 });
+                this.loadTareas.emit(true);
+                this.cargando = false;
+                this.submitted = false;
+                this.verificationForm.reset();
+                setTimeout(() => {
+                    this.checkVerify();
+                }, 300);
             }
 
         } catch (e) {
             console.log(e);
+            this.submitted = false;
             this.cargando = false;
             this.msgs.push({
                 severity: "error",
@@ -162,8 +166,7 @@ export class VerificacionTareaComponent implements OnInit {
         let emp = <Empleado>event;
         this.empleado = emp;
         this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
-        this.verificationForm.patchValue({ fkUsuarioVerificaId: { 'id': this.empleado.id }, email: this.empleado.usuario.email });
+        this.verificationForm.patchValue({ usuarioVerifica: { 'id': this.empleado.id }, email: this.empleado.usuario.email });
     }
-
 
 }

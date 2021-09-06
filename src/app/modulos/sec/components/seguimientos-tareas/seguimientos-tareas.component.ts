@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, KeyValueDiffers, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
@@ -9,15 +9,19 @@ import { SeguimientosService } from '../../services/seguimientos.service';
 @Component({
     selector: 'app-seguimientos-tareas',
     templateUrl: './seguimientos-tareas.component.html',
-    styleUrls: ['./seguimientos-tareas.component.scss']
+    styleUrls: ['./seguimientos-tareas.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeguimientosTareasComponent implements OnInit {
 
     /* Variables */
     @Input() status;
+    @Input() tarea;
+    @Input() tareaClose: boolean = false;
     @Input() tareaId;
     @Output() isFollowExist: EventEmitter<boolean> = new EventEmitter();
 
+    differ: any;
     msgs: Message[] = [];
     cargando = false;
     trackings;
@@ -35,7 +39,10 @@ export class SeguimientosTareasComponent implements OnInit {
         private empleadoService: EmpleadoService,
         private route: ActivatedRoute,
         private seguimientoService: SeguimientosService,
+        private differs: KeyValueDiffers,
+        private cd: ChangeDetectorRef
     ) {
+        this.differ = differs.find({}).create();
         this.trackingForm = fb.group({
             tareaId: ["", Validators.required],
             pkUser: ["", Validators.required],
@@ -48,7 +55,26 @@ export class SeguimientosTareasComponent implements OnInit {
     ngOnInit() {
         this.trackingForm.patchValue({ tareaId: this.tareaId })
 
-        this.getSeg();
+    }
+
+    ngDoCheck() {
+        if (this.tarea !== undefined) {
+            let changes = this.differ.diff(this.tarea);
+
+            if (changes) {
+                console.log('changes detected');
+                this.getSeg();
+                changes.forEachChangedItem(r => {
+                    this.cd.markForCheck();
+                });
+                changes.forEachAddedItem((r) => {
+                    this.cd.markForCheck();
+                });
+                changes.forEachRemovedItem(r => {
+                    this.cd.markForCheck();
+                });
+            }
+        }
     }
 
     async getSeg() {
@@ -57,6 +83,7 @@ export class SeguimientosTareasComponent implements OnInit {
 
             if (this.trackings.length > 0) {
                 console.log('Se ejecuta el emit')
+                this.cd.markForCheck();
                 this.isFollowExist.emit(true);
             }
         } catch (e) {
@@ -87,6 +114,7 @@ export class SeguimientosTareasComponent implements OnInit {
         this.empleadoService
             .buscar(event.query)
             .then((data) => (this.empleadosList = <Empleado[]>data));
+        this.cd.markForCheck();
     }
 
     async onSubmit() {
@@ -115,6 +143,7 @@ export class SeguimientosTareasComponent implements OnInit {
                     summary: "Mensaje del sistema",
                     detail: "¡Se ha creado exitosamente el seguimiento!",
                 });
+                this.cd.markForCheck();
                 this.closeCreate();
                 this.getSeg();
             }
@@ -146,6 +175,7 @@ export class SeguimientosTareasComponent implements OnInit {
         try {
 
             this.evidences = await this.seguimientoService.getEvidences(id, "fkSegId");
+            this.cd.markForCheck();
 
         } catch (e) {
             this.msgs.push({

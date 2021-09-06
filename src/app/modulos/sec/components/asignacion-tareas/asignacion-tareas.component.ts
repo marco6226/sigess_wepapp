@@ -49,7 +49,7 @@ export class AsignacionTareasComponent implements OnInit {
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
                     tarea.estado = statuses[status];
-
+                    tarea.primerNombre = tarea.primerNombre + ' ' + tarea.primerApellido;
                     tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
                     return tarea;
                 }));

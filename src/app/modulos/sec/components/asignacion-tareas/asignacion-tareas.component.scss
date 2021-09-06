@@ -95,6 +95,12 @@
                 padding-bottom: 0.25rem;
                 border: none;
                 background-color: unset;
+                &.ui-state-highlight {
+                    color: #333333;
+                    .ui-sortable-column-icon {
+                        color: #000;
+                    }
+                }
                 &:hover {
                     background-color: unset;
                 }
