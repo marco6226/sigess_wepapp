@@ -1,0 +1,9 @@
+/* Buttons */
+
+.ui-button {
+    &.ui-state-default {
+        &.ui-button-warning {
+            color: #fff !important;
+        }
+    }
+}
