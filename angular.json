@@ -21,16 +21,21 @@
                             "src/favicon.ico"
                         ],
                         "styles": [
-                            "src/styles.scss",
                             "node_modules/primeng/resources/themes/nova-light/theme.css",
                             "node_modules/primeicons/primeicons.css",
                             "node_modules/font-awesome/css/font-awesome.min.css",
                             "node_modules/primeng/resources/primeng.min.css",
-                            "node_modules/primeflex/primeflex.css"
+                            "node_modules/primeflex/primeflex.css",
+                            "src/styles.scss"
                         ],
                         "scripts": [
                             "node_modules/chart.js/dist/Chart.bundle.js"
-                        ]
+                        ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "./src/assets/scss"
+                            ]
+                        }
                     },
                     "configurations": {
                         "production": {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TareaService } from '../../services/tarea.service';
@@ -12,6 +12,8 @@ import { SeguimientosService } from '../../services/seguimientos.service';
 import { Message } from 'primeng/api';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Criteria } from 'app/modulos/core/entities/filter';
+import { formatDate } from '@angular/common';
+import { CapitalizePipe } from '../../utils/pipes/capitalize.pipe';
 
 @Component({
     selector: 'app-tarea',
@@ -21,7 +23,7 @@ import { Criteria } from 'app/modulos/core/entities/filter';
 export class TareaComponent implements OnInit {
     /* Variables */
     estadoList = [];
-    evidences = [];
+    evidences: any = [];
     msgs: Message[] = [];
     tareaClose: boolean = false;
     tareaVerify: boolean = false;
@@ -47,6 +49,8 @@ export class TareaComponent implements OnInit {
         private tareaService: TareaService,
         private empleadoService: EmpleadoService,
         private seguimientoService: SeguimientosService,
+        @Inject(LOCALE_ID) private locale: string,
+        private capitalizePipe: CapitalizePipe,
     ) {
         this.tareaForm = fb.group({
             id: ["", Validators.required],
@@ -87,11 +91,31 @@ export class TareaComponent implements OnInit {
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
 
         if (this.tarea) {
-            this.status = this.verifyStatus();
+            setTimeout(() => {
+                this.status = this.verifyStatus();
+            }, 300);
             let fecha_cierre = moment(this.tarea.fecha_cierre);
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
 
+            this.tarea.date_close = formatDate(this.tarea.fecha_cierre, 'yyyy-MM-dd', this.locale);
+
             this.tareaVerify = (fecha_cierre.isValid() && fecha_verificacion.isValid()) ? true : false;
+
+            console.log(this.tarea);
+            let fq = new FilterQuery();
+            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_realiza_id, value2: null }];
+            this.empleadoService.findByFilter(fq).then(
+                async resp => {
+                    console.log(resp)
+                    if (resp['data'].length > 0) {
+                        let empleado = resp['data'][0];
+                        this.tarea.email = (empleado.usuario.email || '');
+                        let nombre = this.capitalizePipe.transform(empleado.primerNombre);
+                        let apellido = this.capitalizePipe.transform(empleado.primerApellido);
+                        this.tarea.responsable = ((nombre || '') + ' ' + (apellido || ''));
+                    }
+                }
+            );
 
             if (this.status === 3 || this.status === 4) {
                 this.tareaClose = true;
@@ -125,7 +149,7 @@ export class TareaComponent implements OnInit {
         let fecha_proyectada = moment(this.tarea.fecha_proyectada);
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollowsExist) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 2;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
         if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
@@ -161,6 +185,7 @@ export class TareaComponent implements OnInit {
     }
 
     isFollows(data) {
+        console.log('Funciona el emit')
         this.status = this.verifyStatus(data);
     }
 
@@ -197,6 +222,7 @@ export class TareaComponent implements OnInit {
 
         } catch (e) {
             console.log(e);
+            this.submitted = false;
             this.cargando = false;
             this.msgs.push({
                 severity: "error",
@@ -210,7 +236,7 @@ export class TareaComponent implements OnInit {
     async getEvidences(id) {
         try {
 
-            this.evidences = await this.seguimientoService.getEvidences(id, "fkTareaCierre") as any;
+            this.evidences = await this.seguimientoService.getEvidences(id, "fkTareaCierre") as any || [];
 
         } catch (e) {
             this.msgs.push({

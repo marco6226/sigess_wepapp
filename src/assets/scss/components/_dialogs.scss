@@ -1,0 +1,30 @@
+/* Dialogs */
+
+.ui-dialog {
+    border-radius: 8px !important;
+    transition: all 0.3s ease-in-out !important;
+    .ui-dialog-titlebar {
+        background-color: #fff !important;
+        border-radius: 8px 8px 0 0 !important;
+        text-align: center !important;
+        padding: 1.5em 1em !important;
+        .ui-dialog-title {
+            font-size: 1.25rem !important;
+            margin-top: 0.25rem !important;
+        }
+    }
+    .ui-dialog-content {
+        border-top: 1px solid transparent !important;
+    }
+    .ui-dialog-footer {
+        border-top: 1px solid transparent !important;
+        padding: 1em !important;
+        border-radius: 0 0 8px 8px !important;
+        text-align: center !important;
+        .ui-button {
+            min-width: 7rem !important;
+            border-radius: 20px !important;
+            padding: 0.25rem 0 !important;
+        }
+    }
+}

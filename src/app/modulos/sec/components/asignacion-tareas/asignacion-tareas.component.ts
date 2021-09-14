@@ -72,7 +72,7 @@ export class AsignacionTareasComponent implements OnInit {
         let fecha_proyectada = moment(tarea.fechaProyectada);
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollow) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 2;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
         if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;

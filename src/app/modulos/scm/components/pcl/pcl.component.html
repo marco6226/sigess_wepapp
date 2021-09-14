@@ -2,455 +2,180 @@
 
 
 <div class="card">
-    <h5 class="title-header p-mb-2">PCL - Origen</h5>
-    <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-rounded p-button-text"
-        (click)="resetDiags()"> </button>
-    <p-table [value]="pclList" dataKey="id" editMode="row"    [scrollable]="true">
-         <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col style="width:380px">
-                <col style="width:190px">
-                <col style="width:100px">
-                <col style="width:100px">
-                <col style="width:190px">
-                <col style="width:250px">
-                <col style="width:190px">
-                <col style="width:100px">
-                <col style="width:190px">
-                <col style="width:190px">
-                <col style="width:250px">                
-                <col style="width:250px">
-                <col style="width:100px">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="tipo">Diagnóstico</th>
-                <th pSortableColumn="tipoIntervencion">Pcl</th>
-                <th pSortableColumn="descripcion">% de la PCL</th>
-                <th pSortableColumn="fecha">Fecha de emisión de la PCL</th>
-                <th pSortableColumn="fecha">Entidad que emite la PCL</th>
-                <th pSortableColumn="fecha">Entidad</th>
-                <th pSortableColumn="fecha">Origen</th>
-                <th pSortableColumn="fecha">Fecha de calificación origen</th>
-                <th pSortableColumn="fecha">Estado de calificación origen</th>
-                <th pSortableColumn="fecha">Entidad que emite la calificación origen</th>
-                <th pSortableColumn="fecha">Entidad </th>
-                <th pSortableColumn="fecha">Observaciones</th>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <h5 class="title-header p-mb-2">PCL - Origen</h5>
+        </div>
+        <div class="ui-g-12">
+            <p-table [value]="pclList" dataKey="id" editMode="row" styleClass="material-table" selectionMode="single" [(selection)]="pclSelect">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" pSortableColumn="tipo">Diagnóstico</th>
+                        <th scope="col" pSortableColumn="tipoIntervencion">Pcl</th>
+                        <th scope="col" pSortableColumn="fecha">Entidad que emite la PCL</th>
+                        <th scope="col" pSortableColumn="fecha">Fecha de emisión de la PCL</th>
+                        <th scope="col" pSortableColumn="fecha">Origen</th>
+                        <th scope="col" pSortableColumn="fecha">Entidad que emite la calificación origen</th>
+                        <th scope="col" pSortableColumn="fecha">Estado de calificación origen</th>
+                        <th scope="col" pSortableColumn="fecha">Fecha de calificación origen</th>
+                    </tr>
+                </ng-template>
 
+                <ng-template pTemplate="body" let-pcl let-editing="editing" let-ri="rowIndex">
 
+                    <tr [pSelectableRow]="pcl" class="table-row table-row-selectable">
 
+                        <td class="p-text-center">{{ pcl.diagnostic?.label }}</td>
+                        <td class="p-text-center">{{ pcl.pcl_o?.label }}</td>
+                        <td class="p-text-center">{{ pcl.entidadEmitePcl_o?.label }}</td>
+                        <td class="p-text-center">{{ pcl.emisionPclFecha | date: 'dd/MM/yyyy' }}</td>
+                        <td class="p-text-center">{{ pcl.origen_o?.label }}</td>
+                        <td class="p-text-center">{{ pcl.entidadEmiteCalificacion }}</td>
+                        <td class="p-text-center">{{ pcl.statusDeCalificacion_o?.label }}</td>
+                        <td class="p-text-center">{{ pcl.fechaCalificacion | date: 'dd/MM/yyyy' }}</td>
 
+                    </tr>
 
-                <th style="width:8rem"></th>
-            </tr>
-        </ng-template>
+                </ng-template>
 
-        <ng-template pTemplate="body" let-pcl let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="pcl">
+                <ng-template pTemplate="summary" let-rowData>
+                    <button *sTienePermiso="'SCM_POST_CASEPCL'" pButton type="button" icon="fa fa-plus" label="Crear" (click)="nuevoTratamiento()" [disabled]="pclSelect"></button>
+                    <button *sTienePermiso="'SCM_EDIT_CASEPCL'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="editPcl()" [disabled]="!pclSelect || action"></button>
+                    <button pButton type="button" icon="fa fa-search" label="Consultar" class="ui-button-warning" (click)="showPcl()" [disabled]="!pclSelect || action"></button>
+                    <button *sTienePermiso="'SCM_DEL_CASEPCL'" pButton type="button" [icon]="(action) ? 'pi pi-spin pi-spinner' : 'fa fa-trash'" label="Eliminar" class="ui-button-danger" (click)="deletePcl()" [disabled]="!pclSelect || action"></button>
+                </ng-template>
 
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8" class="p-text-center" *ngIf="loading">
+                            <em class="pi pi-spin pi-spinner" style="font-size: 2rem"></em>
+                        </td>
+                    </tr>
+                </ng-template>
 
+            </p-table>
+        </div>
+    </div>
 
-                <td>
-                    <p-cellEditor>
+    <p-dialog [header]="(!pclSelect) ? 'Crear PCL' : (action) ? 'Información de la PCL' : 'Editar PCL'" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
 
-                        <ng-template pTemplate="input">
+        <form [formGroup]="pclForm">
+            <div class="ui-g">
+                <div class="ui-g p-py-2">
+                    <div class="ui-g-12">
+                        <h5 class="title-header p-mb-2">PCL</h5>
+                    </div>
 
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="diagList" 
-                                    [(ngModel)]="pcl.diag" >
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="diagList" class="select-material" formControlName="diag" styleClass="select-material" required="true" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Diagnósticos</label>
+                        </div>
+                    </div>
 
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="diagList" 
-                                    [(ngModel)]="pcl.diag" >
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="input-field">
+                            <p-dropdown [options]="pclOptionList" formControlName="pcl" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">PCL</label>
+                        </div>
+                    </div>
 
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="input-field">
+                            <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL" class="form-material" id="porcentajePcl" [readonly]="action" />
+                            <label for="" class="active">% de la PCL</label>
+                        </div>
+                    </div>
 
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="pclOptionList" class="select-material"
-                                    [(ngModel)]="pcl.pcl" styleClass="select-material" [autoWidth]="false" >
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="pclOptionList"
-                                     [(ngModel)]="pcl.pcl"   [autoWidth]="false">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="pcl.porcentajePcl">
-                        </ng-template>
-                    </p-cellEditor>
-
-                    <p-cellEditor>
-                        <ng-template pTemplate="output">
-                            <input pInputText type="text" [(ngModel)]="pcl.porcentajePcl">
-                        </ng-template>
-
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-calendar [touchUI]="true"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2010:2030" [(ngModel)]="pcl.emisionPclFecha" dateFormat="dd/mm/yy"
-                                placeholder="dd/MM/yyyy" [locale]="localeES">
-                            </p-calendar>                            
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{pcl.emisionPclFecha | date : 'dd/MM/yyyy'}}
-                        </ng-template>
-                    </p-cellEditor>
-
-                </td>
-                <!--Entidad emitida pcl-->
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="emitPclentity" class="select-material"
-                                    [(ngModel)]="pcl.entidadEmitePcl" styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="emitPclentity"
-                                    class="select-material" [(ngModel)]="pcl.entidadEmitePcl"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="entity[pcl.entidadEmitePcl]"
-                                    class="select-material" [(ngModel)]="pcl.entidadEmitida"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="entity[pcl.entidadEmitePcl]"
-                                    class="select-material" [(ngModel)]="pcl.entidadEmitida"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="origenList"
-                                    class="select-material" [(ngModel)]="pcl.origen"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="origenList"
-                                    class="select-material" [(ngModel)]="pcl.origen"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-calendar [touchUI]="true" [(ngModel)]="pcl.fechaCalificacion" dateFormat="dd/mm/yy"
-                                placeholder="dd/MM/yyyy" [locale]="localeES" [monthNavigator]="true" [yearNavigator]="true" yearRange="2010:2030">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field ">
+                            <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" showButtonBar="true" yearRange="2010:2030" [maxDate]="fechaActual" [locale]="localeES" formControlName="emisionPclFecha" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material"
+                                [disabled]="action">
                             </p-calendar>
-                            
-
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{pcl.fechaCalificacion | date : 'dd/MM/yyyy'}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="pclCalificacionList" class="select-material"
-                                    [(ngModel)]="pcl.statusDeCalificacion" styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="pclCalificacionList"
-                                    class="select-material" [(ngModel)]="pcl.statusDeCalificacion"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="emitPclentity" class="select-material"
-                                    [(ngModel)]="pcl.entidadEmiteCalificacion" styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true" [options]="emitPclentity"
-                                    class="select-material" [(ngModel)]="pcl.entidadEmiteCalificacion"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-
-                            <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="entity[pcl.entidadEmiteCalificacion]"
-                                    class="select-material" [(ngModel)]="pcl.entidadEmitidaCalificacion"
-                                    styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-
-                            <div class="input-field">
-                                <p-dropdown readonly="true" [filter]="true"
-                                    [options]="entity[pcl.entidadEmiteCalificacion]" class="select-material"
-                                    [(ngModel)]="pcl.entidadEmitidaCalificacion" styleClass="select-material">
-                                </p-dropdown>
-                            </div>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="pcl.observaciones">
-                        </ng-template>
-                    </p-cellEditor>
-
-                    <p-cellEditor>
-                        <ng-template pTemplate="output">
-                            <input pInputText type="text" [(ngModel)]="pcl.observaciones">
-                        </ng-template>
-
-                    </p-cellEditor>
-                </td>
-
-                <td style="text-align:center">
-                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                        class="p-button-rounded p-button-text"> </button>
-                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" class="ui-button-danger"
-                        (click)="onRowDelete(pcl)"> </button>
-                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                        (click)="onRowEditSave(pcl)" title="Editar PCL"
-                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-                        (click)="onRowEditCancel(pcl)" class="ui-button-danger"></button>
-                </td>
-            </tr>
-        </ng-template>
-
-
-
-        <ng-template pTemplate="summary" let-rowData>
-            <button pButton type="button" icon="fa fa-plus" (click)="nuevoTratamiento()" label="Nueva Pcl">
-            </button>
-        </ng-template>
-    </p-table>
-</div>
-
-
-
-<p-dialog header="Crear PCL" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [baseZIndex]="10000">
-
-    <form [formGroup]="pclForm">
-        <div class="ui-g">
-            <div class="ui-g p-py-2">
-                <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">PCL</h5>
-                </div>
-                <div class="ui-g-12 ui-md-6">
-
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="diagList" class="select-material" formControlName="diag"
-                            styleClass="select-material" required="true">
-                        </p-dropdown>
-                        <label for="" class="active">Diagnósticos</label>
-
-                    </div>
-                </div>
-
-
-
-                <div class="ui-g-12 ui-md-6">
-                    <div class="input-field">
-                        <p-dropdown [options]="pclOptionList" formControlName="pcl" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">PCL</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field">
-                        <input type="text" pInputText formControlName="porcentajePcl" placeholder="% de la PCL"
-                            class="form-material" id="porcentajePcl" />
-                        <label for="" class="active">% de la PCL</label>
+                            <label for="" class="active">Fecha de emisión de la PCL</label>
+                        </div>
                     </div>
 
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field ">
-                        <p-calendar [monthNavigator]="true" [touchUI]="true"  [yearNavigator]="true" yearRange="2010:2030"
-                            [maxDate]="fechaActual" [locale]="localeES" formControlName="emisionPclFecha"
-                            dateFormat="dd/mm/yy" inputStyleClass="form-material"></p-calendar>
-                            
-                            <button  (click)="reset()"  pButton type="button" label="Limpiar" ></button>
-                            
-                        <label for="" class="active">Fecha de emisión de la PCL</label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmitePcl" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad que emite la PCL</label>
+                        </div>
                     </div>
-                </div>
 
-
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmitePcl"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite la PCL</label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="pclForm.get('entidadEmitePcl').value == 'EPS' || pclForm.get('entidadEmitePcl').value == 'ARL' || pclForm.get('entidadEmitePcl').value == 'AFP'">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="entity[pclForm.get('entidadEmitePcl').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad</label>
+                        </div>
                     </div>
-                </div>
-                
 
-                <div class="ui-g-12 ui-md-6 ui-lg-6" *ngIf="pclForm.get('entidadEmitePcl').value == 'EPS' || pclForm.get('entidadEmitePcl').value == 'ARL' || pclForm.get('entidadEmitePcl').value == 'AFP'">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="entity[pclForm.get('entidadEmitePcl').value]"
-                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad</label>
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="input-field">
+                            <p-dropdown [options]="origenList" formControlName="origen" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Origen</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-4">
-                    <div class="input-field">
-                        <p-dropdown [options]="origenList" formControlName="origen" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Origen</label>
-                        
+                    <div class="ui-g-12 p-mb-2">
+                        <h5 class="title-header">Origen</h5>
                     </div>
-                </div>
 
-                <div class="ui-g-12 p-mb-2">
-                    <h5 class="title-header">Origen</h5>
-                </div>
-
-                <div class="ui-g-12 ui-md-4 ui-lg-3">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                            [maxDate]="fechaActual" formControlName="fechaCalificacion" [locale]="localeES"
-                            dateFormat="dd/mm/yy"></p-calendar>
-                        <label for="" class="active">Fecha de calificación origen</label>
+                    <div class="ui-g-12 ui-md-4 ui-lg-4">
+                        <div class="input-field">
+                            <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" showButtonBar="true" [yearRange]="yearRange" [maxDate]="fechaActual" formControlName="fechaCalificacion" [locale]="localeES" dateFormat="dd/mm/yy" styleClass="calendar-material"
+                                inputStyleClass="form-material" [disabled]="action"></p-calendar>
+                            <label for="" class="active">Fecha de calificación origen</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="pclCalificacionList"
-                            formControlName="statusDeCalificacion" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Estado de calificación origen</label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="pclCalificacionList" formControlName="statusDeCalificacion" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Estado de calificación origen</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmiteCalificacion"
-                            class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite la calificación origen</label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="emitPclentity" formControlName="entidadEmiteCalificacion" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad que emite la calificación origen</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="pclForm.get('entidadEmiteCalificacion').value == 'EPS' || pclForm.get('entidadEmiteCalificacion').value == 'ARL' || pclForm.get('entidadEmiteCalificacion').value == 'AFP'">
-                    <div class="input-field">
-                        <p-dropdown [filter]="true" [options]="entity[pclForm.get('entidadEmiteCalificacion').value]"
-                            formControlName="entidadEmitidaCalificacion" class="select-material"
-                            styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="pclForm.get('entidadEmiteCalificacion').value == 'EPS' || pclForm.get('entidadEmiteCalificacion').value == 'ARL' || pclForm.get('entidadEmiteCalificacion').value == 'AFP'">
+                        <div class="input-field">
+                            <p-dropdown [filter]="true" [options]="entity[pclForm.get('entidadEmiteCalificacion').value]" formControlName="entidadEmitidaCalificacion" class="select-material" styleClass="select-material" [readonly]="action">
+                            </p-dropdown>
+                            <label for="" class="active">Entidad </label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12">
-                    <div class="input-field">
-                        <textarea class="textarea-material" pInputTextarea formControlName="observaciones"></textarea>
-                        <label for="" class="active">Observaciones o diagnósticos calificados</label>
-                        
+                    <div class="ui-g-12">
+                        <div class="input-field">
+                            <textarea class="textarea-material" rows="3" pInputTextarea formControlName="observaciones" [readonly]="action"></textarea>
+                            <label for="" class="active">Observaciones o diagnósticos calificados</label>
+
+                        </div>
                     </div>
-                </div>
-
-                <div style="height:200px">
-
-                </div>
-                <div class="ui-g-12">
-                    <button pButton type="button" label="Guardar" icon="fa fa-plus" (click)="onSubmit()">
-
-                    </button>
                 </div>
             </div>
-        </div>
-    </form>
-</p-dialog>
+        </form>
+
+        <!-- Start footer -->
+        <p-footer>
+            <button *ngIf="pclSelect && !action" pButton type="button" label="Guardar" [icon]="(loadingForm) ? 'pi pi-spin pi-spinner' : 'fa fa-plus'" [disabled]="loadingForm" (click)="onSubmit(true)"></button>
+            <button *ngIf="!pclSelect && !action" pButton type="button" label="Crear" [icon]="(loadingForm) ? 'pi pi-spin pi-spinner' : 'fa fa-plus'" [disabled]="loadingForm" (click)="onSubmit()"></button>
+            <button pButton type="button" [label]="(action) ? 'Cerrar' : 'Cancelar'" icon="pi pi-times" class="ui-button-danger" [disabled]="loadingForm" (click)="onCancel()"></button>
+        </p-footer>
+        <!-- End footer -->
+    </p-dialog>
+
+</div>

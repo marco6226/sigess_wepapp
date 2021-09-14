@@ -268,8 +268,6 @@ p-autoComplete {
     }
     /* Modal Design */
     .ui-dialog {
-        border-radius: 8px;
-        transition: all 0.3s ease-in-out;
         &.dialog-create {
             width: 60vw;
             @media only screen and (min-width: 1280px) {
@@ -280,30 +278,6 @@ p-autoComplete {
             width: 40vw;
             @media only screen and (min-width: 1280px) {
                 width: 25vw;
-            }
-        }
-        .ui-dialog-titlebar {
-            background-color: #fff;
-            border-radius: 8px 8px 0 0;
-            text-align: center;
-            padding: 1.5em 1em;
-            .ui-dialog-title {
-                font-size: 1.25rem;
-                margin-top: 0.25rem;
-            }
-        }
-        .ui-dialog-content {
-            border-top: 1px solid transparent;
-        }
-        .ui-dialog-footer {
-            border-top: 1px solid transparent;
-            padding: 1em;
-            border-radius: 0 0 8px 8px;
-            text-align: center;
-            .ui-button {
-                min-width: 7rem;
-                border-radius: 20px;
-                padding: 0.25rem 0;
             }
         }
     }
