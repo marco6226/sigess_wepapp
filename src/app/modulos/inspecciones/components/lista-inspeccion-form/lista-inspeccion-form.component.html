@@ -16,7 +16,7 @@
   </div>
 
 </p-panel>
-<div class="ui-g-12 ui-sm-12 ui-md-6" *ngIf="ethus">
+<div class="ui-g-12 ui-sm-12 ui-md-6" >
   <form >
       <p-panel>
           <p-header>
@@ -31,7 +31,8 @@
           <input type="number" pInputText formControlName="version" required/>
 
           <label class="s-float-label">Fecha de Validación</label>
-          <input type="text" pInputText formControlName="version" required/>
+          <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
+          dateFormat="dd/mm/yy" id="fechaProyectada" formControlName="fechaProyectada" required></p-calendar>
           
           <div >
               <button  pButton type="button" (click)="(false)" icon="fa fa-check"  title="Validar como  supervision / Ingenieria" ></button>
@@ -40,12 +41,32 @@
       </p-panel>
   </form>
 </div>
-<div class="ui-g-12 ui-sm-12 ui-md-6" *ngIf="ethus">
+<div class="ui-g-12 ui-sm-12 ui-md-6" >
   <form id='2' >
       <p-panel>
           <p-header>
               <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno HSE
           </p-header>
+          
+            <div class="input-field">
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                    *ngIf="empleado?.id == null">
+                    <ng-template let-empleado pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div class="wrapper">
+                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
+                                <div style="margin-left:20px">
+                                    <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                    <br /> {{empleado?.numeroIdentificacion}}
+                                    <br /> {{empleado?.usuario.email}}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+                <label for="" class="active">Número de identificación</label>
+            </div>
           <label class="s-float-label">Nombre</label>
           <input type="text" pInputText formControlName="codigo" required/>
 
@@ -55,7 +76,8 @@
           <input type="number" pInputText formControlName="version" required/>
 
           <label class="s-float-label">Fecha de Validación</label>
-          <input type="number" pInputText formControlName="version" required/>
+          <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
+          dateFormat="dd/mm/yy" id="fechaProyectada" formControlName="fechaProyectada" required></p-calendar>
           
           <div >
               <button  pButton type="button" (click)="(false)" icon="fa fa-check" title="Validar como hse" ></button>

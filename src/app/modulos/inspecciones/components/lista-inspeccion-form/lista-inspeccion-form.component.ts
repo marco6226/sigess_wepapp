@@ -12,6 +12,8 @@ import { TipoHallazgoService } from 'app/modulos/inspecciones/services/tipo-hall
 import { TipoHallazgo } from '../../entities/tipo-hallazgo';
 import { SesionService } from '../../../core/services/sesion.service';
 import { stringify } from 'querystring';
+import { Empleado } from "app/modulos/empresa/entities/empleado";
+import { EmpleadoService } from "app/modulos/empresa/services/empleado.service";
 
 @Component({
     selector: 's-lista-inspeccion-form',
@@ -40,7 +42,11 @@ export class ListaInspeccionFormComponent implements OnInit {
     imgMap: any = {};
     msgs: Message[] = [];
     tipoHallazgoList: TipoHallazgo[];
-
+    es: any;
+    fechaActual = new Date();
+    yearRange: string = this.fechaActual.getFullYear() + ":" + (this.fechaActual.getFullYear() + 1);
+    empleado: Empleado;
+    empleadosList: Empleado[];
     loadingImg: boolean;
     numMaxImg = 3;
 
@@ -48,7 +54,8 @@ export class ListaInspeccionFormComponent implements OnInit {
         private sessionService: SesionService,
         private domSanitizer: DomSanitizer,
         private directorioService: DirectorioService,
-        private tipoHallazgoService: TipoHallazgoService,
+        private tipoHallazgoService: TipoHallazgoService, 
+        private empleadoService: EmpleadoService,
     ) { }
 
     ngOnInit() {
@@ -57,6 +64,13 @@ export class ListaInspeccionFormComponent implements OnInit {
             .then(resp => {
                 this.tipoHallazgoList = resp['data'];
             });
+    }
+    buscarEmpleado(event) {
+        this.empleadoService
+            .buscar(event.query)
+            .then((data) => (this.empleadosList = <Empleado[]>data));
+
+
     }
 
     adicionarElementoInp() {
