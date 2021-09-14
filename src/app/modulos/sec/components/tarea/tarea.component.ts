@@ -23,7 +23,7 @@ import { CapitalizePipe } from '../../utils/pipes/capitalize.pipe';
 export class TareaComponent implements OnInit {
     /* Variables */
     estadoList = [];
-    evidences:any = [];
+    evidences: any = [];
     msgs: Message[] = [];
     tareaClose: boolean = false;
     tareaVerify: boolean = false;
@@ -91,7 +91,9 @@ export class TareaComponent implements OnInit {
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
 
         if (this.tarea) {
-            this.status = this.verifyStatus();
+            setTimeout(() => {
+                this.status = this.verifyStatus();
+            }, 300);
             let fecha_cierre = moment(this.tarea.fecha_cierre);
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
 
@@ -147,7 +149,7 @@ export class TareaComponent implements OnInit {
         let fecha_proyectada = moment(this.tarea.fecha_proyectada);
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollowsExist) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 2;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
         if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
