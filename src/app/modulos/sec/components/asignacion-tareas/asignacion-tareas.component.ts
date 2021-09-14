@@ -46,17 +46,19 @@ export class AsignacionTareasComponent implements OnInit {
         this.tareaService.findByFilter(fq).then(
             async resp => {
                 this.tareasList = resp['data']
+
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
                     tarea.estado = statuses[status];
-                    tarea.primerNombre = tarea.primerNombre + ' ' + tarea.primerApellido;
+                    tarea.primerNombre = tarea.empResponsable.primerNombre;
                     tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
                     return tarea;
                 }));
+
             }
 
         );
-
+        console.log(this.tareasList);
     }
 
     async verifyStatus(tarea) {
