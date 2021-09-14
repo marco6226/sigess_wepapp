@@ -1,0 +1,32 @@
+/* Calendar */
+
+.calendar-material {
+    .ui-datepicker {
+        z-index: 10000 !important;
+    }
+    .ui-datepicker-buttonbar {
+        &>.ui-g>div:last-child {
+            .ui-button-text-empty {
+                background-color: $danger-color;
+                color: $white-color;
+                @include transition(.3s);
+                &:hover {
+                    background-color: darken($danger-color, 5) !important;
+                }
+                span {
+                    display: none;
+                }
+                &::after {
+                    content: '\f12d';
+                    display: inline-block;
+                    font: normal normal normal 14px/1 FontAwesome;
+                    font-size: inherit;
+                    text-rendering: auto;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    padding: .5rem;
+                }
+            }
+        }
+    }
+}

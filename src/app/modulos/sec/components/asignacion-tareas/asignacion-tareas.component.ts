@@ -46,17 +46,19 @@ export class AsignacionTareasComponent implements OnInit {
         this.tareaService.findByFilter(fq).then(
             async resp => {
                 this.tareasList = resp['data']
+
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
                     tarea.estado = statuses[status];
-                    tarea.primerNombre = tarea.primerNombre + ' ' + tarea.primerApellido;
+                    tarea.primerNombre = tarea.empResponsable.primerNombre;
                     tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
                     return tarea;
                 }));
+
             }
 
         );
-
+        console.log(this.tareasList);
     }
 
     async verifyStatus(tarea) {
@@ -70,7 +72,7 @@ export class AsignacionTareasComponent implements OnInit {
         let fecha_proyectada = moment(tarea.fechaProyectada);
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollow) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 2;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
         if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;

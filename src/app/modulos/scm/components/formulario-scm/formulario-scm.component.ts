@@ -95,6 +95,7 @@ export class FormularioScmComponent implements OnInit {
     logsList = []
     empleadosList: Empleado[];
     diagnosticoList = [];
+    modifyDiag = false;
     seguimientos = [];
     tratamientos = [];
     products2 = [];
@@ -622,10 +623,6 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-
-
-
-
     async onSelection(event) {
         this.value = event;
         // this.caseSelect = false;
@@ -635,9 +632,6 @@ export class FormularioScmComponent implements OnInit {
 
 
         this.casosList = await this.scmService.getCaseList(emp.id);
-
-
-
 
         this.empleadoSelect = emp;
         this.loaded = true;
@@ -788,9 +782,15 @@ export class FormularioScmComponent implements OnInit {
             });
     }
 
+    showModalDiagnostico() {
+        this.modalDianostico = true;
+        this.modifyDiag = true;
+    }
 
-    onClick() {
-
+    closeModalDiagnostico() {
+        this.modalDianostico = false;
+        this.diagSelect = null;
+        this.modifyDiag = false;
     }
 
 

@@ -5,9 +5,8 @@
             Casos médicos
         </p-header>
 
-        <p-table #dt [value]="casosList" autoLayout="true" selectionMode="single" [(selection)]="caseSelect" [rows]="11"
-            [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion"
-            sortOrder="1" [totalRecords]="totalRecords" [loading]="loading">
+        <p-table #dt [value]="casosList" autoLayout="true" styleClass="material-table" selectionMode="single" [(selection)]="caseSelect" [rows]="11" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
+            [totalRecords]="totalRecords" [loading]="loading">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="id">#CASO
@@ -38,37 +37,78 @@
                         <p-sortIcon field="casoMedicoLaboral"></p-sortIcon>
                     </th>
                 </tr>
-                <tr>
-
+                <tr class="filters">
                     <td>
-                        <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'fechaCreacion', 'contains')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaCreacion', 'contains')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'region', 'contains')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'region', 'contains')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerApellido')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerApellido')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerNombre')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerNombre')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'statusCaso', 'contains')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'statusCaso', 'contains')">
+                        </div>
                     </td>
                     <td>
-                        <input pInputText type="text"
-                            (input)="dt.filter($event.target.value, 'casoMedicoLaboral', 'contains')">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon">
+                                <em class="pi pi-search"></em>
+                            </span>
+                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'casoMedicoLaboral', 'contains')">
+                        </div>
                     </td>
                 </tr>
             </ng-template>
@@ -88,16 +128,19 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'SCM_CREATE_CASE'" pButton type="button" icon="fa fa-plus"
-                    [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
+                <button *sTienePermiso="'SCM_CREATE_CASE'" pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
 
-                <button *sTienePermiso="'SCM_PUT_CASE'" pButton type="button" icon="fa fa-pencil" label="Modificar"
-                    class="ui-button-success" (click)="openCase()" [disabled]="!caseSelect"></button>
+                <button *sTienePermiso="'SCM_PUT_CASE'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="openCase()" [disabled]="!caseSelect"></button>
 
-                <button *sTienePermiso="'SCM_LIST_CASE'" pButton type="button" icon="fa fa-search" label="Consultar"
-                    class="ui-button-warning" (click)="openCaseConsultar()" [disabled]="!caseSelect"></button>
+                <button *sTienePermiso="'SCM_LIST_CASE'" pButton type="button" icon="fa fa-search" label="Consultar" class="ui-button-warning" (click)="openCaseConsultar()" [disabled]="!caseSelect"></button>
                 <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
                 (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="9" class="p-text-center">No hay registro de casos médicos o con los términos de filtro usados
+                    </td>
+                </tr>
             </ng-template>
         </p-table>
 
@@ -105,7 +148,6 @@
 </div>
 
 <div>
-    <app-formulario-scm *ngIf="visibleForm && caseSelect" (onCancel)="onCancel()" [consultar]="consultar"
-        [caseSelect]="caseSelect">
+    <app-formulario-scm *ngIf="visibleForm && caseSelect" (onCancel)="onCancel()" [consultar]="consultar" [caseSelect]="caseSelect">
     </app-formulario-scm>
 </div>

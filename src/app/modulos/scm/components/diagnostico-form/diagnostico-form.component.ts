@@ -22,14 +22,15 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
     @Input() caseId: string;
     @Input() id: string;
     @Output() eventClose = new EventEmitter<any>()
+    @Output() closeModal = new EventEmitter<any>()
     @Input() diagSelect: any;
 
     origenList = [
         { label: 'Seleccione', value: null },
         { label: 'Común', value: 'Común' },
-        { label: 'Accidente De Trabajo', value: 'Accidente Laboral' },
+        { label: 'Accidente de trabajo', value: 'Accidente Laboral' },
         { label: 'Mixto', value: 'Mixto' },
-        { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
+        { label: 'Enfermedad laboral', value: 'Enfermedad Laboral' },
 
     ];
     localeES: any = locale_es;
@@ -72,6 +73,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
         });
         console.log(this.sistemaAfectado);
     }
+
     ngOnChanges(changes: SimpleChanges) {
         this.patchFormValues();
         // You can also use categoryId.previousValue and 
@@ -99,6 +101,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
         }
 
     }
+
     async onSubmit() {
         this.msgs = [];
         console.log(this.diagnosticoForm);
@@ -109,7 +112,6 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
         let {
             codigoCie10,
             diagnostico,
-            sistemaAfectado,
             fechaDiagnostico,
             detalle,
             origen
@@ -145,27 +147,28 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             }
 
             if (res) {
+                this.eventClose.emit();
+                this.clearInputs();
                 this.msgs.push({
                     severity: "success",
-                    summary: this.diagSelect ? "Diagnóstico Actualizado" : 'Diagnóstico Creado',
+                    summary: "Mensaje del sistema",
+                    detail: this.diagSelect ? "El diagnóstico fue actualizado exitosamente" : 'El diagnóstico fue creado exitosamente',
                     //detail: `Su numero de caso es ${status}`,
                 });
-                setTimeout(() => {
-                    this.clearInputs();
-                    this.eventClose.emit()
-                }, 1000);
             }
         } catch (error) {
 
             this.msgs.push({
                 severity: "error",
-                summary: "Error",
+                summary: "Mensaje del sistema",
+                detail: "Ocurrió un problema con el diagnóstico"
                 // detail: `de el usuario ${emp.numeroIdentificacion}`,
             });
-
         }
+    }
 
-
+    close() {
+        this.closeModal.emit();
     }
 
     clearInputs() {
@@ -188,6 +191,4 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             }
         });
     }
-
-
 }
