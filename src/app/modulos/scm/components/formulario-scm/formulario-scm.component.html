@@ -382,46 +382,46 @@
         </p-tabPanel>
     </ng-container>
 
-        <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
+    <p-tabPanel *ngIf="empleadoSelect" header="Información Médica">
 
 
-            <form *ngIf="createCase || caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <div class="input-field">
-                            <input type="text" pInputText [value]="status" [attr.disabled]="true">
-                            <label for="" class="active">Estado del caso</label>
-                        </div>
+        <form *ngIf="createCase || caseSelect" [formGroup]="casoMedicoForm" (ngSubmit)="onSubmit()">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <div class="input-field">
+                        <input type="text" pInputText [value]="status" [attr.disabled]="true">
+                        <label for="" class="active">Estado del caso</label>
                     </div>
-                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <div class="input-field">
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                    <div class="input-field">
                         <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-                            <label for="" class="active">Fecha de cierre</label>
-                        </div>
+                        <label for="" class="active">Fecha de cierre</label>
                     </div>
-                    <div class="ui-g-12 ui-md-4 ui-lg-8">
-                        <div class="input-field">
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-8">
+                    <div class="input-field">
                         <textarea class="textarea-material" pInputTextarea formControlName="observaciones"></textarea>
-                            <label for="" class="active">Observaciones</label>
-                        </div>
+                        <label for="" class="active">Observaciones</label>
                     </div>
+                </div>
 
-                
-            <div *sTienePermiso="'SCM_GET_CASE_INFO'">
+
+                <div *sTienePermiso="'SCM_GET_CASE_INFO'">
                     <div class="ui-g-12 p-mb-2">
                         <h5 class="title-header">Información del caso</h5>
                     </div>
 
                     <div class="ui-g-12">
-                        <div class="input-field">                        
-                                <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5" required></textarea>
+                        <div class="input-field">
+                            <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5" required></textarea>
                             <label for="" class="active">Descripción completa del caso</label>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
-                        <div class="input-field">                            
-                                <textarea pInputTextarea formControlName="descripcionCargo" rows="4" required></textarea>
+                        <div class="input-field">
+                            <textarea pInputTextarea formControlName="descripcionCargo" rows="4" required></textarea>
                             <label for="" class="active">Descripción del cargo</label>
                         </div>
                     </div>
@@ -432,9 +432,9 @@
                             </p-dropdown>
                             <label for="" class="active">Caso de mesa laboral</label>
                         </div>
-                    </div>      
-                                   
-                            
+                    </div>
+
+
                     <div class="ui-g-12">
                         <h5 class="title-header p-mb-2">Intervención complementaria</h5>
                     </div>
@@ -468,212 +468,216 @@
                             <label for="" class="active">Justificación</label>
                         </div>
                     </div>
-                
-            </div>
-            <div class="principal"  *sTienePermiso="'SCM_GET_REHABILITA'">
-                    <h5 class="title-header">Conceptos de rehabilitación</h5>
-                
-                <div class="id">
-
-                    <h2> 1. </h2>
 
                 </div>
-                <div class="concepto">
-                    <div class="input-field">
+                <div class="principal" *sTienePermiso="'SCM_GET_REHABILITA'">
+                    <h5 class="title-header">Conceptos de rehabilitación</h5>
+
+                    <div class="id">
+
+                        <h2> 1. </h2>
+
+                    </div>
+                    <div class="concepto">
+                        <div class="input-field">
 
                             <p-dropdown [filter]="true" [options]="conceptoRehabilitacion" formControlName="conceptRehabilitacion" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Concepto de rehabilitación</label>
+                            </p-dropdown>
+                            <label for="" class="active">Concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>                
-                <div class="fecha">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                    <div class="fecha">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
                             <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaConceptRehabilitacion"></p-calendar>
-                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                            <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidadp">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                    <div class="entidadp">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
                             <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]" formControlName="entidadEmiteConcepto" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite el concepto de
-                            rehabilitación</label>
+                            </p-dropdown>
+                            <label for="" class="active">Entidad que emite el concepto de
+                                rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidad">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
+                    <div class="entidad">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
                             <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad</label>
+                            </p-dropdown>
+                            <label for="" class="active">Entidad</label>
+                        </div>
                     </div>
-                </div>
-                <div class="id">
+                    <div class="id">
 
-                    <h2> 2. </h2>
+                        <h2> 2. </h2>
 
-                </div>
-                <div class="concepto">
-                    <div class="input-field">
+                    </div>
+                    <div class="concepto">
+                        <div class="input-field">
 
                             <p-dropdown [filter]="true" [options]="conceptoRehabilitacion" formControlName="conceptRehabilitacionTwo" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Concepto de rehabilitación</label>
+                            </p-dropdown>
+                            <label for="" class="active">Concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="fecha">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                    <div class="fecha">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
                             <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
-                        <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                            <label for="" class="active">Fecha de concepto de rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidadp">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                    <div class="entidadp">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
                             <p-dropdown [filter]="true" [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]" formControlName="entidadEmiteConceptoTwo" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite el concepto de
-                            rehabilitación</label>
+                            </p-dropdown>
+                            <label for="" class="active">Entidad que emite el concepto de
+                                rehabilitación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="entidad">
-                    <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
+                    <div class="entidad">
+                        <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
                             <p-dropdown [filter]="true" [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]" formControlName="entidadEmitidaTwo" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad</label>
+                            </p-dropdown>
+                            <label for="" class="active">Entidad</label>
+                        </div>
                     </div>
                 </div>
+
             </div>
-               
-        </div>
-                <div style="text-align: center; width: 100%;">
+            <div style="text-align: center; width: 100%;">
                 <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()" icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()" title="Volver a listado de empleados"></button>
                 <button pButton *ngIf="solicitando == false || !this.consultar" type="submit" icon="fa fa-floppy-o" class="float-btn" [disabled]="this.consultar" style="bottom: 100px;" title="Guardar datos medicos"></button>
 
                 <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
-                </div>
-            </form>
+            </div>
+        </form>
 
 
         <p-table *ngIf="!caseSelect && !createCase" #dt [value]="casosList" (click)="onClick()" autoLayout="true" selectionMode="single" [(selection)]="casoSeleccionado" [rows]="10" (onLazyLoad)="lazyLoad($event)" [paginator]="true" dataKey="id" [lazy]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="id">No. Caso
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">No. Caso
 
-                        </th>
-                        <th pSortableColumn="fechaCreacion">Fecha de apertura
+                    </th>
+                    <th pSortableColumn="fechaCreacion">Fecha de apertura
 
-                        </th>
-                        <th pSortableColumn="case.region">Regional
+                    </th>
+                    <th pSortableColumn="case.region">Regional
 
-                        </th>
-                        <th pSortableColumn="case.ciudad">Ciudad
+                    </th>
+                    <th pSortableColumn="case.ciudad">Ciudad
 
-                        </th>
-                        <th pSortableColumn="pkUser.primerApellido">Apellido
+                    </th>
+                    <th pSortableColumn="pkUser.primerApellido">Apellido
 
-                        </th>
-                        <th pSortableColumn="pkUser.primerNombre">Nombre
+                    </th>
+                    <th pSortableColumn="pkUser.primerNombre">Nombre
 
-                        </th>
-                        <th pSortableColumn="case.documento">No. Documento
+                    </th>
+                    <th pSortableColumn="case.documento">No. Documento
 
-                        </th>
-                        <th pSortableColumn="case.statusCaso">Estado de caso
+                    </th>
+                    <th pSortableColumn="case.statusCaso">Estado de caso
 
-                        </th>
-                        <th pSortableColumn="case.casoMedicoLaboral">Caso de mesa laboral
+                    </th>
+                    <th pSortableColumn="case.casoMedicoLaboral">Caso de mesa laboral
 
-                        </th>
-                    </tr>
-                    <tr>
+                    </th>
+                </tr>
+                <tr>
 
 
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-case>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-case>
 
-                    <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                        <td>{{case.id}}</td>
-                        <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{case.region}}</td>
-                        <td>{{case.ciudad}}</td>
-                        <td>{{case.pkUser.primerApellido}}</td>
-                        <td>{{case.pkUser.primerNombre}}
+                <tr [pSelectableRow]="case" class="table-row table-row-selectable">
+                    <td>{{case.id}}</td>
+                    <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{case.region}}</td>
+                    <td>{{case.ciudad}}</td>
+                    <td>{{case.pkUser.primerApellido}}</td>
+                    <td>{{case.pkUser.primerNombre}}
                         <td>{{case.documento}}</td>
                         <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                         <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
 
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary" let-rowData>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
                 <button *sTienePermiso="'SCM_CREATE_CASE'" (click)="createCaso()" pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
 
                 <button *sTienePermiso="'SCM_PUT_CASE'" (click)="modifyCase()" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
 
                 <button *sTienePermiso="'SCM_LIST_CASE'" (click)="readCase()" pButton type="button" icon="fa fa-pencil" label="Consultar" class="ui-button-success" [disabled]="!casoSeleccionado"></button>
-                    <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+                <!--  <button *sTienePermiso="'ADM_DELETE_USR'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
             (click)="eliminar()" [disabled]="!usuarioSelect"></button>-->
-                </ng-template>
-            </p-table>
+            </ng-template>
+        </p-table>
 
-        </p-tabPanel>
-    
+    </p-tabPanel>
+
     <ng-container *sTienePermiso="'SCM_GET_CASE_DIAG'">
         <p-tabPanel header="Diagnósticos" *ngIf="caseSelect">
 
-            <p-table #dt [value]="diagnosticoList" autoLayout="true" selectionMode="single" [(selection)]="diagSelect" [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="fechaDiagnostico">Fecha de Diagnóstico
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h5 class="title-header p-mb-2">Información sobre diagnósticos</h5>
+                </div>
+                <div class="ui-g-12">
+                    <p-table #dt [value]="diagnosticoList" styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="diagSelect" [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="codigoCie10">CIE 10
 
-                        </th>
-                        <th pSortableColumn="codigoCie10">CIE 10
+                                </th>
+                                <th pSortableColumn="sistemaAfectado">Sistema Afectado
 
-                        </th>
-                        <th pSortableColumn="sistemaAfectado">Sistema Afectado
+                                </th>
+                                <th pSortableColumn="diagnostico">Diagnóstico
 
-                        </th>
-                        <th pSortableColumn="diagnostico">Diagnóstico
+                                </th>
+                                <th pSortableColumn="detalle">Detalles
 
-                        </th>
-                        <th pSortableColumn="detalle">Detalle de Diagnóstico
+                                </th>
+                                <th pSortableColumn="case.origen">Origen
 
-                        </th>
-                        <th pSortableColumn="case.origen">Origen
+                                </th>
+                                <th pSortableColumn="fechaDiagnostico">Fecha
 
-                        </th>
-                        <th pSortableColumn="case.creadoPor">Creado por
+                                </th>
+                                <th pSortableColumn="case.creadoPor">Creado
 
-                        </th>
+                                </th>
+                            </tr>
 
-                    </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-case>
 
-                </ng-template>
-                <ng-template pTemplate="body" let-case>
+                            <tr [pSelectableRowDisabled]="modalDianostico" [pSelectableRow]="case" class="table-row table-row-selectable">
+                                <td class="p-text-center">{{case.codigoCie10 }}</td>
+                                <td class="p-text-center">{{case.sistemaAfectado || ""}}</td>
+                                <td class="p-text-center">{{case.diagnostico}}</td>
+                                <td class="p-text-center">{{case.detalle}}</td>
+                                <td class="p-text-center">{{case.origen}}</td>
+                                <td class="p-text-center">{{case.fechaDiagnostico | date:'dd/MM/yyyy' }}</td>
+                                <td class="p-text-center">{{case.creadoPor}}</td>
 
-                    <tr [pSelectableRowDisabled]="modalDianostico" [pSelectableRow]="case" class="table-row table-row-selectable">
-                        <td>{{case.fechaDiagnostico | date:'dd/MM/yyyy' }}</td>
-                        <td>{{case.codigoCie10 }}</td>
-                        <td>{{case.sistemaAfectado || ""}}</td>
-                        <td>{{case.diagnostico}}</td>
-                        <td>{{case.detalle}}</td>
-                        <td>{{case.origen}}</td>
-                        <td>{{case.creadoPor}}</td>
-
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect" type="button" icon="fa fa-plus" label="Crear Diagnóstico" (click)="diagSelect = null; modalDianostico = true">
-
-                    </button>
-                    
-                    <button *sTienePermiso="'SCM_DEL_CASE_DIAG'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
-                        (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>                    
-
-
-                    <button   *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
-                        (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
-                </ng-template>
-            </p-table>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary" let-rowData>
+                            <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect" type="button" icon="fa fa-plus" label="Crear" (click)="diagSelect = null; modalDianostico = true"></button>
+                            <button *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
+                            <button *sTienePermiso="'SCM_DEL_CASE_DIAG'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger" (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="7" class="p-text-center">No hay registro de diagnósticos médicos</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
         </p-tabPanel>
     </ng-container>
     <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
@@ -704,7 +708,7 @@
                                     <p-sortIcon field="diasAusencia"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="causaAusentismo.nombre">Clase
-                                    
+
                                     <p-sortIcon field="causaAusentismo.nombre"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="causaAusentismo.nombre">Tipo
@@ -1086,51 +1090,51 @@
                             <div class="p-p-3">
                                 <p-table [value]="product.actionPlanList" dataKey="id">
                                     <ng-template pTemplate="header">
-                    <tr *ngIf="product.actionPlanList.length > 0">
+                                        <tr *ngIf="product.actionPlanList.length > 0">
                                             <th pSortableColumn="actividad">Actividad
                                                 <p-sortIcon field="actividad"></p-sortIcon>
-                        </th>
+                                            </th>
                                             <th pSortableColumn="descripcionAct">Descripcion de la actividad
                                                 <p-sortIcon field="descripcionAct">
-                            </p-sortIcon>
-                        </th>
+                                                </p-sortIcon>
+                                            </th>
                                             <th pSortableColumn="responsableEmpresa">Responsable Empresa
                                                 <p-sortIcon field="responsableEmpresa">
-                        </p-sortIcon>
+                                                </p-sortIcon>
                                                 <th pSortableColumn="responsableExterno">Responsable Externo
                                                     <p-sortIcon field="responsableExterno">
-                        </p-sortIcon>
-                    </th>
+                                                    </p-sortIcon>
+                                                </th>
                                                 <th pSortableColumn="fechaProyectada">Fecha proyectada
                                                     <p-sortIcon field="fechaProyectada">
-                            </p-sortIcon>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-plan>
-                    <tr>
-                        <td>{{plan.actividad}}</td>
-                        <td>{{plan.descripcionAct}}</td>
+                                                    </p-sortIcon>
+                                                </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-plan>
+                                        <tr>
+                                            <td>{{plan.actividad}}</td>
+                                            <td>{{plan.descripcionAct}}</td>
                                             <td>{{plan.responsableEmpresa?.primerApellido }} {{plan.responsableEmpresa?.primerNombre }}
                                             </td>
-                        <td>{{plan.responsableExterno}}</td>
-                        <td>{{plan.fechaProyectada | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{plan.responsableExterno}}</td>
+                                            <td>{{plan.fechaProyectada | date:'dd/MM/yyyy'}}</td>
 
-                        <!-- <td>
+                                            <!-- <td>
                         <p-button type="button" icon="pi pi-search"></p-button>
                     </td>-->
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="6">No Existen planes de accion para esta recomendacion.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="6">No Existen planes de accion para esta recomendacion.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            </div>
-            </td>
-            </tr>
-            </ng-template>
             </p-table>
 
         </p-tabPanel>
@@ -1183,13 +1187,13 @@
 
 
 
-<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}" [baseZIndex]="10000">
+<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
     <app-logmodal *ngIf="logsList" [log]="logSelected" [logList]="logsList">
     </app-logmodal>
 </p-dialog>
 
 
-<p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [baseZIndex]="10000">
+<p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
 
     <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id" (eventClose)="onCloseModalDianostico()">
 
@@ -1198,7 +1202,7 @@
 </p-dialog>
 
 
-<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [baseZIndex]="10000">
+<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>
