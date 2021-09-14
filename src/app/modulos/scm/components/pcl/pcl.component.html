@@ -8,23 +8,6 @@
         </div>
         <div class="ui-g-12">
             <p-table [value]="pclList" dataKey="id" editMode="row" styleClass="material-table" selectionMode="single" [(selection)]="pclSelect">
-                <!-- <ng-template pTemplate="colgroup" let-columns>
-                    <colgroup>
-                        <col style="width:380px">
-                        <col style="width:190px">
-                        <col style="width:100px">
-                        <col style="width:100px">
-                        <col style="width:190px">
-                        <col style="width:250px">
-                        <col style="width:190px">
-                        <col style="width:100px">
-                        <col style="width:190px">
-                        <col style="width:190px">
-                        <col style="width:250px">
-                        <col style="width:250px">
-                        <col style="width:100px">
-                    </colgroup>
-                </ng-template> -->
                 <ng-template pTemplate="header">
                     <tr>
                         <th scope="col" pSortableColumn="tipo">Diagnóstico</th>
@@ -59,7 +42,7 @@
                     <button *sTienePermiso="'SCM_POST_CASEPCL'" pButton type="button" icon="fa fa-plus" label="Crear" (click)="nuevoTratamiento()" [disabled]="pclSelect"></button>
                     <button *sTienePermiso="'SCM_EDIT_CASEPCL'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="editPcl()" [disabled]="!pclSelect || action"></button>
                     <button pButton type="button" icon="fa fa-search" label="Consultar" class="ui-button-warning" (click)="showPcl()" [disabled]="!pclSelect || action"></button>
-                    <button *sTienePermiso="'SCM_DEL_CASEPCL'" pButton type="button" [icon]="(loadingForm) ? 'pi pi-spin pi-spinner' : 'fa fa-trash'" label="Eliminar" class="ui-button-danger" (click)="deletePcl()" [disabled]="!pclSelect || action"></button>
+                    <button *sTienePermiso="'SCM_DEL_CASEPCL'" pButton type="button" [icon]="(action) ? 'pi pi-spin pi-spinner' : 'fa fa-trash'" label="Eliminar" class="ui-button-danger" (click)="deletePcl()" [disabled]="!pclSelect || action"></button>
                 </ng-template>
 
                 <ng-template pTemplate="emptymessage">

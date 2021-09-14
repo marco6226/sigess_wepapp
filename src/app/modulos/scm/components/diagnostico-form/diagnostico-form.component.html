@@ -57,8 +57,9 @@
             <small *ngIf="detalle.errors?.required && detalle.touched" id="username2-help" class="p-invalid">Obligatorio</small>
         </div>
 
-        <div class="ui-g-12 p-py-2">
-            <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton type="button" label="Guardar" icon="fa fa-plus" (click)="onSubmit()"></button>
+        <div class="ui-g-12 p-d-flex p-jc-center p-py-2">
+            <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton type="button" [label]="(diagSelect) ? 'Guardar' : 'Crear'" icon="fa fa-plus" style="margin-right: .5rem;" (click)="onSubmit()"></button>
+            <button pButton type="button" [label]="(diagSelect) ? 'Cancelar' : 'Cerrar'" icon="pi pi-times" class="ui-button-danger" (click)="close()"></button>
         </div>
     </div>
 </form>

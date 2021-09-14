@@ -667,7 +667,7 @@
                         </ng-template>
                         <ng-template pTemplate="summary" let-rowData>
                             <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect" type="button" icon="fa fa-plus" label="Crear" (click)="diagSelect = null; modalDianostico = true"></button>
-                            <button *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modalDianostico = true" [disabled]="!diagSelect"></button>
+                            <button *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="showModalDiagnostico()" [disabled]="!diagSelect"></button>
                             <button *sTienePermiso="'SCM_DEL_CASE_DIAG'" pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger" (click)="deleteDiagnostico(diagSelect.id)" [disabled]="!diagSelect"></button>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
@@ -1195,7 +1195,7 @@
 
 <p-dialog header="Crear Diagnóstico" *ngIf="caseSelect" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
 
-    <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id" (eventClose)="onCloseModalDianostico()">
+    <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id" [caseId]="caseSelect.id" (eventClose)="onCloseModalDianostico()" (closeModal)="closeModalDiagnostico()">
 
     </app-diagnostico-form>
 

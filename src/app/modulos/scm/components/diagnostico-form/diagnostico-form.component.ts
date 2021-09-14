@@ -22,6 +22,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
     @Input() caseId: string;
     @Input() id: string;
     @Output() eventClose = new EventEmitter<any>()
+    @Output() closeModal = new EventEmitter<any>()
     @Input() diagSelect: any;
 
     origenList = [
@@ -164,6 +165,10 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
                 // detail: `de el usuario ${emp.numeroIdentificacion}`,
             });
         }
+    }
+
+    close() {
+        this.closeModal.emit();
     }
 
     clearInputs() {
