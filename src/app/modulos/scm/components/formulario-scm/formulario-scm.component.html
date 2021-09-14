@@ -1187,7 +1187,7 @@
 
 
 
-<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
+<p-dialog header="Persistencia de datos" *ngIf="logSelected" [(visible)]="logSelected" [style]="{width: '50vw'}" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false">
     <app-logmodal *ngIf="logsList" [log]="logSelected" [logList]="logsList">
     </app-logmodal>
 </p-dialog>
@@ -1202,7 +1202,7 @@
 </p-dialog>
 
 
-<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
+<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false">
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>
