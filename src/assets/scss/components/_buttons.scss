@@ -1,6 +1,9 @@
 /* Buttons */
 
 .ui-button {
+    @media screen and (min-width: 1200px) {
+        min-width: 7rem;
+    }
     &.ui-state-default {
         &.ui-button-warning {
             color: #fff !important;
