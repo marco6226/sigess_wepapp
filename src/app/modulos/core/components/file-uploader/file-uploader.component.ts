@@ -39,7 +39,7 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         if (this.img) this.imgURL = 'data:image/png;base64,' + this.img;
-    
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -81,10 +81,10 @@ export class FileUploaderComponent implements OnInit, OnChanges {
     async onArchivoSelect(event) {
         let file = event.target.files[0];
         if (file.type != "image/jpeg" && file.type != "image/png" && file.type != "application/pdf" && file.type != "application/vnd.ms-excel" && file.type != "application/msword") {
-            this.msgs.push({ 
-                severity: 'warn', 
-                summary: 'Mensaje del sistema', 
-                detail: 'El tipo de archivo suministrado es inválido' 
+            this.msgs.push({
+                severity: 'warn',
+                summary: 'Mensaje del sistema',
+                detail: 'El tipo de archivo suministrado es inválido'
             });
             return;
         }
@@ -107,29 +107,31 @@ export class FileUploaderComponent implements OnInit, OnChanges {
         }
         let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
         this.loading = true;
-        
+
         try {
             // console.log(await this.directorioService.uploadv2(file, "Test"));
             let res = await this.directorioService.uploadv2(file, "Test");
 
-            if(res) {
+            if (res) {
                 this.loading = false;
-                this.imgURL = urlData;
+                if (file.type.match('image.*')) {
+                    this.imgURL = urlData;
+                } else {
+                    this.imgURL = '../../../../../assets/images/file.png';
+                }
                 this.loadedImage.emit(res);
             }
-            
-        } catch(e) {
+
+        } catch (e) {
             console.log(e);
         }
-
-
     }
 
     download() {
         // console.log('Inicia la descarga')
         // console.log(this.img);
         if (this.img) {
-            this.downloadImage(this.img,"evidence" + this.index);
+            this.downloadImage(this.img, "evidence" + this.index);
         }
     }
 
