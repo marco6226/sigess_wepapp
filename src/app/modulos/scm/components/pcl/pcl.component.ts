@@ -21,9 +21,9 @@ export class PclComponent implements OnInit {
 
     @Output() eventClose = new EventEmitter<any>()
 
-    action:boolean = false;
-    loadingForm:boolean = false;
-    loading:boolean = false;
+    action: boolean = false;
+    loadingForm: boolean = false;
+    loading: boolean = false;
     pclSelect: any;
 
     pclCalificacionList = [
@@ -133,23 +133,28 @@ export class PclComponent implements OnInit {
 
         this.pclList = [];
 
-        this.pclList = await this.scmService.getListPcl(this.pkCase);
+        try {
+            this.pclList = await this.scmService.getListPcl(this.pkCase);
 
-        if (this.pclList) {
-            this.pclList.map(pcl => {
-                console.log(pcl);
-                pcl.diagnostic = this.diagList.filter(diag => diag.value === pcl.diag.toString())[0];
-                pcl.pcl_o = this.pclOptionList.filter(pclF => pclF.value === pcl.pcl.toString())[0];
-                pcl.entidadEmitePcl_o = (pcl.entidadEmitePcl !== null) ? this.emitPclentity.filter(ent => ent.value === pcl.entidadEmitePcl.toString())[0] : null;
-                pcl.origen_o = (pcl.origen !== null) ? this.origenList.filter(org => org.value === pcl.origen.toString())[0] : null;
-                pcl.statusDeCalificacion_o = this.pclCalificacionList.filter(cal => cal.value === pcl.statusDeCalificacion.toString())[0];
-                pcl.emisionPclFecha = pcl.emisionPclFecha == null ? null : new Date(pcl.emisionPclFecha);
-                pcl.fechaCalificacion = pcl.fechaCalificacion == null ? null : new Date(pcl.fechaCalificacion);
-                pcl.entidadEmitida = parseInt(pcl.entidadEmitida);
-            });
+            if (this.pclList) {
+                this.pclList.map(pcl => {
+                    console.log(pcl);
+                    pcl.diagnostic = this.diagList.filter(diag => diag.value === pcl.diag.toString())[0];
+                    pcl.pcl_o = this.pclOptionList.filter(pclF => pclF.value === pcl.pcl.toString())[0];
+                    pcl.entidadEmitePcl_o = (pcl.entidadEmitePcl !== null) ? this.emitPclentity.filter(ent => ent.value === pcl.entidadEmitePcl.toString())[0] : null;
+                    pcl.origen_o = (pcl.origen !== null) ? this.origenList.filter(org => org.value === pcl.origen.toString())[0] : null;
+                    pcl.statusDeCalificacion_o = this.pclCalificacionList.filter(cal => cal.value === pcl.statusDeCalificacion.toString())[0];
+                    pcl.emisionPclFecha = pcl.emisionPclFecha == null ? null : new Date(pcl.emisionPclFecha);
+                    pcl.fechaCalificacion = pcl.fechaCalificacion == null ? null : new Date(pcl.fechaCalificacion);
+                    pcl.entidadEmitida = parseInt(pcl.entidadEmitida);
+                });
+            }
+            this.loading = false;
+            this.cd.markForCheck();
+        } catch (e) {
+            console.log(e);
         }
-        this.loading = false;
-        this.cd.markForCheck();
+
     }
 
     async deletePcl() {
@@ -195,13 +200,13 @@ export class PclComponent implements OnInit {
         this.modalDianostico = true;
         this.pclForm.patchValue(this.pclSelect);
     }
- 
+
     async resetDiags() {
         setTimeout(() => {
             this.msgs = [];
             this.cd.markForCheck();
         }, 5000);
-        
+
         this.iniciarPcl();
     }
 
@@ -238,10 +243,12 @@ export class PclComponent implements OnInit {
                 summary: "Mensaje del sistema",
                 detail: upd ? "Ocurrió un problema al actualizar la PCL" : 'Ocurrió un problema al crear la PCL',
             });
+            this.loadingForm = false;
+            this.cd.markForCheck();
         }
     }
 
-    onCancel(){
+    onCancel() {
         this.modalDianostico = false;
         this.pclSelect = null;
         this.action = false;
