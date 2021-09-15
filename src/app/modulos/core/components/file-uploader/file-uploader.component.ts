@@ -80,12 +80,16 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     async onArchivoSelect(event) {
         let file = event.target.files[0];
-        if (file.type != "image/jpeg" && file.type != "image/png") {
-            this.msgs.push({ severity: 'warn', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
+        if (file.type != "image/jpeg" && file.type != "image/png" && file.type != "application/pdf" && file.type != "application/vnd.ms-excel" && file.type != "application/msword") {
+            this.msgs.push({ 
+                severity: 'warn', 
+                summary: 'Mensaje del sistema', 
+                detail: 'El tipo de archivo suministrado es inválido' 
+            });
             return;
         }
         if (file.size > 1_500_000) {
-            this.msgs.push({ severity: 'warn', summary: 'Tamaño máximo superado 1.5MB', detail: 'La imágen supera el tamaño máximo permitido' });
+            this.msgs.push({ severity: 'warn', summary: 'Mensaje del sistema', detail: 'La imágen supera el tamaño máximo permitido de 1.5MB' });
             return;
         }
         this.msgs = [];

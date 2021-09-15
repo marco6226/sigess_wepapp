@@ -91,7 +91,7 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <p-calendar formControlName="followDate" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    <p-calendar formControlName="followDate" [monthNavigator]="true" [yearNavigator]="true" [maxDate]="fechaActual" yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                     <label for="" class="active">Fecha del seguimiento</label>
                 </div>
 

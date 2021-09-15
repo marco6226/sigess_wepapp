@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { Message } from "primeng/api";
 import { SeguimientosService } from '../../services/seguimientos.service';
 
@@ -35,6 +36,8 @@ export class SeguimientosTareasComponent implements OnInit {
     fullName = '';
     empleado: Empleado;
     empleadosList: Empleado[];
+    fechaActual = new Date();
+    localeES: any = locale_es;
 
     constructor(
         fb: FormBuilder,
