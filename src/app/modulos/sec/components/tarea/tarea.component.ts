@@ -91,9 +91,7 @@ export class TareaComponent implements OnInit {
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
 
         if (this.tarea) {
-            setTimeout(() => {
-                this.status = this.verifyStatus();
-            }, 300);
+            this.status = this.verifyStatus();
             let fecha_cierre = moment(this.tarea.fecha_cierre);
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
 
@@ -143,6 +141,8 @@ export class TareaComponent implements OnInit {
 
     verifyStatus(isFollowsExist = false) {
 
+        console.log('Existe seguimiento? ', isFollowsExist)
+
         /* Vars */
         let now = moment({});
         let fecha_cierre = moment(this.tarea.fecha_cierre);
@@ -185,8 +185,11 @@ export class TareaComponent implements OnInit {
     }
 
     isFollows(data) {
+        this.status = 0;
         console.log('Funciona el emit')
-        this.status = this.verifyStatus(data);
+        setTimeout(() => {
+            this.status = this.verifyStatus(data);
+        }, 300);
     }
 
     async onSubmit() {
