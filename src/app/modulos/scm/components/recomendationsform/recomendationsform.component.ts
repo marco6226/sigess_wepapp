@@ -12,6 +12,7 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
     styleUrls: ["./recomendationsform.component.scss"],
 })
 export class RecomendationsformComponent implements OnInit, OnChanges {
+    
     epsList: SelectItem[];
     afpList: SelectItem[];
     msgs: Message[];
@@ -57,6 +58,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     accions = [];
+
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
         private empleadoService: EmpleadoService
@@ -112,11 +114,11 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
 
     }
 
-
     clearInputs() {
         this.recomendation.reset()
         this.accions = [];
     }
+
     async onSubmit() {
         this.msgs = [];
         console.log(this.recomendation.value);
@@ -169,25 +171,21 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             actividad,
             descripcionAct,
             fechaProyectada,
-
         }
-
-
 
         try {
             let res: any;
             if (this.recoSelect) {
                 res = await this.scmService.updateRecomendation(body);
-
             } else {
                 res = await this.scmService.createRecomendation(body);
-
             }
 
             if (res) {
                 this.msgs.push({
                     severity: "success",
-                    summary: this.recoSelect ? "Recomendacion actualizada" : "Recomendacion Creada",
+                    summary: 'Mensaje del sistema',
+                    detail: this.recoSelect ? "La recomendación fue actualizada exitosamente" : "La recomendación fue creada exitosamente",
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
@@ -205,8 +203,6 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             });
 
         }
-
-
     }
 
     patchFormValues() {
@@ -262,6 +258,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         console.log(this.accions);
 
     }
+
     async onRowCloneInit(pseg, type?) {
         this.msgs = [];
         let { id, tarea, responsable, resultado, responsableExterno, ...product } = pseg;
@@ -270,13 +267,18 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
             let resp = await this.scmService.createSeguimiento(product);
             this.msgs.push({
                 severity: "success",
-                summary: "Seguimiento",
+                summary: "Mensaje del sistema",
                 detail: `Se ha clonado exitosamente`,
             });
 
             //  this.fechaSeg();
         } catch (error) {
-
+            console.log(error);
+            this.msgs.push({
+                severity: "danger",
+                summary: "Mensaje del sistema",
+                detail: `Ocurrió un inconveniente al clonar`,
+            });
         }
 
     }

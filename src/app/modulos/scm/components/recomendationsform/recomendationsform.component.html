@@ -1,290 +1,258 @@
 <p-growl [value]="msgs"></p-growl>
 
 
-<div>
+<div class="ui-g">
+    <div class="ui-g-12">
+        <form [formGroup]="recomendation">
 
-    <div class="ui-g">
-        <div class="ui-g p-py-2">
-            <form [formGroup]="recomendation">
-
-                <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Recomendaciones</h5>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field">
-                        <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones"
-                            class="select-material" styleClass="select-material" required>
-                        </p-dropdown>
-                        <label for="" class="active">Entidad que emite las recomendaciones</label>
-                    </div>
-                    <small *ngIf="entidadEmitRecomendaciones.errors?.required && entidadEmitRecomendaciones.touched"
-                        id="username2-help" class="p-invalid">Obligatorio</small>
-                </div>
-
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <div class="input-field"
-                        *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'PROVSALUD' || recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'PREPAGADAS' ">
-                        <p-dropdown [filter]="true"
-                            [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]"
-                            formControlName="entidadEmitida" class="select-material" styleClass="select-material">
-                        </p-dropdown>
-                        <label for="" class="active">Entidad</label>
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
-                    <div class="input-field">
-
-                        <p-dropdown [options]="typeList" formControlName="tipo" class="select-material"
-                            styleClass="select-material" required>
-                        </p-dropdown>
-                        <label for="" class="active">Tipo</label>
-                    </div>
-                    <small *ngIf="tipo.errors?.required && tipo.touched" id="username2-help"
-                        class="p-invalid">Obligatorio</small>
-
-                </div>
-
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [touchUI]="true"
-                            yearRange="2010:2030" [locale]="localeES" formControlName="fechaInicio"
-                            dateFormat="dd/mm/yy" inputStyleClass="form-material" required>
-                        </p-calendar>
-                        <label for="" class="active">Fecha Inicial</label>
-                    </div>
-                    <small *ngIf="fechaInicio.errors?.required && fechaInicio.touched" id="username2-help"
-                        class="p-invalid">Obligatorio</small>
-                </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-4">
-                    <div class="input-field">
-                        <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true"
-                        yearRange="2010:2030" formControlName="fechaExpiracion" [locale]="localeES"
-                            dateFormat="dd/mm/yy" inputStyleClass="form-material" required>
-                        </p-calendar>
-                        <label for="" class="active">Fecha Final</label>
-                    </div>
-                    <small *ngIf="fechaExpiracion.errors?.required && fechaExpiracion.touched" id="username2-help"
-                        class="p-invalid">Obligatorio</small>
-                </div>
-
-
-                <div class="ui-g-12">
-                    <div class="input-field">
-                        <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea
-                            required></textarea>
-                        <label for="" class="active">Recomendaciones</label>
-                    </div>
-                    <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help"
-                        class="p-invalid">Obligatorio</small>
-
-                </div>
-            </form>
-
-            <div class="card">
-                <h5 class="title-header p-mb-2">Plan de acción</h5>
-                <p-table [value]="accions" dataKey="id" editMode="row">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Actividad</th>
-                            <th>Descripcion</th>
-                            <th>Fecha Proyectada</th>
-                            <th>Responsable Empresa</th>
-                            <th>Responsable Externo</th>
-
-
-                            <th style="width:8rem"></th>
-                        </tr>
-                    </ng-template>
-
-                    <ng-template pTemplate="body" let-pAccion let-editing="editing" let-ri="rowIndex">
-                        <tr [pEditableRow]="pAccion">
-
-                            <td>
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="pAccion.actividad">
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{pAccion.actividad}}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-                            <td>
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="pAccion.descripcionAct">
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{pAccion.descripcionAct}}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-
-                            <td>
-                                
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <p-calendar [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada" dateFormat="dd/mm/yy"
-                                            placeholder="dd/MM/yyyy" [locale]="localeES" [monthNavigator]="true" [yearNavigator]="true" yearRange="2010:2030">
-                                        </p-calendar>
-            
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{pAccion.fechaProyectada | date : 'dd/MM/yyyy'}}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-                            <td>
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
-                                            placeholder="Digite" [style]="{'width':'100%'}"
-                                            (onSelect)="pAccion.responsableEmpresa = $event"
-                                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                                            field="numeroIdentificacion" [(ngModel)]="pAccion.responsableEmpresa"
-                                            *ngIf="empleado?.id == null">
-                                            <ng-template let-empleado pTemplate="item">
-                                                <div class="ui-helper-clearfix">
-                                                    <div class="wrapper">
-                                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                                            style="font-size: 48px;" aria-hidden="true"></i>
-                                                        <img *ngIf="empleado.usuario?.icon"
-                                                            [src]="empleado.usuario?.icon" style="border-radius: 50%;"
-                                                            #imgAvatar />
-                                                        <div style="margin-left:20px">
-                                                            <label>{{empleado?.primerApellido}}
-                                                                {{empleado?.primerNombre}}
-                                                                {{empleado?.segundoNombre}}
-                                                            </label>
-                                                            <br /> {{empleado?.numeroIdentificacion}}
-                                                            <br /> {{empleado?.usuario.email}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                        </p-autoComplete>
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{pAccion.responsableEmpresa?.primerApellido }}
-                                        {{pAccion.responsableEmpresa?.primerNombre
-                                        }}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-
-                            <td>
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="pAccion.responsableExterno">
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{pAccion.responsableExterno}}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-
-                            <td style="text-align:center">
-                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                    icon="pi pi-pencil" (click)="onRowEditInit(pAccion)"
-                                    class="p-button-rounded p-button-text"> </button>
-                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                    icon="pi pi-trash" (click)="onRowDelete(ri)" class="p-button-rounded p-button-text">
-                                </button>
-                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                    icon="pi pi-check" (click)="onRowEditSave(pAccion)"
-                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                    icon="pi pi-times" (click)="onRowEditCancel(pAccion, ri)"
-                                    class="p-button-rounded p-button-text p-button-danger"></button>
-                            </td>
-                        </tr>
-                    </ng-template>
-
-                    <ng-template pTemplate="summary" let-rowData>
-                        <button pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()"
-                            label="Crear Plan de Acción">
-
-                        </button>
-
-                    </ng-template>
-                </p-table>
-            </div>
-            <!-- <div class="ui-g-12">
-                <h5 class="title-header p-mb-2">Plan de Acción</h5>
-            </div>            
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
-                <div class="input-field">
-
-                    <textarea formControlName="actividad" class="textarea-material" pInputTextarea required></textarea>
-
-                    <label for="" class="active">Actividad</label>
-                </div>
-                
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
-                <div class="input-field">
-                    <textarea formControlName="descripcion_act" class="textarea-material" pInputTextarea></textarea>
-
-                    <label for="" class="active">Descripcion de la Actividad</label>
-                </div>
-                
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
-                <div class="input-field">
-                    <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                    formControlName="fecha_proyectada" [locale]="localeES" dateFormat="dd/mm/yy"
-                    inputStyleClass="form-material">
-                </p-calendar>
-                    <label for="" class="active">Fecha proyectada</label>
-                </div>
-               
-            </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-6">
-                <div class="input-field">
-                    <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                        [style]="{'width':'100%'}" (onSelect)="onSelectionResponsable($event)"
-                        formControlName="responsableEmpresaNombre" [suggestions]="empleadosList"
-                        (completeMethod)="buscarEmpleado($event)" *ngIf="empleado?.id == null">
-                        <ng-template let-empleado pTemplate="item">
-                            <div class="ui-helper-clearfix">
-                                <div class="wrapper">
-                                    <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                        style="font-size: 48px;" aria-hidden="true"></i>
-                                    <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                        style="border-radius: 50%;" #imgAvatar />
-                                    <div style="margin-left:20px">
-                                        <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                        {{empleado?.segundoNombre}}
-
-                                        <br /> {{empleado?.numeroIdentificacion}}
-                                        <br /> {{empleado?.usuario.email}}
-                                    </div> 
-                                </div>
-                            </div>
-                        </ng-template>
-                    </p-autoComplete>
-                    <label for="" class="active">responsable empresa</label>
-
-                </div>
-               
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Recomendaciones</h5>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" formControlName="responsableExterno" pInputText placeholder="Responsable"
-                        class="form-material" id="" />
-                    <label for="" class="active">Responsable Externo </label>
+                    <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material" styleClass="select-material">
+                    </p-dropdown>
+                    <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
-                
-            </div> -->
-            <div class="ui-g-12">
-                <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" label="Guardar" icon="fa fa-plus"
-                    (click)="onSubmit()">
-
-                </button>
+                <small *ngIf="entidadEmitRecomendaciones.errors?.required && entidadEmitRecomendaciones.touched" id="username2-help" class="p-invalid">Obligatorio</small>
             </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'PROVSALUD' || recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'PREPAGADAS' ">
+                <div class="input-field">
+                    <p-dropdown [filter]="true" [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                    </p-dropdown>
+                    <label for="" class="active">Entidad</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-lg-4">
+                <div class="input-field">
+                    <p-dropdown [options]="typeList" formControlName="tipo" class="select-material" styleClass="select-material">
+                    </p-dropdown>
+                    <label for="" class="active">Tipo</label>
+                </div>
+                <small *ngIf="tipo.errors?.required && tipo.touched" id="username2-help" class="p-invalid">Obligatorio</small>
+
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-lg-4">
+                <div class="input-field">
+                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" showButtonBar="true" [touchUI]="true" yearRange="2010:2030" [locale]="localeES" formControlName="fechaInicio" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material">
+                    </p-calendar>
+                    <label for="" class="active">Fecha Inicial</label>
+                </div>
+                <small *ngIf="fechaInicio.errors?.required && fechaInicio.touched" id="username2-help" class="p-invalid">Obligatorio</small>
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-lg-4">
+                <div class="input-field">
+                    <p-calendar [monthNavigator]="true" [touchUI]="true" showButtonBar="true" [yearNavigator]="true" yearRange="2010:2030" formControlName="fechaExpiracion" [locale]="localeES" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material">
+                    </p-calendar>
+                    <label for="" class="active">Fecha Final</label>
+                </div>
+                <small *ngIf="fechaExpiracion.errors?.required && fechaExpiracion.touched" id="username2-help" class="p-invalid">Obligatorio</small>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="input-field">
+                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea></textarea>
+                    <label for="" class="active">Recomendaciones</label>
+                </div>
+                <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help" class="p-invalid">Obligatorio</small>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="ui-g-12">
+        <h5 class="title-header p-mb-2">Plan de acción</h5>
+    </div>
+    <div class="iu-g-12">
+        <p-table [value]="accions" dataKey="id" editMode="row" styleClass="material-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Actividad</th>
+                    <th>Descripcion</th>
+                    <th>Fecha Proyectada</th>
+                    <th>Responsable Empresa</th>
+                    <th>Responsable Externo</th>
+
+
+                    <th style="width:8rem">Opciones</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-pAccion let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="pAccion">
+
+                    <td class="p-text-center">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.actividad">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{pAccion.actividad}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="p-text-center">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.descripcionAct">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{pAccion.descripcionAct}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="p-text-center">
+
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada" dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" showButtonBar="true" yearRange="2010:2030" styleClass="calendar-material"
+                                    inputStyleClass="form-material">
+                                </p-calendar>
+
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{pAccion.fechaProyectada | date : 'dd/MM/yyyy'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="p-text-center">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="pAccion.responsableEmpresa = $event" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" field="numeroIdentificacion"
+                                    [(ngModel)]="pAccion.responsableEmpresa" *ngIf="empleado?.id == null">
+                                    <ng-template let-empleado pTemplate="item">
+                                        <div class="ui-helper-clearfix">
+                                            <div class="wrapper">
+                                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
+                                                <div style="margin-left:20px">
+                                                    <label>{{empleado?.primerApellido}}
+                                                        {{empleado?.primerNombre}}
+                                                        {{empleado?.segundoNombre}}
+                                                    </label>
+                                                    <br /> {{empleado?.numeroIdentificacion}}
+                                                    <br /> {{empleado?.usuario.email}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{pAccion.responsableEmpresa?.primerApellido }} {{pAccion.responsableEmpresa?.primerNombre }}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="p-text-center">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.responsableExterno">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{pAccion.responsableExterno}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td class="p-text-center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(pAccion)" class="p-button-rounded ui-table-btn p-button-text p-mr-2"> </button>
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-trash" (click)="onRowDelete(ri)" class="p-button-rounded ui-table-btn ui-button-danger p-button-text">
+                        </button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(pAccion)" class="p-button-rounded ui-table-btn p-button-text p-button-success p-mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(pAccion, ri)" class="p-button-rounded ui-button-danger ui-table-btn p-button-text p-button-danger"></button>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="summary" let-rowData>
+                <button pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()" label="Crear"></button>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" class="p-text-center">No se ha registrado plan de acción
+                    </td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </div>
+
+    <!-- <div class="ui-g-12">
+        <h5 class="title-header p-mb-2">Plan de Acción</h5>
+    </div>            
+    <div class="ui-g-12 ui-md-6 ui-lg-6">
+        <div class="input-field">
+
+            <textarea formControlName="actividad" class="textarea-material" pInputTextarea required></textarea>
+
+            <label for="" class="active">Actividad</label>
         </div>
+        
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-6">
+        <div class="input-field">
+            <textarea formControlName="descripcion_act" class="textarea-material" pInputTextarea></textarea>
+
+            <label for="" class="active">Descripcion de la Actividad</label>
+        </div>
+        
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-6">
+        <div class="input-field">
+            <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
+            formControlName="fecha_proyectada" [locale]="localeES" dateFormat="dd/mm/yy"
+            styleClass="calendar-material" inputStyleClass="form-material">
+        </p-calendar>
+            <label for="" class="active">Fecha proyectada</label>
+        </div>
+       
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+        <div class="input-field">
+            <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                [style]="{'width':'100%'}" (onSelect)="onSelectionResponsable($event)"
+                formControlName="responsableEmpresaNombre" [suggestions]="empleadosList"
+                (completeMethod)="buscarEmpleado($event)" *ngIf="empleado?.id == null">
+                <ng-template let-empleado pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <div class="wrapper">
+                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                style="font-size: 48px;" aria-hidden="true"></i>
+                            <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                style="border-radius: 50%;" #imgAvatar />
+                            <div style="margin-left:20px">
+                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
+                                {{empleado?.segundoNombre}}
+
+                                <br /> {{empleado?.numeroIdentificacion}}
+                                <br /> {{empleado?.usuario.email}}
+                            </div> 
+                        </div>
+                    </div>
+                </ng-template>
+            </p-autoComplete>
+            <label for="" class="active">responsable empresa</label>
+
+        </div>
+       
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="input-field">
+            <input type="text" formControlName="responsableExterno" pInputText placeholder="Responsable"
+                class="form-material" id="" />
+            <label for="" class="active">Responsable Externo </label>
+        </div>
+        
+    </div> -->
+    <div class="ui-g-12 p-pt-3">
+        <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" [label]="(recoSelect) ? 'Actualizar' : 'Guardar'" icon="fa fa-plus" (click)="onSubmit()">
+
+        </button>
     </div>
 </div>

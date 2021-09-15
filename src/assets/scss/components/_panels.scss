@@ -1,0 +1,49 @@
+/* Panels */
+
+.custom-panel {
+    &.ui-tabview {
+        &.ui-tabview-top {
+            .ui-tabview-nav {
+                border-bottom: 1px solid #dee2e6;
+                li {
+                    margin-right: 0;
+                    border: 0;
+                    top: 1px;
+                    line-height: 1;
+                    transition: all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    &:focus {
+                        outline: 0;
+                    }
+                    &:not(.ui-state-active):not(.ui-state-disabled):hover {
+                        background-color: transparent;
+                        border: none;
+                        a {
+                            margin-bottom: -1px;
+                            color: #000;
+                            border-bottom: 1px solid $active-color;
+                        }
+                    }
+                    &.ui-state-active {
+                        background-color: transparent !important;
+                        border: none !important;
+                        a {
+                            color: $active-color;
+                            border-bottom: 1px solid $active-color;
+                            margin-bottom: -1px;
+                        }
+                        &:hover {
+                            a {
+                                color: darken($active-color, 5);
+                                border-bottom: 1px solid darken($active-color, 5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .ui-tabview-panels {
+            margin-top: 1rem;
+            border-radius: .75rem;
+        }
+    }
+}

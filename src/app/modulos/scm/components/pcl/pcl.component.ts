@@ -134,17 +134,20 @@ export class PclComponent implements OnInit {
         this.pclList = [];
 
         this.pclList = await this.scmService.getListPcl(this.pkCase);
-        this.pclList.map(pcl => {
-            console.log(pcl);
-            pcl.diagnostic = this.diagList.filter(diag => diag.value === pcl.diag.toString())[0];
-            pcl.pcl_o = this.pclOptionList.filter(pclF => pclF.value === pcl.pcl.toString())[0];
-            pcl.entidadEmitePcl_o = (pcl.entidadEmitePcl !== null) ? this.emitPclentity.filter(ent => ent.value === pcl.entidadEmitePcl.toString())[0] : null;
-            pcl.origen_o = (pcl.origen !== null) ? this.origenList.filter(org => org.value === pcl.origen.toString())[0] : null;
-            pcl.statusDeCalificacion_o = this.pclCalificacionList.filter(cal => cal.value === pcl.statusDeCalificacion.toString())[0];
-            pcl.emisionPclFecha = pcl.emisionPclFecha == null ? null : new Date(pcl.emisionPclFecha);
-            pcl.fechaCalificacion = pcl.fechaCalificacion == null ? null : new Date(pcl.fechaCalificacion);
-            pcl.entidadEmitida = parseInt(pcl.entidadEmitida);
-        });
+
+        if (this.pclList) {
+            this.pclList.map(pcl => {
+                console.log(pcl);
+                pcl.diagnostic = this.diagList.filter(diag => diag.value === pcl.diag.toString())[0];
+                pcl.pcl_o = this.pclOptionList.filter(pclF => pclF.value === pcl.pcl.toString())[0];
+                pcl.entidadEmitePcl_o = (pcl.entidadEmitePcl !== null) ? this.emitPclentity.filter(ent => ent.value === pcl.entidadEmitePcl.toString())[0] : null;
+                pcl.origen_o = (pcl.origen !== null) ? this.origenList.filter(org => org.value === pcl.origen.toString())[0] : null;
+                pcl.statusDeCalificacion_o = this.pclCalificacionList.filter(cal => cal.value === pcl.statusDeCalificacion.toString())[0];
+                pcl.emisionPclFecha = pcl.emisionPclFecha == null ? null : new Date(pcl.emisionPclFecha);
+                pcl.fechaCalificacion = pcl.fechaCalificacion == null ? null : new Date(pcl.fechaCalificacion);
+                pcl.entidadEmitida = parseInt(pcl.entidadEmitida);
+            });
+        }
         this.loading = false;
         this.cd.markForCheck();
     }

@@ -115,20 +115,20 @@
             <ng-template pTemplate="body" let-case>
 
                 <tr [pSelectableRow]="case" class="table-row table-row-selectable">
-                    <td>{{case.id}}</td>
-                    <td>{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
-                    <td>{{case.region}}</td>
-                    <td>{{case.ciudad}}</td>
-                    <td>{{case.pkUser.primerApellido}}</td>
-                    <td>{{case.pkUser.primerNombre}} </td>
-                    <td>{{case.documento}}</td>
-                    <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                    <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
+                    <td class="p-text-center">{{case.id}}</td>
+                    <td class="p-text-center">{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+                    <td class="p-text-center">{{case.region}}</td>
+                    <td class="p-text-center">{{case.ciudad}}</td>
+                    <td class="p-text-center">{{case.pkUser.primerApellido}}</td>
+                    <td class="p-text-center">{{case.pkUser.primerNombre}} </td>
+                    <td class="p-text-center">{{case.documento}}</td>
+                    <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
+                    <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
 
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button *sTienePermiso="'SCM_CREATE_CASE'" pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear Caso"></button>
+                <button *sTienePermiso="'SCM_CREATE_CASE'" pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear"></button>
 
                 <button *sTienePermiso="'SCM_PUT_CASE'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="openCase()" [disabled]="!caseSelect"></button>
 

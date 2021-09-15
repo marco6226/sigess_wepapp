@@ -694,7 +694,7 @@
                 </div>
                 <div class="ui-g-12">
                     <!-- <p-table [columns]="cols" [value]="products" styleClass="p-datatable-responsive"> -->
-                    <p-table [value]="incapacidades" dataKey="id">
+                    <p-table [value]="incapacidades" dataKey="id" styleClass="material-table">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="fechaDesde">Fecha Inicio
@@ -744,6 +744,14 @@
                             </tr>
                         </ng-template>
 
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8" class="p-text-center">
+                                    No se han registrado incapacidades en este caso médico
+                                </td>
+                            </tr>
+                        </ng-template>
+
                     </p-table>
                 </div>
 
@@ -754,79 +762,116 @@
     <ng-container *sTienePermiso="'SCM_LIST_CASE_RECO'">
         <p-tabPanel header="Recomendaciones" *ngIf="caseSelect">
 
-            <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" [(selection)]="recoSelect" [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Entidad emisora
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h5 class="title-header p-mb-2">Información sobre recomendaciones</h5>
+                </div>
+                <div class="ui-g-12">
 
-                        </th>
-                        <th>Tipo
+                    <p-table #dt [value]="recomendationList" autoLayout="true" selectionMode="single" styleClass="material-table" [(selection)]="recoSelect" [rows]="5" [paginator]="true" dataKey="id" [lazy]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Entidad emisora
 
-                        </th>
-                        <th>Estado
+                                </th>
+                                <th>Tipo
 
-                        </th>
-                        <th>Recomendación
+                                </th>
+                                <th>Estado
 
-                        </th>
-                        <th>Fecha inicial
+                                </th>
+                                <th>Recomendación
 
-                        </th>
-                        <th>Fecha final
+                                </th>
+                                <th>Fecha inicial
 
-                        </th>
+                                </th>
+                                <th>Fecha final
 
+                                </th>
+                            </tr>
+                            <tr class="filters" *ngIf="false">
+                                <td>
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <em class="pi pi-search"></em>
+                                        </span>
+                                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <em class="pi pi-search"></em>
+                                        </span>
+                                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'fapertura', 'contains')">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <em class="pi pi-search"></em>
+                                        </span>
+                                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'regional', 'contains')">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <em class="pi pi-search"></em>
+                                        </span>
+                                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <em class="pi pi-search"></em>
+                                        </span>
+                                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">
+                                            <em class="pi pi-search"></em>
+                                        </span>
+                                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-case>
 
-                    </tr>
-                    <tr *ngIf="false">
+                            <tr [pSelectableRowDisabled]="modalRecomendatios" [pSelectableRow]="case" class="table-row table-row-selectable">
+                                <td class="p-text-center">{{case.entidadEmitRecomendaciones}}</td>
+                                <td class="p-text-center">{{case.tipo }}</td>
+                                <td class="p-text-center">{{case.fechaExpiracion | recomendationstatus}}</td>
+                                <td class="p-text-center">{{case.recomendaciones}}</td>
+                                <td class="p-text-center">{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
+                                <td class="p-text-center">{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
 
-                        <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'fapertura', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'regional', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameLastname', 'contains')">
-                        </td>
-                        <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'documento', 'contains')">
-                        </td>
+                            </tr>
+                        </ng-template>
 
+                        <ng-template pTemplate="summary" let-rowData>
+                            <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus" label="Crear" (click)="openModalRecomendantions()">
+                            </button>
+                            <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modalRecomendatios = true" [disabled]="!recoSelect"></button>
+                            <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger" (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
+                        </ng-template>
 
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6" class="p-text-center">
+                                    No se han registrado recomendaciones en este caso médico
+                                </td>
+                            </tr>
+                        </ng-template>
 
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-case>
-
-                    <tr [pSelectableRowDisabled]="modalRecomendatios" [pSelectableRow]="case" class="table-row table-row-selectable">
-                        <td>{{case.entidadEmitRecomendaciones}}</td>
-                        <td>{{case.tipo }}</td>
-                        <td>{{case.fechaExpiracion | recomendationstatus}}</td>
-                        <td>{{case.recomendaciones}}</td>
-                        <td>{{case.fechaInicio | date:'dd/MM/yyyy'}}</td>
-                        <td>{{case.fechaExpiracion | date:'dd/MM/yyyy'}}</td>
-
-
-
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus" label="Crear recomendación" (click)="openModalRecomendantions()">
-                    </button>
-
-                    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger" (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
-
-                    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="modalRecomendatios = true" [disabled]="!recoSelect"></button>
-
-                </ng-template>
-            </p-table>
+                    </p-table>
+                </div>
+            </div>
         </p-tabPanel>
     </ng-container>
     <ng-container *sTienePermiso="'SCM_GET_CASE_SEG'">
@@ -1202,7 +1247,7 @@
 </p-dialog>
 
 
-<p-dialog class=modal header="Crear Recomendación" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false">
+<p-dialog [header]="(recoSelect) ? 'Editar recomendación' : 'Crear Recomendación'" *ngIf="caseSelect" [(visible)]="modalRecomendatios" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false">
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity" (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
 </p-dialog>

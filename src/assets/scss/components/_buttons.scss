@@ -4,6 +4,10 @@
     @media screen and (min-width: 1200px) {
         min-width: 7rem;
     }
+    &.ui-table-btn {
+        width: 2rem !important;
+        min-width: unset;
+    }
     &.ui-state-default {
         &.ui-button-warning {
             color: #fff !important;

@@ -50,6 +50,9 @@
                         <td colspan="8" class="p-text-center" *ngIf="loading">
                             <em class="pi pi-spin pi-spinner" style="font-size: 2rem"></em>
                         </td>
+                        <td colspan="8" class="p-text-center" *ngIf="!loading && pclList.length === 0">
+                            No hay PCL registradas en este caso médico
+                        </td>
                     </tr>
                 </ng-template>
 
