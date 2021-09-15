@@ -162,6 +162,10 @@ export class SeguimientosTareasComponent implements OnInit {
                 this.closeCreate();
                 this.getSeg();
                 this.cd.markForCheck();
+                setTimeout(() => {
+                    this.msgs = [];
+                    this.cd.markForCheck();
+                }, 3500);
             }
         } catch (e) {
             console.log(e);
