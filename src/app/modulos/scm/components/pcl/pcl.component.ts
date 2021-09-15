@@ -153,6 +153,13 @@ export class PclComponent implements OnInit {
             this.cd.markForCheck();
         } catch (e) {
             console.log(e);
+            this.msgs.push({
+                severity: "error",
+                summary: "Mensaje del sistema",
+                detail: "Ocurrió un error al cargar el listado de PCL"
+            });
+            this.loading = false;
+            this.cd.markForCheck();
         }
 
     }
@@ -181,8 +188,9 @@ export class PclComponent implements OnInit {
                 severity: "error",
                 summary: "Mensaje del sistema",
                 detail: "Ocurrió un error al eliminar la PCL"
-                // detail: `de el usuario ${emp.numeroIdentificacion}`,
             });
+            this.action = false;
+            this.cd.markForCheck();
         }
     }
 
