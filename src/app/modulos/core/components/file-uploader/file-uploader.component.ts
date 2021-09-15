@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { Message } from 'primeng/primeng';
@@ -8,7 +8,7 @@ import { Message } from 'primeng/primeng';
     templateUrl: './file-uploader.component.html',
     styleUrls: ['./file-uploader.component.scss']
 })
-export class FileUploaderComponent implements OnInit {
+export class FileUploaderComponent implements OnInit, OnChanges {
 
 
     /* Variables */
@@ -25,22 +25,25 @@ export class FileUploaderComponent implements OnInit {
     @Input() fileRoute = '';
     @Input() index: number;
     @Input() show: boolean = false;
+    @Input() clear: boolean = false;
 
     @Output() loadedImage: EventEmitter<any> = new EventEmitter();
     @Output() removeImage: EventEmitter<any> = new EventEmitter();
 
     @ViewChild('file', { static: false }) input: ElementRef;
 
-    constructor(private directorioService: DirectorioService,
-
+    constructor(
+        private directorioService: DirectorioService,
         private domSanitizer: DomSanitizer,
-
     ) { }
 
     ngOnInit() {
-        if (this.img) {
-            this.imgURL = 'data:image/png;base64,' + this.img;
-        }
+        if (this.img) this.imgURL = 'data:image/png;base64,' + this.img;
+    
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.clear) this.removeImg(); this.clear = false;
     }
 
     async preview(files) {

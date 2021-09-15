@@ -4,6 +4,7 @@ import { Criteria } from 'app/modulos/core/entities/filter';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { Message } from 'primeng/primeng';
 import { SeguimientosService } from '../../services/seguimientos.service';
 
@@ -23,6 +24,8 @@ export class VerificacionTareaComponent implements OnInit {
     empleado: Empleado;
     empleadosList: Empleado[];
     fullName = '';
+    fechaActual = new Date();
+    localeES: any = locale_es;
 
     @Input() tarea;
     @Input() tareaVerify;

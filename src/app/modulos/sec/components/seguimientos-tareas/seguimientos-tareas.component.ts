@@ -21,9 +21,11 @@ export class SeguimientosTareasComponent implements OnInit {
     @Input() tareaId;
     @Output() isFollowExist: EventEmitter<boolean> = new EventEmitter();
 
+    loading: boolean = false;
     differ: any;
     msgs: Message[] = [];
     cargando = false;
+    clearEvidences: boolean = false;
     trackings;
     displayModal: boolean;
     displayEvidences: boolean;
@@ -45,6 +47,7 @@ export class SeguimientosTareasComponent implements OnInit {
         this.differ = differs.find({}).create();
         this.trackingForm = fb.group({
             tareaId: ["", Validators.required],
+            email: [""],
             pkUser: ["", Validators.required],
             followDate: ["", Validators.required],
             description: ["", Validators.required],
@@ -54,7 +57,6 @@ export class SeguimientosTareasComponent implements OnInit {
 
     ngOnInit() {
         this.trackingForm.patchValue({ tareaId: this.tareaId })
-
     }
 
     ngDoCheck() {
@@ -101,6 +103,7 @@ export class SeguimientosTareasComponent implements OnInit {
     }
 
     addImage(file) {
+        console.log('Form: ',  this.trackingForm.value)
         let evidences = this.trackingForm.get('evidences').value;
         let obj = {
             ruta: file,
@@ -113,8 +116,11 @@ export class SeguimientosTareasComponent implements OnInit {
     buscarEmpleado(event) {
         this.empleadoService
             .buscar(event.query)
-            .then((data) => (this.empleadosList = <Empleado[]>data));
-        this.cd.markForCheck();
+            .then((data) => {
+
+                (this.empleadosList = <Empleado[]>data)
+                this.cd.markForCheck();
+            });
     }
 
     async onSubmit() {
@@ -134,7 +140,16 @@ export class SeguimientosTareasComponent implements OnInit {
         }
 
         try {
-            let res = await this.seguimientoService.createSeg(this.trackingForm.value);
+
+            let follow = {
+                tareaId: this.trackingForm.get('tareaId').value,
+                pkUser: this.trackingForm.get('pkUser').value,
+                followDate: this.trackingForm.get('followDate').value,
+                description: this.trackingForm.get('description').value,
+                evidences: this.trackingForm.get('evidences').value,
+            }
+            
+            let res = await this.seguimientoService.createSeg(follow);
 
             if (res) {
                 this.cargando = false;
@@ -143,9 +158,10 @@ export class SeguimientosTareasComponent implements OnInit {
                     summary: "Mensaje del sistema",
                     detail: "¡Se ha creado exitosamente el seguimiento!",
                 });
-                this.cd.markForCheck();
+                this.submitted = false;
                 this.closeCreate();
                 this.getSeg();
+                this.cd.markForCheck();
             }
         } catch (e) {
             console.log(e);
@@ -172,9 +188,14 @@ export class SeguimientosTareasComponent implements OnInit {
     }
 
     async getEvidences(id) {
+
+        this.loading = true;
         try {
 
             this.evidences = await this.seguimientoService.getEvidences(id, "fkSegId");
+            if (this.evidences) {
+                this.loading = false;
+            }
             this.cd.markForCheck();
 
         } catch (e) {
@@ -195,8 +216,15 @@ export class SeguimientosTareasComponent implements OnInit {
     closeCreate() {
         this.empleado = null;
         this.fullName = null;
-        this.trackingForm.reset();
         this.displayModal = false;
+        this.trackingForm.reset();
+        this.trackingForm.patchValue({
+            tareaId: this.tareaId,
+            evidences: []
+        });
+        this.evidences = [];
+        this.clearEvidences = true;
+        this.cd.markForCheck();
     }
 
     async onSelection(event) {

@@ -13,7 +13,7 @@
                     <th scope="col">Usuario</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Fecha de seguimiento</th>
-                    <th scope="col">Evidencias</th>
+                    <th scope="col" style="max-width: 10rem;">Evidencias</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-tracking>
@@ -22,9 +22,10 @@
                     <td>{{ tracking.description }}</td>
                     <td class="p-text-center">{{ tracking.followDate | date:'shortDate' }}</td>
                     <td class="p-text-center">
-                        <div pTooltip="Ver evidencias" style="display:inline-block;">
-                            <button pButton type="button" (click)="showModalDialog('evidence', tracking.id)" icon="pi pi-eye" iconPos="left" class="ui-button-sm"></button>
+                        <div pTooltip="Ver evidencias" style="display:inline-block;" *ngIf="tracking.evidences.length > 0">
+                            <button pButton type="button" (click)="showModalDialog('evidence', tracking.id)" icon="pi pi-eye" iconPos="left" class="ui-button-sm ui-table-btn"></button>
                         </div>
+                        <span *ngIf="tracking.evidences.length === 0">No posee</span>
                     </td>
                 </tr>
             </ng-template>
@@ -52,7 +53,7 @@
 
             <div class="ui-g-12 ui-md-6">
                 <div class="input-field">
-                    <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
+                    <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" formControlName="email" field="usuario.email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)">
                         <ng-template let-empleado pTemplate="item">
                             <div class="ui-helper-clearfix">
                                 <div class="wrapper">
@@ -121,7 +122,7 @@
             </div>
 
             <div class="uploaders">
-                <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)"></app-file-uploader>
+                <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" [clear]="clearEvidences" (loadedImage)="addImage($event)"></app-file-uploader>
             </div>
 
         </div>
@@ -144,8 +145,12 @@
 <p-dialog header="Evidencias" styleClass="dialog-evidences" [(visible)]="displayEvidences" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false">
 
     <div class="uploaders-flex">
-        <app-file-uploader *ngFor="let evidence of evidences?.files; let i = index" [img]="evidence" [index]="i" [show]="true">
-        </app-file-uploader>
+        <em class="pi pi-spin pi-spinner" style="font-size: 2rem" *ngIf="loading"></em>
+
+        <ng-container *ngIf="!loading">
+            <app-file-uploader *ngFor="let evidence of evidences?.files; let i = index" [img]="evidence" [index]="i" [show]="true">
+            </app-file-uploader>
+        </ng-container>
     </div>
 
     <!-- Start footer -->
