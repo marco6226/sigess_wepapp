@@ -80,7 +80,12 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     async onArchivoSelect(event) {
         let file = event.target.files[0];
-        if (file.type != "image/jpeg" && file.type != "image/png" && file.type != "application/pdf" && file.type != "application/vnd.ms-excel" && file.type != "application/msword") {
+        if (file.type != "image/jpeg" && 
+        file.type != "image/png" && 
+        file.type != "application/pdf" && 
+        file.type != "application/vnd.ms-excel" && 
+        file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && 
+        file.type != "application/msword") {
             this.msgs.push({
                 severity: 'warn',
                 summary: 'Mensaje del sistema',
