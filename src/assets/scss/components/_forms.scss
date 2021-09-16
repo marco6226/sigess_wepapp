@@ -96,6 +96,13 @@ p-autoComplete {
 
 .select-material {
     width: 100% !important;
+    &.ng-valid[required],
+    &.ng-valid.required {
+        height: 30px;
+    }
+    &.ng-invalid[required] {
+        height: 30px;
+    }
     &.ui-dropdown {
         border: none !important;
         border-bottom: 1px solid #dee2e6 !important;

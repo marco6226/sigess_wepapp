@@ -6,6 +6,7 @@ import {
     EventEmitter,
     ElementRef,
     ViewChild,
+    OnDestroy,
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
@@ -43,6 +44,7 @@ import { epsorarl } from "../../entities/eps-or-arl";
 import { Subject } from "rxjs";
 import { ConfirmationService } from "primeng/api";
 import { ConfirmService } from "app/modulos/scm/components/formulario-scm/confirm.service";
+import { ActivatedRoute } from "@angular/router";
 
 export interface TreeNode {
     data?: any;
@@ -56,7 +58,7 @@ export interface TreeNode {
     styleUrls: ["./formulario-scm.component.scss"],
     providers: [DirectorioService, EmpresaService]
 })
-export class FormularioScmComponent implements OnInit {
+export class FormularioScmComponent implements OnInit, OnDestroy {
 
     empresasList: Empresa[];
     styleMap: { [key: string]: string } = {};
@@ -259,14 +261,11 @@ export class FormularioScmComponent implements OnInit {
         private usuarioService: UsuarioService,
         private scmService: CasosMedicosService,
         private perfilService: PerfilService,
-        private confirmationService: ConfirmationService,
-        private confirmService: ConfirmService
+        private confirmService: ConfirmService,
+        private route: ActivatedRoute,
     ) {
 
         this.empresa = this.sesionService.getEmpresa();
-
-
-
 
         let defaultItem = <SelectItem[]>[{ label: "--seleccione--", value: null }];
         this.tipoIdentificacionList = defaultItem.concat(
@@ -276,7 +275,6 @@ export class FormularioScmComponent implements OnInit {
         this.tipoVinculacionList = defaultItem.concat(
             <SelectItem[]>tipo_vinculacion
         );
-
 
         //Instaciacion de datos de form
         this.bussinessParner = fb.group({
@@ -384,8 +382,9 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-
-
+    ngOnDestroy(): void {
+        localStorage.removeItem('scmShowCase');
+    }
 
     get pkUse() {
         return this.casoMedicoForm.get("pkUser") as FormControl
@@ -405,19 +404,26 @@ export class FormularioScmComponent implements OnInit {
             { field: 'fechaExpiracion', header: 'Fecha Finalizacion' }
         ];
 
+        this.consultar = (localStorage.getItem('scmShowCase') === 'true') ? true : false;
+
         //console.log(this.caseSelect.id, "wenas");
-        if (this.caseSelect) {
 
-            this.caseSelect = await this.scmService.getCase(this.caseSelect.id);
+        try {
+            this.caseSelect = await this.scmService.getCase(this.route.snapshot.paramMap.get("id"));
 
+            if (this.caseSelect) {
+                let res: any = await this.scmService.getSvelist();
+                this.sveOptionList.push({ label: "--Seleccione--", value: null });
+                res.forEach((sve) => {
+                    this.sveOptionList.push({ label: sve.nombre, value: sve.id.toString() });
+                });
+
+                this.onLoadInit();
+                this.modifyCase();
+            }
+        } catch (e) {
+            console.log(e);
         }
-
-        let res: any = await this.scmService.getSvelist();
-        this.sveOptionList.push({ label: "--Seleccione--", value: null });
-        res.forEach((sve) => {
-            this.sveOptionList.push({ label: sve.nombre, value: sve.id.toString() });
-        });
-
 
 
         if (this.consultar) {
@@ -430,14 +436,6 @@ export class FormularioScmComponent implements OnInit {
 
         }
 
-        if (this.caseSelect) {
-
-            this.onLoadInit();
-            this.modifyCase();
-
-        }
-
-
         this.comunService.findAllAfp().then((data) => {
             this.afpList = [];
             this.afpList.push({ label: "--Seleccione--", value: null });
@@ -447,8 +445,6 @@ export class FormularioScmComponent implements OnInit {
             this.entity.AFP = this.afpList;
 
         });
-
-       
 
         this.comunService.findAllEps().then((data) => {
             this.epsList = [];
@@ -529,6 +525,7 @@ export class FormularioScmComponent implements OnInit {
         this.empleadoSelect = null;
 
     }
+
     async onSubmit() {
         this.msgs = [];
         if (!this.casoMedicoForm.valid) {
@@ -569,12 +566,12 @@ export class FormularioScmComponent implements OnInit {
         if (this.adicionar) {
             this.msgs.push({
                 severity: "success",
-                summary: "Caso medico creado",
-                detail: `Su numero de caso es ${status}`,
+                summary: "Mensaje del sistema",
+                detail: `El caso médico fue creado exitosamente, su numero de caso es ${status}`,
             });
             setTimeout((res) => {
                 // this.closeForm();
-                //  this.router.navigate(["/app/scm/list"]);
+                // this.router.navigate(["/app/scm/list"]);
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
         }
@@ -582,17 +579,12 @@ export class FormularioScmComponent implements OnInit {
         else if (this.actualizar) {
             this.msgs.push({
                 severity: 'success',
-                summary: 'Caso medico actualizado',
-                detail: `Se ha actualizado correctamente el Caso medico  ${status}`
+                summary: 'Mensaje del sistema',
+                detail: `Se ha actualizado correctamente el caso medico  ${status}`
 
             });
-
         }
-
-
-
     }
-
 
     async buildPerfilesIdList() {
 
@@ -619,8 +611,6 @@ export class FormularioScmComponent implements OnInit {
         this.empleadoService
             .buscar(event.query)
             .then((data) => (this.empleadosList = <Empleado[]>data));
-
-
     }
 
     async onSelection(event) {
@@ -886,14 +876,11 @@ export class FormularioScmComponent implements OnInit {
             this.tratamientos = await this.scmService.getTratamientos(this.caseSelect.id)
             this.empresaId = this.sesionService.getEmpresa().id;
             this.aonRegisters();
-            this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
+            this.status = (this.casoMedicoForm.get("statusCaso").value !== null) ? this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label : 'N/A'
             this.logsList = await this.scmService.getLogs(this.caseSelect.id);
         } catch (error) {
             console.log(error);
         }
-
-
-
     }
 
     async readCase() {
@@ -931,14 +918,11 @@ export class FormularioScmComponent implements OnInit {
 
     async onLoadInit() {
         this.onSelection(this.caseSelect.pkUser);
-
-
     }
 
     createCaso() {
         this.adicionar = true;
         this.createCase = true;
-
     }
 
     onRowEditInit(product, type?) {
@@ -946,28 +930,25 @@ export class FormularioScmComponent implements OnInit {
 
     }
 
-   
-
-    async confirm(product, index) {        
-        if  (await this.confirmService.confirm())
-          this.msgs = [
-            { severity: "info", summary: "Confirmado", detail: "El tratamiento ha sido eliminado"}
-          ],this.onRowDelete(product, index);      
+    async confirm(product, index) {
+        if (await this.confirmService.confirm())
+            this.msgs = [
+                { severity: "info", summary: "Confirmado", detail: "El tratamiento ha sido eliminado" }
+            ], this.onRowDelete(product, index);
         else {
-          this.msgs = [
-            { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación"}
-          ];
+            this.msgs = [
+                { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación" }
+            ];
         }
-        
-      }
-    
+    }
+
     onRowDelete(product, index) {
         product.eliminado = true;
         console.log(product);
         this.tratamientos.slice(index, 1);
         this.onRowEditSave(product, "tratamiento");
-
     }
+
     async onRowCloneInit(pseg, type?) {
         this.msgs = [];
         let { id, tarea, responsable, resultado, responsableExterno, ...product } = pseg;
@@ -982,16 +963,17 @@ export class FormularioScmComponent implements OnInit {
 
             this.fechaSeg();
         } catch (error) {
-
+            console.log(error)
         }
-
     }
+
     async onRowEditSave(product, type?) {
         this.msgs = [];
 
         if (product.responsable) {
             product.responsable = product.responsable.id;
         }
+
         try {
             if (type == "tratamiento") {
                 let resp = await this.scmService.updateTratamiento(product);
@@ -1012,13 +994,14 @@ export class FormularioScmComponent implements OnInit {
 
             this.fechaSeg();
         } catch (error) {
-
+            console.log(error)
         }
     }
 
     onRowEditCancel(product, index: number) {
 
     }
+
     async deleteDiagnostico(id) {
         this.msgs = [];
         try {
@@ -1030,11 +1013,10 @@ export class FormularioScmComponent implements OnInit {
                     detail: `Su Diagnostico fue eliminado`,
                 });
                 this.onCloseModalDianostico();
-
             }
 
         } catch (error) {
-
+            console.log(error)
         }
     }
 
@@ -1049,15 +1031,13 @@ export class FormularioScmComponent implements OnInit {
             if (resp) {
                 this.msgs.push({
                     severity: "error",
-                    summary: "Recomendacion",
-                    detail: `Su Recomendacion fue eliminada`,
+                    summary: "Mensaje del sistema",
+                    detail: `Su recomendación se eliminó exitosamente`,
                 });
                 this.onCloseModalrecomendation();
-
             }
-
         } catch (error) {
-
+            console.log(error)
         }
     }
 
@@ -1068,15 +1048,14 @@ export class FormularioScmComponent implements OnInit {
             if (resp) {
                 this.msgs.push({
                     severity: "error",
-                    summary: "Seguimiento",
-                    detail: `Su Seguimiento fue eliminado`,
+                    summary: "Mensaje del sistema",
+                    detail: `Su seguimiento se eliminó exitosamente`,
                 });
                 this.fechaSeg()
-
             }
 
         } catch (error) {
-
+            console.log(error)
         }
     }
 
@@ -1088,9 +1067,8 @@ export class FormularioScmComponent implements OnInit {
 
             this.seguimientos.push(resp)
         } catch (error) {
-
+            console.log(error)
         }
-
     }
 
     async nuevoTratamiento() {
@@ -1098,11 +1076,13 @@ export class FormularioScmComponent implements OnInit {
             let seg = { pkCase: this.caseSelect.id }
             let resp = await this.scmService.createTratamiento(seg);
 
-            this.tratamientos.push(resp)
+            if (resp) {
+                this.tratamientos.push(resp);
+            }
+
         } catch (error) {
-
+            console.log(error)
         }
-
     }
 
     async fechaSeg() {
@@ -1127,6 +1107,5 @@ export class FormularioScmComponent implements OnInit {
         this.recoSelect = false;
         this.modalRecomendatios = true;
     }
-
 
 }
