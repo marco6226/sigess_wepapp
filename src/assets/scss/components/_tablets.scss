@@ -102,6 +102,13 @@
             }
         }
     }
+    .ui-table-summary {
+        .ui-button {
+            @media screen and (min-width: 1200px) {
+                min-width: 7rem;
+            }
+        }
+    }
     .ui-paginator-bottom {
         padding: 0.5rem;
         background-color: #fff;
