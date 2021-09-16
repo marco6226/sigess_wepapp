@@ -205,6 +205,7 @@ const appRoutes: Routes = [
                 children: [
                     { path: 'creacion', component: FormularioScmComponent },
                     { path: 'list', component: ScmComponent },
+                    { path: 'case/:id', component: FormularioScmComponent },
                     { path: 'permisos', component: ScmpermisosComponent },
 
                 ]
