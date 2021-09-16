@@ -19,6 +19,24 @@ export class FileUploaderComponent implements OnInit, OnChanges {
     loading = false;
     msgs: Message[] = [];
     numMaxImg = 3;
+    mimeType = {
+        'U': {
+            head: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            ext: 'xlsx',
+        },
+        'J': {
+            head: 'application/pdf',
+            ext: 'pdf'
+        },
+        '/': {
+            head: 'image/jpeg',
+            ext: 'jpeg'
+        },
+        'i': {
+            head: 'image/png',
+            ext: 'png'
+        }
+    }
 
     @Input() img: any;
     @Input() file = false;
@@ -38,8 +56,13 @@ export class FileUploaderComponent implements OnInit, OnChanges {
     ) { }
 
     ngOnInit() {
-        if (this.img) this.imgURL = 'data:image/png;base64,' + this.img;
-
+        if (this.img) {
+            console.log('Data de imagen: ', this.img)
+            let type = this.mimeType[this.img.charAt(0)];
+            if (type.ext !== 'png' && type.ext !== 'jpeg') return this.imgURL = '../../../../../assets/images/file.png';
+            this.imgURL = 'data:image/png;base64,' + this.img;
+            
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -80,12 +103,10 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     async onArchivoSelect(event) {
         let file = event.target.files[0];
-        if (file.type != "image/jpeg" && 
-        file.type != "image/png" && 
-        file.type != "application/pdf" && 
-        file.type != "application/vnd.ms-excel" && 
-        file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && 
-        file.type != "application/msword") {
+        if (file.type != "image/jpeg" &&
+            file.type != "image/png" &&
+            file.type != "application/pdf" &&
+            file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
             this.msgs.push({
                 severity: 'warn',
                 summary: 'Mensaje del sistema',
@@ -141,10 +162,12 @@ export class FileUploaderComponent implements OnInit, OnChanges {
     }
 
     downloadImage(base64String, fileName) {
-        const source = `data:application/png;base64,${base64String}`;
+        let type = this.mimeType[base64String.charAt(0)];
+        console.log('Type: ', type)
+        const source = `data:${type.head};base64,${base64String}`;
         const link = document.createElement("a");
         link.href = source;
-        link.download = `${fileName}.png`
+        link.download = `${fileName}.${type.ext}`
         link.click();
     }
 
