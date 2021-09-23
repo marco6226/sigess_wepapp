@@ -225,6 +225,24 @@ export class AnalisisDesviacionComponent implements OnInit {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+            let email = ad.tareaDesviacionList[i].empResponsable.usuario.email;
+            if (email == null || email == '') {
+                this.msgs = [];
+                this.msgs.push({ severity: 'warn', summary: 'Correo electrónico requerido', detail: 'Debe especificar el correo electrónico de la cuenta de usuario' });
+                return;
+            }
+            
+            this.authService.sendNotification(email,ad.tareaDesviacionList[i]).then(
+                resp => {
+                    this.msgs = [];
+                    this.msgs.push({ severity: resp['tipoMensaje'], detail: resp['detalle'], summary: resp['mensaje'] });
+                    this.visibleLnkResetPasswd = true;
+                }
+            ).catch(err => {
+                this.msgs = [];
+                this.msgs.push({ severity: err.error['tipoMensaje'], detail: err.error['detalle'], summary: err.error['mensaje'] });
+                this.visibleLnkResetPasswd = true;
+            });
         }
 
 
@@ -267,8 +285,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.msgs.push({ severity: 'warn', summary: 'Correo electrónico requerido', detail: 'Debe especificar el correo electrónico de la cuenta de usuario' });
                 return;
             }
-            this.visibleLnkResetPasswd = false;
-            this.authService.sendNotification(email,ad).then(
+            
+            this.authService.sendNotification(email,ad.tareaDesviacionList[i]).then(
                 resp => {
                     this.msgs = [];
                     this.msgs.push({ severity: resp['tipoMensaje'], detail: resp['detalle'], summary: resp['mensaje'] });
