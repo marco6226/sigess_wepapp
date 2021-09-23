@@ -268,7 +268,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 return;
             }
             this.visibleLnkResetPasswd = false;
-            this.authService.sendNotification(email).then(
+            this.authService.sendNotification(email,ad).then(
                 resp => {
                     this.msgs = [];
                     this.msgs.push({ severity: resp['tipoMensaje'], detail: resp['detalle'], summary: resp['mensaje'] });

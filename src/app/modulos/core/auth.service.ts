@@ -90,9 +90,12 @@ export class AuthService {
         });
     }
 
-    sendNotification(email: string) {
+    sendNotification(email: string,tarea) {
+
+        let body = tarea;
+        let endpoint = (this.authEndPoint + 'enviarCorreo/' + email);
         return new Promise((resolve, reject) => {
-            this.httpInt.get(this.authEndPoint + 'enviarCorreo/' + email)
+            this.httpInt.post(endpoint,body)
                 .map(res => res)
                 .subscribe(
                     res => resolve(res),
