@@ -11,11 +11,11 @@ import * as moment from "moment";
 import { SeguimientosService } from '../../services/seguimientos.service';
 
 @Component({
-    selector: 'app-asignacion-tareas',
-    templateUrl: './asignacion-tareas.component.html',
-    styleUrls: ['./asignacion-tareas.component.scss']
+    selector: 'app-mis-tareas',
+    templateUrl: './mis-tareas.component.html',
+    styleUrls: ['./mis-tareas.component.scss']
 })
-export class AsignacionTareasComponent implements OnInit {
+export class MisTareasComponent implements OnInit {
 
     tareasList: any;
     tareaSelect: Tarea;
@@ -41,9 +41,11 @@ export class AsignacionTareasComponent implements OnInit {
         }
 
         let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
+        let id = this.sesionService.getUsuario().id;
         let fq = new FilterQuery();
         fq.count = true;
-        fq.filterList = [{ field: 'areaResponsable.id', value1: areas, criteria: Criteria.CONTAINS }];
+        fq.filterList = [{ field: 'empResponsable.usuario.id', value1: id, criteria: Criteria.CONTAINS }];
+        
         this.tareaService.findByFilter(fq).then(
             async resp => {
                 this.tareasList = resp['data']

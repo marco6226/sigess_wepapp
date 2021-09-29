@@ -189,6 +189,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                         { label: 'Investigación', codigo: 'SEC_GET_DESV', routerLink: '/app/sec/desviaciones', class: 'fa fa-exclamation-triangle' },
                         // { label: 'Investigaciones', codigo: 'SEC_GET_ANADESV', routerLink: '/app/sec/consultaAnalisisDesviaciones', class: 'fa fa-exchange' },
                         { label: 'Tareas asignadas', codigo: 'SEC_GET_TAR', routerLink: '/app/sec/tareasAsignadas', class: 'fa fa-tasks' },
+                        { label: 'Mis tareas', codigo: 'SEC_GET_MYTAR', routerLink: '/app/sec/misTareas', class: 'fa fa-bell' },
                     ]
             },
             {

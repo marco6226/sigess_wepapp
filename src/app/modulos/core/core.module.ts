@@ -44,6 +44,7 @@ import { ConsultaAnalisisDesviacionComponent } from 'app/modulos/sec/components/
 import { AnalisisDesviacionComponent } from 'app/modulos/sec/components/analisis-desviacion/analisis-desviacion.component';
 import { GestionTareasComponent } from 'app/modulos/sec/components/gestion-tareas/gestion-tareas.component';
 import { AsignacionTareasComponent } from 'app/modulos/sec/components/asignacion-tareas/asignacion-tareas.component';
+import { MisTareasComponent } from 'app/modulos/sec/components/mis-tareas/mis-tareas.component';
 
 
 import { TarjetaComponent } from 'app/modulos/observaciones/components/tarjeta/tarjeta.component';
@@ -170,6 +171,7 @@ const appRoutes: Routes = [
                     { path: 'analisisDesviacion', component: AnalisisDesviacionComponent },
                     { path: 'tareas', component: GestionTareasComponent },
                     { path: 'tareasAsignadas', component: AsignacionTareasComponent },
+                    { path: 'misTareas', component: MisTareasComponent },
                     { path: 'tarea/:id', component: TareaComponent }
                 ]
             },
@@ -205,6 +207,7 @@ const appRoutes: Routes = [
                 children: [
                     { path: 'creacion', component: FormularioScmComponent },
                     { path: 'list', component: ScmComponent },
+                    { path: 'case/:id', component: FormularioScmComponent },
                     { path: 'permisos', component: ScmpermisosComponent },
 
                 ]

@@ -7,7 +7,7 @@ export class ConfirmService {
   constructor(private confirmationService: ConfirmationService) {}
 
   confirm({
-    message = "esta usted seguro que desea eliminar el tratamiento?",
+    message = "¿Está usted seguro que desea eliminar este tratamiento?",
     header = "Confirmación",
     icon = "pi pi-exclamation-triangle"
   } = {}): Promise<boolean> {

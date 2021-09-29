@@ -6,6 +6,7 @@ import { SecComponent } from './sec.component';
 import { ConsultaDesviacionComponent } from './components/consulta-desviacion/consulta-desviacion.component';
 import { GestionTareasComponent } from './components/gestion-tareas/gestion-tareas.component';
 import { AsignacionTareasComponent } from './components/asignacion-tareas/asignacion-tareas.component';
+import { MisTareasComponent } from './components/mis-tareas/mis-tareas.component';
 import { AnalisisDesviacionComponent } from './components/analisis-desviacion/analisis-desviacion.component';
 
 import { SistemaCausaRaizService } from 'app/modulos/sec/services/sistema-causa-raiz.service';
@@ -41,6 +42,7 @@ import { CapitalizePipe } from './utils/pipes/capitalize.pipe';
         ConsultaDesviacionComponent,
         GestionTareasComponent,
         AsignacionTareasComponent,
+        MisTareasComponent,
         AnalisisDesviacionComponent,
         ConsultaAnalisisDesviacionComponent,
         AnalisisCostosComponent,

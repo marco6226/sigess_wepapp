@@ -7,7 +7,7 @@ import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
 import { SelectItem } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
-import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-scm',
@@ -51,9 +51,10 @@ export class ScmComponent implements OnInit {
         { value: 'INACTIVO', label: 'INACTIVO' },
     ];
 
-    constructor(private scmService: CasosMedicosService,
+    constructor(
+        private scmService: CasosMedicosService,
         private cargoService: CargoService,
-        private paramNav: ParametroNavegacionService,
+        private router: Router
     ) { }
 
     async ngOnInit() {
@@ -68,38 +69,24 @@ export class ScmComponent implements OnInit {
                 //this.cargoList = this.cargoList.slice();
             }
         );
-
-        await this.loadData();
     }
-
-    async loadData() {
-
-    }
-
 
     onSubmit() { }
 
     openCase() {
-        this.consultar = false;
-        this.visibleForm = true;
-        this.paramNav.redirect('/app/scm/list/');
+        localStorage.setItem('scmShowCase', 'false');
+        // this.consultar = false;
+        // this.visibleForm = true;
+        this.router.navigate(['/app/scm/case/', this.caseSelect.id])
+        // this.paramNav.redirect('/app/scm/list/');
         // + this.caseSelect.id);
-
     }
-
-    
-
 
     openCaseConsultar() {
-        this.consultar = true;
-        this.visibleForm = true;
-
-    }
-
-
-    async onCancel() {
-        this.visibleForm = false;
-        await this.loadData();
+        localStorage.setItem('scmShowCase', 'true');
+        // this.consultar = true;
+        // this.visibleForm = true;
+        this.router.navigate(['/app/scm/case/', this.caseSelect.id])
     }
 
     eliminar() { }
@@ -120,7 +107,7 @@ export class ScmComponent implements OnInit {
             this.totalRecords = res.count;
 
         } catch (error) {
-
+            console.log(error)
         }
 
 

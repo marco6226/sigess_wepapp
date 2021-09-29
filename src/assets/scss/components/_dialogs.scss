@@ -3,6 +3,13 @@
 .ui-dialog {
     border-radius: 8px !important;
     transition: all 0.3s ease-in-out !important;
+    &.ui-confirmdialog {
+        .ui-dialog-footer {
+            .ui-button {
+                min-width: unset !important;
+            }
+        }
+    }
     .ui-dialog-titlebar {
         background-color: $white-color !important;
         border-radius: 8px 8px 0 0 !important;

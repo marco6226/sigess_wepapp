@@ -12,6 +12,10 @@
     <p-tabPanel header="Información General">
         <div class="ui-g">
 
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Información de la desviación</h5>
+            </div>
+
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
                     <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea?.hash_id" readonly="true" />
@@ -28,22 +32,33 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
+                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.concepto }}</textarea>
+                    <label for="" class="active">Concepto</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.aspecto_causante }}</textarea>
+                    <label for="" class="active">Descripción de la desviación</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
+                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea?.date_close" readonly="true" />
+                    <label for="" class="active">Fecha del reporte</label>
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Tarea asignada</h5>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="input-field">
                     <input type="text" pInputText placeholder="Tipo de Accion" class="form-material" [value]="tarea?.tipo_accion" readonly="true" />
                     <label for="" class="active">Tipo de Acción</label>
-                </div>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="text" pInputText placeholder="Zona" class="form-material" [value]="tarea?.regional" readonly="true" />
-                    <label for="" class="active">Zona</label>
-                </div>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea?.area" readonly="true" />
-                    <label for="" class="active">Sede</label>
                 </div>
             </div>
 
@@ -63,8 +78,8 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha reporte" class="form-material" [value]="tarea?.date_close" readonly="true" />
-                    <label for="" class="active">Fecha del reporte</label>
+                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.descripcion }}</textarea>
+                    <label for="" class="active">Descripción de la actividad</label>
                 </div>
             </div>
 
@@ -77,22 +92,15 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.concepto }}</textarea>
-                    <label for="" class="active">Concepto</label>
+                    <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.regional" readonly="true" />
+                    <label for="" class="active">Regional</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.descripcion }}</textarea>
-                    <label for="" class="active">Descripción de la actividad</label>
-                </div>
-            </div>
-
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <div class="input-field">
-                    <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.aspecto_causante }}</textarea>
-                    <label for="" class="active">Descripción de la desviación</label>
+                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea?.area" readonly="true" />
+                    <label for="" class="active">Sede</label>
                 </div>
             </div>
 

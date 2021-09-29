@@ -131,53 +131,6 @@ p-autoComplete {
 }
 
 :host ::ng-deep {
-    .form-material {
-        &.ui-inputtext {
-            outline: none;
-            height: 2rem;
-            width: 100%;
-            font-size: 16px;
-            margin: 0 0 8px 0;
-            padding: 0;
-            padding-left: 0.25rem;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-            -webkit-box-sizing: content-box;
-            box-sizing: content-box;
-            -webkit-transition: border 0.3s, -webkit-box-shadow 0.3s;
-            transition: border 0.3s, -webkit-box-shadow 0.3s;
-            transition: box-shadow 0.3s, border 0.3s;
-            transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
-            &:focus {
-                border-bottom: 1px solid #007ad9 !important;
-            }
-        }
-    }
-    .form-material-autocomplete {
-        &.ui-autocomplete {
-            .ui-autocomplete-input {
-                &:focus {
-                    border-bottom: 1px solid #007ad9 !important;
-                    border-radius: unset;
-                }
-            }
-        }
-    }
-    /*  Select */
-    .select-material {
-        width: 100% !important;
-        &.ui-dropdown {
-            border: none;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: -1rem;
-        }
-    }
-    /*   Radio buttons */
-    .radio-material {
-        &.ui-radiobutton {
-            padding-top: 0.75rem;
-        }
-    }
     modal {
         max-height: 100%;
         overflow-y: auto;
@@ -236,33 +189,6 @@ p-autoComplete {
             .ui-tabview-panels {
                 margin-top: 1rem;
                 border-radius: 0.75rem;
-            }
-        }
-    }
-    /* Table responsive */
-    .p-datatable {
-        &.p-datatable-responsive {
-            .p-datatable-thead>tr>th,
-            .p-datatable-tfoot>tr>td {
-                display: none !important;
-            }
-            .p-datatable-tbody>tr>td {
-                text-align: left;
-                display: block;
-                width: 100%;
-                float: left;
-                clear: left;
-                border: 0 none;
-                .p-column-title {
-                    padding: 0.4rem;
-                    min-width: 30%;
-                    display: inline-block;
-                    margin: -0.4em 1em -0.4em -0.4rem;
-                    font-weight: bold;
-                }
-                &:last-child {
-                    border-bottom: 1px solid var(--surface-d);
-                }
             }
         }
     }

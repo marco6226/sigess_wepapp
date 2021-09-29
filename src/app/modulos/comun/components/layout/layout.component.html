@@ -16,6 +16,13 @@
 			</div>
 			<label style="align-self: center;font-size: 14px;margin-left: 10px;">{{usuario.email}}</label>
 		</div>
+		<div id="tareas">
+			<div id="avatar2" (click)="menu.toggle($event)">
+				<i  class="fa fal fa-bell" aria-hidden="true"></i>
+				
+			</div>
+			
+		</div>
 		<div class="empresa-selector">
 			<p-dropdown [options]="empresasItems" [(ngModel)]="empresaSelect" [filter]="true" [style]="{'width':'250px'}" class="menu-empresa-selector"
 			 (onChange)="onChangeEmpresa()">
@@ -23,6 +30,7 @@
 			</p-dropdown>
 
 		</div>
+		
 	</div>
 	<div id="menu" class="menu" #menu >
 		<ng-content select="layout-menu"></ng-content>
