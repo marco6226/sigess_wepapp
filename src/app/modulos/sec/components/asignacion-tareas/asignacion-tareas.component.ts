@@ -42,6 +42,7 @@ export class AsignacionTareasComponent implements OnInit {
 
         let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
         let fq = new FilterQuery();
+        fq.count = true;
         fq.filterList = [{ field: 'areaResponsable.id', value1: areas, criteria: Criteria.CONTAINS }];
         this.tareaService.findByFilter(fq).then(
             async resp => {
