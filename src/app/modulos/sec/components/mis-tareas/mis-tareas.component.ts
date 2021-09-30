@@ -56,11 +56,20 @@ export class MisTareasComponent implements OnInit {
                     tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
                     return tarea;
                 }));
+                console.log(this.tareasList);
+
+                const estados = this.tareasList.map(x => x.estado)
+                console.log(estados);
+
+        function devolverEstados (datos){
+         return estados.reduce(( a , d ) => (a[d] ? a[d] += 1 : a[d] = 1 , a), { } );
+         }
+            console.log(devolverEstados(estados));
 
             }
 
         );
-        console.log(this.tareasList);
+        
     }
 
     async verifyStatus(tarea) {

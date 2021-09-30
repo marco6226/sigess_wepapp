@@ -136,8 +136,8 @@ export class ListaInspeccionFormComponent implements OnInit {
             this.msgs.push({ severity: 'warn', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
             return;
         }
-        if (file.size > 1_500_000) {
-            this.msgs.push({ severity: 'warn', summary: 'Tamaño máximo superado 1.5MB', detail: 'La imágen supera el tamaño máximo permitido' });
+        if (file.size > 3_500_000) {
+            this.msgs.push({ severity: 'warn', summary: 'Tamaño máximo superado 3.5MB', detail: 'La imágen supera el tamaño máximo permitido' });
             return;
         }
         this.msgs = [];

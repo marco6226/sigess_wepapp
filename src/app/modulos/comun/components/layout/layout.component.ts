@@ -14,7 +14,7 @@ import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { config } from 'app/config'
 import { Router } from '@angular/router';
 
-
+import { MisTareasComponent } from 'app/modulos/sec/components/mis-tareas/mis-tareas.component';
 
 import { PermisoService } from 'app/modulos/admin/services/permiso.service'
 import { AuthService } from '../../../core/auth.service';
@@ -25,7 +25,7 @@ import { ConfiguracionGeneral } from '../../entities/configuracion-general';
 	selector: 's-layout',
 	templateUrl: './layout.component.html',
 	styleUrls: ['./layout.component.scss'],
-	providers: [PermisoService, ConfiguracionGeneralService]
+	providers: [PermisoService, ConfiguracionGeneralService,MisTareasComponent]
 })
 export class LayoutComponent implements OnInit, AfterContentInit {
 
@@ -41,6 +41,9 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	usuario: Usuario;
 	items: MenuItem[];
 	mapaPermisos: any;
+	modalDianostico = false;
+	displayModal: boolean;
+	tarea: MisTareasComponent;
 
 
 	constructor(
@@ -77,6 +80,20 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 			}
 		);
 	}
+
+	examplemodal() {
+		this.modalDianostico = true;
+        
+	}
+	closeCreate() {
+        
+        this.displayModal = false;
+        
+    }
+
+	cargartareas(tareas:MisTareasComponent){
+	
+}
 
 	irPreferencias() {
 		this.router.navigate(['app/empresa/usuarioPreferencias']);
