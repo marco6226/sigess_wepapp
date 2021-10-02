@@ -93,7 +93,7 @@ import { TareaComponent } from '../sec/components/tarea/tarea.component';
 import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 const appRoutes: Routes = [
-    // { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'contacto', component: ContactoComponent },
     {
