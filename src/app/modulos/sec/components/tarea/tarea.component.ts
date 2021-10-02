@@ -93,15 +93,17 @@ export class TareaComponent implements OnInit {
         if (this.tarea) {
             this.status = this.verifyStatus();
             let fecha_cierre = moment(this.tarea.fecha_cierre);
+
+
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
 
-            this.tarea.date_close = formatDate(this.tarea.fecha_cierre, 'yyyy-MM-dd', this.locale);
+            this.tarea.fecha_reporte = formatDate(this.tarea.fecha_reporte, 'yyyy-MM-dd', this.locale);
 
             this.tareaVerify = (fecha_cierre.isValid() && fecha_verificacion.isValid()) ? true : false;
 
             console.log(this.tarea);
             let fq = new FilterQuery();
-            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.fk_usuario_realiza_id, value2: null }];
+            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.empResponsable.id, value2: null }];
             this.empleadoService.findByFilter(fq).then(
                 async resp => {
                     console.log(resp)
