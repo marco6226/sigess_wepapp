@@ -31,7 +31,7 @@
                         <th pSortableColumn="codigo"> Código
                             <p-sortIcon field="codigo"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="descripcion" style="width: 10%">Descripción
+                        <th pSortableColumn="descripcion" style="width: 10%">Actividad
                             <p-sortIcon field="descripcion"></p-sortIcon>
                         </th>
                         <th pSortableColumn="responsable"> Responsable
@@ -93,7 +93,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -133,7 +133,7 @@
                         <td>{{tarea.areaResponsable?.nombre}}</td>
                         <td>{{tarea.codigo}}</td>
                         <td>{{tarea.nombre}}</td>
-                        <td>{{tarea?.empResponsable?.primerNombre}}</td>
+                        <td>{{tarea?.empResponsable?.primerNombre}} {{tarea?.empResponsable?.primerApellido}}</td>
                         <td class="p-text-center">{{tarea.fechaProyectada | date:'dd-MM-yyyy'}}</td>
                         <td class="p-text-center status" [ngClass]="{
                             'status--danger': tarea.estado === 'Vencida' || tarea.estado === 'Cerrada fuera de tiempo', 

@@ -114,8 +114,8 @@ export class FileUploaderComponent implements OnInit, OnChanges {
             });
             return;
         }
-        if (file.size > 1_500_000) {
-            this.msgs.push({ severity: 'warn', summary: 'Mensaje del sistema', detail: 'La imágen supera el tamaño máximo permitido de 1.5MB' });
+        if (file.size > 3_500_000) {
+            this.msgs.push({ severity: 'warn', summary: 'Mensaje del sistema', detail: 'La imágen supera el tamaño máximo permitido de 3.5MB' });
             return;
         }
         this.msgs = [];

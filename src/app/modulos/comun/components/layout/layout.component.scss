@@ -171,7 +171,13 @@ h1 {
     cursor: pointer;
 }
 
+.myClass {
+    color: red;
+ }
 
+ .dialogHeader {
+    float: left;
+  }
 /*
 :host  /deep/ .menu button{ 
 	height: 55px;

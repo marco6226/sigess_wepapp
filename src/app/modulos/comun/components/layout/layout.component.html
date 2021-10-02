@@ -17,12 +17,20 @@
 			<label style="align-self: center;font-size: 14px;margin-left: 10px;">{{usuario.email}}</label>
 		</div>
 		<div id="tareas">
-			<div id="avatar2" (click)="menu.toggle($event)">
+			<div id="avatar2"  (click)="modalDianostico = true">
 				<i  class="fa fal fa-bell" aria-hidden="true"></i>
 				
 			</div>
 			
 		</div>
+		<p-dialog class="dialogHeader"  header="Tareas Asignadas" [(visible)]="modalDianostico" [style]="{'width':'350px','height':'150px', 'margin-top': '10px'}" [modal]="false" [closable]="true" [draggable]="false" [responsive]="true" showEffect="fade" [resizable]="false">
+
+		<label style="align-self: center;font-size: 14px;margin-left: 10px;"><strong>Usted tiene asignadas las siguientes tareas :</strong></label>
+		<div style="align-self: center;font-size: 14px;margin-left: 10px;margin-top: 10px;color:rgba(27, 160, 49, 0.651);"><strong>Abiertas :  3</strong></div>
+		<div style="align-self: center;font-size: 14px;margin-left: 10px;color:rgb(9, 5, 252);"><strong>En Seguimiento :  1</strong></div>
+		<div style="align-self: center;font-size: 14px;margin-left: 10px;color:rgb(253, 4, 4);"><strong>Vencidas : 10</strong></div>
+		</p-dialog>
+
 		<div class="empresa-selector">
 			<p-dropdown [options]="empresasItems" [(ngModel)]="empresaSelect" [filter]="true" [style]="{'width':'250px'}" class="menu-empresa-selector"
 			 (onChange)="onChangeEmpresa()">
