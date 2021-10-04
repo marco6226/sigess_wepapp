@@ -12,7 +12,7 @@ import { CasosMedicosService } from "../../services/casos-medicos.service";
     styleUrls: ["./recomendationsform.component.scss"],
 })
 export class RecomendationsformComponent implements OnInit, OnChanges {
-    
+
     epsList: SelectItem[];
     afpList: SelectItem[];
     msgs: Message[];
@@ -26,8 +26,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         { label: 'Entidad  que emite', value: null },
         { label: 'EPS', value: 'EPS' },
         { label: 'ARL', value: 'ARL' },
-        { label: 'Proveedor de salud', value: 'PROVSALUD' },
-        { label: 'Medicina prepagada', value: 'PREPAGADAS' },
+        { label: 'Proveedor de salud', value: 'Proveedor de salud' },
+        { label: 'Medicina prepagada', value: 'Medicina Prepagada' },
 
     ];
 

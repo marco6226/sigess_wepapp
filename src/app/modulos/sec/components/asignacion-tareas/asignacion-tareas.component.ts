@@ -40,36 +40,32 @@ export class AsignacionTareasComponent implements OnInit {
             5: 'Vencida',
         }
 
-        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
-        let fq = new FilterQuery();
-        fq.count = true;
-        fq.filterList = [{ field: 'areaResponsable.id', value1: areas, criteria: Criteria.CONTAINS }];
-        this.tareaService.findByFilter(fq).then(
+        this.tareaService.findByDetails().then(
             async resp => {
-                this.tareasList = resp['data']
+                this.tareasList = resp;
 
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
                     tarea.estado = statuses[status];
-                    tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
+                    tarea.fecha_proyectada = new Date(tarea.fecha_proyectada).toISOString();
                     return tarea;
                 }));
-
+                console.log(this.tareasList);
             }
 
         );
-        console.log(this.tareasList);
+
     }
 
     async verifyStatus(tarea) {
 
-        let trackings = await this.seguimientoService.getSegByTareaID(tarea.id) as any;
-        let isFollow = (trackings.length > 0) ? true : false;
+        let trackings = tarea.trackings
+        let isFollow = (trackings > 0) ? true : false;
 
         /* Vars */
         let now = moment({});
-        let fecha_cierre = moment(tarea.fechaCierre);
-        let fecha_proyectada = moment(tarea.fechaProyectada);
+        let fecha_cierre = moment(tarea.fecha_cierre);
+        let fecha_proyectada = moment(tarea.fecha_proyectada);
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollow) return 1;
         if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
@@ -79,6 +75,7 @@ export class AsignacionTareasComponent implements OnInit {
 
         return 0;
     }
+
 
     selectTarea(tarea: Tarea) {
         this.tareaSelect = tarea;

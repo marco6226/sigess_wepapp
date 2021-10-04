@@ -12,14 +12,14 @@ import { SesionService } from 'app/modulos/core/services/sesion.service';
 export class TareaService extends ServiceCRUD<Tarea>{
 
     httpInt;
-    headers;        
+    headers;
 
     constructor(
-        httpInt: HttpInt, 
+        httpInt: HttpInt,
         mensajeUsuarioService: MensajeUsuarioService,
         private http: HttpClient,
         public sesionService: SesionService,
-        ) {
+    ) {
         super(httpInt, mensajeUsuarioService);
     }
 
@@ -69,6 +69,10 @@ export class TareaService extends ServiceCRUD<Tarea>{
 
     public findByDetailId(tareaId: string) {
         return this.http.get(`${this.end_point}detail/${tareaId}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
+    public findByDetails() {
+        return this.http.get(`${this.end_point}details`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
     findByAnalisis(analisisId: string) {
