@@ -89,6 +89,8 @@ export class TareaService extends ServiceCRUD<Tarea>{
         return "TareaService";
     }
 
+    
+
     getRequestHeaders(headers?: HttpHeaders): any {
         if (headers == null)
             headers = new HttpHeaders().set('Content-Type', 'application/json');

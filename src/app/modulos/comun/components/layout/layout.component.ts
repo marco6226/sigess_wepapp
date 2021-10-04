@@ -21,6 +21,7 @@ import { AuthService } from '../../../core/auth.service';
 import { ConfiguracionGeneralService } from '../../services/configuracion-general.service';
 import { ConfiguracionGeneral } from '../../entities/configuracion-general';
 
+ var $: any;
 @Component({
 	selector: 's-layout',
 	templateUrl: './layout.component.html',
@@ -45,6 +46,9 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	displayModal: boolean;
 	tarea: MisTareasComponent;
 
+	data: any;
+
+
 
 	constructor(
 		private confGenService: ConfiguracionGeneralService,
@@ -53,11 +57,31 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		private router: Router,
 		private sesionService: SesionService,
 		private permisoService: PermisoService,
-		private authService: AuthService
+		private authService: AuthService,
+		private mistareas: MisTareasComponent,
 	) {
+		
 
 	}
-
+	showNotification(from, align){
+		const type = ['','info','success','warning','danger'];
+  
+		const color = Math.floor((Math.random() * 4) + 1);
+  
+		$.notify({
+			icon: "notifications",
+			message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
+  
+		},{
+			type: type[color],
+			timer: 4000,
+			placement: {
+				from: from,
+				align: align
+			},
+			
+		});
+	}
 	ngOnInit() {
 		this.usuario = this.sesionService.getUsuario();
 		this.items = [
@@ -68,6 +92,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		this.empresaService.findByUsuario(this.usuario.id).then(
 			resp => this.loadItems(<Empresa[]>resp)
 		);
+		this.cargartareas();
 	}
 
 	logout() {
@@ -91,9 +116,18 @@ export class LayoutComponent implements OnInit, AfterContentInit {
         
     }
 
-	cargartareas(tareas:MisTareasComponent){
-	
-}
+	cargartareas(): void {
+		
+		console.log("aca debe cargar la info");
+		this.mistareas.ngOnInit();
+		
+	  }
+
+	  irtareas(): void {
+		this.router.navigate(['app//sec/misTareas']);
+	  }
+
+	  
 
 	irPreferencias() {
 		this.router.navigate(['app/empresa/usuarioPreferencias']);

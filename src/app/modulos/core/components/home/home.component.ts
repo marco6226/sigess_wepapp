@@ -62,7 +62,8 @@ export class HomeComponent implements OnInit {
         private usuarioService: UsuarioService,
         private indicadorService: ModeloGraficaService,
         private areaService: AreaService
-    ) {
+    )
+     {
          
         var date = new Date();
         date.setFullYear( date.getFullYear() - 1 );

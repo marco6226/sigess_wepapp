@@ -40,7 +40,7 @@ export class MisTareasComponent implements OnInit {
             5: 'Vencida',
         }
 
-        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
+//        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
         let id = this.sesionService.getUsuario().id;
         let fq = new FilterQuery();
         fq.count = true;
@@ -58,19 +58,26 @@ export class MisTareasComponent implements OnInit {
                 }));
                 console.log(this.tareasList);
 
-                const estados = this.tareasList.map(x => x.estado)
-                console.log(estados);
+               // let estados = this.tareasList.map(x => x.estado)
+               // console.log(estados);
 
-        function devolverEstados (datos){
-         return estados.reduce(( a , d ) => (a[d] ? a[d] += 1 : a[d] = 1 , a), { } );
-         }
-            console.log(devolverEstados(estados));
-
+        
+            
+            this.devolverEstados ();
+            console.log(this.devolverEstados());
             }
-
+            
         );
         
     }
+
+    devolverEstados (){
+        let total ={};
+        const estados = this.tareasList.map(x => x.estado)
+        total = estados.reduce(( a , d ) => (a[d] ? a[d] += 1 : a[d] = 1 , a), { } );
+        return total;
+
+        }
 
     async verifyStatus(tarea) {
 
