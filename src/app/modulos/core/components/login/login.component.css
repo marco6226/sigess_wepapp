@@ -22,7 +22,8 @@ input{
   background-image: url(/assets/images/logo.svg);
   opacity: 0.9;
   background-size: 130px;
-	
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .form-container {
