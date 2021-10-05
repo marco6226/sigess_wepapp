@@ -92,7 +92,13 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		this.empresaService.findByUsuario(this.usuario.id).then(
 			resp => this.loadItems(<Empresa[]>resp)
 		);
-		this.cargartareas();
+
+		
+		setTimeout(() => {
+           
+            this.cargartareas();
+        }, 5000);
+
 	}
 
 	logout() {
