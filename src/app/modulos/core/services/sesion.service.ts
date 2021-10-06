@@ -161,7 +161,7 @@ export class SesionService {
         case 'NOMB_MOD_COP': return 'COPASST';
         case 'NOMB_MOD_SEC': return 'Seguimiento y control';
         case 'NOMB_MOD_IND': return 'Indicadores';
-        case 'NUM_MAX_FOTO_INP': return '1';
+        case 'NUM_MAX_FOTO_INP': return '3';
       }
       return null;
     } else {
