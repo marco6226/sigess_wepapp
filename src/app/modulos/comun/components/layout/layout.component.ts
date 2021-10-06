@@ -45,6 +45,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	modalDianostico = false;
 	displayModal: boolean;
 	tarea: MisTareasComponent;
+	public tareasPendientes: any;
 
 	data: any;
 
@@ -121,12 +122,22 @@ export class LayoutComponent implements OnInit, AfterContentInit {
         this.displayModal = false;
         
     }
-
-	cargartareas(): void {
+	
+	
+	async cargartareas(){//: void {
 		
-		console.log("aca debe cargar la info");
+		//console.log("aca debe cargar la info");	
+		        
 		this.mistareas.ngOnInit();
+        
+		//this.nom= this.mistareas.ngOnInit() as any;
+		setTimeout(() => {           
+			this.tareasPendientes= this.mistareas.devolverEstados()
+        }, 500);
 		
+		
+		console.log(this.tareasPendientes)
+		return this.tareasPendientes
 	  }
 
 	  irtareas(): void {
@@ -244,5 +255,5 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		element.nativeElement.classList.add(newClass);
 		element.nativeElement.classList.remove(oldClass);
 	}
-
+	
 }
