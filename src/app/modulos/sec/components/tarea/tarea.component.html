@@ -106,7 +106,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Responsable" class="form-material" [value]="tarea?.responsable" readonly="true" />
+                    <input type="text" pInputText placeholder="Responsable" class="form-material" [value]="(tarea?.responsable)? tarea?.responsable : 'No posee responsable'" readonly="true" />
                     <label for="" class="active">Responsable</label>
                 </div>
             </div>

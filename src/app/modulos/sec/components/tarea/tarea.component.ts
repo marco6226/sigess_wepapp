@@ -102,20 +102,23 @@ export class TareaComponent implements OnInit {
             this.tareaVerify = (fecha_cierre.isValid() && fecha_verificacion.isValid()) ? true : false;
 
             console.log(this.tarea);
-            let fq = new FilterQuery();
-            fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.empResponsable.id, value2: null }];
-            this.empleadoService.findByFilter(fq).then(
-                async resp => {
-                    console.log(resp)
-                    if (resp['data'].length > 0) {
-                        let empleado = resp['data'][0];
-                        this.tarea.email = (empleado.usuario.email || '');
-                        let nombre = this.capitalizePipe.transform(empleado.primerNombre);
-                        let apellido = this.capitalizePipe.transform(empleado.primerApellido);
-                        this.tarea.responsable = ((nombre || '') + ' ' + (apellido || ''));
+
+            if (this.tarea.empResponsable) {
+                let fq = new FilterQuery();
+                fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.tarea.empResponsable.id, value2: null }];
+                this.empleadoService.findByFilter(fq).then(
+                    async resp => {
+                        console.log(resp)
+                        if (resp['data'].length > 0) {
+                            let empleado = resp['data'][0];
+                            this.tarea.email = (empleado.usuario.email || '');
+                            let nombre = this.capitalizePipe.transform(empleado.primerNombre);
+                            let apellido = this.capitalizePipe.transform(empleado.primerApellido);
+                            this.tarea.responsable = ((nombre || '') + ' ' + (apellido || ''));
+                        }
                     }
-                }
-            );
+                );
+            }
 
             if (this.status === 3 || this.status === 4) {
                 this.tareaClose = true;
