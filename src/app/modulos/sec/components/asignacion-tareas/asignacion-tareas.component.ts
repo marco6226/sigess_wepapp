@@ -43,7 +43,6 @@ export class AsignacionTareasComponent implements OnInit {
         this.tareaService.findByDetails().then(
             async resp => {
                 this.tareasList = resp;
-
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
                     tarea.estado = statuses[status];
