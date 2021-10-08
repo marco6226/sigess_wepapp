@@ -1,3 +1,4 @@
+import { AuthGuardService } from './../../auth-guard.service';
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit {
         private authService: AuthService,
         private activateRoute: ActivatedRoute,
         private sesionService: SesionService,
+		private AuthGuardService: AuthGuardService,
     ) {
         this.subscription = this.authService.getLoginObservable().subscribe(visible => this.setVisible(visible));
         this.userform = fb.group({
@@ -106,7 +108,10 @@ export class LoginComponent implements OnInit {
                 if (this.modal) {
                     this.authService.onLogin(res);
                 } else {
-                    this.router.navigate([(aceptaTerm ? '/app/home' : '/app/terminos')]);
+					let url = this.AuthGuardService.Geturl();
+                    this.router.navigate([(aceptaTerm ? url : '/app/terminos')]);
+					//this.router.navigate([(aceptaTerm ? '/app/home' : '/app/terminos')]);
+					this.AuthGuardService.Seturl('/app/home');
                 }
             }).catch(
                 err => {
