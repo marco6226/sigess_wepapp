@@ -6,6 +6,7 @@ import { CambioPasswdService } from 'app/modulos/comun/services/cambio-passwd.se
 import { UsuarioService } from '../../../admin/services/usuario.service';
 import { PasswordValidator } from '../../validators/password-validator';
 
+
 @Component({
   selector: 's-cambioPasswd',
   templateUrl: './cambio-passwd.component.html',
@@ -17,6 +18,13 @@ export class CambioPasswdComponent implements OnInit {
   form: FormGroup;
   visible: boolean;
   subscription: Subscription;
+
+  password;
+  passwordNew;
+  passwordConfirm;
+  show = false;
+  showNew = false;
+  showConfirm = false;
 
   constructor(
     @Inject(FormBuilder) fb: FormBuilder,
@@ -33,7 +41,9 @@ export class CambioPasswdComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.password = 'password';
+    this.passwordNew = 'password';
+    this.passwordConfirm = 'password';
   }
 
   onSubmit(value: any) {
@@ -45,5 +55,41 @@ export class CambioPasswdComponent implements OnInit {
       }
     );
   }
+  
+  
+  mostrar() {
+		if (this.password === 'password') {
+		  this.password = 'text';
+		  this.show = true;
+		  console.log(this.password);
+		} else {
+		  this.password = 'password';	
+		  this.show = false;
+		  console.log(this.password);
+		}
+	  }
+    mostrarNueva() {
+      if (this.passwordNew === 'password') {
+        this.passwordNew = 'text';
+        this.showNew = true;
+        console.log(this.passwordNew);
+      } else {
+        this.passwordNew = 'password';	
+        this.showNew = false;
+        console.log(this.passwordNew);
+      }
+      }
+      mostrarConfirm() {
+        if (this.passwordConfirm === 'password') {
+          this.passwordConfirm = 'text';
+          this.showConfirm = true;
+          console.log(this.passwordConfirm);
+        } else {
+          this.passwordConfirm = 'password';	
+          this.showConfirm = false;
+          console.log(this.passwordConfirm);
+        }
+        }
+
 
 }
