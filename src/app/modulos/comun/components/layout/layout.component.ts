@@ -200,14 +200,19 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		this.confirmationService.confirm({
 			header: '¿Cambiar a la empresa "' + this.empresaSelect.nombreComercial + '"?',
 			message: 'Esto reiniciará la sesión actual, ¿Desea continuar?',
-			accept: () => {
-				this.sesionService.setEmpresa(this.empresaSelect);
-				location.reload();
+			accept: async() => {
+				await this.sesionService.setEmpresa(this.empresaSelect);				
+				//await location.reload();
+				await this.router.navigate([('/app/home')]);
+				await location.reload();
+				           
+					
+				//this.router.navigate([('/app/home')]);
 			},
 			reject: () => {
 				this.empresaSelect = this.empresaSelectOld;
 			},
-		});
+		});		
 	}
 
 
