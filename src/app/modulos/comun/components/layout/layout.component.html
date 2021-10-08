@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <p-confirmDialog icon="fa fa-question-circle" [style]="{'width':'250px'}" [closable]="false" acceptLabel="Si"></p-confirmDialog>
 <s-mensaje-usuario></s-mensaje-usuario>
 <s-cambioPasswd></s-cambioPasswd>
@@ -17,19 +19,34 @@
 			<label style="align-self: center;font-size: 14px;margin-left: 10px;">{{usuario.email}}</label>
 		</div>
 		<div id="tareas">
-			<div id="avatar2"  (click)="modalDianostico = true">
-				<i  class="fa fal fa-bell" aria-hidden="true"></i>
-				
+			<div id="avatar2" (mouseenter)="modalDianostico = true; ">
+				<i  class="fa fal fa-bell" aria-hidden="true" ></i>				
 			</div>
-			
+			<!--
+			<div id="avatar2"  (click)="modalDianostico = true; ">
+				<i  class="fa fal fa-bell" aria-hidden="true"></i>				
+			</div>		-->	
 		</div>
-		<p-dialog class="dialogHeader"  header="Tareas Asignadas" [(visible)]="modalDianostico" [style]="{'width':'350px','height':'150px', 'margin-top': '10px'}" [modal]="false" [closable]="true" [draggable]="false" [responsive]="true" showEffect="fade" [resizable]="false">
+		
+		<p-dialog (mouseleave)="modalDianostico = false;" id="dialogo" class="dialogo"   [(visible)]="modalDianostico" [style]="{'width':'330px','height':'100px', 'font-size': '10px','margin-left': '500px','margin-top': '-210px'}" [modal]="false" [closable]="true" [draggable]="false" [responsive]="true" showEffect="fade" [resizable]="true">
+		
+		<label style="font-size: 14px;margin-left: 10px;margin-top: -10px; padding-top: 100px;"><strong>Usted tiene asignadas las siguientes tareas :</strong></label>
+		<br>
+		<br>
+		<!--
+		<div style="align-self: top;font-size: 12px;margin-left: 10px;margin-top: 5px;color:rgba(27, 160, 49, 0.651);">Abiertas :  3</div>
+		<div style="align-self: center;font-size: 12px;margin-left: 10px;color:rgb(9, 5, 252);">En Seguimiento :  1</div>
+		<div style="align-self: center;font-size: 12px;margin-left: 10px;color:rgb(253, 4, 4);">Vencidas : 10</div>
+		-->
 
-		<label style="align-self: center;font-size: 14px;margin-left: 10px;"><strong>Usted tiene asignadas las siguientes tareas :</strong></label>
-		<div style="align-self: center;font-size: 14px;margin-left: 10px;margin-top: 10px;color:rgba(27, 160, 49, 0.651);"><strong>Abiertas :  3</strong></div>
-		<div style="align-self: center;font-size: 14px;margin-left: 10px;color:rgb(9, 5, 252);"><strong>En Seguimiento :  1</strong></div>
-		<div style="align-self: center;font-size: 14px;margin-left: 10px;color:rgb(253, 4, 4);"><strong>Vencidas : 10</strong></div>
+		<div style="align-self: top;font-size: 12px;margin-left: 10px;margin-top: 5px;color:rgba(27, 160, 49, 0.651);" 
+			*ngFor="let datos of tareasPendientes | keyvalue">{{datos.key}}: {{datos.value}}</div>
+		
+		<label style="align-self: center;font-size: 14px;margin-left: 10px;">{{data}}</label>
+		<br>
+		<button style="background-color: #46B9FC; border-color: #46B9FC; color: white; border-radius: 5px;" type="button" (click)="irtareas()" class="btn btn-info">Ir </button>
 		</p-dialog>
+		
 
 		<div class="empresa-selector">
 			<p-dropdown [options]="empresasItems" [(ngModel)]="empresaSelect" [filter]="true" [style]="{'width':'250px'}" class="menu-empresa-selector"

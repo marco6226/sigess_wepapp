@@ -1,8 +1,9 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { MensajeUsuarioService } from 'app/modulos/comun/services/mensaje-usuario.service'
-import { MensajeUsuario } from 'app/modulos/comun/entities/mensaje-usuario'
-import { Message } from 'primeng/primeng'
+import { MensajeUsuarioService } from 'app/modulos/comun/services/mensaje-usuario.service';
+import { MensajeUsuario } from 'app/modulos/comun/entities/mensaje-usuario';
+import { Message } from 'primeng/primeng';
+
 @Component({
   selector: 's-mensaje-usuario',
   templateUrl: './mensaje-usuario.component.html',

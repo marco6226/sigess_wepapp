@@ -1,3 +1,5 @@
+import { LayoutComponent } from './../../../comun/components/layout/layout.component';
+import { async } from '@angular/core/testing';
 import { Component, OnInit } from '@angular/core';
 import { TareaService } from 'app/modulos/sec/services/tarea.service'
 import { SesionService } from 'app/modulos/core/services/sesion.service'
@@ -9,6 +11,7 @@ import { Filter, Criteria } from '../../../core/entities/filter';
 import { Permiso } from '../../../empresa/entities/permiso';
 import * as moment from "moment";
 import { SeguimientosService } from '../../services/seguimientos.service';
+
 
 @Component({
     selector: 'app-mis-tareas',
@@ -40,7 +43,7 @@ export class MisTareasComponent implements OnInit {
             5: 'Vencida',
         }
 
-        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
+//        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
         let id = this.sesionService.getUsuario().id;
         let fq = new FilterQuery();
         fq.count = true;
@@ -57,21 +60,20 @@ export class MisTareasComponent implements OnInit {
                     return tarea;
                 }));
                 console.log(this.tareasList);
-
-                const estados = this.tareasList.map(x => x.estado)
-                console.log(estados);
-
-        function devolverEstados (datos){
-         return estados.reduce(( a , d ) => (a[d] ? a[d] += 1 : a[d] = 1 , a), { } );
-         }
-            console.log(devolverEstados(estados));
-
-            }
-
-        );
-        
+            }            
+        );        
     }
-
+    
+    
+    devolverEstados (){
+        let total =[];
+        const estados = this.tareasList.map(x => x.estado)
+        total = estados.reduce(( a , d ) => (a[d] ? a[d] += 1 : a[d] = 1 , a), { } );
+        //console.log(total); 
+        return total;      
+        }        
+        
+           
     async verifyStatus(tarea) {
 
         let trackings = await this.seguimientoService.getSegByTareaID(tarea.id) as any;

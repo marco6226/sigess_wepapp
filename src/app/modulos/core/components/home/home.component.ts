@@ -63,10 +63,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private usuarioService: UsuarioService,
         private indicadorService: ModeloGraficaService,
-        private areaService: AreaService,
-        private activateRoute: ActivatedRoute,
-        private paramNav: ParametroNavegacionService,
-
+        private areaService: AreaService
     ) {
 
         var date = new Date();
@@ -483,13 +480,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         localStorage.removeItem('url');
     }
     ngAfterViewInit(): void {
-        console.log(localStorage.getItem('url'));
-        if (localStorage.getItem('url')) {
-            console.log("entro");
-            setTimeout(() => {
-                this.paramNav.redirect(localStorage.getItem('url'));
-            }, 1600);
-        }
+
 
 
     }
