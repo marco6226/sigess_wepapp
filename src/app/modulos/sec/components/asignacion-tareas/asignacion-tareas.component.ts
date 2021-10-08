@@ -1,14 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TareaService } from 'app/modulos/sec/services/tarea.service'
-import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { Tarea } from 'app/modulos/sec/entities/tarea'
 import { Message } from 'primeng/primeng';
-import { FilterQuery } from '../../../core/entities/filter-query';
-import { Filter, Criteria } from '../../../core/entities/filter';
-import { Permiso } from '../../../empresa/entities/permiso';
 import * as moment from "moment";
-import { SeguimientosService } from '../../services/seguimientos.service';
 
 @Component({
     selector: 'app-asignacion-tareas',
@@ -17,6 +12,8 @@ import { SeguimientosService } from '../../services/seguimientos.service';
 })
 export class AsignacionTareasComponent implements OnInit {
 
+    yearRange;
+    es: any;
     tareasList: any;
     tareaSelect: Tarea;
     msgs: Message[] = [];
@@ -24,12 +21,27 @@ export class AsignacionTareasComponent implements OnInit {
 
     constructor(
         private tareaService: TareaService,
-        private sesionService: SesionService,
         private paramNav: ParametroNavegacionService,
-        private seguimientoService: SeguimientosService,
     ) { }
 
     ngOnInit() {
+
+        let date = new Date().getFullYear().toString();
+
+        this.yearRange = ((parseInt(date) - 20) + ':' + (parseInt(date) + 20)).toString();
+
+        console.log(this.yearRange);
+
+        this.es = {
+            firstDayOfWeek: 1,
+            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+            dayNamesMin: [ "D","L","M","X","J","V","S" ],
+            monthNames: [ "Enero ","Febrero ","Marzo ","Abril ","Mayo ","Junio ","Julio ","Agosto ","Septiembre ","Octubre ","Noviembre ","Diciembre " ],
+            monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+            today: 'Hoy',
+            clear: 'Borrar'
+        }
 
         let statuses = {
             0: 'N/A',
@@ -76,6 +88,11 @@ export class AsignacionTareasComponent implements OnInit {
         return 0;
     }
 
+    filterData(val, field, dt) {
+        let time = new Date(val);
+        console.log('Valor: ', time.toJSON())
+        return dt.filter(time.toJSON(), field ,'contains')
+    }
 
     selectTarea(tarea: Tarea) {
         this.tareaSelect = tarea;
