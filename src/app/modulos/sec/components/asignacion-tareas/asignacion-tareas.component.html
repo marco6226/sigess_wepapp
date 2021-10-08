@@ -1,7 +1,6 @@
 <p-growl [value]="msgs"></p-growl>
 
-<s-dataNotFound *ngIf="!tareasList || tareasList.length <= 0" icon="fa-tasks"
-    message="No se cuenta con registros de tareas generadas">
+<s-dataNotFound *ngIf="!tareasList || tareasList.length <= 0" icon="fa-tasks" message="No se cuenta con registros de tareas generadas">
     <div *sTienePermiso="'SEC_GET_ANADESV'">
         Genera nuevas tareas a partir de un análisis de desviación
         <a (click)="navegar()">aqui</a>
@@ -9,14 +8,12 @@
 </s-dataNotFound>
 
 
-<p-panel header="Listado de tareas" styleClass="material-panel"
-    [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
+<p-panel header="Listado de tareas" styleClass="material-panel" [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
 
     <div class="ui-g">
         <div class="ui-g-12 p-mb-3">
 
-            <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single"
-                [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
+            <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th pSortableColumn="module"> Módulo
@@ -56,8 +53,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'module', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'module', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -65,8 +61,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'fecha_reporte', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'fecha_reporte', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -74,8 +69,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'regional', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'regional', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -83,8 +77,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'area', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'area', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -92,8 +85,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'hash_id', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'hash_id', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -101,8 +93,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -110,8 +101,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'empResponsable.primer_nombre', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'empResponsable.primer_nombre', 'contains')">
                             </div>
                         </td>
                         <td>
@@ -119,8 +109,9 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'fecha_proyectada','contains')">
+                                <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'fecha_proyectada','contains')"> -->
+                                <!-- <input pInputText type="text" (input)="filterData($event.target.value, 'fecha_proyectada')"> -->
+                                <p-calendar (onSelect)="filterData($event, 'fecha_proyectada', dt)" dateFormat="dd-mm-yy" [locale]="es" [yearNavigator]="true" [yearRange]="yearRange" styleClass="ui-inputtext" inputStyleClass="ui-inputclean" readonlyInput="true"></p-calendar>
                             </div>
                         </td>
                         <td>
@@ -128,8 +119,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
                             </div>
                         </td>
 
@@ -159,14 +149,11 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="9" class="p-text-center">No hay registro de tareas asignadas o con los términos de
-                            filtro usados</td>
+                        <td colspan="9" class="p-text-center">No hay registro de tareas asignadas o con los términos de filtro usados</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary" let-rowData>
-                    <button pButton type="button" icon="fa fa-search" label="Consultar" (click)="onClick()"
-                        routerLinkActive="router-link-active" class="ui-button-warning"
-                        [disabled]="!tareaSelect"></button>
+                    <button pButton type="button" icon="fa fa-search" label="Consultar" (click)="onClick()" routerLinkActive="router-link-active" class="ui-button-warning" [disabled]="!tareaSelect"></button>
                 </ng-template>
             </p-table>
         </div>
@@ -179,8 +166,7 @@
 <p-overlayPanel #opCump appendTo="body">
     <div *ngIf="tareaSelect">
         <h4>{{tareaSelect.nombre}}</h4>
-        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesRealizacion"
-            placeholder="Observaciones de cumplimiento"></textarea>
+        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesRealizacion" placeholder="Observaciones de cumplimiento"></textarea>
         <br />
         <br />
         <button pButton type="button" (click)="reportarCumplimiento()" label="Reportar cumplimiento de tarea"></button>
@@ -191,8 +177,7 @@
 <p-overlayPanel #opVerf appendTo="body">
     <div *ngIf="tareaSelect">
         <h4>{{tareaSelect.nombre}}</h4>
-        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesVerificacion"
-            placeholder="Observaciones de verificación"></textarea>
+        <textarea rows="8" maxlength="512" pInputTextarea [(ngModel)]="tareaSelect.observacionesVerificacion" placeholder="Observaciones de verificación"></textarea>
         <br />
         <br />
         <button pButton type="button" (click)="reportarVerificacion()" label="Reportar verificación de tarea"></button>
