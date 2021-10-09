@@ -4,7 +4,7 @@
 <s-mensaje-usuario></s-mensaje-usuario>
 <s-cambioPasswd></s-cambioPasswd>
 <s-idleTimeout></s-idleTimeout>
-<s-login [modal]="true" [visible]="false"></s-login>
+<!--<s-login [modal]="true" [visible]="false"></s-login>--> 
 
 <div id="layout">
 
@@ -51,6 +51,7 @@
 		<div class="empresa-selector">
 			<p-dropdown [options]="empresasItems" [(ngModel)]="empresaSelect" [filter]="true" [style]="{'width':'250px'}" class="menu-empresa-selector"
 			 (onChange)="onChangeEmpresa()">
+			 
 
 			</p-dropdown>
 

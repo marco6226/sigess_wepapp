@@ -7,7 +7,11 @@
         <label class="s-float-label">Contraseña anterior</label>
         <div class="ui-inputgroup">
           <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
-          <input id="passwdant" pInputText type="password" formControlName="oldPasswd" required/>
+          <input [type]="password" id="passwdant" pInputText type="password" formControlName="oldPasswd" required/>     
+          <button type="button" (click)="mostrar()" class="btn btn-secondary">
+              <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+              <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+          </button>
         </div>
       </div>
 
@@ -15,7 +19,11 @@
         <label class="s-float-label">Contraseña nueva</label>
         <div class="ui-inputgroup">
           <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" pInputText formControlName="newPasswd" required/>
+          <input [type]="passwordNew" type="password" pInputText formControlName="newPasswd" required/>
+          <button type="button" (click)="mostrarNueva()" class="btn btn-secondary">
+            <i class="fa fa-eye" aria-hidden="true" *ngIf="!showNew"></i>
+            <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="showNew"></i>
+        </button>
         </div>
         <label class="msg-validacion" *ngIf="!form.controls['newPasswd'].valid&&form.controls['newPasswd'].dirty">
           {{form.controls['newPasswd'].errors.password}}
@@ -30,7 +38,11 @@
         <label class="s-float-label">Repita contraseña nueva</label>
         <div class="ui-inputgroup">
           <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" pInputText formControlName="newPasswdConfirm" required/>
+          <input [type]="passwordConfirm" type="password" pInputText formControlName="newPasswdConfirm" required/>
+          <button type="button" (click)="mostrarConfirm()" class="btn btn-secondary">
+            <i class="fa fa-eye" aria-hidden="true" *ngIf="!showConfirm"></i>
+            <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="showConfirm"></i>
+        </button>
         </div>
         <label class="msg-validacion" *ngIf="form.controls['newPasswdConfirm'].value != form.controls['newPasswd'].value">La
           contraseña nueva debe coincidir con su confirmación
