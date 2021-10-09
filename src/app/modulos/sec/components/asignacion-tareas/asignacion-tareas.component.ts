@@ -31,8 +31,6 @@ export class AsignacionTareasComponent implements OnInit {
 
         this.yearRange = ((parseInt(date) - 20) + ':' + (parseInt(date) + 20)).toString();
 
-        console.log(this.yearRange);
-
         this.es = {
             firstDayOfWeek: 1,
             dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
@@ -49,22 +47,12 @@ export class AsignacionTareasComponent implements OnInit {
         this.getTareas();
 
         FilterUtils['dateFilter'] = (value, filter):boolean => {
-            if (filter === undefined || filter === null) {
-                return true;
-            }
+            if (filter === undefined || filter === null) return true;
 
-            if (value === undefined || value === null) {
-                return false;
-            }
+            if (value === undefined || value === null) return false;
 
             let val = moment(value.split('T')[0]),
             filt = moment(filter);
-            
-
-            // console.log('Está usando el custom')
-            // console.log('¿Son iguales las fechas?', filt.isSame(val))
-            // console.log(value)
-            // console.log(filter)
 
             return filt.isSame(val);
         }
