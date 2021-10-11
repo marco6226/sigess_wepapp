@@ -113,9 +113,22 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="tarea?.email" readonly="true" />
+                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="(tarea?.email) ? tarea?.email : 'No posee responsable'" readonly="true" />
                     <label for="" class="active">Correo electrónico del responsable</label>
                 </div>
+            </div>
+
+            <div class="ui-g-12">
+                <h5 class="title-header p-mb-2">Evidencias</h5>
+            </div>
+
+            <div class="uploaders" *ngIf="tareaEvidences.length > 0">
+                <app-file-uploader *ngFor="let evidence of tareaEvidences; let i = index" [img]="evidence" [index]="i" [show]="true">
+                </app-file-uploader>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="tareaEvidences.length === 0">
+                <span>Esta tarea no posee evidencias</span>
             </div>
 
         </div>
