@@ -18,7 +18,8 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="hash_id" class="form-material" [value]="tarea?.hash_id" readonly="true" />
+                    <input type="text" pInputText placeholder="hash_id" class="form-material" [value]="tarea?.hash_id"
+                        readonly="true" />
                     <label for="" class="active">Código de la desviación</label>
                 </div>
             </div>
@@ -26,7 +27,8 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
                     <label for="" class="active">Módulo</label>
-                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo" readonly="true" [value]="tarea?.module" />
+                    <input type="text" pInputText placeholder="Modulo" class="form-material" id="modulo" readonly="true"
+                        [value]="tarea?.module" />
                 </div>
             </div>
 
@@ -46,7 +48,8 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha del reporte" class="form-material" [value]="tarea?.fecha_reporte" readonly="true" />
+                    <input type="text" pInputText placeholder="Fecha del reporte" class="form-material"
+                        [value]="tarea?.fecha_reporte" readonly="true" />
                     <label for="" class="active">Fecha del reporte</label>
                 </div>
             </div>
@@ -57,21 +60,24 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Tipo de Accion" class="form-material" [value]="tarea?.tipo_accion" readonly="true" />
+                    <input type="text" pInputText placeholder="Tipo de Accion" class="form-material"
+                        [value]="tarea?.tipo_accion" readonly="true" />
                     <label for="" class="active">Tipo de Acción</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Jerarquia de control" class="form-material" [value]="tarea?.jerarquia" readonly="true" />
+                    <input type="text" pInputText placeholder="Jerarquia de control" class="form-material"
+                        [value]="tarea?.jerarquia" readonly="true" />
                     <label for="" class="active">Jerarquia de control</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material" [value]="tarea?.nombre" readonly="true" />
+                    <input type="email" pInputText placeholder="Correo corporativo" class="form-material"
+                        [value]="tarea?.nombre" readonly="true" />
                     <label for="" class="active">Nombre de la actividad</label>
                 </div>
             </div>
@@ -85,35 +91,40 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="tarea?.fecha_proyectada" readonly="true" />
+                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material"
+                        [value]="tarea?.fecha_proyectada" readonly="true" />
                     <label for="" class="active">Fecha proyectada de cierre</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.regional" readonly="true" />
+                    <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.regional"
+                        readonly="true" />
                     <label for="" class="active">Regional</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea?.area" readonly="true" />
+                    <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea?.area"
+                        readonly="true" />
                     <label for="" class="active">Sede</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Responsable" class="form-material" [value]="(tarea?.responsable)? tarea?.responsable : 'No posee responsable'" readonly="true" />
+                    <input type="text" pInputText placeholder="Responsable" class="form-material"
+                        [value]="(tarea?.responsable)? tarea?.responsable : 'No posee responsable'" readonly="true" />
                     <label for="" class="active">Responsable</label>
                 </div>
             </div>
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material" [value]="(tarea?.email) ? tarea?.email : 'No posee responsable'" readonly="true" />
+                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material"
+                        [value]="(tarea?.email) ? tarea?.email : 'No posee responsable'" readonly="true" />
                     <label for="" class="active">Correo electrónico del responsable</label>
                 </div>
             </div>
@@ -123,7 +134,8 @@
             </div>
 
             <div class="uploaders" *ngIf="tareaEvidences.length > 0">
-                <app-file-uploader *ngFor="let evidence of tareaEvidences; let i = index" [img]="evidence" [index]="i" [show]="true">
+                <app-file-uploader *ngFor="let evidence of tareaEvidences; let i = index" [img]="evidence" [index]="i"
+                    [show]="true">
                 </app-file-uploader>
             </div>
 
@@ -136,7 +148,8 @@
 
     <p-tabPanel header="Seguimientos">
 
-        <app-seguimientos-tareas [tarea]="tarea" [tareaClose]="tareaClose" [status]="status" [tareaId]="tareaId" (isFollowExist)="isFollows($event)">
+        <app-seguimientos-tareas [tarea]="tarea" [tareaClose]="tareaClose" [status]="status" [tareaId]="tareaId"
+            (isFollowExist)="isFollows($event)">
         </app-seguimientos-tareas>
 
     </p-tabPanel>
@@ -155,12 +168,17 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" formControlName="email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [readonly]="tareaClose">
+                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
+                            formControlName="email" [style]="{'width':'100%'}" (onSelect)="onSelection($event)"
+                            [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                            [readonly]="tareaClose">
                             <ng-template let-empleado pTemplate="item">
                                 <div class="ui-helper-clearfix">
                                     <div class="wrapper">
-                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
-                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar alt="" />
+                                        <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                            style="font-size: 24px; align-self: center;" aria-hidden="true"></i>
+                                        <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
+                                            style="border-radius: 50%;" #imgAvatar alt="" />
                                         <div style="margin-left:20px">
                                             <span class="p-text-capitalize">
                                                 {{empleado?.primerApellido}} {{empleado?.primerNombre}}
@@ -186,14 +204,17 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <input type="text" pInputText placeholder="Nombres y apellidos" [value]="fullName" class="form-material" [attr.disabled]="true" />
+                        <input type="text" pInputText placeholder="Nombres y apellidos" [value]="fullName"
+                            class="form-material" [attr.disabled]="true" />
                         <label for="" class="active">Nombres y apellidos</label>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                        <p-calendar formControlName="fechaCierre" [monthNavigator]="true" [yearNavigator]="true" [maxDate]="fechaActual" yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy" [disabled]="tareaClose"></p-calendar>
+                        <p-calendar formControlName="fechaCierre" [monthNavigator]="true" [yearNavigator]="true"
+                            [maxDate]="fechaActual" yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"
+                            [disabled]="tareaClose"></p-calendar>
                         <label for="" class="active">Fecha de cierre</label>
                     </div>
 
@@ -207,7 +228,8 @@
 
                 <div class="ui-g-12 ui-md-6">
                     <div class="input-field">
-                        <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5" required [readOnly]="tareaClose"></textarea>
+                        <textarea pInputTextarea formControlName="descripcionCierre" class="form-material" rows="5"
+                            required [readOnly]="tareaClose"></textarea>
                         <label for="" class="active">Descripción de la acción realizada</label>
                     </div>
 
@@ -229,14 +251,16 @@
 
                 <div class="uploaders">
                     <ng-container *ngIf="!tareaClose">
-                        <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i" (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
+                        <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i"
+                            (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
                     </ng-container>
                     <ng-container *ngIf="tareaClose && evidences?.files !== undefined">
                         <ng-container *ngIf="evidences?.files.length === 0">
                             <p>Esta tarea se cerró sin evidencias</p>
                         </ng-container>
                         <ng-container *ngIf="evidences?.files.length > 0">
-                            <app-file-uploader *ngFor="let evidence of evidences?.files; let i = index" [img]="evidence" [index]="i" [show]="true">
+                            <app-file-uploader *ngFor="let evidence of evidences?.files; let i = index" [img]="evidence"
+                                [index]="i" [show]="true">
                             </app-file-uploader>
                         </ng-container>
                     </ng-container>
@@ -245,8 +269,10 @@
                 <!-- End evidences -->
 
                 <!-- Start send button -->
-                <button pButton *ngIf="cargando == false && !tareaClose" type="submit" icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
-                <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
+                <button pButton *ngIf="cargando == false && !tareaClose" type="submit" icon="fa fa-floppy-o"
+                    class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
+                <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8"
+                    [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                 <!-- End send button -->
 
             </div>

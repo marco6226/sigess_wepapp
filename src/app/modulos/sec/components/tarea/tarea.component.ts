@@ -151,21 +151,27 @@ export class TareaComponent implements OnInit {
 
     async getTareaEvidences() {
         try {
-            
+
             let res: any = await this.tareaService.getTareaEvidences(this.tareaId);
 
             if (res) {
 
                 res.files.forEach(async (evidence) => {
-                    let ev = await this.directorioService.download(evidence);
+                    let ev: any = await this.directorioService.download(evidence);
+                    let blob = new Blob([ev]);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        if (ev) {
+                            this.tareaEvidences.push(reader.result);
+                        } else {
+                            throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
+                        }
+                    }
 
-                    if (ev) {
-                        this.tareaEvidences.push(ev);  
-                    } else {
-                        throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
-                    } 
-                });     
-                        
+
+                });
+
             }
 
         } catch (e) {

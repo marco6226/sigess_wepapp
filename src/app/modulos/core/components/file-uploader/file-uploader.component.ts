@@ -17,6 +17,7 @@ export class FileUploaderComponent implements OnInit, OnChanges {
     imgURL: any;
     imgMap: any = {};
     loading = false;
+    disable = false;
     msgs: Message[] = [];
     numMaxImg = 3;
     mimeType = {
@@ -57,11 +58,19 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         if (this.img) {
-            console.log('Data de imagen: ', this.img)
+            //console.log('Data de imagen: ', this.img)
+            console.log(this.img.split(',').length)
+            if (this.img.split(',').length > 1) this.img = this.img.split(',')[1];
+
             let type = this.mimeType[this.img.charAt(0)];
+
+            if (!type) {
+                this.disable = true; return this.imgURL = '../../../../../assets/images/notfound.png';
+            }
+
             if (type.ext !== 'png' && type.ext !== 'jpeg') return this.imgURL = '../../../../../assets/images/file.png';
             this.imgURL = 'data:image/png;base64,' + this.img;
-            
+
         }
     }
 
