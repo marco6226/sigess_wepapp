@@ -14,6 +14,7 @@ import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Criteria } from 'app/modulos/core/entities/filter';
 import { formatDate } from '@angular/common';
 import { CapitalizePipe } from '../../utils/pipes/capitalize.pipe';
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 
 @Component({
     selector: 'app-tarea',
@@ -42,6 +43,7 @@ export class TareaComponent implements OnInit {
     empleadosList: Empleado[];
     status = 0;
     statuses;
+    tareaEvidences = [];
 
     constructor(
         fb: FormBuilder,
@@ -49,6 +51,7 @@ export class TareaComponent implements OnInit {
         private tareaService: TareaService,
         private empleadoService: EmpleadoService,
         private seguimientoService: SeguimientosService,
+        private directorioService: DirectorioService,
         @Inject(LOCALE_ID) private locale: string,
         private capitalizePipe: CapitalizePipe,
     ) {
@@ -101,6 +104,8 @@ export class TareaComponent implements OnInit {
 
             this.tareaVerify = (fecha_cierre.isValid() && fecha_verificacion.isValid()) ? true : false;
 
+            this.getTareaEvidences();
+
             console.log(this.tarea);
 
             if (this.tarea.empResponsable) {
@@ -141,6 +146,36 @@ export class TareaComponent implements OnInit {
                 );
 
             }
+        }
+    }
+
+    async getTareaEvidences() {
+        try {
+
+            let res: any = await this.tareaService.getTareaEvidences(this.tareaId);
+
+            if (res) {
+
+                res.files.forEach(async (evidence) => {
+                    let ev: any = await this.directorioService.download(evidence);
+                    let blob = new Blob([ev]);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        if (ev) {
+                            this.tareaEvidences.push(reader.result);
+                        } else {
+                            throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
+                        }
+                    }
+
+
+                });
+
+            }
+
+        } catch (e) {
+            console.log(e);
         }
     }
 

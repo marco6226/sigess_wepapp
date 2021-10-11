@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
+    datourl= '/app/home'
 
     constructor(private authService: AuthService, private router: Router, private activateRoute: ActivatedRoute) { }
 
@@ -19,12 +20,20 @@ export class AuthGuardService implements CanActivate {
         localStorage.setItem('url', url);
         // Store the attempted URL for redirecting
         this.authService.redirectUrl = url;
-
         // Navigate to the login page with extras
         //this.router.navigateByUrl('/app/sec/tarea/' + 1);
-
+        this.datourl = url
         this.router.navigate(['/login']);
         return false;
+    }
+
+    
+    Geturl (){        
+        return this.datourl;
+    }
+
+    Seturl(url: string){        
+        this.datourl = url;
     }
 
 }

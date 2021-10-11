@@ -8,6 +8,7 @@
         border-radius: inherit;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        overflow: visible;
     }
     .ui-table-thead {
         tr>th {
@@ -53,6 +54,21 @@
                 padding: 0.25rem 0.429em;
                 border-top-left-radius: 0 !important;
                 border-bottom-left-radius: 0 !important;
+                .ui-datepicker {
+                    left: 50%;
+                    transform: translate(-30%, 0px) !important;
+                    min-width: 300px;
+                    transition: all .3s ease-in-out;
+                    td {
+                        padding: 0;
+                    }
+                }
+            }
+            .ui-inputclean {
+                border: none !important;
+                border-left: unset !important;
+                padding: unset;
+                border-bottom: 1px solid transparent !important;
             }
         }
     }

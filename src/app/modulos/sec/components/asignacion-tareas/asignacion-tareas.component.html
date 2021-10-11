@@ -13,7 +13,7 @@
     <div class="ui-g">
         <div class="ui-g-12 p-mb-3">
 
-            <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
+            <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th pSortableColumn="module"> Módulo
@@ -61,7 +61,8 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'fecha_reporte', 'contains')">
+                                <p-calendar (onSelect)="dt.filter($event, 'fecha_reporte', 'dateFilter')" showButtonBar="true" dateFormat="dd-mm-yy" [locale]="es" (onClearClick)="dt.filter(undefined, 'fecha_reporte', 'dateFilter')" [yearNavigator]="true" [yearRange]="yearRange" styleClass="ui-inputtext"
+                                    inputStyleClass="ui-inputclean" readonlyInput="true"></p-calendar>
                             </div>
                         </td>
                         <td>
@@ -109,9 +110,8 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'fecha_proyectada','contains')"> -->
-                                <!-- <input pInputText type="text" (input)="filterData($event.target.value, 'fecha_proyectada')"> -->
-                                <p-calendar (onSelect)="filterData($event, 'fecha_proyectada', dt)" dateFormat="dd-mm-yy" [locale]="es" [yearNavigator]="true" [yearRange]="yearRange" styleClass="ui-inputtext" inputStyleClass="ui-inputclean" readonlyInput="true"></p-calendar>
+                                <p-calendar (onSelect)="dt.filter($event, 'fecha_proyectada', 'dateFilter')" showButtonBar="true" dateFormat="dd-mm-yy" [locale]="es" (onClearClick)="dt.filter(undefined, 'fecha_proyectada', 'dateFilter')" [yearNavigator]="true" [yearRange]="yearRange"
+                                    styleClass="ui-inputtext" inputStyleClass="ui-inputclean" readonlyInput="true"></p-calendar>
                             </div>
                         </td>
                         <td>
@@ -130,13 +130,13 @@
                     <tr [pSelectableRow]="tarea">
 
                         <td class="p-text-center">{{tarea.module}}</td>
-                        <td class="p-text-center">{{tarea.fecha_reporte | date:'dd-MM-yyyy'}}</td>
+                        <td class="p-text-center">{{tarea.fecha_reporte | date:'dd-MM-yyyy' : 'UTC'}}</td>
                         <td>{{tarea.regional}}</td>
                         <td>{{tarea.area}}</td>
                         <td>{{tarea.hash_id}}</td>
                         <td>{{tarea.nombre}}</td>
-                        <td>{{tarea?.empResponsable?.primer_nombre}} {{tarea?.empResponsable?.primer_apellido}}</td>
-                        <td class="p-text-center">{{tarea.fecha_proyectada | date:'dd-MM-yyyy'}}</td>
+                        <td class="p-text-center">{{(tarea?.empResponsable) ? tarea?.empResponsable?.primer_nombre + ' ' + tarea?.empResponsable?.primer_apellido : 'No posee responsable'}}</td>
+                        <td class="p-text-center">{{ tarea?.fecha_proyectada | date:'dd-MM-yyyy' : 'UTC'}}</td>
                         <td class="p-text-center status" [ngClass]="{
                             'status--danger': tarea.estado === 'Vencida' || tarea.estado === 'Cerrada fuera de tiempo', 
                             'status--success': tarea.estado === 'Abierta' || tarea.estado === 'Cerrada en el tiempo',

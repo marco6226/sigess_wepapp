@@ -89,6 +89,10 @@ export class TareaService extends ServiceCRUD<Tarea>{
         });
     }
 
+    public getTareaEvidences(id) {
+        return this.http.get(`${this.end_point}images/${id}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
     getClassName(): string {
         return "TareaService";
     }

@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TareaService } from 'app/modulos/sec/services/tarea.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { Tarea } from 'app/modulos/sec/entities/tarea'
-import { Message } from 'primeng/primeng';
+import { FilterUtils, Message } from 'primeng/primeng';
 import * as moment from "moment";
 
 @Component({
@@ -12,6 +12,7 @@ import * as moment from "moment";
 })
 export class AsignacionTareasComponent implements OnInit {
 
+    loading: boolean = false;
     yearRange;
     es: any;
     tareasList: any;
@@ -30,19 +31,35 @@ export class AsignacionTareasComponent implements OnInit {
 
         this.yearRange = ((parseInt(date) - 20) + ':' + (parseInt(date) + 20)).toString();
 
-        console.log(this.yearRange);
-
         this.es = {
             firstDayOfWeek: 1,
-            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
-            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
-            dayNamesMin: [ "D","L","M","X","J","V","S" ],
-            monthNames: [ "Enero ","Febrero ","Marzo ","Abril ","Mayo ","Junio ","Julio ","Agosto ","Septiembre ","Octubre ","Noviembre ","Diciembre " ],
-            monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+            dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+            dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+            dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+            monthNames: ["Enero ", "Febrero ", "Marzo ", "Abril ", "Mayo ", "Junio ", "Julio ", "Agosto ", "Septiembre ", "Octubre ", "Noviembre ", "Diciembre "],
+            monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
             today: 'Hoy',
             clear: 'Borrar'
         }
 
+        this.loading = true;
+
+        this.getTareas();
+
+        FilterUtils['dateFilter'] = (value, filter):boolean => {
+            if (filter === undefined || filter === null) return true;
+
+            if (value === undefined || value === null) return false;
+
+            let val = moment(value.split('T')[0]),
+            filt = moment(filter);
+
+            return filt.isSame(val);
+        }
+
+    }
+
+    getTareas() {
         let statuses = {
             0: 'N/A',
             1: 'En seguimiento',
@@ -61,11 +78,11 @@ export class AsignacionTareasComponent implements OnInit {
                     tarea.fecha_proyectada = new Date(tarea.fecha_proyectada).toISOString();
                     return tarea;
                 }));
+                this.loading = false;
                 console.log(this.tareasList);
             }
 
         );
-
     }
 
     async verifyStatus(tarea) {
@@ -85,12 +102,6 @@ export class AsignacionTareasComponent implements OnInit {
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
 
         return 0;
-    }
-
-    filterData(val, field, dt) {
-        let time = new Date(val);
-        console.log('Valor: ', time.toJSON())
-        return dt.filter(time.toJSON(), field ,'contains')
     }
 
     selectTarea(tarea: Tarea) {
