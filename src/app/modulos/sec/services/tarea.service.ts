@@ -74,6 +74,9 @@ export class TareaService extends ServiceCRUD<Tarea>{
     public findByDetails() {
         return this.http.get(`${this.end_point}details`, this.getRequestHeaders(this.headers)).toPromise();
     }
+    public findByDetailsByEmpleado(id) {
+        return this.http.get(this.end_point+'details/'+id, this.getRequestHeaders(this.headers)).toPromise();
+    }
 
     findByAnalisis(analisisId: string) {
         return new Promise(resolve => {

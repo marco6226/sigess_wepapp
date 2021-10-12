@@ -48,9 +48,9 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Fecha del reporte" class="form-material"
-                        [value]="tarea?.fecha_reporte" readonly="true" />
+                    
                     <label for="" class="active">Fecha del reporte</label>
+                    <td class="form-material">{{ tarea?.fecha_reporte | date:'dd-MM-yyyy' }}</td>
                 </div>
             </div>
 
@@ -91,9 +91,9 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Correo Electronico" class="form-material"
-                        [value]="tarea?.fecha_proyectada" readonly="true" />
+                    
                     <label for="" class="active">Fecha proyectada de cierre</label>
+                    <td class="form-material">{{ tarea?.fecha_proyectada | date:'dd-MM-yyyy' }}</td>
                 </div>
             </div>
 

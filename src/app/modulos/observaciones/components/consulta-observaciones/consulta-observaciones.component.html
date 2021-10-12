@@ -1,4 +1,4 @@
-<p-panel header="Reporte de condicion">
+<p-panel header="Reporte de condición">
 
   <p-table #dt [value]="observacionesList" autoLayout="true" selectionMode="single" [(selection)]="observacionSelect" [rows]="10"
     [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
@@ -9,6 +9,9 @@
         </th>
         <th pSortableColumn="tipoObservacion" style="width:130px">Tipo
           <p-sortIcon field="tipoObservacion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="Codigo" style="width:130px">Código
+          <p-sortIcon field="id"></p-sortIcon>
         </th>
         <th pSortableColumn="descripcion">descripción
           <p-sortIcon field="descripcion"></p-sortIcon>
@@ -26,6 +29,9 @@
         </td>
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoObservacion', 'contains')">
+        </td>
+        <td>
+          <input pInputText type="number" (input)="dt.filter($event.target.value, 'id', 'equals')">
         </td>
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
@@ -47,6 +53,7 @@
       <tr [pSelectableRow]="observ">
         <td>{{observ.fechaObservacion | date:'dd/MM/yyyy HH:mm'}}</td>
         <td>{{observ.tipoObservacion}}</td>
+        <td>OBS-{{observ.id}}</td>
         <td>{{observ.descripcion}}</td>
         <td>{{observ.nivelRiesgo.nombre}}</td>
         <td>
