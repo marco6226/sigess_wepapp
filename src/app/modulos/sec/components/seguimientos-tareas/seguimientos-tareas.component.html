@@ -20,7 +20,7 @@
                 <tr>
                     <td class="p-text-center">{{ tracking.pkUser.usuario.email }}</td>
                     <td>{{ tracking.description }}</td>
-                    <td class="p-text-center">{{ tracking.followDate | date:'shortDate' }}</td>
+                    <td class="p-text-center">{{ tracking.followDate | date:'dd-MM-yyyy' }}</td>
                     <td class="p-text-center">
                         <div pTooltip="Ver evidencias" style="display:inline-block;" *ngIf="tracking.evidences.length > 0">
                             <button pButton type="button" (click)="showModalDialog('evidence', tracking.id)" icon="pi pi-eye" iconPos="left" class="ui-button-sm ui-table-btn"></button>

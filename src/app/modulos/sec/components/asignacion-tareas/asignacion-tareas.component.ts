@@ -70,7 +70,7 @@ export class AsignacionTareasComponent implements OnInit {
         }
 
         this.tareaService.findByDetails().then(
-            async resp => {
+            async resp => { 
                 this.tareasList = resp;
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
@@ -95,11 +95,12 @@ export class AsignacionTareasComponent implements OnInit {
         let fecha_cierre = moment(tarea.fecha_cierre);
         let fecha_proyectada = moment(tarea.fecha_proyectada);
 
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollow) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
-        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day') && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) return 2;
+        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day')) return 3;
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 4;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && !isFollow) return 5;
 
         return 0;
     }

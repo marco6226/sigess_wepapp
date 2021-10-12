@@ -5,7 +5,7 @@ import { TareaService } from 'app/modulos/sec/services/tarea.service'
 import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { Tarea } from 'app/modulos/sec/entities/tarea'
-import { Message } from 'primeng/primeng';
+import { FilterUtils, Message } from 'primeng/primeng';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Filter, Criteria } from '../../../core/entities/filter';
 import { Permiso } from '../../../empresa/entities/permiso';
@@ -24,6 +24,10 @@ export class MisTareasComponent implements OnInit {
     tareaSelect: Tarea;
     msgs: Message[] = [];
     observacionesRealizacion: string;
+    loading: boolean = false;
+    yearRange;
+    es: any;
+
 
     constructor(
         private tareaService: TareaService,
@@ -33,6 +37,8 @@ export class MisTareasComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+
+        this.loading = true;
 
         let statuses = {
             0: 'N/A',
@@ -49,22 +55,56 @@ export class MisTareasComponent implements OnInit {
         fq.count = true;
         fq.filterList = [{ field: 'empResponsable.usuario.id', value1: id, criteria: Criteria.CONTAINS }];
         
-        this.tareaService.findByFilter(fq).then(
-            async resp => {
-                this.tareasList = resp['data']
-
+        //console.log(fq.fieldList)        
+        this.tareaService.findByDetailsByEmpleado(id).then(
+            async resp => { 
+                this.tareasList = resp;
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);
                     tarea.estado = statuses[status];
-                    tarea.fechaProyectada = new Date(tarea.fechaProyectada).toISOString();
+                    tarea.fecha_proyectada = new Date(tarea.fecha_proyectada).toISOString();
                     return tarea;
                 }));
+                this.loading = false;
                 console.log(this.tareasList);
+                 let estados = this.tareasList.map(x => x.estado)
+                console.log(estados);
+
+        
+            
+                //this.devolverEstados ();
+                //console.log(this.devolverEstados());
             }            
-        );        
+        );
+        
+        let date = new Date().getFullYear().toString();
+
+        this.yearRange = ((parseInt(date) - 20) + ':' + (parseInt(date) + 20)).toString();
+
+        this.es = {
+            firstDayOfWeek: 1,
+            dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+            dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+            dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+            monthNames: ["Enero ", "Febrero ", "Marzo ", "Abril ", "Mayo ", "Junio ", "Julio ", "Agosto ", "Septiembre ", "Octubre ", "Noviembre ", "Diciembre "],
+            monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+            today: 'Hoy',
+            clear: 'Borrar'
+        }
+
+        FilterUtils['dateFilter'] = (value, filter):boolean => {
+            if (filter === undefined || filter === null) return true;
+
+            if (value === undefined || value === null) return false;
+
+            let val = moment(value.split('T')[0]),
+            filt = moment(filter);
+
+            return filt.isSame(val);
+        }
     }
     
-    
+
     devolverEstados (){
         let total =[];
         const estados = this.tareasList.map(x => x.estado)
@@ -73,26 +113,32 @@ export class MisTareasComponent implements OnInit {
         return total;      
         }        
         
-           
+        /*  0: 'N/A',
+            1: 'En seguimiento',
+            2: 'Abierta',
+            3: 'Cerrada en el tiempo',
+            4: 'Cerrada fuera de tiempo',
+            5: 'Vencida',*/
     async verifyStatus(tarea) {
 
-        let trackings = await this.seguimientoService.getSegByTareaID(tarea.id) as any;
-        let isFollow = (trackings.length > 0) ? true : false;
-
+        let trackings = tarea.trackings
+        let isFollow = (trackings > 0) ? true : false;
+        console.log(isFollow);
         /* Vars */
         let now = moment({});
-        let fecha_cierre = moment(tarea.fechaCierre);
-        let fecha_proyectada = moment(tarea.fechaProyectada);
+        let fecha_cierre = moment(tarea.fecha_cierre);
+        let fecha_proyectada = moment(tarea.fecha_proyectada);
 
-        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now) && isFollow) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now)) return 2;
-        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
+
+        if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day') && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) return 2;
+        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day')) return 3;
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 4;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && !isFollow) return 5;
 
         return 0;
     }
-
     selectTarea(tarea: Tarea) {
         this.tareaSelect = tarea;
     }
