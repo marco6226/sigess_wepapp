@@ -48,7 +48,8 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	public tareasPendientes: any;
 
 	data: any;
-
+	position: number=window.innerWidth-400;
+	pos:number=1000;
 
 
 	constructor(
@@ -99,7 +100,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
            
             this.cargartareas();
         }, 5000);
-
+		this.ActPosition();
 	}
 
 	logout() {
@@ -261,4 +262,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		element.nativeElement.classList.remove(oldClass);
 	}
 	
+	ActPosition(){
+		this.position =window.innerWidth-400;
+	}
 }

@@ -153,13 +153,18 @@ h1 {
 #avatar2 {
     position: relative;
     top:-27px;
-    left: 1060px;
-    right: 0px;
+    //left: max-width;
+    //right: 0px;
     width: 35px;
-    height: 35px;
+    //height: 35px;
     color: #fff;
-    display: flex;
+    //display: flex;
     font-size: 20px;
+    //background: violet;
+    text-align: center;
+    margin-left: auto;
+    margin-right: 190px;
+    
 }
 
 #avatar-content i {
