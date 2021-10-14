@@ -49,7 +49,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 
 	data: any;
 	position: number=window.innerWidth-400;
-	pos:number=1000;
+	pos:number=1500;
 
 
 	constructor(
