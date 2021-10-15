@@ -132,9 +132,10 @@ export class MisTareasComponent implements OnInit {
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day') && isFollow) return 1;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && isFollow) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) return 2;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day') && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day') && !isFollow) return 2;
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day')) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 4;
+        if (fecha_cierre.isValid() && fecha_proyectada.isSameOrBefore(now,'day')) return 4;        
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && !isFollow) return 5;
 
         return 0;

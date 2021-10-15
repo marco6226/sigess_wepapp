@@ -4,6 +4,9 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 import { Tarea } from 'app/modulos/sec/entities/tarea'
 import { FilterUtils, Message } from 'primeng/primeng';
 import * as moment from "moment";
+import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { FilterQuery } from '../../../core/entities/filter-query';
+import { Filter, Criteria } from '../../../core/entities/filter';
 
 @Component({
     selector: 'app-asignacion-tareas',
@@ -19,10 +22,13 @@ export class AsignacionTareasComponent implements OnInit {
     tareaSelect: Tarea;
     msgs: Message[] = [];
     observacionesRealizacion: string;
+    arrayIdsareas  = [];
+     
 
     constructor(
         private tareaService: TareaService,
         private paramNav: ParametroNavegacionService,
+        private sesionService: SesionService,
     ) { }
 
     ngOnInit() {
@@ -68,8 +74,13 @@ export class AsignacionTareasComponent implements OnInit {
             4: 'Cerrada fuera de tiempo',
             5: 'Vencida',
         }
-
-        this.tareaService.findByDetails().then(
+       // this.arrayIdsareas = [54, 52];
+        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
+        areas = areas.replace('{', '');
+        areas = areas.replace('}', '');     
+        this.arrayIdsareas.push (areas.valueOf());
+       
+        this.tareaService.findByDetails(this.arrayIdsareas).then(
             async resp => { 
                 this.tareasList = resp;
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
@@ -97,11 +108,11 @@ export class AsignacionTareasComponent implements OnInit {
 
         if (!fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day') && isFollow) return 1;
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && isFollow) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) return 2;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day') && isFollow) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day') && !isFollow) return 2;
         if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now,'day')) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 4;
+        if (fecha_cierre.isValid() && fecha_proyectada.isSameOrBefore(now,'day')) return 4;        
         if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day') && !isFollow) return 5;
-
         return 0;
     }
 

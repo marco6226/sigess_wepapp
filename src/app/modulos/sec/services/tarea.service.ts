@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInt } from 'app/httpInt'
 import { endPoints } from 'environments/environment'
-
+import { FilterQuery } from "app/modulos/core/entities/filter-query";
 import { ServiceCRUD } from 'app/modulos/core/services/service-crud.service'
 import { Tarea } from 'app/modulos/sec/entities/tarea'
 import { MensajeUsuarioService } from 'app/modulos/comun/services/mensaje-usuario.service';
@@ -71,9 +71,24 @@ export class TareaService extends ServiceCRUD<Tarea>{
         return this.http.get(`${this.end_point}detail/${tareaId}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
-    public findByDetails() {
-        return this.http.get(`${this.end_point}details`, this.getRequestHeaders(this.headers)).toPromise();
-    }
+  //  public findByDetails(areas) {
+       // return this.http.get(`${this.end_point}details`, this.getRequestHeaders(this.headers)).toPromise();
+    //    return this.http.get(this.end_point+'detalle/'+areas)
+   // }
+
+    findByDetails<T>(areas) {
+        return new Promise(resolve => {
+          this.httpInt.get(this.end_point + "detalle/" + areas)
+            .map(res => res)
+            .subscribe(
+            res => {
+              resolve(res);
+            }
+            ,
+            err => this.manageError(err)
+            )
+        });
+      }
     public findByDetailsByEmpleado(id) {
         return this.http.get(this.end_point+'details/'+id, this.getRequestHeaders(this.headers)).toPromise();
     }

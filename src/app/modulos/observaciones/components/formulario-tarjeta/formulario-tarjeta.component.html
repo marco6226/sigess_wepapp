@@ -7,7 +7,8 @@
             <h4 style="margin-top: 0px">Tipo de observación:</h4>
             <div [ngClass]="form.value.tipoObservacion == null ? 'invalid' : 'valid'">
               <ng-template ngFor let-to [ngForOf]="tarjeta?.campos.tipo_observacion" let-i="index">
-                <p-radioButton name="tipo_observacion" [value]="to.label" [label]="to.label" formControlName="tipoObservacion"></p-radioButton>
+                <p-radioButton class="form-check-input" name="tipo_observacion" [value]="to.label" [label]="to.label" formControlName="tipoObservacion"></p-radioButton>
+                <br>
               </ng-template>
             </div>
           </div>

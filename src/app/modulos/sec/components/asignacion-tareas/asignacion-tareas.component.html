@@ -19,7 +19,7 @@
                         <th pSortableColumn="module"> Módulo
                             <p-sortIcon field="module"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="fecha_reporte">Fecha
+                        <th pSortableColumn="fecha_reporte">Fecha de reporte
                             <p-sortIcon field="fecha_reporte"></p-sortIcon>
                         </th>
                         <th pSortableColumn="regional"> Regional
@@ -94,7 +94,7 @@
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
                                 </span>
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
                             </div>
                         </td>
                         <td>
