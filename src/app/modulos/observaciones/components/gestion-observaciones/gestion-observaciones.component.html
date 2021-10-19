@@ -44,11 +44,7 @@
               - {{cr.nombre}}
               <br/>
             </ng-template>
-          </div>
-          <div class="obs-pnl" *ngIf="observacion.tarjeta?.usarNivelRiesgo">
-            <h4>Nivel riesgo:</h4>
-            {{observacion.nivelRiesgo?.nombre}} - {{observacion.nivelRiesgo?.descripcion}}
-          </div>
+          </div>          
           <div class="obs-pnl">
             <h4> Usuario que reporta:</h4>
             {{observacion.usuarioReporta?.email}}
@@ -66,27 +62,28 @@
   </p-panel>
   <br/><br/>
 
-  <p-panel *ngIf="visiblePnlDenegada">
+  <p-panel  *ngIf="visiblePnlDenegada">
     <p-header>
       <button pButton type="button" icon="fa fa-ban" label="Denegar" *ngIf="!consultar" (click)="guardarDenegar()" class="ui-button-danger"
         [disabled]="motivo == null || motivo.length == 0"></button>
     </p-header>
-    <strong>Motivo</strong>
+    <strong>Observaciones</strong>
+    <br/>
+    <textarea pInputTextarea style="width:100%;height: 100px;" [(ngModel)]="motivo" [disabled]="consultar"></textarea>
+
+  </p-panel>
+  <p-panel  *ngIf="visiblePnlAceptada">
+    <p-header>
+      <button pButton type="button" icon="fa fa-check" label="Aceptar" *ngIf="!consultar" (click)="guardarAceptar()" class="ui-button-success"
+        [disabled]="motivo == null || motivo.length == 0"></button>
+    </p-header>
+    <strong>Observaciones</strong>
     <br/>
     <textarea pInputTextarea style="width:100%;height: 100px;" [(ngModel)]="motivo" [disabled]="consultar"></textarea>
 
   </p-panel>
 
-  <p-panel *ngIf="visiblePnlAceptada">
-    <p-header>
-      <button pButton type="button" icon="fa fa-check" label="Aceptar" *ngIf="!consultar" (click)="guardarAceptar()" class="ui-button-success"
-        [disabled]="causaRaizSelectList == null || causaRaizSelectList.length == 0"></button>
-    </p-header>
-    <strong>Causa raiz aprobada:</strong>
-    <br/>
-    <br/>
-    <p-tree [value]="causaRaizList" selectionMode="checkbox" [(selection)]="causaRaizSelectList" [style]="{'width':'100%'}"></p-tree>
-  </p-panel>
+  
 
   <ng-container *ngIf="!consultar">
     <button *sTienePermiso="'AUC_PUT_OBSACEPT'" pButton type="button" icon="fa fa-check" title="Gestionar observación" class="float-btn ui-button-success"

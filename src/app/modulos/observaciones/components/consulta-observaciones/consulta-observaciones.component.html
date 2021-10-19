@@ -16,9 +16,7 @@
         <th pSortableColumn="descripcion">descripción
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        <th pSortableColumn="nivelRiesgo.nombre" style="width:150px">Nivel de riesgo
-          <p-sortIcon field="nivelRiesgo.nombre"></p-sortIcon>
-        </th>
+        
         <th pSortableColumn="aceptada" style="width:120px">Estado
           <p-sortIcon field="aceptada"></p-sortIcon>
         </th>
@@ -36,9 +34,7 @@
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
         </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nivelRiesgo.nombre', 'contains')">
-        </td>
+        
         <td>
           <!-- <select (input)="dt.filter($event.target.value, 'aceptada', 'eq')">
             <option [value]="true">Aceptada</option>
@@ -55,7 +51,7 @@
         <td>{{observ.tipoObservacion}}</td>
         <td>OBS-{{observ.id}}</td>
         <td>{{observ.descripcion}}</td>
-        <td>{{observ.nivelRiesgo.nombre}}</td>
+        
         <td>
           <span *ngIf="observ.aceptada == true" class="badge success">Aceptada</span>
           <span *ngIf="observ.aceptada == false" class="badge novalid">Denegada</span>

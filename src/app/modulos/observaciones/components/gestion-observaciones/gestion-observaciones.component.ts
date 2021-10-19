@@ -77,12 +77,14 @@ export class GestionObservacionesComponent implements OnInit {
         if (this.observacion.aceptada != null) {
           this.visiblePnlAceptada = <boolean>this.observacion.aceptada;
           this.visiblePnlDenegada = !this.observacion.aceptada;
+          
         }
         if (this.visiblePnlAceptada) {
-          this.causaRaizSelectList = [];
-          this.loadCausaRaiz();
+          this.motivo = this.observacion.motivo;
+          console.log(this.motivo);
         } else if (this.visiblePnlDenegada) {
           this.motivo = this.observacion.motivo;
+          console.log(this.motivo);
         }
       }
     );
@@ -147,7 +149,7 @@ export class GestionObservacionesComponent implements OnInit {
   }
 
   guardarAceptar() {
-    this.observacion.causaRaizAprobadaList = this.buildCausaRaizList(this.causaRaizSelectList);
+    this.observacion.motivo = this.motivo;
     this.observacionService.aceptarObservacion(this.observacion).then(
       data => {
         this.visibleObservacion = false;
@@ -178,7 +180,7 @@ export class GestionObservacionesComponent implements OnInit {
   }
 
   aceptar() {
-    this.loadCausaRaiz();
+    //this.loadCausaRaiz();
     this.visiblePnlAceptada = true;
     this.visiblePnlDenegada = false;
   }
