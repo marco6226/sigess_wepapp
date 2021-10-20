@@ -163,7 +163,7 @@
                 <!-- Start general info -->
 
                 <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">General</h5>
+                    <h5 class="title-header p-mb-2">Cierre</h5>
                 </div>
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -214,15 +214,17 @@
                     <div class="input-field">
                         <p-calendar formControlName="fechaCierre" [monthNavigator]="true" [yearNavigator]="true"
                             [maxDate]="fechaActual" yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"
-                            [disabled]="tareaClose"></p-calendar>
+                            [disabled]="tareaClose" *sTienePermiso="'SEC_CHANGE_FECHACIERRE'" required="true"></p-calendar>
+                            <p-calendar formControlName="fechaCierre" 
+                            [maxDate]="fechaActual" [minDate]="fechaActual"  [locale]="localeES" dateFormat="dd/mm/yy"
+                            [disabled]="tareaClose" *ngIf="!fechavisible" required="true"></p-calendar>
+                           
+
+
                         <label for="" class="active">Fecha de cierre</label>
                     </div>
 
-                    <!-- Start validations -->
-                    <div *ngIf="submitted && f.fechaCierre.hasError('required')" class="error-msg ">
-                        <span>Debe seleccionar una fecha de cierre.</span>
-                    </div>
-                    <!-- End validations -->
+                    
 
                 </div>
 

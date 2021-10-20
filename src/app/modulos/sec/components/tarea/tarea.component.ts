@@ -15,6 +15,7 @@ import { Criteria } from 'app/modulos/core/entities/filter';
 import { formatDate } from '@angular/common';
 import { CapitalizePipe } from '../../utils/pipes/capitalize.pipe';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 @Component({
     selector: 'app-tarea',
@@ -44,6 +45,7 @@ export class TareaComponent implements OnInit {
     status = 0;
     statuses;
     tareaEvidences = [];
+    fechavisible = false;
 
     constructor(
         fb: FormBuilder,
@@ -52,6 +54,7 @@ export class TareaComponent implements OnInit {
         private empleadoService: EmpleadoService,
         private seguimientoService: SeguimientosService,
         private directorioService: DirectorioService,
+        private sesionService: SesionService,
         @Inject(LOCALE_ID) private locale: string,
         private capitalizePipe: CapitalizePipe,
     ) {
@@ -96,6 +99,16 @@ export class TareaComponent implements OnInit {
         if (this.tarea) {
             this.status = this.verifyStatus();
             let fecha_cierre = moment(this.tarea.fecha_cierre);
+
+            let permiso = this.sesionService.getPermisosMap()['SEC_CHANGE_FECHACIERRE'];
+            if (permiso != null && permiso.valido == true) {
+                this.fechavisible = true ;
+
+              }else{
+                fecha_cierre = moment(this.fechaActual);
+              }
+
+            console.log(permiso);
 
 
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
