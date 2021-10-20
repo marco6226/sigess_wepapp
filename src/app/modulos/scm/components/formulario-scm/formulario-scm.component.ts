@@ -45,6 +45,7 @@ import { Subject } from "rxjs";
 import { ConfirmationService } from "primeng/api";
 import { ConfirmService } from "app/modulos/scm/components/formulario-scm/confirm.service";
 import { ActivatedRoute } from "@angular/router";
+import { Proveedor } from "app/modulos/comun/entities/proveedor";
 
 export interface TreeNode {
     data?: any;
@@ -204,7 +205,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     nameAndLastName = "";
     solicitando: boolean = false;
     departamento;
-    entity: epsorarl = { EPS: [], ARL: [], AFP: [], PREPAGADAS: [], PROVSALUD: [] };
+    entity: epsorarl = { EPS: [], ARL: [], AFP: [], Medicina_Prepagada: [], Proveedor_de_salud: [] };
     caseOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
@@ -244,6 +245,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { label: "En Calificación", value: "1" },
         { label: "En Firme", value: "2" },
         { label: "En Apelación", value: "0" }
+    ]
+    entityOptionList = [
+        
+        { label: "EPS", value: "EPS" },
+        { label: "ARL", value: "ARL" },
+        { label: "Medicina prepagada", value: "Medicina_prepagada" },
+        { label: "Proveedor de salud", value: "Proveedor_de_salud" }
     ]
 
     pclCalificacionList = [
@@ -463,7 +471,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 this.arlList.push({ label: arl.nombre, value: arl.id });
             });
             this.entity.ARL = this.arlList;
-
+            console.log(this.arlList);
         });
 
         this.comunService.findAllPrepagadas().then((data) => {
@@ -472,17 +480,18 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             (<Prepagadas[]>data).forEach((prepagadas) => {
                 this.prepagadasList.push({ label: prepagadas.nombre, value: prepagadas.id });
             });
-            this.entity.PREPAGADAS = this.prepagadasList;
+            this.entity.Medicina_Prepagada = this.prepagadasList;
+            console.log(this.prepagadasList);
         });
 
         this.comunService.findAllProvSalud().then((data) => {
             this.provsaludList = [];
             this.provsaludList.push({ label: "--Seleccione--", value: null });
-            (<Prepagadas[]>data).forEach((prov) => {
+            (<Proveedor[]>data).forEach((prov) => {
                 this.provsaludList.push({ label: prov.nombre, value: prov.id });
             });
             console.log(this.provsaludList);
-            this.entity.PROVSALUD = this.provsaludList;
+            this.entity.Proveedor_de_salud = this.provsaludList;
         });
 
 

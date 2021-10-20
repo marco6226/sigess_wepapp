@@ -26,8 +26,8 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         { label: 'Entidad  que emite', value: null },
         { label: 'EPS', value: 'EPS' },
         { label: 'ARL', value: 'ARL' },
-        { label: 'Proveedor de salud', value: 'Proveedor de salud' },
-        { label: 'Medicina prepagada', value: 'Medicina Prepagada' },
+        { label: 'Proveedor de salud', value: 'Proveedor_de_salud' },
+        { label: 'Medicina prepagada', value: 'Medicina_Prepagada' },
 
     ];
 
@@ -226,6 +226,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         } else {
             this.clearInputs();
         }
+        console.log(this.entidadEmitRecomendaciones);
     }
 
     onSelectionResponsable(event) {

@@ -5,6 +5,6 @@ export class epsorarl {
     EPS: SelectItem[]
     ARL: SelectItem[]
     AFP: SelectItem[]
-    PREPAGADAS: SelectItem[]
-    PROVSALUD: SelectItem[]
+    Medicina_Prepagada: SelectItem[]
+    Proveedor_de_salud: SelectItem[]
 }

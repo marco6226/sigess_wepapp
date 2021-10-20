@@ -11,14 +11,14 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material" styleClass="select-material">
+                    <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material"  styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
                 <small *ngIf="entidadEmitRecomendaciones.errors?.required && entidadEmitRecomendaciones.touched" id="username2-help" class="p-invalid">Obligatorio</small>
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'PROVSALUD' || recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'PREPAGADAS' ">
+            <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'Proveedor_de_salud' || recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'Medicina_Prepagada' ">
                 <div class="input-field">
                     <p-dropdown [filter]="true" [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material">
                     </p-dropdown>
@@ -110,7 +110,9 @@
 
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-calendar [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada" dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" showButtonBar="true" yearRange="2010:2030" styleClass="calendar-material"
+                                <p-calendar [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada"
+                                 dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES"
+                                  [monthNavigator]="true"  [yearNavigator]="true" showButtonBar="true" yearRange="2010:2030" styleClass="calendar-material"
                                     inputStyleClass="form-material">
                                 </p-calendar>
 

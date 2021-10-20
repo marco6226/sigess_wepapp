@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ElementoInspeccion } from 'app/modulos/inspecciones/entities/elemento-inspeccion'
-import { OpcionCalificacion } from 'app/modulos/inspecciones/entities/opcion-calificacion'
+import { ElementoInspeccion } from 'app/modulos/inspecciones/entities/elemento-inspeccion';
+import { OpcionCalificacion } from 'app/modulos/inspecciones/entities/opcion-calificacion';
 import { SistemaNivelRiesgo } from 'app/modulos/core/entities/sistema-nivel-riesgo';
 import { NivelRiesgo } from 'app/modulos/core/entities/nivel-riesgo';
-import { Calificacion } from 'app/modulos/inspecciones/entities/calificacion'
+import { Calificacion } from 'app/modulos/inspecciones/entities/calificacion';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
-import { Message, OverlayPanel } from 'primeng/primeng'
-import { TipoHallazgoService } from 'app/modulos/inspecciones/services/tipo-hallazgo.service'
+import { Message, OverlayPanel } from 'primeng/primeng';
+import { TipoHallazgoService } from 'app/modulos/inspecciones/services/tipo-hallazgo.service';
 import { TipoHallazgo } from '../../entities/tipo-hallazgo';
 import { SesionService } from '../../../core/services/sesion.service';
 import { stringify } from 'querystring';
@@ -34,9 +34,10 @@ export class ListaInspeccionFormComponent implements OnInit {
     @Input("usarNivelRiesgo") usarNivelRiesgo: boolean;
     @Input("usarTipoHallazgo") usarTipoHallazgo: boolean;
     visibleDlg: boolean;
-
+    empresa: Empresa;
     contadorElem: number = 0;
     ethus: boolean = false;
+
     elementoSelect: ElementoInspeccion;
     imagenesList: any[] = [];
     imgMap: any = {};
@@ -49,6 +50,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     empleadosList: Empleado[];
     loadingImg: boolean;
     numMaxImg = 3;
+    idempresa: string;
 
     constructor(
         private sessionService: SesionService,
@@ -56,7 +58,13 @@ export class ListaInspeccionFormComponent implements OnInit {
         private directorioService: DirectorioService,
         private tipoHallazgoService: TipoHallazgoService, 
         private empleadoService: EmpleadoService,
-    ) { }
+    ) {
+        this.empresa = this.sessionService.getEmpresa();
+
+        this.idempresa = this.empresa.id;
+
+    
+     }
 
     ngOnInit() {
         this.numMaxImg = this.sessionService.getConfigParam('NUM_MAX_FOTO_INP');
@@ -64,6 +72,7 @@ export class ListaInspeccionFormComponent implements OnInit {
             .then(resp => {
                 this.tipoHallazgoList = resp['data'];
             });
+            console.log(this.idempresa);
     }
     buscarEmpleado(event) {
         this.empleadoService

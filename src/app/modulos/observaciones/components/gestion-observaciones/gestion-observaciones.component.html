@@ -38,6 +38,12 @@
               - {{afec}} <br/>
             </ng-template>
           </div>
+          <div class="obs-pnl">
+            <h4>Recomendación:</h4>
+            
+               {{observacion.recomendacion}}
+            
+          </div>
           <div class="obs-pnl" *ngIf="observacion.tarjeta?.usarCausaRaiz">
             <h4>Causa raíz:</h4>
             <ng-template ngFor let-cr [ngForOf]="observacion.causaRaizList">

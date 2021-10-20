@@ -18,7 +18,7 @@
 </p-panel>
 <div class="ui-g-12 ui-sm-12 ui-md-6" >
   <form >
-      <p-panel *ngIf="ethus">
+      <p-panel  *ngIf="empresa.id == '11' && !editable">
           <p-header>
               <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno supervision / Ingenieria
           </p-header>
@@ -61,7 +61,7 @@
 </div>
 <div class="ui-g-12 ui-sm-12 ui-md-6" >
   <form id='2' >
-      <p-panel *ngIf="ethus">
+      <p-panel *ngIf="empresa.id == '11' && !editable">
           <p-header>
               <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno HSE
           </p-header>
