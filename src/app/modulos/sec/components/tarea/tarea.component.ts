@@ -1,3 +1,4 @@
+import { Modulo } from './../../../core/enums/enumeraciones';
 import { Component, Inject, OnInit, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -165,8 +166,12 @@ export class TareaComponent implements OnInit {
     async getTareaEvidences() {
         try {
 
-            let res: any = await this.tareaService.getTareaEvidences(this.tareaId);
-
+            this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
+            
+            this.tarea = await this.tareaService.findByDetailId(this.tareaId);
+            console.log(this.tarea.hash_id.slice(0,3));
+            let res: any = await this.tareaService.getTareaEvidencesModulos(this.tareaId, this.tarea.hash_id.slice(0,3));
+            
             if (res) {
 
                 res.files.forEach(async (evidence) => {

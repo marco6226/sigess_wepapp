@@ -111,6 +111,10 @@ export class TareaService extends ServiceCRUD<Tarea>{
         return this.http.get(`${this.end_point}images/${id}`, this.getRequestHeaders(this.headers)).toPromise();
     }
 
+    public getTareaEvidencesModulos(id, modulo) {
+        return this.http.get(`${this.end_point}images/${id}/${modulo}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
     getClassName(): string {
         return "TareaService";
     }
