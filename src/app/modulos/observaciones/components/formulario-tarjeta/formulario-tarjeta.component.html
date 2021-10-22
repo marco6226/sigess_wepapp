@@ -19,7 +19,7 @@
           </div>
 
           <div>
-            <h4>Implicación:</h4>
+            <h4>Categoría:</h4>
             <p-tree [value]="implicacionTree" selectionMode="checkbox" [style]="{'width':'100%'}" [(selection)]="implicacionSelectList"
               [ngClass]="implicacionSelectList.length == 0 ? 'invalid' : 'valid'"></p-tree>
           </div>
@@ -35,8 +35,9 @@
         <p-panel header="Detalle">
           <div class="obs-pnl">
             <h4 style="margin-top: 0px">Afecta:</h4>
-            <ng-template ngFor let-afectaOpt [ngForOf]="tarjeta?.campos.afecta" let-i="index">
+            <ng-template style="margin-top: 4px" ngFor let-afectaOpt [ngForOf]="tarjeta?.campos.afecta" let-i="index">
               <p-checkbox name="_afecta" [value]="afectaOpt.label" [label]="afectaOpt.label" formControlName="afecta" [(ngModel)]="afectaSelectList"></p-checkbox>
+              <br>
             </ng-template>
           </div>
 

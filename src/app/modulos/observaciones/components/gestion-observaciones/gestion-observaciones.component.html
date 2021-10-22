@@ -10,6 +10,10 @@
       <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ">
         <p-panel header="Datos de observación">
           <div class="obs-pnl">
+            <h4>Código:</h4>
+            OBS-{{observacion.id}}
+          </div>
+          <div class="obs-pnl">
             <h4>Tipo de reporte:</h4>
             {{observacion.tipoObservacion}}
           </div>
@@ -18,7 +22,7 @@
             {{observacion.descripcion}}
           </div>
           <div class="obs-pnl">
-            <h4>Implicacion:</h4>
+            <h4>Categoría:</h4>
             <ng-template ngFor let-imp [ngForOf]="observacion?.implicacionList" let-i="index">
               - {{imp.nombre}}
               <br/>

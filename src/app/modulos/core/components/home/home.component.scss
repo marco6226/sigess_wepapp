@@ -1,5 +1,5 @@
 .fa{
-  font-size: 22px;
+  font-size: 30px;
 }
 
 .fa-check-circle{
@@ -34,6 +34,9 @@ border-top: 0.1px solid #ffffff;
         font-size: 3rem;
     }
 }
+.icon-adm{
+  background-image: url('/assets/images/icons-invert/adm.svg');
+}
 
 .info {
     display: flex;
@@ -57,3 +60,30 @@ p label{
   width: 60%; 
   padding: 10px;
   }
+
+  .btn-wsp{
+    size: 50px;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    bottom: 30px;
+    right: 30px;
+    background: #0df053;
+    color: #fff;
+    border-radius: 40px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0px 1px 10px  rgba(0,0,0,0.5);
+    z-index: 100;
+
+}
+
+.btn-wsp:hover{
+    
+   text-decoration: none;
+    color: #0df053;
+    background: #fff;
+    
+
+}
