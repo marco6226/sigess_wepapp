@@ -18,7 +18,7 @@ export class GestionTareasComponent implements OnInit {
 
     @Input('tareasList') tareasList: Tarea[];
     @Input('readOnly') readOnly: boolean;
-
+    
     modificar: boolean;
     adicionar: boolean;
     form: FormGroup;
@@ -55,7 +55,7 @@ export class GestionTareasComponent implements OnInit {
         this.adicionar = !this.readOnly;
         this.modificar = false;
     }
-
+    
     onSubmit() {
         let tarea = new Tarea();
         tarea.nombre = this.form.value.nombre;

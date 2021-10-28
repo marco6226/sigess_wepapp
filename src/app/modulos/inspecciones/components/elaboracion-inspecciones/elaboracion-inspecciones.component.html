@@ -38,12 +38,54 @@
   <s-lista-inspeccion-form [value]="listaInspeccion?.elementoInspeccionList" [opciones]="listaInspeccion?.opcionCalificacionList"
     [editable]="false" [disabled]="consultar" [nivelRiesgoList]="nivelRiesgoList" diligenciable="true" #listaInspeccionForm
     [usarNivelRiesgo]="listaInspeccion?.usarNivelRiesgo" [usarTipoHallazgo]="listaInspeccion?.usarTipoHallazgo"></s-lista-inspeccion-form>
-
+    <div class="ui-g-12 ui-sm-12 ui-md-6" >
+      <form  [formGroup]="Form">
+          <p-panel  >
+              <p-header>
+                  <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno supervision / Ingenieria
+              </p-header>
+              <div class="input-field">
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
+                    *ngIf="empleado?.id == null">
+                    <ng-template let-empleado pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div class="wrapper">
+                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle" style="font-size: 48px;" aria-hidden="true"></i>
+                                <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon" style="border-radius: 50%;" #imgAvatar />
+                                <div style="margin-left:20px">
+                                    <br /> {{empleado?.primerApellido}} {{empleado?.primerNombre}} {{empleado?.segundoNombre}}
+                                    <br /> {{empleado?.numeroIdentificacion}}
+                                    <br /> {{empleado?.usuario.email}}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+                <label for="" class="active">Número de identificación</label>
+            </div>
+              <label class="s-float-label">Nombre</label>
+              <input type="text" pInputText formControlName="codigo" required/>
+    
+              <label class="s-float-label">Cargo</label>
+              <input type="text" pInputText formControlName="nombre" required/>
+              
+    
+              <label class="s-float-label">Fecha de Validación</label>
+              <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
+              dateFormat="dd/mm/yy" id="fechavistoing" formControlName="fechavistoing" required></p-calendar>
+              
+              <div >
+                  <button  pButton type="button" (click)="(false)" icon="fa fa-check"  title="Validar como  supervision / Ingenieria" ></button>
+              </div>
+              
+          </p-panel>
+      </form>
+    </div>
   <button pButton type="button" icon="fa fa-floppy-o" *ngIf="adicionar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
-    class="float-btn"></button>
+    class="float-btn" data-toggle="tooltip" data-placement="bottom" title="Guardar"></button>
 
   <button pButton type="button" icon="fa fa-pencil" *ngIf="modificar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
-    class="float-btn ui-button-success"></button>
+    class="float-btn ui-button-success" data-toggle="tooltip" data-placement="bottom" title="Modificar"></button>
 
   <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
 

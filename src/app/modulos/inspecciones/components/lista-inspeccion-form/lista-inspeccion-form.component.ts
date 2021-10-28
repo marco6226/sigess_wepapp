@@ -14,6 +14,7 @@ import { SesionService } from '../../../core/services/sesion.service';
 import { stringify } from 'querystring';
 import { Empleado } from "app/modulos/empresa/entities/empleado";
 import { EmpleadoService } from "app/modulos/empresa/services/empleado.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 's-lista-inspeccion-form',
@@ -37,7 +38,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     empresa: Empresa;
     contadorElem: number = 0;
     ethus: boolean = false;
-
+    inpForm: FormGroup;
     elementoSelect: ElementoInspeccion;
     imagenesList: any[] = [];
     imgMap: any = {};
@@ -48,6 +49,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     yearRange: string = this.fechaActual.getFullYear() + ":" + (this.fechaActual.getFullYear() + 1);
     empleado: Empleado;
     empleadosList: Empleado[];
+    fullName = '';
     loadingImg: boolean;
     numMaxImg = 3;
     idempresa: string;
@@ -176,5 +178,16 @@ export class ListaInspeccionFormComponent implements OnInit {
         if (this.elementoSelect.calificacion.documentosList != null) {
             this.elementoSelect.calificacion.documentosList.splice(event.index, 1);
         }
+    }
+
+    async onSelection(event) {
+        console.log(event);
+        this.fullName = null;
+        this.empleado = null;
+        const emp = <Empleado>event;
+
+        this.empleado = emp;
+        this.fullName = (this.empleado.primerNombre || '') + ' ' + (this.empleado.primerApellido || '');
+        this.inpForm.patchValue({ empleadohse: { 'id': this.empleado.id }});
     }
 }
