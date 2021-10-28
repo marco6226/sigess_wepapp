@@ -10,6 +10,7 @@ import { InspeccionService } from 'app/modulos/inspecciones/services/inspeccion.
 import { SistemaNivelRiesgoService } from 'app/modulos/core/services/sistema-nivel-riesgo.service';
 import { SistemaNivelRiesgo } from 'app/modulos/core/entities/sistema-nivel-riesgo';
 import { Router } from '@angular/router';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { Message, SelectItem } from 'primeng/primeng'
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
@@ -21,6 +22,8 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { SesionService } from '../../../core/services/sesion.service';
 import { Area } from '../../../empresa/entities/area';
 import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Empresa } from 'app/modulos/empresa/entities/empresa';
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -29,6 +32,8 @@ import { DatePipe } from '@angular/common';
     providers: [DirectorioService,DatePipe]
 })
 export class ElaboracionInspeccionesComponent implements OnInit {
+
+    editable: boolean = false;
 
     pdfGenerado: boolean;
     @ViewChild('listaInspeccionForm', { static: false }) listaInspeccionForm: ListaInspeccionFormComponent;
@@ -45,7 +50,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     adicionar: boolean;
     formValid: boolean;
     redireccion: string;
-
+    empleado: Empleado;
+    Form: FormGroup;
+ empresa:Empresa;
     area: Area;
     initLoading = false;
     solicitando = false;
@@ -174,6 +181,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
             let inspeccion = new Inspeccion();
             inspeccion.area = this.area;
+            inspeccion.empleadohse = this.empleado;
+            inspeccion.empleadoing = this.empleado;
+            inspeccion.fechavistohse = new Date();
+            inspeccion.fechavistoing = new Date();
             inspeccion.listaInspeccion = this.listaInspeccion;
             inspeccion.programacion = this.programacion;
             inspeccion.calificacionList = calificacionList;
@@ -244,6 +255,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             detail: 'Se ha ' + (this.adicionar ? 'creado' : 'modificado') + ' correctamente la inspección' + ' INP-' + insp.id
         });
         this.finalizado = true;
+        
     }
 
     private extraerCalificaciones(elemList: ElementoInspeccion[], calificacionList: Calificacion[]) {
@@ -330,14 +342,14 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
 
             let camposForm = template.querySelector('#L_campos_formulario');
-            let tr = camposForm.cloneNode(true);
+            const tr = camposForm.cloneNode(true);
             tr.childNodes[0].textContent = "Ubicación"
             tr.childNodes[1].textContent = this.programacion ? this.programacion.area.nombre : "";
-            camposForm.parentElement.appendChild(tr)
-            let tfecha = camposForm.cloneNode(true);
-            tfecha.childNodes[0].textContent = "Fecha y Hora de realización"
+            camposForm.parentElement.appendChild(tr);
+            const tfecha = camposForm.cloneNode(true);
+            tfecha.childNodes[0].textContent = 'Fecha y Hora de realización'
             tfecha.childNodes[1].textContent = fechahora;
-            camposForm.parentElement.appendChild(tfecha)
+            camposForm.parentElement.appendChild(tfecha);
             this.listaInspeccion.formulario.campoList.forEach(campo => {
                 let tr = camposForm.cloneNode(true);
                 tr.childNodes[0].textContent = campo.nombre;

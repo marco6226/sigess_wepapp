@@ -1,6 +1,7 @@
 
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
-import { Usuario } from 'app/modulos/empresa/entities/usuario'
+import { Usuario } from 'app/modulos/empresa/entities/usuario';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { Calificacion } from './calificacion'
 import { Programacion } from './programacion'
 import { RespuestaCampo } from 'app/modulos/comun/entities/respuesta-campo'
@@ -11,6 +12,8 @@ export class Inspeccion {
   id: number;
   fechaRealizada: Date;
   fechaModificacion: Date;
+  fechavistohse: Date;
+  fechavistoing: Date;
   observacion: string;
   lugar: string;
   equipo: string;
@@ -24,6 +27,9 @@ export class Inspeccion {
   programacion: Programacion;
   usuarioRegistra: Usuario;
   usuarioModifica: Usuario;
+  empleadoing: Empleado;
+  empleadohse: Empleado;
+
 
   listaInspeccion:ListaInspeccion;
   area:Area;
