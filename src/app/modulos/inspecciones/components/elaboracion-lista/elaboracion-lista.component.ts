@@ -273,6 +273,7 @@ export class ElaboracionListaComponent implements OnInit {
 
     actualizar(actualizarVersion: boolean) {        
         let listInp = new ListaInspeccion();
+        let versiondato = listInp.listaInspeccionPK.version;
         listInp.listaInspeccionPK = this.form.value.id;
         listInp.nombre = this.form.value.nombre;
         listInp.codigo = this.form.value.codigo;
@@ -287,7 +288,7 @@ export class ElaboracionListaComponent implements OnInit {
         let param = (actualizarVersion == false ? null : 'actualizarVersion=true');
         if(actualizarVersion==true){
             listInp.estado = 'inactivo';
-            listInp.listaInspeccionPK.version = listInp.listaInspeccionPK.version + 1;
+            versiondato = listInp.listaInspeccionPK.version + 1;
             this.listaInspeccionService.update(listInp,'actualizarVersion=false')
         }
         listInp.estado = 'activo';
@@ -299,7 +300,7 @@ export class ElaboracionListaComponent implements OnInit {
                         let resp = await this.directorioService.upload(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null);
                         let respid = Object.values(resp);
                         
-                        this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), listInp.listaInspeccionPK.version.toString());                                                
+                        this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), versiondato.toString());                                                
                     });
                 }
                 

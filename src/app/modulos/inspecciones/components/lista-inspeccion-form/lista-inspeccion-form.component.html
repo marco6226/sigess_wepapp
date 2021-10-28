@@ -17,7 +17,7 @@
 
 </p-panel>
 <div class="ui-g-12 ui-sm-12 ui-md-6" >
-  <form [formGroup]="inpForm">
+  <form >
       <p-panel  *ngIf="empresa.id == '11' && !editable">
           <p-header>
               <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno supervision / Ingenieria
@@ -50,7 +50,7 @@
 
           <label class="s-float-label">Fecha de Validación</label>
           <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
-          dateFormat="dd/mm/yy" id="fechavistoing" formControlName="fechavistoing" required></p-calendar>
+          dateFormat="dd/mm/yy" id="fechaProyectada" formControlName="fechaProyectada" required></p-calendar>
           
           <div >
               <button  pButton type="button" (click)="(false)" icon="fa fa-check"  title="Validar como  supervision / Ingenieria" ></button>
@@ -60,14 +60,14 @@
   </form>
 </div>
 <div class="ui-g-12 ui-sm-12 ui-md-6" >
-  <form [formGroup]="inpForm" >
+  <form id='2' >
       <p-panel *ngIf="empresa.id == '11' && !editable">
           <p-header>
               <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno HSE
           </p-header>
           
             <div class="input-field">
-                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="empleadohse"
+                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
                     *ngIf="empleado?.id == null">
                     <ng-template let-empleado pTemplate="item">
                         <div class="ui-helper-clearfix">
@@ -86,14 +86,14 @@
                 <label for="" class="active">Número de identificación</label>
             </div>
           <label class="s-float-label">Nombre</label>
-          <input type="text" pInputText formControlName="nombre" required/>
+          <input type="text" pInputText formControlName="codigo" required/>
 
           <label class="s-float-label">Cargo</label>
-          <input type="text" pInputText formControlName="cargo" required/>          
+          <input type="text" pInputText formControlName="nombre" required/>          
 
           <label class="s-float-label">Fecha de Validación</label>
           <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [locale]="es"
-          dateFormat="dd/mm/yy" id="fechavistohse" formControlName="fechavistohse" required></p-calendar>
+          dateFormat="dd/mm/yy" id="fechaProyectada" formControlName="fechaProyectada" required></p-calendar>
           
           <div >
               <button  pButton type="button" (click)="(false)" icon="fa fa-check" title="Validar como hse" ></button>
