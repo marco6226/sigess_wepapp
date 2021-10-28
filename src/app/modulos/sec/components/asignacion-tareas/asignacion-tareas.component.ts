@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TareaService } from 'app/modulos/sec/services/tarea.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
@@ -7,6 +8,9 @@ import * as moment from "moment";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Filter, Criteria } from '../../../core/entities/filter';
+
+import * as XLSX from 'xlsx'; 
+import {DragDropModule} from 'primeng/dragdrop';
 
 @Component({
     selector: 'app-asignacion-tareas',
@@ -24,6 +28,8 @@ export class AsignacionTareasComponent implements OnInit {
     observacionesRealizacion: string;
     arrayIdsareas  = [];
      
+    modalExcel = false;
+    fileName= 'ListadoSeguimiento.xlsx';
 
     constructor(
         private tareaService: TareaService,
@@ -179,6 +185,37 @@ export class AsignacionTareasComponent implements OnInit {
 
         this.paramNav.redirect('/app/sec/tarea/' + this.tareaSelect.id);
 
+    }
+
+
+    exportexcel(): void 
+    {
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+			
+    }
+
+    dragStart(event,car) {
+        //this.draggedCar = car;
+    }
+
+    drop(event) {
+        /*if(this.draggedCar) {
+            let draggedCarIndex = this.findIndex(this.draggedCar);
+            this.selectedCars = [...this.selectedCars, this.draggedCar];
+            this.availableCars = this.availableCars.filter((val,i) => i!=draggedCarIndex);
+            this.draggedCar = null;
+        }*/
+    }
+
+    dragEnd(event) {
+       // this.draggedCar = null;
     }
 
 }

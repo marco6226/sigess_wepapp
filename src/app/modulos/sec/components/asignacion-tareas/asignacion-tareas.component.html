@@ -6,16 +6,15 @@
         <a (click)="navegar()">aqui</a>
     </div>
 </s-dataNotFound>
-
-
+            
 <p-panel header="Listado de tareas" styleClass="material-panel" [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
-
-    <div class="ui-g">
+    <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <button pButton type="button" (click)="modalDianostico = true;" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <div class="ui-g" >        
         <div class="ui-g-12 p-mb-3">
-
-            <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
+            <p-table  id="excel-table" #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">
                 <ng-template pTemplate="header" let-columns>
-                    <tr>
+                    <tr >
                         <th pSortableColumn="module"> Módulo
                             <p-sortIcon field="module"></p-sortIcon>
                         </th>
@@ -126,7 +125,7 @@
 
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-tarea>
+                <ng-template pTemplate="body" let-tarea >
                     <tr [pSelectableRow]="tarea">
 
                         <td class="p-text-center">{{tarea.module}}</td>
@@ -183,3 +182,47 @@
         <button pButton type="button" (click)="reportarVerificacion()" label="Reportar verificación de tarea"></button>
     </div>
 </p-overlayPanel>
+
+<p-dialog  [(visible)]="modalDianostico" [style]="{'width':'630px','height':'100px', 'font-size': '10px'}">
+    <p-header style="font-size: 14px;margin-left: 10px;margin-top: -10px; padding-top: 100px;">
+        Seleccione los datos que desee exportar:
+    </p-header>
+    <div pDraggable="dd">
+        
+    </div>
+
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-g-nopad drag-column">
+            <ul style="margin:0;padding:0">
+                <li *ngFor="let car of availableCars" class="ui-helper-clearfix" pDraggable="cars"
+                    (onDragStart)="dragStart($event,car)" (onDragEnd)="dragEnd($event)">
+                    <h6>ui-button-success</h6>
+                </li>
+            </ul>
+        </div>
+        <div class="ui-g-12 ui-md-6 drop-column" pDroppable="cars" 
+            (onDrop)="drop($event)" [ngClass]="{'ui-highlight-car':draggedCar}">
+            <p-table [value]="selectedCars">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Vin</th>
+                        <th>Year</th>
+                        <th>Brand</th>
+                        <th>Color</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-car>
+                    <tr>
+                        <td>{{car.vin}}</td>
+                        <td>{{car.year}}</td>
+                        <td>{{car.brand}}</td>
+                        <td>{{car.color}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <div pDroppable="dd">Droppable Div</div>
+    <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+</p-dialog>

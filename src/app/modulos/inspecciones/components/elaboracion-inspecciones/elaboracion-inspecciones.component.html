@@ -21,9 +21,16 @@
 
       </div>
     </p-header>
+    
     <p>
       {{listaInspeccion?.descripcion}}
     </p>
+    <br>
+    <div class="uploaders"  *ngIf="listaEvidence.length > 0 ">
+      <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
+          [show]="true">
+      </app-file-uploader>
+    </div> 
   </p-panel>
   <br/>
   <s-formulario *ngIf="listaInspeccion?.formulario" [formularioModel]="listaInspeccion?.formulario" (onValidChange)="actualizarValidacion($event)"></s-formulario>

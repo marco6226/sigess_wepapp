@@ -6,6 +6,7 @@ import { Formulario } from 'app/modulos/comun/entities/formulario';
 
 export class ListaInspeccion {
   listaInspeccionPK: ListaInspeccionPK = new ListaInspeccionPK();
+  id: number;
   nombre: string;
   codigo: string;
   fkPerfilId: string;
@@ -17,4 +18,6 @@ export class ListaInspeccion {
   formulario: Formulario;
   usarTipoHallazgo:boolean;
   usarNivelRiesgo:boolean;
+  fkdocumento: number;
+  version: number;
 }

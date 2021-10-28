@@ -91,6 +91,27 @@
             </p-panel>
         </div>
 
+        <div class="ui-g-12 ui-sm-12 ui-md-6">
+            <p-panel>
+                <p-header>
+                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                    <label class="ui-panel-title"> Registro gráfico</label>
+                </p-header> 
+                <p-messages [(value)]="msgs"></p-messages>
+                <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" *ngIf="form.valid && listaEvidence.length == 0" ></button>
+                <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+      
+                <s-galeria *ngIf="imagenesList?.length > 0 && form.valid" [images]="imagenesList" [readOnly]="readOnly" ></s-galeria>
+                
+                <div class="uploaders" *ngIf="listaEvidence.length > 0 ">
+                    <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
+                        [show]="true">
+                    </app-file-uploader>
+                </div>
+
+            </p-panel>
+        </div>
+
         <div class="ui-g-12 ui-sm-12 ui-md-12">
             <s-formularioConstructor #formularioConstructor></s-formularioConstructor>
         </div>

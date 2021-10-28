@@ -1,4 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Documento } from './../../../ado/entities/documento';
+import { ListaInspeccionPK } from 'app/modulos/inspecciones/entities/lista-inspeccion-pk';
+import { stringify } from 'querystring';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -17,6 +20,12 @@ import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { PerfilService } from 'app/modulos/admin/services/perfil.service';
 import { Perfil } from 'app/modulos/empresa/entities/perfil';
 
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+
+import { TareaService } from 'app/modulos/sec/services/tarea.service';
+import { SeguimientosService } from 'app/modulos/sec/services/seguimientos.service';
+
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-elaboracion-lista',
@@ -35,7 +44,13 @@ export class ElaboracionListaComponent implements OnInit {
     modificar: boolean = false;
     finalizado: boolean = false;
     perfilList: SelectItem[] = [];
-    tipoListaOpts: SelectItem[] = [
+    
+    imagenesList: any[];
+    numMaxImg = 2;
+
+    listaEvidence = [];
+
+    tipoListaOpts: SelectItem[] = [    
         
 { label: 'Bioseguridad', value: 'Bioseguridad' },
 { label: 'COPASST', value: 'COPASST' },
@@ -58,19 +73,26 @@ export class ElaboracionListaComponent implements OnInit {
 { label: 'Teletrabajo', value: 'Teletrabajo' },
 { label: 'Transporte', value: 'Transporte' },
 
+
     ];
 
     constructor(
         private fb: FormBuilder,
         private listaInspeccionService: ListaInspeccionService,
         private paramNav: ParametroNavegacionService,
-        private perfilService: PerfilService
+        private perfilService: PerfilService,
+        private directorioService: DirectorioService,
+        private seguimientoService: SeguimientosService,
+        private tareaService: TareaService,
+
+        private domSanitizer: DomSanitizer,
     ) { }
 
     ngOnInit() {
+        
         this.perfilService.findAll().then(
             resp => {
-                //console.log(resp);
+                
                 (<Perfil[]>resp['data']).forEach(perfil => {
                     this.perfilList.push({ label: perfil.nombre, value: perfil.id });
                 });
@@ -101,24 +123,16 @@ export class ElaboracionListaComponent implements OnInit {
                 break;
         }
         this.paramNav.reset();
+        
     }
-    test(event) {
-        //console.log(event);
-
-        //console.log(this.perfilList);
-
-    }
-    onClick() {
-        //console.log(this.form.value);
-    }
+    
+    
     buildPerfilesIdList(ids: Array<any>) {
-        let perfilesIdList = [];
-        //console.log(ids);
+        let perfilesIdList = [];        
         ids.forEach(ue => {
 
             perfilesIdList.push({ id: ue });
         });
-        //console.log(perfilesIdList);
         return perfilesIdList;
     }
     consultarLista(listaInsp: ListaInspeccion) {
@@ -155,6 +169,7 @@ export class ElaboracionListaComponent implements OnInit {
         if (this.consultar) {
             this.form.disable();
         }
+        this.getTareaEvidences(parseInt(listaInsp.listaInspeccionPK.id),listaInsp.listaInspeccionPK.version);
     }
 
 
@@ -224,6 +239,14 @@ export class ElaboracionListaComponent implements OnInit {
         await this.verifyIntegrity(listInp);
         this.listaInspeccionService.create(listInp).then(
             data => {
+
+                if (this.imagenesList != null) {
+                    this.imagenesList.forEach(async imgObj => {                                              
+                        let resp = await this.directorioService.upload(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null);
+                        let respid = Object.values(resp);
+                        this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), listInp.listaInspeccionPK.version.toString());                                                
+                    });
+                }
                 this.msgs = [];
                 this.msgs.push({ severity: 'success', summary: 'Lista de inspección creada', detail: 'Se ha creado correctamente la lista de inspección  ' + listInp.nombre });
                 this.finalizado = true;
@@ -248,7 +271,7 @@ export class ElaboracionListaComponent implements OnInit {
 
     }
 
-    actualizar(actualizarVersion: boolean) {
+    actualizar(actualizarVersion: boolean) {        
         let listInp = new ListaInspeccion();
         listInp.listaInspeccionPK = this.form.value.id;
         listInp.nombre = this.form.value.nombre;
@@ -264,11 +287,22 @@ export class ElaboracionListaComponent implements OnInit {
         let param = (actualizarVersion == false ? null : 'actualizarVersion=true');
         if(actualizarVersion==true){
             listInp.estado = 'inactivo';
+            listInp.listaInspeccionPK.version = listInp.listaInspeccionPK.version + 1;
             this.listaInspeccionService.update(listInp,'actualizarVersion=false')
         }
         listInp.estado = 'activo';
+         
         this.listaInspeccionService.update(listInp, param).then(
             data => {
+                if (this.imagenesList != null) {
+                    this.imagenesList.forEach(async imgObj => {                                              
+                        let resp = await this.directorioService.upload(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null);
+                        let respid = Object.values(resp);
+                        
+                        this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), listInp.listaInspeccionPK.version.toString());                                                
+                    });
+                }
+                
                 this.msgs = [];
                 let detalle = actualizarVersion ? 'Se ha generado correctamente una nueva versión de la lista de inspección ' : 'Se ha actualizado correctamente la lista de inspección ';
                 this.msgs.push({ severity: 'success', summary: 'Lista de inspección actualizada', detail: detalle + listInp.nombre });
@@ -295,5 +329,51 @@ export class ElaboracionListaComponent implements OnInit {
         this.elementoInspeccionList = [];
         this.form.reset();
     }
+
+    
+    onArchivoSelect(event) {
+        let file = event.target.files[0];
+        this.msgs = [];
+        if (file.type != "image/jpeg" && file.type != "image/png") {
+            this.msgs.push({ severity: 'error', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
+            return;
+        }
+        if (file.size > 3_500_000) {
+            this.msgs.push({ severity: 'error', summary: 'Tamaño máximo superado 3.5 MB', detail: 'La imágen supera el tamaño máximo permitido' });
+            return;
+        }
+        if (this.imagenesList == null)
+            this.imagenesList = [];
+        let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+        this.imagenesList.push({ source: urlData, file: file });
+        this.imagenesList = this.imagenesList.slice();
+    }
+
+    async getTareaEvidences(lista_id: number, version_id: number) {
+        try {
+            let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
+            console.log(res);
+            if (res) {
+                res.files.forEach(async (evidence) => {
+                    let ev: any = await this.directorioService.download(evidence);
+                    console.log(ev)
+                    let blob = new Blob([ev]);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        if (ev) {
+                            this.listaEvidence.push(reader.result);
+                        } else {
+                            throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
+                        }
+                    }
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 
 }

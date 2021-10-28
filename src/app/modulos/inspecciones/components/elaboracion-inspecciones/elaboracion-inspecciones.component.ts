@@ -48,6 +48,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     area: Area;
     initLoading = false;
     solicitando = false;
+    listaEvidence = [];
 
     constructor(
         private router: Router,
@@ -103,6 +104,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 .catch(err => {
                     this.initLoading = false;
                 });
+                this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
         } else if (accion == 'GET' || accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
             this.consultar = accion == 'GET';
@@ -124,6 +126,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.programacion = this.inspeccion.programacion;
                     this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
                     this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
+                    this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
 
                     this.listaInspeccion.formulario.campoList.forEach(campo => {
                         for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
@@ -141,7 +144,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });;
         }
-
+        
         this.paramNav.reset();
     }
 
@@ -356,6 +359,32 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             WinPrint.focus();
             WinPrint.print();
         }, 400);
+    }
+
+    async getTareaEvidences(lista_id: number, version_id: number) {
+        try {
+            let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
+            console.log(res);
+            if (res) {
+                res.files.forEach(async (evidence) => {
+                    let ev: any = await this.directorioService.download(evidence);
+                    console.log(ev)
+                    let blob = new Blob([ev]);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        if (ev) {
+                            this.listaEvidence.push(reader.result);
+                        } else {
+                            throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
+                        }
+                    }
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 }
