@@ -101,7 +101,7 @@
       <tr>
         <td rowspan="2" style="width: 30%;border:solid thin #ccc;text-align: center">
           <img style="width:100%;" id="P_empresa_logo" />
-        </td>
+        </td>        
         <td style="width: 55%;border:solid thin #ccc;text-align: center">
           SISTEMA DE GESTION DE SEGURIDAD Y SALUD EN EL TRABAJO
         </td>
@@ -116,6 +116,17 @@
         <td style="border:solid thin #ccc;text-align: center">
           Version <label id="P_version"></label>
         </td>
+      </tr>
+      <tr>
+        
+        <td  colspan="3" style="width: 30%;border:solid thin #ccc;text-align: center">      
+          <div>
+            <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
+                [show]="true" style="display:block;" width="30%" >
+            </app-file-uploader>          
+          </div>
+        </td>        
+        
       </tr>
       <tr>
         <td colspan="3" style="background-color:#eee;border:solid thin #ccc;padding: 8px;-webkit-print-color-adjust: exact;">

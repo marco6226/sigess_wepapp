@@ -70,6 +70,31 @@ export class DirectorioService extends ServiceCRUD<Directorio>{
         });
     }
 
+    uploadv3(documentoId: string, paramId: string, modulo: string) {
+
+        let endPoint = this.end_point + 'uploadv3';
+
+        let formData: FormData = new FormData();
+
+        
+        formData.append("documentoId",documentoId);
+        formData.append("paramId",paramId);
+        formData.append("modulo",modulo);
+
+
+        return new Promise(resolve => {
+            this.httpInt.postFile(endPoint, formData)
+                .map(res => res)
+                .subscribe(
+                    res => {
+                        resolve(res);
+                    }
+                    ,
+                    err => this.manageError(err)
+                )
+        });
+    }
+
     uploadv4(documentoId: string, listaId: string, version: string) {
 
         let endPoint = this.end_point + 'uploadv4';

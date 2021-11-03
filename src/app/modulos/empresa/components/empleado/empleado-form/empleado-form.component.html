@@ -108,7 +108,22 @@
                     </div>
                 </div>
             </p-panel>
-            <br />
+            <br/>
+            <p-panel header="FIRMA EMPLEADO">
+                <p-messages [(value)]="msgs"></p-messages>
+                <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" *ngIf="!readOnly"></button>
+                <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+      
+                <s-galeria *ngIf="imagenesList?.length > 0" [images]="imagenesList" [readOnly]="readOnly"></s-galeria>
+               <!-- 
+                <div class="uploaders" *ngIf="listaEvidence.length >= 0 ">
+                    <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i" [show]="true">
+                    </app-file-uploader>
+                </div>
+                -->
+            </p-panel>
+              
+            <br>
             <p-panel header="EMERGENCIA">
                 <div class="ui-g">                    
                     

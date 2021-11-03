@@ -9,7 +9,7 @@ import { ListaInspeccionService } from 'app/modulos/inspecciones/services/lista-
 import { InspeccionService } from 'app/modulos/inspecciones/services/inspeccion.service'
 import { SistemaNivelRiesgoService } from 'app/modulos/core/services/sistema-nivel-riesgo.service';
 import { SistemaNivelRiesgo } from 'app/modulos/core/entities/sistema-nivel-riesgo';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { Message, SelectItem } from 'primeng/primeng'
 
@@ -57,9 +57,11 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     initLoading = false;
     solicitando = false;
     listaEvidence = [];
+    id;
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private directorioService: DirectorioService,
         private listaInspeccionService: ListaInspeccionService,
         private paramNav: ParametroNavegacionService,
@@ -70,6 +72,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+
+        this.id = this.route.snapshot.paramMap.get('id');
+
         let filterQuery = new FilterQuery();
         let filter = new Filter();
         filter.criteria = Criteria.EQUALS;
@@ -335,6 +340,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
+            let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
+            let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
+            //template.querySelector('#P_lista_logo').setAttribute('src', this.listaEvidence);
+            console.log(this.listaEvidence);
 
             console.log(this.listaInspeccion.nombre);
             console.log(this.listaInspeccion.codigo);
@@ -409,5 +418,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             console.log(e);
         }
     }
+
+    
+    
 
 }
