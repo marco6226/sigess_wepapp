@@ -53,6 +53,8 @@ export class FormularioTarjetaComponent implements OnInit {
             afecta: new FormControl(),
             descripcion: [null, Validators.required],
             recomendacion: null,
+            personasobservadas: null,
+            personasabordadas: null,
             nivelRiesgo: null,
             causaRaiz: null,
             area: [null, Validators.required]
@@ -131,6 +133,8 @@ export class FormularioTarjetaComponent implements OnInit {
         observacion.area = this.form.value.area;
         observacion.afecta = this.afectaSelectList;
         observacion.recomendacion = this.form.value.recomendacion;
+        observacion.personasabordadas = this.form.value.personasabordadas;
+        observacion.personasobservadas = this.form.value.personasobservadas;
         observacion.causaRaizList = this.buildCausaRaizList(this.causaRaizSelectList);
         observacion.nivelRiesgo = this.form.value.nivelRiesgo;
         observacion.tarjeta = new Tarjeta();

@@ -12,6 +12,8 @@ export class Observacion {
   afecta: string[];
   descripcion: string;
   recomendacion: string;
+  personasobservadas: string;
+  personasabordadas: string;
   nivelRiesgo: string;
   fechaObservacion: Date;
   aceptada: Boolean;

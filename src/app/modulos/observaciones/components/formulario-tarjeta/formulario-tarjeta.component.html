@@ -14,12 +14,14 @@
           </div>
 
           <div class="obs-pnl">
-            <h4>Descripción:</h4>
+            <h4 *ngIf="form.value.tipoObservacion != 'Desviación'  && form.value.tipoObservacion != 'Comportamiento seguro'">Descripción:</h4>
+            <h4 *ngIf="form.value.tipoObservacion == 'Desviación'">Acto inseguro observado:</h4>
+            <h4 *ngIf="form.value.tipoObservacion == 'Comportamiento seguro'">Comportamientos seguros resaltantes:</h4>
             <textarea pInputTextarea style="height:100px;" formControlName="descripcion" required></textarea>
           </div>
 
           <div>
-            <h4>Categoría:</h4>
+            <h4>Categorías:</h4>
             <p-tree [value]="implicacionTree" selectionMode="checkbox" [style]="{'width':'100%'}" [(selection)]="implicacionSelectList"
               [ngClass]="implicacionSelectList.length == 0 ? 'invalid' : 'valid'"></p-tree>
           </div>
@@ -33,18 +35,19 @@
 
       <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4">
         <p-panel header="Detalle">
-          <div class="obs-pnl">
-            <h4 style="margin-top: 0px">Afecta:</h4>
-            <ng-template style="margin-top: 4px" ngFor let-afectaOpt [ngForOf]="tarjeta?.campos.afecta" let-i="index">
-              <p-checkbox name="_afecta" [value]="afectaOpt.label" [label]="afectaOpt.label" formControlName="afecta" [(ngModel)]="afectaSelectList"></p-checkbox>
-              <br>
-            </ng-template>
-          </div>
+          
 
           <div class="obs-pnl">
-            <h4>Recomendación:</h4>
-            <textarea pInputTextarea style="height:100px;" formControlName="recomendacion"></textarea>
+            <h4>Personas observadas:</h4>
+            <input pInputText type="number" formControlName="personasobservadas"/>
+            
           </div>
+          <div class="obs-pnl">
+            <h4>Personas abordadas:</h4>
+            <input pInputText type="number" formControlName="personasabordadas"/>
+            
+          </div>
+
 
           <div class="obs-pnl" *ngIf="tarjeta?.usarCausaRaiz">
             <h4>Causa raíz:</h4>

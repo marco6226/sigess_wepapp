@@ -652,7 +652,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             }
 
         }
-        this.edad = `${fechaNacimiento.diff(moment.now(), "year") * -1}`;
+        this.edad = `${fechaNacimiento.diff(moment.now(), "year") * -1} Años`;
         this.arl = this.empresa.arl == null ? null : this.empresa.arl.nombre;
         this.casoMedicoForm.patchValue({
             documento: this.empleadoSelect.numeroIdentificacion,
