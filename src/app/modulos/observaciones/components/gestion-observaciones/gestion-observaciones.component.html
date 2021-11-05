@@ -36,6 +36,7 @@
       </div>
       <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ">
         <p-panel header="Detalle">
+          <!--
           <div class="obs-pnl">
             <h4>Afecta:</h4>
             <ng-template ngFor let-afec [ngForOf]="observacion.afecta">
@@ -48,6 +49,17 @@
                {{observacion.recomendacion}}
             
           </div>
+          -->
+          <div class="obs-pnl">
+            <h4>Personas observadas:</h4>
+            {{observacion.personasobservadas}}            
+          </div>
+
+          <div class="obs-pnl">
+            <h4>Personas abordadas:</h4>
+          {{observacion.personasabordadas}}
+          </div>
+
           <div class="obs-pnl" *ngIf="observacion.tarjeta?.usarCausaRaiz">
             <h4>Causa raíz:</h4>
             <ng-template ngFor let-cr [ngForOf]="observacion.causaRaizList">
@@ -71,7 +83,7 @@
     </div>
   </p-panel>
   <br/><br/>
-
+  
   <p-panel  *ngIf="visiblePnlDenegada">
     <p-header>
       <button pButton type="button" icon="fa fa-ban" label="Denegar" *ngIf="!consultar" (click)="guardarDenegar()" class="ui-button-danger"
@@ -95,7 +107,7 @@
 
   
 
-  <ng-container *ngIf="!consultar">
+  <ng-container *ngIf="!consultar && observacion.tipoObservacion != EstadoSeg">
     <button *sTienePermiso="'AUC_PUT_OBSACEPT'" pButton type="button" icon="fa fa-check" title="Gestionar observación" class="float-btn ui-button-success"
       style="right: 100px;" (click)="aceptar()"></button>
 

@@ -1,3 +1,4 @@
+import { ListaInspeccionPK } from './../../entities/lista-inspeccion-pk';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -504,6 +505,32 @@ export class ProgramacionComponent implements OnInit {
     this.paramNav.setParametro<Programacion>(programacion);
     this.paramNav.setAccion<string>('POST');
     this.paramNav.redirect('/app/inspecciones/elaboracionInspecciones');
+  }
+
+  irInspeccion2() {
+    let programacionId = this.form.value.id;    
+    let matrizValue = this.findMatrizValue(this.fechaSelect);
+    console.log(matrizValue)
+    console.log( matrizValue.programacionList)
+    console.log(this.fechaSelect)
+    let programacion: Programacion;
+    
+    for (let i = 0; i < matrizValue.programacionList.length; i++) {
+      if (matrizValue.programacionList[i].id == programacionId) {
+        programacion = matrizValue.programacionList[i];
+        break;
+      }
+    }
+    let nId=programacion.listaInspeccion.listaInspeccionPK.id;
+    let nVersion=programacion.listaInspeccion.listaInspeccionPK.version;
+    this.paramNav.setParametro<Programacion>(programacion);
+    this.paramNav.setAccion<string>('POST');
+    this.paramNav.redirect('/app/inspecciones/elaboracionInspecciones/' + nId + "/" + nVersion);
+    //this.paramNav.redirect('/app/inspecciones/elaboracionInspecciones/' + 'filterList: [{"criteria":"eq","field":"listaInspeccionPK.id","value1":4}, {"criteria":"eq","field":"listaInspeccionPK.version","value1":"1"}]');
+    console.log(Date.now())
+    let fecha : Date;
+            fecha= new Date;
+            console.log(fecha)
   }
 
 }

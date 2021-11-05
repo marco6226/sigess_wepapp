@@ -24,6 +24,7 @@ import { Area } from '../../../empresa/entities/area';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
+import { parse } from 'path';
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -58,6 +59,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     solicitando = false;
     listaEvidence = [];
     id;
+    version;
+    matriz: any[][];
 
     constructor(
         private router: Router,
@@ -73,8 +76,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
     ngOnInit() {
 
-        this.id = this.route.snapshot.paramMap.get('id');
-
         let filterQuery = new FilterQuery();
         let filter = new Filter();
         filter.criteria = Criteria.EQUALS;
@@ -86,6 +87,11 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 this.nivelRiesgoList.push({ label: element.nombre, value: element.id });
             })
         );
+        console.log(this.sistemaNivelRiesgoService.findByFilter(filterQuery).then(
+            resp => (<SistemaNivelRiesgo>resp['data'][0]).nivelRiesgoList.forEach(element => {
+                this.nivelRiesgoList.push({ label: element.nombre, value: element.id });
+            })
+        ))
 
         let accion = this.paramNav.getAccion<string>();
         if (accion == 'POST') {
@@ -158,9 +164,57 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });;
         }
+        else{
+            this.redireccion = '/app/inspecciones/programacion';
+            this.adicionar = true;
+            this.programacion = this.paramNav.getParametro<Programacion>();
+
+            
+            this.id = this.route.snapshot.paramMap.get('id');
+            this.version = this.route.snapshot.paramMap.get('version');
+            
+
+            //this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.programacion.listaInspeccion;
+            //this.area = this.programacion == null ? this.inspeccion.area : this.programacion.area;
+            // console.log(this.programacion);
+            let filterQuery = new FilterQuery();
+
+            let filterId = new Filter();
+            filterId.criteria = Criteria.EQUALS;
+            filterId.field = "listaInspeccionPK.id";
+            filterId.value1 = this.route.snapshot.paramMap.get('id');
+
+            let filterVersion = new Filter();
+            filterVersion.criteria = Criteria.EQUALS;
+            filterVersion.field = "listaInspeccionPK.version";
+            filterVersion.value1 = this.route.snapshot.paramMap.get('version');
+
+            filterQuery.filterList = [filterId, filterVersion];
+
+            this.initLoading = true;
+            this.listaInspeccionService.findByFilter(filterQuery)
+                .then(data => {
+                    this.initLoading = false;
+                    this.listaInspeccion = (<ListaInspeccion[]>data['data'])[0]
+                })
+                .catch(err => {
+                    this.initLoading = false;
+                });
+                this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+        }
         
         this.paramNav.reset();
     }
+
+    findMatrizValue(fecha: Date) {
+        for (let i = 0; i < this.matriz.length; i++) {
+          for (let j = 0; j < this.matriz[i].length; j++) {
+            if (this.matriz[i][j] != null && this.matriz[i][j].dia.valueOf() === fecha.valueOf()) {
+              return this.matriz[i][j];
+            }
+          }
+        }
+      }
 
     private cargarCalificaciones(elemList: ElementoInspeccion[], calificacionList: Calificacion[]) {
         for (let i = 0; i < elemList.length; i++) {

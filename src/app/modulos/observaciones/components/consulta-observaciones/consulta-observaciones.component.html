@@ -55,7 +55,8 @@
         <td>
           <span *ngIf="observ.aceptada == true" class="badge success">Aceptada</span>
           <span *ngIf="observ.aceptada == false" class="badge novalid">Denegada</span>
-          <span *ngIf="observ.aceptada == null" class="badge inactive">Sin asignar</span>
+          <span *ngIf="observ.aceptada == null && observ.tipoObservacion != 'Positivas'" class="badge inactive">Sin asignar</span>
+          <span *ngIf="observ.aceptada == null && observ.tipoObservacion == 'Positivas'" class="badge warning">Segura</span>
         </td>
       </tr>
     </ng-template>

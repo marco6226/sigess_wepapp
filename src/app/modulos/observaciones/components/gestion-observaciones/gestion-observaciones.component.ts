@@ -33,6 +33,7 @@ export class GestionObservacionesComponent implements OnInit {
     visibleObservacion: boolean = true;
     msg: string;
     consultar: boolean = true;
+  EstadoSeg: string = "Positivas";
     imagenesList: any = [];
 
     constructor(
