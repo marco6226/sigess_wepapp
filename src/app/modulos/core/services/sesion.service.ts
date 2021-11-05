@@ -8,6 +8,7 @@ import { Session } from 'app/modulos/core/entities/session';
 import { Router } from '@angular/router';
 
 import { config } from 'app/config'
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
 
 @Injectable()
 export class SesionService {
@@ -32,6 +33,22 @@ export class SesionService {
         this.session.usuario = usuario;
         localStorage.setItem(config.session_id, JSON.stringify(this.session));
     }
+
+    public getEmpleado(): Empleado {
+        if (this.session == null) {
+            this.session = <Session>JSON.parse(localStorage.getItem(config.session_id));
+            if (this.session == null) return null;
+        }
+        return this.session.empleado;
+    }
+    public setEmpleado(empleado: Empleado) {
+        this.session.empleado = empleado;
+        localStorage.setItem(config.session_id, JSON.stringify(this.session));
+    }
+
+    
+
+    
 
     public getEmpresa(): Empresa {
         if (this.session == null) {

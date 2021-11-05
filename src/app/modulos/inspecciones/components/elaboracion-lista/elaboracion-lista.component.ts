@@ -44,7 +44,7 @@ export class ElaboracionListaComponent implements OnInit {
     modificar: boolean = false;
     finalizado: boolean = false;
     perfilList: SelectItem[] = [];
-    
+    canvas: any;
     imagenesList: any[];
     numMaxImg = 2;
 
@@ -86,7 +86,9 @@ export class ElaboracionListaComponent implements OnInit {
         private tareaService: TareaService,
 
         private domSanitizer: DomSanitizer,
-    ) { }
+    ) {this.canvas = document.createElement('canvas');
+    this.canvas.width = 256;
+    this.canvas.height = 256; }
 
     ngOnInit() {
         
@@ -333,7 +335,37 @@ export class ElaboracionListaComponent implements OnInit {
 
     
     onArchivoSelect(event) {
+
+        let ctx = this.canvas.getContext("2d");
+        let reader  = new FileReader();
         let file = event.target.files[0];
+        // load to image to get it's width/height
+        let img = new Image();
+        img.onload = function() {
+            // scale canvas to image
+            ctx.canvas.width = '200';
+            ctx.canvas.height = '200';
+            // draw image
+            ctx.drawImage(img, 0, 0
+                , ctx.canvas.width, ctx.canvas.height
+            );
+        }
+        // this is to setup loading the image
+        reader.onloadend = async function () {
+            img.src = await reader.result as string;
+        }
+        // this is to read the file
+          reader.readAsDataURL(file);
+
+          console.log(reader);
+
+          console.log(file);
+          console.log(img);
+          console.log(img.src);
+
+
+       
+
         this.msgs = [];
         if (file.type != "image/jpeg" && file.type != "image/png") {
             this.msgs.push({ severity: 'error', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
@@ -353,12 +385,15 @@ export class ElaboracionListaComponent implements OnInit {
     async getTareaEvidences(lista_id: number, version_id: number) {
         try {
             let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
+            let ctx = this.canvas.getContext("2d");
             console.log(res);
             if (res) {
                 res.files.forEach(async (evidence) => {
                     let ev: any = await this.directorioService.download(evidence);
                     console.log(ev)
                     let blob = new Blob([ev]);
+                    console.log(blob);                   
+        
                     let reader = new FileReader();
                     reader.readAsDataURL(blob);
                     reader.onloadend = () => {

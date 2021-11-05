@@ -9,7 +9,7 @@
             
 <p-panel header="Listado de tareas" styleClass="material-panel" [style.display]="tareasList && tareasList.length > 0 ? 'block':'none'">
     <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
-    <button pButton type="button" (click)="modalDianostico = true;" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    
     <div class="ui-g" >        
         <div class="ui-g-12 p-mb-3">
             <p-table  id="excel-table" #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="tareaSelect" selectionMode="single" [value]="tareasList" [paginator]="true" [rows]="10">

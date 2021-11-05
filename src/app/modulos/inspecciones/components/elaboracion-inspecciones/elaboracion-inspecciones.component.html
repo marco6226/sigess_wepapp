@@ -38,6 +38,7 @@
   <s-lista-inspeccion-form [value]="listaInspeccion?.elementoInspeccionList" [opciones]="listaInspeccion?.opcionCalificacionList"
     [editable]="false" [disabled]="consultar" [nivelRiesgoList]="nivelRiesgoList" diligenciable="true" #listaInspeccionForm
     [usarNivelRiesgo]="listaInspeccion?.usarNivelRiesgo" [usarTipoHallazgo]="listaInspeccion?.usarTipoHallazgo"></s-lista-inspeccion-form>
+    <!-- ss
     <div class="ui-g-12 ui-sm-12 ui-md-6" >
       <form  [formGroup]="Form">
           <p-panel  >
@@ -81,6 +82,7 @@
           </p-panel>
       </form>
     </div>
+  -->
   <button pButton type="button" icon="fa fa-floppy-o" *ngIf="adicionar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
     class="float-btn" data-toggle="tooltip" data-placement="bottom" title="Guardar"></button>
 
@@ -157,6 +159,24 @@
 
         </td>
       </tr>
+    </table>
+    <table width="100%" style="border-collapse: collapse;">
+      <tr>
+
+      </tr>
+      <tr>
+        <td  colspan="1" style="width: 30%;border:solid thin #ccc;text-align: center">
+          Firma <label id="P_version"></label>
+        </td>
+        <td  colspan="3" style="width: 30%;border:solid thin #ccc;text-align: center">      
+          <div>
+            <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
+                [show]="true" style="display:block;" width="30%" >
+            </app-file-uploader>          
+          </div>
+        </td> 
+      </tr>
+      
     </table>
   </div>
 </div>

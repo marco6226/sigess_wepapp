@@ -16,7 +16,12 @@
         <th pSortableColumn="descripcion">descripción
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        
+        <th pSortableColumn="descripcion">personas observadas
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descripcion">personas abordadas
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
         <th pSortableColumn="aceptada" style="width:120px">Estado
           <p-sortIcon field="aceptada"></p-sortIcon>
         </th>
@@ -34,6 +39,12 @@
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
         </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td> <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        </td>
+
         
         <td>
           <!-- <select (input)="dt.filter($event.target.value, 'aceptada', 'eq')">
@@ -51,6 +62,10 @@
         <td>{{observ.tipoObservacion}}</td>
         <td>OBS-{{observ.id}}</td>
         <td>{{observ.descripcion}}</td>
+        <td>{{observ.personasobservadas}}</td>
+        <td>{{observ.personasabordadas}}</td>
+        
+
         
         <td>
           <span *ngIf="observ.aceptada == true" class="badge success">Aceptada</span>

@@ -29,8 +29,7 @@ export class Inspeccion {
   usuarioModifica: Usuario;
   empleadoing: Empleado;
   empleadohse: Empleado;
-
-
+  empleado: Empleado;
   listaInspeccion:ListaInspeccion;
   area:Area;
 }

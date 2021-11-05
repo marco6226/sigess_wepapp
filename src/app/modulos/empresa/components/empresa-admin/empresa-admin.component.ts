@@ -210,7 +210,8 @@ export class EmpresaAdminComponent implements OnInit {
 
         if (this.isUpdate) {
             let ctx = this.canvas.getContext("2d");
-            ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 256, 256);
+            //ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 300, 300);
+            ctx.drawImage((<any>this.imgAvatar).nativeElement, 0, 0, 200 , 200);
             empresa.logo = this.canvas.toDataURL();
             this.empresaService.update(empresa).then(
                 resp => this.manageResponse(<Empresa>resp)

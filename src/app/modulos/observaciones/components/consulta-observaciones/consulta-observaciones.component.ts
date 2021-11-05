@@ -28,6 +28,8 @@ export class ConsultaObservacionesComponent implements OnInit {
     'tipoObservacion',
     'descripcion',
     'nivelRiesgo_nombre',
+    'personasobservadas',
+    'personasabordadas',
     'aceptada'
   ];
 

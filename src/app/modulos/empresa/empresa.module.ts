@@ -32,6 +32,7 @@ import { CompetenciaComponent } from './components/competencia/competencia.compo
 import { EvaluacionDesempenoComponent } from './components/evaluacion-desempeno/evaluacion-desempeno.component';
 import { EvaluacionDesempenoFormComponent } from './components/evaluacion-desempeno-form/evaluacion-desempeno-form.component';
 import { ContextoOrganizacionComponent } from './components/contexto-organizacion/contexto-organizacion.component';
+import { FileUploaderComponent } from '../core/components/file-uploader/file-uploader.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ContextoOrganizacionComponent } from './components/contexto-organizacio
     EmpresaRoutingModule,
     DragDropModule,
     GMapModule,
-    ImageCropperModule
+    ImageCropperModule,
+    
   ],
   exports: [ComunModule],
   declarations: [
@@ -61,6 +63,7 @@ import { ContextoOrganizacionComponent } from './components/contexto-organizacio
     EvaluacionDesempenoComponent,
     EvaluacionDesempenoFormComponent,
     ContextoOrganizacionComponent,
+    
 
   ],
   providers: [

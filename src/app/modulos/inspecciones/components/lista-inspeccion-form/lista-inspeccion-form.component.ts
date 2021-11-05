@@ -39,6 +39,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     contadorElem: number = 0;
     ethus: boolean = false;
     inpForm: FormGroup;
+    inpForm2: FormGroup;
     elementoSelect: ElementoInspeccion;
     imagenesList: any[] = [];
     imgMap: any = {};

@@ -4,18 +4,19 @@
     <label class="ui-panel-title">Elementos de inspección</label>
   </p-header>
 
-  <div class="ui-g">
+  <div  [formGroup]="inpForm2" class="ui-g">
     <div class="ui-g-12">
-      <div style="margin-right: 25px;">
+      <div  style="margin-right: 25px;">
         <s-elemento-inspeccion-node *ngIf="value" [value]="value" [editable]="editable" [opciones]="opciones" [disabled]="disabled" [nivelRiesgoList]="nivelRiesgoList"
           [diligenciable]="diligenciable" (onElementoClick)="elementoClick($event)" [tiposHallazgo]="tipoHallazgoList"></s-elemento-inspeccion-node>
 
-        <a (click)="adicionarElementoInp()" *ngIf="editable" title="Adicionar nuevo elemento">Nuevo elemento</a>
+        <a   (click)="adicionarElementoInp()" *ngIf="editable" title="Adicionar nuevo elemento">Nuevo elemento</a>
       </div>
     </div>
   </div>
 
 </p-panel>
+<!-- ss
 <div class="ui-g-12 ui-sm-12 ui-md-6" >
   <form [formGroup]="inpForm">
       <p-panel  *ngIf="empresa.id == '11' && !editable">
@@ -102,7 +103,7 @@
       </p-panel>
   </form>
 </div>
-
+ -->
 <p-dialog [(visible)]="visibleDlg" [draggable]="true" [resizable]="true" [responsive]="true" appendTo="body" [maximizable]="true"
   [modal]="false" [width]="540">
   <h2>{{elementoSelect?.codigo}}. {{elementoSelect?.nombre}}</h2>
