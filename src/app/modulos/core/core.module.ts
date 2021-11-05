@@ -149,7 +149,9 @@ const appRoutes: Routes = [
                     { path: 'elaboracionLista', component: ElaboracionListaComponent },
                     { path: 'programacion', component: ProgramacionComponent },
                     { path: 'elaboracionInspecciones', component: ElaboracionInspeccionesComponent },
-                    { path: 'consultaInspecciones', component: ConsultaInspeccionesComponent }
+                    { path: 'elaboracionInspecciones/:id/:version', component: ElaboracionInspeccionesComponent },
+                    { path: 'consultaInspecciones', component: ConsultaInspeccionesComponent },
+                    { path: 'elaboracionLista/:id/:version', component: ElaboracionListaComponent}
                 ]
             },
             {
