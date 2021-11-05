@@ -17,6 +17,8 @@
             <h4 *ngIf="form.value.tipoObservacion != 'Desviación'  && form.value.tipoObservacion != 'Comportamiento seguro'">Descripción:</h4>
             <h4 *ngIf="form.value.tipoObservacion == 'Desviación'">Acto inseguro observado:</h4>
             <h4 *ngIf="form.value.tipoObservacion == 'Comportamiento seguro'">Comportamientos seguros resaltantes:</h4>
+            <h4 *ngIf="form.value.tipoObservacion == 'Positivas'">Obervaciones positivas:</h4>
+            <h4 *ngIf="form.value.tipoObservacion == 'Acciones a mejorar'">Acciones a mejorar resaltantes:</h4>
             <textarea pInputTextarea style="height:100px;" formControlName="descripcion" required></textarea>
           </div>
 
