@@ -183,7 +183,7 @@
     </div>
 </p-overlayPanel>
 
-<p-dialog  [(visible)]="modalDianostico" [style]="{'width':'630px','height':'100px', 'font-size': '10px'}">
+<p-dialog   [style]="{'width':'630px','height':'100px', 'font-size': '10px'}">
     <p-header style="font-size: 14px;margin-left: 10px;margin-top: -10px; padding-top: 100px;">
         Seleccione los datos que desee exportar:
     </p-header>
@@ -194,15 +194,15 @@
     <div class="ui-g">
         <div class="ui-g-12 ui-md-6 ui-g-nopad drag-column">
             <ul style="margin:0;padding:0">
-                <li *ngFor="let car of availableCars" class="ui-helper-clearfix" pDraggable="cars"
-                    (onDragStart)="dragStart($event,car)" (onDragEnd)="dragEnd($event)">
+                <li class="ui-helper-clearfix" pDraggable="cars"
+                    (onDragEnd)="dragEnd($event)">
                     <h6>ui-button-success</h6>
                 </li>
             </ul>
         </div>
         <div class="ui-g-12 ui-md-6 drop-column" pDroppable="cars" 
-            (onDrop)="drop($event)" [ngClass]="{'ui-highlight-car':draggedCar}">
-            <p-table [value]="selectedCars">
+            (onDrop)="drop($event)">
+            <p-table>
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Vin</th>
