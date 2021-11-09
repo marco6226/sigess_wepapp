@@ -71,11 +71,26 @@ export class EmpleadoService extends ServiceCRUD<Empleado> {
     });
   }
 
+  
+  findempleadoByUsuario(parametro: string) {
+    return new Promise(resolve => {
+      this.httpInt.get(endPoints.EmpleadoService + "buscarempleado/" + parametro)
+        .map(res => res)
+        .subscribe(
+          res => {
+            resolve(res);
+          }
+          ,
+          err => this.manageError(err)
+        )
+    });
+  }
+
   getClassName(): string {
     return "EmpleadoService";
   }
 
-  public getInspeccionImagen(empleado_id) {
+  public getFirma(empleado_id) {
     return this.http.get(`${this.end_point}images/${empleado_id}`, this.getRequestHeaders(this.headers)).toPromise();
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit, AfterContentInit, ContentChild, ViewChild, ElementRe
 import { LayoutMenuComponent } from './layout-menu/layout-menu.component'
 
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
+import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { Usuario } from 'app/modulos/empresa/entities/usuario'
 import { Permiso } from 'app/modulos/empresa/entities/permiso'
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service'
@@ -40,6 +42,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	empresaSelect: Empresa;
 	empresaSelectOld: Empresa;
 	usuario: Usuario;
+	empleado:Empleado;
 	items: MenuItem[];
 	mapaPermisos: any;
 	modalDianostico = false;
@@ -55,6 +58,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	constructor(
 		private confGenService: ConfiguracionGeneralService,
 		private empresaService: EmpresaService,
+		private empleadoService: EmpleadoService,
 		private confirmationService: ConfirmationService,
 		private router: Router,
 		private sesionService: SesionService,
@@ -84,7 +88,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 			
 		});
 	}
-	ngOnInit() {
+	async ngOnInit() {
 		this.usuario = this.sesionService.getUsuario();
 		this.items = [
 			{ label: 'Preferencias', icon: 'fa fa-gears', command: (event => this.irPreferencias()) },
@@ -94,13 +98,15 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		this.empresaService.findByUsuario(this.usuario.id).then(
 			resp => this.loadItems(<Empresa[]>resp)
 		);
-
+		
 		
 		setTimeout(() => {
            
             this.cargartareas();
         }, 5000);
 		this.ActPosition();
+
+		
 	}
 
 	logout() {
@@ -151,7 +157,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		this.router.navigate(['app/empresa/usuarioPreferencias']);
 	}
 
-	loadItems(empresas: Empresa[]) {
+	async loadItems(empresas: Empresa[]) {
 		empresas.forEach(emp => {
 			this.empresasItems.push({ label: emp.nombreComercial, value: emp });
 		});
@@ -176,6 +182,14 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 				this.sesionService.setPermisosMap(this.mapaPermisos);
 				this.menuComp.recargarMenu();
 			});
+
+			await  this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
+				resp => {
+				  this.empleado = <Empleado>(resp);
+				  console.log(this.empleado);
+				  this.sesionService.setEmpleado(this.empleado);
+				}
+			  );
 	}
 
 	ngAfterContentInit() {

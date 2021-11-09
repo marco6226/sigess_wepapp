@@ -25,6 +25,7 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { parse } from 'path';
+import { EmpleadoService } from '../../../empresa/services/empleado.service';
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -58,6 +59,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     initLoading = false;
     solicitando = false;
     listaEvidence = [];
+    firma =[];
     id;
     version;
     matriz: any[][];
@@ -67,6 +69,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         private route: ActivatedRoute,
         private directorioService: DirectorioService,
         private listaInspeccionService: ListaInspeccionService,
+        private empleadoService: EmpleadoService,
         private paramNav: ParametroNavegacionService,
         private inspeccionService: InspeccionService,
         private sistemaNivelRiesgoService: SistemaNivelRiesgoService,
@@ -125,6 +128,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });
                 this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+                this.getFirma();
         } else if (accion == 'GET' || accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
             this.consultar = accion == 'GET';
@@ -147,6 +151,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
                     this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
                     this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+                    this.getFirma();
 
                     this.listaInspeccion.formulario.campoList.forEach(campo => {
                         for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
@@ -201,6 +206,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });
                 this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+                this.getFirma();
         }
         
         this.paramNav.reset();
@@ -394,11 +400,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
+            template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
             let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
             let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
             //template.querySelector('#P_lista_logo').setAttribute('src', this.listaEvidence);
             console.log(this.listaEvidence);
-
+            console.log(this.firma);
+            console.log(this.sesionService.getEmpleado().primerApellido);
             console.log(this.listaInspeccion.nombre);
             console.log(this.listaInspeccion.codigo);
             console.log(this.listaInspeccion.listaInspeccionPK.version);
@@ -472,6 +480,37 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             console.log(e);
         }
     }
+
+    async getFirma() {
+
+        try {
+
+           let id_empleado = this.sesionService.getEmpleado().id;
+            let res: any = await this.empleadoService.getFirma(id_empleado);
+            console.log(res);
+            if (res) {
+                res.files.forEach(async (evidence) => {
+                    let ev: any = await this.directorioService.download(evidence);
+                    console.log(ev)
+                    let blob = new Blob([ev]);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        if (ev) {
+                            this.firma.push(reader.result);
+                        } else {
+                            throw new Error("Ocurrió un problema al consultar la firma");
+                        }
+                    }
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    
 
     
     

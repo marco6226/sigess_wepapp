@@ -510,7 +510,7 @@ export class EmpleadoFormComponent implements OnInit {
 
     async getTareaEvidences() {
         try {
-            let res: any = await this.empleadoService.getInspeccionImagen(this.empleadoSelect.id);
+            let res: any = await this.empleadoService.getFirma(this.empleadoSelect.id);
             console.log(res);
             if (res) {
                 res.files.forEach(async (evidence) => {

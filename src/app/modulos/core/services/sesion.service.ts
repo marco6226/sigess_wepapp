@@ -67,7 +67,7 @@ export class SesionService {
         let empParam = this.getEmpresa();
         return empParam == null ? '' : '' + empParam.id;
     }
-
+        
     public getToken(): string {
         if (this.session == null) {
             this.session = <Session>JSON.parse(localStorage.getItem(config.session_id));
