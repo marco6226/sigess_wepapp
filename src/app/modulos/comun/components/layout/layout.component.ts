@@ -175,7 +175,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 				this.menuComp.recargarMenu();
 			});
 
-		this.permisoService.findAll()
+			await this.permisoService.findAll()
 			.then((data: Permiso[]) => {
 				this.mapaPermisos = {};
 				data.forEach(element => this.mapaPermisos[element.recurso.codigo] = { 'valido': element.valido, 'areas': element.areas });
@@ -183,13 +183,16 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 				this.menuComp.recargarMenu();
 			});
 
-			await  this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
-				resp => {
-				  this.empleado = <Empleado>(resp);
-				  console.log(this.empleado);
-				  this.sesionService.setEmpleado(this.empleado);
-				}
-			  );
+			setTimeout(() => {           
+				this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
+					resp => {
+					  this.empleado = <Empleado>(resp);
+					  console.log(this.empleado);
+					  this.sesionService.setEmpleado(this.empleado);
+					}
+				  );
+			}, 2000);
+			
 	}
 
 	ngAfterContentInit() {
