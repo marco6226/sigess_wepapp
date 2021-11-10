@@ -120,6 +120,57 @@ export class DirectorioService extends ServiceCRUD<Directorio>{
         });
     }
 
+
+    UpdateActaulizarVersion(documentoId: string, listaId: string, version: string) {
+
+        let endPoint = this.end_point + 'update';
+
+        let formData: FormData = new FormData();
+
+        
+        formData.append("documentoId",documentoId);
+        formData.append("listaId",listaId);
+        formData.append("version",version);
+
+
+        return new Promise(resolve => {
+            this.httpInt.postFile(endPoint, formData)
+                .map(res => res)
+                .subscribe(
+                    res => {
+                        resolve(res);
+                    }
+                    ,
+                    err => this.manageError(err)
+                )
+        });
+    }
+
+    Update(documentoId: string, listaId: string, version: string) {
+
+        let endPoint = this.end_point + 'updateV2';
+
+        let formData: FormData = new FormData();
+
+        
+        formData.append("documentoId",documentoId);
+        formData.append("listaId",listaId);
+        formData.append("version",version);
+
+
+        return new Promise(resolve => {
+            this.httpInt.postFile(endPoint, formData)
+                .map(res => res)
+                .subscribe(
+                    res => {
+                        resolve(res);
+                    }
+                    ,
+                    err => this.manageError(err)
+                )
+        });
+    }
+
     findByFilter(filterQuery?: FilterQuery, modulo?: string) {
         let endPoint = modulo == null ? this.end_point + '?' : this.end_point + modulo + '?'
         return new Promise(resolve => {
@@ -135,6 +186,8 @@ export class DirectorioService extends ServiceCRUD<Directorio>{
                 )
         });
     }
+
+    
 
     delete(id: string, modulo?: string) {
         let endPoint = modulo == null ? this.end_point : this.end_point + modulo + '/'

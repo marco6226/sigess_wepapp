@@ -48,6 +48,8 @@ export class ElaboracionListaComponent implements OnInit {
     imagenesList: any[];
     numMaxImg = 2;
 
+    cambiarImagenAnterior: boolean = true;
+
     listaEvidence = [];
 
     tipoListaOpts: SelectItem[] = [    
@@ -301,9 +303,17 @@ export class ElaboracionListaComponent implements OnInit {
                     this.imagenesList.forEach(async imgObj => {                                              
                         let resp = await this.directorioService.upload(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null);
                         let respid = Object.values(resp);
-                        
-                        this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), versiondato.toString());                                                
+                        if (this.cambiarImagenAnterior){
+                            this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), versiondato.toString());
+                        }
+                        else{
+                            this.directorioService.Update(respid[0], listInp.listaInspeccionPK.id.toString(), listInp.listaInspeccionPK.version.toString());
+                        }
+                                                                        
                     });
+                }
+                else if (this.listaEvidence.length > 0){
+                    //TODO: agregar imagen de la version anterior en la nueva generada
                 }
                 
                 this.msgs = [];
@@ -334,8 +344,8 @@ export class ElaboracionListaComponent implements OnInit {
     }
 
     
-    onArchivoSelect(event) {
-
+    onArchivoSelect(event, imagenAnterior: boolean) {
+        this.cambiarImagenAnterior = imagenAnterior;
         let ctx = this.canvas.getContext("2d");
         let reader  = new FileReader();
         let file = event.target.files[0];
