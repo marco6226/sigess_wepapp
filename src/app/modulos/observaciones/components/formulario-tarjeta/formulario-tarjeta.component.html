@@ -39,17 +39,27 @@
         <p-panel header="Detalle">
           
 
-          <div class="obs-pnl">
+          <div class="obs-pnl" *ngIf="idEmpresa == '16'">
             <h4>Personas observadas:</h4>
             <input pInputText type="number" formControlName="personasobservadas"/>
             
           </div>
-          <div class="obs-pnl">
+          <div class="obs-pnl" *ngIf="idEmpresa == '16'">
             <h4>Personas abordadas:</h4>
             <input pInputText type="number" formControlName="personasabordadas"/>
             
           </div>
-
+          <div class="obs-pnl" *ngIf="idEmpresa != '16'">
+            <h4 style="margin-top: 0px">Afecta:</h4>
+            <ng-template style="margin-top: 4px" ngFor let-afectaOpt [ngForOf]="tarjeta?.campos.afecta" let-i="index">
+              <p-checkbox name="_afecta" [value]="afectaOpt.label" [label]="afectaOpt.label" formControlName="afecta" [(ngModel)]="afectaSelectList"></p-checkbox>
+              <br>
+            </ng-template>
+          </div>
+          <div class="obs-pnl" *ngIf="idEmpresa != '16'">
+            <h4>Recomendación:</h4>
+            <textarea pInputTextarea style="height:100px;" formControlName="recomendacion"></textarea>
+          </div>
 
           <div class="obs-pnl" *ngIf="tarjeta?.usarCausaRaiz">
             <h4>Causa raíz:</h4>

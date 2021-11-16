@@ -17,6 +17,7 @@ import { NivelRiesgo } from 'app/modulos/core/entities/nivel-riesgo';
 import { Message, SelectItem } from 'primeng/primeng'
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Directorio } from '../../../ado/entities/directorio';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 @Component({
     selector: 's-formulario-tarjeta',
@@ -38,6 +39,7 @@ export class FormularioTarjetaComponent implements OnInit {
     visibleDlg: boolean;
     imagenesList: any[];
     msgs: Message[];
+    idEmpresa: string;
 
     constructor(
         private directorioService: DirectorioService,
@@ -46,6 +48,7 @@ export class FormularioTarjetaComponent implements OnInit {
         private sistemaNivelRiesgoService: SistemaNivelRiesgoService,
         private observacionService: ObservacionService,
         private fb: FormBuilder,
+        public sesionService: SesionService
     ) {
         this.form = fb.group({
             id: null,
@@ -62,6 +65,7 @@ export class FormularioTarjetaComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.idEmpresa = this.sesionService.getEmpresa().id;
         this.implicacionTree = this.buildImplicacionTree(this.tarjeta.implicacionList);
         this.sistemaNivelRiesgoService.findDefault().then(
             data => (<SistemaNivelRiesgo>data).nivelRiesgoList.forEach(element => {

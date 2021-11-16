@@ -66,3 +66,57 @@ input{
     background-color: #1b57fd;
     border-color: #393cfc;
 }
+.btn-wsp{
+  size: 50px;
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  bottom: 30px;
+  right: 20px;
+  background: #0df053;
+  color: #fff;
+  border-radius: 40px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 0px 1px 10px  rgba(0,0,0,0.5);
+  z-index: 100;
+  
+}
+
+.btn-wsp:hover{
+  
+ text-decoration: none;  
+  background: #0df053;
+  color: #fff;
+  right: 20px;
+  transition: 100ms;
+  width: 290px;
+  text-align: left;
+  padding-left: 10px;
+  
+
+}
+
+
+.ocultar{
+  
+display: inline-flex;
+font-size: x-large;
+position: fixed;
+color: rgba(0, 0, 0, 0); /*este es para el texto*/
+
+ 
+
+}
+
+.ocultar:hover{
+  
+display: inline;
+ font-size: medium;
+ text-align: right;
+ padding-left: 5px;
+ color: #fff !important;
+ position: fixed;
+
+}

@@ -68,8 +68,8 @@ p label{
     height: 40px;
     line-height: 40px;
     bottom: 30px;
-    right: 30px;
-    background: #0df053;
+    right: 20px;
+    background: #00943e;
     color: #fff;
     border-radius: 40px;
     text-align: center;
@@ -84,9 +84,9 @@ p label{
    text-decoration: none;
     //color: #0df053;
     //background: #fff;
-    background: #0df053;
+    background: #00943e;
     color: #fff;
-    right: 30px;
+    right: 20px;
     transition: 100ms;
     width: 290px;
     text-align: left;
@@ -114,7 +114,5 @@ p label{
    text-align: right;
    padding-left: 5px;
    color: #fff !important;
-   transition: 1ms;
    position: fixed;
-
 }
