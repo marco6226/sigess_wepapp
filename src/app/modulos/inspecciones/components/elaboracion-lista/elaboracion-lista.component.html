@@ -99,13 +99,13 @@
                 </p-header> 
                 <p-messages [(value)]="msgs"></p-messages>
                 <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" *ngIf="form.valid && listaEvidence.length == 0" ></button>
-                <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Cambiar imágen " *ngIf="form.valid && listaEvidence.length > 0" ></button>
-                <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+                <button pButton type="button" (click)="fileInput2.click()" icon="fa fa-plus" label="Cambiar imágen " *ngIf="form.valid && listaEvidence.length > 0" ></button>
+                <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event, true)">
                 
-      
+
                 <s-galeria *ngIf="imagenesList?.length > 0 && form.valid" [images]="imagenesList"  ></s-galeria>
                 
-                <div class="uploaders" *ngIf="listaEvidence.length > 0 ">
+                <div class="uploaders" *ngIf="listaEvidence.length > 0 && cambiarImagenAnterior">
                     <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
                         [show]="true">
                     </app-file-uploader>
