@@ -91,11 +91,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 this.nivelRiesgoList.push({ label: element.nombre, value: element.id });
             })
         );
-        console.log(this.sistemaNivelRiesgoService.findByFilter(filterQuery).then(
-            resp => (<SistemaNivelRiesgo>resp['data'][0]).nivelRiesgoList.forEach(element => {
-                this.nivelRiesgoList.push({ label: element.nombre, value: element.id });
-            })
-        ))
+        
 
         let accion = this.paramNav.getAccion<string>();
         if (accion == 'POST') {
@@ -104,7 +100,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.programacion = this.paramNav.getParametro<Programacion>();
             this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.programacion.listaInspeccion;
             this.area = this.programacion == null ? this.inspeccion.area : this.programacion.area;
-            // console.log(this.programacion);
+           
             let filterQuery = new FilterQuery();
 
             let filterId = new Filter();
@@ -136,7 +132,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
     resp => {
       this.empleadoelabora = <Empleado>(resp);
       this.getFirma(this.empleadoelabora.id);
-      console.log(this.empleadoelabora);                              
+                                   
     }
   );
 }, 2000);
@@ -168,7 +164,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
                             resp => {
                               this.empleadoelabora = <Empleado>(resp);
                               this.getFirma(this.empleadoelabora.id);
-                              console.log(this.empleadoelabora);                              
+                                                          
                             }
                           );
                     }, 2000);
@@ -199,9 +195,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             this.version = this.route.snapshot.paramMap.get('version');
             
 
-            //this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.programacion.listaInspeccion;
-            //this.area = this.programacion == null ? this.inspeccion.area : this.programacion.area;
-            // console.log(this.programacion);
+            
             let filterQuery = new FilterQuery();
 
             let filterId = new Filter();
@@ -232,7 +226,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
                             resp => {
                               this.empleadoelabora = <Empleado>(resp);
                               this.getFirma(this.empleadoelabora.id);
-                              console.log(this.empleadoelabora);                              
+                                                           
                             }
                           );
                     }, 2000);
@@ -433,14 +427,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
             let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
             //template.querySelector('#P_lista_logo').setAttribute('src', this.listaEvidence);
-            console.log(this.listaEvidence);
-            console.log(this.firma);
-            console.log(this.sesionService.getEmpleado().primerApellido);
-            console.log(this.listaInspeccion.nombre);
-            console.log(this.listaInspeccion.codigo);
-            console.log(this.listaInspeccion.listaInspeccionPK.version);
-            console.log(this.listaInspeccion.formulario.nombre);
-            console.log(this.inspeccion.fechaRealizada);
+           
             
 
 
@@ -464,7 +451,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
                     }
                 }
                 camposForm.parentElement.appendChild(tr);
-                console.log(this.inspeccion.respuestasCampoList);
+                
             });
 
 
@@ -476,7 +463,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
 
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
-            console.log(WinPrint);
+            
             WinPrint.document.write(template.innerHTML);
             WinPrint.document.close();
             WinPrint.focus();
@@ -487,11 +474,11 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
     async getTareaEvidences(lista_id: number, version_id: number) {
         try {
             let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
-            console.log(res);
+           
             if (res) {
                 res.files.forEach(async (evidence) => {
                     let ev: any = await this.directorioService.download(evidence);
-                    console.log(ev)
+                   
                     let blob = new Blob([ev]);
                     let reader = new FileReader();
                     reader.readAsDataURL(blob);
@@ -506,22 +493,22 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             }
 
         } catch (e) {
-            console.log(e);
+            
         }
     }
 
     async getFirma(id_empleado: string) {
-        console.log(id_empleado);
+        
         try {
 
           // let id_empleado = this.sesionService.getEmpleado().id;
             
             let res: any = await this.empleadoService.getFirma(id_empleado);
-            console.log(res);
+            
             if (res) {
                 res.files.forEach(async (evidence) => {
                     let ev: any = await this.directorioService.download(evidence);
-                    console.log(ev)
+                    
                     let blob = new Blob([ev]);
                     let reader = new FileReader();
                     reader.readAsDataURL(blob);
@@ -536,7 +523,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             }
 
         } catch (e) {
-            console.log(e);
+           
         }
     }
 

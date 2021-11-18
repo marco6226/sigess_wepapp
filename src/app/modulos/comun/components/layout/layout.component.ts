@@ -114,7 +114,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 			resp => this.router.navigate([''])
 		).catch(
 			err => {
-				//console.log(err);
+				
 				alert("Se produjo un error al cerrar sesión, ingresar nuevamente")
 			}
 		);
@@ -133,7 +133,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	
 	async cargartareas(){//: void {
 		
-		//console.log("aca debe cargar la info");	
+			
 		        
 		this.mistareas.ngOnInit();
         
@@ -143,7 +143,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
         }, 500);
 		
 		
-		console.log(this.tareasPendientes)
+		
 		return this.tareasPendientes
 	  }
 
@@ -186,8 +186,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 			setTimeout(() => {           
 				this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
 					resp => {
-					  this.empleado = <Empleado>(resp);
-					  console.log(this.empleado);
+					  this.empleado = <Empleado>(resp);					  
 					  this.sesionService.setEmpleado(this.empleado);
 					}
 				  );

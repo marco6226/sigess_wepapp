@@ -511,7 +511,7 @@ export class EmpleadoFormComponent implements OnInit {
     async getTareaEvidences() {
         try {
             let res: any = await this.empleadoService.getFirma(this.empleadoSelect.id);
-            console.log(res);
+           
             if (res) {
                 res.files.forEach(async (evidence) => {
                     let ev: any = await this.directorioService.download(evidence);

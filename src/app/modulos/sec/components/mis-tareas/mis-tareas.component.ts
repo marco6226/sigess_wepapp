@@ -56,7 +56,7 @@ let empleadoid = this.sesionService.getEmpleado().id;
         fq.count = true;
         fq.filterList = [{ field: 'empResponsable.usuario.id', value1: id, criteria: Criteria.CONTAINS }];
         
-        //console.log(fq.fieldList)        
+               
         this.tareaService.findByDetailsByEmpleado(id).then(
             async resp => { 
                 this.tareasList = resp;
@@ -67,14 +67,10 @@ let empleadoid = this.sesionService.getEmpleado().id;
                     return tarea;
                 }));
                 this.loading = false;
-                console.log(this.tareasList);
+                
                  let estados = this.tareasList.map(x => x.estado)
-                console.log(estados);
-
-        
-            
-                //this.devolverEstados ();
-                //console.log(this.devolverEstados());
+               
+                
             }            
         );
         
@@ -110,7 +106,7 @@ let empleadoid = this.sesionService.getEmpleado().id;
         let total =[];
         const estados = this.tareasList.map(x => x.estado)
         total = estados.reduce(( a , d ) => (a[d] ? a[d] += 1 : a[d] = 1 , a), { } );
-        //console.log(total); 
+        
         return total;      
         }        
         
@@ -124,7 +120,7 @@ let empleadoid = this.sesionService.getEmpleado().id;
 
         let trackings = tarea.trackings
         let isFollow = (trackings > 0) ? true : false;
-        console.log(isFollow);
+        
         /* Vars */
         let now = moment({});
         let fecha_cierre = moment(tarea.fecha_cierre);

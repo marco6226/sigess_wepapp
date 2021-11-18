@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.activateRoute.queryParams
             .subscribe(params => {
-                console.log(params); // { orderby: "price" }
+                
                 if (params.redirect) {
                     localStorage.setItem('url', params.redirect);
                 }
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
     }
     onSubmit(value: any) {
         this.logueando = true;
-        //console.log(value);
+       
         this.authService.login(value.username, value.passwd, value.recordar, value.pin)
             .then(res => {
                 let aceptaTerm = this.authService.sesionService.getUsuario().fechaAceptaTerminos != null;
@@ -176,11 +176,11 @@ export class LoginComponent implements OnInit {
         if (this.password === 'password') {
             this.password = 'text';
             this.show = true;
-            console.log(this.password);
+            
         } else {
             this.password = 'password';
             this.show = false;
-            console.log(this.password);
+            
         }
     }
 

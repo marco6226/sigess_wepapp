@@ -61,7 +61,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
 
     ngOnInit() {
         this.areasPermiso = this.sesionService.getPermisosMap()['INP_GET_INP'].areas;
-        console.log(this.areasPermiso);
+        
 
     }
 
@@ -110,7 +110,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
                 this.totalRecords = resp['count'];
                 this.loading = false;
                 this.inspeccionesList = [];
-                console.log("aqui paso");
+                
                 (<any[]>resp['data']).forEach(dto => {
                     this.inspeccionesList.push(FilterQuery.dtoToObject(dto));
                 });

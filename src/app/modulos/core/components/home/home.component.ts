@@ -498,7 +498,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             resp => this.evtLogList = resp['data']
         );
 
-        console.log(this.desdes, this.hastas, this.arrayIds);
+        
     }
 
     actualizarArea(areas) {
@@ -521,7 +521,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.testing = true;
         }, 1000);
 
-        console.log(this.desdes, this.hastas, this.arrayIds);
+        
 
     }
 
@@ -555,12 +555,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.ejecutadas = data7[0][0];
             this.planeadas = data7[0][1];
             this.inptotal = (this.ejecutadas / this.planeadas) * 100;
-            console.log(this.ejecutadas, this.planeadas);
+            
 
         } else {
             this.data7 == null;
             this.inptotal = 0;
-            console.log("el cumplimiento de inp es 0");
+            
         }
 
     }
@@ -656,7 +656,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.showData = true;
         }
-        console.log(data4)
+        
     }
     async updateCharts5() {
         this.showData = false;
@@ -671,7 +671,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (data5.length < 0) return false;
         for (const iterator of data5) {
-            //  console.log("eficaciaauc");
+            
 
             this.data5.labels.push(iterator[2]);
             this.data5.datasets[0].data.push(iterator[1]);
@@ -692,8 +692,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (data6.length < 0) return false;
         for (const iterator of data6) {
-            //  console.log("efectividad AT");
-            //  console.log(data6);
+            
 
             this.data6.labels.push(iterator[2]);
             this.data6.datasets[0].data.push(iterator[1]);
@@ -707,12 +706,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     selecFromDate(date: Date) {
         this.desdes = date.toISOString().slice(0, 10)
         date.toISOString().slice(.1)
-        console.log(date.toISOString().slice(0, 10));
+        
     }
 
     selectToDate(date: Date) {
         this.hastas = date.toISOString().slice(0, 10);
-        console.log(date.toISOString().slice(0, 10));
+        
         this.testing = false;
         this.updateCharts();
         this.updateCharts2();

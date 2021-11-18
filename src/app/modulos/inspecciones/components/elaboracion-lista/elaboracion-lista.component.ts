@@ -199,7 +199,7 @@ export class ElaboracionListaComponent implements OnInit {
     }
 
     async guardar() {
-        console.log();
+        
         
 
         this.msgs = [];
@@ -321,7 +321,7 @@ export class ElaboracionListaComponent implements OnInit {
                 this.msgs.push({ severity: 'success', summary: 'Lista de inspección actualizada', detail: detalle + listInp.nombre });
             }
         );
-        console.log(listInp.estado)
+        
     }
 
 
@@ -367,11 +367,7 @@ export class ElaboracionListaComponent implements OnInit {
         // this is to read the file
           reader.readAsDataURL(file);
 
-          console.log(reader);
-
-          console.log(file);
-          console.log(img);
-          console.log(img.src);
+         
 
 
        
@@ -396,13 +392,13 @@ export class ElaboracionListaComponent implements OnInit {
         try {
             let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
             let ctx = this.canvas.getContext("2d");
-            console.log(res);
+            
             if (res) {
                 res.files.forEach(async (evidence) => {
                     let ev: any = await this.directorioService.download(evidence);
-                    console.log(ev)
+                    
                     let blob = new Blob([ev]);
-                    console.log(blob);                   
+                                       
         
                     let reader = new FileReader();
                     reader.readAsDataURL(blob);
@@ -417,7 +413,7 @@ export class ElaboracionListaComponent implements OnInit {
             }
 
         } catch (e) {
-            console.log(e);
+           
         }
     }
 

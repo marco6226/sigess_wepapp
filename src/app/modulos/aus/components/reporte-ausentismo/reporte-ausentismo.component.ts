@@ -73,7 +73,7 @@ export class ReporteAusentismoComponent implements OnInit {
                 }
             );
             this.form.valueChanges.subscribe(res => {
-                console.log(res);
+                
             })
         }
 

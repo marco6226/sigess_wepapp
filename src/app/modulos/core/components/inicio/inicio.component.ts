@@ -19,7 +19,7 @@ export class InicioComponent implements OnInit, AfterViewInit {
 
         this.activateRoute.queryParams
             .subscribe(params => {
-                console.log(params); // { orderby: "price" }
+               
                 if (params.redirect) {
                     localStorage.setItem('url', params.redirect);
                 }

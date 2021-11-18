@@ -75,7 +75,7 @@ export class ListaInspeccionFormComponent implements OnInit {
             .then(resp => {
                 this.tipoHallazgoList = resp['data'];
             });
-            console.log(this.idempresa);
+           
     }
     buscarEmpleado(event) {
         this.empleadoService
@@ -89,7 +89,7 @@ export class ListaInspeccionFormComponent implements OnInit {
         let elemento = new ElementoInspeccion();
         elemento.numero = ++this.contadorElem;
         elemento.codigo = JSON.stringify(this.value.length + 1);
-        console.log(this.value);
+        
         if (this.value == null)
             this.value = [];
         this.value.push(elemento);
@@ -182,7 +182,7 @@ export class ListaInspeccionFormComponent implements OnInit {
     }
 
     async onSelection(event) {
-        console.log(event);
+       
         this.fullName = null;
         this.empleado = null;
         const emp = <Empleado>event;

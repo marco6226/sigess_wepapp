@@ -58,8 +58,7 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         if (this.img) {
-            //console.log('Data de imagen: ', this.img)
-            console.log(this.img.split(',').length)
+            
             if (this.img.split(',').length > 1) this.img = this.img.split(',')[1];
 
             let type = this.mimeType[this.img.charAt(0)];
@@ -79,23 +78,23 @@ export class FileUploaderComponent implements OnInit, OnChanges {
     }
 
     async preview(files) {
-        console.log(files);
+       
         if (files.length === 0) return;
 
         let mimeType = files[0].type;
 
         /* TODO: Se necesita validar diferente para cargar archivos */
         if (mimeType.match('image.*|application.*') == null) {
-            console.log("Only images or doc are supported.");
+           
             return;
         }
 
-        console.log('Está cargando')
+        
 
         let reader = new FileReader();
         this.imagePath = files;
         reader.readAsDataURL(files[0]);
-        console.log(reader.onload);
+       
         reader.onload = async (_event) => {
             /* TODO: Aquí realizar el evento de carga */
             if (mimeType.match('image.*')) {
@@ -144,7 +143,7 @@ export class FileUploaderComponent implements OnInit, OnChanges {
         this.loading = true;
 
         try {
-            // console.log(await this.directorioService.uploadv2(file, "Test"));
+            
             let res = await this.directorioService.uploadv2(file, "Test");
 
             if (res) {
@@ -158,13 +157,12 @@ export class FileUploaderComponent implements OnInit, OnChanges {
             }
 
         } catch (e) {
-            console.log(e);
+          
         }
     }
 
     download() {
-        // console.log('Inicia la descarga')
-        // console.log(this.img);
+        
         if (this.img) {
             this.downloadImage(this.img, "evidence" + this.index);
         }
@@ -172,7 +170,7 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
     downloadImage(base64String, fileName) {
         let type = this.mimeType[base64String.charAt(0)];
-        console.log('Type: ', type)
+        
         const source = `data:${type.head};base64,${base64String}`;
         const link = document.createElement("a");
         link.href = source;
