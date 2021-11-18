@@ -53,6 +53,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     formValid: boolean;
     redireccion: string;
     empleado: Empleado;
+    empleadoelabora: Empleado;
     Form: FormGroup;
  empresa:Empresa;
     area: Area;
@@ -128,7 +129,18 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });
                 this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-                this.getFirma();
+
+                
+                setTimeout(() => {           
+this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+    resp => {
+      this.empleadoelabora = <Empleado>(resp);
+      this.getFirma(this.empleadoelabora.id);
+      console.log(this.empleadoelabora);                              
+    }
+  );
+}, 2000);
+               
         } else if (accion == 'GET' || accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
             this.consultar = accion == 'GET';
@@ -151,7 +163,15 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
                     this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
                     this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-                    this.getFirma();
+                                        setTimeout(() => {           
+                        this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+                            resp => {
+                              this.empleadoelabora = <Empleado>(resp);
+                              this.getFirma(this.empleadoelabora.id);
+                              console.log(this.empleadoelabora);                              
+                            }
+                          );
+                    }, 2000);
 
                     this.listaInspeccion.formulario.campoList.forEach(campo => {
                         for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
@@ -206,7 +226,16 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });
                 this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-                this.getFirma();
+                
+                                        setTimeout(() => {           
+                        this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+                            resp => {
+                              this.empleadoelabora = <Empleado>(resp);
+                              this.getFirma(this.empleadoelabora.id);
+                              console.log(this.empleadoelabora);                              
+                            }
+                          );
+                    }, 2000);
         }
         
         this.paramNav.reset();
@@ -481,11 +510,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
     }
 
-    async getFirma() {
-
+    async getFirma(id_empleado: string) {
+        console.log(id_empleado);
         try {
 
-           let id_empleado = this.sesionService.getEmpleado().id;
+          // let id_empleado = this.sesionService.getEmpleado().id;
+            
             let res: any = await this.empleadoService.getFirma(id_empleado);
             console.log(res);
             if (res) {
