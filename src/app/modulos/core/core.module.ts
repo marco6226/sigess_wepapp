@@ -289,7 +289,7 @@ const appRoutes: Routes = [
         FileUploaderComponent
     ],
     exports: [
-        FileUploaderComponent
+        FileUploaderComponent,ComunModule
     ],
     providers: [AuthGuardService, AuthService, ModeloGraficaService],
 })

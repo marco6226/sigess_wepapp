@@ -16,10 +16,10 @@
         <th pSortableColumn="descripcion">descripción
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        <th pSortableColumn="descripcion">personas observadas
+        <th pSortableColumn="descripcion" *ngIf="idEmpresa == '16'">personas observadas
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        <th pSortableColumn="descripcion">personas abordadas
+        <th pSortableColumn="descripcion" *ngIf="idEmpresa == '16'" >personas abordadas
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
         <th pSortableColumn="aceptada" style="width:120px">Estado
@@ -39,10 +39,11 @@
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
         </td>
-        <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
-        </td> <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
+        <td *ngIf="idEmpresa == '16'">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')"  >
+        </td> 
+        <td *ngIf="idEmpresa == '16'">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')"  >
         </td>
 
         
@@ -62,8 +63,8 @@
         <td>{{observ.tipoObservacion}}</td>
         <td>OBS-{{observ.id}}</td>
         <td>{{observ.descripcion}}</td>
-        <td>{{observ.personasobservadas}}</td>
-        <td>{{observ.personasabordadas}}</td>
+        <td  *ngIf="idEmpresa == '16'">{{observ.personasobservadas}}</td>
+        <td  *ngIf="idEmpresa == '16'">{{observ.personasabordadas}}</td>
         
 
         

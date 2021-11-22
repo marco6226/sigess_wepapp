@@ -35,6 +35,7 @@ export class GestionObservacionesComponent implements OnInit {
     consultar: boolean = true;
   EstadoSeg: string = "Positivas";
     imagenesList: any = [];
+    idEmpresa : string;
 
     constructor(
         private domSanitizer: DomSanitizer,
@@ -48,6 +49,8 @@ export class GestionObservacionesComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+
+        this.idEmpresa = this.sesionService.getEmpresa().id;
         this.observacion = this.paramNav.getParametro<Observacion>();
         this.consultar = this.paramNav.getAccion() == "GET";
 

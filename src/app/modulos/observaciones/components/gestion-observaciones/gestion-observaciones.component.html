@@ -36,26 +36,26 @@
       </div>
       <div class="ui-g-12 ui-sm-12 ui-md-6 ui-lg-4 ">
         <p-panel header="Detalle">
-          <!--
-          <div class="obs-pnl">
+          
+          <div class="obs-pnl" *ngIf="idEmpresa != '16'">
             <h4>Afecta:</h4>
             <ng-template ngFor let-afec [ngForOf]="observacion.afecta">
               - {{afec}} <br/>
             </ng-template>
           </div>
-          <div class="obs-pnl">
+          <div class="obs-pnl" *ngIf="idEmpresa != '16'">
             <h4>Recomendación:</h4>
             
                {{observacion.recomendacion}}
             
           </div>
-          -->
-          <div class="obs-pnl">
+         
+          <div class="obs-pnl" *ngIf="idEmpresa == '16'">
             <h4>Personas observadas:</h4>
             {{observacion.personasobservadas}}            
           </div>
 
-          <div class="obs-pnl">
+          <div class="obs-pnl" *ngIf="idEmpresa == '16'">
             <h4>Personas abordadas:</h4>
           {{observacion.personasabordadas}}
           </div>

@@ -22,6 +22,7 @@ export class ConsultaObservacionesComponent implements OnInit {
   observacionSelect: Observacion;
   loading: boolean;
   totalRecords: number;
+  idEmpresa: string;
   fields: string[] = [
     'id',
     'fechaObservacion',
@@ -42,6 +43,7 @@ export class ConsultaObservacionesComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.idEmpresa = this.sesionService.getEmpresa().id;
   }
 
 

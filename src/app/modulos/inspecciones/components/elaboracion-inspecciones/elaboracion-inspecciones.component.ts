@@ -423,7 +423,9 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-            template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
+            console.log(this.empleadoelabora.primerNombre);
+          //  template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
+            template.querySelector('#P_firma').textContent = this.empleadoelabora.primerNombre + " " + this.empleadoelabora.primerApellido;
             let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
             let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
             //template.querySelector('#P_lista_logo').setAttribute('src', this.listaEvidence);
