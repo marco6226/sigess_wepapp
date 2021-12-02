@@ -2,3 +2,5 @@ node_modules
 node_modules
 dist
 /src/app/modulos/core/auth.service.ts
+.vscode/settings.json
+.gitignore

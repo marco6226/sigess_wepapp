@@ -1,7 +1,5 @@
-
-import { Usuario } from 'app/modulos/empresa/entities/usuario'
-import { Documento } from 'app/modulos/ado/entities/documento'
-
+import { Usuario } from 'app/modulos/empresa/entities/usuario';
+import { Documento } from 'app/modulos/ado/entities/documento';
 
 export class Directorio {
     id: string;
@@ -14,4 +12,5 @@ export class Directorio {
     documento: Documento;
     tamanio: number;
     fechaCreacion: Date;
+    nivelAcceso: string;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Modulo } from 'app/modulos/core/enums/enumeraciones';
 import { Directorio } from 'app/modulos/ado/entities/directorio';
@@ -42,6 +42,7 @@ export class GestionDocumentalComponent implements OnInit {
     loading: boolean;
     draggedNode: TreeNode;
     criterioBusqueda: string;
+    esPrivado: boolean;
 
     constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
@@ -50,6 +51,7 @@ export class GestionDocumentalComponent implements OnInit {
     ngOnInit() {
         //this.cargarRaiz();
         this.loading = true;
+        this.esPrivado = false;
     }
 
     loadNodes(event: any) {
@@ -329,6 +331,8 @@ export class GestionDocumentalComponent implements OnInit {
         let dir = new Directorio();
         dir.id = directorio.id;
         dir.nombre = directorio.nombre;
+        dir.nivelAcceso = this.esPrivado ? 'PRIVADO' : 'PUBLICO';
+
         if (nodo.parent != null || directorio.directorioPadre != null) {
             let dirPadre = new Directorio();
             dirPadre.id = nodo.parent == null ? directorio.directorioPadre.id : nodo.parent.data.id;
@@ -339,7 +343,7 @@ export class GestionDocumentalComponent implements OnInit {
             this.growlMsgs.push({
                 severity: 'success',
                 summary: 'Actualización realizada',
-                detail: 'Se ha realizado correctamente la actualización' + this.nodeSelect.data.nombre,
+                detail: 'Se ha realizado correctamente la actualización ' + this.nodeSelect.data.nombre,
             });
         });
     }
@@ -524,5 +528,8 @@ export class GestionDocumentalComponent implements OnInit {
                 this.loading = false;
             });
         }
+    }
+    getNivelAcceso(nodo: Directorio) {
+        this.esPrivado = nodo.nivelAcceso == 'PRIVADO';
     }
 }
