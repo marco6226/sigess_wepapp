@@ -34,6 +34,7 @@
                 [rows]="20"
                 [totalRecords]="totalRecords"
                 [(selection)]="nodeSelect"
+                (click)="getNivelAcceso(nodeSelect.data)"
                 dataKey="id"
                 sortField="fechaCreacion"
                 sortOrder="-1"
@@ -81,9 +82,11 @@
                         <i class="fa fa-check"></i>
                     </span>
                 </div>
+                <p-checkbox #nivelAcceso name="cbxAccessLevel" id="nivAcceso" class="form-check-input" [(ngModel)]="esPrivado" binary="true" label="Privado"></p-checkbox>
             </div>
             <p>
-                <label>Tipo: {{ nodeSelect?.data.extension.nombre }}</label>
+                <label style="padding-right: 20px">Tipo: {{ nodeSelect?.data.extension.nombre }} ­­­ </label>
+
                 <a (click)="descargar(nodeSelect?.data)" style="float: right" *ngIf="nodeSelect?.data.esDocumento">
                     <span class="fa fa-download" style="font-size: 14px"></span>
                     Descargar
