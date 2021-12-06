@@ -5,6 +5,7 @@ import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { Message, MenuItem, ConfirmationService } from 'primeng/primeng';
 import { PaginatorModule } from 'primeng/paginator';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Filter, Criteria } from 'app/modulos/core/entities/filter';
@@ -43,15 +44,16 @@ export class GestionDocumentalComponent implements OnInit {
     draggedNode: TreeNode;
     criterioBusqueda: string;
     esPrivado: boolean;
+    usuarioId: string;
 
-    constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService) {
+    constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
     }
 
     ngOnInit() {
-        //this.cargarRaiz();
         this.loading = true;
         this.esPrivado = false;
+        this.usuarioId = this.sesionService.getUsuario().id;
     }
 
     loadNodes(event: any) {
@@ -92,11 +94,10 @@ export class GestionDocumentalComponent implements OnInit {
         return this.directorioService.findByFilter(filterQuery).then((data) => {
             this.totalRecords = data['count'];
             let dirList = this.inicializarFechas(<Directorio[]>data['data']);
-            console.log(1);
+            // console.log(1);
+            // console.log(2);
 
-            console.log(2);
-
-            console.log(dirList);
+            // console.log(dirList);
             this.directorioList = this.generarModelo(dirList, null);
 
             this.loading = false;
@@ -124,9 +125,6 @@ export class GestionDocumentalComponent implements OnInit {
             leaf: false,
             data: dir,
         };
-        console.log(dir.id);
-
-        console.log('' + node.data.id);
         return node;
     }
 
@@ -346,6 +344,7 @@ export class GestionDocumentalComponent implements OnInit {
                 detail: 'Se ha realizado correctamente la actualización ' + this.nodeSelect.data.nombre,
             });
         });
+        this.cargarRaiz(event);
     }
 
     descargar(directorio: Directorio) {
@@ -529,7 +528,10 @@ export class GestionDocumentalComponent implements OnInit {
             });
         }
     }
-    getNivelAcceso(nodo: Directorio) {
-        this.esPrivado = nodo.nivelAcceso == 'PRIVADO';
+    getNivelAcceso(event, dataNode?: Directorio) {
+        if (dataNode != null) {
+            this.esPrivado = dataNode.nivelAcceso == 'PRIVADO';
+            this.cargarRaiz(event);
+        }
     }
 }
