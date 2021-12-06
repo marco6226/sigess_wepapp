@@ -22,7 +22,8 @@ button{
 }
 
 button:hover{
-  background-color: #eee;
+  background-color: rgb(223, 155, 28);
+  color: black;
 }
 
 .icon-subitem{
@@ -93,7 +94,7 @@ button:hover{
     background-image: url('/assets/images/icons-invert/ado.svg');
 }
 .icon-scm{
-    background-image: url('/assets/images/icons-invert/scm.svg');
+    background-image: url('/assets/images/icons-invert/scm4.svg');
 }
 .icon-aus{
     background-image: url('/assets/images/icons-invert/aus.svg');
@@ -116,12 +117,13 @@ button:hover{
 }
 
 
-
 /* Estilos personalizados para accordion del menu */
 .menu-container{
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     max-height: 0px;
+    background: black;
+    //d07400ff
 }
 
 .menu-container-expand{

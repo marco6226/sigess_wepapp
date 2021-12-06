@@ -46,6 +46,7 @@ import { ConfirmationService } from "primeng/api";
 import { ConfirmService } from "app/modulos/scm/components/formulario-scm/confirm.service";
 import { ActivatedRoute } from "@angular/router";
 import { Proveedor } from "app/modulos/comun/entities/proveedor";
+import { Router } from '@angular/router';
 
 export interface TreeNode {
     data?: any;
@@ -191,6 +192,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     provsaludList: SelectItem[];
     sveOptionList: SelectItem[] = [];
     cargoList: SelectItem[];
+    casocreado = false;
     caseStatus = [
         { label: "Abierto", value: "1" },
         { label: "Cerrado", value: "0" },
@@ -271,6 +273,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         private perfilService: PerfilService,
         private confirmService: ConfirmService,
         private route: ActivatedRoute,
+        private router: Router,
     ) {
 
         this.empresa = this.sesionService.getEmpresa();
@@ -561,6 +564,9 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
 
         let status;
+        if (this.casocreado == true){
+            this.createCase = false;
+        }
 
         if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
@@ -578,20 +584,29 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 summary: "Mensaje del sistema",
                 detail: `El caso médico fue creado exitosamente, su numero de caso es ${status}`,
             });
+            this.actualizar = true;
+            this.adicionar = false;
+           
+                    
             setTimeout((res) => {
                 // this.closeForm();
                 // this.router.navigate(["/app/scm/list"]);
                 // this.router.navigateByUrl("/app/scm/list");
             }, 3000);
+            this.caseSelect.id = status;
+          this.casocreado = true;
         }
+            
 
         else if (this.actualizar) {
             this.msgs.push({
                 severity: 'success',
                 summary: 'Mensaje del sistema',
                 detail: `Se ha actualizado correctamente el caso medico  ${status}`
+                
 
             });
+            this.createCase = false;
         }
     }
 

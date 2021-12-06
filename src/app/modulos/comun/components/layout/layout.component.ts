@@ -94,11 +94,12 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 			{ label: 'Preferencias', icon: 'fa fa-gears', command: (event => this.irPreferencias()) },
 			{ label: 'Cerrar sesión', icon: 'fa fa-sign-out', command: (event => this.logout()) }
 		];
+		
+		
 
-		this.empresaService.findByUsuario(this.usuario.id).then(
+		  this.empresaService.findByUsuario(this.usuario.id).then(
 			resp => this.loadItems(<Empresa[]>resp)
 		);
-		
 		
 		setTimeout(() => {
            
@@ -180,17 +181,20 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 				this.mapaPermisos = {};
 				data.forEach(element => this.mapaPermisos[element.recurso.codigo] = { 'valido': element.valido, 'areas': element.areas });
 				this.sesionService.setPermisosMap(this.mapaPermisos);
+				console.log(this.mapaPermisos);
 				this.menuComp.recargarMenu();
 			});
 
-			setTimeout(() => {           
-				this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
+			         
+				await this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
 					resp => {
-					  this.empleado = <Empleado>(resp);					  
+					  this.empleado = <Empleado>(resp);	
+					  console.log(this.empleado);				  
 					  this.sesionService.setEmpleado(this.empleado);
 					}
 				  );
-			}, 2000);
+
+			
 			
 	}
 
