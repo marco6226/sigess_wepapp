@@ -4,11 +4,11 @@
 <p-scrollPanel [style]="{width: '100%', height: 'calc(100% - 50px)'}" styleClass="custombar">
 	<ng-template ngFor let-item [ngForOf]="items" let-i="index">
 		<div *sTienePermiso="item.codigo" [ngClass]="item.expanded == true ? 'menu-container-expand' : ''" style="margin: 5px;margin-right: -5px;">
-			<button [class]="item.class" [pTooltip]="expanded == true ? item.label : ''" (click)="toggleMenu(item, container);">{{item.label}}</button>
+			<button [class]="item.class" [pTooltip]="item.label" (click)="toggleMenu(item, container);">{{item.label}}</button>
 
 			<div class="menu-container" #container>
 				<ng-template ngFor let-subItem [ngForOf]="item.items">
-					<button *sTienePermiso="subItem.codigo" [routerLink]="subItem.routerLink" routerLinkActive="active" [pTooltip]="expanded == true ? subItem.label : ''">
+					<button *sTienePermiso="subItem.codigo" [routerLink]="subItem.routerLink" routerLinkActive="active" [pTooltip]="subItem.label">
 						<i [ngClass]="['icon-subitem', subItem.class]" class="icon-subitem" aria-hidden="true"></i>
 						{{subItem.label}}
 					</button>

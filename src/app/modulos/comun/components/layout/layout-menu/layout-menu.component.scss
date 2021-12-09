@@ -22,7 +22,7 @@ button{
 }
 
 button:hover{
-  background-color: rgb(223, 155, 28);
+  background-color: rgba(242, 159, 6, 0.768);
   color: black;
 }
 
@@ -122,7 +122,7 @@ button:hover{
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     max-height: 0px;
-    background: black;
+   // background: black;
     //d07400ff
 }
 
@@ -130,5 +130,6 @@ button:hover{
     overflow: hidden;
     border: solid thin #ccc;
     border-radius: 10px;
+    //background: black;
 }
 

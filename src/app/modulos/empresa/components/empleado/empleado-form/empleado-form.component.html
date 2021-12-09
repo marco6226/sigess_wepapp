@@ -110,16 +110,16 @@
             </p-panel>
             <br/>
             <div class="ui-g">
-            <p-panel  class="ui-g-2" header="FIRMA EMPLEADO">
+            <p-panel  class="ui-g-4" header="FIRMA EMPLEADO">
                 <p-messages [(value)]="msgs"></p-messages>
                 <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" ></button>
                 <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
       
-                <s-galeria *ngIf="imagenesList?.length > 0" [images]="imagenesList" ></s-galeria>
+               
                
                 <div class="uploaders" *ngIf="listaEvidence.length >= 0 ">
                    
-               
+                    <img *ngIf="avatar" [src]="imagenesPath"  />
                 </div>
                
             </p-panel>
