@@ -423,9 +423,16 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-            console.log(this.empleadoelabora.primerNombre);
+           // console.log(this.empleadoelabora.primerNombre);
           //  template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
-            template.querySelector('#P_firma').textContent = this.empleadoelabora.primerNombre + " " + this.empleadoelabora.primerApellido;
+          if(this.empleadoelabora != null ){
+            template.querySelector('#P_firma').textContent = this.empleadoelabora.primerNombre + " " + this.empleadoelabora.primerApellido + " ";
+            template.querySelector('#P_cargo').textContent = " Cargo: " + this.empleadoelabora.cargo.nombre;
+           // console.log(this.empleadoelabora.cargo.nombre);
+        }else{
+            template.querySelector('#P_firma').textContent = this.inspeccion.usuarioRegistra ? this.inspeccion.usuarioRegistra.email : "";
+           // console.log(this.inspeccion.usuarioRegistra ? this.inspeccion.usuarioRegistra.email : "");
+        }
             let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
             let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
             //template.querySelector('#P_lista_logo').setAttribute('src', this.listaEvidence);
