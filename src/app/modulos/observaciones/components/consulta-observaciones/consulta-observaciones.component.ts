@@ -31,7 +31,8 @@ export class ConsultaObservacionesComponent implements OnInit {
     'nivelRiesgo_nombre',
     'personasobservadas',
     'personasabordadas',
-    'aceptada'
+    'aceptada',
+    'area'
   ];
 
   constructor(

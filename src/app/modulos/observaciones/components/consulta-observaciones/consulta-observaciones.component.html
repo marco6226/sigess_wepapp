@@ -16,6 +16,9 @@
         <th pSortableColumn="descripcion">descripción
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
+        <th pSortableColumn="area">Área
+          <p-sortIcon field="area"></p-sortIcon>
+        </th>
         <th pSortableColumn="descripcion" *ngIf="idEmpresa == '16'">personas observadas
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
@@ -39,6 +42,9 @@
         <td>
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
         </td>
+        <td>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'area', 'contains')">
+        </td>
         <td *ngIf="idEmpresa == '16'">
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')"  >
         </td> 
@@ -60,9 +66,10 @@
     <ng-template pTemplate="body" let-observ>
       <tr [pSelectableRow]="observ">
         <td>{{observ.fechaObservacion | date:'dd/MM/yyyy HH:mm'}}</td>
-        <td>{{observ.tipoObservacion}}</td>
+        <td>{{observ.tipoObservacion}}</td>        
         <td>OBS-{{observ.id}}</td>
         <td>{{observ.descripcion}}</td>
+        <td>{{observ.area?.nombre}}</td>
         <td  *ngIf="idEmpresa == '16'">{{observ.personasobservadas}}</td>
         <td  *ngIf="idEmpresa == '16'">{{observ.personasabordadas}}</td>
         
