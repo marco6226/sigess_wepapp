@@ -43,7 +43,7 @@
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')">
         </td>
         <td>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'area', 'contains')">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
         </td>
         <td *ngIf="idEmpresa == '16'">
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'descripcion', 'contains')"  >
@@ -59,7 +59,7 @@
             <option [value]="false">Denegada</option>
             <option [value]="null">Sin asignar</option>
           </select> -->
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'aceptada', 'contains')">
+          
         </td>
       </tr>
     </ng-template>

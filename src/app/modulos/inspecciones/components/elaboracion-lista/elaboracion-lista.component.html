@@ -99,7 +99,7 @@
                 </p-header> 
                 <p-messages [(value)]="msgs"></p-messages>
                 <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Adjuntar imágen" *ngIf="form.valid && listaEvidence.length == 0" ></button>
-                <button pButton type="button" (click)="fileInput2.click()" icon="fa fa-plus" label="Cambiar imágen " *ngIf="form.valid && listaEvidence.length > 0" ></button>
+                <button pButton type="button" (click)="fileInput.click()" icon="fa fa-plus" label="Cambiar imágen " *ngIf="form.valid && listaEvidence.length > 0" ></button>
                 <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event, true)">
                 
 
