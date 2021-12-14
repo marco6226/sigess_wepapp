@@ -6,6 +6,7 @@ import { OpcionCalificacion } from 'app/modulos/inspecciones/entities/opcion-cal
 import { NivelRiesgo } from 'app/modulos/core/entities/nivel-riesgo';
 import { TipoHallazgo } from '../../../entities/tipo-hallazgo';
 import { TreeNode } from 'primeng/api';
+import { SelectItem, Message } from "primeng/api";
 
 @Component({
   selector: 's-elemento-inspeccion-node',
@@ -36,6 +37,12 @@ export class ElementoInspeccionNodeComponent implements OnInit {
     7: { color: '#4169E1', contraste: '' },
     8: { color: '#7B68EE', contraste: '' },
   };
+
+  criticidadList: SelectItem[] = [ 
+    { label: "--seleccione--",value : null },  
+    { label: "Bajo",value: "Bajo"},
+    { label: "Medio", value: "Medio" },
+    { label: "Alto", value: "Alto" }];
   constructor() {
    }
 

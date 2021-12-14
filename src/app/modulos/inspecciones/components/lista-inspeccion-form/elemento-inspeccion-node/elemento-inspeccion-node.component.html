@@ -18,12 +18,15 @@
         <label *ngIf="!editable">{{elem.descripcion}}</label>
       </td>
 
-      <!--
-      <td style="width: 150px">
-        <p-multiSelect [options]="tiposHallazgo" [(ngModel)]="elem.tipoHallazgoList" optionLabel="nombre" defaultLabel="--Tipos Hallazgo--"
-          *ngIf="editable"></p-multiSelect>
+      
+      <td style="width: 150px"> 
+        <p-dropdown [filter]="true" [options]="criticidadList" [(ngModel)]="elem.criticidad" value="label"
+        class="select-material" 
+        styleClass="select-material" required>
+        </p-dropdown>       
+                 
       </td>
-      -->
+      
       
       <td width="10px">
         <button pButton type="button" icon="fa fa-plus" (click)="addElemento(elem)" *ngIf="editable"></button>

@@ -11,7 +11,7 @@ export class ElementoInspeccion {
   elementoInspeccionList: ElementoInspeccion[] = [];
   calificable: boolean;
   tipoHallazgoList:TipoHallazgo[];
-
+  criticidad:string;
   numero: number;
   calificacion: Calificacion;
 }
