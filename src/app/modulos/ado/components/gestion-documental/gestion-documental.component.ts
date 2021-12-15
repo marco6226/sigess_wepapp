@@ -570,9 +570,10 @@ export class GestionDocumentalComponent implements OnInit {
                 filterQuery.filterList.push(filtPadre);
             } else {
                 let filterValue = new Filter();
-                filterValue.criteria = Criteria.CONTAINS;
+                filterValue.criteria = Criteria.LIKE;
                 filterValue.field = 'nombre';
-                filterValue.value1 = this.criterioBusqueda;
+                filterValue.value1 ='%' + this.criterioBusqueda + '%';
+              //  filterValue.value1 =this.criterioBusqueda;
                 filterQuery.filterList.push(filterValue);
             }
 
