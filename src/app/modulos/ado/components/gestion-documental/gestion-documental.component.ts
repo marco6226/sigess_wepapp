@@ -11,6 +11,7 @@ import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 import { TreeNode } from 'primeng/api';
 import { Util } from 'app/modulos/comun/util';
+import { Console } from 'console';
 
 @Component({
     selector: 'app-gestion-documental',
@@ -45,6 +46,10 @@ export class GestionDocumentalComponent implements OnInit {
     criterioBusqueda: string;
     esPrivado: boolean;
     usuarioId: string;
+    regactual:any;
+    sortOrder;
+    sortField;
+    rows;
 
     constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
@@ -66,9 +71,62 @@ export class GestionDocumentalComponent implements OnInit {
 
         let filterQuery = new FilterQuery();
         filterQuery.sortField = event.sortField;
-        filterQuery.sortOrder = event.sortOrder;
+       // filterQuery.sortOrder = event.sortOrder;
+       filterQuery.sortOrder = event.sortOrder;
         filterQuery.offset = event.first;
+        console.log(event.first)
+        this.regactual=event.first;
+        this.sortOrder=event.sortOrder;
+        this.sortField=event.sortField;
+        this.rows=event.rows;
         filterQuery.rows = event.rows;
+
+        let filterEliminado = new Filter();
+        filterEliminado.criteria = Criteria.EQUALS;
+        filterEliminado.field = 'eliminado';
+        filterEliminado.value1 = 'false';
+
+        filterQuery.count = true;
+
+        let filterPadre = new Filter();
+        filterPadre.criteria = Criteria.IS_NULL;
+        filterPadre.field = 'directorioPadre';
+        filterQuery.filterList = [filterPadre, filterEliminado];
+
+        let filterCase = new Filter();
+        filterCase.criteria = Criteria.IS_NULL;
+        filterCase.field = 'caseId';
+        filterQuery.filterList = [filterPadre, filterEliminado, filterCase];
+        if (this.caseid) {
+            filterCase.criteria = Criteria.EQUALS;
+            filterCase.value1 = this.caseid;
+        }
+
+        return this.directorioService.findByFilter(filterQuery).then((data) => {
+            this.totalRecords = data['count'];
+            let dirList = this.inicializarFechas(<Directorio[]>data['data']);
+            // console.log(1);
+            // console.log(2);
+
+            // console.log(dirList);
+            this.directorioList = this.generarModelo(dirList, null);
+
+            this.loading = false;
+        });
+        console.log(this.totalRecords);
+    }
+
+    recarguesimple(event, actual:number) {
+        
+        this.nodoPadre = null;
+        // Busca los directorios del directorio seleccionado
+
+        let filterQuery = new FilterQuery();
+        filterQuery.sortField = this.sortField;
+        filterQuery.sortOrder = this.sortOrder;
+      
+        filterQuery.offset = actual;
+        filterQuery.rows = this.rows;
 
         let filterEliminado = new Filter();
         filterEliminado.criteria = Criteria.EQUALS;
@@ -160,14 +218,19 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     crearNuevaCarpeta() {
+        
         let dir = new Directorio();
+        dir.directorioPadre=null;
+        console.log(dir)
         if (this.nodeSelect != null) {
             // Determina el nodo padre de tipo carpeta
+            console.log(this.nodeSelect)
             let nodoPadre = this.nodeSelect.data.esDocumento ? this.nodeSelect.parent : this.nodeSelect;
             dir.directorioPadre = nodoPadre.data.id;
         }
         dir.nombre = this.nombreCarpeta;
         dir.caseId = this.caseid;
+        dir.nivelAcceso="PUBLICO"
         this.directorioService.create(dir).then((data) => this.gestionarRespuesta(<Directorio>data));
     }
     gestionarRespuesta(dir: Directorio) {
@@ -229,7 +292,7 @@ export class GestionDocumentalComponent implements OnInit {
             this.nodeSelect = nodeSelect;
             this.descargar(nodeSelect.data);
         }
-        this.cargarRaiz(event);
+        //this.cargarRaiz(event);
     }
 
     parentsItems(node: TreeNode, list: TreeNode[]): TreeNode[] {
@@ -431,7 +494,7 @@ export class GestionDocumentalComponent implements OnInit {
         this.draggedNode = param.node;
     }
 
-    drop(event, dropParam: any) {
+    async drop(event, dropParam: any) {
         // Si dropParam se recibe como null, indica que el nodo arrastrado deberá moverse a la raíz
         let dropNode = dropParam == null ? null : dropParam.node;
         let directorio = this.draggedNode.data;
@@ -442,6 +505,8 @@ export class GestionDocumentalComponent implements OnInit {
         let dir = new Directorio();
         dir.id = directorio.id;
         dir.nombre = directorio.nombre;
+        dir.nivelAcceso= directorio.nivelAcceso;
+        console.log(dir);
 
         if (dropParam != null) {
             let dirPadre = new Directorio();
@@ -451,7 +516,7 @@ export class GestionDocumentalComponent implements OnInit {
             dir.directorioPadre = null;
         }
 
-        this.directorioService.update(dir).then((data) => {
+       await this.directorioService.update(dir).then((data) => {
             let childrenList = this.draggedNode.parent == null ? this.directorioList : this.draggedNode.parent.children;
             for (let i = 0; childrenList.length; i++) {
                 if (childrenList[i].data.id == this.draggedNode.data.id) {
@@ -473,9 +538,11 @@ export class GestionDocumentalComponent implements OnInit {
             this.growlMsgs.push({
                 severity: 'success',
                 summary: 'Traslado realizado',
-                detail: 'Se ha trasladado correctamente el archivo ' + this.draggedNode.data.nombre,
+                detail: 'Se ha trasladado correctamente el archivo. ' + this.draggedNode.data.nombre,
             });
         });
+        console.log(this.regactual)
+    this.recarguesimple(event,this.regactual);
     }
 
     dragEnd(event) {
@@ -531,7 +598,7 @@ export class GestionDocumentalComponent implements OnInit {
     getNivelAcceso(event, dataNode?: Directorio) {
         if (dataNode != null) {
             this.esPrivado = dataNode.nivelAcceso == 'PRIVADO';
-            this.cargarRaiz(event);
+           // this.cargarRaiz(event);
         }
     }
 }

@@ -249,9 +249,9 @@ export class ElaboracionListaComponent implements OnInit {
     }
 
     actualizar(actualizarVersion: boolean) {
-        let listInp = new ListaInspeccion();
-        let versiondato = listInp.listaInspeccionPK.version;
+        let listInp = new ListaInspeccion();        
         listInp.listaInspeccionPK = this.form.value.id;
+        let versiondato = listInp.listaInspeccionPK.version;
         listInp.nombre = this.form.value.nombre;
         listInp.codigo = this.form.value.codigo;
         listInp.fkPerfilId = JSON.stringify(this.form.value.perfilesId);
