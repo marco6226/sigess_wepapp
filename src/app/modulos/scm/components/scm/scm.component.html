@@ -47,10 +47,10 @@
                 </td>
                 <td>
                     <div class="ui-inputgroup">
-                        <span class="ui-inputgroup-addon">
-                            <em class="pi pi-search"></em>
-                        </span>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaCreacion', 'contains')">
+                                                
+                        <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaCreacion', 'bt')">
+                        </s-rangoFechaSelector>                      
+
                     </div>
                 </td>
                 <td>
