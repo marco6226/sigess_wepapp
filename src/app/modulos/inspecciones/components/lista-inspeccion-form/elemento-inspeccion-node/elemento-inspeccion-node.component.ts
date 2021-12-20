@@ -7,6 +7,7 @@ import { NivelRiesgo } from 'app/modulos/core/entities/nivel-riesgo';
 import { TipoHallazgo } from '../../../entities/tipo-hallazgo';
 import { TreeNode } from 'primeng/api';
 import { SelectItem, Message } from "primeng/api";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 's-elemento-inspeccion-node',
@@ -43,7 +44,8 @@ export class ElementoInspeccionNodeComponent implements OnInit {
     { label: "Bajo",value: "Bajo"},
     { label: "Medio", value: "Medio" },
     { label: "Alto", value: "Alto" }];
-  constructor() {
+  constructor(public router: Router) {
+
    }
 
   // Interface implements

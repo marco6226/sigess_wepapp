@@ -112,7 +112,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 
 	logout() {
 		this.authService.logout().then(
-			resp => this.router.navigate([''])
+			resp => this.router.navigate(['/login'])
 		).catch(
 			err => {
 				

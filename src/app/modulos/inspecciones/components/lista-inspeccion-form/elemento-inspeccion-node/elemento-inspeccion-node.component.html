@@ -4,7 +4,7 @@
 
       <td width="65px" style="text-align: center;">
         <textarea pInputTextarea [(ngModel)]="elem.codigo" *ngIf="editable" placeholder="Código" maxlength="20" disabled></textarea>
-        <label *ngIf="!editable">{{nivelSeparator}}{{elem.codigo}}</label>
+        <label *ngIf="!editable">{{elem.codigo}}</label>
       </td>
 
       <td>
@@ -19,7 +19,7 @@
       </td>
 
       
-      <td style="width: 150px"> 
+      <td *ngIf="router.url === '/app/inspecciones/elaboracionLista'"  style="width: 150px"> 
         <label>Criticidad</label>
         <p-dropdown [filter]="true" [options]="criticidadList" [(ngModel)]="elem.criticidad" value="label"
         class="select-material" 
