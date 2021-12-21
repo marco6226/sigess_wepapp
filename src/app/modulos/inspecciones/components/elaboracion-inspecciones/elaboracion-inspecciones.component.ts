@@ -136,6 +136,7 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
     }
   );
 }, 2000);
+console.log();
                
         } else if (accion == 'GET' || accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
@@ -324,6 +325,12 @@ this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).t
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
+       for (let j = 0; j < 20; j++) {
+        console.log("ELEMENTOS CRITICOS",this.listaInspeccion.elementoInspeccionList[0].elementoInspeccionList[j].elementoInspeccionList[j].criticidad);        
+        console.log("RESPUESTAS id",calificacionList[j].elementoInspeccion);
+        console.log("RESPUESTAS calificacion",calificacionList[j].opcionCalificacion.valor);
+        console.log("PREGUNTAS      id",this. listaInspeccion.elementoInspeccionList[0].elementoInspeccionList[j].elementoInspeccionList[j]);
+        console.log("CORREOS",this.inspeccion.area.contacto);}
     }
 
     private manageResponse(insp: Inspeccion) {

@@ -11,6 +11,7 @@ export class Area {
   sede: Sede;
   areaPadre: Area;
   areaList: Area[];
+  contacto: string;
 
   numero: number;
 
