@@ -26,6 +26,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { parse } from 'path';
 import { EmpleadoService } from '../../../empresa/services/empleado.service';
+import { OpcionCalificacion } from '../../entities/opcion-calificacion';
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -41,6 +42,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     @ViewChild('listaInspeccionForm', { static: false }) listaInspeccionForm: ListaInspeccionFormComponent;
     msgs: Message[];
     listaInspeccion: ListaInspeccion;
+    ElementoInspeccionList: ElementoInspeccion;
     inspeccion: Inspeccion;
     inspeccionId: number;
     programacion: Programacion;
@@ -325,12 +327,98 @@ console.log();
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
-       for (let j = 0; j < 20; j++) {
-        console.log("ELEMENTOS CRITICOS",this.listaInspeccion.elementoInspeccionList[0].elementoInspeccionList[j].elementoInspeccionList[j].criticidad);        
-        console.log("RESPUESTAS id",calificacionList[j].elementoInspeccion);
-        console.log("RESPUESTAS calificacion",calificacionList[j].opcionCalificacion.valor);
-        console.log("PREGUNTAS      id",this. listaInspeccion.elementoInspeccionList[0].elementoInspeccionList[j].elementoInspeccionList[j]);
-        console.log("CORREOS",this.inspeccion.area.contacto);}
+
+        let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
+        console.log(nocumple);
+
+        nocumple = nocumple.filter(function(element) {
+            return element.opcionCalificacion.valor === 0;
+           
+            
+          });
+          console.log(nocumple);
+          console.log("nocumple", nocumple);
+
+          let arrraynocumple = [];
+          
+          let var2 = nocumple.map(item =>{
+            //  for(let i in item){
+                arrraynocumple.push(item.elementoInspeccion.id)
+        console.log( "nuevo array ",arrraynocumple);
+          return arrraynocumple;
+          })
+        
+          console.log( "no cumplen array",arrraynocumple);
+
+          let criticos = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList;
+        console.log(criticos);
+
+          let  var1=[]
+
+          for (let idx = 0; idx < criticos.length; idx++){
+
+            let criticosInterno = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList[idx].elementoInspeccionList;
+            console.log("primer nivel",criticosInterno)
+           
+            var1.push( criticosInterno.filter(function(element) {
+                return element.criticidad === 'Alto' || element.criticidad === 'Medio' ;               
+                
+              }));
+           
+          }
+          let obj2 = JSON.parse(JSON.stringify(var1));
+
+
+          console.log( "altos Y MEDIOS ", var1.slice() );
+          console.log( "altos Y MEDIOS ", obj2 );
+
+          const newArray = []
+          for (let idx = 0; idx < var1.length; idx++){
+          let var2 = var1[idx].map(item =>{
+            //  for(let i in item){
+                 newArray.push(item.id,item.criticidad,item.codigo,item.nombre)
+        console.log( "nuevo array ", newArray);
+          return newArray
+          })
+        }
+        let arrayResultadoVar1=[]
+          for (let idx = 0; idx < var1.length; idx++){
+            var1[idx].map(item =>{
+              //  for(let i in item){
+                   newArray.push(item.id)
+                   arrraynocumple.forEach(element => {
+                       if(item.id == element){
+                           arrayResultadoVar1.push(item)
+                       }
+                   });
+          console.log( "nuevo array ",newArray);
+            return newArray
+            })
+          }
+          console.log("ResultadoVar1",arrayResultadoVar1)
+          console.log( "nuevo array ",newArray);
+
+          for(let i=0;i<newArray.length;i++){
+            let element = newArray[i]
+            if(arrraynocumple.includes(element)){
+                console.log(`coincide '${element}'`)
+            }
+        }
+        let arrayResultado=[]
+
+          arrraynocumple.forEach(element => {
+              newArray.forEach(element2 => {
+                  if(element == element2){
+                      arrayResultado.push(element)
+                  }
+              });
+          });
+        
+          console.log("Resultado",arrayResultado)
+        
+          
+          console.log("CORREOS",this.inspeccion.area.contacto);
+
     }
 
     private manageResponse(insp: Inspeccion) {
