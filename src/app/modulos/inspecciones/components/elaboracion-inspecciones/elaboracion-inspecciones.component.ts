@@ -444,21 +444,66 @@ console.log();
         
     }
 
+    validarRequerirFoto(elementoSelect: ElementoInspeccion) {
+        if (
+            elementoSelect != null &&
+            elementoSelect.calificacion != null &&
+            elementoSelect.calificacion.opcionCalificacion != null &&
+            elementoSelect.calificacion.opcionCalificacion.requerirDoc == true &&
+            (elementoSelect.calificacion['img_key'] == null || elementoSelect.calificacion['img_key'].length == 0)
+
+        ) {
+            throw new Error("Debe agregar una imágen para la calificación del elemento " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
+            // this.msgs.push({
+            //     severity: 'warn',
+            //     summary: 'Fotografía inválida.',
+                
+            //     detail: 'Debe especificar al menos una fotografía para la calificación "' + elementoSelect.calificacion.opcionCalificacion.nombre + ' ',
+            // });
+            // return false;
+        }
+        return true;
+    }
+
+    validarDescripcion(elementoSelect: ElementoInspeccion) {
+        if (
+            elementoSelect != null &&
+            elementoSelect.calificacion != null &&
+            elementoSelect.calificacion.recomendacion != null &&
+            elementoSelect.calificacion.opcionCalificacion.requerirDoc === true &&
+            (elementoSelect.calificacion.recomendacion == null || elementoSelect.calificacion.recomendacion === '')
+        ) {
+            console.log('RECOMENDACION: ', elementoSelect.calificacion.recomendacion);
+            throw new Error("Debe agregar una descripción al adjuntar evidencia de la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" aún no ha sido calificado.");
+            // this.msgs.push({
+            //     severity: 'warn',
+            //     summary: 'Descripción inválida.',
+            //     detail: 'Debe agregar una descripción al adjuntar evidencia de la calificación ' + elementoSelect.calificacion.opcionCalificacion.nombre + '"',
+            // });
+
+            return false;
+        }
+        return true;
+    }
+
     private extraerCalificaciones(elemList: ElementoInspeccion[], calificacionList: Calificacion[]) {
         for (let i = 0; i < elemList.length; i++) {
             if (elemList[i].elementoInspeccionList != null && elemList[i].elementoInspeccionList.length > 0) {
                 this.extraerCalificaciones(elemList[i].elementoInspeccionList, calificacionList);
             } else {
-                if (elemList[i].calificacion.opcionCalificacion.id == null) {
-                    throw new Error("El elemento \"" + elemList[i].codigo + " " + elemList[i].nombre + "\" aún no ha sido calificado.");
-                } else {
-                    let calif = elemList[i].calificacion;
-                    if (calif.nivelRiesgo != null && calif.nivelRiesgo.id != null && (calif.recomendacion == null || calif.recomendacion == '')) {
-                        throw new Error("Se ha establecido un nivel de riesgo para el elemento " + elemList[i].codigo + ". Debe especificar una recomendación");
+
+                if( this.validarDescripcion(elemList[i]) && this.validarRequerirFoto(elemList[i]) ){
+                    if (elemList[i].calificacion.opcionCalificacion.id == null) {
+                        throw new Error("El elemento \"" + elemList[i].codigo + " " + elemList[i].nombre + "\" aún no ha sido calificado.");
+                    } else {
+                        let calif = elemList[i].calificacion;
+                        if (calif.nivelRiesgo != null && calif.nivelRiesgo.id != null && (calif.recomendacion == null || calif.recomendacion == '')) {
+                            throw new Error("Se ha establecido un nivel de riesgo para el elemento " + elemList[i].codigo + ". Debe especificar una recomendación");
+                        }
+                        calif.elementoInspeccion = new ElementoInspeccion();
+                        calif.elementoInspeccion.id = elemList[i].id;
+                        calificacionList.push(calif);
                     }
-                    calif.elementoInspeccion = new ElementoInspeccion();
-                    calif.elementoInspeccion.id = elemList[i].id;
-                    calificacionList.push(calif);
                 }
             }
         }
