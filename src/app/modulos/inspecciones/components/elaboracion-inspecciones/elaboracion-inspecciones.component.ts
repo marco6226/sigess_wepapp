@@ -57,7 +57,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     empleado: Empleado;
     empleadoelabora: Empleado;
     Form: FormGroup;
- empresa:Empresa;
+    empresa:Empresa;
     area: Area;
     initLoading = false;
     solicitando = false;
@@ -130,15 +130,15 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
                 
                 setTimeout(() => {           
-this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
-    resp => {
-      this.empleadoelabora = <Empleado>(resp);
-      this.getFirma(this.empleadoelabora.id);
-                                   
-    }
-  );
-}, 2000);
-console.log();
+                    this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+                        resp => {
+                          this.empleadoelabora = <Empleado>(resp);
+                          this.getFirma(this.empleadoelabora.id);
+                                                       
+                        }
+                    );
+                }, 2000);
+            console.log();
                
         } else if (accion == 'GET' || accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
@@ -445,43 +445,40 @@ console.log();
     }
 
     validarRequerirFoto(elementoSelect: ElementoInspeccion) {
+        for(let i =0; i < this.listaInspeccionForm.opciones.length; i++){
+            if(elementoSelect.calificacion.opcionCalificacion.id === this.listaInspeccionForm.opciones[i].id){
+                elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc
+            }
+        }
         if (
             elementoSelect != null &&
             elementoSelect.calificacion != null &&
             elementoSelect.calificacion.opcionCalificacion != null &&
             elementoSelect.calificacion.opcionCalificacion.requerirDoc == true &&
-            (elementoSelect.calificacion['img_key'] == null || elementoSelect.calificacion['img_key'].length == 0)
+            (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length == 0)
 
         ) {
-            throw new Error("Debe agregar una imágen para la calificación del elemento " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
-            // this.msgs.push({
-            //     severity: 'warn',
-            //     summary: 'Fotografía inválida.',
-                
-            //     detail: 'Debe especificar al menos una fotografía para la calificación "' + elementoSelect.calificacion.opcionCalificacion.nombre + ' ',
-            // });
-            // return false;
+            throw new Error("Debe especificar al menos una fotografía para la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
         }
         return true;
     }
 
     validarDescripcion(elementoSelect: ElementoInspeccion) {
+
+        for(let i =0; i < this.listaInspeccionForm.opciones.length; i++){
+            if(elementoSelect.calificacion.opcionCalificacion.id === this.listaInspeccionForm.opciones[i].id){
+                elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc
+            }
+        }
+        elementoSelect.calificacion.recomendacion = elementoSelect.calificacion.recomendacion === undefined ? '': elementoSelect.calificacion.recomendacion
         if (
             elementoSelect != null &&
             elementoSelect.calificacion != null &&
             elementoSelect.calificacion.recomendacion != null &&
             elementoSelect.calificacion.opcionCalificacion.requerirDoc === true &&
-            (elementoSelect.calificacion.recomendacion == null || elementoSelect.calificacion.recomendacion === '')
+            (elementoSelect.calificacion.recomendacion == null || elementoSelect.calificacion.recomendacion === '' )
         ) {
-            console.log('RECOMENDACION: ', elementoSelect.calificacion.recomendacion);
-            throw new Error("Debe agregar una descripción al adjuntar evidencia de la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" aún no ha sido calificado.");
-            // this.msgs.push({
-            //     severity: 'warn',
-            //     summary: 'Descripción inválida.',
-            //     detail: 'Debe agregar una descripción al adjuntar evidencia de la calificación ' + elementoSelect.calificacion.opcionCalificacion.nombre + '"',
-            // });
-
-            return false;
+            throw new Error("Debe agregar una descripción al adjuntar evidencia de la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
         }
         return true;
     }
@@ -492,17 +489,17 @@ console.log();
                 this.extraerCalificaciones(elemList[i].elementoInspeccionList, calificacionList);
             } else {
 
-                if( this.validarDescripcion(elemList[i]) && this.validarRequerirFoto(elemList[i]) ){
-                    if (elemList[i].calificacion.opcionCalificacion.id == null) {
-                        throw new Error("El elemento \"" + elemList[i].codigo + " " + elemList[i].nombre + "\" aún no ha sido calificado.");
-                    } else {
-                        let calif = elemList[i].calificacion;
-                        if (calif.nivelRiesgo != null && calif.nivelRiesgo.id != null && (calif.recomendacion == null || calif.recomendacion == '')) {
-                            throw new Error("Se ha establecido un nivel de riesgo para el elemento " + elemList[i].codigo + ". Debe especificar una recomendación");
-                        }
-                        calif.elementoInspeccion = new ElementoInspeccion();
-                        calif.elementoInspeccion.id = elemList[i].id;
-                        calificacionList.push(calif);
+                if (elemList[i].calificacion.opcionCalificacion.id == null) {
+                    throw new Error("El elemento \"" + elemList[i].codigo + " " + elemList[i].nombre + "\" aún no ha sido calificado.");
+                } else {
+                    let calif = elemList[i].calificacion;
+                    if (calif.nivelRiesgo != null && calif.nivelRiesgo.id != null && (calif.recomendacion == null || calif.recomendacion == '')) {
+                        throw new Error("Se ha establecido un nivel de riesgo para el elemento " + elemList[i].codigo + ". Debe especificar una recomendación");
+                    }else{            
+                            calif.elementoInspeccion = new ElementoInspeccion();
+                            calif.elementoInspeccion.id = elemList[i].id;
+                            calificacionList.push(calif);
+                            if( this.validarRequerirFoto(elemList[i]) && this.validarDescripcion(elemList[i]) ){}
                     }
                 }
             }
