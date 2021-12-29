@@ -137,6 +137,23 @@ export class AuthService {
         });
     }
 
+    sendNotificationhallazgosCriticos(email: string, nocumplecriticos) {
+        console.log("Enviar notificacion a: (" + email + ")");
+        console.log("criticos (" + nocumplecriticos + ")");
+        let body = nocumplecriticos;
+        let endpoint = this.authEndPoint + "enviarHallazgosCriticos/" + email;
+        return new Promise((resolve, reject) => {
+            this.httpInt
+                .post(endpoint, body)
+                .map((res) => res)
+                .subscribe(
+                    (res) => resolve(res),
+                    (err) => reject(err)
+                );
+            console.log("Enviada a:" + email);
+        });
+    }
+
     requestRefresh(token: string) {
         let body = token;
         console.log("paso por aca");

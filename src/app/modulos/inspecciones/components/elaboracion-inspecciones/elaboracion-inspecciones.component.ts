@@ -27,6 +27,7 @@ import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { parse } from 'path';
 import { EmpleadoService } from '../../../empresa/services/empleado.service';
 import { OpcionCalificacion } from '../../entities/opcion-calificacion';
+import { AuthService } from "app/modulos/core/auth.service";
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -78,6 +79,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         private sistemaNivelRiesgoService: SistemaNivelRiesgoService,
         private sesionService: SesionService,
         private datePipe : DatePipe,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -418,6 +420,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         
           
           console.log("CORREOS",this.inspeccion.area.contacto);
+          this.authService.sendNotificationhallazgosCriticos(
+            this.inspeccion.area.contacto,
+            arrayResultadoVar1[0].calificacion.opcionCalificacion
+        );
 
     }
 
