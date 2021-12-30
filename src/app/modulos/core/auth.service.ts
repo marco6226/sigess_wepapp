@@ -137,22 +137,24 @@ export class AuthService {
         });
     }
 
-    sendNotificationhallazgosCriticos(email: string, nocumplecriticos) {
-        console.log("Enviar notificacion a: (" + email + ")");
-        console.log("criticos (" + nocumplecriticos + ")");
+    sendNotificationhallazgosCriticos(id, nocumplecriticos) {
+       
+
         let body = nocumplecriticos;
-        let endpoint = this.authEndPoint + "enviarHallazgosCriticos/" + email;
-        return new Promise((resolve, reject) => {
+        let endPoint = this.authEndPoint + "enviarHallazgosCriticos/" + id ;
+        return new Promise((resolve) => {
             this.httpInt
-                .post(endpoint, body)
+                .post(endPoint , body)
                 .map((res) => res)
                 .subscribe(
-                    (res) => resolve(res),
-                    (err) => reject(err)
+                    (res) => {
+                        resolve(res);
+                    },
+                   // (err) => this.manageError(err)
                 );
-            console.log("Enviada a:" + email);
         });
     }
+   
 
     requestRefresh(token: string) {
         let body = token;

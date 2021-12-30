@@ -28,6 +28,7 @@ import { parse } from 'path';
 import { EmpleadoService } from '../../../empresa/services/empleado.service';
 import { OpcionCalificacion } from '../../entities/opcion-calificacion';
 import { AuthService } from "app/modulos/core/auth.service";
+import { ServiceCRUD } from 'app/modulos/core/services/service-crud.service';
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -401,9 +402,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           console.log( "nuevo array ",newArray);
 
           for(let i=0;i<newArray.length;i++){
-            let element = newArray[i]
+            let element = newArray[i];
             if(arrraynocumple.includes(element)){
-                console.log(`coincide '${element}'`)
+                console.log(`coincide '${element}'`);
             }
         }
         let arrayResultado=[]
@@ -411,18 +412,18 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           arrraynocumple.forEach(element => {
               newArray.forEach(element2 => {
                   if(element == element2){
-                      arrayResultado.push(element)
+                      arrayResultado.push(element);
                   }
               });
           });
         
-          console.log("Resultado",arrayResultado)
-        
+          console.log("Resultado",arrayResultado);        
           
           console.log("CORREOS",this.inspeccion.area.contacto);
           this.authService.sendNotificationhallazgosCriticos(
-            this.inspeccion.area.contacto,
-            arrayResultadoVar1[0].calificacion.opcionCalificacion
+            this.inspeccion.id,
+            arrayResultadoVar1           
+            
         );
 
     }
