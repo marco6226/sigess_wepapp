@@ -361,7 +361,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           for (let idx = 0; idx < criticos.length; idx++){
 
             let criticosInterno = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList[idx].elementoInspeccionList;
-            console.log("primer nivel",criticosInterno)
+            
            
             var1.push( criticosInterno.filter(function(element) {
                 return element.criticidad === 'Alto' || element.criticidad === 'Medio' ;               
@@ -379,8 +379,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           for (let idx = 0; idx < var1.length; idx++){
           let var2 = var1[idx].map(item =>{
             //  for(let i in item){
-                 newArray.push(item.id,item.criticidad,item.codigo,item.nombre)
-        console.log( "nuevo array ", newArray);
+                 newArray.push(item.id,item.criticidad,item.codigo,item.nombre)       
           return newArray
           })
         }
@@ -393,13 +392,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                        if(item.id == element){
                            arrayResultadoVar1.push(item)
                        }
-                   });
-          console.log( "nuevo array ",newArray);
-            return newArray
+                   });          
+            return newArray;
             })
           }
           console.log("ResultadoVar1",arrayResultadoVar1)
-          console.log( "nuevo array ",newArray);
+          
 
           for(let i=0;i<newArray.length;i++){
             let element = newArray[i];
@@ -420,11 +418,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           console.log("Resultado",arrayResultado);        
           
           console.log("CORREOS",this.inspeccion.area.contacto);
+
+          if (this.finalizado === true){
           this.authService.sendNotificationhallazgosCriticos(
             this.inspeccion.id,
-            arrayResultadoVar1           
-            
-        );
+            arrayResultadoVar1);
+    }
 
     }
 
@@ -461,8 +460,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             elementoSelect != null &&
             elementoSelect.calificacion != null &&
             elementoSelect.calificacion.opcionCalificacion != null &&
-            elementoSelect.calificacion.opcionCalificacion.requerirDoc == true &&
-            (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length == 0)
+            elementoSelect.calificacion.opcionCalificacion.requerirDoc == true && elementoSelect.calificacion.documentosList.length < 1 &&
+            (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length === 0)
 
         ) {
             throw new Error("Debe especificar al menos una fotografía para la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
