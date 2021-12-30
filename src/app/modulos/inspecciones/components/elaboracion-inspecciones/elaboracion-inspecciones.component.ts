@@ -330,6 +330,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
+        
 
         let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
         console.log(nocumple);
@@ -419,11 +420,15 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           
           console.log("CORREOS",this.inspeccion.area.contacto);
 
-          if (this.finalizado === true){
-          this.authService.sendNotificationhallazgosCriticos(
-            this.inspeccion.id,
-            arrayResultadoVar1);
-    }
+          setTimeout(() => { 
+              if (this.finalizado === true){
+            this.authService.sendNotificationhallazgosCriticos(
+              this.inspeccion.id,
+              arrayResultadoVar1);
+      }
+        }, 5000);
+          
+    
 
     }
 
