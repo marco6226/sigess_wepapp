@@ -77,6 +77,7 @@ export class CargueDatosComponent implements OnInit {
 
     editRowIndex: number;
     editColIndex: number;
+    fechasValidas:boolean;
     empleadosList: Empleado[];
     defaultItem = <SelectItem[]>[{ label: "", value: "" }];
     modelo: any = {
@@ -231,13 +232,32 @@ export class CargueDatosComponent implements OnInit {
         reader.readAsBinaryString(file);
     }
 
-    splitDate(date) {
-        let real = date.split("-");
+    splitDate(date): [Date,boolean] {
+        let real = date.split("/");
+        if(real.length != 3 || real[0]>999 || real[1]>12){
+            this.msgs = [];
+            this.msgs.push({
+                summary: "Formato de fecha incorrecto",
+                detail: "Por favor rectifique que las fechas sean de la forma: DD/MM/YYYY",
+                severity: "warn",
+            });
+            return [new Date(), false]
+        }
+        let fechaValida:Date = new Date(real[0] + "/" + real[1] + "/" + real[2]);
 
-        return new Date(real[2] + "/" + real[1] + "/" + real[0]);
+        return [fechaValida, true];
+
     }
-    createEmployeArray(arrayOfEmployees) {
+    createEmployeArray(arrayOfEmployees){
         arrayOfEmployees.forEach((json) => {
+            const fechaIngreso = this.splitDate(json.fechaIngreso);
+            const fechaNacimiento = this.splitDate(json.fechaNacimiento);
+            if(fechaIngreso[1] && fechaNacimiento[1]){
+                this.fechasValidas=true;
+            }else{
+                this.fechasValidas = false;
+            }
+            
             let empleado = new Empleado();
             empleado.primerNombre = json.primerNombre;
             empleado.segundoNombre = json.segundoNombre;
@@ -246,12 +266,12 @@ export class CargueDatosComponent implements OnInit {
             empleado.codigo = json.codigo;
             empleado.direccion = json.direccion;
             empleado.direccion = json.direccion;
-            empleado.fechaIngreso = this.splitDate(json.fechaIngreso);
+            empleado.fechaIngreso = fechaIngreso[0];
             empleado.emergencyContact = json.emergencyContact;
             empleado.corporativePhone = json.corporativePhone;
             empleado.phoneEmergencyContact = json.phoneEmergencyContact;
             empleado.emailEmergencyContact = json.emailEmergencyContact;
-            empleado.fechaNacimiento = this.splitDate(json.fechaNacimiento);
+            empleado.fechaNacimiento = fechaNacimiento[0];
             empleado.genero = json.genero;
             empleado.numeroIdentificacion = json.numeroIdentificacion;
             empleado.telefono1 = json.telefono1;
@@ -297,7 +317,6 @@ export class CargueDatosComponent implements OnInit {
                 this.fallidosArray.push(json);
                 return;
             }
-
             this.empleadosArray.push(empleadoValidado);
         });
     }
@@ -388,27 +407,37 @@ export class CargueDatosComponent implements OnInit {
 
     cargarDatos() {
         if (true) {
-            this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
-                if ((<Message[]>resp).length == 0) {
-                    localStorage.setItem(
-                        this.cabecera,
-                        JSON.stringify(this.mapping)
-                    );
-                    this.msgsCarga.push({
-                        summary: "Datos cargados",
-                        detail: "Todos los registros fueron cargados exitosamente",
-                        severity: "success",
-                    });
-                } else {
-                    (<any[]>resp).forEach((element) => {
+            if(this.fechasValidas){
+                 this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
+                    if ((<Message[]>resp).length == 0) {
+                        localStorage.setItem(
+                            this.cabecera,
+                            JSON.stringify(this.mapping)
+                        );
                         this.msgsCarga.push({
-                            summary: element.mensaje,
-                            detail: element.detalle,
-                            severity: element.tipoMensaje,
+                            summary: "Datos cargados",
+                            detail: "Todos los registros fueron cargados exitosamente",
+                            severity: "success",
                         });
-                    });
-                }
-            });
+                    } else {
+                        (<any[]>resp).forEach((element) => {
+                            this.msgsCarga.push({
+                                summary: element.mensaje,
+                                detail: element.detalle,
+                                severity: element.tipoMensaje,
+                            });
+                        });
+                    }
+                });
+            }else{
+                this.msgs = [];
+                this.msgs.push({
+                    summary: "Fechas inválidas.",
+                    detail: "Corregir formato de las fechas(DD/MM/YY) y subir el documento. ",
+                    severity: "warn",
+                });
+            }
+           
         } else {
             this.msgs = [];
             this.msgs.push({

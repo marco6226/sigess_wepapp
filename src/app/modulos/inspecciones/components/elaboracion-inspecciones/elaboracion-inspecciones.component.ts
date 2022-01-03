@@ -329,15 +329,17 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
+        
 
         let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
-        
+
 
         nocumple = nocumple.filter(function(element) {
             return element.opcionCalificacion.valor === 0;
            
             
           });
+        
          
           let arrraynocumple = [];
           
@@ -348,12 +350,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         
          
           let criticos = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList;
-        
           let  var1=[]
 
           for (let idx = 0; idx < criticos.length; idx++){
 
             let criticosInterno = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList[idx].elementoInspeccionList;
+            
            
            
             var1.push( criticosInterno.filter(function(element) {
@@ -394,6 +396,16 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             arrayResultadoVar1 
             );
         }
+          setTimeout(() => { 
+              if (this.finalizado === true){
+            this.authService.sendNotificationhallazgosCriticos(
+              this.inspeccion.id,
+              arrayResultadoVar1);
+      }
+        }, 5000);
+          
+    
+
     }
 
     private manageResponse(insp: Inspeccion) {
@@ -429,8 +441,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             elementoSelect != null &&
             elementoSelect.calificacion != null &&
             elementoSelect.calificacion.opcionCalificacion != null &&
-            elementoSelect.calificacion.opcionCalificacion.requerirDoc == true &&
-            (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length == 0)
+            elementoSelect.calificacion.opcionCalificacion.requerirDoc == true && elementoSelect.calificacion.documentosList.length < 1 &&
+            (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length === 0)
 
         ) {
             throw new Error("Debe especificar al menos una fotografía para la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");

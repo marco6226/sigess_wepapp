@@ -138,14 +138,12 @@ export class AuthService {
     }
 
     sendNotificationhallazgosCriticos(id, nocumplecriticos) {
-       
-
         let body = nocumplecriticos;
         let endPoint = this.authEndPoint + "enviarHallazgosCriticos/" + id ;
         return new Promise((resolve) => {
             this.httpInt
                 .post(endPoint , body)
-                .map((res) => res)
+                // .map((res) => res)
                 .subscribe(
                     (res) => {
                         resolve(res);
