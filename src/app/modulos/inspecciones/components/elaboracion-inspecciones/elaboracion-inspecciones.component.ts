@@ -141,7 +141,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                         }
                     );
                 }, 2000);
-            console.log();
                
         } else if (accion == 'GET' || accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
@@ -332,36 +331,30 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
 
         let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
-        console.log(nocumple);
+        
 
         nocumple = nocumple.filter(function(element) {
             return element.opcionCalificacion.valor === 0;
            
             
           });
-          console.log(nocumple);
-          console.log("nocumple", nocumple);
-
+         
           let arrraynocumple = [];
           
-          let var2 = nocumple.map(item =>{
-            //  for(let i in item){
-                arrraynocumple.push(item.elementoInspeccion.id)
-        console.log( "nuevo array ",arrraynocumple);
-          return arrraynocumple;
+          let var2 = nocumple.map(item =>{          
+            arrraynocumple.push(item.elementoInspeccion.id)        
+             return arrraynocumple;
           })
         
-          console.log( "no cumplen array",arrraynocumple);
-
+         
           let criticos = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList;
-        console.log(criticos);
-
+        
           let  var1=[]
 
           for (let idx = 0; idx < criticos.length; idx++){
 
             let criticosInterno = <ElementoInspeccion[]><unknown>this.listaInspeccion.elementoInspeccionList[idx].elementoInspeccionList;
-            console.log("primer nivel",criticosInterno)
+           
            
             var1.push( criticosInterno.filter(function(element) {
                 return element.criticidad === 'Alto' || element.criticidad === 'Medio' ;               
@@ -372,60 +365,35 @@ export class ElaboracionInspeccionesComponent implements OnInit {
           let obj2 = JSON.parse(JSON.stringify(var1));
 
 
-          console.log( "altos Y MEDIOS ", var1.slice() );
-          console.log( "altos Y MEDIOS ", obj2 );
-
           const newArray = []
           for (let idx = 0; idx < var1.length; idx++){
           let var2 = var1[idx].map(item =>{
-            //  for(let i in item){
+          
                  newArray.push(item.id,item.criticidad,item.codigo,item.nombre)
-        console.log( "nuevo array ", newArray);
+        
           return newArray
           })
         }
         let arrayResultadoVar1=[]
           for (let idx = 0; idx < var1.length; idx++){
             var1[idx].map(item =>{
-              //  for(let i in item){
+             
                    newArray.push(item.id)
                    arrraynocumple.forEach(element => {
                        if(item.id == element){
                            arrayResultadoVar1.push(item)
                        }
                    });
-          console.log( "nuevo array ",newArray);
+         
             return newArray
             })
           }
-          console.log("ResultadoVar1",arrayResultadoVar1)
-          console.log( "nuevo array ",newArray);
-
-          for(let i=0;i<newArray.length;i++){
-            let element = newArray[i];
-            if(arrraynocumple.includes(element)){
-                console.log(`coincide '${element}'`);
-            }
-        }
-        let arrayResultado=[]
-
-          arrraynocumple.forEach(element => {
-              newArray.forEach(element2 => {
-                  if(element == element2){
-                      arrayResultado.push(element);
-                  }
-              });
-          });
-        
-          console.log("Resultado",arrayResultado);        
-          
-          console.log("CORREOS",this.inspeccion.area.contacto);
+          if(arrayResultadoVar1.length>0){
           this.authService.sendNotificationhallazgosCriticos(
             this.inspeccion.id,
-            arrayResultadoVar1           
-            
-        );
-
+            arrayResultadoVar1 
+            );
+        }
     }
 
     private manageResponse(insp: Inspeccion) {
@@ -567,15 +535,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-           // console.log(this.empleadoelabora.primerNombre);
-          //  template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
+           //  template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
           if(this.empleadoelabora != null ){
             template.querySelector('#P_firma').textContent = this.empleadoelabora.primerNombre + " " + this.empleadoelabora.primerApellido + " ";
-            template.querySelector('#P_cargo').textContent = " Cargo: " + this.empleadoelabora.cargo.nombre;
-           // console.log(this.empleadoelabora.cargo.nombre);
+            template.querySelector('#P_cargo').textContent = " Cargo: " + this.empleadoelabora.cargo.nombre;           
         }else{
             template.querySelector('#P_firma').textContent = this.inspeccion.usuarioRegistra ? this.inspeccion.usuarioRegistra.email : "";
-           // console.log(this.inspeccion.usuarioRegistra ? this.inspeccion.usuarioRegistra.email : "");
+           
         }
             let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
             let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
@@ -653,8 +619,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     async getFirma(id_empleado: string) {
         
         try {
-
-          // let id_empleado = this.sesionService.getEmpleado().id;
             
             let res: any = await this.empleadoService.getFirma(id_empleado);
             
