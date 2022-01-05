@@ -11,9 +11,7 @@ import { Area } from '../../empresa/entities/area';
 export class Inspeccion {
   id: number;
   fechaRealizada: Date;
-  fechaModificacion: Date;
-  fechavistohse: Date;
-  fechavistoing: Date;
+  fechaModificacion: Date;  
   observacion: string;
   lugar: string;
   equipo: string;
@@ -27,9 +25,17 @@ export class Inspeccion {
   programacion: Programacion;
   usuarioRegistra: Usuario;
   usuarioModifica: Usuario;
-  empleadoing: Empleado;
-  empleadohse: Empleado;
+  // empleadoing: Empleado;
+  // empleadohse: Empleado;
   empleado: Empleado;
   listaInspeccion:ListaInspeccion;
   area:Area;
+
+  fechavistohse: Date;
+  fkempleadohse: Empleado;
+  conceptohse: string
+
+  fechavistoing: Date;
+  fkempleadoing: Empleado;
+  conceptoing: string;
 }

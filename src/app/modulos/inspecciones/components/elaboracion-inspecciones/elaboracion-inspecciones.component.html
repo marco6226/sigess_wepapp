@@ -83,10 +83,104 @@
       </form>
     </div>
   -->
-  <button pButton type="button" icon="fa fa-floppy-o" *ngIf="adicionar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
+  <br>
+  <p-panel *ngIf="permisoHse">
+    <p-header>
+      <i class="fa fa-th-list" aria-hidden="true"></i>
+      <label class="ui-panel-title">Visto Bueno HSE</label>
+    </p-header>
+    <form [formGroup]="FormHseq">
+      <div>
+        <i class="pi pi-check-circle aceptar" *ngIf="FormHseq.value.concepto=='Aceptado'"></i>
+        <i class="pi pi-minus-circle denegar" *ngIf="FormHseq.value.concepto=='Denegado'"></i>
+        <label>Concepto</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input type="text" formControlName="concepto" [(ngModel)]="FormHseq.value.concepto" [value]="FormHseq.value.concepto" readOnly="true"/>
+        </div>
+        <label>Usuario que Gestiona</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input type="text" formControlName="usuarioGestiona" [value]="FormHseq.value.usuarioGestiona" readOnly="true"/>
+        </div>
+        <label>Cargo</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input type="text" formControlName="cargo" readOnly="true"/>
+        </div>
+        <label>Fecha</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input 
+            type="date" 
+            formControlName="fecha" 
+            [value]="selectDateHse|date:'yyyy-MM-dd'" 
+            [min]="minDateHse|date:'yyyy-MM-dd'" 
+            [max]="maxDateHse | date:'yyyy-MM-dd'" 
+            style="width: 20%;"
+            [(ngModel)]="selectDateHse"
+            (ionChange)="rangoFechaCierreHse($event)"/>
+        </div>
+        <br>
+        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('HSE')" style="margin-right: 10px;"></button>
+        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('HSE')"></button>
+      </div>
+    </form> 
+  </p-panel>
+  
+
+  <p-panel *ngIf="permisoIngenieria">
+    <p-header>
+      <i class="fa fa-th-list" aria-hidden="true"></i>
+      <label class="ui-panel-title">Visto Bueno Supervisión/Ingenieria</label>
+    </p-header>
+    <form [formGroup]="FormIng">
+      <div>
+        <i class="pi pi-check-circle aceptar" *ngIf="FormIng.value.concepto=='Aceptado'"></i>
+        <i class="pi pi-minus-circle denegar" *ngIf="FormIng.value.concepto=='Denegado'"></i>
+        <label>Concepto</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input type="text" formControlName="concepto" [(ngModel)]="FormIng.value.concepto" [value]="FormIng.value.concepto" readOnly="true"/>
+        </div>
+        <label>Usuario que Gestiona</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input type="text" formControlName="usuarioGestiona" [value]="FormIng.value.usuarioGestiona" readOnly="true"/>
+        </div>
+        <label>Cargo</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input type="text" formControlName="cargo" readOnly="true"/>
+        </div>
+        <label>Fecha</label>
+        <div>
+          <!-- <div class="ui-inputgroup"> -->
+          <input 
+            type="date" 
+            formControlName="fecha" 
+            [value]="selectDateIngenieria|date:'yyyy-MM-dd'" 
+            [min]="minDateIngenieria|date:'yyyy-MM-dd'" 
+            [max]="maxDateIngenieria | date:'yyyy-MM-dd'" 
+            style="width: 20%;"
+            [(ngModel)]="selectDateIngenieria"
+            (ionChange)="rangoFechaCierre($event)"/>
+        </div>
+        <br>
+        <button pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('ING')" style="margin-right: 10px;"></button>
+
+        <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('ING')" style="margin-right: 10px;"></button>
+        <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('ING')"></button>
+      </div>
+    </form> 
+  </p-panel>
+  <br>
+  <br>
+  <!---->
+  <button pButton type="button" icon="fa fa-floppy-o" *ngIf="adicionar && solicitando == false"(click)="onSubmit()"
     class="float-btn" data-toggle="tooltip" data-placement="bottom" title="Guardar"></button>
 
-  <button pButton type="button" icon="fa fa-pencil" *ngIf="modificar && solicitando == false" [disabled]="!formValid" (click)="onSubmit()"
+  <button pButton type="button" icon="fa fa-pencil" *ngIf="modificar && solicitando == false" (click)="onSubmit()"
     class="float-btn ui-button-success" data-toggle="tooltip" data-placement="bottom" title="Modificar"></button>
 
   <p-progressSpinner *ngIf="solicitando == true" class="float-btn" strokeWidth="8" [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
@@ -94,10 +188,7 @@
 </div>
 
 
-
-
-
-<div id="plantilla" style="display: none;">
+<!-- <div id="plantilla" style="display: none;">
   <div style="background-color: white">
     <table width="100%" style="border-collapse: collapse;">
       <tr>
@@ -179,4 +270,6 @@
       
     </table>
   </div>
-</div>
+</div> -->
+
+

@@ -7,3 +7,36 @@
     color: #333333;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
+.aceptar{
+    // color: lightgreen;
+    color: rgba(0, 255, 0, 0.3);
+    font-size: 9rem;
+    position: absolute;
+    right: 0;
+    // margin-top: 60px;
+    animation-name: sello;
+    animation-duration: 200ms;
+    animation-iteration-count: 1;
+}
+
+.denegar{
+    color: rgba(255, 0, 0, 0.5);
+    font-size: 9rem;
+    position: absolute;
+    right: 0;
+    // margin-top: 60px;
+    animation-name: sello;
+    animation-duration: 200ms;
+    animation-iteration-count: 1;
+}
+
+@keyframes sello {
+    0%{
+        // font-size: 15em;
+        transform: scale(2,2);
+    }
+    100%{
+        // font-size: 9em;
+        transform: scale(1,1);
+    }
+}

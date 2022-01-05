@@ -29,6 +29,7 @@ import { EmpleadoService } from '../../../empresa/services/empleado.service';
 import { OpcionCalificacion } from '../../entities/opcion-calificacion';
 import { AuthService } from "app/modulos/core/auth.service";
 import { ServiceCRUD } from 'app/modulos/core/services/service-crud.service';
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 
 @Component({
     selector: 'app-elaboracion-inspecciones',
@@ -68,6 +69,21 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     id;
     version;
     matriz: any[][];
+    accion;
+
+    localeES: any = locale_es;
+    FormHseq: FormGroup;
+    FormIng: FormGroup;
+    maxDateHse: string = new Date().toISOString();
+    minDateHse: string;
+    selectDateHse;
+    maxDateIngenieria: string = new Date().toISOString();
+    minDateIngenieria: string;
+    selectDateIngenieria;
+    permisoHse:boolean=false;
+    permisoIngenieria:boolean=false;
+
+
 
     constructor(
         private router: Router,
@@ -80,8 +96,22 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         private sistemaNivelRiesgoService: SistemaNivelRiesgoService,
         private sesionService: SesionService,
         private datePipe : DatePipe,
-        private authService: AuthService
-    ) { }
+        private authService: AuthService,
+        private fb: FormBuilder
+    ) { 
+        this.FormHseq = this.fb.group({
+            concepto: ['',Validators.required],
+            usuarioGestiona: [sesionService.getEmpleado().primerNombre + " " +sesionService.getEmpleado().primerApellido ,Validators.required],
+            cargo: [sesionService.getEmpleado().cargo.descripcion,Validators.required],
+            fecha: ['',Validators.required]
+        });
+        this.FormIng = this.fb.group({
+            concepto: ['',Validators.required],
+            usuarioGestiona: [sesionService.getEmpleado().primerNombre + " " +sesionService.getEmpleado().primerApellido,Validators.required],
+            cargo: [sesionService.getEmpleado().cargo.descripcion,Validators.required],
+            fecha: ['',Validators.required]
+        });
+     }
 
     ngOnInit() {
 
@@ -97,9 +127,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             })
         );
         
-
-        let accion = this.paramNav.getAccion<string>();
-        if (accion == 'POST') {
+        this.accion = this.paramNav.getAccion<string>();
+        if (this.accion == 'POST') {
             this.redireccion = '/app/inspecciones/programacion';
             this.adicionar = true;
             this.programacion = this.paramNav.getParametro<Programacion>();
@@ -132,20 +161,20 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
 
                 
-                setTimeout(() => {           
-                    this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
-                        resp => {
-                          this.empleadoelabora = <Empleado>(resp);
-                          this.getFirma(this.empleadoelabora.id);
+                // setTimeout(() => {           
+                //     this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+                //         resp => {
+                //           this.empleadoelabora = <Empleado>(resp);
+                //           this.getFirma(this.empleadoelabora.id);
                                                        
-                        }
-                    );
-                }, 2000);
+                //         }
+                //     );
+                // }, 2000);
                
-        } else if (accion == 'GET' || accion == 'PUT') {
+        } else if (this.accion == 'GET' || this.accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
-            this.consultar = accion == 'GET';
-            this.modificar = accion == 'PUT';
+            this.consultar = this.accion == 'GET';
+            this.modificar = this.accion == 'PUT';
             this.inspeccion = this.paramNav.getParametro<Inspeccion>();
 
             let filterQuery = new FilterQuery();
@@ -238,6 +267,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
         
         this.paramNav.reset();
+        this.firmaPermisos();
     }
 
     findMatrizValue(fecha: Date) {
@@ -273,18 +303,23 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     onSubmit() {
         let calificacionList: Calificacion[] = [];
         try {
+            console.log("3")
             this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
 
             let inspeccion = new Inspeccion();
+            console.log("4")
             inspeccion.area = this.area;
-            inspeccion.empleadohse = this.empleado;
-            inspeccion.empleadoing = this.empleado;
-            inspeccion.fechavistohse = new Date();
-            inspeccion.fechavistoing = new Date();
+            // inspeccion.empleadohse = this.empleado;
+            // inspeccion.empleadoing = this.empleado;
+            // inspeccion.fechavistohse = new Date();
+            // inspeccion.fechavistoing = new Date();
+            console.log("5")
             inspeccion.listaInspeccion = this.listaInspeccion;
             inspeccion.programacion = this.programacion;
+            console.log("6")
             inspeccion.calificacionList = calificacionList;
             inspeccion.respuestasCampoList = [];
+            console.log("7")
             this.listaInspeccion.formulario.campoList.forEach(campo => {
                 if (campo.tipo == 'multiple_select' && campo.respuestaCampo.valor != null) {
                     let arraySelection = (<string[]>campo.respuestaCampo.valor);
@@ -302,6 +337,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 campo.respuestaCampo.campoId = campo.id;
                 inspeccion.respuestasCampoList.push(campo.respuestaCampo);
             });
+            console.log("8")
 
             this.solicitando = true;
             if (this.adicionar) {
@@ -324,13 +360,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                         this.solicitando = false;
                     });
             }
-
+            console.log("2",inspeccion)
         } catch (error) {
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
         
-
+        console.log("1",this.inspeccion)
         let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
 
 
@@ -390,6 +426,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             return newArray
             })
           }
+
+          console.log(arrayResultadoVar1.length)
+
           if(arrayResultadoVar1.length>0){
           this.authService.sendNotificationhallazgosCriticos(
             this.inspeccion.id,
@@ -437,17 +476,32 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc
             }
         }
-        if (
-            elementoSelect != null &&
-            elementoSelect.calificacion != null &&
-            elementoSelect.calificacion.opcionCalificacion != null &&
-            elementoSelect.calificacion.opcionCalificacion.requerirDoc == true && elementoSelect.calificacion.documentosList.length < 1 &&
-            (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length === 0)
-
-        ) {
-            throw new Error("Debe especificar al menos una fotografía para la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
+       
+        if(this.accion=='POST'){
+            if (
+                elementoSelect != null &&
+                elementoSelect.calificacion != null &&
+                elementoSelect.calificacion.opcionCalificacion != null &&
+                elementoSelect.calificacion.opcionCalificacion.requerirDoc == true &&
+                (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length === 0) 
+            ) {
+                throw new Error("Debe especificar al menos una fotografía para la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
+            }
+            return true;
         }
-        return true;
+        else{
+            if (
+                elementoSelect != null &&
+                elementoSelect.calificacion != null &&
+                elementoSelect.calificacion.opcionCalificacion != null &&
+                elementoSelect.calificacion.opcionCalificacion.requerirDoc == true && 
+                elementoSelect.calificacion.documentosList.length < 1 &&
+                (this.listaInspeccionForm.imgMap[elementoSelect.id] == null || this.listaInspeccionForm.imgMap[elementoSelect.id].length === 0) 
+            ) {
+                throw new Error("Debe especificar al menos una fotografía para la calificación " + elementoSelect.codigo + " " + elementoSelect.nombre + "\" ");
+            }
+            return true;
+        }        
     }
 
     validarDescripcion(elementoSelect: ElementoInspeccion) {
@@ -471,6 +525,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     }
 
     private extraerCalificaciones(elemList: ElementoInspeccion[], calificacionList: Calificacion[]) {
+        console.log("1-1",elemList,calificacionList)
         for (let i = 0; i < elemList.length; i++) {
             if (elemList[i].elementoInspeccionList != null && elemList[i].elementoInspeccionList.length > 0) {
                 this.extraerCalificaciones(elemList[i].elementoInspeccionList, calificacionList);
@@ -491,6 +546,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 }
             }
         }
+        console.log("1-2")
     }
 
 
@@ -656,9 +712,151 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
     }
 
+    rangoFechaCierre(){
+        let permiso = this.sesionService.getPermisosMap()["SEC_CHANGE_FECHACIERRE"];
+        if (permiso != null && permiso.valido == true) {
+            this.minDateIngenieria = "2000-01-01";
+        } else {
+            this.minDateIngenieria = this.maxDateIngenieria;
+        }
+        console.log(permiso)
+    }
+      
+    rangoFechaCierreHse(){
+        let permiso = this.sesionService.getPermisosMap()["SEC_CHANGE_FECHACIERRE"];
+        if (permiso != null && permiso.valido == true) {
+            this.minDateHse = "2000-01-01";
+        } else {
+            this.minDateHse = this.maxDateHse;
+        }
+        console.log(permiso)
+    }
     
+    firmaPermisos(){
+        this.permisoHse = this.sesionService.getPermisosMap()["HSE"];
+        this.permisoIngenieria = this.sesionService.getPermisosMap()["INGENIERIA"];
+        
+        if(this.permisoHse){
+            this.selectDateHse = this.maxDateHse;          
+            // setTimeout(() => {
+            //     this.FormHseq.value.usuarioGestiona = this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido;
+            //     this.FormHseq.value.cargo = this.sesionService.getEmpleado().cargo.descripcion;
+            // }, 2000);
+            
+        }
 
+        if(this.permisoIngenieria){
+            this.selectDateIngenieria = this.maxDateIngenieria;
+            // setTimeout(() => {
+            //     this.FormIng.value.usuarioGestiona = this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido;
+            //     this.FormIng.value.cargo = this.sesionService.getEmpleado().cargo.descripcion;
+            // }, 2000);
+            
+        }
+
+    }
     
+    cargarDatosVistoBueno(tipo: string){
+        
+    }
+
+    botonAceptar(tipo: string){
+        console.log(tipo)
+        if(tipo=='HSE'){
+            this.FormHseq.value.concepto = "Aceptado"
+        }
+        else if(tipo=='ING'){
+            this.FormIng.value.concepto = "Aceptado"
+        }
+        this.guardarVistoBueno(tipo)
+    }
+
+    botonDenegar(tipo: string){
+        console.log(tipo)
+        if(tipo=='HSE'){
+            this.FormHseq.value.concepto = "Denegado"
+        }
+        else if(tipo=='ING'){
+            this.FormIng.value.concepto = "Denegado"
+        }
+        this.guardarVistoBueno(tipo)
+    }
+    
+    guardarVistoBueno(tipo: string){
+        let calificacionList: Calificacion[] = [];
+        try {
+            // console.log("3")
+            this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
+
+            let inspeccion = new Inspeccion();
+            // console.log("4")
+            inspeccion.area = this.area;
+
+            if(tipo=='HSE'){
+                inspeccion.fechavistohse = this.FormHseq.value.fecha;
+                inspeccion.fkempleadohse = this.empleado;
+                inspeccion.conceptohse = this.FormHseq.value.concepto;
+            }
+            else if(tipo=='ING'){
+                inspeccion.fechavistoing = this.FormIng.value.fecha;
+                inspeccion.fkempleadoing = this.empleado;
+                inspeccion.conceptoing = this.FormIng.value.concepto;
+            }
+
+            // console.log("5")
+            inspeccion.listaInspeccion = this.listaInspeccion;
+            inspeccion.programacion = this.programacion;
+            // console.log("6")
+            inspeccion.calificacionList = calificacionList;
+            inspeccion.respuestasCampoList = [];
+            // console.log("7")
+            this.listaInspeccion.formulario.campoList.forEach(campo => {
+                if (campo.tipo == 'multiple_select' && campo.respuestaCampo.valor != null) {
+                    let arraySelection = (<string[]>campo.respuestaCampo.valor);
+                    if (arraySelection.length > 0) {
+                        let valorArray: string = "";
+                        arraySelection.forEach(element => {
+                            valorArray += element + ';';
+                        });
+                        valorArray = valorArray.substring(0, valorArray.length - 1);
+                        campo.respuestaCampo.valor = valorArray;
+                    } else {
+                        campo.respuestaCampo.valor = null;
+                    }
+                }
+                campo.respuestaCampo.campoId = campo.id;
+                inspeccion.respuestasCampoList.push(campo.respuestaCampo);
+            });
+           
+            this.solicitando = true;            
+            inspeccion.id = this.inspeccionId
+            this.inspeccionService.update(inspeccion)
+                .then(data => {
+                    this.manageResponse(<Inspeccion>data);
+                    this.solicitando = false;
+                })
+                .catch(err => {
+                    this.solicitando = false;
+                });
+            
+        } catch (error) {
+            this.msgs = [];
+            this.msgs.push({ severity: 'warn', detail: error });
+        }
+        
+        
+
+
+        // inspeccion.id = this.inspeccionId
+        // this.inspeccionService.update(inspeccion)
+        //     .then(data => {
+        //         this.manageResponse(<Inspeccion>data);
+        //         this.solicitando = false;
+        //     })
+        //     .catch(err => {
+        //         this.solicitando = false;
+        //     });
+    }
     
 
 }

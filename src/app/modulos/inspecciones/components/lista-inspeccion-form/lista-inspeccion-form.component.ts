@@ -14,7 +14,7 @@ import { SesionService } from '../../../core/services/sesion.service';
 import { stringify } from 'querystring';
 import { Empleado } from "app/modulos/empresa/entities/empleado";
 import { EmpleadoService } from "app/modulos/empresa/services/empleado.service";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 's-lista-inspeccion-form',
@@ -70,6 +70,11 @@ export class ListaInspeccionFormComponent implements OnInit {
      }
 
     ngOnInit() {
+
+        this.inpForm2 = new FormGroup({
+            firstName: new FormControl()
+         });
+
         this.numMaxImg = this.sessionService.getConfigParam('NUM_MAX_FOTO_INP');
         this.tipoHallazgoService.findByFilter()
             .then(resp => {
@@ -127,7 +132,7 @@ export class ListaInspeccionFormComponent implements OnInit {
             this.elementoSelect.calificacion.documentosList.forEach(doc => {
                 this.imgMap[elem.id] = [];
                 this.directorioService.download(doc.id)
-                    .then(data => {
+                    .then((data?: any) => {
                         let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
                         this.imagenesList.push({ source: urlData });
                         this.imagenesList = this.imagenesList.slice();
