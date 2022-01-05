@@ -25,17 +25,16 @@ export class Inspeccion {
   programacion: Programacion;
   usuarioRegistra: Usuario;
   usuarioModifica: Usuario;
-  // empleadoing: Empleado;
-  // empleadohse: Empleado;
+
   empleado: Empleado;
   listaInspeccion:ListaInspeccion;
   area:Area;
 
   fechavistohse: Date;
-  fkempleadohse: Empleado;
+  empleadohse: Empleado;
   conceptohse: string
 
   fechavistoing: Date;
-  fkempleadoing: Empleado;
+  empleadoing: Empleado;
   conceptoing: string;
 }

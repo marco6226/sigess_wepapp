@@ -114,7 +114,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
      }
 
     ngOnInit() {
-
+        this.empleado = this.sesionService.getEmpleado();
         let filterQuery = new FilterQuery();
         let filter = new Filter();
         filter.criteria = Criteria.EQUALS;
@@ -782,8 +782,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         this.guardarVistoBueno(tipo)
     }
     
-    guardarVistoBueno(tipo: string){
+    async guardarVistoBueno(tipo: string){
         let calificacionList: Calificacion[] = [];
+        console.log(tipo)
         try {
             // console.log("3")
             this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
@@ -794,12 +795,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
             if(tipo=='HSE'){
                 inspeccion.fechavistohse = this.FormHseq.value.fecha;
-                inspeccion.fkempleadohse = this.empleado;
+                inspeccion.empleadohse = this.empleado;
                 inspeccion.conceptohse = this.FormHseq.value.concepto;
             }
             else if(tipo=='ING'){
                 inspeccion.fechavistoing = this.FormIng.value.fecha;
-                inspeccion.fkempleadoing = this.empleado;
+                inspeccion.empleadoing = this.empleado;
                 inspeccion.conceptoing = this.FormIng.value.concepto;
             }
 
@@ -830,7 +831,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
            
             this.solicitando = true;            
             inspeccion.id = this.inspeccionId
-            this.inspeccionService.update(inspeccion)
+            console.log(inspeccion)
+            setTimeout(() => {
+                this.inspeccionService.update(inspeccion)
                 .then(data => {
                     this.manageResponse(<Inspeccion>data);
                     this.solicitando = false;
@@ -838,6 +841,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 .catch(err => {
                     this.solicitando = false;
                 });
+            }, 3000);
+            
             
         } catch (error) {
             this.msgs = [];
