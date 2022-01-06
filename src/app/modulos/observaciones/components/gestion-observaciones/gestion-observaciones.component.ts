@@ -71,7 +71,7 @@ export class GestionObservacionesComponent implements OnInit {
             .then((resp) => (this.observacion = resp["data"][0]))
             .then((resp) => {
                 this.observacion.documentoList.forEach((doc) => {
-                    this.directorioService.download(doc.id).then((data) => {
+                    this.directorioService.download(doc.id).then((data?:any) => {
                         let urlData = this.domSanitizer.bypassSecurityTrustUrl(
                             URL.createObjectURL(data)
                         );

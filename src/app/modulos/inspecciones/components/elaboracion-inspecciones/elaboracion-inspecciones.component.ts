@@ -82,7 +82,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     selectDateIngenieria;
     permisoHse:boolean=false;
     permisoIngenieria:boolean=false;
-
+    mostarHseGet: boolean=true;
+    mostarIngGet: boolean=true;
 
 
     constructor(
@@ -98,20 +99,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         private datePipe : DatePipe,
         private authService: AuthService,
         private fb: FormBuilder
-    ) { 
-        this.FormHseq = this.fb.group({
-            concepto: ['',Validators.required],
-            usuarioGestiona: [sesionService.getEmpleado().primerNombre + " " +sesionService.getEmpleado().primerApellido ,Validators.required],
-            cargo: [sesionService.getEmpleado().cargo.descripcion,Validators.required],
-            fecha: ['',Validators.required]
-        });
-        this.FormIng = this.fb.group({
-            concepto: ['',Validators.required],
-            usuarioGestiona: [sesionService.getEmpleado().primerNombre + " " +sesionService.getEmpleado().primerApellido,Validators.required],
-            cargo: [sesionService.getEmpleado().cargo.descripcion,Validators.required],
-            fecha: ['',Validators.required]
-        });
-     }
+    ) { }
 
     ngOnInit() {
         this.empleado = this.sesionService.getEmpleado();
@@ -160,17 +148,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 });
                 this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
 
-                
-                // setTimeout(() => {           
-                //     this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
-                //         resp => {
-                //           this.empleadoelabora = <Empleado>(resp);
-                //           this.getFirma(this.empleadoelabora.id);
-                                                       
-                //         }
-                //     );
-                // }, 2000);
-               
+                               
         } else if (this.accion == 'GET' || this.accion == 'PUT') {
             this.redireccion = '/app/inspecciones/consultaInspecciones';
             this.consultar = this.accion == 'GET';
@@ -193,14 +171,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
                     this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
                     this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-                                        setTimeout(() => {           
+                    setTimeout(() => {           
                         this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
                             resp => {
-                              this.empleadoelabora = <Empleado>(resp);
-                              this.getFirma(this.empleadoelabora.id);
-                                                          
+                              this.empleadoelabora = <Empleado>(resp);                                                          
                             }
                           );
+                          this.vistoPermisos();
                     }, 2000);
 
                     this.listaInspeccion.formulario.campoList.forEach(campo => {
@@ -218,6 +195,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 .catch(err => {
                     this.initLoading = false;
                 });;
+                
         }
         else{
             this.redireccion = '/app/inspecciones/programacion';
@@ -258,16 +236,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                                         setTimeout(() => {           
                         this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
                             resp => {
-                              this.empleadoelabora = <Empleado>(resp);
-                              this.getFirma(this.empleadoelabora.id);
-                                                           
+                              this.empleadoelabora = <Empleado>(resp);                                                           
                             }
                           );
                     }, 2000);
         }
         
-        this.paramNav.reset();
-        this.firmaPermisos();
+        this.paramNav.reset();        
     }
 
     findMatrizValue(fecha: Date) {
@@ -303,23 +278,14 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     onSubmit() {
         let calificacionList: Calificacion[] = [];
         try {
-            console.log("3")
             this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
 
             let inspeccion = new Inspeccion();
-            console.log("4")
             inspeccion.area = this.area;
-            // inspeccion.empleadohse = this.empleado;
-            // inspeccion.empleadoing = this.empleado;
-            // inspeccion.fechavistohse = new Date();
-            // inspeccion.fechavistoing = new Date();
-            console.log("5")
             inspeccion.listaInspeccion = this.listaInspeccion;
             inspeccion.programacion = this.programacion;
-            console.log("6")
             inspeccion.calificacionList = calificacionList;
             inspeccion.respuestasCampoList = [];
-            console.log("7")
             this.listaInspeccion.formulario.campoList.forEach(campo => {
                 if (campo.tipo == 'multiple_select' && campo.respuestaCampo.valor != null) {
                     let arraySelection = (<string[]>campo.respuestaCampo.valor);
@@ -337,7 +303,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 campo.respuestaCampo.campoId = campo.id;
                 inspeccion.respuestasCampoList.push(campo.respuestaCampo);
             });
-            console.log("8")
 
             this.solicitando = true;
             if (this.adicionar) {
@@ -360,13 +325,11 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                         this.solicitando = false;
                     });
             }
-            console.log("2",inspeccion)
         } catch (error) {
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
         
-        console.log("1",this.inspeccion)
         let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
 
 
@@ -426,8 +389,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             return newArray
             })
           }
-
-          console.log(arrayResultadoVar1.length)
 
           if(arrayResultadoVar1.length>0){
           this.authService.sendNotificationhallazgosCriticos(
@@ -525,7 +486,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     }
 
     private extraerCalificaciones(elemList: ElementoInspeccion[], calificacionList: Calificacion[]) {
-        console.log("1-1",elemList,calificacionList)
         for (let i = 0; i < elemList.length; i++) {
             if (elemList[i].elementoInspeccionList != null && elemList[i].elementoInspeccionList.length > 0) {
                 this.extraerCalificaciones(elemList[i].elementoInspeccionList, calificacionList);
@@ -546,7 +506,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 }
             }
         }
-        console.log("1-2")
     }
 
 
@@ -599,11 +558,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             template.querySelector('#P_lista_nombre').textContent = this.listaInspeccion.nombre;
             template.querySelector('#P_codigo').textContent = this.listaInspeccion.codigo;
             template.querySelector('#P_version').textContent = '' + this.listaInspeccion.listaInspeccionPK.version;
-          //  template.querySelector('#P_version').textContent = '' + fechahora;
-            // template.querySelector('#P_ubicacion').textContent = '' + this.programacion.area.nombre;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-           //  template.querySelector('#P_firma').textContent = this.sesionService.getEmpleado().primerNombre +" " + this.sesionService.getEmpleado().primerApellido;
           if(this.empleadoelabora != null ){
             template.querySelector('#P_firma').textContent = this.empleadoelabora.primerNombre + " " + this.empleadoelabora.primerApellido + " ";
             template.querySelector('#P_cargo').textContent = " Cargo: " + this.empleadoelabora.cargo.nombre;           
@@ -613,7 +569,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
             let  a: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.id.toString();
             let b: string | ArrayBuffer=this.listaInspeccion.listaInspeccionPK.version.toString();
-            //template.querySelector('#P_lista_logo').setAttribute('src', this.listaEvidence);
            
             
 
@@ -684,33 +639,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
     }
 
-    async getFirma(id_empleado: string) {
-        
-        try {
-            
-            let res: any = await this.empleadoService.getFirma(id_empleado);
-            
-            if (res) {
-                res.files.forEach(async (evidence) => {
-                    let ev: any = await this.directorioService.download(evidence);
-                    
-                    let blob = new Blob([ev]);
-                    let reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = () => {
-                        if (ev) {
-                            this.firma.push(reader.result);
-                        } else {
-                            throw new Error("Ocurrió un problema al consultar la firma");
-                        }
-                    }
-                });
-            }
-
-        } catch (e) {
-           
-        }
-    }
 
     rangoFechaCierre(){
         let permiso = this.sesionService.getPermisosMap()["SEC_CHANGE_FECHACIERRE"];
@@ -719,7 +647,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         } else {
             this.minDateIngenieria = this.maxDateIngenieria;
         }
-        console.log(permiso)
     }
       
     rangoFechaCierreHse(){
@@ -729,39 +656,81 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         } else {
             this.minDateHse = this.maxDateHse;
         }
-        console.log(permiso)
     }
     
-    firmaPermisos(){
+    async vistoPermisos(){
+
+        if(this.consultar && this.inspeccion.conceptohse == null){
+             this.mostarHseGet = false;
+        }
+
+        if(this.consultar && this.inspeccion.conceptoing == null){
+            this.mostarIngGet = false;
+        }
+      
+        
         this.permisoHse = this.sesionService.getPermisosMap()["HSE"];
         this.permisoIngenieria = this.sesionService.getPermisosMap()["INGENIERIA"];
         
         if(this.permisoHse){
-            this.selectDateHse = this.maxDateHse;          
-            // setTimeout(() => {
-            //     this.FormHseq.value.usuarioGestiona = this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido;
-            //     this.FormHseq.value.cargo = this.sesionService.getEmpleado().cargo.descripcion;
-            // }, 2000);
-            
+            this.selectDateHse = this.maxDateHse;      
+            if(this.inspeccion.conceptohse != null){
+                this.FormHseq = this.fb.group({
+                    concepto: [this.inspeccion.conceptohse,Validators.required],
+                    usuarioGestiona: [this.inspeccion.empleadohse.primerNombre + " " + this.inspeccion.empleadohse.primerApellido,Validators.required],
+                    cargo: [this.inspeccion.empleadohse.cargo.nombre,Validators.required],
+                    fecha: [this.inspeccion.fechavistohse,Validators.required]
+                });
+                this.selectDateHse = this.inspeccion.fechavistohse
+            }
+            else{
+                this.FormHseq = this.fb.group({
+                    concepto: ['',Validators.required],
+                    usuarioGestiona: [this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido ,Validators.required],
+                    cargo: [this.sesionService.getEmpleado().cargo.descripcion,Validators.required],
+                    fecha: ['',Validators.required]
+                });
+            }   
         }
 
         if(this.permisoIngenieria){
             this.selectDateIngenieria = this.maxDateIngenieria;
-            // setTimeout(() => {
-            //     this.FormIng.value.usuarioGestiona = this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido;
-            //     this.FormIng.value.cargo = this.sesionService.getEmpleado().cargo.descripcion;
-            // }, 2000);
+            if(this.inspeccion.conceptoing != null){
+                this.FormIng = this.fb.group({
+                    concepto: [this.inspeccion.conceptoing,Validators.required],
+                    usuarioGestiona: [this.inspeccion.empleadoing.primerNombre + " " + this.inspeccion.empleadoing.primerApellido,Validators.required],
+                    cargo: [this.inspeccion.empleadoing.cargo.nombre,Validators.required],
+                    fecha: [this.inspeccion.fechavistoing,Validators.required]
+                });
+                this.selectDateIngenieria = this.inspeccion.fechavistoing
+            }
+            else{
+                this.FormIng = this.fb.group({
+                    concepto: ['',Validators.required],
+                    usuarioGestiona: [this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido,Validators.required],
+                    cargo: [this.sesionService.getEmpleado().cargo.descripcion,Validators.required],
+                    fecha: ['',Validators.required]
+                });
+            }   
             
         }
-
     }
     
-    cargarDatosVistoBueno(tipo: string){
-        
+    async selectEmpleado(id){
+    let user = this.sesionService.getUsuario();
+        let empleadoSelect: Empleado;
+
+        let fq = new FilterQuery();
+        fq.filterList = [{ field: 'usuario.id', value1: id, criteria: Criteria.EQUALS, value2: null }];
+        await this.empleadoService.findByFilter(fq).then(
+        resp => {
+            empleadoSelect = (<Empleado[]>resp['data'])[0];
+        }
+        );
+        return empleadoSelect;
     }
 
     botonAceptar(tipo: string){
-        console.log(tipo)
         if(tipo=='HSE'){
             this.FormHseq.value.concepto = "Aceptado"
         }
@@ -772,76 +741,47 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     }
 
     botonDenegar(tipo: string){
-        console.log(tipo)
         if(tipo=='HSE'){
             this.FormHseq.value.concepto = "Denegado"
         }
         else if(tipo=='ING'){
             this.FormIng.value.concepto = "Denegado"
         }
-        this.guardarVistoBueno(tipo)
+        this.guardarVistoBueno(tipo)    
     }
     
     async guardarVistoBueno(tipo: string){
         let calificacionList: Calificacion[] = [];
-        console.log(tipo)
         try {
-            // console.log("3")
             this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
 
             let inspeccion = new Inspeccion();
-            // console.log("4")
             inspeccion.area = this.area;
 
-            if(tipo=='HSE'){
+            if(this.FormHseq.value.concepto == 'Aceptado'||this.FormHseq.value.concepto == 'Denegado'){
                 inspeccion.fechavistohse = this.FormHseq.value.fecha;
                 inspeccion.empleadohse = this.empleado;
                 inspeccion.conceptohse = this.FormHseq.value.concepto;
             }
-            else if(tipo=='ING'){
+            
+            if(this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado'){
                 inspeccion.fechavistoing = this.FormIng.value.fecha;
                 inspeccion.empleadoing = this.empleado;
                 inspeccion.conceptoing = this.FormIng.value.concepto;
             }
-
-            // console.log("5")
-            inspeccion.listaInspeccion = this.listaInspeccion;
-            inspeccion.programacion = this.programacion;
-            // console.log("6")
             inspeccion.calificacionList = calificacionList;
             inspeccion.respuestasCampoList = [];
-            // console.log("7")
-            this.listaInspeccion.formulario.campoList.forEach(campo => {
-                if (campo.tipo == 'multiple_select' && campo.respuestaCampo.valor != null) {
-                    let arraySelection = (<string[]>campo.respuestaCampo.valor);
-                    if (arraySelection.length > 0) {
-                        let valorArray: string = "";
-                        arraySelection.forEach(element => {
-                            valorArray += element + ';';
-                        });
-                        valorArray = valorArray.substring(0, valorArray.length - 1);
-                        campo.respuestaCampo.valor = valorArray;
-                    } else {
-                        campo.respuestaCampo.valor = null;
-                    }
-                }
-                campo.respuestaCampo.campoId = campo.id;
-                inspeccion.respuestasCampoList.push(campo.respuestaCampo);
-            });
            
             this.solicitando = true;            
             inspeccion.id = this.inspeccionId
-            console.log(inspeccion)
-            setTimeout(() => {
+           
                 this.inspeccionService.update(inspeccion)
                 .then(data => {
-                    this.manageResponse(<Inspeccion>data);
                     this.solicitando = false;
                 })
                 .catch(err => {
                     this.solicitando = false;
                 });
-            }, 3000);
             
             
         } catch (error) {
@@ -849,18 +789,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.msgs.push({ severity: 'warn', detail: error });
         }
         
-        
-
-
-        // inspeccion.id = this.inspeccionId
-        // this.inspeccionService.update(inspeccion)
-        //     .then(data => {
-        //         this.manageResponse(<Inspeccion>data);
-        //         this.solicitando = false;
-        //     })
-        //     .catch(err => {
-        //         this.solicitando = false;
-        //     });
     }
     
 
