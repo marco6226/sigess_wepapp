@@ -550,12 +550,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         });
     }
 
-    imprimir() {
+    async imprimir() {
         let template = document.getElementById('plantilla');
         if (!this.pdfGenerado) {
             const date = new Date (this.inspeccion.fechaRealizada);
             const fechahora = this.datePipe.transform(date, 'dd/MM/yyyy HH:mm');
-            template.querySelector('#P_lista_nombre').textContent = this.listaInspeccion.nombre;
+            template.querySelector('#P_lista_nombre').textContent = await this.listaInspeccion.nombre;
             template.querySelector('#P_codigo').textContent = this.listaInspeccion.codigo;
             template.querySelector('#P_version').textContent = '' + this.listaInspeccion.listaInspeccionPK.version;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
