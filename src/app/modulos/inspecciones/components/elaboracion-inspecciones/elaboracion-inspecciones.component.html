@@ -221,5 +221,118 @@
       </tr>
       
     </table>
+    <table width="100%" style="border-collapse: collapse;"  *ngIf="permisoHse">
+      <tr>
+        <td  colspan="4" style="background-color:#eee;border:solid thin #ccc;padding: 8px;-webkit-print-color-adjust: exact;">
+          Visto Bueno HSE
+        </td>
+       
+      </tr>
+      <tr> 
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>Concepto</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label id="P_conceptohse">{{inspeccion?.conceptohse}}</label>
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>Usuario que gestiona</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>{{inspeccion?.empleadohse?.primerNombre}} {{inspeccion?.empleadohse?.primerApellido}}</label>
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>Cargo</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>{{inspeccion?.empleadohse?.cargo.nombre}}</label>
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label >Fecha</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label >{{inspeccion?.fechavistohse | date:'dd/MM/yyyy HH:mm'}}</label>
+        
+        </td>
+      </tr>
+    </table>
+    <table width="100%" style="border-collapse: collapse;" *ngIf="permisoIngenieria">
+      <tr>
+        <td  colspan="4" style="background-color:#eee;border:solid thin #ccc;padding: 8px;-webkit-print-color-adjust: exact;">
+          Visto Bueno Supervisión/Ingenieria
+        </td>
+       
+      </tr>
+      <tr> 
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>Concepto</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>{{inspeccion?.conceptoing}}</label>
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>Usuario que gestiona</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>{{inspeccion?.empleadoing?.primerNombre}} {{inspeccion?.empleadoing?.primerApellido}}</label>
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>Cargo</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label>{{inspeccion?.empleadoing?.cargo.nombre}}</label>
+        
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label >Fecha</label>
+        
+        </td>
+        <td colspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+              
+        <label >{{inspeccion?.fechavistoing | date:'dd/MM/yyyy HH:mm'}}</label>
+        
+        </td>
+      </tr>
+    </table>
+
   </div>
 </div>
