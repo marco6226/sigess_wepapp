@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { timeout } from 'rxjs/operators';
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { SelectItem } from "primeng/api";
 import { Message } from "primeng/primeng";
 import { Empleado } from "app/modulos/empresa/entities/empleado";
@@ -31,6 +32,10 @@ import { FilterQuery } from "../../../core/entities/filter-query";
 import { SortOrder } from "../../../core/entities/filter";
 import { Usuario } from "../../entities/usuario";
 import { UsuarioEmpresa } from "../../entities/usuario-empresa";
+import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
+import { Table } from 'primeng/table';
+import { timeStamp } from 'console';
+import * as moment from "moment";
 const EXCEL_TYPE =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const EXCEL_EXTENSION = ".xlsx";
@@ -41,6 +46,8 @@ const EXCEL_EXTENSION = ".xlsx";
     providers: [CiudadService],
 })
 export class CargueDatosComponent implements OnInit {
+    @ViewChild('dt', { static: false }) table: Table;
+    @ViewChild('fileInput', { static: false }) fileInput: any;
     msgs: Message[];
     msgsCarga: Message[] = [];
     opcionSelect: string = "EMPLEADO";
@@ -74,7 +81,12 @@ export class CargueDatosComponent implements OnInit {
     areaOpc = [];
     ciudadOpc = [];
     ccfOpc = [];
+   
 
+    myFile:string;
+    isCargado:boolean = false;
+    porcentCarga=0;
+    totalDeRegistros=0;
     editRowIndex: number;
     editColIndex: number;
     fechasValidas:boolean;
@@ -153,7 +165,8 @@ export class CargueDatosComponent implements OnInit {
         private cargoService: CargoService,
         private perfilService: PerfilService,
         private areaService: AreaService,
-        private ciudadService: CiudadService
+        private ciudadService: CiudadService,
+        private paramNav: ParametroNavegacionService,
     ) {
         let areafiltQuery = new FilterQuery();
         areafiltQuery.sortOrder = SortOrder.ASC;
@@ -203,15 +216,22 @@ export class CargueDatosComponent implements OnInit {
 
         response = await this.comunService.findAllCcf();
         this.ccfData = response;
-        console.log(this.ccfData);
+        // console.log(this.ccfData);
         response = await this.cargoService.findByFilter(cargofiltQuery);
         this.cargoData = response.data;
 
         response = await this.perfilService.findAll();
         this.perfilData = response.data;
+
+
+        //Datos de prueba para la barra de progreso
+        // this.porcentCarga = 0;
+        // this.totalDeRegistros = 1000;
+        // this.calcularProgreso(550);
     }
 
     onArchivoSelect(ev) {
+        this.fallidosArray = [];
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
@@ -221,104 +241,215 @@ export class CargueDatosComponent implements OnInit {
             workBook = XLSX.read(data, { type: "binary" });
             jsonData = workBook.SheetNames.reduce((initial, name) => {
                 const sheet = workBook.Sheets[name];
+                
                 initial = XLSX.utils.sheet_to_json(sheet);
-                console.log(initial);
+                // console.log(file);
                 return initial;
             }, {});
+
+            // console.log("JSONDATA:",jsonData.length);
+            for (let i = 0; i < jsonData.length; i++) {
+                
+                
+                if(this.validarFecha(jsonData[i].fechaIngreso).toString() == 'Invalid Date'){
+                    jsonData[i].fechaIngreso = 'Invalid Date';
+                }else{
+                    jsonData[i].fechaIngreso = this.validarFecha(jsonData[i].fechaIngreso);
+                }
+
+                if(this.validarFecha(jsonData[i].fechaNacimiento).toString() == 'Invalid Date'){
+                    jsonData[i].fechaNacimiento = 'Invalid Date';
+                }else{
+                    jsonData[i].fechaNacimiento = this.validarFecha(jsonData[i].fechaNacimiento);
+                }
+            }
+
             this.workbookExcel = jsonData;
-            console.log(this.workbookExcel);
+            // console.log(this.workbookExcel);
             this.createEmployeArray(jsonData);
         };
+        this.isCargado=true;
         reader.readAsBinaryString(file);
+    }
+
+    validarFecha(date: Date) : Date{
+        const fechaAux:any = date;
+        const fechaMod:Date = new Date( (fechaAux - (25567)) * 86400 * 1000 ) ;
+        let fecha:any;
+
+        if(fechaMod.toString() == 'Invalid Date'){
+
+            if( this.splitDate(fechaAux)[1] ){
+                fecha = moment( this.splitDate(fechaAux)[0] ).utcOffset('GMT-05:00').format("YYYY-MM-DD"); //Formatea lo que retorna splitDate
+            }else{
+                fecha = '';
+            }
+        }else{
+            //TRANSFORMAR
+            fecha = moment(fechaMod).utcOffset('GMT-05:00').format("YYYY-MM-DD");
+            // console.log("FECHA", fecha);
+            // fecha = fechaMod;
+            // console.log("FECHA MOD", fechaMod);
+        }
+        
+        return fecha;
     }
 
     splitDate(date): [Date,boolean] {
         let real = date.split("/");
-        if(real.length != 3 || real[0]>999 || real[1]>12){
-            this.msgs = [];
-            this.msgs.push({
-                summary: "Formato de fecha incorrecto",
-                detail: "Por favor rectifique que las fechas sean de la forma: DD/MM/YYYY",
-                severity: "warn",
-            });
+        if(real.length != 3 || real[0]>31 || real[1]>12 ){
+            // this.msgs = [];
+            // this.msgs.push({
+            //     summary: "Formato de fecha incorrecto",
+            //     detail: "Por favor rectifique que las fechas sean de la forma: DD/MM/YYYY",
+            //     severity: "warn",
+            // });
             return [new Date(), false]
         }
-        let fechaValida:Date = new Date(real[0] + "/" + real[1] + "/" + real[2]);
 
+        // let fechaValida:Date = new Date(real[0] + "/" + real[1] + "/" + real[2]);
+        let fechaValida:Date = new Date(real[2] + "-" + real[1] + "-" + real[0]);
+        
         return [fechaValida, true];
-
     }
     createEmployeArray(arrayOfEmployees){
-        arrayOfEmployees.forEach((json) => {
-            const fechaIngreso = this.splitDate(json.fechaIngreso);
-            const fechaNacimiento = this.splitDate(json.fechaNacimiento);
-            if(fechaIngreso[1] && fechaNacimiento[1]){
-                this.fechasValidas=true;
-            }else{
-                this.fechasValidas = false;
-            }
-            
+        this.porcentCarga = 1;
+        this.empleadosArray = [];
+
+        for (let i = 0; i < arrayOfEmployees.length; i++) {
+            // console.log("LONGITUD", arrayOfEmployees.length);
+            this.calcularProgreso(i);
             let empleado = new Empleado();
-            empleado.primerNombre = json.primerNombre;
-            empleado.segundoNombre = json.segundoNombre;
-            empleado.primerApellido = json.primerApellido;
-            empleado.segundoApellido = json.segundoApellido;
-            empleado.codigo = json.codigo;
-            empleado.direccion = json.direccion;
-            empleado.direccion = json.direccion;
-            empleado.fechaIngreso = fechaIngreso[0];
-            empleado.emergencyContact = json.emergencyContact;
-            empleado.corporativePhone = json.corporativePhone;
-            empleado.phoneEmergencyContact = json.phoneEmergencyContact;
-            empleado.emailEmergencyContact = json.emailEmergencyContact;
-            empleado.fechaNacimiento = fechaNacimiento[0];
-            empleado.genero = json.genero;
-            empleado.numeroIdentificacion = json.numeroIdentificacion;
-            empleado.telefono1 = json.telefono1;
-            empleado.telefono2 = json.telefono2;
-            empleado.direccionGerencia = json.direccionGerencia;
-            empleado.regional = json.regional;
-            if (json.ciudad) {
+            empleado.primerNombre = arrayOfEmployees[i].primerNombre;
+            empleado.segundoNombre = arrayOfEmployees[i].segundoNombre;
+            empleado.primerApellido = arrayOfEmployees[i].primerApellido;
+            empleado.segundoApellido = arrayOfEmployees[i].segundoApellido;
+            empleado.codigo = arrayOfEmployees[i].codigo;
+            empleado.direccion = arrayOfEmployees[i].direccion;
+            empleado.direccion = arrayOfEmployees[i].direccion;
+            empleado.fechaIngreso = arrayOfEmployees[i].fechaIngreso;
+            empleado.emergencyContact = arrayOfEmployees[i].emergencyContact;
+            empleado.corporativePhone = arrayOfEmployees[i].corporativePhone;
+            empleado.phoneEmergencyContact = arrayOfEmployees[i].phoneEmergencyContact;
+            empleado.emailEmergencyContact = arrayOfEmployees[i].emailEmergencyContact;
+            empleado.fechaNacimiento = arrayOfEmployees[i].fechaNacimiento;
+            empleado.genero = arrayOfEmployees[i].genero;
+            empleado.numeroIdentificacion = arrayOfEmployees[i].numeroIdentificacion;
+            empleado.telefono1 = arrayOfEmployees[i].telefono1;
+            empleado.telefono2 = arrayOfEmployees[i].telefono2;
+            empleado.direccionGerencia = arrayOfEmployees[i].direccionGerencia;
+            empleado.regional = arrayOfEmployees[i].regional;
+            if (arrayOfEmployees[i].ciudad) {
                 empleado.ciudad = new Ciudad();
-                empleado.ciudad.nombre = json.ciudad;
+                empleado.ciudad.nombre = arrayOfEmployees[i].ciudad;
             }
 
-            if (json.afp != null) {
+            if (arrayOfEmployees[i].afp != null) {
                 empleado.afp = new Afp();
-                empleado.afp.nombre = json.afp;
+                empleado.afp.nombre = arrayOfEmployees[i].afp;
             }
-            if (json.eps != null) {
+            if (arrayOfEmployees[i].eps != null) {
                 empleado.eps = new Eps();
-                empleado.eps.nombre = json.eps || "";
+                empleado.eps.nombre = arrayOfEmployees[i].eps || "";
             }
-            if (json.ccf != null) {
+            if (arrayOfEmployees[i].ccf != null) {
                 empleado.ccf = new Ccf();
-                empleado.ccf.nombre = json.ccf;
+                empleado.ccf.nombre = arrayOfEmployees[i].ccf;
             }
-            empleado.tipoIdentificacion = json.tipoIdentificacion;
-            empleado.tipoVinculacion = json.tipoVinculacion;
-            empleado.zonaResidencia = json.zonaResidencia;
+            empleado.tipoIdentificacion = arrayOfEmployees[i].tipoIdentificacion;
+            empleado.tipoVinculacion = arrayOfEmployees[i].tipoVinculacion;
+            empleado.zonaResidencia = arrayOfEmployees[i].zonaResidencia;
             empleado.area = new Area();
             empleado.cargo = new Cargo();
             empleado.usuario = new Usuario();
-            empleado.area.nombre = json.area;
-            empleado.cargo.nombre = json.cargo;
-            empleado.usuario.email = json.email;
+            empleado.area.nombre = arrayOfEmployees[i].area;
+            empleado.cargo.nombre = arrayOfEmployees[i].cargo;
+            empleado.usuario.email = arrayOfEmployees[i].email;
             empleado.usuario.ipPermitida = [];
             //empleado.usuario.id = this.empleadoSelect.usuario.id;
-            // empleado.usuario.ipPermitida = json.ipPermitida;
+            // empleado.usuario.ipPermitida = arrayOfEmployees[i].ipPermitida;
             empleado.usuario.usuarioEmpresaList = [];
             let empleadoValidado = this.validateEmployeeCampos(
                 empleado,
-                json.perfil
+                arrayOfEmployees[i].perfil
             );
             if (empleadoValidado.error) {
-                json.error = empleadoValidado.error;
-                this.fallidosArray.push(json);
+                arrayOfEmployees[i].error = empleadoValidado.error;
+                this.fallidosArray.push(arrayOfEmployees[i]);
                 return;
             }
             this.empleadosArray.push(empleadoValidado);
-        });
+        // });
+            
+        }
+        this.porcentCarga = 0;
+        // arrayOfEmployees.forEach((json) => {
+        //     // const fechaIngreso = this.splitDate(json.fechaIngreso);
+        //     // const fechaNacimiento = this.splitDate(json.fechaNacimiento);
+        //     // this.fechasValidas= fechaIngreso[1] && fechaNacimiento[1];
+        //     // this.calcularProgreso();
+        //     let empleado = new Empleado();
+        //     empleado.primerNombre = json.primerNombre;
+        //     empleado.segundoNombre = json.segundoNombre;
+        //     empleado.primerApellido = json.primerApellido;
+        //     empleado.segundoApellido = json.segundoApellido;
+        //     empleado.codigo = json.codigo;
+        //     empleado.direccion = json.direccion;
+        //     empleado.direccion = json.direccion;
+        //     empleado.fechaIngreso = json.fechaIngreso;
+        //     empleado.emergencyContact = json.emergencyContact;
+        //     empleado.corporativePhone = json.corporativePhone;
+        //     empleado.phoneEmergencyContact = json.phoneEmergencyContact;
+        //     empleado.emailEmergencyContact = json.emailEmergencyContact;
+        //     empleado.fechaNacimiento = json.fechaNacimiento;
+        //     empleado.genero = json.genero;
+        //     empleado.numeroIdentificacion = json.numeroIdentificacion;
+        //     empleado.telefono1 = json.telefono1;
+        //     empleado.telefono2 = json.telefono2;
+        //     empleado.direccionGerencia = json.direccionGerencia;
+        //     empleado.regional = json.regional;
+        //     if (json.ciudad) {
+        //         empleado.ciudad = new Ciudad();
+        //         empleado.ciudad.nombre = json.ciudad;
+        //     }
+
+        //     if (json.afp != null) {
+        //         empleado.afp = new Afp();
+        //         empleado.afp.nombre = json.afp;
+        //     }
+        //     if (json.eps != null) {
+        //         empleado.eps = new Eps();
+        //         empleado.eps.nombre = json.eps || "";
+        //     }
+        //     if (json.ccf != null) {
+        //         empleado.ccf = new Ccf();
+        //         empleado.ccf.nombre = json.ccf;
+        //     }
+        //     empleado.tipoIdentificacion = json.tipoIdentificacion;
+        //     empleado.tipoVinculacion = json.tipoVinculacion;
+        //     empleado.zonaResidencia = json.zonaResidencia;
+        //     empleado.area = new Area();
+        //     empleado.cargo = new Cargo();
+        //     empleado.usuario = new Usuario();
+        //     empleado.area.nombre = json.area;
+        //     empleado.cargo.nombre = json.cargo;
+        //     empleado.usuario.email = json.email;
+        //     empleado.usuario.ipPermitida = [];
+        //     //empleado.usuario.id = this.empleadoSelect.usuario.id;
+        //     // empleado.usuario.ipPermitida = json.ipPermitida;
+        //     empleado.usuario.usuarioEmpresaList = [];
+        //     let empleadoValidado = this.validateEmployeeCampos(
+        //         empleado,
+        //         json.perfil
+        //     );
+        //     if (empleadoValidado.error) {
+        //         json.error = empleadoValidado.error;
+        //         this.fallidosArray.push(json);
+        //         return;
+        //     }
+        //     console.log("LLEGO ACÄ");
+        //     this.empleadosArray.push(empleadoValidado);
+        // });
     }
 
     dragStart(e: any, opt: any) {
@@ -377,6 +508,18 @@ export class CargueDatosComponent implements OnInit {
             return { error: "cargo no existe o nula", employe };
         }
 
+        if (employe.fechaNacimiento.toString() != '') {
+            employe.fechaNacimiento = employe.fechaNacimiento;
+        } else {
+            return { error: "Fecha de nacimiento en formato incorrecto. Debe ser (dd/MM/yyyy) en formato fecha.", employe };
+        }
+
+        if (employe.fechaIngreso.toString() != '') {
+            employe.fechaIngreso = employe.fechaIngreso;
+        } else {
+            return { error: "Fecha de ingreso en formato incorrecto. Debe ser (dd/MM/yyyy) en formato fecha.", employe };
+        }
+
         if (perfil) {
             let ue = new UsuarioEmpresa();
             ue.perfil = new Perfil();
@@ -407,8 +550,11 @@ export class CargueDatosComponent implements OnInit {
 
     cargarDatos() {
         if (true) {
-            if(this.fechasValidas){
+            // if(this.fechasValidas){
+                this.porcentCarga=1;
+                // console.log("EMPLEADOS ARRAY", this.empleadosArray);
                  this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
+                    //  this.porcentCarga=1; //Muestra la barra de progreso
                     if ((<Message[]>resp).length == 0) {
                         localStorage.setItem(
                             this.cabecera,
@@ -419,6 +565,8 @@ export class CargueDatosComponent implements OnInit {
                             detail: "Todos los registros fueron cargados exitosamente",
                             severity: "success",
                         });
+                        
+                        // this.porcentCarga=0;
                     } else {
                         (<any[]>resp).forEach((element) => {
                             this.msgsCarga.push({
@@ -428,15 +576,19 @@ export class CargueDatosComponent implements OnInit {
                             });
                         });
                     }
+
+                    this.empleadosArray = [];
+                    this.porcentCarga = 0;
                 });
-            }else{
-                this.msgs = [];
-                this.msgs.push({
-                    summary: "Fechas inválidas.",
-                    detail: "Corregir formato de las fechas(DD/MM/YY) y subir el documento. ",
-                    severity: "warn",
-                });
-            }
+            // }
+            // else{
+            //     this.msgs = [];
+            //     this.msgs.push({
+            //         summary: "Fechas inválidas.",
+            //         detail: "Corregir formato de las fechas(DD/MM/YY) y re-subir el documento. ",
+            //         severity: "warn",
+            //     });
+            // }
            
         } else {
             this.msgs = [];
@@ -515,5 +667,21 @@ export class CargueDatosComponent implements OnInit {
     toggle(row, col) {
         this.editRowIndex = row;
         this.editColIndex = col;
+    }
+
+contador = 0;
+    calcularProgreso(elementoActual:number){
+        // elementoActual++; //sumar uno
+        this.porcentCarga = (elementoActual/this.workbookExcel.length)*100;
+        // console.log(this.porcentCarga);
+        // console.log(++this.contador);
+    }
+
+    limpiar(){
+        this.porcentCarga = 0;
+        this.workbookExcel.length = 0;
+        this.msgsCarga.length = 0;
+        this.myFile='';
+        this.isCargado = false;
     }
 }

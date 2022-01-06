@@ -6,8 +6,9 @@
             <p-dropdown [options]="opciones" [(ngModel)]="opcionSelect" disabled="true"></p-dropdown>
         </div>
         <div class="ui-g-12 ui-md-10">
-            <button pButton type="button" icon="pi pi-upload" (click)="fileInput.click()"></button>
-            <input name="myFile" type="file" style="visibility: hidden;" #fileInput (change)="onArchivoSelect($event)">
+            <button pButton [disabled]="isCargado" type="button" icon="pi pi-upload" (click)="fileInput.click()"></button>
+            <button pButton [disabled]="!isCargado" type="button" icon="fa fa-refresh" (click)="limpiar();" pTooltip="Refrescar"></button>
+            <input name="myFile" [(ngModel)]="myFile" type="file" style="visibility: hidden;" #fileInput (input)="onArchivoSelect($event)">
         </div>
         <ng-template ngFor let-opt [ngForOf]="modelo[opcionSelect]" let-i="index">
             <div class="badge active" pDraggable="dd" (onDragStart)="dragStart($event, opt)" *ngIf="!opt.selected">
@@ -18,6 +19,10 @@
 </p-panel>
 
 <br />
+
+<p-messages [(value)]="msgsCarga"></p-messages>
+<p-progressBar *ngIf="porcentCarga>0" mode="determinate"  [value]="porcentCarga" [style]="{'height': '6px'}"></p-progressBar>
+<!-- <p-progressBar *ngIf="numeroCargados>0" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar> -->
 
 <p-panel *ngIf="workbookExcel.length>0">
     <p-header>
@@ -43,7 +48,7 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+        <!-- <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
             <tr>
                 <ng-template ngFor let-col [ngForOf]="columns" let-j="index">
                     <td *ngIf="i == editRowIndex && j == editColIndex" style="padding: 0px;"
@@ -53,7 +58,7 @@
                             </option>
                         </select>
                         <!-- <p-dropdown *ngIf="col['campo']?.opciones" [options]="col['campo']?.opciones" [(ngModel)]="rowData[col.orden].nombre"></p-dropdown> -->
-                        <input class="input-table" *ngIf="!col['campo']?.opciones" type="text" pInputText
+                        <!-- <input class="input-table" *ngIf="!col['campo']?.opciones" type="text" pInputText
                             [(ngModel)]="rowData[col.orden].nombre" />
                     </td>
 
@@ -63,12 +68,13 @@
                     </td>
                 </ng-template>
             </tr>
-        </ng-template>
+        </ng-template> --> -->
         <ng-template pTemplate="summary">
-            Mostrando {{((+dt.first+1))}} al {{+dt.first+ +dt.rows}} de {{+dt.totalRecords}} registros en total
+            Mostrando {{((+dt.first+1))}} al {{+workbookExcel.length}} de {{+workbookExcel.length}} registros en total.
+            <!-- Mostrando {{((+dt.first+1))}} al {{+dt.first+ +dt.rows}} de {{+dt.totalRecords}} registros en total. -->
         </ng-template>
     </p-table>
 
-    <p-messages [(value)]="msgsCarga"></p-messages>
+    
 
 </p-panel>
