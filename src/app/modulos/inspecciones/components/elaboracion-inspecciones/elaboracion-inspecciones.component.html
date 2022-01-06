@@ -75,8 +75,8 @@
             (ionChange)="rangoFechaCierreHse($event)"/>
         </div>
         <br>
-        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('HSE')" style="margin-right: 10px;"></button>
-        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('HSE')"></button>
+        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('HSE')" style="margin-right: 10px;" class="ui-button-success"></button>
+        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('HSE')" class="ui-button-danger"></button>
       </div>
     </form>
     <div *ngIf="!mostarHseGet">
@@ -120,8 +120,8 @@
             (ionChange)="rangoFechaCierre($event)"/>
         </div>
         <br>
-         <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('ING')" style="margin-right: 10px;"></button>
-         <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('ING')"></button>
+         <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('ING')" style="margin-right: 10px;" class="ui-button-success"></button>
+         <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('ING')" class="ui-button-danger"></button>
       </div>
     </form> 
     <div *ngIf="!mostarIngGet">
