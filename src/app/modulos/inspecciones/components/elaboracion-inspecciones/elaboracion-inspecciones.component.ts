@@ -315,6 +315,22 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                         this.solicitando = false;
                     });
             } else {
+
+                //------
+                if(this.FormHseq.value.concepto == 'Aceptado'||this.FormHseq.value.concepto == 'Denegado'){
+                    inspeccion.fechavistohse = this.FormHseq.value.fecha;
+                    inspeccion.empleadohse = this.empleado;
+                    inspeccion.conceptohse = this.FormHseq.value.concepto;
+                }
+                
+                if(this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado'){
+                    inspeccion.fechavistoing = this.FormIng.value.fecha;
+                    inspeccion.empleadoing = this.empleado;
+                    inspeccion.conceptoing = this.FormIng.value.concepto;
+                }
+
+                //------
+
                 inspeccion.id = this.inspeccionId
                 this.inspeccionService.update(inspeccion)
                     .then(data => {
