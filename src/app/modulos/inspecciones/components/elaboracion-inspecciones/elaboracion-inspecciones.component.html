@@ -59,7 +59,7 @@
         </div>
         <label>Cargo</label>
         <div>
-          <input type="text" formControlName="cargo" readOnly="true"/>
+          <input type="text" [(ngModel)]="FormHseq.value.cargo" formControlName="cargo" readOnly="true"/>
         </div>
         <label>Fecha</label>
         <div>
@@ -75,8 +75,8 @@
             (ionChange)="rangoFechaCierreHse($event)"/>
         </div>
         <br>
-        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('HSE')" style="margin-right: 10px;" class="ui-button-success"></button>
-        <button *ngIf="FormHseq.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('HSE')" class="ui-button-danger"></button>
+        <button *ngIf="FormHseq.invalid" [disabled]="isEmpleadoValid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('HSE')" style="margin-right: 10px;" class="ui-button-success"></button>
+        <button *ngIf="FormHseq.invalid" [disabled]="isEmpleadoValid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('HSE')" class="ui-button-danger"></button>
       </div>
     </form>
     <div *ngIf="!mostarHseGet">
@@ -104,7 +104,7 @@
         </div>
         <label>Cargo</label>
         <div>
-          <input type="text" formControlName="cargo" readOnly="true"/>
+          <input type="text" [(ngModel)]="FormIng.value.cargo" formControlName="cargo" readOnly="true"/>
         </div>
         <label>Fecha</label>
         <div>
@@ -120,8 +120,8 @@
             (ionChange)="rangoFechaCierre($event)"/>
         </div>
         <br>
-         <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('ING')" style="margin-right: 10px;" class="ui-button-success"></button>
-         <button *ngIf="FormIng.invalid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('ING')" class="ui-button-danger"></button>
+         <button *ngIf="FormIng.invalid" [disabled]="isEmpleadoValid" pButton type="button" icon="fa fa-check" label="Aceptar" (click)="botonAceptar('ING')" style="margin-right: 10px;" class="ui-button-success"></button>
+         <button *ngIf="FormIng.invalid" [disabled]="isEmpleadoValid" pButton type="button" icon="fa fa-ban" label="Denegar" (click)="botonDenegar('ING')" class="ui-button-danger"></button>
       </div>
     </form> 
     <div *ngIf="!mostarIngGet">

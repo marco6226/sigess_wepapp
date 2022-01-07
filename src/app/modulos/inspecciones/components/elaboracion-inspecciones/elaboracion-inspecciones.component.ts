@@ -84,6 +84,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     permisoIngenieria:boolean=false;
     mostarHseGet: boolean=true;
     mostarIngGet: boolean=true;
+    isEmpleadoValid: boolean;
 
 
     constructor(
@@ -99,7 +100,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         private datePipe : DatePipe,
         private authService: AuthService,
         private fb: FormBuilder
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.empleado = this.sesionService.getEmpleado();
@@ -316,21 +317,37 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     });
             } else {
 
-                //------
-                if(this.FormHseq.value.concepto == 'Aceptado'||this.FormHseq.value.concepto == 'Denegado'){
+                if((this.FormHseq.value.concepto == 'Aceptado'||this.FormHseq.value.concepto == 'Denegado') && this.inspeccion.empleadohse != null){
+                    inspeccion.fechavistohse = this.FormHseq.value.fecha;
+                    inspeccion.empleadohse = this.inspeccion.empleadohse;
+                    inspeccion.conceptohse = this.FormHseq.value.concepto;
+                }
+                else if(this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado'){
                     inspeccion.fechavistohse = this.FormHseq.value.fecha;
                     inspeccion.empleadohse = this.empleado;
                     inspeccion.conceptohse = this.FormHseq.value.concepto;
                 }
+                else{
+                    inspeccion.fechavistohse = this.inspeccion.fechavistohse
+                    inspeccion.empleadohse = this.inspeccion.empleadohse;
+                    inspeccion.conceptohse = this.inspeccion.conceptohse;
+                }
                 
-                if(this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado'){
+                if((this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado') && this.inspeccion.empleadoing != null){
+                    inspeccion.fechavistoing = this.FormIng.value.fecha;
+                    inspeccion.empleadoing = this.inspeccion.empleadoing;
+                    inspeccion.conceptoing = this.FormIng.value.concepto;
+                }
+                else if(this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado'){
                     inspeccion.fechavistoing = this.FormIng.value.fecha;
                     inspeccion.empleadoing = this.empleado;
                     inspeccion.conceptoing = this.FormIng.value.concepto;
                 }
-
-                //------
-
+                else{
+                    inspeccion.fechavistoing = this.inspeccion.fechavistoing
+                    inspeccion.empleadoing = this.inspeccion.empleadoing;
+                    inspeccion.conceptoing = this.inspeccion.conceptoing;
+                }
                 inspeccion.id = this.inspeccionId
                 this.inspeccionService.update(inspeccion)
                     .then(data => {
@@ -676,6 +693,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     
     async vistoPermisos(){
 
+        this.isEmpleadoValid = this.sesionService.getEmpleado() == null;
+        console.log(this.isEmpleadoValid)
+
         if(this.consultar && this.inspeccion.conceptohse == null){
              this.mostarHseGet = false;
         }
@@ -699,15 +719,31 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 });
                 this.selectDateHse = this.inspeccion.fechavistohse
             }
-            else{
+            else if(this.sesionService.getEmpleado()!=null){
                 this.FormHseq = this.fb.group({
-                    concepto: ['',Validators.required],
+                    concepto: [null,Validators.required],
                     usuarioGestiona: [this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido ,Validators.required],
-                    cargo: [this.sesionService.getEmpleado().cargo.descripcion,Validators.required],
+                    cargo: [this.sesionService.getEmpleado().cargo.nombre,Validators.required],
                     fecha: ['',Validators.required]
                 });
-            }   
+            }
+            else{
+                this.FormHseq = this.fb.group({
+                    concepto: [null,Validators.required],
+                    usuarioGestiona: [null,Validators.required],
+                    cargo: [null,Validators.required],
+                    fecha: [null,Validators.required]
+                });
+            }
         }
+        else{
+            this.FormHseq = this.fb.group({
+                concepto: [null,Validators.required],
+                usuarioGestiona: [null,Validators.required],
+                cargo: [null,Validators.required],
+                fecha: [null,Validators.required]
+            });
+        }  
 
         if(this.permisoIngenieria){
             this.selectDateIngenieria = this.maxDateIngenieria;
@@ -720,16 +756,31 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 });
                 this.selectDateIngenieria = this.inspeccion.fechavistoing
             }
-            else{
+            else if(this.sesionService.getEmpleado()!=null){
                 this.FormIng = this.fb.group({
-                    concepto: ['',Validators.required],
+                    concepto: [null,Validators.required],
                     usuarioGestiona: [this.sesionService.getEmpleado().primerNombre + " " + this.sesionService.getEmpleado().primerApellido,Validators.required],
-                    cargo: [this.sesionService.getEmpleado().cargo.descripcion,Validators.required],
+                    cargo: [this.sesionService.getEmpleado().cargo.nombre,Validators.required],
                     fecha: ['',Validators.required]
                 });
-            }   
-            
+            }
+            else{
+                this.FormIng = this.fb.group({
+                    concepto: [null,Validators.required],
+                    usuarioGestiona: [null,Validators.required],
+                    cargo: [null,Validators.required],
+                    fecha: [null,Validators.required]
+                });
+            }  
         }
+        else{
+            this.FormIng = this.fb.group({
+                concepto: [null,Validators.required],
+                usuarioGestiona: [null,Validators.required],
+                cargo: [null,Validators.required],
+                fecha: [null,Validators.required]
+            });
+        }   
     }
     
     async selectEmpleado(id){
@@ -769,7 +820,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     async guardarVistoBueno(tipo: string){
         let calificacionList: Calificacion[] = [];
         try {
-            this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
+            //this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
 
             let inspeccion = new Inspeccion();
             inspeccion.area = this.area;
