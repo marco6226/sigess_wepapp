@@ -249,18 +249,19 @@ export class CargueDatosComponent implements OnInit {
 
             // console.log("JSONDATA:",jsonData.length);
             for (let i = 0; i < jsonData.length; i++) {
+                const fechaIngreso = this.validarFecha(jsonData[i].fechaIngreso);
+                const fechaNacimiento = this.validarFecha(jsonData[i].fechaNacimiento);
                 
-                
-                if(this.validarFecha(jsonData[i].fechaIngreso).toString() == 'Invalid Date'){
+                if(fechaIngreso.toString() == 'Invalid Date'){
                     jsonData[i].fechaIngreso = 'Invalid Date';
                 }else{
-                    jsonData[i].fechaIngreso = this.validarFecha(jsonData[i].fechaIngreso);
+                    jsonData[i].fechaIngreso = fechaIngreso;
                 }
 
-                if(this.validarFecha(jsonData[i].fechaNacimiento).toString() == 'Invalid Date'){
+                if(fechaNacimiento.toString() == 'Invalid Date'){
                     jsonData[i].fechaNacimiento = 'Invalid Date';
                 }else{
-                    jsonData[i].fechaNacimiento = this.validarFecha(jsonData[i].fechaNacimiento);
+                    jsonData[i].fechaNacimiento = fechaNacimiento;
                 }
             }
 
@@ -550,9 +551,7 @@ export class CargueDatosComponent implements OnInit {
 
     cargarDatos() {
         if (true) {
-            // if(this.fechasValidas){
                 this.porcentCarga=1;
-                // console.log("EMPLEADOS ARRAY", this.empleadosArray);
                  this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
                     //  this.porcentCarga=1; //Muestra la barra de progreso
                     if ((<Message[]>resp).length == 0) {
@@ -566,7 +565,7 @@ export class CargueDatosComponent implements OnInit {
                             severity: "success",
                         });
                         
-                        // this.porcentCarga=0;
+                        this.porcentCarga=0;
                     } else {
                         (<any[]>resp).forEach((element) => {
                             this.msgsCarga.push({
@@ -580,16 +579,6 @@ export class CargueDatosComponent implements OnInit {
                     this.empleadosArray = [];
                     this.porcentCarga = 0;
                 });
-            // }
-            // else{
-            //     this.msgs = [];
-            //     this.msgs.push({
-            //         summary: "Fechas inválidas.",
-            //         detail: "Corregir formato de las fechas(DD/MM/YY) y re-subir el documento. ",
-            //         severity: "warn",
-            //     });
-            // }
-           
         } else {
             this.msgs = [];
             this.msgs.push({
