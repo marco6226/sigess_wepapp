@@ -315,6 +315,22 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                         this.solicitando = false;
                     });
             } else {
+
+                //------
+                if(this.FormHseq.value.concepto == 'Aceptado'||this.FormHseq.value.concepto == 'Denegado'){
+                    inspeccion.fechavistohse = this.FormHseq.value.fecha;
+                    inspeccion.empleadohse = this.empleado;
+                    inspeccion.conceptohse = this.FormHseq.value.concepto;
+                }
+                
+                if(this.FormIng.value.concepto == 'Aceptado'||this.FormIng.value.concepto == 'Denegado'){
+                    inspeccion.fechavistoing = this.FormIng.value.fecha;
+                    inspeccion.empleadoing = this.empleado;
+                    inspeccion.conceptoing = this.FormIng.value.concepto;
+                }
+
+                //------
+
                 inspeccion.id = this.inspeccionId
                 this.inspeccionService.update(inspeccion)
                     .then(data => {
@@ -550,12 +566,12 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         });
     }
 
-    imprimir() {
+    async imprimir() {
         let template = document.getElementById('plantilla');
         if (!this.pdfGenerado) {
             const date = new Date (this.inspeccion.fechaRealizada);
             const fechahora = this.datePipe.transform(date, 'dd/MM/yyyy HH:mm');
-            template.querySelector('#P_lista_nombre').textContent = this.listaInspeccion.nombre;
+            template.querySelector('#P_lista_nombre').textContent = await this.listaInspeccion.nombre;
             template.querySelector('#P_codigo').textContent = this.listaInspeccion.codigo;
             template.querySelector('#P_version').textContent = '' + this.listaInspeccion.listaInspeccionPK.version;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
