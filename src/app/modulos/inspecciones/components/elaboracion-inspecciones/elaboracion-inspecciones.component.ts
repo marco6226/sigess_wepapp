@@ -423,19 +423,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             })
           }
 
-          if(arrayResultadoVar1.length>0){
+          if(arrayResultadoVar1.length>0 && this.finalizado === true)){
           this.authService.sendNotificationhallazgosCriticos(
             this.inspeccion.id,
             arrayResultadoVar1 
             );
         }
-          setTimeout(() => { 
-              if (this.finalizado === true){
-            this.authService.sendNotificationhallazgosCriticos(
-              this.inspeccion.id,
-              arrayResultadoVar1);
-      }
-        }, 5000);
+          
           
     
 
