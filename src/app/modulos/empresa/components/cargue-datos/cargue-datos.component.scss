@@ -35,3 +35,11 @@ select{
 .td-view{
   min-width: 250px;
 }
+.spinner{
+  width: 100%;
+  display: flex;
+  position: fixed;
+  margin-top: 290px;
+  justify-content: center;
+  z-index: 10;
+}

@@ -48,6 +48,9 @@ const EXCEL_EXTENSION = ".xlsx";
 export class CargueDatosComponent implements OnInit {
     @ViewChild('dt', { static: false }) table: Table;
     @ViewChild('fileInput', { static: false }) fileInput: any;
+
+    initLoading = false;
+
     msgs: Message[];
     msgsCarga: Message[] = [];
     opcionSelect: string = "EMPLEADO";
@@ -230,7 +233,8 @@ export class CargueDatosComponent implements OnInit {
         // this.calcularProgreso(550);
     }
 
-    onArchivoSelect(ev) {
+    async onArchivoSelect(ev) {
+        this.initLoading = true;
         this.fallidosArray = [];
         let workBook = null;
         let jsonData = null;
@@ -273,8 +277,11 @@ export class CargueDatosComponent implements OnInit {
             // console.log(this.workbookExcel);
             this.createEmployeArray(jsonData);
         };
-        this.isCargado=true;
+        this.isCargado=true;        
         reader.readAsBinaryString(file);
+        setTimeout(() => {
+            this.initLoading = false;
+        }, 1000);
         
     }
 
@@ -573,6 +580,8 @@ export class CargueDatosComponent implements OnInit {
 
     cargarDatos() {
         // if (true) {
+                this.initLoading = true;
+            
                 this.porcentCarga=1;
                 // this.fragmentarArrayEmpleados(this.empleadosArray);
                 this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
@@ -603,6 +612,10 @@ export class CargueDatosComponent implements OnInit {
                     this.empleadosArray = [];
                     this.porcentCarga = 0;
                 });
+                setTimeout(() => {
+                    this.initLoading = false;
+                }, 1000);
+                
         // } else {
         //     this.msgs = [];
         //     this.msgs.push({
