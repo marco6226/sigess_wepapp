@@ -1,4 +1,6 @@
 <p-growl [value]="msgs"></p-growl>
+<div class="spinner" *ngIf="initLoading"><img src="assets/images/icons-invert/tenor.gif" alt=""  style="overflow: hidden"></div>
+
 
 <p-panel header="Cargue masivo de datos">
     <div class="ui-g">
@@ -6,8 +8,8 @@
             <p-dropdown [options]="opciones" [(ngModel)]="opcionSelect" disabled="true"></p-dropdown>
         </div>
         <div class="ui-g-12 ui-md-10">
-            <button pButton [disabled]="isCargado" type="button" icon="pi pi-upload" (click)="fileInput.click()"></button>
-            <button pButton [disabled]="!isCargado" type="button" icon="fa fa-refresh" (click)="limpiar();" pTooltip="Refrescar"></button>
+            <button pButton [disabled]="isCargado || initLoading" type="button" icon="pi pi-upload" (click)="fileInput.click()"></button>
+            <button pButton [disabled]="!isCargado || initLoading" type="button" icon="fa fa-refresh" (click)="limpiar();" pTooltip="Refrescar"></button>
             <input name="myFile" [(ngModel)]="myFile" type="file" style="visibility: hidden;" #fileInput (input)="onArchivoSelect($event)">
         </div>
         <ng-template ngFor let-opt [ngForOf]="modelo[opcionSelect]" let-i="index">
@@ -26,8 +28,8 @@
 
 <p-panel *ngIf="workbookExcel.length>0">
     <p-header>
-        <button pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()"></button>
-        <button pButton type="button" label="Revisar errores" class="p-button-danger"
+        <button [disabled]="initLoading" pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()"></button>
+        <button [disabled]="initLoading" pButton type="button" label="Revisar errores" class="p-button-danger"
             (click)="descargarFallidos()"></button>
 
     </p-header>
