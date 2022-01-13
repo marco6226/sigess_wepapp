@@ -252,17 +252,21 @@ export class CargueDatosComponent implements OnInit {
                 const fechaIngreso = this.validarFecha(jsonData[i].fechaIngreso);
                 const fechaNacimiento = this.validarFecha(jsonData[i].fechaNacimiento);
                 
-                if(fechaIngreso.toString() == 'Invalid Date'){
-                    jsonData[i].fechaIngreso = 'Invalid Date';
-                }else{
-                    jsonData[i].fechaIngreso = fechaIngreso;
-                }
 
-                if(fechaNacimiento.toString() == 'Invalid Date'){
-                    jsonData[i].fechaNacimiento = 'Invalid Date';
-                }else{
-                    jsonData[i].fechaNacimiento = fechaNacimiento;
-                }
+                jsonData[i].fechaIngreso = fechaIngreso;
+                jsonData[i].fechaNacimiento = fechaNacimiento;
+
+                // if(fechaIngreso == null){
+                //     jsonData[i].fechaIngreso = null;
+                // }else{
+                //     jsonData[i].fechaIngreso = fechaIngreso;
+                // }
+
+                // if(fechaNacimiento == null){
+                //     jsonData[i].fechaNacimiento = null;
+                // }else{
+                //     jsonData[i].fechaNacimiento = fechaNacimiento;
+                // }
             }
 
             this.workbookExcel = jsonData;
@@ -271,6 +275,7 @@ export class CargueDatosComponent implements OnInit {
         };
         this.isCargado=true;
         reader.readAsBinaryString(file);
+        
     }
 
     validarFecha(date: Date) : Date{
@@ -283,14 +288,11 @@ export class CargueDatosComponent implements OnInit {
             if( this.splitDate(fechaAux)[1] ){
                 fecha = moment( this.splitDate(fechaAux)[0] ).utcOffset('GMT-05:00').format("YYYY-MM-DD"); //Formatea lo que retorna splitDate
             }else{
-                fecha = '';
+                fecha = null;
             }
         }else{
             //TRANSFORMAR
             fecha = moment(fechaMod).utcOffset('GMT-05:00').format("YYYY-MM-DD");
-            // console.log("FECHA", fecha);
-            // fecha = fechaMod;
-            // console.log("FECHA MOD", fechaMod);
         }
         
         return fecha;
@@ -298,17 +300,10 @@ export class CargueDatosComponent implements OnInit {
 
     splitDate(date): [Date,boolean] {
         let real = date.split("/");
-        if(real.length != 3 || real[0]>31 || real[1]>12 ){
-            // this.msgs = [];
-            // this.msgs.push({
-            //     summary: "Formato de fecha incorrecto",
-            //     detail: "Por favor rectifique que las fechas sean de la forma: DD/MM/YYYY",
-            //     severity: "warn",
-            // });
+
+        if(real.length != 3 || real[0]>31 || real[1]>12 || real[0] <1){
             return [new Date(), false]
         }
-
-        // let fechaValida:Date = new Date(real[0] + "/" + real[1] + "/" + real[2]);
         let fechaValida:Date = new Date(real[2] + "-" + real[1] + "-" + real[0]);
         
         return [fechaValida, true];
@@ -318,8 +313,7 @@ export class CargueDatosComponent implements OnInit {
         this.empleadosArray = [];
 
         for (let i = 0; i < arrayOfEmployees.length; i++) {
-            // console.log("LONGITUD", arrayOfEmployees.length);
-            this.calcularProgreso(i);
+            // this.calcularProgreso(i);
             let empleado = new Empleado();
             empleado.primerNombre = arrayOfEmployees[i].primerNombre;
             empleado.segundoNombre = arrayOfEmployees[i].segundoNombre;
@@ -377,9 +371,11 @@ export class CargueDatosComponent implements OnInit {
             if (empleadoValidado.error) {
                 arrayOfEmployees[i].error = empleadoValidado.error;
                 this.fallidosArray.push(arrayOfEmployees[i]);
-                return;
+                // return;
+            }else{
+                this.empleadosArray.push(empleadoValidado);
             }
-            this.empleadosArray.push(empleadoValidado);
+            
         // });
             
         }
@@ -451,6 +447,7 @@ export class CargueDatosComponent implements OnInit {
         //     console.log("LLEGO ACÄ");
         //     this.empleadosArray.push(empleadoValidado);
         // });
+        
     }
 
     dragStart(e: any, opt: any) {
@@ -509,13 +506,13 @@ export class CargueDatosComponent implements OnInit {
             return { error: "cargo no existe o nula", employe };
         }
 
-        if (employe.fechaNacimiento.toString() != '') {
+        if (employe.fechaNacimiento !=null) {
             employe.fechaNacimiento = employe.fechaNacimiento;
         } else {
             return { error: "Fecha de nacimiento en formato incorrecto. Debe ser (dd/MM/yyyy) en formato fecha.", employe };
         }
 
-        if (employe.fechaIngreso.toString() != '') {
+        if (employe.fechaIngreso != null) {
             employe.fechaIngreso = employe.fechaIngreso;
         } else {
             return { error: "Fecha de ingreso en formato incorrecto. Debe ser (dd/MM/yyyy) en formato fecha.", employe };
@@ -549,24 +546,49 @@ export class CargueDatosComponent implements OnInit {
         cell["campo"] = this.optDragged;
     }
 
+    fragmentarArrayEmpleados(empleadosArray:any){
+        console.log(empleadosArray);
+        const tamanioPagina = 100; //
+        const cantidadEmpleados:number = empleadosArray.length;
+        let empleadosPaginados = [];
+
+
+        const numeroDePaginas = Math.ceil(cantidadEmpleados / tamanioPagina);
+        let desde = 0;
+        let hasta = tamanioPagina;
+
+        for (let i = 0; i < numeroDePaginas; i++) {
+            this.porcentCarga+=10;
+            empleadosPaginados.push( empleadosArray.slice(desde, hasta) );
+                
+            desde = hasta;
+            hasta += tamanioPagina;
+        }
+        console.log("EMPLEADOS PAGINADOS: ", empleadosPaginados);
+
+        return empleadosPaginados;
+    }
+
     cargarDatos() {
-        if (true) {
+        // if (true) {
                 this.porcentCarga=1;
-                 this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
-                    //  this.porcentCarga=1; //Muestra la barra de progreso
+                // this.fragmentarArrayEmpleados(this.empleadosArray);
+                this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
                     if ((<Message[]>resp).length == 0) {
                         localStorage.setItem(
                             this.cabecera,
                             JSON.stringify(this.mapping)
                         );
+                        console.log("CABECERA: ", this.cabecera);
+                        console.log("MAPPING: ", this.mapping);
                         this.msgsCarga.push({
                             summary: "Datos cargados",
                             detail: "Todos los registros fueron cargados exitosamente",
                             severity: "success",
                         });
                         
-                        this.porcentCarga=0;
                     } else {
+
                         (<any[]>resp).forEach((element) => {
                             this.msgsCarga.push({
                                 summary: element.mensaje,
@@ -579,14 +601,14 @@ export class CargueDatosComponent implements OnInit {
                     this.empleadosArray = [];
                     this.porcentCarga = 0;
                 });
-        } else {
-            this.msgs = [];
-            this.msgs.push({
-                summary: "Campos incompletos",
-                detail: "No se han relacionado todas las columnas con los campos requeridos",
-                severity: "warn",
-            });
-        }
+        // } else {
+        //     this.msgs = [];
+        //     this.msgs.push({
+        //         summary: "Campos incompletos",
+        //         detail: "No se han relacionado todas las columnas con los campos requeridos",
+        //         severity: "warn",
+        //     });
+        // }
     }
 
     descargarFallidos() {
@@ -658,12 +680,8 @@ export class CargueDatosComponent implements OnInit {
         this.editColIndex = col;
     }
 
-contador = 0;
     calcularProgreso(elementoActual:number){
-        // elementoActual++; //sumar uno
         this.porcentCarga = (elementoActual/this.workbookExcel.length)*100;
-        // console.log(this.porcentCarga);
-        // console.log(++this.contador);
     }
 
     limpiar(){
