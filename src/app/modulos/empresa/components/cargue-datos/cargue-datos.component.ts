@@ -301,7 +301,7 @@ export class CargueDatosComponent implements OnInit {
             //TRANSFORMAR
             fecha = moment(fechaMod).utcOffset('GMT-05:00').format();
         }
-        console.log("🚀 ~ file: cargue-datos.component.ts ~ line 301 ~ CargueDatosComponent ~ validarFecha ~ fecha", fecha)
+        
         return fecha;
         
     }
