@@ -26,7 +26,8 @@
 
 <p-panel *ngIf="workbookExcel.length>0">
     <p-header>
-        <button pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()"></button>
+        <button pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()" [disabled]="fallidosArray.length>0" 
+            ></button>
         <button pButton type="button" label="Revisar errores" class="p-button-danger"
             (click)="descargarFallidos()"></button>
 

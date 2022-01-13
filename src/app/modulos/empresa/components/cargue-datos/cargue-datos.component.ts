@@ -280,23 +280,25 @@ export class CargueDatosComponent implements OnInit {
 
     validarFecha(date: Date) : Date{
         const fechaAux:any = date;
-        const fechaMod:Date = new Date( (fechaAux - (25567)) * 86400 * 1000 ) ;
+        const fechaMod:Date = new Date( (fechaAux - (25568)) * 86400 * 1000 ) ;
         let fecha:any;
 
         if(fechaMod.toString() == 'Invalid Date'){
 
             if( this.splitDate(fechaAux)[1] ){
-                fecha = moment( this.splitDate(fechaAux)[0] ).utcOffset('GMT-05:00').format("YYYY-MM-DD"); //Formatea lo que retorna splitDate
+                fecha = moment( this.splitDate(fechaAux)[0] ).utcOffset('GMT-05:00').format(); //Formatea lo que retorna splitDate
             }else{
                 fecha = null;
             }
         }else{
             //TRANSFORMAR
-            fecha = moment(fechaMod).utcOffset('GMT-05:00').format("YYYY-MM-DD");
+            fecha = moment(fechaMod).utcOffset('GMT-05:00').format();
         }
-        
+        console.log("🚀 ~ file: cargue-datos.component.ts ~ line 301 ~ CargueDatosComponent ~ validarFecha ~ fecha", fecha)
         return fecha;
+        
     }
+        
 
     splitDate(date): [Date,boolean] {
         let real = date.split("/");
