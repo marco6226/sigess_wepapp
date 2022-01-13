@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
     relojText: string;
     intentosMax = 5;
     visiblePinForm = false;
+    version;
 
     constructor(
         @Inject(FormBuilder) fb: FormBuilder,
@@ -52,6 +53,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+       this.version = this.sesionService.getAppVersion();
         this.activateRoute.queryParams
             .subscribe(params => {
                 
