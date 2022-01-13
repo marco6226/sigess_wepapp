@@ -32,7 +32,7 @@ export class Inspeccion {
 
   fechavistohse: Date;
   empleadohse: Empleado;
-  conceptohse: string
+  conceptohse: string;
 
   fechavistoing: Date;
   empleadoing: Empleado;

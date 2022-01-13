@@ -11,7 +11,7 @@ import { SistemaNivelRiesgoService } from 'app/modulos/core/services/sistema-niv
 import { SistemaNivelRiesgo } from 'app/modulos/core/entities/sistema-nivel-riesgo';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
-import { Message, SelectItem } from 'primeng/primeng'
+import { Message, SelectItem } from 'primeng/primeng';
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
@@ -423,15 +423,19 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             })
           }
 
-          if(arrayResultadoVar1.length>0 && this.finalizado === true){
-          this.authService.sendNotificationhallazgosCriticos(
-            this.inspeccion.id,
-            arrayResultadoVar1 
-            );
-        }
           
-          
-    
+
+
+        setTimeout(() => { 
+            if (arrayResultadoVar1.length>0 && this.finalizado === true)
+            {                    
+              this.authService.sendNotificationhallazgosCriticos(
+                this.inspeccion.id,
+                arrayResultadoVar1);
+            }
+            console.log(arrayResultadoVar1.length);
+          console.log(this.finalizado);
+          }, 10000);
 
     }
 
@@ -455,6 +459,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             detail: 'Se ha ' + (this.adicionar ? 'creado' : 'modificado') + ' correctamente la inspección' + ' INP-' + insp.id
         });
         this.finalizado = true;
+        console.log(this.finalizado);
         
     }
 
