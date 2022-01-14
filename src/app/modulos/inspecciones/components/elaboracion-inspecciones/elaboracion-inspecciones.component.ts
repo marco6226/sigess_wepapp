@@ -243,53 +243,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     this.initLoading = false;
                 });;
         }
-        // else{
-        //     this.redireccion = '/app/inspecciones/programacion';
-        //     this.adicionar = true;
-        //     this.programacion = this.paramNav.getParametro<Programacion>();
-
-            
-        //     this.id = this.route.snapshot.paramMap.get('id');
-        //     this.version = this.route.snapshot.paramMap.get('version');
-            
-
-            
-        //     let filterQuery = new FilterQuery();
-
-        //     let filterId = new Filter();
-        //     filterId.criteria = Criteria.EQUALS;
-        //     filterId.field = "listaInspeccionPK.id";
-        //     filterId.value1 = this.route.snapshot.paramMap.get('id');
-
-        //     let filterVersion = new Filter();
-        //     filterVersion.criteria = Criteria.EQUALS;
-        //     filterVersion.field = "listaInspeccionPK.version";
-        //     filterVersion.value1 = this.route.snapshot.paramMap.get('version');
-
-        //     filterQuery.filterList = [filterId, filterVersion];
-        //     // filterQuery.filterList = [filterId]
-
-        //     this.initLoading = true;
-        //     this.listaInspeccionService.findByFilter(filterQuery)
-        //         .then(data => {
-        //             this.initLoading = false;
-        //             this.listaInspeccion = (<ListaInspeccion[]>data['data'])[0]
-        //         })
-        //         .catch(err => {
-        //             this.initLoading = false;
-        //         });
-        //         this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-        //         // this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-
-                
-        //                                 setTimeout(() => {           
-        //                 this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
-        //                     resp => {
-        //                       this.empleadoelabora = <Empleado>(resp);                                                           
-        //                     }
-        //                   );
-        //             }, 2000);
-        // }
+        
         
         this.paramNav.reset();        
     }
@@ -334,6 +288,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             inspeccion.listaInspeccion = this.listaInspeccion;
             inspeccion.programacion = this.programacion;
             inspeccion.calificacionList = calificacionList;
+            inspeccion.calificacionList[0].opcionCalificacion = calificacionList[0].opcionCalificacion;
             inspeccion.respuestasCampoList = [];
             this.listaInspeccion.formulario.campoList.forEach(campo => {
                 if (campo.tipo == 'multiple_select' && campo.respuestaCampo.valor != null) {
@@ -356,7 +311,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.solicitando = true;
             if (this.adicionar) {
                 this.inspeccionService.create(inspeccion)
-                    .then(data => {
+                    .then(data => {                        
                         this.manageResponse(<Inspeccion>data);
                         this.solicitando = false;
                     })
@@ -406,10 +361,18 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                         this.solicitando = false;
                     });
             }
+            if(this.accion === 'POST'){
+                console.log(inspeccion)
+
+            this.inspeccion = inspeccion;
+            console.log(this.inspeccion)
+            }
         } catch (error) {
             this.msgs = [];
             this.msgs.push({ severity: 'warn', detail: error });
         }
+
+        
         
         let nocumple = <Calificacion[]><unknown>this.inspeccion.calificacionList;
 
@@ -481,11 +444,13 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             }
             console.log(arrayResultadoVar1.length);
           console.log(this.finalizado);
-          }, 1000);
+          }, 10000);
+        
 
     }
 
     private manageResponse(insp: Inspeccion) {
+        this.inspeccion.id = insp.id;
         insp.calificacionList.
             forEach(calificacion => {
                 let keyMap = calificacion.elementoInspeccion.id;
@@ -512,7 +477,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     validarRequerirFoto(elementoSelect: ElementoInspeccion) {
         for(let i =0; i < this.listaInspeccionForm.opciones.length; i++){
             if(elementoSelect.calificacion.opcionCalificacion.id === this.listaInspeccionForm.opciones[i].id){
-                elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc
+                elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc;
+                elementoSelect.calificacion.opcionCalificacion.valor = this.listaInspeccionForm.opciones[i].valor;
             }
         }
        
@@ -578,7 +544,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                     }else{            
                             calif.elementoInspeccion = new ElementoInspeccion();
                             calif.elementoInspeccion.id = elemList[i].id;
+                            calif.opcionCalificacion = elemList[i].calificacion.opcionCalificacion;
                             calificacionList.push(calif);
+                            console.log(elemList);
+                            console.log(calif);
                             if( this.validarRequerirFoto(elemList[i]) && this.validarDescripcion(elemList[i]) ){}
                     }
                 }
