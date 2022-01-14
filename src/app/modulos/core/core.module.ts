@@ -149,7 +149,8 @@ const appRoutes: Routes = [
                     { path: 'elaboracionLista', component: ElaboracionListaComponent },
                     { path: 'programacion', component: ProgramacionComponent },
                     { path: 'elaboracionInspecciones', component: ElaboracionInspeccionesComponent },
-                    { path: 'elaboracionInspecciones/:id/:version', component: ElaboracionInspeccionesComponent },
+                    { path: 'elaboracionInspecciones/:id', component: ElaboracionInspeccionesComponent},
+                    { path: 'elaboracionInspecciones/:id/:version', component: ElaboracionInspeccionesComponent},
                     { path: 'consultaInspecciones', component: ConsultaInspeccionesComponent },
                     { path: 'elaboracionLista/:id/:version', component: ElaboracionListaComponent}
                 ]
@@ -260,7 +261,8 @@ const appRoutes: Routes = [
             },
 
         ]
-    }
+    },
+    // { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -103,6 +103,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        console.log(this.route.snapshot.paramMap.get("id"))
+
         this.empleado = this.sesionService.getEmpleado();
         let filterQuery = new FilterQuery();
         let filter = new Filter();
@@ -199,49 +201,95 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 
         }
         else{
-            this.redireccion = '/app/inspecciones/programacion';
-            this.adicionar = true;
-            this.programacion = this.paramNav.getParametro<Programacion>();
-
-            
-            this.id = this.route.snapshot.paramMap.get('id');
-            this.version = this.route.snapshot.paramMap.get('version');
-            
-
-            
+            this.consultar=true;
             let filterQuery = new FilterQuery();
-
             let filterId = new Filter();
             filterId.criteria = Criteria.EQUALS;
-            filterId.field = "listaInspeccionPK.id";
+            filterId.field = "id";
             filterId.value1 = this.route.snapshot.paramMap.get('id');
+            this.inspeccionId = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
-            let filterVersion = new Filter();
-            filterVersion.criteria = Criteria.EQUALS;
-            filterVersion.field = "listaInspeccionPK.version";
-            filterVersion.value1 = this.route.snapshot.paramMap.get('version');
-
-            filterQuery.filterList = [filterId, filterVersion];
-
+            filterQuery.filterList = [filterId];
             this.initLoading = true;
-            this.listaInspeccionService.findByFilter(filterQuery)
+            this.inspeccionService.findByFilter(filterQuery)
                 .then(data => {
+                    this.inspeccion = (<Inspeccion[]>data['data'])[0];
+                    this.programacion = this.inspeccion.programacion;
+                    this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
+                    this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
+                    this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+                    setTimeout(() => {           
+                        this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+                            resp => {
+                              this.empleadoelabora = <Empleado>(resp);                                                          
+                            }
+                          );
+                          this.vistoPermisos();
+                    }, 2000);
+
+                    this.listaInspeccion.formulario.campoList.forEach(campo => {
+                        for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
+                            let rc = this.inspeccion.respuestasCampoList[i];
+                            if (rc.campoId == campo.id) {
+                                campo.respuestaCampo = rc;
+                                break;
+                            }
+                        }
+                    });
+                    this.cargarCalificaciones(this.listaInspeccion.elementoInspeccionList, this.inspeccion.calificacionList);
                     this.initLoading = false;
-                    this.listaInspeccion = (<ListaInspeccion[]>data['data'])[0]
                 })
                 .catch(err => {
                     this.initLoading = false;
-                });
-                this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
-                
-                                        setTimeout(() => {           
-                        this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
-                            resp => {
-                              this.empleadoelabora = <Empleado>(resp);                                                           
-                            }
-                          );
-                    }, 2000);
+                });;
         }
+        // else{
+        //     this.redireccion = '/app/inspecciones/programacion';
+        //     this.adicionar = true;
+        //     this.programacion = this.paramNav.getParametro<Programacion>();
+
+            
+        //     this.id = this.route.snapshot.paramMap.get('id');
+        //     this.version = this.route.snapshot.paramMap.get('version');
+            
+
+            
+        //     let filterQuery = new FilterQuery();
+
+        //     let filterId = new Filter();
+        //     filterId.criteria = Criteria.EQUALS;
+        //     filterId.field = "listaInspeccionPK.id";
+        //     filterId.value1 = this.route.snapshot.paramMap.get('id');
+
+        //     let filterVersion = new Filter();
+        //     filterVersion.criteria = Criteria.EQUALS;
+        //     filterVersion.field = "listaInspeccionPK.version";
+        //     filterVersion.value1 = this.route.snapshot.paramMap.get('version');
+
+        //     filterQuery.filterList = [filterId, filterVersion];
+        //     // filterQuery.filterList = [filterId]
+
+        //     this.initLoading = true;
+        //     this.listaInspeccionService.findByFilter(filterQuery)
+        //         .then(data => {
+        //             this.initLoading = false;
+        //             this.listaInspeccion = (<ListaInspeccion[]>data['data'])[0]
+        //         })
+        //         .catch(err => {
+        //             this.initLoading = false;
+        //         });
+        //         this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+        //         // this.getTareaEvidences(parseInt(this.listaInspeccion.listaInspeccionPK.id),this.listaInspeccion.listaInspeccionPK.version);
+
+                
+        //                                 setTimeout(() => {           
+        //                 this.empleadoService.findempleadoByUsuario(this.inspeccion.usuarioRegistra.id).then(
+        //                     resp => {
+        //                       this.empleadoelabora = <Empleado>(resp);                                                           
+        //                     }
+        //                   );
+        //             }, 2000);
+        // }
         
         this.paramNav.reset();        
     }
@@ -276,7 +324,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         return null;
     }
 
-    onSubmit() {
+    async onSubmit() {
         let calificacionList: Calificacion[] = [];
         try {
             this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
@@ -368,10 +416,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
         nocumple = nocumple.filter(function(element) {
             return element.opcionCalificacion.valor === 0;
-           
-            
-          });
-        
+        });
+        console.log(nocumple)
          
           let arrraynocumple = [];
           
@@ -423,10 +469,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             })
           }
 
-          
+          console.log(arrayResultadoVar1)
 
 
-        setTimeout(() => { 
+        await setTimeout(() => { 
             if (arrayResultadoVar1.length>0 && this.finalizado === true)
             {                    
               this.authService.sendNotificationhallazgosCriticos(
@@ -435,7 +481,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             }
             console.log(arrayResultadoVar1.length);
           console.log(this.finalizado);
-          }, 10000);
+          }, 1000);
 
     }
 
@@ -817,12 +863,11 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     }
     
     async guardarVistoBueno(tipo: string){
-        let calificacionList: Calificacion[] = [];
         try {
-            //this.extraerCalificaciones(this.listaInspeccion.elementoInspeccionList, calificacionList);
-
+            console.log(this.inspeccion)
             let inspeccion = new Inspeccion();
             inspeccion.area = this.area;
+            inspeccion = this.inspeccion
 
             if(this.FormHseq.value.concepto == 'Aceptado'||this.FormHseq.value.concepto == 'Denegado'){
                 inspeccion.fechavistohse = this.FormHseq.value.fecha;
@@ -835,8 +880,6 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 inspeccion.empleadoing = this.empleado;
                 inspeccion.conceptoing = this.FormIng.value.concepto;
             }
-            inspeccion.calificacionList = calificacionList;
-            inspeccion.respuestasCampoList = [];
            
             this.solicitando = true;            
             inspeccion.id = this.inspeccionId
