@@ -1,5 +1,5 @@
 <p-growl [value]="msgs"></p-growl>
-<div class="spinner" *ngIf="initLoading"><img src="assets/images/icons-invert/tenor.gif" alt=""  style="overflow: hidden"></div>
+<div class="spinner" *ngIf="initLoading"><img src="assets/images/icons-invert/cargando.gif" alt=""  style="overflow: hidden"></div>
 
 
 <p-panel header="Cargue masivo de datos">
@@ -8,7 +8,7 @@
             <p-dropdown [options]="opciones" [(ngModel)]="opcionSelect" disabled="true"></p-dropdown>
         </div>
         <div class="ui-g-12 ui-md-10">
-            <button pButton [disabled]="isCargado || initLoading" type="button" icon="pi pi-upload" (click)="fileInput.click()"></button>
+            <button pButton [disabled]="isCargado || initLoading" type="button" icon="pi pi-upload" (click)="fileInput.click()" pTooltip="Cargar archivo"></button>
             <button pButton [disabled]="!isCargado || initLoading" type="button" icon="fa fa-refresh" (click)="limpiar();" pTooltip="Refrescar"></button>
             <input name="myFile" [(ngModel)]="myFile" type="file" style="visibility: hidden;" #fileInput (input)="onArchivoSelect($event)">
         </div>
@@ -26,10 +26,10 @@
 <p-progressBar *ngIf="porcentCarga>0" mode="determinate"  [value]="porcentCarga" [style]="{'height': '6px'}"></p-progressBar>
 <!-- <p-progressBar *ngIf="numeroCargados>0" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar> -->
 
-<p-panel *ngIf="workbookExcel.length>0">
+<p-panel *ngIf="workbookExcel.length>0 && fallidosArray.length==0 ">
     <p-header>
         <button [disabled]="initLoading || fallidosArray.length>0" pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()" ></button>
-        <button [disabled]="initLoading" pButton type="button" label="Revisar errores" class="p-button-danger"
+        <button [disabled]="initLoading || fallidosArray.length==0" pButton type="button" label="Revisar errores" class="p-button-danger"
             (click)="descargarFallidos()"></button>
 
     </p-header>
@@ -79,4 +79,13 @@
 
     
 
+</p-panel>
+<p-panel *ngIf="fallidosArray.length>0">
+    <p-header>
+        <button [disabled]="initLoading || fallidosArray.length>0" pButton type="button" icon="fa fa-check" label="Cargar datos" (click)="cargarDatos()" ></button>
+        <button [disabled]="initLoading || fallidosArray.length==0" pButton type="button" label="Revisar errores" class="p-button-danger"
+            (click)="descargarFallidos()"></button>
+
+    </p-header>
+    <label for="">Por favor ajustar los registros con errores</label>
 </p-panel>

@@ -36,6 +36,7 @@ import { ParametroNavegacionService } from "app/modulos/core/services/parametro-
 import { Table } from 'primeng/table';
 import { timeStamp } from 'console';
 import * as moment from "moment";
+import { isNull } from '@angular/compiler/src/output/output_ast';
 const EXCEL_TYPE =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const EXCEL_EXTENSION = ".xlsx";
@@ -236,6 +237,7 @@ export class CargueDatosComponent implements OnInit {
     async onArchivoSelect(ev) {
         this.initLoading = true;
         this.fallidosArray = [];
+        setTimeout(() => {
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
@@ -257,31 +259,23 @@ export class CargueDatosComponent implements OnInit {
                 const fechaNacimiento = this.validarFecha(jsonData[i].fechaNacimiento);
                 
 
-                jsonData[i].fechaIngreso = fechaIngreso;
-                jsonData[i].fechaNacimiento = fechaNacimiento;
 
-                // if(fechaIngreso == null){
-                //     jsonData[i].fechaIngreso = null;
-                // }else{
-                //     jsonData[i].fechaIngreso = fechaIngreso;
-                // }
-
-                // if(fechaNacimiento == null){
-                //     jsonData[i].fechaNacimiento = null;
-                // }else{
-                //     jsonData[i].fechaNacimiento = fechaNacimiento;
-                // }
+                
+                    jsonData[i].fechaIngreso = fechaIngreso;
+                    jsonData[i].fechaNacimiento = fechaNacimiento;
+                
             }
 
             this.workbookExcel = jsonData;
             // console.log(this.workbookExcel);
             this.createEmployeArray(jsonData);
+            this.initLoading = false;
         };
         this.isCargado=true;        
         reader.readAsBinaryString(file);
-        setTimeout(() => {
-            this.initLoading = false;
-        }, 1000);
+        
+    }, 2000);
+
         
     }
 
@@ -295,7 +289,7 @@ export class CargueDatosComponent implements OnInit {
             if( this.splitDate(fechaAux)[1] ){
                 fecha = moment( this.splitDate(fechaAux)[0] ).utcOffset('GMT-05:00').format(); //Formatea lo que retorna splitDate
             }else{
-                fecha = null;
+                fecha = null;                
             }
         }else{
             //TRANSFORMAR
@@ -579,10 +573,9 @@ export class CargueDatosComponent implements OnInit {
     }
 
     cargarDatos() {
-        // if (true) {
+        
                 this.initLoading = true;
             
-                this.porcentCarga=1;
                 // this.fragmentarArrayEmpleados(this.empleadosArray);
                 this.empleadoService.loadAll(this.empleadosArray).then((resp) => {
                     if ((<Message[]>resp).length == 0) {
@@ -610,20 +603,8 @@ export class CargueDatosComponent implements OnInit {
                     }
 
                     this.empleadosArray = [];
-                    this.porcentCarga = 0;
-                });
-                setTimeout(() => {
                     this.initLoading = false;
-                }, 1000);
-                
-        // } else {
-        //     this.msgs = [];
-        //     this.msgs.push({
-        //         summary: "Campos incompletos",
-        //         detail: "No se han relacionado todas las columnas con los campos requeridos",
-        //         severity: "warn",
-        //     });
-        // }
+                });
     }
 
     descargarFallidos() {
