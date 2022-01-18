@@ -77,7 +77,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
         filterQuery.fieldList = this.fieldsNoProg;
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
         filterQuery.filterList.push({ criteria: Criteria.IS_NULL, field: 'programacion' });
-        filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+        filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: 'area.id', value1: this.areasPermiso });
 
         this.inspeccionService.findByFilter(filterQuery).then(
             resp => {

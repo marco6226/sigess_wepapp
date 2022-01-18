@@ -5,11 +5,10 @@ import { ObservacionService } from 'app/modulos/observaciones/services/observaci
 import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { Router } from '@angular/router';
-
-import { Message } from 'primeng/primeng'
-
-import { FilterQuery } from 'app/modulos/core/entities/filter-query'
-import { Filter, Criteria } from 'app/modulos/core/entities/filter'
+import { Message } from 'primeng/primeng';
+import { Area } from 'app/modulos/empresa/entities/area';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
+import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 
 @Component({
   selector: 'app-consulta-observaciones',
@@ -23,6 +22,8 @@ export class ConsultaObservacionesComponent implements OnInit {
   loading: boolean;
   totalRecords: number;
   idEmpresa: string;
+  observacion: Observacion;
+  area: Area;
   fields: string[] = [
     'id',
     'fechaObservacion',
@@ -32,8 +33,11 @@ export class ConsultaObservacionesComponent implements OnInit {
     'personasobservadas',
     'personasabordadas',
     'aceptada',
-    'area'
+    'area',
+    'area_id',
+    'area_nombre' 
   ];
+  areasPermiso: string;
 
   constructor(
     private observacionService: ObservacionService,
@@ -45,6 +49,7 @@ export class ConsultaObservacionesComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.idEmpresa = this.sesionService.getEmpresa().id;
+    this.areasPermiso = this.sesionService.getPermisosMap()['AUC_GET_OBS'].areas;
   }
 
 
@@ -56,9 +61,9 @@ export class ConsultaObservacionesComponent implements OnInit {
     filterQuery.offset = event.first;
     filterQuery.rows = event.rows;
     filterQuery.count = true;
-
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+    filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: 'area.id', value1: this.areasPermiso });
 
     this.observacionService.findByFilter(filterQuery).then(
       resp => {
