@@ -19,10 +19,10 @@
       </td>
 
       
-      <td *ngIf="router.url === '/app/inspecciones/elaboracionLista'"  style="width: 150px"> 
+      <td  style="width: 150px"> 
         <label>Criticidad</label>
         <p-dropdown [filter]="true" [options]="criticidadList" [(ngModel)]="elem.criticidad" value="label"
-        class="select-material" 
+        class="select-material" [disabled]="router.url != '/app/inspecciones/elaboracionLista'"
         styleClass="select-material" required>
         </p-dropdown>       
                  

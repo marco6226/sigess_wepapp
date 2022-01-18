@@ -40,7 +40,7 @@ export class ElementoInspeccionNodeComponent implements OnInit {
   };
 
   criticidadList: SelectItem[] = [ 
-    { label: "--seleccione--",value : null },  
+    { label: "----",value : null },  
     { label: "Bajo",value: "Bajo"},
     { label: "Medio", value: "Medio" },
     { label: "Alto", value: "Alto" }];
