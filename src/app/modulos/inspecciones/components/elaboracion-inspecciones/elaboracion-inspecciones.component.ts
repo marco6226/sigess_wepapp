@@ -513,10 +513,10 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
         for(let i =0; i < this.listaInspeccionForm.opciones.length; i++){
             if(elementoSelect.calificacion.opcionCalificacion.id === this.listaInspeccionForm.opciones[i].id){
-                elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc
+                elementoSelect.calificacion.opcionCalificacion.requerirDoc = this.listaInspeccionForm.opciones[i].requerirDoc;
             }
         }
-        elementoSelect.calificacion.recomendacion = elementoSelect.calificacion.recomendacion === undefined ? '': elementoSelect.calificacion.recomendacion
+        elementoSelect.calificacion.recomendacion = elementoSelect.calificacion.recomendacion === undefined ? '': elementoSelect.calificacion.recomendacion;
         if (
             elementoSelect != null &&
             elementoSelect.calificacion != null &&

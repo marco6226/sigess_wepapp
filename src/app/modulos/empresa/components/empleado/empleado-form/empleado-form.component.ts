@@ -154,7 +154,7 @@ export class EmpleadoFormComponent implements OnInit {
             area: [null, Validators.required],
             cargoId: [null, Validators.required],
             perfilesId: [null, Validators.required],
-            //'ipPermitida': [null],
+            ipPermitida: [],
             email: [null, { disabled: true }, Validators.required],
             direccionGerencia: [null],
             regional: [null],
@@ -213,7 +213,7 @@ export class EmpleadoFormComponent implements OnInit {
                     correoPersonal: this.empleadoSelect.correoPersonal,
                     ciudadGerencia: this.empleadoSelect.ciudadGerencia,
                     jefeInmediato: this.empleadoSelect.jefeInmediato,
-                    //'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
+                    'ipPermitida': this.empleadoSelect.usuario.ipPermitida,
                     businessPartner: this.empleadoSelect.businessPartner,
                     email: [this.empleadoSelect.usuario.email],
                 });
@@ -334,7 +334,7 @@ export class EmpleadoFormComponent implements OnInit {
         console.log(this.form.value.jefeInmediato);
 
         // //console.log(this.form.value.ipPermitida);
-        // empleado.usuario.ipPermitida = this.form.value.ipPermitida;
+        empleado.usuario.ipPermitida = [];
         empleado.usuario.usuarioEmpresaList = [];
 
         this.form.value.perfilesId.forEach((perfilId) => {
@@ -424,7 +424,7 @@ export class EmpleadoFormComponent implements OnInit {
             area: empleado.area,
             correoPersonal: empleado.correoPersonal,
             cargoId: empleado.cargo.id,
-            //'ipPermitida': empleado.usuario.ipPermitida,
+            ipPermitida: empleado.usuario.ipPermitida,
             direccionGerencia: empleado.direccionGerencia,
 
             email: [empleado.usuario.email],
@@ -446,8 +446,7 @@ export class EmpleadoFormComponent implements OnInit {
             area: empleado.area,
             correoPersonal: empleado.correoPersonal,
             cargoId: empleado.cargo.id,
-            //'ipPermitida': empleado.usuario.ipPermitida,
-
+            ipPermitida: empleado.usuario.ipPermitida,
             email: [empleado.usuario.email],
         });
     }
