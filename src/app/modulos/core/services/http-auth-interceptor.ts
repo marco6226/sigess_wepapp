@@ -13,6 +13,7 @@ import { AuthService } from '../auth.service';
 import { MensajeUsuario } from '../entities/mensaje-usuario';
 import { CambioPasswdService } from '../../comun/services/cambio-passwd.service';
 import { MensajeUsuarioService } from '../../comun/services/mensaje-usuario.service';
+import { Router} from '@angular/router';
 
 @Injectable()
 export class HttpAuthInterceptor implements HttpInterceptor {
@@ -24,6 +25,7 @@ export class HttpAuthInterceptor implements HttpInterceptor {
         public authService: AuthService,
         public cambioPasswdService: CambioPasswdService,
         public mensajeUsuarioService: MensajeUsuarioService,
+        public router: Router,
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -64,6 +66,12 @@ export class HttpAuthInterceptor implements HttpInterceptor {
 
         switch (msg.codigo) {
             case 1_001:
+                this.authService.logout();               
+                    
+                    setTimeout(() => {
+                        this.router.navigate(['login']);
+                    }, 1000);
+               
                 if (!this.inflightAuthRequest) {
                     this.inflightAuthRequest = this.authService.refreshToken();
                     if (!this.inflightAuthRequest) {

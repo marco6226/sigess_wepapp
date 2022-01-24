@@ -14,8 +14,9 @@
         <button *ngIf="!adicionar" pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button>
         {{listaInspeccion?.nombre}}
 
-      </div>
+      </div>      
       <div style="float: right;">
+        INP-{{inspeccion.id}} |
         {{listaInspeccion?.codigo}} | Versión: {{listaInspeccion?.listaInspeccionPK.version}}
          <p> Ubicacion: {{programacion ? programacion.area.nombre : "" }}</p>
 

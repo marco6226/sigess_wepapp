@@ -207,6 +207,7 @@ export class AuthService {
                 .catch((error) => {
                     this.setLoginFormVisible(true);
                 });
+                this.logout();
 
             return this.loginSubmitSubject.asObservable();
         } else {
