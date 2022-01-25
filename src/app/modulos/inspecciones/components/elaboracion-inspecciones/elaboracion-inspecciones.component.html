@@ -16,7 +16,7 @@
 
       </div>      
       <div style="float: right;">
-        INP-{{inspeccion.id}} |
+        INP-{{inspeccion?.id}} |
         {{listaInspeccion?.codigo}} | Versión: {{listaInspeccion?.listaInspeccionPK.version}}
          <p> Ubicacion: {{programacion ? programacion.area.nombre : "" }}</p>
 
@@ -41,6 +41,25 @@
     [usarNivelRiesgo]="listaInspeccion?.usarNivelRiesgo" [usarTipoHallazgo]="listaInspeccion?.usarTipoHallazgo"></s-lista-inspeccion-form>
    
   <br>
+  <p-panel *sTienePermiso="'INP_GET_ESTADO'">
+    <p-header>
+      <i class="fa fa-th-list" aria-hidden="true"></i>
+      <label class="ui-panel-title">Estado de la maquina</label>
+    </p-header>
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+      <div class="input-field">
+          <p-dropdown [options]="EstadoOptionList" formControlName="equipo"
+              class="select-material" styleClass="select-material">
+          </p-dropdown>
+          <label for="" class="active">Estado</label>
+      </div>
+  </div>
+    <label>Observaciones</label>
+    <div class="input-field">
+      <textarea pInputTextarea formControlName="observacion" rows="3"
+          required></textarea>      
+  </div>
+  </p-panel>
   <p-panel *ngIf="permisoHse">
     <p-header>
       <i class="fa fa-th-list" aria-hidden="true"></i>

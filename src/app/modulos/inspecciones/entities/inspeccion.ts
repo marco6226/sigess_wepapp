@@ -11,7 +11,7 @@ import { Area } from '../../empresa/entities/area';
 export class Inspeccion {
   id: number;
   fechaRealizada: Date;
-  fechaModificacion: Date;  
+  fechaModificacion: Date;
   observacion: string;
   lugar: string;
   equipo: string;

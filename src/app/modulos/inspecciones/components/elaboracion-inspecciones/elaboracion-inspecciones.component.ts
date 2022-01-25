@@ -85,6 +85,16 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     mostarHseGet: boolean=true;
     mostarIngGet: boolean=true;
     isEmpleadoValid: boolean;
+    equipo: string;
+    observacion: string;
+
+    EstadoOptionList = [
+        { label: "Disponible", value: "Disponible" },
+        { label: "Parado por lluvia", value: "Parado por lluvia" },
+        { label: "Reparación", value: "Reparación" },
+        { label: "Varado", value: "Varado" },
+        { label: "Operativo", value: "Operativo" },
+    ];
 
 
     constructor(
@@ -170,6 +180,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.inspeccionService.findByFilter(filterQuery)
                 .then(data => {
                     this.inspeccion = (<Inspeccion[]>data['data'])[0];
+                    this.inspeccion.equipo = this.inspeccion.equipo;
+                    this.inspeccion.observacion = this.inspeccion.observacion;
                     this.programacion = this.inspeccion.programacion;
                     this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
                     this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
@@ -198,7 +210,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
                 .catch(err => {
                     this.initLoading = false;
                 });;
-                
+                console.log(this.inspeccion)
         }
         else{
             this.consultar=true;
@@ -290,6 +302,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             inspeccion.calificacionList = calificacionList;
             inspeccion.calificacionList[0].opcionCalificacion = calificacionList[0].opcionCalificacion;
             inspeccion.respuestasCampoList = [];
+            inspeccion.equipo = this.equipo;
+            inspeccion.observacion = this.observacion;
             this.listaInspeccion.formulario.campoList.forEach(campo => {
                 if (campo.tipo == 'multiple_select' && campo.respuestaCampo.valor != null) {
                     let arraySelection = (<string[]>campo.respuestaCampo.valor);
@@ -810,6 +824,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         );
         return empleadoSelect;
     }
+    
 
     botonAceptar(tipo: string){
         if(tipo=='HSE'){
