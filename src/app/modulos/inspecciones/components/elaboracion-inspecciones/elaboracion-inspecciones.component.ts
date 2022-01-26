@@ -180,8 +180,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             this.inspeccionService.findByFilter(filterQuery)
                 .then(data => {
                     this.inspeccion = (<Inspeccion[]>data['data'])[0];
-                    this.inspeccion.equipo = this.inspeccion.equipo;
-                    this.inspeccion.observacion = this.inspeccion.observacion;
+                    this.equipo = this.inspeccion.equipo;
+                    this.observacion = this.inspeccion.observacion;
                     this.programacion = this.inspeccion.programacion;
                     this.listaInspeccion = this.programacion == null ? this.inspeccion.listaInspeccion : this.inspeccion.programacion.listaInspeccion;
                     this.area = this.programacion == null ? this.inspeccion.area : this.inspeccion.programacion.area;
@@ -883,6 +883,4 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
         
     }
-    
-
 }
