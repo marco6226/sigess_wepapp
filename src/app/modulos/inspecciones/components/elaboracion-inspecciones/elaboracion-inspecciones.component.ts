@@ -84,6 +84,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     permisoIngenieria:boolean=false;
     mostarHseGet: boolean=true;
     mostarIngGet: boolean=true;
+    existeEnArray :boolean=false;
+
     isEmpleadoValid: boolean;
     equipo: string;
     observacion: string;
@@ -446,7 +448,51 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             })
           }
 
-          console.log(arrayResultadoVar1)
+      
+
+
+    let dato = this.inspeccion.listaInspeccion.formulario.campoList.filter(item=>{
+        return item.nombre.includes('Numero económico')
+      });
+
+      let numeroeconomico ;
+      let ubicacion;
+      console.log (dato);
+
+if(dato.length > 0){
+      let idnumeroeconomico = dato[0].id;
+   
+   
+
+    let dato2 = this.inspeccion.respuestasCampoList.filter(item=>{
+        return item.campoId.toString().includes(idnumeroeconomico.toString())
+      })
+      console.log(dato2[0].valor);
+      numeroeconomico = dato2[0].valor;
+
+    }
+
+      let dato3 = this.inspeccion.listaInspeccion.formulario.campoList.filter(item=>{
+        return item.nombre.includes('Ubicación');
+      });
+
+
+
+      if(dato3.length > 0){
+      const idubicacion = dato3[0].id;
+
+   
+
+    let dato4 = this.inspeccion.respuestasCampoList.filter(item=>{
+        return item.campoId.toString().includes(idubicacion.toString());
+      })
+      console.log(dato4[0].valor)
+    ubicacion = dato4[0].valor;
+
+    }else{
+        numeroeconomico = "NA"
+        ubicacion ="NA"
+    }
 
 
         await setTimeout(() => { 
@@ -454,7 +500,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
             {                    
               this.authService.sendNotificationhallazgosCriticos(
                 this.inspeccion.id,
-                arrayResultadoVar1);
+                arrayResultadoVar1, numeroeconomico, ubicacion);
             }
             console.log(arrayResultadoVar1.length);
           console.log(this.finalizado);

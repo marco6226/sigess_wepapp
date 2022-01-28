@@ -137,9 +137,9 @@ export class AuthService {
         });
     }
 
-    sendNotificationhallazgosCriticos(id, nocumplecriticos) {
+    sendNotificationhallazgosCriticos(id, nocumplecriticos,numeroeconomico,ubicacion) {
         let body = nocumplecriticos;
-        let endPoint = this.authEndPoint + "enviarHallazgosCriticos/" + id ;
+        let endPoint = this.authEndPoint + 'enviarHallazgosCriticos/' + id + '/' + numeroeconomico  + '/' + ubicacion;
         return new Promise((resolve) => {
             this.httpInt
                 .post(endPoint , body)
