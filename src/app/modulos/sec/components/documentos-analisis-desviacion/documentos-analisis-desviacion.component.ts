@@ -41,7 +41,7 @@ export class DocumentosAnalisisDesviacionComponent implements OnInit {
     if (this.esImagen(doc)) {
       this.directorioService.download(doc.id).then(
         data => {
-          let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+          let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
           this.documentosList.push({ source: urlData, documento: doc });
           this.documentosList = this.documentosList.slice();
         }

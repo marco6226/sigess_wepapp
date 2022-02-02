@@ -1,3 +1,4 @@
+import { ConfirmService } from 'app/modulos/scm/components/formulario-scm/confirm.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, KeyValueDiffers, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
@@ -56,7 +57,9 @@ export class PclComponent implements OnInit {
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
         private differs: KeyValueDiffers,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private confirmService: ConfirmService,
+
     ) {
         this.differ = differs.find({}).create();
 
@@ -170,19 +173,29 @@ export class PclComponent implements OnInit {
         this.pclForm.patchValue(this.pclSelect);
         this.msgs = [];
         try {
-            let res = await this.scmService.deletePcl(this.pclForm.value);
 
-            if (res) {
-                this.msgs.push({
-                    severity: "success",
-                    summary: "Mensaje del sistema",
-                    detail: "La PCL ha sido eliminada exitosamente"
-                });
-                this.action = false;
-                this.eventClose.emit();
-                this.resetDiags();
-                this.cd.markForCheck();
+            if (await this.confirmService.confirmPCL()){
+                let res = await this.scmService.deletePcl(this.pclForm.value);
+
+                if (res) {
+                    this.msgs.push({
+                        severity: "success",
+                        summary: "Mensaje del sistema",
+                        detail: "La PCL ha sido eliminada exitosamente"
+                    });
+                    this.action = false;
+                    this.eventClose.emit();
+                    this.resetDiags();
+                    this.cd.markForCheck();
+                }
             }
+        else {
+            this.msgs = [
+                { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación" }
+            ];
+        }
+
+            
         } catch (error) {
             this.msgs.push({
                 severity: "error",
