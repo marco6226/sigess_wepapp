@@ -21,6 +21,7 @@ export class PclComponent implements OnInit {
     @Input() entity: epsorarl;
 
     @Output() eventClose = new EventEmitter<any>()
+    @Output() dlistaPCL: EventEmitter<any> = new EventEmitter();
 
     action: boolean = false;
     loadingForm: boolean = false;
@@ -85,7 +86,8 @@ export class PclComponent implements OnInit {
     async ngOnInit() {
 
         this.loadDiagnostics();
-        this.iniciarPcl();
+        await this.iniciarPcl();
+        this.dlistaPCL.emit(this.pclList);
     }
 
     loadDiagnostics(val?) {
