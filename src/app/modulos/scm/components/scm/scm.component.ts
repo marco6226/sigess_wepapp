@@ -2,6 +2,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
+import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 import { Cargo } from 'app/modulos/empresa/entities/cargo';
 import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
@@ -44,6 +45,7 @@ export class ScmComponent implements OnInit {
         'razon',
         'pkUser',
         'sve',
+        'eliminado',
 
     ];
     estadosList: SelectItem[] = [
@@ -98,9 +100,15 @@ export class ScmComponent implements OnInit {
         filterQuery.offset = event.first;
         filterQuery.rows = event.rows;
         filterQuery.count = true;
+        let filterEliminado = new Filter();
+        filterEliminado.criteria = Criteria.EQUALS;
+        filterEliminado.field = 'eliminado';
+        filterEliminado.value1 = 'false';
 
         filterQuery.fieldList = this.fields;
-        filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+        filterQuery.filterList = [filterEliminado];        
+        //filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+       
         try {
             let res: any = await this.scmService.findByFilter(filterQuery);
             this.casosList = res.data;
