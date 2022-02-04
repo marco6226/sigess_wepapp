@@ -784,9 +784,10 @@
                             <button *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil"
                                 label="Modificar" class="ui-button-success" (click)="showModalDiagnostico()"
                                 [disabled]="!diagSelect"></button>
-                            <button *sTienePermiso="'SCM_DEL_CASE_DIAG'" pButton type="button" icon="fa fa-trash"
+                            <button *sTienePermiso="['SCM_DEL_CASE_DIAG']" pButton type="button" icon="fa fa-trash"
                                 label="Eliminar" class="ui-button-danger" (click)="deleteDiagnostico(diagSelect.id)"
                                 [disabled]="!diagSelect"></button>
+
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
@@ -804,7 +805,7 @@
     <ng-container *sTienePermiso="'SCM_GET_CASEPCL'">
         <p-tabPanel header="PCL" *ngIf="caseSelect && this.diagnosticoList.length > 0">
             <app-pcl [diagnosticos]="this.diagnosticoList" [entity]="entity" [emitPclentity]="emitPclentity"
-                [pkCase]="caseSelect.id" [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()">
+                [pkCase]="caseSelect.id" [pclOptionList]="pclOptionList" (eventClose)="onCloseModalDianostico()" (dlistaPCL)="ok($event)">
             </app-pcl>
         </p-tabPanel>
     </ng-container>
@@ -998,7 +999,7 @@
                             <button pButton type="button" icon="fa fa-pencil" label="Modificar"
                                 class="ui-button-success" (click)="modalRecomendatios = true"
                                 [disabled]="!recoSelect"></button>
-                            <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"
+                            <button pButton type="button" icon="fa fa-trash" label="Eliminar" *sTienePermiso="'SCM_DEL_CASE_RECO'" class="ui-button-danger"
                                 (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
                         </ng-template>
 
@@ -1146,7 +1147,7 @@
                                         icon="pi pi-times" (click)="onRowEditCancel(seguimiento, ri)"
                                         class="p-button-rounded p-button-text ui-button-danger"></button>
 
-                                    <button *ngIf="!editing" pButton pRipple type="button" pCancelEditableRow
+                                    <button *sTienePermiso="'SCM_DEL_CASE_SEG'" pButton pRipple type="button" pCancelEditableRow
                                         icon="pi pi-trash" (click)="deleteSeguimiento(seguimiento.id)"
                                         title="Borrar Seguimiento" class="ui-button-danger"></button>
                                 </td>

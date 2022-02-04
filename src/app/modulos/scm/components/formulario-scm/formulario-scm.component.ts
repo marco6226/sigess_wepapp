@@ -62,6 +62,9 @@ export interface TreeNode {
 })
 export class FormularioScmComponent implements OnInit, OnDestroy {
 
+    listaPCL;
+    itemInPCL:boolean=false;
+
     empresasList: Empresa[];
     styleMap: { [key: string]: string } = {};
     value;
@@ -517,6 +520,12 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                     this.buildPerfilesIdList();
                 }, 500);
         });
+
+    }
+
+    onClick(){
+        console.log(this.sesionService.getPermisosMap())
+        console.log(this.sesionService.getPermisosMap()["SCM_DEL_CASE_DIAG"])
 
     }
 
@@ -1044,16 +1053,34 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     }
 
     async deleteDiagnostico(id) {
+        
+        console.log("diagnostico:",id)
         this.msgs = [];
         try {
-            let resp = await this.scmService.deleteDiagnosticos(id);
-            if (resp) {
-                this.msgs.push({
-                    severity: "error",
-                    summary: "Diagnostico",
-                    detail: `Su Diagnostico fue eliminado`,
-                });
-                this.onCloseModalDianostico();
+            await this.validarPCL()
+            if(!this.itemInPCL){               
+            
+                if (await this.confirmService.confirmDiagnostico()){
+                    let resp = await this.scmService.deleteDiagnosticos(id);
+                    if (resp) {
+                        this.msgs.push({
+                            severity: "error",
+                            summary: "Diagnostico",
+                            detail: `Su Diagnostico fue eliminado`,
+                        });
+                        this.onCloseModalDianostico();
+                    }
+                }            
+                else {
+                    this.msgs = [
+                        { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación" }
+                    ];
+                }
+            }
+            else{
+                this.msgs = [
+                    { severity: "info", summary: "Cancelado", detail: "El diagnostico contiene PCL activos" }
+                ];
             }
 
         } catch (error) {
@@ -1068,15 +1095,23 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     async deleteRecomendation(id) {
         this.msgs = [];
         try {
-            let resp = await this.scmService.deleteRecomendation(id);
-            if (resp) {
-                this.msgs.push({
-                    severity: "error",
-                    summary: "Mensaje del sistema",
-                    detail: `Su recomendación se eliminó exitosamente`,
-                });
-                this.onCloseModalrecomendation();
+            if (await this.confirmService.confirmRecomendacion()){
+                let resp = await this.scmService.deleteRecomendation(id);
+                if (resp) {
+                    this.msgs.push({
+                        severity: "error",
+                        summary: "Mensaje del sistema",
+                        detail: `Su recomendación se eliminó exitosamente`,
+                    });
+                    this.onCloseModalrecomendation();
+                }
             }
+        else {
+            this.msgs = [
+                { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación" }
+            ];
+        }
+            
         } catch (error) {
             console.log(error)
         }
@@ -1084,16 +1119,24 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     async deleteSeguimiento(id) {
         this.msgs = [];
-        try {
-            let resp = await this.scmService.deleteSeguimiento(id);
-            if (resp) {
-                this.msgs.push({
-                    severity: "error",
-                    summary: "Mensaje del sistema",
-                    detail: `Su seguimiento se eliminó exitosamente`,
-                });
-                this.fechaSeg()
+        try {           
+            if (await this.confirmService.confirmSeguimiento()){
+                let resp = await this.scmService.deleteSeguimiento(id);
+                if (resp) {
+                    this.msgs.push({
+                        severity: "error",
+                        summary: "Mensaje del sistema",
+                        detail: `Su seguimiento se eliminó exitosamente`,
+                    });
+                    this.fechaSeg()
+                }
             }
+        else {
+            this.msgs = [
+                { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación" }
+            ];
+        }
+            
 
         } catch (error) {
             console.log(error)
@@ -1149,4 +1192,26 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.modalRecomendatios = true;
     }
 
+    
+    ok(event){
+        console.log("------------------------------------------------",event)
+        console.log("************************************************",this.diagnosticoList)
+        console.log("////////////////////////////////////////////////",this.diagSelect)
+
+
+        this.listaPCL=event
+    }
+    validarPCL(){
+        this.itemInPCL=false;
+
+        // console.log(this.diagSelect.diagnostico)
+        this.listaPCL.forEach(item => {
+           if(item.diagnostic.label == this.diagSelect.diagnostico){
+            this.itemInPCL=true;
+            // return true;
+           }
+       }); 
+    //    console.log(this.itemInPCL)
+    }
+    
 }
