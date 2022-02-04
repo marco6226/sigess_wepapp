@@ -366,6 +366,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             entidadEmitidaTwo: [null],
             cargo: [null],
             descripcionCompletaCaso: [null, /*Validators.required*/],
+            eliminado: [false, /*Validators.required*/],
             fechaCalificacion: [null, /*Validators.required*/],
             sve: [null, /*Validators.required*/],
             pkUser: [null, Validators.required],
@@ -523,9 +524,24 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         try {
             let token: any = await this.scmService.getTokenAon();
             console.log(token.message.Authorization);
+            let  fechafinal = new Date().toISOString().slice(0, 10);
+            console.log(fechafinal);
 
-            let res: any = await this.scmService.getRegistersAon(token.message.Authorization, this.empleadoSelect.numeroIdentificacion, "2010-01-01", "2021-12-31");
+            let res: any = await this.scmService.getRegistersAon(token.message.Authorization, this.empleadoSelect.numeroIdentificacion, "2010-01-01", fechafinal);
             this.incapacidades = res.message.data;
+            
+
+            this.incapacidades = this.incapacidades.sort((a, b) => {
+                if (a.finicio > b.finicio ) {
+                  return -1;
+                }
+                if (a.finicio < b.finicio) {
+                  return 1;
+                }
+                return 0;
+              });
+
+            
         } catch (error) {
             console.log(error.message);
         }
@@ -554,6 +570,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
             names: ``,
             cargo: this.empleadoForm.value.cargoId,
+            eliminado: false,
 
 
             pkUser: this.empleadoForm.get("id").value || null,
