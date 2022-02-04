@@ -1062,7 +1062,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             }
             else{
                 this.msgs = [
-                    { severity: "info", summary: "Cancelado", detail: "El diagnostico contiene PCL activos" }
+                    { severity: "info", summary: "Cancelado", detail: "El diagnostico contiene PCL asociada" }
                 ];
             }
 
@@ -1176,25 +1176,16 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     }
 
     
-    ok(event){
-        console.log("------------------------------------------------",event)
-        console.log("************************************************",this.diagnosticoList)
-        console.log("////////////////////////////////////////////////",this.diagSelect)
-
-
+    recibirPCL(event){
         this.listaPCL=event
     }
     validarPCL(){
         this.itemInPCL=false;
-
-        // console.log(this.diagSelect.diagnostico)
         this.listaPCL.forEach(item => {
            if(item.diagnostic.label == this.diagSelect.diagnostico){
             this.itemInPCL=true;
-            // return true;
            }
-       }); 
-    //    console.log(this.itemInPCL)
+        }); 
     }
     
 }

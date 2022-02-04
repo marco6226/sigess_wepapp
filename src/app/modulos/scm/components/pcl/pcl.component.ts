@@ -189,7 +189,10 @@ export class PclComponent implements OnInit {
                     this.eventClose.emit();
                     this.resetDiags();
                     this.cd.markForCheck();
+                    await this.iniciarPcl();
+                    this.dlistaPCL.emit(this.pclList);
                 }
+               
             }
         else {
             this.msgs = [
@@ -214,8 +217,10 @@ export class PclComponent implements OnInit {
         this.pclForm.patchValue(this.pclSelect);
     }
 
-    nuevoTratamiento() {
+    async nuevoTratamiento() {
         this.modalDianostico = true;
+        await this.iniciarPcl();
+        this.dlistaPCL.emit(this.pclList);
     }
 
     showPcl() {
