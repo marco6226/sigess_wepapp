@@ -550,7 +550,7 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     buscar(event: any) {
-        if (event.keyCode == 13) {
+        // if (event.keyCode == 13) {
             this.loading = true;
             let filterQuery = new FilterQuery();
             filterQuery.filterList = [];
@@ -594,7 +594,8 @@ export class GestionDocumentalComponent implements OnInit {
                 this.directorioList = this.generarModelo(dirList, null);
                 this.loading = false;
             });
-        }
+        // }
+        console.log(event)
     }
     getNivelAcceso(event, dataNode?: Directorio) {
         if (dataNode != null) {

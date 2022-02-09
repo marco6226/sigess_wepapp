@@ -11,10 +11,11 @@
 <p-panel >
     <p-messages [(value)]="msgs" [closable]="false"></p-messages>
     <p-header>
-        <div class="ui-inputgroup">
+        <div class="ui-inputgroup" >
             <span class="ui-inputgroup-addon">
-                <i class="fa fa-search"></i>
+                <i class="fa fa-search"   ></i>
             </span>
+           
             <input type="text" pInputText placeholder="Buscar documento" [(ngModel)]="criterioBusqueda" (keypress)="buscar($event)" />
         </div>
     </p-header>

@@ -224,7 +224,7 @@ export class TareaComponent implements OnInit {
 
         if (
             !fecha_cierre.isValid() &&
-            fecha_proyectada.isAfter(now) &&
+            
             isFollowsExist
         )
             return 1;
