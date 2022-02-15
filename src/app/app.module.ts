@@ -28,7 +28,6 @@ import { HttpAuthInterceptor } from './modulos/core/services/http-auth-intercept
 import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
 import { ScmModule } from './modulos/scm/scm.module';
-import {NgxGraphModule} from './ngx-graph/ngx-graph.module';
 
 
 
