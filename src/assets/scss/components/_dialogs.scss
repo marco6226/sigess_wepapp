@@ -2,7 +2,9 @@
 
 .ui-dialog {
     border-radius: 8px !important;
-    transition: all 0.3s ease-in-out !important;
+    // transition: all 0.3s ease-in-out !important;
+    // padding: 43px !important;
+    width: 100%;
     &.ui-confirmdialog {
         .ui-dialog-footer {
             .ui-button {

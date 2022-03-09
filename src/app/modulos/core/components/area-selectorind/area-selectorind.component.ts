@@ -51,7 +51,7 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
   displayDialog: boolean = false;
   lblBtn: string;
   sugerenciasList: TreeNode[];
-  loading: boolean = false;
+  loading: boolean = true;
   propagateChange = (_: any) => { };
 
   constructor(private areaService: AreaService) { }
@@ -110,7 +110,7 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
         let root: TreeNode = {
           label: '',
           selectable: false,
-          expanded: false,
+          expanded: true,
         };
         let nodos = this.createTreeNode(<Area[]>data['data'], null);
         root.children = nodos;
@@ -256,6 +256,8 @@ export class AreaSelectorIndComponent implements OnInit, ControlValueAccessor {
     this.onAreaSelect.emit(area);
   }
 
-  
+  ok(){
+    console.log(this.areaSelected, this.areasNodes)
+  }
 
 }
