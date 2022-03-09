@@ -35,7 +35,7 @@ export class ConsultaObservacionesComponent implements OnInit {
     'aceptada',
     'area',
     'area_id',
-    'area_nombre' 
+    'area_nombre'
   ];
   areasPermiso: string;
 

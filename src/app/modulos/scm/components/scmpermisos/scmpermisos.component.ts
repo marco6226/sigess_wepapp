@@ -39,7 +39,7 @@ export class ScmpermisosComponent implements OnInit {
         let filterQuery = new FilterQuery();
 
         this.areaService.findAll().then(
-            resp => (<Area[]>resp['data']).forEach(area => this.areaList.push({ label: area.nombre, value: area.id }))
+            resp => (<Area[]>resp['data']).forEach(area => this.areaList.push({ label: area.nombre, value: area.id,title: area.areaPadre.nombre}))
         );
 
         this.perfilesList.push({ label: '--Seleccione--', value: null });
