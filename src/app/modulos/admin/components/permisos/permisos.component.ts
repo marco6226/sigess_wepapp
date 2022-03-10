@@ -41,11 +41,12 @@ export class PermisosComponent implements OnInit {
         this.areaService.findAll().then(
             // resp => (<Area[]>resp['data']).forEach(area => this.areaList.push({ label: area.nombre, value: area.id ,title: area.areaPadre.nombre }))
             resp => (<Area[]>resp['data']).forEach(area=>{
-                if(area.areaPadre.nombre == undefined || area.areaPadre.nombre == null){
-                    this.areaList.push({label: area.nombre +" - "+ area.areaPadre.toString(),value : area.id})
-                }else{
-                    this.areaList.push({label: area.nombre  +" - "+ area.areaPadre.nombre,value: area.id})
-                }
+                // if(area.areaPadre.nombre == undefined || area.areaPadre.nombre == null){
+                //     this.areaList.push({label: area.nombre +" - "+ area.areaPadre.toString(),value : area.id})
+                // }else{
+                //     this.areaList.push({label: area.nombre  +" - "+ area.areaPadre.nombre,value: area.id})
+                // }
+                this.areaList.push({label: area.nombre,value : area.id})
             })
         );
         console.log(this.areaList);
