@@ -40,6 +40,7 @@ export class PermisosComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        
         // this.areaService.findAll().then(
         //     resp => (<Area[]>resp['data']).forEach(area => this.areaList.push({ label: area.nombre, value: area.id }))
         //     // resp => (<Area[]>resp['data']).forEach(area=>{
