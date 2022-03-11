@@ -1,3 +1,5 @@
+import { element } from 'protractor';
+import { Criteria } from './../../../core/entities/filter';
 import { Component, OnInit } from '@angular/core';
 
 import { Message } from 'primeng/primeng';
@@ -11,7 +13,7 @@ import { SelectItem } from 'primeng/primeng'
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { AreaService } from '../../../empresa/services/area.service';
-import { Area } from '../../../empresa/entities/area';
+import { Area, Estructura } from '../../../empresa/entities/area';
 import { Filter } from 'app/modulos/core/entities/filter';
 
 @Component({
@@ -38,18 +40,18 @@ export class PermisosComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.areaService.findAll().then(
-            // resp => (<Area[]>resp['data']).forEach(area => this.areaList.push({ label: area.nombre, value: area.id ,title: area.areaPadre.nombre }))
-            resp => (<Area[]>resp['data']).forEach(area=>{
-                if(area.areaPadre.nombre == undefined || area.areaPadre.nombre == null){
-                    this.areaList.push({label: area.nombre +" - "+ area.areaPadre.toString(),value : area.id})
-                }else{
-                    this.areaList.push({label: area.nombre  +" - "+ area.areaPadre.nombre,value: area.id})
-                }
-            })
-        );
+        // this.areaService.findAll().then(
+        //     resp => (<Area[]>resp['data']).forEach(area => this.areaList.push({ label: area.nombre, value: area.id }))
+        //     // resp => (<Area[]>resp['data']).forEach(area=>{
+        //     //     if(area.areaPadre.nombre == undefined || area.areaPadre.nombre == null){
+        //     //         this.areaList.push({label: area.nombre +" - "+ area.areaPadre.toString(),value : area.id})
+        //     //     }else{
+        //     //         this.areaList.push({label: area.nombre  +" - "+ area.areaPadre.nombre,value: area.id})
+        //     //     }
+        //     // })
+        // );
         console.log(this.areaList);
-
+        this.selectArea_areaPadre();
 
         this.perfilesList.push({ label: '--Seleccione--', value: null });
         this.perfilService.findAll().then(
@@ -156,5 +158,39 @@ export class PermisosComponent implements OnInit {
         );
     }
 
+    selectArea_areaPadre(){
+        let filterAreaQuery = new FilterQuery();
+    filterAreaQuery.filterList = [
+      { field: 'areaPadre', criteria: Criteria.IS_NULL, value1: null, value2: null },
+      { field: 'estructura', criteria: Criteria.EQUALS, value1: Estructura.ORGANIZACIONAL.toString(), value2: null }
+    ];
+    this.areaService.findByFilter(filterAreaQuery)
+      .then(element => {
+        this.createArbol(element);
+      })
+    }
+
+    createArbol(data){        
+        console.log(data)
+        data.data.forEach(element => {
+            // console.log(element)
+            this.areaList.push({label: element.nombre, value : element.id})
+            if(element.areaList.length > 0){
+                this.createArbolHijo(element.nombre,element.areaList)
+            }
+        });
+        console.log('lista',this.areaList)
+    }
+
+    createArbolHijo(nombrePadre, dataHijo){
+        console.log(dataHijo)
+        dataHijo.forEach(element => {
+            // console.log(element)
+            this.areaList.push({label: nombrePadre + "-" + element.nombre, value : element.id})
+            if(element.areaList.length > 0){
+                this.createArbolHijo(element.nombre,element.areaList)
+            }
+        });
+    }
 
 }
