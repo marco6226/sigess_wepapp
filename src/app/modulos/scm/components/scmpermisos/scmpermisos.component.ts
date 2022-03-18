@@ -27,7 +27,7 @@ export class ScmpermisosComponent implements OnInit {
     msgs: Message[] = [];
     rowGroupMetadata: any;
     areaList: SelectItem[] = [];
-
+    isOnEdit: boolean = false;
     constructor(
         private areaService: AreaService,
         private recursoService: RecursoService,
@@ -137,6 +137,7 @@ export class ScmpermisosComponent implements OnInit {
     }
 
     actualizarPermiso(recurso: Recurso) {
+        this.isOnEdit=true;
         let permiso = new Permiso();
         permiso.valido = recurso.selected;
         permiso.recurso = new Recurso();
@@ -150,6 +151,9 @@ export class ScmpermisosComponent implements OnInit {
             resp => {
                 this.msgs = [];
                 this.msgs.push({ summary: 'PERMISO ACTUALIZADO', detail: 'El permiso se ha actualizado correctamente', severity: 'success' });
+                if(resp){
+                    this.isOnEdit=false;
+                }
             }
         );
     }

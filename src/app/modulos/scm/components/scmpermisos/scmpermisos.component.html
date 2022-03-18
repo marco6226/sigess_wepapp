@@ -50,8 +50,8 @@
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex">
                     <tr>
-                        <td style="width: 3em;">
-                            <button pButton icon="fa fa-pencil" class="soft-icon" style="color:green !important;"
+                        <td style="width: 3em;" >
+                            <button pButton [disabled]="isOnEdit" icon="fa fa-pencil" class="soft-icon" style="color:green !important;"
                                 (click)="actualizarPermiso(rowData)"></button>
                         </td>
                         <td style="width: 3em;">

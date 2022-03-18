@@ -31,6 +31,7 @@ export class PermisosComponent implements OnInit {
     msgs: Message[] = [];
     rowGroupMetadata: any;
     areaList: SelectItem[] = [];
+    isOnEdit: boolean = false;
 
     constructor(
         private areaService: AreaService,
@@ -142,6 +143,7 @@ export class PermisosComponent implements OnInit {
     }
 
     actualizarPermiso(recurso: Recurso) {
+        this.isOnEdit=true;
         let permiso = new Permiso();
         permiso.valido = recurso.selected;
         permiso.recurso = new Recurso();
@@ -155,6 +157,9 @@ export class PermisosComponent implements OnInit {
             resp => {
                 this.msgs = [];
                 this.msgs.push({ summary: 'PERMISO ACTUALIZADO', detail: 'El permiso se ha actualizado correctamente', severity: 'success' });
+                if(resp){
+                    this.isOnEdit=false;
+                }
             }
         );
     }
