@@ -39,6 +39,7 @@ export class PclComponent implements OnInit {
         { label: 'Seleccione', value: null },
         { label: 'Común', value: 'Común' },
         { label: 'Accidente De Trabajo', value: 'Accidente De Trabajo' },
+        { label: 'Accidente De Transito', value: 'Accidente De Transito' },
         { label: 'Mixto', value: 'Mixto' },
         { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
     ];
