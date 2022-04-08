@@ -1,11 +1,13 @@
 <div><strong>  Investigación</strong>
 </div>
+<button pButton type="button" (click)="exportexcel($event)" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
 <p-tabView>
 
     <p-tabPanel header="Consolidado desviaciones">
         <div>
-            <p-table #dt [value]="desviacionesList" [rows]="10" [paginator]="true" [(selection)]="desviacionesListSelect" [autoLayout]="false" [paginator]="true" paginatorPosition="top" dataKey="hashId" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
+            <p-table id="excel-table" #dt [value]="desviacionesList" [rows]="30" [paginator]="true" [(selection)]="desviacionesListSelect" [autoLayout]="false" [paginator]="true" paginatorPosition="top" dataKey="hashId" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
                 [loading]="loading" [responsive]="true">
+               
                 <!-- paginatorPosition="both" [rowsPerPageOptions]="[5,10,15,20]"-->
                 <ng-template pTemplate="header">
                     <tr>
@@ -28,6 +30,9 @@
                             <p-sortIcon field="concepto"></p-sortIcon>
                         </th>
                         <th pSortableColumn="aspectoCausante" style="width: 30%;">Aspecto causante 
+                            <p-sortIcon field="aspectoCausante"></p-sortIcon>
+                        </th>
+                        <th *ngIf="empresaCriticidadPermiso==empresaId" pSortableColumn="aspectoCausante" style="width: 30%;">Criticidad
                             <p-sortIcon field="aspectoCausante"></p-sortIcon>
                         </th>
                     </tr>
@@ -53,6 +58,9 @@
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value, 'aspectoCausante', 'contains')">
                         </td>
+                        <td *ngIf="empresaCriticidadPermiso==empresaId" >
+                            <p-dropdown [options]="opcionesCritididad" [style]="{'min-width':'0em'}" (onChange)="dt.filter($event.value, 'criticidad', 'equals')"></p-dropdown>
+                        </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-desviacion>
@@ -70,6 +78,7 @@
                         <td>{{desviacion.area_nombre}}</td>
                         <td>{{desviacion.concepto}}</td>
                         <td [pTooltip]="desviacion.aspectoCausante" tooltipPosition="top">{{desviacion.aspectoCausante | slice:0:100}}...</td>
+                        <td *ngIf="empresaCriticidadPermiso==empresaId">{{desviacion.criticidad}}</td>
                     </tr>
                 </ng-template>
                 <!-- <ng-template pTemplate="caption">
