@@ -7,4 +7,6 @@ export class Desviacion {
   aspectoCausante: string;
   nivelRiesgo: string;
   analisisId:string;
+  criticidad?: string;
+  empresaId?: number;
 }

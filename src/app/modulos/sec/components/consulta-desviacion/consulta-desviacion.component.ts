@@ -1,3 +1,4 @@
+import { Inspeccion } from 'app/modulos/inspecciones/entities/inspeccion';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DesviacionService } from 'app/modulos/sec/services/desviacion.service';
@@ -7,6 +8,7 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { SesionService } from '../../../core/services/sesion.service';
 import { Criteria } from '../../../core/entities/filter';
+import * as XLSX from 'xlsx'; 
 
 @Component({
   selector: 'app-consulta-desviacion',
@@ -18,11 +20,21 @@ export class ConsultaDesviacionComponent implements OnInit {
   desviacionesList: Desviacion[];
   desviacionesListSelect: Desviacion[];
   opcionesModulos = [
-    { label: '', value: null },
+    { label: '', value: null }, 
     { label: 'Inspecciones', value: 'Inspecciones' },
     { label: 'Observaciones', value: 'Observaciones' },
     { label: 'Reporte A/I', value: 'Reporte A/I' },
   ];
+
+  empresaCriticidadPermiso: number=11;
+  empresaId: number;
+  opcionesCritididad=[
+    { label: '', value: null},
+    { label: 'Bajo', value: 'Bajo'},
+    { label: 'Medio', value: 'Medio'},
+    { label: 'Alto', value: 'Alto'},
+  ]
+  fileName= 'ListaDesviaciones.xlsx';
 
   loading: boolean = true;
   totalRecords: number;
@@ -33,7 +45,8 @@ export class ConsultaDesviacionComponent implements OnInit {
     'concepto',
     'fechaReporte',
     'aspectoCausante',
-    'analisisId'
+    'analisisId',
+    'criticidad'
   ];
   areasPermiso: string;
 
@@ -52,10 +65,16 @@ export class ConsultaDesviacionComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ok");
+    
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
+    console.log(this.areasPermiso);
+    
   }
+  
 
   lazyLoad(event: any) {
+    console.log(event)
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -64,7 +83,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     filterQuery.rows = event.rows;
     filterQuery.count = true;
    
-    filterQuery.fieldList = this.fields;
+    // filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
 
@@ -72,8 +91,9 @@ export class ConsultaDesviacionComponent implements OnInit {
       resp => {
         this.totalRecords = resp['count'];
         this.loading = false;
-        //console.log(resp);
+        console.log(resp);
         this.desviacionesList = resp['data'];
+        this.empresaId = this.desviacionesList[0].empresaId
       }
     ).catch(err => this.loading = false);
   }
@@ -133,4 +153,53 @@ export class ConsultaDesviacionComponent implements OnInit {
         this.downloading = false;
       });
   }
+
+  async exportexcel(event): Promise<void> 
+    {
+       /* table id is passed over here */   
+       console.log('ok')
+       let element = document.getElementById('excel-table'); 
+       element.getElementsByClassName
+      //  console.log(element, element.classList);
+       
+      // let datos = await this.cargarDatosExcel(event);
+
+      //  const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(datos);
+
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+			
+    }
+
+    cargarDatosExcel(event){
+      let getDatosDesv: Desviacion[];
+
+      // console.log(event)
+      this.loading = true;
+      let filterQuery = new FilterQuery();
+      filterQuery.sortField = event.sortField;
+      // filterQuery.sortOrder = 1;
+      // filterQuery.offset = event.first;
+      // filterQuery.rows = event.rows;
+      // filterQuery.count = true;
+     
+      filterQuery.fieldList = this.fields;
+      filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+      console.log("ioi",this.areasPermiso);
+      
+      filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+  
+      this.desviacionService.findByFilter().then(
+        resp => {
+          console.log(resp);
+          getDatosDesv = resp['data'];
+        }
+      )
+
+      return getDatosDesv;
+    }
 }
