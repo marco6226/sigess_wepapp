@@ -49,7 +49,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     'criticidad'
   ];
   areasPermiso: string;
-
+  getDatosDesv: Desviacion[];
 
   visibleDlg: boolean;
   desde: Date;
@@ -94,6 +94,23 @@ export class ConsultaDesviacionComponent implements OnInit {
         console.log(resp);
         this.desviacionesList = resp['data'];
         this.empresaId = this.desviacionesList[0].empresaId
+      }
+    ).catch(err => this.loading = false);
+
+    let filterQuery2 = new FilterQuery();
+    filterQuery2.sortField = event.sortField;
+    filterQuery2.sortOrder = 1;
+    filterQuery2.offset = event.first;
+    filterQuery2.count = true;
+   
+    // filterQuery.fieldList = this.fields;
+    filterQuery2.filterList = FilterQuery.filtersToArray(event.filters);
+    filterQuery2.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+
+    this.desviacionService.findByFilter(filterQuery2).then(
+      resp => {
+        
+        this.getDatosDesv = resp['data'];
       }
     ).catch(err => this.loading = false);
   }
@@ -162,11 +179,11 @@ export class ConsultaDesviacionComponent implements OnInit {
        element.getElementsByClassName
       //  console.log(element, element.classList);
        
-      // let datos = await this.cargarDatosExcel(event);
+      let datos = await this.cargarDatosExcel(event);
 
-      //  const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(datos);
+       const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(this.getDatosDesv);
 
-       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+      //  const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
        const wb: XLSX.WorkBook = XLSX.utils.book_new();
        XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
 

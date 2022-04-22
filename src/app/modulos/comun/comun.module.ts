@@ -100,6 +100,7 @@ import { CambioPasswdComponent } from './components/cambio-passwd/cambio-passwd.
 import { LoginComponent } from '../core/components/login/login.component';
 import { ContactoComponent } from '../core/components/contacto/contacto.component';
 import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.component';
+import { DiagramAllModule, DiagramModule, OverviewAllModule, SymbolPaletteAllModule, SymbolPaletteModule } from '@syncfusion/ej2-angular-diagrams';
 
 @NgModule({
 	imports: [
@@ -142,7 +143,8 @@ import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.com
 		ChipsModule,
 		FileUploadModule,
 		BreadcrumbModule,
-
+		// TreeSelectModule,
+		
 		ChartModule,
 		MultiSelectModule,
 		DropdownModule,
@@ -155,7 +157,12 @@ import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.com
 		ScrollPanelModule,
 		GMapModule,
         ProgressSpinnerModule,
-        
+
+        DiagramAllModule, 
+		DiagramModule, 
+		OverviewAllModule, 
+		SymbolPaletteAllModule, 
+		SymbolPaletteModule
 	],
 	exports: [
 		CommonModule,
@@ -236,7 +243,13 @@ import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.com
 
 		FileSizePipe,
 		TienePermisoDirective,
-		ConfiguracionGeneralDirective
+		ConfiguracionGeneralDirective,
+
+		DiagramAllModule, 
+		DiagramModule, 
+		OverviewAllModule, 
+		SymbolPaletteAllModule, 
+		SymbolPaletteModule
 	],
 	declarations: [
         LayoutComponent,

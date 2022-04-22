@@ -5,7 +5,7 @@
 
     <p-tabPanel header="Consolidado desviaciones">
         <div>
-            <p-table id="excel-table" #dt [value]="desviacionesList" [rows]="30" [paginator]="true" [(selection)]="desviacionesListSelect" [autoLayout]="false" [paginator]="true" paginatorPosition="top" dataKey="hashId" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
+            <p-table id="excel-table" #dt [value]="desviacionesList" [rows]="10" [paginator]="true" [(selection)]="desviacionesListSelect" [autoLayout]="false" [paginator]="true" paginatorPosition="top" dataKey="hashId" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
                 [loading]="loading" [responsive]="true">
                
                 <!-- paginatorPosition="both" [rowsPerPageOptions]="[5,10,15,20]"-->
