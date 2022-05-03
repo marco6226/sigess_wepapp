@@ -43,7 +43,8 @@ export class ElementoInspeccionNodeComponent implements OnInit {
     { label: "----",value : null },  
     { label: "Bajo",value: "Bajo"},
     { label: "Medio", value: "Medio" },
-    { label: "Alto", value: "Alto" }];
+    { label: "Alto", value: "Alto" },
+    { label: "Muy Alto", value: "Muy Alto" }];
   constructor(public router: Router) {
 
    }

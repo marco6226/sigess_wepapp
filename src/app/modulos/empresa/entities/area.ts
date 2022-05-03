@@ -9,7 +9,7 @@ export class Area {
   nivel: number;
   tipoArea: TipoArea;
   sede: Sede;
-  areaPadre: Area;
+  areaPadre?: Area;
   areaList: Area[];
   contacto: string;
 
