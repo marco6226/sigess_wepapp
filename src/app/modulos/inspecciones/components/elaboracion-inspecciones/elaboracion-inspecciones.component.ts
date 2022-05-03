@@ -416,7 +416,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
            
            
             var1.push( criticosInterno.filter(function(element) {
-                return element.criticidad === 'Alto' || element.criticidad === 'Medio' ;               
+                return element.criticidad === 'Alto' || element.criticidad === 'Medio' || element.criticidad === 'Muy Alto'  ;               
                 
               }));
            
