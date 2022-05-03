@@ -44,8 +44,8 @@ export class FileUtils {
       type: 'text/csv;charset=utf-8;'
     });
 
-    if (window.navigator.msSaveOrOpenBlob) {
-      navigator.msSaveOrOpenBlob(blob, exportFilename + '.csv');
+    if (window.navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, exportFilename + '.csv');
     } else {
       let link = document.createElement("a");
       link.style.display = 'none';
