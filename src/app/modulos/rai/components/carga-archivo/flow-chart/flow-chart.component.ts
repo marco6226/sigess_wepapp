@@ -202,7 +202,3 @@ declare global {
         msSaveBlob?: (blob: any, defaultName?: string) => boolean
     }
 }
-
-if (navigator.msSaveBlob) {
-    // use navigator.msSaveBlob
-}
