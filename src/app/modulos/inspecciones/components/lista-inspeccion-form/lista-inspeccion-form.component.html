@@ -21,7 +21,7 @@
   <form [formGroup]="inpForm">
       <p-panel  *ngIf="empresa.id == '11' && !editable">
           <p-header>
-              <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno supervision / Ingenieria
+              <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno Area encargada
           </p-header>
           <div class="input-field">
             <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" formControlName="numeroIdentificacion"
@@ -64,7 +64,7 @@
   <form [formGroup]="inpForm" >
       <p-panel *ngIf="empresa.id == '11' && !editable">
           <p-header>
-              <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno HSE
+              <i class="fa fa-list" aria-hidden="true"></i> Visto Bueno Maquinaria
           </p-header>
           
             <div class="input-field">
