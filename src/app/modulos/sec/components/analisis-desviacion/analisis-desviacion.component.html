@@ -44,7 +44,29 @@
         <div class="ui-g">
             <div class="ui-g-12 ui-sm-12">
                 <p-tabView>
-                    <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Descipción">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                                <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
+                                <input type="text" pInputText [(ngModel)]="empresaName"/>
+                            </div>
+                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                                <h4 style="margin-bottom: 20px;">NIT</h4>
+                                <input type="text" pInputText [(ngModel)]="empresaNit"/>
+                            </div>    
+                                                  
+                        </div>
+                        <div class="ui-g">
+                           
+                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                                <h4 style="margin-bottom: 20px;">Descripción</h4>
+                                <textarea pInputTextarea [(ngModel)]="empresaDescipcion"></textarea>
+                            </div>                           
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
+                        <app-miembros-equipo></app-miembros-equipo>
+                    </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Flujo 1"></p-tabPanel>

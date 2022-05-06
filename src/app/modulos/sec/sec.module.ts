@@ -27,6 +27,7 @@ import { CoreModule } from '../core/core.module';
 import { SeguimientosTareasComponent } from './components/seguimientos-tareas/seguimientos-tareas.component';
 import { VerificacionTareaComponent } from './components/verificacion-tarea/verificacion-tarea.component';
 import { CapitalizePipe } from './utils/pipes/capitalize.pipe';
+import { MiembrosEquipoComponent } from './components/analisis-desviacion/miembros-equipo/miembros-equipo.component';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { CapitalizePipe } from './utils/pipes/capitalize.pipe';
         TareaComponent,
         SeguimientosTareasComponent,
         VerificacionTareaComponent,
-        CapitalizePipe
+        CapitalizePipe,
+        MiembrosEquipoComponent
     ],
     providers: [
         SistemaCausaRaizService,

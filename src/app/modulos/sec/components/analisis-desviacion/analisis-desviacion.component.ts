@@ -68,6 +68,10 @@ export class AnalisisDesviacionComponent implements OnInit {
     visibleLnkResetPasswd = true;
     idEmpresa: string;
 
+    empresaName: string;
+    empresaNit: string;
+    empresaDescipcion: string;
+
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
