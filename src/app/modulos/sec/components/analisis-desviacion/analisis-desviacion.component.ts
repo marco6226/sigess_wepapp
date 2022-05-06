@@ -25,6 +25,7 @@ import { FilterQuery } from "../../../core/entities/filter-query";
 import { Criteria } from "../../../core/entities/filter";
 import { jerarquia } from "../../entities/jerarquia";
 import { AuthService } from "app/modulos/core/auth.service";
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 @Component({
     selector: "s-analisisDesviacion",
@@ -65,6 +66,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     modificar: boolean = false;
     adicionar: boolean = false;
     visibleLnkResetPasswd = true;
+    idEmpresa: string;
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
@@ -72,10 +74,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         private sistemaCausaInmdService: SistemaCausaInmediataService,
         private sistemaCausaRaizService: SistemaCausaRaizService,
         private paramNav: ParametroNavegacionService,
-        private authService: AuthService
+        private authService: AuthService,
+        private sesionService: SesionService,
     ) {}
 
     ngOnInit() {
+        this.idEmpresa = this.sesionService.getEmpresa().id;
         if (this.value == null) {
             switch (this.paramNav.getAccion<string>()) {
                 case "GET":

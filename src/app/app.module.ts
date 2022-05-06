@@ -29,11 +29,11 @@ import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
 import { ScmModule } from './modulos/scm/scm.module';
 
-// declare global {
-//     interface Navigator {
-//         msSaveBlob?: (blob: any, defaultName?: string) => boolean
-//     }
-// }
+declare global {
+    interface Navigator {
+        msSaveBlob?: (blob: any, defaultName?: string) => boolean
+    }
+}
 
 
 

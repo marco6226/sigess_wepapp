@@ -22,8 +22,8 @@ input{
   background-image: url(/assets/images/logocirculo2.svg);
   opacity: 0.9;
   background-size: 250px;
-  margin-left: 8px;
-  margin-top: 8px;
+  /*margin-left: 8px;
+  margin-top: 8px;*/
 }
 
 .form-container {

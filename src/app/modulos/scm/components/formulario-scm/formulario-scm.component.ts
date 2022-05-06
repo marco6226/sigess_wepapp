@@ -125,15 +125,19 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     entityConceptoRehabilitacion = [
         [
             { label: "--Seleccione--", value: null },
+            { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "EPS" },
 
         ],
         [
             { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
         ],
         [
             { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
+            { label: "ARL", value: "ARL" },
         ],
 
         [

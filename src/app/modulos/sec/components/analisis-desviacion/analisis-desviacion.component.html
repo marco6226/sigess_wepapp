@@ -44,6 +44,14 @@
         <div class="ui-g">
             <div class="ui-g-12 ui-sm-12">
                 <p-tabView>
+                    <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Flujo 1"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Parametros"></p-tabPanel>
                     <p-tabPanel header="Establecimiento de causas">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
