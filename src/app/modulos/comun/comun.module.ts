@@ -35,7 +35,6 @@ import {
 	PasswordModule,
 	CheckboxModule,
 	TabViewModule,
-	ButtonModule,
 	TooltipModule,
 	GrowlModule,
 	RadioButtonModule,
@@ -102,6 +101,25 @@ import { ContactoComponent } from '../core/components/contacto/contacto.componen
 import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.component';
 import { DiagramAllModule, DiagramModule, OverviewAllModule, SymbolPaletteAllModule, SymbolPaletteModule } from '@syncfusion/ej2-angular-diagrams';
 
+import {ToastModule} from 'primeng/toast';
+import {ToolbarModule} from 'primeng/toolbar';
+import {ButtonModule} from 'primeng/button';
+import {RatingModule} from 'primeng/rating';
+// import {InputNumberModule} from 'primeng/primeng';
+
+
+const modules = [
+	ToastModule,
+	ButtonModule,
+	BreadcrumbModule,
+	MenuModule,
+	ConfirmDialogModule,
+	PanelModule,
+	ToolbarModule,
+	RatingModule,
+	// InputNumberModule
+  ];
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -162,7 +180,9 @@ import { DiagramAllModule, DiagramModule, OverviewAllModule, SymbolPaletteAllMod
 		DiagramModule, 
 		OverviewAllModule, 
 		SymbolPaletteAllModule, 
-		SymbolPaletteModule
+		SymbolPaletteModule,
+
+		modules
 	],
 	exports: [
 		CommonModule,
@@ -249,7 +269,9 @@ import { DiagramAllModule, DiagramModule, OverviewAllModule, SymbolPaletteAllMod
 		DiagramModule, 
 		OverviewAllModule, 
 		SymbolPaletteAllModule, 
-		SymbolPaletteModule
+		SymbolPaletteModule,
+
+		modules
 	],
 	declarations: [
         LayoutComponent,

@@ -1,177 +1,126 @@
-<!-- <p-table>
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="analisisId" style="width:9%;" title="Documento">Documento
-                <p-sortIcon field="analisisId"></p-sortIcon>
-            </th>
-            <th pSortableColumn="modulo" style="width: 9%;">Nombre
-                <p-sortIcon field="modulo"></p-sortIcon>
-            </th>
-            <th pSortableColumn="hashId" style="width: 11%;">Cargo
-                <p-sortIcon field="hashId"></p-sortIcon>
-            </th>
-            <th pSortableColumn="fechaReporte" style="width: 9%;">División
-                <p-sortIcon field="fechaReporte.date:'yyyy-MM-dd HH:mm'" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-            </th>
-            <th pSortableColumn="area.nombre" style="width: 10%;">Localidad
-                <p-sortIcon field="area.nombre"></p-sortIcon>
-            </th>
-           
-        </tr>
-        <ng-template pTemplate="body" let-desviacion>
-            <tr [pSelectableRow]="desviacion">
-                <td style="text-align: center;">
-                    <ng-container *ngIf="desviacion.analisisId">
-                        <button pButton type="button" icon="fa fa-search" class="soft-icon" *sTienePermiso="'SEC_GET_ANADESV'" (click)="consultarAnalisis(desviacion)" style="margin-bottom:5px;"></button>
-                        <button pButton type="button" icon="fa fa-pencil" class="soft-icon" *sTienePermiso="'SEC_PUT_ANADESV'" (click)="modificarAnalisis(desviacion)"></button>
-                    </ng-container>
-                    <p-tableCheckbox [value]="desviacion" *ngIf="!desviacion.analisisId"></p-tableCheckbox>
-                </td>
-                <td>{{desviacion.modulo}}</td>
-                <td>{{desviacion.hashId}}</td>
-                <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td>
-                <td>{{desviacion.area_nombre}}</td>
-                <td>{{desviacion.concepto}}</td>
-                <td [pTooltip]="desviacion.aspectoCausante" tooltipPosition="top">{{desviacion.aspectoCausante | slice:0:100}}...</td>
-            </tr>
+
+
+<!-- <p-toast></p-toast> -->
+
+<!-- <button pButton>gas</button> -->
+<button pButton pRipple label="New" icon="pi pi-plus" (click)="openNew()"></button>
+<button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+
+<div >
+    <p-toolbar >
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
         </ng-template>
-    </ng-template>
-</p-table> -->
 
+        <ng-template pTemplate="right">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
 
-<!-- <div class="ui-g-12"> -->
-    <p-table [value]="seguimientos" dataKey="id" editMode="row" styleClass="material-table">
+    <p-table #dt [value]="miembros" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>Documento</th>
-                <th>Nombre</th>
-                <th>Cargo</th>
-                <th>División</th>
-                <th>Localidad</th>
-
-                <th style="width:10rem"></th>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="price">Cargo <p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="category">División <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="rating">Localidad <p-sortIcon field="rating"></p-sortIcon></th>
+                <!-- <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+                <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-seguimiento let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="seguimiento">
+        <ng-template pTemplate="body" let-miembro>
+            <tr>
                 <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-calendar [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
-                                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
-                            </p-calendar>
-
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{seguimiento.fechaSeg | date : 'dd/MM/yyyy'}}
-                        </ng-template>
-                    </p-cellEditor>
+                    <p-tableCheckbox [value]="miembro"></p-tableCheckbox>
                 </td>
-                <td colspan="3">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{seguimiento.seguimiento}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
+                <td>{{miembro.nombre}}</td>
+                <td>{{miembro.cargo}}</td>
+                <td>{{miembro.division}}</td>
+                <td>{{miembro.localidad}}</td>
+                <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
+                <!-- <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td> -->
                 <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="seguimiento.tarea">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{seguimiento.tarea}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
-                                placeholder="Digite" [style]="{'width':'100%'}"
-                                (onSelect)="seguimiento.responsable = $event"
-                                [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
-                                field="numeroIdentificacion" [(ngModel)]="seguimiento.responsable"
-                                *ngIf="empleado?.id == null">
-                                <ng-template let-empleado pTemplate="item">
-                                    <div class="ui-helper-clearfix">
-                                        <div class="wrapper">
-                                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                                style="font-size: 48px;" aria-hidden="true"></i>
-                                            <img *ngIf="empleado.usuario?.icon"
-                                                [src]="empleado.usuario?.icon"
-                                                style="border-radius: 50%;" #imgAvatar />
-                                            <div style="margin-left:20px">
-                                                <label>{{empleado?.primerApellido}}
-                                                    {{empleado?.primerNombre}}
-                                                    {{empleado?.segundoNombre}}
-                                                </label>
-                                                <br /> {{empleado?.numeroIdentificacion}}
-                                                <br /> {{empleado?.usuario.email}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </p-autoComplete>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{seguimiento.responsable?.primerApellido }}
-                            {{seguimiento.responsable?.primerNombre }}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="seguimiento.responsableExterno">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{seguimiento.responsableExterno}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="seguimiento.resultado">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{seguimiento.resultado}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td class="p-text-center" *ngIf="!this.consultar">
-                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                        icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
-                        title="Editar Seguimiento"
-                        class="p-button-rounded p-button-text p-mr-2"></button>
-                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento"
-                        class="p-button-rounded p-button-text p-mr-2"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                        icon="pi pi-check" (click)="onRowEditSave(seguimiento)"
-                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                        icon="pi pi-times" (click)="onRowEditCancel(seguimiento, ri)"
-                        class="p-button-rounded p-button-text ui-button-danger"></button>
-
-                    <button *sTienePermiso="'SCM_DEL_CASE_SEG'" pButton pRipple type="button" pCancelEditableRow
-                        icon="pi pi-trash" (click)="deleteSeguimiento(seguimiento.id)"
-                        title="Borrar Seguimiento" class="ui-button-danger"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(miembro)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(miembro)"></button>
                 </td>
             </tr>
         </ng-template>
-
-        <ng-template pTemplate="summary" let-rowData>
-            <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
-                label="Crear" (click)="nuevoSeguimiento()">
-
-            </button>
-
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{miembros ? miembros.length : 0 }} products.
+            </div>
         </ng-template>
     </p-table>
-<!-- </div> -->
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregamar Miembro al Equipo" [modal]="true" styleClass="p-fluid">
+    <!-- <label for="name">Name</label>
+    <input type="text" pInputText  required autofocus /> -->
+    <!-- <ng-template pTemplate="content"> -->
+        <div class="p-field">
+            <label for="Nombre">Nombre</label>
+            <input type="text" required autofocus [(ngModel)]="nombre" />
+            <small class="p-invalid" *ngIf="submitted && !nombre">is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="Cargo">Cargo</label>
+            <input type="text" required autofocus [(ngModel)]="cargo" />
+        </div>
+        <div class="p-field">
+            <label for="Division">División</label>
+            <input type="text" required autofocus [(ngModel)]="division" />
+        </div>
+        <div class="p-field">
+            <label for="Localidad">Localidad</label>
+            <input type="text" required autofocus [(ngModel)]="localidad" />
+
+        </div>
+
+        <!-- <div class="p-field">
+            <label class="p-mb-3">Category</label>
+            <div class="p-formgrid p-grid">
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="category1" name="category" value="Accessories" ></p-radioButton>
+                    <label for="category1">Accessories</label>
+                </div>
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="category2" name="category" value="Clothing" ></p-radioButton>
+                    <label for="category2">Clothing</label>
+                </div>
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="category3" name="category" value="Electronics" ></p-radioButton>
+                    <label for="category3">Electronics</label>
+                </div>
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="category4" name="category" value="Fitness" ></p-radioButton>
+                    <label for="category4">Fitness</label>
+                </div>
+            </div>
+        </div> -->
+
+        
+    <!-- </ng-template> -->
+    
+    <!-- <ng-template pTemplate="footer"> -->
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    <!-- </ng-template> -->
+</p-dialog>
+
+<!-- <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->
