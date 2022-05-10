@@ -1,5 +1,5 @@
 import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
-import { FlowChartComponent } from './components/carga-archivo/flow-chart/flow-chart.component';
+// import { FlowChartComponent } from './components/carga-archivo/flow-chart/flow-chart.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComunModule } from 'app/modulos/comun/comun.module'
@@ -76,7 +76,7 @@ import { BrowserModule } from '@angular/platform-browser';
     FormularioIncidenteComponent,
     ConsultaReportesComponent,
     CargaArchivoComponent,
-    FlowChartComponent
+    // FlowChartComponent
   ],
   providers: [ReporteService]
 })
