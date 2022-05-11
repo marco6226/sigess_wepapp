@@ -1,3 +1,4 @@
+import { EvidenciasComponent } from './components/analisis-desviacion/evidencias/evidencias.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SecRoutingModule } from './sec-routing.module';
@@ -88,7 +89,8 @@ import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
         VerificacionTareaComponent,
         CapitalizePipe,
         MiembrosEquipoComponent,
-        FlowChartComponent
+        FlowChartComponent,
+        EvidenciasComponent
     ],
     providers: [
         SistemaCausaRaizService,

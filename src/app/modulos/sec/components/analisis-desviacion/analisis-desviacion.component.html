@@ -67,7 +67,9 @@
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
                         <app-miembros-equipo></app-miembros-equipo>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias">
+                        <app-evidencias></app-evidencias>
+                    </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
                         <app-flow-chart></app-flow-chart>
                     </p-tabPanel>

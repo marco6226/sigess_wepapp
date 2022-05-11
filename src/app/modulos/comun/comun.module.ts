@@ -117,6 +117,7 @@ const modules = [
 	PanelModule,
 	ToolbarModule,
 	RatingModule,
+	FileUploadModule,
 	// InputNumberModule
   ];
 
