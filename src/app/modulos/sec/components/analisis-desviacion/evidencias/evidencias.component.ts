@@ -11,5 +11,5 @@ export class EvidenciasComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
 }

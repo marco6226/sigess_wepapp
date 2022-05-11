@@ -7,7 +7,7 @@
 <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
 
 <div >
-    <p-toolbar >
+    <!-- <p-toolbar >
         <ng-template pTemplate="left">
             <button pButton pRipple label="New" icon="pi pi-plus" (click)="openNew()"></button>
             <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
@@ -17,20 +17,20 @@
             <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
         </ng-template>
-    </p-toolbar>
+    </p-toolbar> -->
 
     <p-table #dt [value]="miembros" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
         [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
+         [showCurrentPageReport]="true">
+        <!-- <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
-                <h5 class="p-m-0">Manage Products</h5>
+                <h5 class="p-m-0">Miembros del equipo</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
                 </span>
             </div>
-        </ng-template>
+        </ng-template> -->
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 3rem">
@@ -40,7 +40,6 @@
                 <th pSortableColumn="price">Cargo <p-sortIcon field="price"></p-sortIcon></th>
                 <th pSortableColumn="category">División <p-sortIcon field="category"></p-sortIcon></th>
                 <th pSortableColumn="rating">Localidad <p-sortIcon field="rating"></p-sortIcon></th>
-                <!-- <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
                 <th></th>
             </tr>
         </ng-template>
@@ -53,26 +52,26 @@
                 <td>{{miembro.cargo}}</td>
                 <td>{{miembro.division}}</td>
                 <td>{{miembro.localidad}}</td>
-                <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
-                <!-- <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td> -->
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(miembro)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(miembro)"></button>
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="summary">
+        <!-- <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
                 In total there are {{miembros ? miembros.length : 0 }} products.
             </div>
-        </ng-template>
+            <h1>{{miembros.length%2}}</h1>
+            <div *ngIf="miembros.length%2==0">
+                <h1>El numero de miembros debe ser impar</h1>
+            </div>
+        </ng-template> -->
     </p-table>
 </div>
 
 <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregamar Miembro al Equipo" [modal]="true" styleClass="p-fluid">
-    <!-- <label for="name">Name</label>
-    <input type="text" pInputText  required autofocus /> -->
-    <!-- <ng-template pTemplate="content"> -->
+
         <div class="p-field">
             <label for="Nombre">Nombre</label>
             <input type="text" required autofocus [(ngModel)]="nombre" />
@@ -89,38 +88,12 @@
         <div class="p-field">
             <label for="Localidad">Localidad</label>
             <input type="text" required autofocus [(ngModel)]="localidad" />
-
         </div>
 
-        <!-- <div class="p-field">
-            <label class="p-mb-3">Category</label>
-            <div class="p-formgrid p-grid">
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category1" name="category" value="Accessories" ></p-radioButton>
-                    <label for="category1">Accessories</label>
-                </div>
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category2" name="category" value="Clothing" ></p-radioButton>
-                    <label for="category2">Clothing</label>
-                </div>
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category3" name="category" value="Electronics" ></p-radioButton>
-                    <label for="category3">Electronics</label>
-                </div>
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category4" name="category" value="Fitness" ></p-radioButton>
-                    <label for="category4">Fitness</label>
-                </div>
-            </div>
-        </div> -->
-
-        
-    <!-- </ng-template> -->
-    
-    <!-- <ng-template pTemplate="footer"> -->
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
         <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
-    <!-- </ng-template> -->
+   
 </p-dialog>
 
-<!-- <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->
+<p-toast></p-toast>
+<!-- <button type="button" pButton pRipple (click)="showError()" label="Error" class="p-button-danger"></button> -->

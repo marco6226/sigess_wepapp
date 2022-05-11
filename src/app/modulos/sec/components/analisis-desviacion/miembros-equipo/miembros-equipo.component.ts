@@ -6,7 +6,8 @@ import { MiembroEquipo } from './miembro-equipo';
 @Component({
   selector: 'app-miembros-equipo',
   templateUrl: './miembros-equipo.component.html',
-  styleUrls: ['./miembros-equipo.component.scss']
+  styleUrls: ['./miembros-equipo.component.scss'],
+  providers: [MessageService]
 })
 export class MiembrosEquipoComponent implements OnInit {
 
@@ -24,7 +25,7 @@ export class MiembrosEquipoComponent implements OnInit {
   id: number=0;
   constructor(
     // private productService: ProductService,
-    // private messageService: MessageService,
+    private messageService: MessageService,
     private confirmationService: ConfirmationService
     ) { }
 
@@ -53,6 +54,8 @@ export class MiembrosEquipoComponent implements OnInit {
 }
 
 editProduct(product: MiembroEquipo) {
+    console.log(product);
+    
     this.miembro = {...product};
     this.productDialog = true;
 }
@@ -105,6 +108,9 @@ this.miembro.localidad = this.localidad;
         this.productDialog = false;
         this.miembro = {};
         this.borrarMiembro();
+        if(this.miembros.length%2==0){
+            this.showError();
+        }
     // }
 }
 
@@ -134,6 +140,10 @@ this.nombre = '';
 this.cargo = '';
 this.division = '';
 this.localidad = '';
+}
+
+showError() {
+    this.messageService.add({severity:'error', summary: 'Error', detail: 'La cantidad de los miembros del equipo deben ser impares'});
 }
 
 }
