@@ -56,6 +56,11 @@ export class MiembrosEquipoComponent implements OnInit {
 editProduct(product: MiembroEquipo) {
     console.log(product);
     
+    this.nombre = product.nombre;
+    this.cargo = product.cargo;
+    this.division = product.division;
+    this.localidad = product.localidad;
+
     this.miembro = {...product};
     this.productDialog = true;
 }
