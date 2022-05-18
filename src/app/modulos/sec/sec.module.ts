@@ -38,6 +38,7 @@ import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { ListViewAllModule } from '@syncfusion/ej2-angular-lists';
 import { DropDownButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
+import { FactorCausalComponent } from './components/analisis-desviacion/factor-causal/factor-causal.component';
 
 @NgModule({
     imports: [
@@ -90,7 +91,8 @@ import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
         CapitalizePipe,
         MiembrosEquipoComponent,
         FlowChartComponent,
-        EvidenciasComponent
+        EvidenciasComponent,
+        FactorCausalComponent
     ],
     providers: [
         SistemaCausaRaizService,

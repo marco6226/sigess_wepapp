@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes, RouterLink } from '@angular/router';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService, StepsModule } from 'primeng/primeng';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 import { CieSelectorComponent } from 'app/modulos/comun/components/cie-selector/cie-selector.component';
@@ -105,6 +105,7 @@ import {ToastModule} from 'primeng/toast';
 import {ToolbarModule} from 'primeng/toolbar';
 import {ButtonModule} from 'primeng/button';
 import {RatingModule} from 'primeng/rating';
+import {MenuItem} from 'primeng/api';
 // import {InputNumberModule} from 'primeng/primeng';
 
 
@@ -118,6 +119,7 @@ const modules = [
 	ToolbarModule,
 	RatingModule,
 	FileUploadModule,
+	StepsModule,
 	// InputNumberModule
   ];
 

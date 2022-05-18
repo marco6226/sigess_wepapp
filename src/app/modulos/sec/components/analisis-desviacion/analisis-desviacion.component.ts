@@ -1,3 +1,4 @@
+import { FactorCausal } from './../../entities/factor-causal';
 import { Component, OnInit, Input } from "@angular/core";
 
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
@@ -422,5 +423,17 @@ export class AnalisisDesviacionComponent implements OnInit {
     onEvent(event) {
         this.tareasList = event.data;
         console.log(this.tareasList, ": Las tareas");
+    }
+
+    factorCusal: FactorCausal[]=[]
+    probe(event: FactorCausal[]){
+        console.log(event,"sip");
+        this.factorCusal=[];
+        event.forEach(element => {
+            this.factorCusal.push(element)
+        });
+        // this.factorCusal.push(event)
+        console.log(this.factorCusal);
+        
     }
 }

@@ -62,7 +62,7 @@
                                 <h4 style="margin-bottom: 20px;">Descripción</h4>
                                 <textarea pInputTextarea [(ngModel)]="empresaDescipcion"></textarea>
                             </div>                           
-                        </div>
+                        </div>                       
                     </p-tabPanel>
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
                         <app-miembros-equipo></app-miembros-equipo>
@@ -71,9 +71,11 @@
                         <app-evidencias></app-evidencias>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
-                        <app-flow-chart></app-flow-chart>
+                        <app-flow-chart (datosFC)="probe($event)"></app-flow-chart>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Flujo 1"></p-tabPanel>
+                    <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
+                        <app-factor-causal [factorCausal]="data"></app-factor-causal>
+                    </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe"></p-tabPanel>
