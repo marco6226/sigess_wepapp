@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { Reporte } from 'app/modulos/rai/entities/reporte';
 
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
@@ -26,6 +27,11 @@ import { Criteria } from "../../../core/entities/filter";
 import { jerarquia } from "../../entities/jerarquia";
 import { AuthService } from "app/modulos/core/auth.service";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import {
+    locale_es,
+    tipo_identificacion,
+    tipo_vinculacion,
+} from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
 
 @Component({
     selector: "s-analisisDesviacion",
@@ -53,6 +59,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     causaInmediataList: TreeNode[] = [];
     causaInmediataListSelect: TreeNode[] = [];
     causaInmediataAnalisisList: CausaInmediata[];
+    reporteSelect: Reporte[];
 
     desviacionesList: Desviacion[];
     analisisCosto: AnalisisCosto = new AnalisisCosto();
@@ -71,6 +78,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     empresaName: string;
     empresaNit: string;
     empresaDescipcion: string;
+    fechaActual = new Date();
+    yearRange: string = "1900:" + this.fechaActual.getFullYear();
+    localeES: any = locale_es;
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
@@ -294,9 +304,11 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.observacion = this.observacion;
         ad.participantes = JSON.stringify(this.participantes);
         ad.tareaDesviacionList = this.tareasList;
+        if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+        }
         }
 
         ad.jerarquia = ad.jerarquia;

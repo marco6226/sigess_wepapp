@@ -43,6 +43,8 @@ export class EmpleadoComponent implements OnInit {
         'usuario_icon',
         'area_nombre',
         'estado',
+        'empresa',
+        'nit',
     ];
 
     constructor(

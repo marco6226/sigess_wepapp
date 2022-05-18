@@ -16,8 +16,9 @@ import {
     mecanismo,
     lugar,
     tipoAccidente,
-    locale_es
-} from 'app/modulos/rai/enumeraciones/reporte-enumeraciones'
+    locale_es,
+    severidad,
+} from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
@@ -42,6 +43,7 @@ export class FormularioAccidenteComponent implements OnInit {
     tipoIdentificacionEmpresa: SelectItem[];
     sitioList: SelectItem[];
     tipoLesionList: SelectItem[];
+    severidadList: SelectItem[];
     parteCuerpoList: SelectItem[];
     agenteList: SelectItem[];
     mecanismoList: SelectItem[];
@@ -63,6 +65,7 @@ export class FormularioAccidenteComponent implements OnInit {
         this.jornadaTrabajoList = defaultItem.concat(<SelectItem[]>jornada_trabajo);
         this.tipoIdentificacion = defaultItem.concat(<SelectItem[]>tipo_identificacion);
         this.tipoIdentificacionEmpresa = defaultItem.concat(<SelectItem[]>tipo_identificacion_empresa);
+        this.severidadList = defaultItem.concat(<SelectItem[]>severidad);
         this.sitioList = defaultItem.concat(<SelectItem[]>sitio);
         this.tipoLesionList = defaultItem.concat(<SelectItem[]>tipo_lesion);
         this.parteCuerpoList = defaultItem.concat(<SelectItem[]>parte_cuerpo);
@@ -127,6 +130,7 @@ export class FormularioAccidenteComponent implements OnInit {
             jornadaHabitual: this.reporte.jornadaHabitual,
             fechaAccidente: this.reporte.fechaAccidente == null ? null : new Date(this.reporte.fechaAccidente),
             horaAccidente: this.reporte.horaAccidente == null ? null : new Date(this.reporte.horaAccidente),
+            numero_furat: this.reporte.numero_furat,
             jornadaAccidente: this.reporte.jornadaAccidente,
             realizandoLaborHabitual: this.reporte.realizandoLaborHabitual,
             nombreLaborHabitual: this.reporte.nombreLaborHabitual,
@@ -151,6 +155,7 @@ export class FormularioAccidenteComponent implements OnInit {
             ciudadCentroTrabajo: this.reporte.ciudadCentroTrabajo,
             ciudadEmpleado: this.reporte.ciudadEmpleado,
             ciudadAccidente: this.reporte.ciudadAccidente,
+            severidad:this.reporte.severidad,
             areaAccidente: this.reporte.areaAccidente,
             usuarioReporta: this.reporte.usuarioReporta,
             empresa: this.reporte.empresa,
@@ -160,6 +165,7 @@ export class FormularioAccidenteComponent implements OnInit {
             numeroIdentificacionResponsable: this.reporte.numeroIdentificacionResponsable,
             cargoResponsable: this.reporte.cargoResponsable,
             fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte)
+            //console.log(empresa)
         });
 
 
@@ -182,9 +188,10 @@ export class FormularioAccidenteComponent implements OnInit {
     async infoEmpresa() {
 
         let empresa = await this.empresaService.findSelected() as Empresa;
+        
         this.form.patchValue({
+            //identificacionEmpresa: empresa.nit,
             tipoIdentificacionEmpresa: "NI",
-            identificacionEmpresa: empresa.nit,
             direccionEmpresa: empresa.direccion,
             telefonoEmpresa: empresa.telefono,
             emailEmpresa: empresa.email

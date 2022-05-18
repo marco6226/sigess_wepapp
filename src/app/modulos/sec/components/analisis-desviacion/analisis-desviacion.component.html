@@ -21,7 +21,7 @@
                     {{rowData.hashId}}
                 </td>
                 <td>
-                    {{rowData.area_nombre}}
+                    {{rowData.area.nombre}}
                 </td>
                 <td>
                     {{rowData.concepto}}
@@ -44,29 +44,71 @@
         <div class="ui-g">
             <div class="ui-g-12 ui-sm-12">
                 <p-tabView>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Descipción">
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Descripción">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
-                                <input type="text" pInputText [(ngModel)]="empresaName"/>
+                                {{desviacionesList[0].empresa}}
                             </div>
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">NIT</h4>
-                                <input type="text" pInputText [(ngModel)]="empresaNit"/>
+                                {{desviacionesList[0].nit}}
                             </div>    
                                                   
                         </div>
                         <div class="ui-g">
-                           
-                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
-                                <h4 style="margin-bottom: 20px;">Descripción</h4>
-                                <textarea pInputTextarea [(ngModel)]="empresaDescipcion"></textarea>
-                            </div>                           
+                            <h4 style="margin-bottom: 20px;">Reporte de investigación</h4>
+                                                       
                         </div>
+                        <div class="ui-g">
+                            <h4 style="margin-bottom: 20px;">Reporte Inicial</h4>
+                                                       
+                        </div>
+                                              
+                          
+                        <p-table [value]="desviacionesList"  autoLayout="true">
+                                                        
+                            <ng-template pTemplate="body">
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Nombre del evento</th>
+                                    <td>{{desviacionesList[0].concepto}}</td> 
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Nombre del colaborador</th>
+                                    <td>{{desviacionesList[0]?.nombre}}</td> 
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Fecha del incidente</th>
+                                    <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Hora del incidente</th>
+                                    <td>{{desviacionesList[0]?.hora}}</td> 
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Ubicacion</th>
+                                    <td>{{desviacionesList[0]?.area.nombre}}</td> 
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Clasificación</th>
+                                    <td>{{desviacionesList[0]?.severidad}}</td> 
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #c8c8c8;">Descripción</th>
+                                   
+                                    <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="10"
+                            placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
+                        <div *ngIf="consultar">
+                            {{observacion}}
+                        </div> 
+                                </tr>
+                                </ng-template>
+                            
+                        </p-table>  
+                        
                     </p-tabPanel>
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
-                        <app-miembros-equipo></app-miembros-equipo>
-                    </p-tabPanel>
+                        <app-miembros-equipo></app-miembros-equipo>         </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Flujo 1"></p-tabPanel>
@@ -148,13 +190,13 @@
                             [readOnly]="consultar"></s-documentosAnalisisDesviacion>
                     </p-tabPanel>
 
-                    <p-tabPanel header="Observaciones">
+                        <p-tabPanel header="Observaciones">
                         <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="7"
                             placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
                         <div *ngIf="consultar">
                             {{observacion}}
                         </div>
-                    </p-tabPanel>
+                        </p-tabPanel>
 
                 </p-tabView>
             </div>

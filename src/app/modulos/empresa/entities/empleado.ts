@@ -48,4 +48,6 @@ export class Empleado {
     horasExtraList: HorasExtra[];
     documentosList: Documento[];
     estado: string;
+    empresa: string;
+    nit: string;
 }

@@ -46,7 +46,8 @@ export class ConsultaDesviacionComponent implements OnInit {
     'fechaReporte',
     'aspectoCausante',
     'analisisId',
-    'criticidad'
+    'criticidad',
+    'nombre'
   ];
   areasPermiso: string;
   getDatosDesv: Desviacion[];

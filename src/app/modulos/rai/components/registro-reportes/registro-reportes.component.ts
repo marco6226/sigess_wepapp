@@ -32,6 +32,8 @@ export class RegistroReportesComponent implements OnInit {
   ) { }
 
 async  ngOnInit() {
+  
+    console.log( this.Zeller(24,9,1983));
     let repParam = this.paramNav.getParametro<Reporte>();
     if (repParam != null) {
       this.consultar = this.paramNav.getAccion<string>() == 'GET';
@@ -43,6 +45,9 @@ async  ngOnInit() {
         resp => {
           this.reporteSelect = <Reporte>(resp['data'][0]);
           console.log(this.reporteSelect);
+          // let dayact = this.reporteSelect.fechaAccidente.getDay();
+          //           console.log(dayact);
+          console.log(new Date(this.reporteSelect.fechaAccidente).getMonth());
           this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
     
           this.tipoReporte = this.reporteSelect.tipo;
@@ -123,4 +128,58 @@ async  ngOnInit() {
     }
     this.limpiarCampos();
   }
+    /**
+ * Función que implementa la congruencia de los zellers y devuelve según el resultado el día de la semana.
+ * 
+ * @param D {Int} Numero del dia (0-31)
+ * @param M {Int} Número del mes (1-12)
+ * @param Y {Year} Año completo e.g 2001
+ */
+Zeller(D, M, Y){    
+  let Day = "";
+
+  if (M < 3)
+  {
+      M = M + 12;
+      Y = Y - 1;
+  }
+  
+  let C = Math.floor(Y / 100);
+let K = Y - (100 * C);
+
+let S = Math.floor(2.6 * M - 5.39) + Math.floor(K / 4) + Math.floor(C / 4) + D + K - (2 * C);
+
+  let ans = S - (7 * Math.floor(S / 7));
+  
+  if (ans == 0)
+  {
+      Day = "Domingo";
+  }
+  else if (ans == 1)
+  {
+      Day = "Lunes";
+  }
+  else if (ans == 2)
+  {
+      Day = "Martes";
+  }
+  else if (ans == 3)
+  {
+      Day = "Miercoles";
+  }
+  else if (ans == 4)
+  {
+      Day = "Jueves";
+  }
+  else if (ans == 5)
+  {
+      Day = "Viernes";
+  }
+  else
+  {
+      Day = "Sabado";
+  }
+  
+  return Day;
+}
 }

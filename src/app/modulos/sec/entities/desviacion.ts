@@ -6,7 +6,13 @@ export class Desviacion {
   fechaReporte: string;
   aspectoCausante: string;
   nivelRiesgo: string;
+  areaNombre: string;
   analisisId:string;
   criticidad?: string;
   empresaId?: number;
+  nombre: string;
+  hora: string;
+  severidad: string;
+  empresa: string;
+  nit: string;
 }

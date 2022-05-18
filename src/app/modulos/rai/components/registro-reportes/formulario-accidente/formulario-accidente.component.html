@@ -364,6 +364,12 @@
                 [header]="visibleCamposAccidente ? 'III. INFORMACIÓN SOBRE EL ACCIDENTE':'II. INFORMACIÓN SOBRE EL INCIDENTE'">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Numero de FURAT
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                        <input pInputText formControlName="numero_furat" />
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Fecha {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
@@ -437,6 +443,12 @@
                         </p-radioButton>
                         <p-radioButton name="zonaAcc" label="Rural" value="R" formControlName="zonaAccidente">
                         </p-radioButton>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                        Clasificación
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                        <p-dropdown [options]="severidadList" formControlName="severidad"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         ¿Causó muerte?

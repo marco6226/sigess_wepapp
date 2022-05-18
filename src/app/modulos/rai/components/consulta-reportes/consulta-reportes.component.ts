@@ -34,6 +34,8 @@ export class ConsultaReportesComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    console.log();
+    
   }
 
   lazyLoad(event: any) {
@@ -74,4 +76,6 @@ export class ConsultaReportesComponent implements OnInit {
   navegar() {
     this.paramNav.redirect('app/rai/registroReporte');
   }
+
+
 }
