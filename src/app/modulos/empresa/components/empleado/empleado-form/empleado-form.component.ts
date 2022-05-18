@@ -65,6 +65,7 @@ export class EmpleadoFormComponent implements OnInit {
     empresaId = this.sesionService.getEmpresa().id;
     fechaActual = new Date();
     jefeInmediatoForm: FormGroup;
+    empresaForm: FormGroup;
     yearRange: string = '1900:' + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -126,6 +127,10 @@ export class EmpleadoFormComponent implements OnInit {
             correoPersonal: { value: '', disabled: true },
             cargoId: [{ value: '', disabled: true }, Validators.required],
         });
+        this.empresaForm = fb.group({            
+            empresa: [{ value: '', disabled: false }],
+            nit: [{ value: '', disabled: false }],
+        });
         this.form = fb.group({
             id: [null],
             primerNombre: [null, Validators.required],
@@ -157,6 +162,8 @@ export class EmpleadoFormComponent implements OnInit {
             ipPermitida: [],
             email: [null, { disabled: true }, Validators.required],
             direccionGerencia: [null],
+            empresa: [null],
+            nit: [null],
             regional: [null],
             businessPartner: [''],
             jefeInmediato: [''],
@@ -166,12 +173,15 @@ export class EmpleadoFormComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.empleadoSelect);
+        console.log(this.empleadoSelect.nit,this.empleadoSelect.primerNombre);
         this.isUpdate ? this.form.controls['email'].disable() : ''; //this for disabled email in case of update
         if (this.empleadoSelect != null) {
             let fq = new FilterQuery();
             fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
             //console.log(fq,this.empleadoSelect.id);
             this.empleadoService.findByFilter(fq).then((resp) => {
+                console.log(resp);
                 this.empleadoSelect = <Empleado>resp['data'][0];
                 this.loaded = true;
                 console.log(this.empleadoSelect);
@@ -205,6 +215,8 @@ export class EmpleadoFormComponent implements OnInit {
                     cargoId: this.empleadoSelect.cargo.id,
                     perfilesId: [4],
                     corporativePhone: this.empleadoSelect.corporativePhone,
+                    empresa: this.empleadoSelect.empresa,
+                    nit: this.empleadoSelect.nit,
                     emergencyContact: this.empleadoSelect.emergencyContact,
                     phoneEmergencyContact: this.empleadoSelect.phoneEmergencyContact,
                     emailEmergencyContact: this.empleadoSelect.emailEmergencyContact,
@@ -217,6 +229,9 @@ export class EmpleadoFormComponent implements OnInit {
                     businessPartner: this.empleadoSelect.businessPartner,
                     email: [this.empleadoSelect.usuario.email],
                 });
+                this.empresaForm.patchValue({
+                    empresa: this.empleadoSelect.empresa,
+                    nit: this.empleadoSelect.nit})
             });
             //cargar imagen
         } else {
@@ -302,6 +317,8 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.numeroIdentificacion = this.form.value.numeroIdentificacion;
         empleado.telefono1 = this.form.value.telefono1;
         empleado.telefono2 = this.form.value.telefono2;
+        empleado.empresa = this.empresaForm.value.empresa;
+        empleado.nit = this.empresaForm.value.nit;
         empleado.ciudad = this.form.value.ciudad == null ? null : this.form.value.ciudad.id;
         if (this.form.value.afp != null) {
             empleado.afp = new Afp();

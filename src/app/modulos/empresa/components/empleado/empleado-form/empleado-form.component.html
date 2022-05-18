@@ -9,7 +9,7 @@
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="primerNombre" required />
                     </div>
-
+                    
                     <div class="ui-g-12 ui-md-2">
                         <label>Segundo Nombre</label>
                     </div>
@@ -269,6 +269,29 @@
     </p-tabPanel>
 
     <p-tabPanel header="Empresa">
+        
+        <p-panel header="Datos de la empresa">
+
+
+            <div class="ui-g" [formGroup]="empresaForm">
+
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                    <input type="text" pInputText formControlName="empresa" />
+                    <label for="" class="active">Nombre Comercial</label>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="input-field">
+                    <input type="text" pInputText formControlName="nit" />
+                    <label for="" class="active">Nit</label>
+                    </div>
+                </div>
+               
+            </div>
+        </p-panel>
+        <br>
         <p-panel header="Jefe inmediato">
             <div class="ui-g" [formGroup]="jefeInmediatoForm">
 

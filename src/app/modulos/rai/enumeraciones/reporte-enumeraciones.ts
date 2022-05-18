@@ -97,17 +97,12 @@ export const sitio = [
     { value: 'OTRO', label: 'Otro (Especifique)' },
 ];
 
-// export const sitio = [
-//     { value: 'Almacenes o depósitos', label: 'Almacenes o depósitos' },
-//     { value: 'Áreas de producción', label: 'Áreas de producción' },
-//     { value: 'Áreas recreativas o productivas', label: 'Áreas recreativas o productivas' },
-//     { value: 'Corredores o pasillos', label: 'Corredores o pasillos' },
-//     { value: 'Escaleras', label: 'Escaleras' },
-//     { value: 'Parqueaderos o áreas de circulación vehicular', label: 'Parqueaderos o áreas de circulación vehicular' },
-//     { value: 'Oficinas', label: 'Oficinas' },
-//     { value: 'Otras áreas comunes', label: 'Otras áreas comunes' },
-//     { value: 'Otro', label: 'Otro (Especifique)' },
-// ];
+export const severidad = [
+    { value: 'Leve', label: 'Leve' },
+    { value: 'Grave', label: 'Grave' },
+    { value: 'Mortal', label: 'Mortal' },
+   
+];
 
 export const tipo_lesion = [
     { value: 'FRACTURA', label: 'Fractura' },

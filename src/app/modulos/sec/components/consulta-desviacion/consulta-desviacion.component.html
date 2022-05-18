@@ -75,7 +75,7 @@
                         <td>{{desviacion.modulo}}</td>
                         <td>{{desviacion.hashId}}</td>
                         <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td>
-                        <td>{{desviacion.area_nombre}}</td>
+                        <td>{{desviacion.area.nombre}}</td>
                         <td>{{desviacion.concepto}}</td>
                         <td [pTooltip]="desviacion.aspectoCausante" tooltipPosition="top">{{desviacion.aspectoCausante | slice:0:100}}...</td>
                         <td *ngIf="empresaCriticidadPermiso==empresaId">{{desviacion.criticidad}}</td>

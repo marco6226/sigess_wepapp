@@ -58,6 +58,7 @@ export class Reporte {
   jornadaHabitual: string;
   fechaAccidente: Date;
   horaAccidente: Date;
+  numero_furat: string;
   jornadaAccidente: string;
   realizandoLaborHabitual: boolean;
   nombreLaborHabitual: string;
@@ -86,7 +87,7 @@ export class Reporte {
   usuarioReporta: Usuario;
   empresa: Empresa;
   testigoReporteList: TestigoReporte[];
-
+  severidad: string;
   nombresResponsable: string;
   apellidosResponsable: string;
   tipoIdentificacionResponsable: string;
