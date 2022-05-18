@@ -19,8 +19,18 @@
         </ng-template>
     </p-toolbar> -->
 
-<!-- <div class="ui-g-12"> -->
-    <!-- <p-table [value]="seguimientos" dataKey="id" editMode="row" styleClass="material-table">
+    <p-table #dt [value]="miembros" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+         [showCurrentPageReport]="true">
+        <!-- <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Miembros del equipo</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template> -->
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 3rem">
@@ -80,6 +90,10 @@
             <input type="text" required autofocus [(ngModel)]="localidad" />
         </div>
 
-        </ng-template>
-    </p-table> -->
-<!-- </div> -->
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+   
+</p-dialog>
+
+<p-toast></p-toast>
+<!-- <button type="button" pButton pRipple (click)="showError()" label="Error" class="p-button-danger"></button> -->
