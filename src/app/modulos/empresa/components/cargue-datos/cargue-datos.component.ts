@@ -337,6 +337,8 @@ export class CargueDatosComponent implements OnInit {
             empleado.telefono2 = arrayOfEmployees[i].telefono2;
             empleado.direccionGerencia = arrayOfEmployees[i].direccionGerencia;
             empleado.regional = arrayOfEmployees[i].regional;
+            empleado.empresa = arrayOfEmployees[i].empresa;
+            empleado.nit = arrayOfEmployees[i].nit;
             if (arrayOfEmployees[i].ciudad) {
                 empleado.ciudad = new Ciudad();
                 empleado.ciudad.nombre = arrayOfEmployees[i].ciudad;

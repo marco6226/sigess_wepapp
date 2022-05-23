@@ -84,8 +84,22 @@ export class EmpleadoFormComponent implements OnInit {
     numMaxImg = 1;
     avatar: any;
     listaEvidence = [];
-
-
+    empresaList2 = [
+        { label: "--Seleccione--", value: null },
+        { label: "Agromil S.A.S", value: "Agromil S.A.S", nit:"830511745" },
+        { label: "Almacenes Corona", value: "Almacenes Corona", nit:"860500480-8" },
+        { label: "Compañía Colombiana de Ceramica S.A.S", value: "Compañía Colombiana de Ceramica S.A.S",nit:"860002536-5" },
+        { label: "Corlanc S.A.S", value: "Corlanc S.A.S",nit:"900481586-1" },
+        { label: "Corona Industrial", value: "Corona Industrial",nit:"900696296-4" },
+        { label: "Despachadora internacional de Colombia S.A.S", value: "Despachadora internacional de Colombia S.A.S",nit:"860068121-6" },
+        { label: "Electroporcelana Gamma", value: "Electroporcelana Gamma",nit:"890900121-4" },
+        { label: "Locería Colombiana S.A.S", value: "Locería Colombiana S.A.S",nit:"890900085-7" },
+        { label: "Minerales Industriales S.A", value: "Minerales Industriales S.A",nit:"890917398-1" },
+        { label: "Nexentia S.A.S", value: "Nexentia S.A.S",nit:"900596618-3" },
+        { label: "Suministros de Colombia S.A.S", value: "Suministros de Colombia S.A.S",nit:"890900120-7" },
+        { label: "Organización corona", value: "Organización corona",nit:"860002688-6" }
+	]
+    
     constructor(
         private empleadoService: EmpleadoService,
         private fb: FormBuilder,
@@ -128,8 +142,8 @@ export class EmpleadoFormComponent implements OnInit {
             cargoId: [{ value: '', disabled: true }, Validators.required],
         });
         this.empresaForm = fb.group({            
-            empresa: [{ value: '', disabled: false }],
-            nit: [{ value: '', disabled: false }],
+            empresa:[null, Validators.required],
+            nit:[null, Validators.required],
         });
         this.form = fb.group({
             id: [null],

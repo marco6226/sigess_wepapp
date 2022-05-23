@@ -22,6 +22,7 @@ import {
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 @Component({
     selector: 's-form-accidente',
@@ -53,12 +54,14 @@ export class FormularioAccidenteComponent implements OnInit {
     form: FormGroup;
     testigoReporteList: TestigoReporte[];
     visibleCamposAccidente: boolean;
+    idEmpresa: string;
 
     constructor(
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
         private reporteService: ReporteService,
         private empresaService: EmpresaService,
+        private sesionService: SesionService,
     ) {
         let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
         this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
@@ -76,6 +79,8 @@ export class FormularioAccidenteComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.idEmpresa = this.sesionService.getEmpresa().id;
+        console.log(this.idEmpresa)
         this.infoEmpresa()
         this.form = this.fb.group({
             id: this.reporte.id,

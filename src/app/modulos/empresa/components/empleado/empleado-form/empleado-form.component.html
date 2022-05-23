@@ -37,7 +37,6 @@
                         <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion" required>
                         </p-dropdown>
                     </div>
-
                     <div class="ui-g-12 ui-md-2">
                         Número identificación
                     </div>
@@ -273,19 +272,29 @@
         <p-panel header="Datos de la empresa">
 
 
-            <div class="ui-g" [formGroup]="empresaForm">
+            <div class="ui-g" [formGroup]="empresaForm" >
 
 
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                       
+                    
                     <div class="input-field">
-                    <input type="text" pInputText formControlName="empresa" />
-                    <label for="" class="active">Nombre Comercial</label>
+
+                        <p-dropdown [options]="empresaList2" formControlName="empresa"
+                            class="select-material" styleClass="select-material" >
+                        </p-dropdown>
+
+                        <label for="" class="active">Nombre Comercial</label>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-                    <input type="text" pInputText formControlName="nit" />
-                    <label for="" class="active">Nit</label>
+
+                        <p-dropdown [options]="empresaList2" formControlName="nit"
+                            class="select-material" styleClass="select-material" optionValue="nit" >
+                        </p-dropdown>
+
+                        <label for="" class="active">Nit</label>
                     </div>
                 </div>
                
@@ -364,6 +373,7 @@
                     
                     </div>
                 </div>
+                
 
                
             </div>
