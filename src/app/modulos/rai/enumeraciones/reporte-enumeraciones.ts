@@ -100,6 +100,7 @@ export const sitio = [
 export const severidad = [
     { value: 'Leve', label: 'Leve' },
     { value: 'Grave', label: 'Grave' },
+    { value: 'Severo', label: 'Severo' },    
     { value: 'Mortal', label: 'Mortal' },
    
 ];
