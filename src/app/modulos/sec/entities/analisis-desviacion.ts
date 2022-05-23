@@ -19,6 +19,8 @@ export class AnalisisDesviacion {
   causasAdminList: CausaAdministrativa[];
   desviacionesList: Desviacion[];
   documentosList:Documento[];
-  tareaDesviacionList:Tarea[]; participantes: string;
+  tareaDesviacionList:Tarea[]; 
+  participantes: string;
   tareaAsignada:  boolean;
+  flow_chart: string;
 }

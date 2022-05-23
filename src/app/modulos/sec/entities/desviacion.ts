@@ -1,3 +1,4 @@
+import { Area } from './../../empresa/entities/area';
 
 export class Desviacion {
   hashId: string;
@@ -15,4 +16,5 @@ export class Desviacion {
   severidad: string;
   empresa: string;
   nit: string;
+  area?: Area;
 }
