@@ -84,22 +84,24 @@ export class EmpleadoFormComponent implements OnInit {
     numMaxImg = 1;
     avatar: any;
     listaEvidence = [];
-    empresaList2 = [
-        { label: "--Seleccione--", value: null },
-        { label: "Agromil S.A.S", value: "Agromil S.A.S", nit:"830511745" },
-        { label: "Almacenes Corona", value: "Almacenes Corona", nit:"860500480-8" },
-        { label: "Compañía Colombiana de Ceramica S.A.S", value: "Compañía Colombiana de Ceramica S.A.S",nit:"860002536-5" },
-        { label: "Corlanc S.A.S", value: "Corlanc S.A.S",nit:"900481586-1" },
-        { label: "Corona Industrial", value: "Corona Industrial",nit:"900696296-4" },
-        { label: "Despachadora internacional de Colombia S.A.S", value: "Despachadora internacional de Colombia S.A.S",nit:"860068121-6" },
-        { label: "Electroporcelana Gamma", value: "Electroporcelana Gamma",nit:"890900121-4" },
-        { label: "Locería Colombiana S.A.S", value: "Locería Colombiana S.A.S",nit:"890900085-7" },
-        { label: "Minerales Industriales S.A", value: "Minerales Industriales S.A",nit:"890917398-1" },
-        { label: "Nexentia S.A.S", value: "Nexentia S.A.S",nit:"900596618-3" },
-        { label: "Suministros de Colombia S.A.S", value: "Suministros de Colombia S.A.S",nit:"890900120-7" },
-        { label: "Organización corona", value: "Organización corona",nit:"860002688-6" }
+    empresaList2: empresaNit[] = [
+        { label: "--Seleccione--", empresa: null, nit: null },
+        { label: "Agromil S.A.S", empresa: "Agromil S.A.S", nit:"830511745" },
+        { label: "Almacenes Corona", empresa: "Almacenes Corona", nit:"860500480-8" },
+        { label: "Compañía Colombiana de Ceramica S.A.S", empresa: "Compañía Colombiana de Ceramica S.A.S",nit:"860002536-5" },
+        { label: "Corlanc S.A.S", empresa: "Corlanc S.A.S",nit:"900481586-1" },
+        { label: "Corona Industrial", empresa: "Corona Industrial",nit:"900696296-4" },
+        { label: "Despachadora internacional de Colombia S.A.S", empresa: "Despachadora internacional de Colombia S.A.S",nit:"860068121-6" },
+        { label: "Electroporcelana Gamma", empresa: "Electroporcelana Gamma",nit:"890900121-4" },
+        { label: "Locería Colombiana S.A.S", empresa: "Locería Colombiana S.A.S",nit:"890900085-7" },
+        { label: "Minerales Industriales S.A", empresa: "Minerales Industriales S.A",nit:"890917398-1" },
+        { label: "Nexentia S.A.S", empresa: "Nexentia S.A.S",nit:"900596618-3" },
+        { label: "Suministros de Colombia S.A.S", empresa: "Suministros de Colombia S.A.S",nit:"890900120-7" },
+        { label: "Organización corona", empresa: "Organización corona",nit:"860002688-6" }
 	]
     
+    empresaSelect2: empresaNit;
+
     constructor(
         private empleadoService: EmpleadoService,
         private fb: FormBuilder,
@@ -246,6 +248,14 @@ export class EmpleadoFormComponent implements OnInit {
                 this.empresaForm.patchValue({
                     empresa: this.empleadoSelect.empresa,
                     nit: this.empleadoSelect.nit})
+
+                    this.empresaList2.forEach(element => {
+                        if(element.label==this.empleadoSelect.empresa){
+                            this.empresaSelect2=element  
+                        }
+                    });
+                   
+                
             });
             //cargar imagen
         } else {
@@ -331,7 +341,7 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.numeroIdentificacion = this.form.value.numeroIdentificacion;
         empleado.telefono1 = this.form.value.telefono1;
         empleado.telefono2 = this.form.value.telefono2;
-        empleado.empresa = this.empresaForm.value.empresa;
+        empleado.empresa = this.empresaForm.value.empresa.label;
         empleado.nit = this.empresaForm.value.nit;
         empleado.ciudad = this.form.value.ciudad == null ? null : this.form.value.ciudad.id;
         if (this.form.value.afp != null) {
@@ -552,4 +562,10 @@ export class EmpleadoFormComponent implements OnInit {
             console.log(e);
         }
     }
+}
+
+interface empresaNit{
+ label: string;
+ empresa: string;
+ nit: string;
 }

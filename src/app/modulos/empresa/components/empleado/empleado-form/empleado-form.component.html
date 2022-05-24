@@ -267,20 +267,16 @@
         <s-documentosEmpleadoForm *ngIf="loaded" [value]="empleadoSelect"></s-documentosEmpleadoForm>
     </p-tabPanel>
 
-    <p-tabPanel header="Empresa">
+    <p-tabPanel header="Empresa" *ngIf="empresaId=='3'">
         
         <p-panel header="Datos de la empresa">
 
 
             <div class="ui-g" [formGroup]="empresaForm" >
-
-
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                       
-                    
                     <div class="input-field">
 
-                        <p-dropdown [options]="empresaList2" formControlName="empresa"
+                        <p-dropdown [options]="empresaList2" optionLabel="label" formControlName="empresa" [(ngModel)]="empresaSelect2"
                             class="select-material" styleClass="select-material" >
                         </p-dropdown>
 
@@ -289,15 +285,10 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
                     <div class="input-field">
-
-                        <p-dropdown [options]="empresaList2" formControlName="nit"
-                            class="select-material" styleClass="select-material" optionValue="nit" >
-                        </p-dropdown>
-
-                        <label for="" class="active">Nit</label>
+                    <input type="text" pInputText optionLabel="nit" formControlName="nit" [value]="empresaSelect2.nit" required readonly=true/>
+                    <label for="" class="active">Nit</label>
                     </div>
                 </div>
-               
             </div>
         </p-panel>
         <br>
