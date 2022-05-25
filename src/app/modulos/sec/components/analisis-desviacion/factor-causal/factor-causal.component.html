@@ -1,9 +1,89 @@
-<h1>Nombre Etapa: {{factorCausal.nombre}}</h1>
+<form>
+    <div id="msform">
+        <h1>Nombre Etapa: {{factorCausal.nombre}}</h1>
+        <p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
 
-<p-steps [model]="items" [(activeIndex)]="pasoSelect"></p-steps>
+        <div>
+          <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
+          <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+        </div>
 
-<div *ngIf="pasoSelect==0">
+        <div *ngIf="pasoSelect==0">
+          <fieldset *ngFor="let item of questionIndividual" >
+              <div >
+                <label>{{item.id}}</label>
+                <label>{{item.pregunta}}</label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                  <div>
+                    <p-radioButton [name]="item.dq" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
+                  </div>                  
+                </div>
+                <br>
+                <br>
 
+                <div class="areas" *ngFor="let ide of item.areas">
+                  <label for="">{{ide.area}}</label>
+                </div>
+
+              </div>
+          </fieldset>
+        </div>
+
+        <div *ngIf="pasoSelect==1">
+          <fieldset *ngFor="let item of questionTrabajo" >
+              <div >
+                <label>{{item.id}}</label>
+                <label>{{item.pregunta}}</label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                  <div>
+                    <p-radioButton [name]="item.dq" value="val1" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" value="val2" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
+                  </div>                  
+                </div>
+                <br>
+                <br>
+
+                <div class="areas" *ngFor="let ide of item.areas">
+                  <label for="">{{ide.area}}</label>
+                </div>
+
+              </div>
+          </fieldset>
+        </div>
+        
+        <div>
+          <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
+          <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+        </div>
+        
+    </div>
+    
+</form>
+<!-- 
+<button (click)="changeSelection($event)">dddd</button>
+<button (click)="ok()">adf</button> -->
+
+<!-- 
+<p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
+
+<div *ngIf="pasoSelect==0" id="msform">
+    <fieldset>
+      <h2 class="fs-title">Create your account</h2>
+      <h3 class="fs-subtitle">This is step 1</h3>
+      <input type="text" name="email" placeholder="Email" />
+      <input type="password" name="pass" placeholder="Password" />
+      <input type="password" name="cpass" placeholder="Confirm Password" />
+      <input type="button" name="next" class="next action-button" value="Next" />
+    </fieldset>
 </div>
 <div *ngIf="pasoSelect==1">
 <h1>la</h1>
@@ -15,4 +95,40 @@
 
 <button *ngIf="pasoSelect>0" (click)="back()">Volver</button>
 
-<button *ngIf="items.length>pasoSelect" (click)="next()">Siguiente</button>
+<button *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+
+
+<form id="msform">
+    <ul id="progressbar">
+      <li class="active">Account Setup</li>
+      <li>Social Profiles</li>
+      <li>Personal Details</li>
+    </ul>
+    <fieldset>
+      <h2 class="fs-title">Create your account</h2>
+      <h3 class="fs-subtitle">This is step 1</h3>
+      <input type="text" name="email" placeholder="Email" />
+      <input type="password" name="pass" placeholder="Password" />
+      <input type="password" name="cpass" placeholder="Confirm Password" />
+      <input type="button" name="next" class="next action-button" value="Next" />
+    </fieldset>
+    <fieldset>
+      <h2 class="fs-title">Social Profiles</h2>
+      <h3 class="fs-subtitle">Your presence on the social network</h3>
+      <input type="text" name="twitter" placeholder="Twitter" />
+      <input type="text" name="facebook" placeholder="Facebook" />
+      <input type="text" name="gplus" placeholder="Google Plus" />
+      <input type="button" name="previous" class="previous action-button" value="Previous" />
+      <input type="button" name="next" class="next action-button" value="Next" />
+    </fieldset>
+    <fieldset>
+      <h2 class="fs-title">Personal Details</h2>
+      <h3 class="fs-subtitle">We will never sell it</h3>
+      <input type="text" name="fname" placeholder="First Name" />
+      <input type="text" name="lname" placeholder="Last Name" />
+      <input type="text" name="phone" placeholder="Phone" />
+      <textarea name="address" placeholder="Address"></textarea>
+      <input type="button" name="previous" class="previous action-button" value="Previous" />
+      <input type="submit" name="submit" class="submit action-button" value="Submit" />
+    </fieldset>
+  </form> -->
