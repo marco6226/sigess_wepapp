@@ -107,7 +107,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
                 this.loadingNoProg = false;
                 this.inspeccionNoProgList = [];
                 (<any[]>resp['data']).forEach(dto => {
-                    this.inspeccionNoProgList.push(FilterQuery.dtoToObject(dto));
+                    // this.inspeccionNoProgList.push(FilterQuery.dtoToObject(dto));
                     let obj = FilterQuery.dtoToObject(dto)
                      obj['hash'] = obj.listaInspeccion.listaInspeccionPK.id + '.' + obj.listaInspeccion.listaInspeccionPK.version;
                       try {
@@ -153,7 +153,7 @@ export class ConsultaInspeccionesComponent implements OnInit {
                 this.inspeccionesList = [];
                 
                 (<any[]>resp['data']).forEach(dto => {
-                    this.inspeccionesList.push(FilterQuery.dtoToObject(dto));
+                    // this.inspeccionesList.push(FilterQuery.dtoToObject(dto));
                     let obj = FilterQuery.dtoToObject(dto)
                      obj['hash'] = obj.listaInspeccion.listaInspeccionPK.id + '.' + obj.listaInspeccion.listaInspeccionPK.version;
                       try {
