@@ -70,11 +70,12 @@ export class ProgramacionComponent implements OnInit {
   visibleProgMasiva: boolean;
   fechaMaxima: Date;
   semanaLaboral = ['1', '2', '3', '4', '5',];
-
+  listaInspeccionList: ListaInspeccion[];
   areasPerm: string;
   loading: boolean = false;
   progLoading: boolean = false;
   permiso:boolean = false;;
+  totalRecords: number;
   constructor(
     private sesionService: SesionService,
     private router: Router,
@@ -107,16 +108,17 @@ export class ProgramacionComponent implements OnInit {
     let user:any = JSON.parse(localStorage.getItem('session'));
     let filterQuery = new FilterQuery();
 
+
     filterQuery.filterList = [{
       field: 'usuarioEmpresaList.usuario.id',
       criteria: Criteria.EQUALS,
       value1: user.usuario.id,
       value2: null
     }];
-    const userP = await this.userService.findByFilter(filterQuery);
+     
+const userP = await this.userService.findByFilter(filterQuery);
     console.log(userP);
-    let userParray:any = userP;    
-
+    let userParray:any = userP;   
    
     this.areasPerm = this.sesionService.getPermisosMap()['INP_GET_PROG'].areas;
 
@@ -125,31 +127,38 @@ export class ProgramacionComponent implements OnInit {
     this.fechaMaxima.setMonth(11);
     this.fechaMaxima.setFullYear(this.fechaMaxima.getFullYear() + 1);
 
-    let j = new FilterQuery();
-    j.filterList= [{
+     filterQuery = new FilterQuery();
+     filterQuery.filterList= [{
       field: 'estado',
       criteria: Criteria.NOT_EQUALS,
       value1: 'inactivo',
       value2: null
     }];
 
-    this.listaInspeccionService.findByFilter(j)
-      .then(data => {
-        console.log(data);
-        (<ListaInspeccion[]>data['data']).forEach(lista => {
-          try {
-            for (const profile of userParray.data) {
-             console.log(profile.id)
-            
-             if (lista.fkPerfilId.includes(`${profile.id}`)) {
-              this.listasInspeccionList.push({ label: lista.codigo + ' - ' + lista.nombre + ' v' + lista.listaInspeccionPK.version, value: lista.listaInspeccionPK });
-              break;
+    this.listaInspeccionService.findByFilter(filterQuery).then(
+      resp => {
+        this.totalRecords = resp['count'];
+        this.loading = false;
+        this.listaInspeccionList = [];
+        (<any[]>resp['data']).forEach(dto => {
+          let obj = FilterQuery.dtoToObject(dto)
+          obj['hash'] = obj.listaInspeccionPK.id + '.' + obj.listaInspeccionPK.version;
+         try {
+           for (const profile of userParray.data) {
+            console.log(profile.id)
+
+            let perfilArray = JSON.parse(obj.fkPerfilId)
+
+            perfilArray.forEach(perfil => {
+              console.log(perfil);
+              if (perfil===profile.id) {
+                if(!this.listaInspeccionList.find(element=>element==obj)){
+                  this.listaInspeccionList.push(obj);
+                }              
             }
-            
- 
-            }
-          } catch (error) {
-            
+            });
+          }
+         } catch (error) {            
           } 
         });
         console.log(this.listasInspeccionList);

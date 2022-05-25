@@ -6,11 +6,14 @@ import { Programacion } from 'app/modulos/inspecciones/entities/programacion'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { Message } from 'primeng/primeng'
 import { SesionService } from '../../../core/services/sesion.service';
+import { PerfilService } from 'app/modulos/admin/services/perfil.service';
 
 
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { filter } from 'rxjs/operators';
+import { ListaInspeccionService } from 'app/modulos/inspecciones/services/lista-inspeccion.service'
+import { ListaInspeccion } from 'app/modulos/inspecciones/entities/lista-inspeccion'
 
 @Component({
     selector: 'app-consulta-inspecciones',
@@ -33,11 +36,13 @@ export class ConsultaInspeccionesComponent implements OnInit {
         'programacion_area_id',
         'programacion_area_nombre',
         'fechaModificacion',
-        'usuarioModifica_email'
+        'usuarioModifica_email',    
+        'listaInspeccion'
     ];
     areasPermiso: string;
-
+    userParray: any;
     // No programadas
+    listaInspeccion: ListaInspeccion;
     inspeccionNoProgList: any[];
     inspeccionNoProgSelect: Inspeccion;
     totalRecordsNoProg: number;
@@ -50,13 +55,16 @@ export class ConsultaInspeccionesComponent implements OnInit {
         'area_id',
         'area_nombre',
         'fechaModificacion',
-        'usuarioModifica_email'
+        'usuarioModifica_email',    
+        'listaInspeccion'
     ];
 
     constructor(
         private paramNav: ParametroNavegacionService,
         private inspeccionService: InspeccionService,
         private sesionService: SesionService,
+        private userService: PerfilService,
+        private listaInspeccionService: ListaInspeccionService,
     ) { }
 
     ngOnInit() {
@@ -65,14 +73,28 @@ export class ConsultaInspeccionesComponent implements OnInit {
 
     }
 
-    lazyLoadNoProg(event: any) {
+    async lazyLoadNoProg(event: any) {
+        let user:any = JSON.parse(localStorage.getItem('session'));
+    let filterQuery = new FilterQuery();
+
+    filterQuery.filterList = [{
+      field: 'usuarioEmpresaList.usuario.id',
+      criteria: Criteria.EQUALS,
+      value1: user.usuario.id,
+      value2: null
+    }];
+    const userP = await this.userService.findByFilter(filterQuery);
+        this.userParray = userP; 
         this.loadingNoProg = true;
-        let filterQuery = new FilterQuery();
+        
+        filterQuery = new FilterQuery();
         filterQuery.sortField = event.sortField;
         filterQuery.sortOrder = event.sortOrder;
         filterQuery.offset = event.first;
         filterQuery.rows = event.rows;
         filterQuery.count = true;
+        // const userP =await this.userService.findByFilter(filterQuery);
+        // let userParray:any = userP;   
 
         filterQuery.fieldList = this.fieldsNoProg;
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
@@ -86,12 +108,32 @@ export class ConsultaInspeccionesComponent implements OnInit {
                 this.inspeccionNoProgList = [];
                 (<any[]>resp['data']).forEach(dto => {
                     this.inspeccionNoProgList.push(FilterQuery.dtoToObject(dto));
+                    let obj = FilterQuery.dtoToObject(dto)
+                     obj['hash'] = obj.listaInspeccion.listaInspeccionPK.id + '.' + obj.listaInspeccion.listaInspeccionPK.version;
+                      try {
+                        for (const profile of this.userParray.data) {
+                         console.log(profile.id)
+             
+                         let perfilArray = JSON.parse(obj.listaInspeccion.fkPerfilId)
+             
+                         perfilArray.forEach(perfil => {
+                           console.log(perfil);
+                           if (perfil===profile.id) {
+                            if(!this.inspeccionNoProgList.find(element=>element==obj)){
+                              this.inspeccionNoProgList.push(obj);
+                            }              
+                        }
+                         });
+                       }
+                      } catch (error) {
+                        
+                      } 
                 });
             }
         );
     }
 
-    lazyLoad(event: any) {
+    async lazyLoad(event: any) {
         this.loading = true;
         let filterQuery = new FilterQuery();
         filterQuery.sortField = event.sortField;
@@ -99,7 +141,6 @@ export class ConsultaInspeccionesComponent implements OnInit {
         filterQuery.offset = event.first;
         filterQuery.rows = event.rows;
         filterQuery.count = true;
-
         filterQuery.fieldList = this.fields;
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
         //filterQuery.filterList.push({criteria:Criteria.IS_NOT_NULL, field:'programacion'});
@@ -113,7 +154,28 @@ export class ConsultaInspeccionesComponent implements OnInit {
                 
                 (<any[]>resp['data']).forEach(dto => {
                     this.inspeccionesList.push(FilterQuery.dtoToObject(dto));
-                });
+                    let obj = FilterQuery.dtoToObject(dto)
+                     obj['hash'] = obj.listaInspeccion.listaInspeccionPK.id + '.' + obj.listaInspeccion.listaInspeccionPK.version;
+                      try {
+                        for (const profile of this.userParray.data) {
+                         console.log(profile.id)
+             
+                         let perfilArray = JSON.parse(obj.listaInspeccion.fkPerfilId)
+             
+                         perfilArray.forEach(perfil => {
+                           console.log(perfil);
+                           if (perfil===profile.id) {
+                            if(!this.inspeccionesList.find(element=>element==obj)){
+                              this.inspeccionesList.push(obj);
+                            }              
+                        }
+                         });
+                       }
+                      } catch (error) {
+                        
+                      } 
+                    });
+                
             }
         );
     }
