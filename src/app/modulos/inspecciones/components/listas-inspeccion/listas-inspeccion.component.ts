@@ -108,8 +108,9 @@ export class ListasInspeccionComponent implements OnInit {
             perfilArray.forEach(perfil => {
               console.log(perfil);
               if (perfil===profile.id) {
-              this.listaInspeccionList.push(obj);
-              // break;
+                if(!this.listaInspeccionList.find(element=>element==obj)){
+                  this.listaInspeccionList.push(obj);
+                }              
             }
             });
           }
