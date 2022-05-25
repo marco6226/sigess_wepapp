@@ -103,39 +103,19 @@ export class ListasInspeccionComponent implements OnInit {
            for (const profile of userParray.data) {
             console.log(profile.id)
 
-          //   if (obj.fkPerfilId.includes(`${profile.id}`)) {
-          //     this.listaInspeccionList.push(obj);
-          //     break;
-          //  }
-console.log(obj.fkPerfilId);
+            let perfilArray = JSON.parse(obj.fkPerfilId)
 
-let perfilArray = JSON.parse(obj.fkPerfilId)
-
-// a = a.split("[")
-// a = a.split("]")
-
-
-console.log(perfilArray);
-
-
-          perfilArray.forEach(perfil => {
-            console.log(perfil);
-            if (perfil===profile.id) {
-             this.listaInspeccionList.push(obj);
-             // break;
-           }
-          });
-
-          
-           
-
-           }
+            perfilArray.forEach(perfil => {
+              console.log(perfil);
+              if (perfil===profile.id) {
+              this.listaInspeccionList.push(obj);
+              // break;
+            }
+            });
+          }
          } catch (error) {
            
          } 
-            
-          
-        
         });
       }
     );
