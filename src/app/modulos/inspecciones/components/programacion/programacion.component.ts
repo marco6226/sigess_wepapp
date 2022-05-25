@@ -154,6 +154,7 @@ const userP = await this.userService.findByFilter(filterQuery);
               if (perfil===profile.id) {
                 if(!this.listaInspeccionList.find(element=>element==obj)){
                   this.listaInspeccionList.push(obj);
+                  this.listasInspeccionList.push({ label: obj.codigo + ' - ' + obj.nombre + ' v' + obj.listaInspeccionPK.version, value: obj.listaInspeccionPK } );
                 }              
             }
             });
