@@ -96,14 +96,33 @@ export class ConsultaInspeccionesComponent implements OnInit {
         // const userP =await this.userService.findByFilter(filterQuery);
         // let userParray:any = userP;   
 
+        
+        // console.log(this.userParray.data);
+        
+
         filterQuery.fieldList = this.fieldsNoProg;
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
         filterQuery.filterList.push({ criteria: Criteria.IS_NULL, field: 'programacion' });
         filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: 'area.id', value1: this.areasPermiso });
 
+var x:any[]=[];
+
+        this.userParray.data.forEach(element => {
+            console.log(element.id);
+            x.push(element.id)
+        });
+        console.log("{"+x+"}");
+        
+        var y:string = "["+x+"]";
+        console.log(y);
+        
+        filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: 'listaInspeccion.fkPerfilId', value1: y });
+
         this.inspeccionService.findByFilter(filterQuery).then(
             resp => {
                 this.totalRecordsNoProg = resp['count'];
+                console.log(resp);
+                
                 this.loadingNoProg = false;
                 this.inspeccionNoProgList = [];
                 (<any[]>resp['data']).forEach(dto => {
@@ -112,12 +131,12 @@ export class ConsultaInspeccionesComponent implements OnInit {
                      obj['hash'] = obj.listaInspeccion.listaInspeccionPK.id + '.' + obj.listaInspeccion.listaInspeccionPK.version;
                       try {
                         for (const profile of this.userParray.data) {
-                         console.log(profile.id)
+                        //  console.log(profile.id)
              
                          let perfilArray = JSON.parse(obj.listaInspeccion.fkPerfilId)
              
                          perfilArray.forEach(perfil => {
-                           console.log(perfil);
+                        //    console.log(perfil);
                            if (perfil===profile.id) {
                             if(!this.inspeccionNoProgList.find(element=>element==obj)){
                               this.inspeccionNoProgList.push(obj);
@@ -125,6 +144,8 @@ export class ConsultaInspeccionesComponent implements OnInit {
                         }
                          });
                        }
+                       console.log(this.inspeccionNoProgList.length);
+                       
                       } catch (error) {
                         
                       } 
@@ -158,12 +179,12 @@ export class ConsultaInspeccionesComponent implements OnInit {
                      obj['hash'] = obj.listaInspeccion.listaInspeccionPK.id + '.' + obj.listaInspeccion.listaInspeccionPK.version;
                       try {
                         for (const profile of this.userParray.data) {
-                         console.log(profile.id)
+                        //  console.log(profile.id)
              
                          let perfilArray = JSON.parse(obj.listaInspeccion.fkPerfilId)
              
                          perfilArray.forEach(perfil => {
-                           console.log(perfil);
+                        //    console.log(perfil);
                            if (perfil===profile.id) {
                             if(!this.inspeccionesList.find(element=>element==obj)){
                               this.inspeccionesList.push(obj);
