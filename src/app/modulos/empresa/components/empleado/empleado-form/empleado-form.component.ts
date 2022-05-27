@@ -342,7 +342,7 @@ export class EmpleadoFormComponent implements OnInit {
         empleado.telefono1 = this.form.value.telefono1;
         empleado.telefono2 = this.form.value.telefono2;
         empleado.empresa = this.empresaForm.value.empresa.label;
-        empleado.nit = this.empresaForm.value.nit;
+        empleado.nit = this.empresaForm.value.empresa.nit;
         empleado.ciudad = this.form.value.ciudad == null ? null : this.form.value.ciudad.id;
         if (this.form.value.afp != null) {
             empleado.afp = new Afp();
