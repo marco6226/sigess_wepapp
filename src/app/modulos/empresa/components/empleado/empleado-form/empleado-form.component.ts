@@ -189,8 +189,8 @@ export class EmpleadoFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.empleadoSelect);
-        console.log(this.empleadoSelect.nit,this.empleadoSelect.primerNombre);
+      //  console.log(this.empleadoSelect);
+      //  console.log(this.empleadoSelect.nit,this.empleadoSelect.primerNombre);
         this.isUpdate ? this.form.controls['email'].disable() : ''; //this for disabled email in case of update
         if (this.empleadoSelect != null) {
             let fq = new FilterQuery();
@@ -245,20 +245,21 @@ export class EmpleadoFormComponent implements OnInit {
                     businessPartner: this.empleadoSelect.businessPartner,
                     email: [this.empleadoSelect.usuario.email],
                 });
-                this.empresaForm.patchValue({
-                    empresa: this.empleadoSelect.empresa,
-                    nit: this.empleadoSelect.nit})
+                // this.empresaForm.patchValue({
+                //     empresa: this.empleadoSelect.empresa,
+                //     nit: this.empleadoSelect.nit})
 
-                    this.empresaList2.forEach(element => {
-                        if(element.label==this.empleadoSelect.empresa){
-                            this.empresaSelect2=element  
-                        }
-                    });
+                //     this.empresaList2.forEach(element => {
+                //         if(element.label==this.empleadoSelect.empresa){
+                //             this.empresaSelect2=element  
+                //         }
+                //     });
                    
                 
             });
             //cargar imagen
-        } else {
+        } 
+        else {
             this.loaded = true;
             let area: any;
             //console.log("new register");
