@@ -1,3 +1,4 @@
+import { IdentificacionFactorCausalComponent } from './components/analisis-desviacion/factor-causal/identificacion-factor-causal/identificacion-factor-causal.component';
 import { EvidenciasComponent } from './components/analisis-desviacion/evidencias/evidencias.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -92,7 +93,8 @@ import { FactorCausalComponent } from './components/analisis-desviacion/factor-c
         MiembrosEquipoComponent,
         FlowChartComponent,
         EvidenciasComponent,
-        FactorCausalComponent
+        FactorCausalComponent,
+        IdentificacionFactorCausalComponent
     ],
     providers: [
         SistemaCausaRaizService,
