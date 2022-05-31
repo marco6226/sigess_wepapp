@@ -1,0 +1,22 @@
+<!-- <fieldset> -->
+  <!-- <h2>{{identificacionFc?.factor}}</h2> -->
+  <div *ngFor="let item of identificacionFc?.subProd">
+    <br>
+    <fieldset>
+      <h3 style="font-weight: 500;">{{item.subProd}}</h3>
+      <div *ngFor="let data of item.causa">
+        <!-- <p-checkbox name="groupname" [value]="data.id" [(ngModel)]="selectedValues">{{data.ProcedimientoFC}}</p-checkbox> -->
+        <div class="field-checkbox">
+          <p-checkbox name="groupname" [value]="data.esCausa" [(ngModel)]="data.esCausa">{{data.ProcedimientoFC}}</p-checkbox>
+          <label for="binary">  {{data.ProcedimientoFC}}</label>
+      </div>
+      </div>
+    </fieldset>
+  </div>
+    <div >
+
+      <button (click)="a=0" pButton icon="pi pi-check" label="Confirm"></button>
+     
+      <button (click)="ok()"> ok </button>
+    </div>  
+  <!-- </fieldset> -->
