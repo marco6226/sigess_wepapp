@@ -175,3 +175,46 @@
 		color:black;
 		margin-left: 50px;
 	}
+
+	.tabla{
+		width: 150%;
+		.fila{
+			width: 100%;
+			// div{
+				.C1{
+					width: 50%;
+					// background: red; #9bf584
+					text-align: center;
+					// [data-status="true"] {
+					// 	color: green;
+					// }
+					// [data-status="false"] {
+					// 	color: red;
+					// }
+				}
+	
+				.C2true{
+					width: 30%;
+					text-align: center;
+					background: red;
+				}
+				.C2false{
+					width: 30%;
+					text-align: center;
+					background:#9bf584;
+					// background: blue;
+				}
+			// }
+			
+			
+		}
+
+		.H1{
+
+		}
+
+		.H2{
+			
+		}
+
+	}

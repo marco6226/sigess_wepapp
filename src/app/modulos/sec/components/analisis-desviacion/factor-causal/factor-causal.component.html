@@ -69,11 +69,25 @@
                 <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.factor"></button>
                 <br>
                 <br>
+                <table class="tabla">
+                  <th class="H1">Factor Causal</th>
+                <th class="H2">Es Causa?</th>
+              </table>            
+
                 <div *ngFor="let datas of item.subProd">
-                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <!-- <th mat-header-cell *matHeaderCellDef> No. </th>
                   <tr *ngFor="let data of datas.causa">
                     <label for="">{{data.id}} {{data.ProcedimientoFC}} {{data.esCausa}}</label>
-                  </tr>                  
+                  </tr>       -->
+                  <table class="tabla">
+                    <!-- <th class="C1">Factor Causal</th>
+                  <th class="C2">Es Causa?</th> -->
+                    <tr class="fila" *ngFor="let data of datas.causa">
+                      <td class="C1">{{ data.ProcedimientoFC }}</td>
+                      <td class="C2false" *ngIf="!data.esCausa">No</td>
+                      <td class="C2true" *ngIf="data.esCausa">Si</td>
+                    </tr>
+                  </table>            
                 </div>
                 <ng-container matColumnDef="demo-position">
                   <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -94,7 +108,7 @@
           </div>
 
           <div>
-            <p-button icon="pi pi-check" (click)="display=false" label="Yes" class="p-button-text"></p-button>
+            <p-button icon="pi pi-check" (click)="display=false" label="Confirmar" class="p-button-text"></p-button>
           </div>
 
         </p-dialog>
