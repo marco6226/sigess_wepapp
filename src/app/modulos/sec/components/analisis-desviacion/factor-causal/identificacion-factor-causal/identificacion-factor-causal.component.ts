@@ -11,6 +11,7 @@ export class IdentificacionFactorCausalComponent implements OnInit {
   @Input()identificacionFc: IdentificacionFC | null
 
   selectedValues: string[] = [];
+  value: boolean
 
   constructor() { }
 
@@ -19,6 +20,14 @@ export class IdentificacionFactorCausalComponent implements OnInit {
 
   ok(){
     console.log(this.identificacionFc);
+    console.log(this.selectedValues);
+    console.log(this.value);
+    
+    
+  }
+
+  test(event){
+    console.log(event);
     
   }
 }

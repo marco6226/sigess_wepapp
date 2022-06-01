@@ -82,7 +82,7 @@ import { CargaArchivoComponent } from '../rai/components/carga-archivo/carga-arc
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { ManualesComponent } from '../ayuda/components/manuales/manuales.component';
 import { TerminosCondicionesComponent } from './components/terminos-condiciones/terminos-condiciones.component';
-import { CardModule } from 'primeng/primeng';
+import { CardModule } from 'primeng/card';
 import { AreaSelectorIndComponent } from './components/area-selectorind/area-selectorind.component';
 import { ModeloGraficaService } from '../ind/services/modelo-grafica.service';
 import { FormularioScmComponent } from '../scm/components/formulario-scm/formulario-scm.component';

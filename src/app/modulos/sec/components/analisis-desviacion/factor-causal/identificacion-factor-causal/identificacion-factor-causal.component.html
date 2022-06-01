@@ -7,7 +7,7 @@
       <div *ngFor="let data of item.causa">
         <!-- <p-checkbox name="groupname" [value]="data.id" [(ngModel)]="selectedValues">{{data.ProcedimientoFC}}</p-checkbox> -->
         <div class="field-checkbox">
-          <p-checkbox name="groupname" [value]="data.esCausa" [(ngModel)]="data.esCausa">{{data.ProcedimientoFC}}</p-checkbox>
+          <p-checkbox [name]="data.id" [(ngModel)]="data.esCausa" [binary]="true">{{data.ProcedimientoFC}}</p-checkbox>
           <label for="binary">  {{data.ProcedimientoFC}}</label>
       </div>
       </div>
@@ -15,8 +15,8 @@
   </div>
     <div >
 
-      <button (click)="a=0" pButton icon="pi pi-check" label="Confirm"></button>
+      <!-- <button (click)="a=0" pButton icon="pi pi-check" label="Confirm"></button>
      
-      <button (click)="ok()"> ok </button>
+      <button (click)="ok()"> ok </button> -->
     </div>  
   <!-- </fieldset> -->
