@@ -9,7 +9,7 @@
         </div>
 
         <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
-          <h2 class="titulos"><b>Desempeño Individual</b></h2>
+          <h2 class="titulos"><b>Desempeño individual</b></h2>
           <fieldset  *ngFor="let item of questionIndividual" >
               <div >
                 <label>{{item.id}}</label>
@@ -36,8 +36,35 @@
         </div>
         <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
 
-          <h2 class="titulos"><b>Desempeño del Equipo de Trabajo</b></h2>
+          <h2 class="titulos"><b>Desempeño del equipo de trabajo</b></h2>
           <fieldset   *ngFor="let item of questionTrabajo">
+              <div >
+                <label>{{item.id}}</label>
+                <label>{{item.pregunta}}</label>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                  <div class="buttons">
+                    <p-radioButton [name]="item.dq" value="val1" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" value="val2" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
+                  </div>                  
+                </div>
+                <br>
+                <br>
+
+                <div class="areas" *ngFor="let ide of item.areas ;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
+                  <label for="">{{ide.area}}</label>
+                </div>
+
+              </div>
+          </fieldset>
+        </div>
+        <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
+
+          <h2 class="titulos"><b>Sistema de administración</b></h2>
+          <fieldset   *ngFor="let item of questionAdministracion">
               <div >
                 <label>{{item.id}}</label>
                 <label>{{item.pregunta}}</label>
