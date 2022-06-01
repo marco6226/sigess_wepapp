@@ -8,9 +8,9 @@
           <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
         </div>
 
-        <div *ngIf="pasoSelect==0">
-          <h2>Desempeño Individual</h2>
-          <fieldset *ngFor="let item of questionIndividual" >
+        <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
+          <h2 class="titulos"><b>Desempeño Individual</b></h2>
+          <fieldset  *ngFor="let item of questionIndividual" >
               <div >
                 <label>{{item.id}}</label>
                 <label>{{item.pregunta}}</label>
@@ -19,7 +19,7 @@
                 <br>
                 <br>
                 <div>
-                  <div>
+                  <div class="buttons">
                     <p-radioButton [name]="item.dq" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
                     <p-radioButton [name]="item.dq" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
                   </div>                  
@@ -27,15 +27,17 @@
                 <br>
                 <br>
 
-                <div class="areas" *ngFor="let ide of item.areas">
+                <div class="areas" *ngFor="let ide of item.areas;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
                   <label for="">{{ide.area}}</label>
                 </div>
 
               </div>
           </fieldset>
-        
-          <h2>Desempeño del Equipo de Trabajo</h2>
-          <fieldset *ngFor="let item of questionTrabajo" >
+        </div>
+        <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
+
+          <h2 class="titulos"><b>Desempeño del Equipo de Trabajo</b></h2>
+          <fieldset   *ngFor="let item of questionTrabajo">
               <div >
                 <label>{{item.id}}</label>
                 <label>{{item.pregunta}}</label>
@@ -44,7 +46,7 @@
                 <br>
                 <br>
                 <div>
-                  <div>
+                  <div class="buttons">
                     <p-radioButton [name]="item.dq" value="val1" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
                     <p-radioButton [name]="item.dq" value="val2" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
                   </div>                  
@@ -52,7 +54,7 @@
                 <br>
                 <br>
 
-                <div class="areas" *ngFor="let ide of item.areas">
+                <div class="areas" *ngFor="let ide of item.areas ;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
                   <label for="">{{ide.area}}</label>
                 </div>
 
@@ -63,24 +65,27 @@
         <div *ngIf="pasoSelect==1">
           <div *ngFor="let item of identificacionFC">
             <fieldset *ngIf="item.selectable">
-              <div >
+              <table mat-table class="mat-elevation-z8 demo-table">
                 <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.factor"></button>
                 <br>
                 <br>
                 <div *ngFor="let datas of item.subProd">
-                  <div *ngFor="let data of datas.causa">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <tr *ngFor="let data of datas.causa">
                     <label for="">{{data.id}} {{data.ProcedimientoFC}} {{data.esCausa}}</label>
-                  </div>                  
+                  </tr>                  
                 </div>
-              </div>  
+                <ng-container matColumnDef="demo-position">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  
+                </ng-container>
+              </table>  
             </fieldset>
           </div>
         </div>
+        
     
-        <div>
-          <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
-          <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
-        </div>
+       
         
         <p-dialog [header]="selectIdentificacionFC?.factor" [(visible)]="display" [style]="{width: '50vw'}">
           

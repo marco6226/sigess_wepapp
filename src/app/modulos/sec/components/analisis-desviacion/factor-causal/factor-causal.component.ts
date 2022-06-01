@@ -2,6 +2,7 @@ import { ConfirmationService } from 'primeng/primeng';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Desempeno, FactorCausal, IdentificacionFC } from './../../../entities/factor-causal';
 import { Component, OnInit, Input } from '@angular/core';
+//import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-factor-causal',
