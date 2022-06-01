@@ -114,9 +114,11 @@ var x:any[]=[];
         console.log("{"+x+"}");
         
         var y:string = "["+x+"]";
+        let z : string ="{"+x+"}"
         console.log(y);
+        console.log(z);
         
-        filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: 'listaInspeccion.fkPerfilId', value1: y });
+    //    filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: 'listaInspeccion.fkPerfilId', value1: z });
 
         this.inspeccionService.findByFilter(filterQuery).then(
             resp => {

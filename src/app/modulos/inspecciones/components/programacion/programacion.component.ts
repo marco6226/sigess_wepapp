@@ -152,10 +152,11 @@ const userP = await this.userService.findByFilter(filterQuery);
             perfilArray.forEach(perfil => {
               console.log(perfil);
               if (perfil===profile.id) {
-                if(!this.listasInspeccionList.find(element=>element==obj)){
+                if(!this.listaInspeccionList.find(element=>element==obj)){
+                  this.listaInspeccionList.push(obj);
                   this.listasInspeccionList.push({ label: obj.codigo + ' - ' + obj.nombre + ' v' + obj.listaInspeccionPK.version, value: obj.listaInspeccionPK } );
                 }              
-            }
+              }
             });
           }
          } catch (error) {            
