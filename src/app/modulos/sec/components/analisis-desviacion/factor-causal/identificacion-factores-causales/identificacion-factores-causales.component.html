@@ -1,0 +1,9 @@
+<h1>{{identificacionFc?.pregunta}}</h1>
+<div *ngFor="let item of identificacionFc?.areas">
+    <br>
+    <!-- <h3 style="font-weight: 500;">{{item.factor}}</h3> -->
+    <!-- <div class="products--grid"> -->
+        <app-identificacion-factor-causal [factor]="item"></app-identificacion-factor-causal>
+    <!-- </div>   -->
+</div>
+<!-- <button (click)="test()">s</button> -->

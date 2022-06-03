@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IdentificacionFC } from 'app/modulos/sec/entities/factor-causal';
+import { Desempeno, IdentificacionFC } from 'app/modulos/sec/entities/factor-causal';
 
 @Component({
   selector: 'app-identificacion-factor-causal',
@@ -8,7 +8,8 @@ import { IdentificacionFC } from 'app/modulos/sec/entities/factor-causal';
 })
 export class IdentificacionFactorCausalComponent implements OnInit {
 
-  @Input()identificacionFc: IdentificacionFC | null
+  @Input()identificacionFc: Desempeno | null
+  @Input()factor: IdentificacionFC | null
 
   selectedValues: string[] = [];
   value: boolean
@@ -26,8 +27,10 @@ export class IdentificacionFactorCausalComponent implements OnInit {
     
   }
 
-  test(event){
-    console.log(event);
+  test(){
+    console.log(this.identificacionFc);
+    console.log(this.factor);
+    
     
   }
 }

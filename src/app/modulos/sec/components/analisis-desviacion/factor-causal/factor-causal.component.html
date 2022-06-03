@@ -1,18 +1,22 @@
-<form>
+<form >
     <div id="msform">
         <h1>Nombre Etapa: {{factorCausal.nombre}}</h1>
         <p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
 
         <div>
           <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
-          <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+          <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+          <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
         </div>
 
         <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
           <h2 class="titulos"><b>Desempeño individual</b></h2>
           <fieldset  *ngFor="let item of questionIndividual" >
+            <div *ngIf="item.selected">
+              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
+            </div>
               <div >
-                <label>{{item.id}}</label>
+                <label>{{item.id + 1}} </label>
                 <label>{{item.pregunta}}</label>
                 <br>
                 <br>
@@ -20,15 +24,14 @@
                 <br>
                 <div>
                   <div class="buttons">
-                    <p-radioButton [name]="item.dq" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
-                    <p-radioButton [name]="item.dq" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
                   </div>                  
                 </div>
                 <br>
                 <br>
-
                 <div class="areas" *ngFor="let ide of item.areas;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
-                  <label for="">{{ide.area}}</label>
+                  <label for="">{{ide.factor}}</label>
                 </div>
 
               </div>
@@ -38,8 +41,11 @@
 
           <h2 class="titulos"><b>Desempeño del equipo de trabajo</b></h2>
           <fieldset   *ngFor="let item of questionTrabajo">
+            <div *ngIf="item.selected">
+              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
+            </div>
               <div >
-                <label>{{item.id}}</label>
+                <label>{{item.id + 1}} </label>
                 <label>{{item.pregunta}}</label>
                 <br>
                 <br>
@@ -47,15 +53,15 @@
                 <br>
                 <div>
                   <div class="buttons">
-                    <p-radioButton [name]="item.dq" value="val1" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
-                    <p-radioButton [name]="item.dq" value="val2" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
                   </div>                  
                 </div>
                 <br>
                 <br>
 
                 <div class="areas" *ngFor="let ide of item.areas ;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
-                  <label for="">{{ide.area}}</label>
+                  <label for="">{{ide.factor}}</label>
                 </div>
 
               </div>
@@ -65,8 +71,11 @@
 
           <h2 class="titulos"><b>Sistema de administración</b></h2>
           <fieldset   *ngFor="let item of questionAdministracion">
+            <div *ngIf="item.selected">
+              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
+            </div>
               <div >
-                <label>{{item.id}}</label>
+                <label>{{item.id + 1}} </label>
                 <label>{{item.pregunta}}</label>
                 <br>
                 <br>
@@ -74,15 +83,15 @@
                 <br>
                 <div>
                   <div class="buttons">
-                    <p-radioButton [name]="item.dq" value="val1" label="Si  " (onClick)="changeSelection(item.dq, true)"></p-radioButton>
-                    <p-radioButton [name]="item.dq" value="val2" label="No  " (onClick)="changeSelection(item.dq, false)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
                   </div>                  
                 </div>
                 <br>
                 <br>
 
                 <div class="areas" *ngFor="let ide of item.areas ;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
-                  <label for="">{{ide.area}}</label>
+                  <label for="">{{ide.factor}}</label>
                 </div>
 
               </div>
@@ -131,8 +140,11 @@
         <p-dialog [header]="selectIdentificacionFC?.factor" [(visible)]="display" [style]="{width: '50vw'}">
           
           <div>
-            <app-identificacion-factor-causal [identificacionFc]="selectIdentificacionFC"></app-identificacion-factor-causal>
+            <app-identificacion-factores-causales [identificacionFc]="selectIdentificacionFC"></app-identificacion-factores-causales>
           </div>
+          <!-- <div>
+            <app-identificacion-factor-causal [identificacionFc]="selectIdentificacionFC"></app-identificacion-factor-causal>
+          </div> -->
 
           <div>
             <p-button icon="pi pi-check" (click)="display=false" label="Confirmar" class="p-button-text"></p-button>

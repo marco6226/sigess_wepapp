@@ -7,7 +7,9 @@ export interface Desempeno{
     id: number;
     pregunta: string;
     dq:string;
-    areas: areaInvolucrada[];
+    // areas: areaInvolucrada[];
+    areas?: IdentificacionFC[];
+    selected: boolean|null|undefined
   }
 
 export interface areaInvolucrada{
