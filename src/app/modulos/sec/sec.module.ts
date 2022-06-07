@@ -40,6 +40,7 @@ import { ListViewAllModule } from '@syncfusion/ej2-angular-lists';
 import { DropDownButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
 import { FactorCausalComponent } from './components/analisis-desviacion/factor-causal/factor-causal.component';
+import { IdentificacionFactoresCausalesComponent } from './components/analisis-desviacion/factor-causal/identificacion-factores-causales/identificacion-factores-causales.component';
 
 @NgModule({
     imports: [
@@ -94,7 +95,8 @@ import { FactorCausalComponent } from './components/analisis-desviacion/factor-c
         FlowChartComponent,
         EvidenciasComponent,
         FactorCausalComponent,
-        IdentificacionFactorCausalComponent
+        IdentificacionFactorCausalComponent,
+        IdentificacionFactoresCausalesComponent
     ],
     providers: [
         SistemaCausaRaizService,
