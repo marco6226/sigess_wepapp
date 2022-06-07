@@ -83,6 +83,11 @@ export class AnalisisDesviacionComponent implements OnInit {
     fechaActual = new Date();
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
+    tipoList = [
+        { label: 'Seleccione', value: null },
+        { label: 'Inicial', value: 'Inicial' },
+        { label: 'Prorroga', value: 'Prorroga' },
+    ];
 
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
@@ -152,7 +157,19 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultarAnalisis(this.value.id);
         }
     }
+    async nuevaIncapacidad() {
+        // try {
+        //     // let seg = { pkCase: this.caseSelect.id }
+        //     // let resp = await this.scmService.createTratamiento(seg);
 
+        //     // if (resp) {
+        //     //     this.tratamientos.push(resp);
+        //     }
+
+        // } catch (error) {
+        //     console.log(error)
+        // }
+    }
     removeDesv(desviacion: Desviacion) {
         if (this.desviacionesList.length == 1) {
             this.msgs = [];

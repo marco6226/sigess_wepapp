@@ -107,6 +107,178 @@
                         </p-table>  
                         
                     </p-tabPanel>
+                    <p-tabPanel  *ngIf="idEmpresa == '3'" header="Información complementaria">
+                        <p-tabView>
+                            <p-tabPanel  *ngIf="idEmpresa == '3'" header="complementaria">
+                                <p-table [value]="desviacionesList"  autoLayout="true">
+                                                        
+                                    <ng-template pTemplate="body">
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Peligro</th>
+                                            <td>{{desviacionesList[0].concepto}}</td> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Descripción del Peligro</th>
+                                            <td>{{desviacionesList[0]?.nombre}}</td> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Estado del evento ante ARL</th>
+                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Atención primeros axilios sin remisión a la EPS</th>
+                                            <td>{{desviacionesList[0]?.hora}}</td> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Envío copia FURAT a  EPS</th>
+                                            <td>{{desviacionesList[0]?.area.nombre}}</td> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Fecha envío copia EPS</th>
+                                            <td>{{desviacionesList[0]?.severidad}}</td> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Entrega copia de FURAT  al trabajador</th>
+                                           
+                                            <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="10"
+                                    placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
+
+                                <div *ngIf="consultar">
+                                    {{observacion}}
+                                </div> 
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #c8c8c8;">Fecha entrega copia al trabajador</th>
+                                            <td>{{desviacionesList[0]?.severidad}}</td> 
+                                        </tr>
+                                        </ng-template>
+                                    
+                                </p-table> 
+                            </p-tabPanel>
+                            <p-tabPanel  *ngIf="idEmpresa == '3'" header="Dias perdidos">
+                                <p-table [value]="desviacionesList" dataKey="id" editMode="row" styleClass="material-table">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="tipo">Tipo</th>
+                                            <th pSortableColumn="tipoIntervencion">CIE 10</th>
+                                            <th pSortableColumn="descripcion">Diagnostico</th>
+                                            <th pSortableColumn="fecha">Fecha inicio</th>
+                                            <th pSortableColumn="fecha">Fecha fin</th>
+                                            <th pSortableColumn="fecha">Dias de ausencia</th>
+                                            <th style="width:8rem"></th>
+                                        </tr>
+                                    </ng-template>
+            
+                                    <ng-template pTemplate="body" let-tratamiento let-editing="editing" let-ri="rowIndex">
+                                        <tr [pEditableRow]="desviacionesList">
+            
+                                            <td class="p-text-center">
+                                                <p-cellEditor>
+            
+                                                    <ng-template pTemplate="input">
+            
+                                                        <div class="input-field">
+                                                            <p-dropdown [filter]="true" [options]="tipoList"
+                                                                class="select-material" [(ngModel)]="tratamiento.tipo"
+                                                                styleClass="select-material">
+                                                            </p-dropdown>
+                                                        </div>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{(tipoList !== null) ? tipoList
+                                                        : ''}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td class="p-text-center">
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="tratamiento.tipoIntervencion">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tratamiento.tipoIntervencion}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td class="p-text-center">
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="tratamiento.descripcion">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tratamiento.descripcion}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+            
+                                            <td class="p-text-center">
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fechaInicio"
+                                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                                        </p-calendar>
+            
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+            
+                                            </td>
+                                            <td class="p-text-center">
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fechaFin"
+                                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                                        </p-calendar>
+            
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+            
+                                            </td>
+                                            <td class="p-text-center">
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="tratamiento.descripcion">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tratamiento.descripcion}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>            
+                                            <td class="p-text-center">
+                                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                                    icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
+                                                    class="p-button-rounded p-button-text p-mr-2"> </button>
+                                                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                                                    (click)="confirm(tratamiento,ri)"
+                                                    class="p-button-rounded p-button-text ui-button-danger">
+                                                </button>
+                                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                                    icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')"
+                                                    title="Editar Tratamiento"
+                                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                                    icon="pi pi-times" (click)="onRowEditCancel(tratamiento, ri)"
+                                                    class="p-button-rounded p-button-text ui-button-danger"></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+            
+                                    <ng-template pTemplate="summary" let-rowData>
+                                        <button  pButton type="button" icon="fa fa-plus"
+                                            (click)="nuevaIncapacidad()" label="Crear">
+                                        </button>
+                                    </ng-template>
+            
+                                </p-table>
+                            </p-tabPanel>
+                        </p-tabView>
+                        
+                    </p-tabPanel>
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
                         <app-miembros-equipo></app-miembros-equipo>
                     </p-tabPanel>
