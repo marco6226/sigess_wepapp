@@ -5,6 +5,7 @@
 
         <div>
           <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
+          <button class="next action-button"  *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
           <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
           <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
         </div>
@@ -99,8 +100,38 @@
         </div>
         
         <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px" >
-          <div *ngFor="let item of identificacionFC">
-            <fieldset *ngIf="item.selectable">
+          <p-tabPanel header="Hola">
+            <p-tabPanel header="s">
+
+            </p-tabPanel>
+          </p-tabPanel>
+          <div *ngFor="let item of questionIndividual">
+            <fieldset *ngIf="item.selected">
+              <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.pregunta"></button>
+
+              <h1>{{item.pregunta}}</h1>
+              <div *ngFor="let area of item.areas">
+                <fieldset>
+                  <h2>{{area.factor}}</h2>
+                  <br>
+                  <div *ngFor="let sub of area.subProd">
+                    <h3 style="color: red;">{{sub.subProd}}</h3>
+                    <br>
+                    <table mat-table class="mat-elevation-z8 demo-table" *ngFor="let causa of sub.causa">
+                      <!-- <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="causa.ProcedimientoFC"></button> -->
+                      <div>
+                        <label style="margin-left: 20px;" for="">{{causa.ProcedimientoFC}}</label>
+                      </div>
+                    </table>
+                  </div>                  
+                </fieldset>
+              </div>
+            </fieldset>            
+          </div>
+
+          <div *ngFor="let item of questionIndividual">
+            <fieldset *ngIf="item.selected">
+              <h1>{{item.pregunta}}</h1>
               <table mat-table class="mat-elevation-z8 demo-table">
                 <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.factor"></button>
                 <br>

@@ -117,10 +117,10 @@
                         <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'"  >
-                        <app-factor-causal factorCausal="data"></app-factor-causal>
+                        <app-factor-causal (dataFC)="dataFactorCausal($event)" factorCausal="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
-                        <app-factor-causal [factorCausal]="data"></app-factor-causal>
+                        <app-factor-causal (dataFC)="dataFactorCausal($event)" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>

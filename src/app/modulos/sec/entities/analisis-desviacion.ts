@@ -23,4 +23,5 @@ export class AnalisisDesviacion {
   participantes: string;
   tareaAsignada:  boolean;
   flow_chart: string;
+  factor_causal: string;
 }
