@@ -28,6 +28,7 @@ import { Criteria } from "../../../core/entities/filter";
 import { jerarquia } from "../../entities/jerarquia";
 import { AuthService } from "app/modulos/core/auth.service";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import * as moment from 'moment';
 import {
     locale_es,
     tipo_identificacion,
@@ -157,6 +158,15 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultarAnalisis(this.value.id);
         }
     }
+
+    // get daysCount() {
+    //     let fecha1 = moment(new Date(this.desviacionesList.('fechaDesde').value))
+
+    //     let fecha2 = moment(new Date(this.desviacionesList.get('fechaHasta').value))
+
+    //     return Math.abs(fecha1.diff(fecha2, "days"))
+
+    // }
     async nuevaIncapacidad() {
         // try {
         //     // let seg = { pkCase: this.caseSelect.id }
