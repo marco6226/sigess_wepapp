@@ -5,7 +5,7 @@
 
         <div>
           <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
-          <button class="next action-button"  *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+          <!-- <button class="next action-button"  *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
           <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
           <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
         </div>
@@ -128,14 +128,10 @@
         </div> -->
         
         <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px" >
-          <p-tabPanel header="Hola">
-            <p-tabPanel header="s">
-
-            </p-tabPanel>
-          </p-tabPanel>
           <div *ngFor="let item of questionIndividual">
             <fieldset *ngIf="item.selected">
-              <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.pregunta"></button>
+              <!-- <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.pregunta"></button> -->
+              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
 
               <h1>{{item.pregunta}}</h1>
               <div *ngFor="let area of item.areas">
@@ -146,7 +142,6 @@
                     <h3 style="color: red;">{{sub.subProd}}</h3>
                     <br>
                     <table mat-table class="mat-elevation-z8 demo-table" *ngFor="let causa of sub.causa">
-                      <!-- <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="causa.ProcedimientoFC"></button> -->
                       <div>
                         <label style="margin-left: 20px;" for="">{{causa.ProcedimientoFC}}</label>
                       </div>
@@ -157,7 +152,7 @@
             </fieldset>            
           </div>
 
-          <div *ngFor="let item of questionIndividual">
+          <!-- <div *ngFor="let item of questionIndividual">
             <fieldset *ngIf="item.selected">
               <h1>{{item.pregunta}}</h1>
               <table mat-table class="mat-elevation-z8 demo-table">
@@ -170,13 +165,7 @@
               </table>            
 
                 <div *ngFor="let datas of item">
-                  <!-- <th mat-header-cell *matHeaderCellDef> No. </th>
-                  <tr *ngFor="let data of datas.causa">
-                    <label for="">{{data.id}} {{data.ProcedimientoFC}} {{data.esCausa}}</label>
-                  </tr>       -->
                   <table class="tabla">
-                    <!-- <th class="C1">Factor Causal</th>
-                  <th class="C2">Es Causa?</th> -->
                     <tr class="fila" *ngFor="let data of datas.causa">
                       <td class="C1">{{ data.ProcedimientoFC }}</td>
                       <td class="C2false" *ngIf="!data.esCausa">No</td>
@@ -190,7 +179,7 @@
                 </ng-container>
               </table>  
             </fieldset>
-          </div>
+          </div> -->
         </div>
         
     
