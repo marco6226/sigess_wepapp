@@ -250,7 +250,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
+            console.log("----->",resp["data"][0].factor_causal);
+            
             this.dataFlow = resp["data"][0];
+            this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
+            console.log(this.factorCusal);
+            
             this.desviacionesList = analisis.desviacionesList;
             this.observacion = analisis.observacion;
             this.analisisId = analisis.id;
@@ -327,7 +332,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.observacion = this.observacion;
         ad.participantes = JSON.stringify(this.participantes);
         ad.flow_chart = this.flowChartSave;
-        ad.factor_causal= "Prueba";
+        ad.factor_causal= JSON.stringify(this.factorCusal);
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
@@ -340,7 +345,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         this.analisisDesviacionService.create(ad).then((data) => {
             let analisisDesviacion = <AnalisisDesviacion>data;
-            // this.manageResponse(analisisDesviacion);
+            this.manageResponse(analisisDesviacion);
             this.analisisId = analisisDesviacion.id;
             this.documentos = [];
             this.modificar = true;
@@ -359,7 +364,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.desviacionesList = this.desviacionesList;
         ad.analisisCosto = this.analisisCosto;
         ad.observacion = this.observacion;
-        ad.factor_causal= this.datasFC;
+        ad.factor_causal= JSON.stringify(this.factorCusal);
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
         ad.participantes = JSON.stringify(this.participantes);
@@ -375,7 +380,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.analisisDesviacionService.update(ad).then((data) => {
                 console.log(data, "data");
                 
-                // this.manageResponse(<AnalisisDesviacion>data);
+                this.manageResponse(<AnalisisDesviacion>data);
                 this.modificar = true;
                 this.adicionar = false;
             });
@@ -491,9 +496,17 @@ export class AnalisisDesviacionComponent implements OnInit {
 datasFC: string
     dataFactorCausal(event){
 
+    console.log(this.factorCusal);
 
-        console.log("FC",event);
-        this.datasFC=event
+    console.log("FC",event);
+
+    this.factorCusal.forEach(element => {
+        console.log(element);
+        
+    });
+
+
+        // this.datasFC=JSON.stringify(event)
     }
 
     test(){

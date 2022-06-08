@@ -1,7 +1,7 @@
 import { ConfirmationService } from 'primeng/primeng';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Desempeno, FactorCausal, IdentificacionFC } from './../../../entities/factor-causal';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Desempeno, FactorCausal, IdentificacionFC, seccion } from './../../../entities/factor-causal';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 //import {MatTableModule} from '@angular/material/table';
 
 @Component({
@@ -9,10 +9,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './factor-causal.component.html',
   styleUrls: ['./factor-causal.component.scss']
 })
-export class FactorCausalComponent implements OnInit {
+export class FactorCausalComponent implements OnInit, AfterViewInit {
 
   @Input() factorCausal: FactorCausal;
-  @Output() dataFC = new EventEmitter<any>();
+  @Output() dataFC = new EventEmitter<FactorCausal>();
 
   pasoSelect=0;
 
@@ -73,23 +73,20 @@ export class FactorCausalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.formDesempeno = this.fb.group({
-      Dq1: [null, Boolean, Validators.required],
-      Dq2: [null, Boolean, Validators.required],
-      Dq3: [null, Boolean, Validators.required],
-      Dq4: [null, Boolean, Validators.required],
-      Dq5: [null, Boolean, Validators.required],
-      Dq6: [null, Boolean, Validators.required],
-      Dq7: [null, Boolean, Validators.required],
-      Dq8: [null, Boolean, Validators.required],
-      Dq9: [null, Boolean, Validators.required],
-      Dq10: [null, Boolean, Validators.required],
-      Dq11: [null, Boolean, Validators.required],
-      Dq12: [null, Boolean, Validators.required],
-      Dq13: [null, Boolean, Validators.required],
-      Dq14: [null, Boolean, Validators.required],
-      Dq15: [null, Boolean, Validators.required],
-    });
+  
+  }
+
+  ngAfterViewInit(){
+
+    if(this.factorCausal.seccion){
+      
+    }else{
+      this.addData();
+      console.log("------------------------------------->");
+
+    }
+    
+
   }
 
   next(){
@@ -103,6 +100,8 @@ export class FactorCausalComponent implements OnInit {
   }
 
   changeSelection(id: number, selection:boolean){
+    this.addData();
+    
     // console.log(selectForm, selection);
     
     // console.log(this.formDesempeno.value);
@@ -143,18 +142,19 @@ export class FactorCausalComponent implements OnInit {
     //   return {question: e}
     // })
 
-    let z: Desempeno[]=[]
+    let z={s:[]}
     
 this.questionIndividual.forEach(element => {
-  z.push(element)
+  z.s.push(element)
 });
 
    
     // this.dataFC.emit(this.questionIndividual);
     let y = {z}
-    console.log(z,y,JSON.stringify(y),JSON.stringify(z));
+    console.log(JSON.stringify(this.factorCausal));
     
-    this.dataFC.emit(JSON.stringify(z));
+    this.dataFC.emit(this.factorCausal);
+    // this.dataFC.emit(JSON.stringify(this.factorCausal));
 
 
    
@@ -222,5 +222,17 @@ this.questionIndividual.forEach(element => {
   //   showModalDialog() {
   //     this.displayModal = true;
   // }
+
+    addData(){
+      console.log(this.factorCausal);
+
+      let datos: seccion[]=[
+        {tipoDesempeno: 'Desempeño individual', desempeno: this.questionIndividual},
+        {tipoDesempeno: 'Desempeño del equipo de trabajo', desempeno: this.questionTrabajo},
+        {tipoDesempeno: 'Sistema de administración', desempeno: this.questionAdministracion},
+      ]
+      this.factorCausal.seccion=datos;
+    }
+
 
 }

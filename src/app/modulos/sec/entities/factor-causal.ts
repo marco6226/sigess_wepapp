@@ -1,6 +1,12 @@
 export interface FactorCausal{
     id: number;
     nombre: string;
+    seccion?: seccion[];
+}
+
+export interface seccion{
+  tipoDesempeno: string;
+  desempeno: Desempeno[];
 }
 
 export interface Desempeno{
