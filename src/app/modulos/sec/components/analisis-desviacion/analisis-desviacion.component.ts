@@ -337,6 +337,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.observacion = this.observacion;
         ad.participantes = JSON.stringify(this.participantes);
         ad.flow_chart = this.flowChartSave;
+        ad.factor_causal= "Prueba";
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
@@ -349,7 +350,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         this.analisisDesviacionService.create(ad).then((data) => {
             let analisisDesviacion = <AnalisisDesviacion>data;
-            this.manageResponse(analisisDesviacion);
+            // this.manageResponse(analisisDesviacion);
             this.analisisId = analisisDesviacion.id;
             this.documentos = [];
             this.modificar = true;
@@ -368,6 +369,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.desviacionesList = this.desviacionesList;
         ad.analisisCosto = this.analisisCosto;
         ad.observacion = this.observacion;
+        ad.factor_causal= this.datasFC;
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
         ad.participantes = JSON.stringify(this.participantes);
@@ -383,7 +385,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.analisisDesviacionService.update(ad).then((data) => {
                 console.log(data, "data");
                 
-                this.manageResponse(<AnalisisDesviacion>data);
+                // this.manageResponse(<AnalisisDesviacion>data);
                 this.modificar = true;
                 this.adicionar = false;
             });
@@ -493,6 +495,15 @@ export class AnalisisDesviacionComponent implements OnInit {
     dataDiagram(event){
         // console.log(event);
         this.flowChartSave = event;
+        console.log(this.flowChartSave);
+        
+    }
+datasFC: string
+    dataFactorCausal(event){
+
+
+        console.log("FC",event);
+        this.datasFC=event
     }
 
     test(){

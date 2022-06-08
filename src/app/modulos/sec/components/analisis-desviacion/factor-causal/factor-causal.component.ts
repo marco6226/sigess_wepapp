@@ -1,7 +1,7 @@
 import { ConfirmationService } from 'primeng/primeng';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Desempeno, FactorCausal, IdentificacionFC } from './../../../entities/factor-causal';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 //import {MatTableModule} from '@angular/material/table';
 
 @Component({
@@ -12,6 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FactorCausalComponent implements OnInit {
 
   @Input() factorCausal: FactorCausal;
+  @Output() dataFC = new EventEmitter<any>();
 
   pasoSelect=0;
 
@@ -132,7 +133,29 @@ export class FactorCausalComponent implements OnInit {
     console.log(this.questionIndividual);
     console.log(this.questionTrabajo);
     console.log(this.questionAdministracion);
+
+    let x;
+
+    x= Object.values(this.questionIndividual)
+  console.log(x);
+  
+    // let z= this.questionIndividual.map(function(e){
+    //   return {question: e}
+    // })
+
+    let z: Desempeno[]=[]
     
+this.questionIndividual.forEach(element => {
+  z.push(element)
+});
+
+   
+    // this.dataFC.emit(this.questionIndividual);
+    let y = {z}
+    console.log(z,y,JSON.stringify(y),JSON.stringify(z));
+    
+    this.dataFC.emit(JSON.stringify(z));
+
 
    
     let validacion1, validacion2, validacion3 : boolean = false;
@@ -165,6 +188,7 @@ export class FactorCausalComponent implements OnInit {
     }
     
     console.log(this.validators);
+    
     
 
   }
