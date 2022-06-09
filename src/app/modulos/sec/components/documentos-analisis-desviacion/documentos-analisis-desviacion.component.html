@@ -1,7 +1,7 @@
 <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
 <p-messages [(value)]="msgs" [closable]="true"></p-messages>
 <div class="ui-g" style="margin-top: 10px;">
-  <div class="ui-g-12 ui-sm-12 ui-md-6">
+  <div class="ui-g-12 ui-sm-12 ui-md-10">
     <ng-template ngFor let-doc [ngForOf]="documentos" let-i="index">
       <table class="dwrapper">
         <tr>
