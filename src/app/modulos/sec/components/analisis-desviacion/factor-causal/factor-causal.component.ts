@@ -41,8 +41,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   ]
 
   questionIndividual:Desempeno[]=[
-    {id:0,pregunta:'¿Estaba la persona excesivamente fatigada, impedida, molesta, aburrida, distraida o abrumada?',dq:"Dq1",areas:[this.identificacionFC[5],this.identificacionFC[6]],selected:false},
-    {id:1,pregunta:'¿Debería la persona haber tenido y usado un procedimiento escrito, pero no fue así?',dq:"Dq2",areas:[this.identificacionFC[0]],selected:true},
+    {id:0,pregunta:'¿Estaba la persona excesivamente fatigada, impedida, molesta, aburrida, distraida o abrumada?',dq:"Dq1",areas:[this.identificacionFC[5],this.identificacionFC[6]],selected:null},
+    {id:1,pregunta:'¿Debería la persona haber tenido y usado un procedimiento escrito, pero no fue así?',dq:"Dq2",areas:[this.identificacionFC[0]],selected:null},
     {id:2,pregunta:'¿Se cometió un error mientras se usaba un procedimiento?',dq:"Dq3",areas:[this.identificacionFC[0]],selected:null},
     {id:3,pregunta:'¿No estaban disponibles las alarmas o indicadores o se entendieron mal para reconocer o responder a una problema?',dq:"Dq4",areas:[this.identificacionFC[5]],selected:null},
     {id:4,pregunta:'¿Se identificaron o manejaron mal los indicadores, alarmas, controles, herramienta o equipo?',dq:"Dq5",areas:[this.identificacionFC[3]],selected:null},
@@ -111,17 +111,17 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
     // console.log(this.formDesempeno.value[selectForm]);
 
     if(id < 8){
-      this.questionIndividual[id].selected = selection;
+      this.factorCausal.seccion[0].desempeno[id].selected = selection;
       if(selection){
         this.showDialog(this.questionIndividual[id]);
       }
     }else if( id < 11){
-      this.questionTrabajo[id-8].selected = selection;
+      this.factorCausal.seccion[1].desempeno[id-8].selected  = selection;
       if(selection){
         this.showDialog(this.questionTrabajo[id-8]);
       }
     }else{
-      this.questionAdministracion[id-11].selected = selection;
+      this.factorCausal.seccion[2].desempeno[id-11].selected  = selection;
       if(selection){
         this.showDialog(this.questionAdministracion[id-11]);
       }      
@@ -160,22 +160,22 @@ this.questionIndividual.forEach(element => {
    
     let validacion1, validacion2, validacion3 : boolean = false;
 
-    for (let index = 0; index < this.questionIndividual.length; index++) {
-      if(this.questionIndividual[index].selected==null){
+    for (let index = 0; index < this.factorCausal.seccion[0].desempeno.length; index++) {
+      if(this.factorCausal.seccion[0].desempeno[index].selected==null){
         validacion1=true;
         break;
       }
     }
 
-    for (let index = 0; index < this.questionTrabajo.length; index++) {
-      if(this.questionTrabajo[index].selected==null){
+    for (let index = 0; index < this.factorCausal.seccion[1].desempeno.length; index++) {
+      if(this.factorCausal.seccion[1].desempeno[index].selected==null){
         validacion2=true;
         break;
       }
     }
 
-    for (let index = 0; index < this.questionTrabajo.length; index++) {
-      if(this.questionTrabajo[index].selected==null){
+    for (let index = 0; index < this.factorCausal.seccion[2].desempeno.length; index++) {
+      if(this.factorCausal.seccion[2].desempeno[index].selected==null){
         validacion3=true;
         break;
       }
