@@ -60,6 +60,7 @@ export class FlowChartComponent {
         this.diagram.loadDiagram(this.dataFlowChart.flow_chart)
         console.log(JSON.parse(this.dataFlowChart.flow_chart));
         
+        this.loadFC();
             
         }, 600);
 
@@ -301,7 +302,7 @@ export class FlowChartComponent {
         // console.log("ok");
   
         let x = this.listFC.find((x)=>x.nombre == evento.oldValue)
-  console.log(x);
+            console.log(x);
   
         if(x!=undefined){
           this.listFC.forEach(element => {
@@ -320,6 +321,30 @@ export class FlowChartComponent {
     } catch (error) {
         console.log("error",error);
     }
+  }
+
+  loadFC(){
+    console.log(this.dataFlowChart); 
+    console.log(JSON.parse(this.dataFlowChart.flow_chart).nodes);
+    let y = JSON.parse(this.dataFlowChart.flow_chart).nodes;
+
+    y.forEach(element => {
+        if (element.id.includes('factor')) {
+            console.log(element.annotations[0].content);
+            this.listFC.push({id:this.listFC.length+1, nombre:element.annotations[0].content});
+        }
+        console.log(element);
+        console.log(element.id);
+        // if (element.id) {
+            
+        // }
+        // this.listFC.push({id:this.listFC.length+1, element});
+        
+    });
+
+    // this.listFC.push({id:this.listFC.length+1, nombre:evento.newValue});
+
+
   }
 
   saveDiagram(){

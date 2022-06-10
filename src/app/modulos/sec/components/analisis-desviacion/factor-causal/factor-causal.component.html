@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <form >
     <div id="msform">
         <h1>Nombre Etapa: {{factorCausal.nombre}}</h1>
@@ -6,7 +7,8 @@
         <div>
           <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
           <!-- <button class="next action-button"  *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
-          <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+          <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+          <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
           <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
         </div>
 
@@ -128,58 +130,29 @@
         </div> -->
         
         <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px" >
-          <div *ngFor="let item of questionIndividual">
-            <fieldset *ngIf="item.selected">
-              <!-- <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item.pregunta"></button> -->
-              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
+          <!-- <p-organizationChart [value]="data"
+              styleClass="company">
+              <ng-template let-node pTemplate="leaf">
+                  <span style="font-weight:bold">{{node.label}}</span>
+              </ng-template>
+              <ng-template let-node pTemplate="default">
+                  {{node.label}}
+              </ng-template>
+          </p-organizationChart> -->
 
-              <h1>{{item.pregunta}}</h1>
-              <div *ngFor="let area of item.areas">
-                <fieldset>
-                  <h2>{{area.factor}}</h2>
-                  <br>
-                  <div *ngFor="let sub of area.subProd">
-                    <h3 style="color: red;">{{sub.subProd}}</h3>
-                    <br>
-                    <table mat-table class="mat-elevation-z8 demo-table" *ngFor="let causa of sub.causa">
-                      <div>
-                        <label style="margin-left: 20px;" for="">{{causa.ProcedimientoFC}}</label>
-                      </div>
-                    </table>
-                  </div>                  
-                </fieldset>
+          <p-organizationChart [value]="data" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
+          styleClass="company">
+          <ng-template let-node pTemplate="person">
+              <div class="node-header p-corner-top">{{node.label}}</div>
+              <div class="node-content">
+                  <div>{{node.data.name}}</div>
               </div>
-            </fieldset>            
-          </div>
+          </ng-template>
+          <ng-template let-node pTemplate="department">
+              {{node.label}}
+          </ng-template>
+        </p-organizationChart>
 
-          <!-- <div *ngFor="let item of questionIndividual">
-            <fieldset *ngIf="item.selected">
-              <h1>{{item.pregunta}}</h1>
-              <table mat-table class="mat-elevation-z8 demo-table">
-                <button (click)="showDialog(item)" pButton icon="pi pi-check" [label]="item"></button>
-                <br>
-                <br>
-                <table class="tabla">
-                  <th class="H1">Factor Causal</th>
-                <th class="H2">Es Causa?</th>
-              </table>            
-
-                <div *ngFor="let datas of item">
-                  <table class="tabla">
-                    <tr class="fila" *ngFor="let data of datas.causa">
-                      <td class="C1">{{ data.ProcedimientoFC }}</td>
-                      <td class="C2false" *ngIf="!data.esCausa">No</td>
-                      <td class="C2true" *ngIf="data.esCausa">Si</td>
-                    </tr>
-                  </table>            
-                </div>
-                <ng-container matColumnDef="demo-position">
-                  <th mat-header-cell *matHeaderCellDef> No. </th>
-                  
-                </ng-container>
-              </table>  
-            </fieldset>
-          </div> -->
         </div>
         
     

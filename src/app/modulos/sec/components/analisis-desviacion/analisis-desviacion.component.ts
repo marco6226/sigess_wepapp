@@ -263,6 +263,8 @@ export class AnalisisDesviacionComponent implements OnInit {
             console.log("----->",resp["data"][0].factor_causal);
             
             this.dataFlow = resp["data"][0];
+            this.flowChartSave = resp["data"][0].flow_chart;
+
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             console.log(this.factorCusal);
             
@@ -487,11 +489,37 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     setFactorCausal(event: FactorCausal[]){
         console.log(event,"sip");
-        this.factorCusal=[];
+        // this.factorCusal=[];
         event.forEach(element => {
-            this.factorCusal.push(element)
+            // this.factorCusal.push(element)
+            let x = this.factorCusal.find((x)=>x.id == element.id)
+            console.log(x);
+            
+            if(x!=undefined){
+                // this.listFC.forEach(element => {
+                    if(element.id===x.id){
+                        // element.nombre = x.nombre;
+                        x.nombre = element.nombre;
+                    }
+                // });
+            }else{
+                this.factorCusal.push(element);
+            }
+
         });
         // this.factorCusal.push(event)
+
+        
+
+
+        // for (let index = 0; index < event.length; index++) {
+        //    for (let indey = 0; indey < this.factorCusal.length; indey++) {
+        //        const element = array[indey];
+               
+        //    }
+            
+        // }
+
         console.log(this.factorCusal);
         
     }
@@ -500,7 +528,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     dataDiagram(event){
         // console.log(event);
         this.flowChartSave = event;
-        console.log(this.flowChartSave);
+        // console.log(this.flowChartSave);
         
     }
 datasFC: string

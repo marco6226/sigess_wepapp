@@ -1,13 +1,16 @@
+import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/primeng';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Desempeno, FactorCausal, IdentificacionFC, seccion } from './../../../entities/factor-causal';
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 //import {MatTableModule} from '@angular/material/table';
+import {TreeNode} from 'primeng/api';
 
 @Component({
   selector: 'app-factor-causal',
   templateUrl: './factor-causal.component.html',
-  styleUrls: ['./factor-causal.component.scss']
+  styleUrls: ['./factor-causal.component.scss'],
+  providers: [MessageService]
 })
 export class FactorCausalComponent implements OnInit, AfterViewInit {
 
@@ -15,6 +18,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   @Output() dataFC = new EventEmitter<FactorCausal>();
 
   pasoSelect=0;
+  data: TreeNode[];
+  selectedNode: TreeNode;
 
   public formDesempeno: FormGroup;
   display: boolean = false;
@@ -69,11 +74,79 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
-  
+    this.data = [{
+      label: 'CEO',
+      type: 'person',
+      styleClass: 'p-person',
+      expanded: true,
+      data: {name:'Walter White', 'avatar': 'walter.jpg'},
+      children: [
+          {
+              label: 'CFO',
+              type: 'person',
+              styleClass: 'p-person',
+              expanded: true,
+              data: {name:'Saul Goodman', 'avatar': 'saul.jpg'},
+              children:[{
+                  label: 'Tax',
+                  styleClass: 'department-cfo'
+              },
+              {
+                  label: 'Legal',
+                  styleClass: 'department-cfo'
+              }],
+          },
+          {
+              label: 'COO',
+              type: 'person',
+              styleClass: 'p-person',
+              expanded: true,
+              data: {name:'Mike E.', 'avatar': 'mike.jpg'},
+              children:[{
+                  label: 'Operations',
+                  styleClass: 'department-coo'
+              }]
+          },
+          {
+              label: 'CTO',
+              type: 'person',
+              styleClass: 'p-person',
+              expanded: true,
+              data: {name:'Jesse Pinkman', 'avatar': 'jesse.jpg'},
+              children:[{
+                  label: 'Development',
+                  styleClass: 'department-cto',
+                  expanded: true,
+                  children:[{
+                      label: 'Analysis',
+                      styleClass: 'department-cto'
+                  },
+                  {
+                      label: 'Front End',
+                      styleClass: 'department-cto'
+                  },
+                  {
+                      label: 'Back End',
+                      styleClass: 'department-cto'
+                  }]
+              },
+              {
+                  label: 'QA',
+                  styleClass: 'department-cto'
+              },
+              {
+                  label: 'R&D',
+                  styleClass: 'department-cto'
+              }]
+          }
+      ]
+  }];
+
   }
 
   ngAfterViewInit(){
@@ -90,8 +163,14 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   }
 
   next(){
-    console.log(this.factorCausal);
-    this.pasoSelect++;
+    console.log("hola");
+    this.validacion();
+    if (this.validators) {
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Faltan campos por responder'});
+    }else{
+      console.log(this.factorCausal);
+      this.pasoSelect++;
+    }    
   }
 
   back(){
@@ -100,7 +179,7 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   }
 
   changeSelection(id: number, selection:boolean){
-    this.addData();
+    // this.addData();
     
     // console.log(selectForm, selection);
     
@@ -113,25 +192,19 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
     if(id < 8){
       this.factorCausal.seccion[0].desempeno[id].selected = selection;
       if(selection){
-        this.showDialog(this.questionIndividual[id]);
+        this.showDialog(this.factorCausal.seccion[0].desempeno[id]);
       }
     }else if( id < 11){
       this.factorCausal.seccion[1].desempeno[id-8].selected  = selection;
       if(selection){
-        this.showDialog(this.questionTrabajo[id-8]);
+        this.showDialog(this.factorCausal.seccion[1].desempeno[id-8]);
       }
     }else{
       this.factorCausal.seccion[2].desempeno[id-11].selected  = selection;
       if(selection){
-        this.showDialog(this.questionAdministracion[id-11]);
+        this.showDialog(this.factorCausal.seccion[2].desempeno[id-11]);
       }      
     }
-
-    
-    
-    console.log(this.questionIndividual);
-    console.log(this.questionTrabajo);
-    console.log(this.questionAdministracion);
 
     let x;
 
@@ -156,8 +229,10 @@ this.questionIndividual.forEach(element => {
     this.dataFC.emit(this.factorCausal);
     // this.dataFC.emit(JSON.stringify(this.factorCausal));
 
+    this.validacion();
+  }
 
-   
+  validacion(){
     let validacion1, validacion2, validacion3 : boolean = false;
 
     for (let index = 0; index < this.factorCausal.seccion[0].desempeno.length; index++) {
@@ -188,9 +263,6 @@ this.questionIndividual.forEach(element => {
     }
     
     console.log(this.validators);
-    
-    
-
   }
 
   cx=false;
@@ -232,6 +304,10 @@ this.questionIndividual.forEach(element => {
         {tipoDesempeno: 'Sistema de administración', desempeno: this.questionAdministracion},
       ]
       this.factorCausal.seccion=datos;
+    }
+
+    onNodeSelect(event) {
+      this.messageService.add({severity: 'success', summary: 'Node Selected', detail: event.node.label});
     }
 
 
