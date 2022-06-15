@@ -18,7 +18,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   @Output() dataFC = new EventEmitter<FactorCausal>();
 
   pasoSelect=0;
-  data: TreeNode[];
+  data1: TreeNode[];
+  data2: TreeNode[]=[{label: 'Desastre Natural / Sabotaje',type: 'person',data: {name:'No'},}];
   selectedNode: TreeNode;
 
   public formDesempeno: FormGroup;
@@ -28,8 +29,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   validators: boolean = true;
   steps = [
     {label: 'Dificultad de Desempeño Humano'},
-    {label: 'Identificación de Factor Causal'},
-    {label: 'Step 3'}
+    {label: 'Causa Raiz'},
+    // {label: 'Listado Final Factores Causales'}
   ];
 
   jefeForm: FormGroup;
@@ -79,74 +80,11 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.data = [{
-      label: 'CEO',
-      type: 'person',
-      styleClass: 'p-person',
-      expanded: true,
-      data: {name:'Walter White', 'avatar': 'walter.jpg'},
-      children: [
-          {
-              label: 'CFO',
-              type: 'person',
-              styleClass: 'p-person',
-              expanded: true,
-              data: {name:'Saul Goodman', 'avatar': 'saul.jpg'},
-              children:[{
-                  label: 'Tax',
-                  styleClass: 'department-cfo'
-              },
-              {
-                  label: 'Legal',
-                  styleClass: 'department-cfo'
-              }],
-          },
-          {
-              label: 'COO',
-              type: 'person',
-              styleClass: 'p-person',
-              expanded: true,
-              data: {name:'Mike E.', 'avatar': 'mike.jpg'},
-              children:[{
-                  label: 'Operations',
-                  styleClass: 'department-coo'
-              }]
-          },
-          {
-              label: 'CTO',
-              type: 'person',
-              styleClass: 'p-person',
-              expanded: true,
-              data: {name:'Jesse Pinkman', 'avatar': 'jesse.jpg'},
-              children:[{
-                  label: 'Development',
-                  styleClass: 'department-cto',
-                  expanded: true,
-                  children:[{
-                      label: 'Analysis',
-                      styleClass: 'department-cto'
-                  },
-                  {
-                      label: 'Front End',
-                      styleClass: 'department-cto'
-                  },
-                  {
-                      label: 'Back End',
-                      styleClass: 'department-cto'
-                  }]
-              },
-              {
-                  label: 'QA',
-                  styleClass: 'department-cto'
-              },
-              {
-                  label: 'R&D',
-                  styleClass: 'department-cto'
-              }]
-          }
-      ]
-  }];
+    
+    this.data1 = [{label: 'Dificultad con Equipo',expanded: true,type: 'person',data: {name:''},children:[{label: 'Falla Tolerable',expanded: true,type: 'person',data: {name:'No'},},{label: 'Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Especificaciones de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Problema no Previsto',expanded: true,type: 'person',data: {name:''},children:[{label: 'Ambiente de Trabajao no considerado',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Diseño no sigue Especificación',expanded: true,type: 'person',data: {name:'No'},},{label: 'Especificación NM',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Revisión de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Revisión Independiente NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'Administración del Cambio NM',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Análisis de Riesgo NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Equipos / Partes Defectuosas',expanded: true,type: 'person',data: {name:''},children:[{label: 'Abastecimientos',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Manufactura',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Almacenamiento',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Control de Calidad',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Mantenimiento Preventivo / Predictivo',expanded: true,type: 'person',data: {name:''},children:[{label: 'MP NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'No MP p/Equipo',expanded: true,type: 'person',data: {name:'No'},},{label: 'MP NM p/Equipo',expanded: true,type: 'person',data: {name:'No'},},]},]},{label: 'Falla Repetida',expanded: true,type: 'person',data: {name:''},children:[{label: 'Sistema de Administración',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción Correctiva',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción correctiva NM',expanded: true,type: 'person',data: {name:'No'},},{label: 'Acción correctiva No Implementada',expanded: true,type: 'person',data: {name:'No'},},{label: 'Tendencias NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},
+];
 
+  
   }
 
   ngAfterViewInit(){
@@ -307,6 +245,14 @@ this.questionIndividual.forEach(element => {
     }
 
     onNodeSelect(event) {
+      console.log(event);
+
+      if(event.node.data.name=='No'){
+        event.node.data.name='Si'
+      }else if(event.node.data.name=='Si'){
+        event.node.data.name='No'
+      }
+      
       this.messageService.add({severity: 'success', summary: 'Node Selected', detail: event.node.label});
     }
 

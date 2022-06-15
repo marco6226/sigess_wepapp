@@ -41,157 +41,57 @@
               </div>
             </fieldset>
           </div>
-          <!-- <h2 class="titulos"><b>Desempeño individual</b></h2>
-          <fieldset  *ngFor="let item of questionIndividual" >
-            <div *ngIf="item.selected">
-              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
-            </div>
-            <div >
-              <label>{{item.id + 1}} </label>
-              <label>{{item.pregunta}}</label>
-              <br>
-              <br>
-              <br>
-              <br>
-              <div>
-                <div class="buttons">
-                  <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
-                  <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
-                </div>                  
-              </div>
-              <br>
-              <br>
-              <div class="areas" *ngFor="let ide of item.areas;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
-                <label for="">{{ide.factor}}</label>
-              </div>
-
-            </div>
-          </fieldset> -->
         </div>
-        <!-- <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
-
-          <h2 class="titulos"><b>Desempeño del equipo de trabajo</b></h2>
-          <fieldset   *ngFor="let item of factorCausal?.seccion[1]">
-            <div *ngIf="item.selected">
-              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
-            </div>
-              <div >
-                <label>{{item.id + 1}} </label>
-                <label>{{item.pregunta}}</label>
-                <br>
-                <br>
-                <br>
-                <br>
-                <div>
-                  <div class="buttons">
-                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
-                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
-                  </div>                  
-                </div>
-                <br>
-                <br>
-
-                <div class="areas" *ngFor="let ide of item.areas ;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
-                  <label for="">{{ide.factor}}</label>
-                </div>
-
-              </div>
-          </fieldset>
-        </div>
-        <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">
-
-          <h2 class="titulos"><b>Sistema de administración</b></h2>
-          <fieldset   *ngFor="let item of factorCausal?.seccion[2]">
-            <div *ngIf="item.selected">
-              <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
-            </div>
-              <div >
-                <label>{{item.id + 1}} </label>
-                <label>{{item.pregunta}}</label>
-                <br>
-                <br>
-                <br>
-                <br>
-                <div>
-                  <div class="buttons">
-                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
-                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
-                  </div>                  
-                </div>
-                <br>
-                <br>
-
-                <div class="areas" *ngFor="let ide of item.areas ;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
-                  <label for="">{{ide.factor}}</label>
-                </div>
-
-              </div>
-          </fieldset>
-        </div> -->
         
-        <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px" >
-          <!-- <p-organizationChart [value]="data"
+        <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px" >               
+
+          <p-fieldset legend="Dificultad con Equipo" [toggleable]="true">
+            <p-organizationChart [value]="data1" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
+                styleClass="company">
+                <ng-template let-node pTemplate="person">
+                    <div class="node-header p-corner-top">{{node.label}}</div>
+                    <div class="node-content">
+                        <div>{{node.data.name}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-node pTemplate="department">
+                    {{node.label}}
+                </ng-template>
+            </p-organizationChart>
+          </p-fieldset>
+
+          <p-fieldset legend="Desastre Natural / Sabotaje" [toggleable]="true">
+            <p-organizationChart [value]="data2" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
               styleClass="company">
-              <ng-template let-node pTemplate="leaf">
-                  <span style="font-weight:bold">{{node.label}}</span>
+              <ng-template let-node pTemplate="person">
+                  <div class="node-header p-corner-top">{{node.label}}</div>
+                  <div class="node-content">
+                      <div>{{node.data.name}}</div>
+                  </div>
               </ng-template>
-              <ng-template let-node pTemplate="default">
+              <ng-template let-node pTemplate="department">
                   {{node.label}}
               </ng-template>
-          </p-organizationChart> -->
-
-          <p-organizationChart [value]="data" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
-          styleClass="company">
-          <ng-template let-node pTemplate="person">
-              <div class="node-header p-corner-top">{{node.label}}</div>
-              <div class="node-content">
-                  <div>{{node.data.name}}</div>
-              </div>
-          </ng-template>
-          <ng-template let-node pTemplate="department">
-              {{node.label}}
-          </ng-template>
-        </p-organizationChart>
+            </p-organizationChart>
+          </p-fieldset>       
 
         </div>
-        
-    
-       
+<!-- 
+        <div *ngIf="pasoSelect==2" style="width: 80%; float: center; margin-top: 22px" >               
+
+        </div>
+        -->
         
         <p-dialog [header]="selectIdentificacionFC?.factor" [(visible)]="display" [style]="{width: '50vw'}">
           
           <div>
             <app-identificacion-factores-causales [identificacionFc]="selectIdentificacionFC"></app-identificacion-factores-causales>
           </div>
-          <!-- <div>
-            <app-identificacion-factor-causal [identificacionFc]="selectIdentificacionFC"></app-identificacion-factor-causal>
-          </div> -->
 
           <div>
             <p-button icon="pi pi-check" (click)="display=false" label="Confirmar" class="p-button-text"></p-button>
           </div>
 
         </p-dialog>
-
-      <!-- <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog> -->
-      
-      <!-- <button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show">f</button> -->
-      
-
-
-      <!-- <button (click)="confirm()" pButton icon="pi pi-check" label="Confirm">33</button>
-      <h5>Modal</h5>
-<p-button (click)="showModalDialog()" icon="pi pi-external-link" label="Show"></p-button>
-<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
-    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-       
-            <p-button icon="pi pi-check" (click)="displayModal=false" label="Yes" class="p-button-text"></p-button>
-            <p-button icon="pi pi-times" (click)="displayModal=false" label="No"></p-button>
-      
-</p-dialog> -->
-
     </div>
 </form>
