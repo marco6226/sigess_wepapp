@@ -1,37 +1,3 @@
-<!-- 
-<h1>{{identificacionFc?.pregunta}}</h1>
-<div *ngFor="let item of identificacionFc?.areas">
-  <br>
-  <h3 style="font-weight: 500;">{{item.factor}}</h3>
-  <fieldset>
-    <div *ngFor="let data of item.subProd; let i = index">
-      <div class="field-checkbox">
-        <p-checkbox [name]="data.id" [(ngModel)]="data.causa" [binary]="true">{{data.ProcedimientoFC}}</p-checkbox>
-        <label for="binary">  {{data.ProcedimientoFC}}</label>
-      </div>
-    </div>
-  </fieldset>
-</div>  
-
-<button (click)="test()">test</button>
-
-
-
-<div class="products--grid">
-  <h1>{{identificacionFc?.pregunta}}</h1>
-<div *ngFor="let item of identificacionFc?.areas">
-  <br>
-  <h3 style="font-weight: 500;">{{item.factor}}</h3>
-  <fieldset>
-    <div *ngFor="let data of item.subProd; let i = index">
-      <div class="field-checkbox">
-        <p-checkbox [name]="data.id" [(ngModel)]="data.causa" [binary]="true">{{data.ProcedimientoFC}}</p-checkbox>
-        <label for="binary">  {{data.ProcedimientoFC}}</label>
-      </div>
-    </div>
-  </fieldset>
-</div>   -->
-
 <fieldset>
   <h3 style="font-weight: 500;">{{factor.factor}}</h3>
   <div class="products--grids">
@@ -46,32 +12,3 @@
     </div>
   </div> 
 </fieldset>
-
-
-
-
-  <!-- <app-product
-      [product]="product"
-      *ngFor="let product of products"
-      (addedProduct)="onAddToShoppingCart($event)"
-      (showProduct)="onShowDetail($event)"
-    ></app-product>
-  <button (click)="onLoadMore()">Load more</button>
-  </div>
-  <div class="product-detail" [class.active]="showProductDetail">
-  {{ statusDetail }}
-  <div *ngIf="productChosen">
-  <button (click)="toggleProductDetail()">Close</button>
-  <h1>{{ productChosen.title }}</h1>
-  <swiper
-        [slidesPerView]="1"
-      >
-  <ng-template swiperSlide *ngFor="let img of productChosen.images">
-  <img [src]="img" alt="">
-  </ng-template>
-  </swiper>
-  <p>{{ productChosen.description }}</p>
-  <button (click)="updateProduct()">editar</button>
-  <button (click)="deleteProduct()">delete</button>
-  </div> -->
-  <!-- </div> -->

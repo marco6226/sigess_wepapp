@@ -2,6 +2,7 @@ export interface FactorCausal{
     id: number;
     nombre: string;
     seccion?: seccion[];
+    causa_Raiz?: Causa_Raiz[];
 }
 
 export interface seccion{
@@ -21,7 +22,6 @@ export interface Desempeno{
 export interface areaInvolucrada{
     area: string
   }
-
 
 /// procedimientos
 
@@ -43,3 +43,21 @@ export interface Causa{
     ProcedimientoFC: string;
     esCausa: boolean;
   }
+
+export interface Causa_Raiz{
+  label: string;
+  expanded: boolean;
+  type: string;
+  data: {name:string};
+  children?: Causa_Raiz[]
+}
+
+export interface Incapacidad{
+  id?:number;
+  cie10?: string;
+  diagnostico?: string;
+  fechaInicio?: Date;
+  fechaFin?: Date;
+  tipo?: string;
+  diasAusencia?: number;
+}

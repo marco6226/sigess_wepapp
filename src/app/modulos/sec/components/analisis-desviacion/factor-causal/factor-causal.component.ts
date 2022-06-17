@@ -1,7 +1,7 @@
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/primeng';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Desempeno, FactorCausal, IdentificacionFC, seccion } from './../../../entities/factor-causal';
+import { Desempeno, FactorCausal, IdentificacionFC, seccion, Causa_Raiz } from './../../../entities/factor-causal';
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 //import {MatTableModule} from '@angular/material/table';
 import {TreeNode} from 'primeng/api';
@@ -15,11 +15,12 @@ import {TreeNode} from 'primeng/api';
 export class FactorCausalComponent implements OnInit, AfterViewInit {
 
   @Input() factorCausal: FactorCausal;
+  @Input() causasRaiz: Causa_Raiz;
   @Output() dataFC = new EventEmitter<FactorCausal>();
+  // @Output() dataCR = new EventEmitter<Causa_Raiz[]>();
 
   pasoSelect=0;
-  data1: TreeNode[];
-  data2: TreeNode[]=[{label: 'Desastre Natural / Sabotaje',type: 'person',data: {name:'No'},}];
+  
   selectedNode: TreeNode;
 
   public formDesempeno: FormGroup;
@@ -30,7 +31,6 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   steps = [
     {label: 'Dificultad de Desempeño Humano'},
     {label: 'Causa Raiz'},
-    // {label: 'Listado Final Factores Causales'}
   ];
 
   jefeForm: FormGroup;
@@ -71,7 +71,15 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
     {id:14,pregunta:'¿Hubiera detectado este problema una revisión de control de calidad independiente?',dq:"Dq15",areas:[this.identificacionFC[1]],selected:null},
   ]
 
+  datos: Causa_Raiz[]=[
+    {label: 'Dificultad con Equipo',expanded: true,type: 'person',data: {name:''},children:[{label: 'Falla Tolerable',expanded: true,type: 'person',data: {name:'No'},},{label: 'Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Especificaciones de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Problema no Previsto',expanded: true,type: 'person',data: {name:''},children:[{label: 'Ambiente de Trabajao no considerado',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Diseño no sigue Especificación',expanded: true,type: 'person',data: {name:'No'},},{label: 'Especificación NM',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Revisión de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Revisión Independiente NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'Administración del Cambio NM',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Análisis de Riesgo NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Equipos / Partes Defectuosas',expanded: true,type: 'person',data: {name:''},children:[{label: 'Abastecimientos',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Manufactura',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Almacenamiento',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Control de Calidad',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Mantenimiento Preventivo / Predictivo',expanded: true,type: 'person',data: {name:''},children:[{label: 'MP NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'No MP p/Equipo',expanded: true,type: 'person',data: {name:'No'},},{label: 'MP NM p/Equipo',expanded: true,type: 'person',data: {name:'No'},},]},]},{label: 'Falla Repetida',expanded: true,type: 'person',data: {name:''},children:[{label: 'Sistema de Administración',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción Correctiva',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción correctiva NM',expanded: true,type: 'person',data: {name:'No'},},{label: 'Acción correctiva No Implementada',expanded: true,type: 'person',data: {name:'No'},},{label: 'Tendencias NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},
+    {label: 'Desastre Natural / Sabotaje',type: 'person',expanded: true,data: {name:'No'},}
+  ]
  
+  // data1: TreeNode[] = [{label: 'Dificultad con Equipo',expanded: true,type: 'person',data: {name:''},children:[{label: 'Falla Tolerable',expanded: true,type: 'person',data: {name:'No'},},{label: 'Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Especificaciones de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Problema no Previsto',expanded: true,type: 'person',data: {name:''},children:[{label: 'Ambiente de Trabajao no considerado',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Diseño no sigue Especificación',expanded: true,type: 'person',data: {name:'No'},},{label: 'Especificación NM',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Revisión de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Revisión Independiente NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'Administración del Cambio NM',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Análisis de Riesgo NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Equipos / Partes Defectuosas',expanded: true,type: 'person',data: {name:''},children:[{label: 'Abastecimientos',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Manufactura',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Almacenamiento',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Control de Calidad',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Mantenimiento Preventivo / Predictivo',expanded: true,type: 'person',data: {name:''},children:[{label: 'MP NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'No MP p/Equipo',expanded: true,type: 'person',data: {name:'No'},},{label: 'MP NM p/Equipo',expanded: true,type: 'person',data: {name:'No'},},]},]},{label: 'Falla Repetida',expanded: true,type: 'person',data: {name:''},children:[{label: 'Sistema de Administración',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción Correctiva',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción correctiva NM',expanded: true,type: 'person',data: {name:'No'},},{label: 'Acción correctiva No Implementada',expanded: true,type: 'person',data: {name:'No'},},{label: 'Tendencias NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},];
+  // data2: TreeNode[] = [{label: 'Desastre Natural / Sabotaje',type: 'person',data: {name:'No'},}];
+  data1: TreeNode[]
+  data2: TreeNode[]
 
   constructor(
     private fb: FormBuilder,
@@ -79,26 +87,40 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
     private messageService: MessageService
   ) { }
 
-  ngOnInit(): void {
-    
-    this.data1 = [{label: 'Dificultad con Equipo',expanded: true,type: 'person',data: {name:''},children:[{label: 'Falla Tolerable',expanded: true,type: 'person',data: {name:'No'},},{label: 'Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Especificaciones de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Problema no Previsto',expanded: true,type: 'person',data: {name:''},children:[{label: 'Ambiente de Trabajao no considerado',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Diseño no sigue Especificación',expanded: true,type: 'person',data: {name:'No'},},{label: 'Especificación NM',expanded: true,type: 'person',data: {name:'No'},},]},{label: 'Revisión de Diseño',expanded: true,type: 'person',data: {name:''},children:[{label: 'Revisión Independiente NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'Administración del Cambio NM',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Análisis de Riesgo NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Equipos / Partes Defectuosas',expanded: true,type: 'person',data: {name:''},children:[{label: 'Abastecimientos',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Manufactura',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Almacenamiento',expanded: true,type: 'person',data: {name:'No'},children:[{label: 'Control de Calidad',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},{label: 'Mantenimiento Preventivo / Predictivo',expanded: true,type: 'person',data: {name:''},children:[{label: 'MP NM',expanded: true,type: 'person',data: {name:''},children:[{label: 'No MP p/Equipo',expanded: true,type: 'person',data: {name:'No'},},{label: 'MP NM p/Equipo',expanded: true,type: 'person',data: {name:'No'},},]},]},{label: 'Falla Repetida',expanded: true,type: 'person',data: {name:''},children:[{label: 'Sistema de Administración',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción Correctiva',expanded: true,type: 'person',data: {name:''},children:[{label: 'Acción correctiva NM',expanded: true,type: 'person',data: {name:'No'},},{label: 'Acción correctiva No Implementada',expanded: true,type: 'person',data: {name:'No'},},{label: 'Tendencias NM',expanded: true,type: 'person',data: {name:'No'},},]},]},]},]},
-];
+  ngOnInit(): void {  
 
-  
+
   }
 
   ngAfterViewInit(){
 
-    if(this.factorCausal.seccion){
-      
-    }else{
-      this.addData();
+    if(!this.factorCausal.seccion){
+      this.addDataFC();
       console.log("------------------------------------->");
-
     }
-    
 
+    if (!this.factorCausal.causa_Raiz) {
+      // this.data1=[this.datos[0]]
+      // this.data2=[this.datos[1]]
+      this.factorCausal.causa_Raiz=this.datos
+    }
+    // else{
+    //   this.data1=[this.datos[0]]
+    //   this.data2=[this.datos[1]]
+    // }
   }
+
+  addDataFC(){
+    console.log(this.factorCausal);
+
+    let datos: seccion[]=[
+      {tipoDesempeno: 'Desempeño individual', desempeno: this.questionIndividual},
+      {tipoDesempeno: 'Desempeño del equipo de trabajo', desempeno: this.questionTrabajo},
+      {tipoDesempeno: 'Sistema de administración', desempeno: this.questionAdministracion},
+    ]
+    this.factorCausal.seccion=datos;
+  }
+
 
   next(){
     console.log("hola");
@@ -109,6 +131,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
       console.log(this.factorCausal);
       this.pasoSelect++;
     }    
+    console.log(this.pasoSelect,this.steps.length);
+    
   }
 
   back(){
@@ -117,15 +141,6 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   }
 
   changeSelection(id: number, selection:boolean){
-    // this.addData();
-    
-    // console.log(selectForm, selection);
-    
-    // console.log(this.formDesempeno.value);
-    // console.log(this.formDesempeno.value[selectForm]);
-    // this.formDesempeno.value[selectForm]=selection;
-
-    // console.log(this.formDesempeno.value[selectForm]);
 
     if(id < 8){
       this.factorCausal.seccion[0].desempeno[id].selected = selection;
@@ -233,17 +248,7 @@ this.questionIndividual.forEach(element => {
   //     this.displayModal = true;
   // }
 
-    addData(){
-      console.log(this.factorCausal);
-
-      let datos: seccion[]=[
-        {tipoDesempeno: 'Desempeño individual', desempeno: this.questionIndividual},
-        {tipoDesempeno: 'Desempeño del equipo de trabajo', desempeno: this.questionTrabajo},
-        {tipoDesempeno: 'Sistema de administración', desempeno: this.questionAdministracion},
-      ]
-      this.factorCausal.seccion=datos;
-    }
-
+   
     onNodeSelect(event) {
       console.log(event);
 
@@ -252,9 +257,25 @@ this.questionIndividual.forEach(element => {
       }else if(event.node.data.name=='Si'){
         event.node.data.name='No'
       }
+      console.log(this.datos);
+
+      // this.dataCR.emit(this.datos);
+      console.log(this.causasRaiz);
       
-      this.messageService.add({severity: 'success', summary: 'Node Selected', detail: event.node.label});
+      // this.messageService.add({severity: 'success', summary: 'Node Selected', detail: event.node.label
     }
 
+    
+    test(){
+      console.log(this.factorCausal);
 
+      console.log(this.data1, this.data2);
+      
+
+      this.factorCausal.causa_Raiz.forEach(element => {
+        console.log(element);
+        this.data1 = [element]
+      });
+      
+    }
 }

@@ -24,4 +24,6 @@ export class AnalisisDesviacion {
   tareaAsignada:  boolean;
   flow_chart: string;
   factor_causal: string;
+  causa_raiz: string;
+  incapacidades: string;
 }

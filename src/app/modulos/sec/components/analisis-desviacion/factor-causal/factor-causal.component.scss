@@ -343,3 +343,13 @@
 	::ng-deep .ui-organizationchart .ui-organizationchart-node-content{
 		padding: 0 !important;
 	}
+
+
+	::ng-deep body .ui-fieldset .ui-fieldset-content{
+		width: 100%;
+		// background: red;
+	}
+
+	::ng-deep body .ui-fieldset{
+		background-color: #f0f8ff00;
+	}

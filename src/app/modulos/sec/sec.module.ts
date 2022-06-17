@@ -41,6 +41,7 @@ import { DropDownButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
 import { FactorCausalComponent } from './components/analisis-desviacion/factor-causal/factor-causal.component';
 import { IdentificacionFactoresCausalesComponent } from './components/analisis-desviacion/factor-causal/identificacion-factores-causales/identificacion-factores-causales.component';
+import { IncapacidadesComplementariaComponent } from './components/analisis-desviacion/factor-causal/incapacidades-complementaria/incapacidades-complementaria.component';
 
 @NgModule({
     imports: [
@@ -96,7 +97,8 @@ import { IdentificacionFactoresCausalesComponent } from './components/analisis-d
         EvidenciasComponent,
         FactorCausalComponent,
         IdentificacionFactorCausalComponent,
-        IdentificacionFactoresCausalesComponent
+        IdentificacionFactoresCausalesComponent,
+        IncapacidadesComplementariaComponent
     ],
     providers: [
         SistemaCausaRaizService,

@@ -1,4 +1,4 @@
-import { FactorCausal } from './../../entities/factor-causal';
+import { Causa_Raiz, FactorCausal, Incapacidad } from './../../entities/factor-causal';
 import { Component, OnInit, Input } from "@angular/core";
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
@@ -55,6 +55,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     causaAdminListSelect: TreeNode[] = [];
     causaAdminAnalisisList: CausaAdministrativa[];
 
+    incapacidadesList: Incapacidad[];
+
     causaRaizList: TreeNode[] = [];
     causaRaizListSelect: TreeNode[] = [];
     causaRaizAnalisisList: CausaRaiz[];
@@ -77,6 +79,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     adicionar: boolean = false;
     visibleLnkResetPasswd = true;
     idEmpresa: string;
+    datasFC: string
+
+    display: boolean = false;
 
     empresaName: string;
     empresaNit: string;
@@ -84,11 +89,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     fechaActual = new Date();
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
-    tipoList = [
-        { label: 'Seleccione', value: null },
-        { label: 'Inicial', value: 'Inicial' },
-        { label: 'Prorroga', value: 'Prorroga' },
-    ];
+    
 
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
@@ -158,28 +159,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultarAnalisis(this.value.id);
         }
     }
-
-    // get daysCount() {
-    //     let fecha1 = moment(new Date(this.desviacionesList.('fechaDesde').value))
-
-    //     let fecha2 = moment(new Date(this.desviacionesList.get('fechaHasta').value))
-
-    //     return Math.abs(fecha1.diff(fecha2, "days"))
-
-    // }
-    async nuevaIncapacidad() {
-        // try {
-        //     // let seg = { pkCase: this.caseSelect.id }
-        //     // let resp = await this.scmService.createTratamiento(seg);
-
-        //     // if (resp) {
-        //     //     this.tratamientos.push(resp);
-        //     }
-
-        // } catch (error) {
-        //     console.log(error)
-        // }
-    }
+   
     removeDesv(desviacion: Desviacion) {
         if (this.desviacionesList.length == 1) {
             this.msgs = [];
@@ -260,13 +240,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            console.log("----->",resp["data"][0].factor_causal);
+            console.log("----->",resp["data"][0]);
             
             this.dataFlow = resp["data"][0];
             this.flowChartSave = resp["data"][0].flow_chart;
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
-            console.log(this.factorCusal);
+            this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
             
             this.desviacionesList = analisis.desviacionesList;
             this.observacion = analisis.observacion;
@@ -345,6 +325,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.participantes = JSON.stringify(this.participantes);
         ad.flow_chart = this.flowChartSave;
         ad.factor_causal= JSON.stringify(this.factorCusal);
+        ad.incapacidades= JSON.stringify(this.incapacidadesList);
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
@@ -367,6 +348,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         console.log(ad.tareaDesviacionList);
     }
 
+
+
     modificarAnalisis() {
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
@@ -377,6 +360,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.analisisCosto = this.analisisCosto;
         ad.observacion = this.observacion;
         ad.factor_causal= JSON.stringify(this.factorCusal);
+        ad.incapacidades= JSON.stringify(this.incapacidadesList);
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
         ad.participantes = JSON.stringify(this.participantes);
@@ -507,18 +491,6 @@ export class AnalisisDesviacionComponent implements OnInit {
             }
 
         });
-        // this.factorCusal.push(event)
-
-        
-
-
-        // for (let index = 0; index < event.length; index++) {
-        //    for (let indey = 0; indey < this.factorCusal.length; indey++) {
-        //        const element = array[indey];
-               
-        //    }
-            
-        // }
 
         console.log(this.factorCusal);
         
@@ -531,25 +503,18 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.flowChartSave);
         
     }
-datasFC: string
-    dataFactorCausal(event){
 
-    console.log(this.factorCusal);
-
-    console.log("FC",event);
-
-    this.factorCusal.forEach(element => {
-        console.log(element);
+    getListIncapacidades(event){
+        console.log(event);
+        this.incapacidadesList = event;
         
-    });
-
-
-        // this.datasFC=JSON.stringify(event)
     }
 
+   
     test(){
-        console.log(this.flowChartSave);
+        console.log(this.incapacidadesList);
         
     }
+
 
 }

@@ -7,7 +7,7 @@
         <div>
           <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
           <!-- <button class="next action-button"  *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
-          <button class="next action-button" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button>
+          <button class="next action-button" *ngIf="pasoSelect < steps.length-1" (click)="next()">Siguiente</button>
           <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
           <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
         </div>
@@ -43,10 +43,11 @@
           </div>
         </div>
         
-        <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px" >               
+        <div *ngIf="pasoSelect==1" style="width: 80%; float: center; margin-top: 22px">               
 
-          <p-fieldset legend="Dificultad con Equipo" [toggleable]="true">
-            <p-organizationChart [value]="data1" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
+          <p-fieldset [legend]="Craiz.label" [toggleable]="true" *ngFor="let Craiz of factorCausal.causa_Raiz">
+            <p-scrollPanel [style]="{width: '90%', height: '100%'}">
+              <p-organizationChart [value]="[Craiz]" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
                 styleClass="company">
                 <ng-template let-node pTemplate="person">
                     <div class="node-header p-corner-top">{{node.label}}</div>
@@ -58,9 +59,26 @@
                     {{node.label}}
                 </ng-template>
             </p-organizationChart>
+            </p-scrollPanel>            
           </p-fieldset>
 
-          <p-fieldset legend="Desastre Natural / Sabotaje" [toggleable]="true">
+
+          <!-- <p-fieldset legend="Dificultad con Equipo" [toggleable]="true">
+            <p-organizationChart [value]="[factorCausal.causa_Raiz[0]]" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
+                styleClass="company">
+                <ng-template let-node pTemplate="person">
+                    <div class="node-header p-corner-top">{{node.label}}</div>
+                    <div class="node-content">
+                        <div>{{node.data.name}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-node pTemplate="department">
+                    {{node.label}}
+                </ng-template>
+            </p-organizationChart>
+          </p-fieldset> -->
+
+          <!-- <p-fieldset legend="Desastre Natural / Sabotaje" [toggleable]="true">
             <p-organizationChart [value]="data2" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
               styleClass="company">
               <ng-template let-node pTemplate="person">
@@ -73,7 +91,7 @@
                   {{node.label}}
               </ng-template>
             </p-organizationChart>
-          </p-fieldset>       
+          </p-fieldset>        -->
 
         </div>
 <!-- 

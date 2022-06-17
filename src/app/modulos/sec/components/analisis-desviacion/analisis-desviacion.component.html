@@ -160,7 +160,10 @@
                                
                             </p-tabPanel>
                             <p-tabPanel  *ngIf="idEmpresa == '3'" header="Dias perdidos">
-                                <p-table [value]="desviacionesList" dataKey="id" editMode="row" styleClass="material-table">
+
+                                <app-incapacidades-complementaria (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList"></app-incapacidades-complementaria>
+
+                                <!-- <p-table [value]="desviacionesList" dataKey="id" editMode="row" styleClass="material-table">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th pSortableColumn="tipo">Tipo</th>
@@ -183,14 +186,14 @@
             
                                                         <div class="input-field">
                                                             <p-dropdown [filter]="true" [options]="tipoList"
-                                                                class="select-material" [(ngModel)]="tratamiento.tipo"
+                                                                class="select-material" [(ngModel)]="tratamiento.Tipo"
                                                                 styleClass="select-material">
                                                             </p-dropdown>
+                                                            
                                                         </div>
                                                     </ng-template>
                                                     <ng-template pTemplate="output">
-                                                        {{(tipoList !== null) ? tipoList
-                                                        : ''}}
+                                                       {{tratamiento.Tipo}}
                                                     </ng-template>
                                                 </p-cellEditor>
                                             </td>
@@ -278,7 +281,7 @@
                                         </button>
                                     </ng-template>
             
-                                </p-table>
+                                </p-table> -->
                             </p-tabPanel>
                         </p-tabView>
                         
@@ -296,7 +299,7 @@
                         <app-factor-causal (dataFC)="dataFactorCausal($event)" factorCausal="data"></app-factor-causal>
                     </p-tabPanel> -->
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
-                        <app-factor-causal (dataFC)="dataFactorCausal($event)" [factorCausal]="data"></app-factor-causal>
+                        <app-factor-causal [factorCausal]="data"></app-factor-causal>
                         <!-- <app-factor-causal (dataFC)="setFactorCausal($event)" [factorCausal]="data"></app-factor-causal> -->
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas"></p-tabPanel>
@@ -406,3 +409,4 @@
 <div style="height: 100px;;"></div>
 
 
+<!-- <button (click)="test()">vli</button> -->
