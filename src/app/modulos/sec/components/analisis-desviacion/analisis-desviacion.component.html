@@ -128,8 +128,8 @@
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
                                             </th>
-                                            <td><p-radioButton [name]="" label="Si  " [value]="true"   ></p-radioButton>
-                                                <p-radioButton [name]="" label="No  " [value]="false"  ></p-radioButton>
+                                            <td><p-radioButton name="group1" label="Si  " [value]="true"   ></p-radioButton>
+                                                <p-radioButton name="group1" label="No  " [value]="false"  ></p-radioButton>
                                             </td> 
                                         </tr>
                                         <tr>
@@ -139,8 +139,8 @@
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Entrega copia de FURAT  al trabajador</th>
                                            
-                                            <td><p-radioButton [name]="" label="Si  " [value]="true"   ></p-radioButton>
-                                                <p-radioButton [name]="" label="No  " [value]="false"  ></p-radioButton>
+                                            <td><p-radioButton name="group2" label="Si  " [value]="true"   ></p-radioButton>
+                                                <p-radioButton name="group2" label="No  " [value]="false"  ></p-radioButton>
                                             </td>                                
                                         </tr>
                                         <tr>
@@ -302,7 +302,9 @@
                         <app-factor-causal [factorCausal]="data"></app-factor-causal>
                         <!-- <app-factor-causal (dataFC)="setFactorCausal($event)" [factorCausal]="data"></app-factor-causal> -->
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
+                        <app-listado-causas [factores]="dataListFactor"></app-listado-causas>
+                    </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Parametros"></p-tabPanel>
@@ -409,4 +411,4 @@
 <div style="height: 100px;;"></div>
 
 
-<!-- <button (click)="test()">vli</button> -->
+<!-- <button (click)="setListDataFactor()">vli</button> -->

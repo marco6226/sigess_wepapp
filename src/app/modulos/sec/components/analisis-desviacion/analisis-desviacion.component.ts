@@ -1,4 +1,4 @@
-import { Causa_Raiz, FactorCausal, Incapacidad } from './../../entities/factor-causal';
+import { Causa_Raiz, FactorCausal, Incapacidad, listFactores } from './../../entities/factor-causal';
 import { Component, OnInit, Input } from "@angular/core";
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
@@ -89,7 +89,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     fechaActual = new Date();
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
-    
+
+    dataListFactor: listFactores[]=[];
 
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
@@ -246,6 +247,8 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.flowChartSave = resp["data"][0].flow_chart;
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
+            this.setListDataFactor();
+
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
             
             this.desviacionesList = analisis.desviacionesList;
@@ -493,6 +496,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
 
         console.log(this.factorCusal);
+        this.setListDataFactor();
         
     }
 
@@ -513,6 +517,78 @@ export class AnalisisDesviacionComponent implements OnInit {
    
     test(){
         console.log(this.incapacidadesList);
+        
+    }
+
+    tempData: listFactores[]=[];
+
+    setListDataFactor(){
+        this.tempData = []
+        this.factorCusal.forEach(data => {
+            console.log(data);            
+            data.seccion.forEach(data1 => {
+                data1.desempeno.forEach(data2 => {   
+                    data2.areas.forEach(data3 => {
+                        data3.subProd.forEach(data4 => {
+                            data4.causa.forEach(element => {    
+
+                                if (element.esCausa) {      
+                                    if (!this.dataListFactor.find(ele=> {return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC})) {
+                                        this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
+                                    }else{
+                                        this.dataListFactor.forEach(ele =>{
+                                            if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC){
+                                                this.tempData.push(ele)                                                
+                                            }
+                                        })
+                                    }
+                                }                                
+                            });
+                        });
+                    });
+                });
+            });
+            data.causa_Raiz.forEach(data1 => {
+                this.selectCausaRaiz(data.nombre, data1.label, data1)
+            });
+            
+        });
+        this.dataListFactor = this.tempData;
+    }
+
+    selectCausaRaiz(nombre, pregunta ,datos){
+        console.log(datos);
+
+        if (datos.data.name=='Si') {
+            if (!this.dataListFactor.find(ele=> {return ele.pregunta == pregunta && ele.metodologia == datos.label})) {
+                this.tempData.push({nombre:nombre, pregunta: pregunta,metodologia: datos.label, accion:'Sin Plan de Accion'})
+            }else{
+                this.dataListFactor.forEach(ele =>{
+                    if(ele.pregunta == pregunta && ele.metodologia == datos.label){
+                        this.tempData.push(ele)                                                
+                    }
+                })
+            }
+            // this.tempData.push({nombre:nombre, pregunta:pregunta, metodologia: datos.label, accion:'Sin Plan de Accion'})            
+        }
+
+        if(datos.children){
+            datos.children.forEach(element => {
+                this.selectCausaRaiz(nombre, pregunta ,element)
+            });
+        }
+       
+
+        console.log(this.tempData);
+        
+
+        // datos.forEach(element => {
+        //     console.log(element);
+            
+        //    if(element.data == 'Si'){
+        //     this.tempData.push({nombre:nombre, pregunta:element.label,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
+        //    }
+        // });
         
     }
 

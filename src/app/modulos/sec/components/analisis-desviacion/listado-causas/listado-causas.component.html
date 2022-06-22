@@ -1,0 +1,23 @@
+<p>listado-causas works!</p>
+<p-table [value]="factores" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Pregunta</th>
+            <th>Nombre del Factor Causal</th>
+            <th>Factor Identificado según Metodología</th>
+            <th>Acción</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-factor>
+        <tr>
+            <td>{{factor.pregunta}}</td>
+            <td>{{factor.nombre}}</td>
+            <td>{{factor.metodologia}}</td>
+            <td>{{factor.accion}}</td>
+        </tr>       
+    </ng-template>
+</p-table>
+
+<!-- <button (click)="test()">asdf</button> -->
+
+

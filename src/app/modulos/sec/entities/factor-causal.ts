@@ -61,3 +61,10 @@ export interface Incapacidad{
   tipo?: string;
   diasAusencia?: number;
 }
+
+export interface listFactores{
+  pregunta?: string;
+  nombre?: string;
+  metodologia?: string;
+  accion?: string;
+}

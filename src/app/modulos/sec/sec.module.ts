@@ -42,6 +42,7 @@ import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
 import { FactorCausalComponent } from './components/analisis-desviacion/factor-causal/factor-causal.component';
 import { IdentificacionFactoresCausalesComponent } from './components/analisis-desviacion/factor-causal/identificacion-factores-causales/identificacion-factores-causales.component';
 import { IncapacidadesComplementariaComponent } from './components/analisis-desviacion/factor-causal/incapacidades-complementaria/incapacidades-complementaria.component';
+import { ListadoCausasComponent } from './components/analisis-desviacion/listado-causas/listado-causas.component';
 
 @NgModule({
     imports: [
@@ -98,7 +99,8 @@ import { IncapacidadesComplementariaComponent } from './components/analisis-desv
         FactorCausalComponent,
         IdentificacionFactorCausalComponent,
         IdentificacionFactoresCausalesComponent,
-        IncapacidadesComplementariaComponent
+        IncapacidadesComplementariaComponent,
+        ListadoCausasComponent
     ],
     providers: [
         SistemaCausaRaizService,
