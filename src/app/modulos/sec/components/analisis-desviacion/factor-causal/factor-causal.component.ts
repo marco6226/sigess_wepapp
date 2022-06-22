@@ -159,6 +159,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
       }      
     }
 
+
+
     let x;
 
     x= Object.values(this.questionIndividual)
@@ -237,12 +239,13 @@ this.questionIndividual.forEach(element => {
     });
 }
 
-  
+  isSelectionable: boolean
 
     showDialog(item) {
+      this.isSelectionable = false;
       console.log(item);      
       this.selectIdentificacionFC = item;
-        this.display = true;
+      this.display = true;      
     }
   //   showModalDialog() {
   //     this.displayModal = true;
@@ -267,15 +270,8 @@ this.questionIndividual.forEach(element => {
 
     
     test(){
-      console.log(this.factorCausal);
-
-      console.log(this.data1, this.data2);
-      
-
-      this.factorCausal.causa_Raiz.forEach(element => {
-        console.log(element);
-        this.data1 = [element]
-      });
+     console.log("---->", this.selectIdentificacionFC);
+     
       
     }
 }

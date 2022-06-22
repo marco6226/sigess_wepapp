@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-dialog header="Subir archivo" [visible]="visibleDlg" (visibleChange)="onVisibleChange($event)" modal="true">
     <p-fileUpload
         name="file"
@@ -10,6 +11,13 @@
         (uploadHandler)="upload($event)"
     >
     </p-fileUpload>
+
+    <div [formGroup]="form">
+        <label for="">Descripción</label>
+        <input formControlName="descripcion" type="text">
+        <small *ngIf="form.invalid" id="username2-help" class="p-invalid">Obligatorio</small>
+    </div>
+
 
     <div [formGroup]="myGroup">
         <p-checkbox #nivelAccesoH name="cbxAccessLevelH" id="nivelAccesoH" class="form-check-input" (click)="this.setNivelAcceso(nivelAccesoH.checked)" binary="true" label="Privado"></p-checkbox>
