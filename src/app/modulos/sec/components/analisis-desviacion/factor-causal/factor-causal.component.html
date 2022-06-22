@@ -63,53 +63,21 @@
           </p-fieldset>
 
 
-          <!-- <p-fieldset legend="Dificultad con Equipo" [toggleable]="true">
-            <p-organizationChart [value]="[factorCausal.causa_Raiz[0]]" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
-                styleClass="company">
-                <ng-template let-node pTemplate="person">
-                    <div class="node-header p-corner-top">{{node.label}}</div>
-                    <div class="node-content">
-                        <div>{{node.data.name}}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-node pTemplate="department">
-                    {{node.label}}
-                </ng-template>
-            </p-organizationChart>
-          </p-fieldset> -->
-
-          <!-- <p-fieldset legend="Desastre Natural / Sabotaje" [toggleable]="true">
-            <p-organizationChart [value]="data2" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
-              styleClass="company">
-              <ng-template let-node pTemplate="person">
-                  <div class="node-header p-corner-top">{{node.label}}</div>
-                  <div class="node-content">
-                      <div>{{node.data.name}}</div>
-                  </div>
-              </ng-template>
-              <ng-template let-node pTemplate="department">
-                  {{node.label}}
-              </ng-template>
-            </p-organizationChart>
-          </p-fieldset>        -->
-
         </div>
-<!-- 
-        <div *ngIf="pasoSelect==2" style="width: 80%; float: center; margin-top: 22px" >               
-
-        </div>
-        -->
         
-        <p-dialog [header]="selectIdentificacionFC?.factor" [(visible)]="display" [style]="{width: '50vw'}">
+        <p-dialog [header]="selectIdentificacionFC?.factor" [(visible)]="display" [closable]="false"	 [style]="{width: '50vw'}">
           
           <div>
             <app-identificacion-factores-causales [identificacionFc]="selectIdentificacionFC"></app-identificacion-factores-causales>
           </div>
 
-          <div>
-            <p-button icon="pi pi-check" (click)="display=false" label="Confirmar" class="p-button-text"></p-button>
+          <div >
+            <p-button icon="pi pi-check" *ngIf="isSelectionable" (click)="display=false" label="Confirmar" class="p-button-text"></p-button>
+            <p-button icon="pi pi-check" *ngIf="!isSelectionable" (click)="test()" label="Confirmar" class="p-button-text"></p-button>
           </div>
 
         </p-dialog>
     </div>
 </form>
+
+<div *ngIf="selectIdentificacionFC"></div>
