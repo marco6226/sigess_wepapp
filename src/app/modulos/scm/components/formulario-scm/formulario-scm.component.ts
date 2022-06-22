@@ -303,7 +303,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             email: { value: "", disabled: true },
             corporativePhone: [{ value: "", disabled: true }],
             cargoId: [{ value: "", disabled: true }, Validators.required],
-            direccionGerencia: [null]
+            direccionGerencia: [{value: " ",  disabled: true}]
 
         });
         this.jefeInmediato = fb.group({
@@ -314,7 +314,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             email: { value: "", disabled: true },
             corporativePhone: [{ value: "", disabled: true }],
             cargoId: [{ value: "", disabled: true }, Validators.required],
-            direccionGerencia: [null]
+            direccionGerencia: [{value: "",  disabled: true}]
 
         });
         this.empleadoForm = fb.group({
