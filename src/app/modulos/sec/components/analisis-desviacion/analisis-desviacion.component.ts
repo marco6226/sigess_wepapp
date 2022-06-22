@@ -247,7 +247,11 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.flowChartSave = resp["data"][0].flow_chart;
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
-            this.setListDataFactor();
+            console.log(this.factorCusal);
+            
+            // if(this.factorCusal){
+                this.setListDataFactor();
+            // }
 
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
             
@@ -523,37 +527,41 @@ export class AnalisisDesviacionComponent implements OnInit {
     tempData: listFactores[]=[];
 
     setListDataFactor(){
-        this.tempData = []
-        this.factorCusal.forEach(data => {
-            console.log(data);            
-            data.seccion.forEach(data1 => {
-                data1.desempeno.forEach(data2 => {   
-                    data2.areas.forEach(data3 => {
-                        data3.subProd.forEach(data4 => {
-                            data4.causa.forEach(element => {    
+        try {          
+            this.tempData = []
+            this.factorCusal.forEach(data => {
+                console.log(data);            
+                data.seccion.forEach(data1 => {
+                    data1.desempeno.forEach(data2 => {   
+                        data2.areas.forEach(data3 => {
+                            data3.subProd.forEach(data4 => {
+                                data4.causa.forEach(element => {    
 
-                                if (element.esCausa) {      
-                                    if (!this.dataListFactor.find(ele=> {return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC})) {
-                                        this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
-                                    }else{
-                                        this.dataListFactor.forEach(ele =>{
-                                            if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC){
-                                                this.tempData.push(ele)                                                
-                                            }
-                                        })
-                                    }
-                                }                                
+                                    if (element.esCausa) {      
+                                        if (!this.dataListFactor.find(ele=> {return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC})) {
+                                            this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
+                                        }else{
+                                            this.dataListFactor.forEach(ele =>{
+                                                if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC){
+                                                    this.tempData.push(ele)                                                
+                                                }
+                                            })
+                                        }
+                                    }                                
+                                });
                             });
                         });
                     });
                 });
+                data.causa_Raiz.forEach(data1 => {
+                    this.selectCausaRaiz(data.nombre, data1.label, data1)
+                });
+                
             });
-            data.causa_Raiz.forEach(data1 => {
-                this.selectCausaRaiz(data.nombre, data1.label, data1)
-            });
-            
-        });
-        this.dataListFactor = this.tempData;
+            this.dataListFactor = this.tempData;
+        } catch (error) {
+                
+        }
     }
 
     selectCausaRaiz(nombre, pregunta ,datos){
@@ -577,7 +585,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.selectCausaRaiz(nombre, pregunta ,element)
             });
         }
-       
+    
 
         console.log(this.tempData);
         
@@ -591,6 +599,4 @@ export class AnalisisDesviacionComponent implements OnInit {
         // });
         
     }
-
-
 }
