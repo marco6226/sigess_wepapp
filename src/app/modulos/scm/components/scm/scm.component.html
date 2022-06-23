@@ -35,6 +35,12 @@
                 <th pSortableColumn="casoMedicoLaboral">Caso de mesa laboral
                     <p-sortIcon field="casoMedicoLaboral"></p-sortIcon>
                 </th>
+                <th pSortableColumn="prioidadCaso">Prioridad
+                    <p-sortIcon field="prioidadCaso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tipoCaso">Tipo de caso
+                    <p-sortIcon field="tipoCaso"></p-sortIcon>
+                </th>
             </tr>
             <tr class="filters">
                 <td>
@@ -109,6 +115,22 @@
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'casoMedicoLaboral', 'contains')">
                     </div>
                 </td>
+                <td>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'prioridadCaso','contains')">
+                    </div>
+                </td>
+                <td>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoCaso','contains')">
+                    </div>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-case>
@@ -123,6 +145,9 @@
                 <td class="p-text-center">{{case.documento}}</td>
                 <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                 <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
+                <!-- <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td> -->
+                <td class="p-text-center">{{case.prioridadCaso}}</td>
+                <td class="p-text-center">{{case.tipoCaso}}</td>
 
             </tr>
         </ng-template>

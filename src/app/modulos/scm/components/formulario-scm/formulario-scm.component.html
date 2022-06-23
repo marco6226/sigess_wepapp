@@ -494,7 +494,7 @@
                                 <label for="" class="active">Descripción del cargo</label>
                             </div>
                         </div>
-                        <div class="ui-g-12 ui-md-4">
+                        <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
                                 <p-dropdown [options]="caseOptionList" formControlName="casoMedicoLaboral"
@@ -503,6 +503,27 @@
                                 <label for="" class="active">Caso de mesa laboral</label>
                             </div>
                         </div>
+
+                        <!-- <div class="ui-g-12 ui-md-4"> -->
+                        <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <div class="input-field">
+
+                                <p-dropdown [options]="prioridadOptionList" formControlName="prioridadCaso"
+                                    class="select-material" styleClass="select-material">
+                                </p-dropdown>
+                                <label for="" class="active">Prioridad</label>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-4">
+                            <div class="input-field">
+
+                                <p-dropdown [options]="tipoOptionList" formControlName="tipoCaso"
+                                    class="select-material" styleClass="select-material">
+                                </p-dropdown>
+                                <label for="" class="active">Tipo de caso</label>
+                            </div>
+                        </div>
+
 
 
                         <div class="ui-g-12">
@@ -684,6 +705,12 @@
                         <th pSortableColumn="case.casoMedicoLaboral">Caso de mesa laboral
 
                         </th>
+                        <th pSortableColumn="case.prioridadCaso">Prioridad
+
+                        </th>
+                        <th pSortableColumn="case.tipoCaso">Tipo de caso
+
+                        </th>
                     </tr>
                     <tr>
 
@@ -702,6 +729,8 @@
                         <td>{{case.documento}}</td>
                         <td>{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                         <td>{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
+                        <td>{{case.prioridadCaso}}</td>
+                        <td>{{case.tipoCaso}}</td>
 
                     </tr>
                 </ng-template>
