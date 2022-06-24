@@ -26,7 +26,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   public formDesempeno: FormGroup;
   display: boolean = false;
   displayModal: boolean;
-  selectIdentificacionFC: IdentificacionFC | null;
+  selectIdentificacionFC: Desempeno | null;
+  // selectIdentificacionFC: IdentificacionFC | null;
   validators: boolean = true;
   steps = [
     {label: 'Dificultad de Desempeño Humano'},
@@ -118,7 +119,10 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
       {tipoDesempeno: 'Desempeño del equipo de trabajo', desempeno: this.questionTrabajo},
       {tipoDesempeno: 'Sistema de administración', desempeno: this.questionAdministracion},
     ]
-    this.factorCausal.seccion=datos;
+
+    let temp = JSON.stringify(datos)
+
+    this.factorCausal.seccion=JSON.parse(temp)// datos;
   }
 
 
@@ -158,31 +162,8 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
         this.showDialog(this.factorCausal.seccion[2].desempeno[id-11]);
       }      
     }
-
-
-
-    let x;
-
-    x= Object.values(this.questionIndividual)
-  console.log(x);
-  
-    // let z= this.questionIndividual.map(function(e){
-    //   return {question: e}
-    // })
-
-    let z={s:[]}
-    
-this.questionIndividual.forEach(element => {
-  z.s.push(element)
-});
-
-   
-    // this.dataFC.emit(this.questionIndividual);
-    let y = {z}
-    console.log(JSON.stringify(this.factorCausal));
     
     this.dataFC.emit(this.factorCausal);
-    // this.dataFC.emit(JSON.stringify(this.factorCausal));
 
     this.validacion();
   }
@@ -263,13 +244,38 @@ this.questionIndividual.forEach(element => {
       console.log(this.datos);
 
       // this.dataCR.emit(this.datos);
-      console.log(this.causasRaiz);
-      
+      console.log(this.factorCausal);
+      this.dataFC.emit(this.factorCausal);
+
       // this.messageService.add({severity: 'success', summary: 'Node Selected', detail: event.node.label
     }
 
+
+    confirmCheck(){
+      let control: boolean = false
+      this.selectIdentificacionFC.areas.forEach(element =>
+         element.subProd.forEach(eleme => {
+           eleme.causa.forEach(ele => {
+             if (ele.esCausa) {
+               control = ele.esCausa;
+             }
+           })
+         })
+      ) 
+
+      if (control) {
+    this.dataFC.emit(this.factorCausal);
+
+        this.display=false
+       } else {
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'No se ha seleccionado ninguna identificacion del factor'});
+        
+       }
+
+    }
     
     test(){
+    //  console.log("---->", this.factorCausal);
      console.log("---->", this.selectIdentificacionFC);
      
       
