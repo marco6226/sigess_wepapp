@@ -20,6 +20,8 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 })
 
 export class ScmComponent implements OnInit {
+    valor2: string;
+    valor3: string;
     empresaId: string;
     casosList: any;
     usuarioSelect: Usuario;
@@ -97,6 +99,17 @@ export class ScmComponent implements OnInit {
 
     eliminar() { }
 
+    DecodificacionSiNo(valor){
+        this.valor2=valor.toLowerCase() ;
+        if(-1!='si'.search(this.valor2)){return '1'}else if(-1!='no'.search(this.valor2)){return '0'}else if(this.valor2!=''){return '3'}
+
+    }
+    DecodificacionEstado(valor){
+        this.valor3=valor.toLowerCase() ;
+        if(-1!='abierto'.search(this.valor2)){return '1'}else if(-1!='cerrado'.search(this.valor2)){return '0'}else if(this.valor2!=''){return '3'}
+        // if(this.valor3=='Abierto'){return '1'}else if(this.valor3=='Cerrado'){return '0'}else if(this.valor2!=''){return '3'}
+    }
+
     async lazyLoad(event: any) {
         let filterQuery = new FilterQuery();
         filterQuery.sortField = event.sortField;
@@ -112,8 +125,9 @@ export class ScmComponent implements OnInit {
         filterQuery.fieldList = this.fields;
         filterQuery.filterList = [filterEliminado];        
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-       
+        console.log(event.filters);
         try {
+            
             let res: any = await this.scmService.findByFilter(filterQuery);
             this.casosList = res.data;
             this.totalRecords = res.count;
