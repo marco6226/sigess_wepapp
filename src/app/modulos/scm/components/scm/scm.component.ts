@@ -9,6 +9,9 @@ import { CargoService } from 'app/modulos/empresa/services/cargo.service';
 import { SelectItem } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 import { Router } from '@angular/router';
+import { Ipecr } from 'app/modulos/ipr/entities/ipecr'
+import { IpecrService } from 'app/modulos/ipr/services/ipecr.service'
+import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 
 @Component({
     selector: 'app-scm',
@@ -48,7 +51,6 @@ export class ScmComponent implements OnInit {
         'eliminado',
         'prioridadCaso',
         'tipoCaso',
-
     ];
     estadosList: SelectItem[] = [
         { value: 'ACTIVO', label: 'ACTIVO' },
@@ -109,7 +111,7 @@ export class ScmComponent implements OnInit {
 
         filterQuery.fieldList = this.fields;
         filterQuery.filterList = [filterEliminado];        
-        //filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+        filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
        
         try {
             let res: any = await this.scmService.findByFilter(filterQuery);
