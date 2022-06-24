@@ -215,6 +215,20 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     solicitando: boolean = false;
     departamento;
     entity: epsorarl = { EPS: [], ARL: [], AFP: [], Medicina_Prepagada: [], Proveedor_de_salud: [] };
+    tipoOptionList = [
+        { label: "--Seleccione--", value: null },
+        { label: "Medico", value: "Medico" },
+        { label: "Juridico", value: "Juridico" },
+        { label: "Otros", value: "Otros" },
+
+    ]
+    prioridadOptionList = [
+        { label: "--Seleccione--", value: null },
+        { label: "Alta", value: "Alta" },
+        { label: "Media", value: "Media" },
+        { label: "Baja", value: "Baja" },
+
+    ]
     caseOptionList = [
         { label: "--Seleccione--", value: null },
         { label: "Si", value: "1" },
@@ -393,7 +407,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             pclEmitEntidad: [null, /*Validators.required*/],
             conceptRehabilitacion: [null, /*Validators.required*/],
             conceptRehabilitacionTwo: [null, /*Validators.required*/],
-
+            tipoCaso: [null, /*Validators.required*/],
+            prioridadCaso: [null, /*Validators.required*/],
             descripcionCargo: [null]
         });
         console.log(this.casoMedicoForm)
