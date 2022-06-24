@@ -332,6 +332,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.participantes = JSON.stringify(this.participantes);
         ad.flow_chart = this.flowChartSave;
         ad.factor_causal= JSON.stringify(this.factorCusal);
+        this.setListDataFactor();
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
@@ -368,6 +369,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.observacion = this.observacion;
         ad.factor_causal= JSON.stringify(this.factorCusal);
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
+        this.setListDataFactor();
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
         ad.participantes = JSON.stringify(this.participantes);
@@ -480,7 +482,12 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     setFactorCausal(event: FactorCausal[]){
         console.log(event,"sip");
-        // this.factorCusal=[];
+        console.log(this.factorCusal);
+        
+        if (!this.factorCusal) {
+        this.factorCusal=[];
+            
+        }
         event.forEach(element => {
             // this.factorCusal.push(element)
             let x = this.factorCusal.find((x)=>x.id == element.id)
@@ -498,6 +505,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             }
 
         });
+        console.log(this.factorCusal);
 
         console.log(this.factorCusal);
         this.setListDataFactor();
@@ -533,24 +541,26 @@ export class AnalisisDesviacionComponent implements OnInit {
                 console.log(data);            
                 data.seccion.forEach(data1 => {
                     data1.desempeno.forEach(data2 => {   
-                        data2.areas.forEach(data3 => {
-                            data3.subProd.forEach(data4 => {
-                                data4.causa.forEach(element => {    
-
-                                    if (element.esCausa) {      
-                                        if (!this.dataListFactor.find(ele=> {return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC})) {
-                                            this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
-                                        }else{
-                                            this.dataListFactor.forEach(ele =>{
-                                                if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC){
-                                                    this.tempData.push(ele)                                                
-                                                }
-                                            })
-                                        }
-                                    }                                
+                        if (data2.selected) {
+                            data2.areas.forEach(data3 => {
+                                data3.subProd.forEach(data4 => {
+                                    data4.causa.forEach(element => {    
+    
+                                        if (element.esCausa) {      
+                                            if (!this.dataListFactor.find(ele=> {return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC})) {
+                                                this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
+                                            }else{
+                                                this.dataListFactor.forEach(ele =>{
+                                                    if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC){
+                                                        this.tempData.push(ele)                                                
+                                                    }
+                                                })
+                                            }
+                                        }                                
+                                    });
                                 });
-                            });
-                        });
+                            });    
+                        }                        
                     });
                 });
                 data.causa_Raiz.forEach(data1 => {
