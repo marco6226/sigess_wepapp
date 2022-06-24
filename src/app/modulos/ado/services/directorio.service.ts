@@ -116,7 +116,7 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
         });
     }
 
-    uploadv5(fileToUpload: File, directorioPadreId: string, modulo: string, modParam: string, caseId: string, nivelAcceso: string) {
+    uploadv5(fileToUpload, directorioPadreId: string, modulo: string, modParam: string, caseId: string, nivelAcceso: string) {
         let endPoint = modulo == 'cop' ? this.end_point + 'cop/upload' : this.end_point + 'upload';
 
         let formData: FormData = new FormData();
