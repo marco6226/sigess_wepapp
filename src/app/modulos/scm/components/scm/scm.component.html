@@ -4,9 +4,9 @@
         Casos médicos
     </p-header>
 
-    <p-table #dt [value]="casosList" autoLayout="true" styleClass="material-table" selectionMode="single" [(selection)]="caseSelect" [rows]="11" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
-        [totalRecords]="totalRecords" [loading]="loading">
-        <ng-template pTemplate="header">
+    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="11" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
+        [totalRecords]="totalRecords">
+        <ng-template pTemplate="header" let-columns>
             <tr>
                 <th pSortableColumn="id">#CASO
                     <p-sortIcon field="id"></p-sortIcon>
@@ -35,8 +35,8 @@
                 <th pSortableColumn="casoMedicoLaboral">Caso de mesa laboral
                     <p-sortIcon field="casoMedicoLaboral"></p-sortIcon>
                 </th>
-                <th pSortableColumn="prioidadCaso">Prioridad
-                    <p-sortIcon field="prioidadCaso"></p-sortIcon>
+                <th pSortableColumn="prioridadCaso">Prioridad
+                    <p-sortIcon field="prioridadCaso"></p-sortIcon>
                 </th>
                 <th pSortableColumn="tipoCaso">Tipo de caso
                     <p-sortIcon field="tipoCaso"></p-sortIcon>
@@ -72,7 +72,7 @@
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'ciudad', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value,'ciudad', 'contains')">
                     </div>
                 </td>
                 <td>
