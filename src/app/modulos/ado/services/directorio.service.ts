@@ -122,6 +122,7 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
         let formData: FormData = new FormData();
 
         if (fileToUpload != null) formData.append('file', fileToUpload, fileToUpload.name);
+        if (fileToUpload != null) formData.append('descripcion',fileToUpload.descripcion);
         if (modulo != null) formData.append('mod', modulo);
         if (modParam != null) formData.append('modParam', modParam);
         if (directorioPadreId != null) formData.append('dpId', directorioPadreId);
