@@ -317,7 +317,7 @@ export class FormularioPeligroComponent implements OnInit {
     filter.value1 = peligroId;
     filterQuery.filterList.push(filter);
 
-    return new Promise(
+    return new Promise<void>(
       resolve => {
 
         this.fuenteService.findByFilter(filterQuery).then(

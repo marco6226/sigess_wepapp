@@ -115,11 +115,19 @@
                                     <ng-template pTemplate="body">
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Peligro</th>
-                                            <td>{{desviacionesList[0].concepto}}</td> 
+                                            <!-- <td>{{desviacionesList[0].concepto}}</td>  -->
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                            <p-dropdown [options]="tipoPeligro" formControlName="tipoPeligro" (onChange)="SelectPeligro($event.value)">
+                                            </p-dropdown></th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Descripción del Peligro</th>
-                                            <td>{{desviacionesList[0]?.nombre}}</td> 
+                                            <!-- <td>{{desviacionesList[0]?.nombre}}</td>  -->
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                            <!-- <p-dropdown [options]="Peligro" formControlName="tipoCaso"></p-dropdown> -->
+                                            <!-- <button (click)="test()"></button> -->
+                                            <p-dropdown [options]="Peligro" formControlName="descripcionPeligro"></p-dropdown>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Estado del evento ante ARL</th>
