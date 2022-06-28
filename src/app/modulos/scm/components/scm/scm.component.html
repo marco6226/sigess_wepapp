@@ -104,7 +104,7 @@
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'statusCaso', 'contains')">
+                        <input pInputText type="text" (input)="dt.filter(DecodificacionEstado($event.target.value), 'statusCaso', 'contains')">
                     </div>
                 </td>
                 <td>
@@ -112,7 +112,8 @@
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'casoMedicoLaboral', 'contains')">
+                        <!-- <input pInputText type="text" (input)="dt.filter( $event.target.value=='Si'?'1':'0', 'casoMedicoLaboral', 'contains')"> -->
+                        <input pInputText type="text" (input)="dt.filter(DecodificacionSiNo($event.target.value), 'casoMedicoLaboral', 'contains')">
                     </div>
                 </td>
                 <td>
@@ -167,6 +168,7 @@
             </tr>
         </ng-template>
     </p-table>
+
 
 </p-panel>
 
