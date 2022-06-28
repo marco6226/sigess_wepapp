@@ -101,12 +101,12 @@ export class ScmComponent implements OnInit {
 
     DecodificacionSiNo(valor){
         this.valor2=valor.toLowerCase() ;
-        if(-1!='si'.search(this.valor2)){return '1'}else if(-1!='no'.search(this.valor2)){return '0'}else if(this.valor2!=''){return '3'}
+        if(this.valor2.length==0){return null}else if(-1!='si'.search(this.valor2)){return '1'}else if(-1!='no'.search(this.valor2)){return'0'}else if(-1!='en seguimiento'.search(this.valor2)){return '2'}else if(-1!='no aplica'.search(this.valor2)){return '3'}else{return '4'}
         //if(-1!='si'.search(this.valor2)){return '1'}else if(-1!='no'.search(this.valor2)){return '0'}else{return null}
     }
     DecodificacionEstado(valor){
         this.valor3=valor.toLowerCase() ;
-        if(-1!='abierto'.search(this.valor3)){return '1'}else if(-1!='cerrado'.search(this.valor3)){return '0'}else if(this.valor3!=''){return '3'}
+        if(this.valor3.length==0){return null}else if(-1!='abierto'.search(this.valor3)){return '1'}else if(-1!='cerrado'.search(this.valor3)){return '0'}else{return '2'}
         // if(this.valor3=='Abierto'){return '1'}else if(this.valor3=='Cerrado'){return '0'}else if(this.valor2!=''){return '3'}
     }
 

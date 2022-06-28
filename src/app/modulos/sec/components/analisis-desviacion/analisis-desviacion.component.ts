@@ -6,8 +6,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
-import {TipoPeligroService} from "app/modulos/ipr/services/tipo-peligro.service";
-import {PeligroService} from "app/modulos/ipr/services/peligro.service";
 
 import { SistemaCausaInmediataService } from "app/modulos/sec/services/sistema-causa-inmediata.service";
 import { SistemaCausaRaizService } from "app/modulos/sec/services/sistema-causa-raiz.service";
@@ -38,8 +36,6 @@ import {
     tipo_identificacion,
     tipo_vinculacion,
 } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
-import { TipoPeligro } from 'app/modulos/ipr/entities/tipo-peligro';
-import { Peligro } from 'app/modulos/ipr/entities/peligro';
 
 @Component({
     selector: "s-analisisDesviacion",
@@ -53,8 +49,6 @@ import { Peligro } from 'app/modulos/ipr/entities/peligro';
 export class AnalisisDesviacionComponent implements OnInit {
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
-
-    form: FormGroup;
 
     analisisPeligros: FormGroup;
     tareasList: Tarea[];
@@ -171,8 +165,6 @@ export class AnalisisDesviacionComponent implements OnInit {
         private paramNav: ParametroNavegacionService,
         private authService: AuthService,
         private sesionService: SesionService,
-        private TipoPeligroService: TipoPeligroService,
-        private PeligroService: PeligroService,
         fb: FormBuilder,
     ) {
         this.analisisPeligros = fb.group({
@@ -437,17 +429,6 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
     modificarAnalisis() {
-        let Pe = new Peligro();
-        let tp = new TipoPeligro();
-
-        Pe.id=this.form.value.peligro.id;
-        Pe.nombre='';
-        Pe.tipoPeligro= this.form.value.tipoPeligro;
-        
-        tp.id=this.form.value.peligro.tipoPeligro.id;
-        tp.nombre='';
-        tp.peligroList=this.form.value.peligro;
-
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -475,25 +456,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                 console.log(data, "data");
                 
                 this.manageResponse(<AnalisisDesviacion>data);
-                this.modificar = true;
-                this.adicionar = false;
-            });
-        // }, 1000);
-
-        // setTimeout(() => {
-            this.TipoPeligroService.update(tp).then((data) => {
-                console.log(data, "data");
-                
-                //this.manageResponse(<TipoPeligro>data);
-                this.modificar = true;
-                this.adicionar = false;
-            });
-        // }, 1000);
-
-        // setTimeout(() => {
-            this.PeligroService.update(Pe).then((data) => {
-                console.log(data, "data");
-                //this.manageResponse(<AnalisisDesviacion>data);
                 this.modificar = true;
                 this.adicionar = false;
             });
