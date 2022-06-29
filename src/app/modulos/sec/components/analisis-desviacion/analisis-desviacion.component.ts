@@ -6,12 +6,17 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
+import { TipoPeligroService } from "app/modulos/ipr/services/tipo-peligro.service";
+import { PeligroService } from "app/modulos/ipr/services/peligro.service";
 
 import { SistemaCausaInmediataService } from "app/modulos/sec/services/sistema-causa-inmediata.service";
 import { SistemaCausaRaizService } from "app/modulos/sec/services/sistema-causa-raiz.service";
 import { SistemaCausaRaiz } from "app/modulos/sec/entities/sistema-causa-raiz";
 import { CausaRaiz } from "app/modulos/sec/entities/causa-raiz";
 import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
+import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
+import { Peligro } from "app/modulos/ipr/entities/peligro";
+
 import { Desviacion } from "app/modulos/sec/entities/desviacion";
 import { TreeNode } from "primeng/primeng";
 import { Message } from "primeng/primeng";
@@ -30,6 +35,7 @@ import { Criteria } from "../../../core/entities/filter";
 import { jerarquia } from "../../entities/jerarquia";
 import { AuthService } from "app/modulos/core/auth.service";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { SelectItem, ConfirmationService } from 'primeng/primeng'
 import * as moment from 'moment';
 import {
     locale_es,
@@ -42,6 +48,7 @@ import {
     templateUrl: "./analisis-desviacion.component.html",
     styleUrls: ["./analisis-desviacion.component.scss"],
     providers: [
+        TipoPeligroService, PeligroService,
         SistemaCausaInmediataService,
         SistemaCausaAdministrativaService,
     ],
@@ -49,10 +56,12 @@ import {
 export class AnalisisDesviacionComponent implements OnInit {
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
-
+    formtp: FormGroup;
+    formp: FormGroup;
     analisisPeligros: FormGroup;
     tareasList: Tarea[];
     flowChartSave: string;
+    form2: Peligro;
 
     causaAdminList: TreeNode[] = [];
     causaAdminListSelect: TreeNode[] = [];
@@ -76,6 +85,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     observacion: string;
     jerarquia: string;
     analisisId: string;
+    Peligro1: string;
+    tPeligro1: string;
     msgs: Message[] = [];
     consultar: boolean = false;
     modificar: boolean = false;
@@ -83,6 +94,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     visibleLnkResetPasswd = true;
     idEmpresa: string;
     datasFC: string
+    date1: Date;
+    date2: Date;
 
     display: boolean = false;
 
@@ -98,6 +111,19 @@ export class AnalisisDesviacionComponent implements OnInit {
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
 
+    tipoPeligroItemList: SelectItem[];
+    peligroItemList: SelectItem[];
+
+    fields: string[] = [
+        'id',
+        'nombre',
+        'fk_tipo_peligro'
+      ];
+    ARLfirme= [
+        { label: "--Seleccione--", value: null },
+        { label: "Objetado", value: "Objetado" },
+        { label: "En firme", value: "En firme" },
+    ]
     tipoPeligro = [
         { label: "--Seleccione--", value: null },
         { label: "BIOLOGICO", value: "BIOLOGICO" },
@@ -119,47 +145,62 @@ export class AnalisisDesviacionComponent implements OnInit {
         { label: "--Seleccione--", value: null },
     ]
 
-    SelectPeligro(a: any){
-        switch (a) {
-            case "BIOLOGICO":
-                this.Peligro = [
-                    { label: "--Seleccione--", value: null },
-                    { label: "Virus", value: "Virus" },
-                    { label: "Bacterias", value: "Bacterias" },
-                    { label: "Hongos", value: "Hongos" },
-                    { label: "Rickettsias", value: "Rickettsias" },
-                    { label: "Parásitos", value: "Parásitos" },
-                    { label: "Picaduras", value: "Picaduras" },
-                    { label: "Mordeduras", value: "Mordeduras" },
-                    { label: "Fluidos corporales", value: "Fluidos_corporales" }
-                ]
-            break;
-            case "FISICOS":
-                this.Peligro = [
-                    { label: "--Seleccione--", value: null },
-                    { label: "Ruido (de impacto,intermitente,continuo)", value: "0" },
-                    { label: "Iluminación (luz visible por exceso o deficiencia)", value: "1" },
-                    { label: "Vibración (cuerpo entero, segmentaria)", value: "2" },
-                    { label: "Temperaturas extremas por Calor", value: "3" },
-                    { label: "Temperaturas extremas por Frio", value: "4" },
-                    { label: "Presión atmosférica (alta y baja)", value: "5" },
-                    { label: "Radiaciones ionizantes (rayos x, gama, beta y alfa)", value: "6" },
-                    { label: "Radiaciones no ionizantes  (láser, ultravioleta, infrarroja, radiofrecuencia, microondas)", value: "7" }
-                ]
-            break;
-        }
-        return this.Peligro;
+    tSelectPeligro(a: string){
+        this.tPeligro1=a;
+    }
+    
+    SelectPeligro(a: string){
+        console.log('a');
+        console.log(a['id']);
+        
+        this.Peligro1=a;
+        this.cargarPeligro(a['id']);
+        console.log(this.tipoPeligroItemList);
+        console.log(this.peligroItemList);
+        // switch (a['nombre']) {
+        //     case "BIOLÓGICO":
+        //         this.Peligro = [
+        //             { label: "--Seleccione--", value: null },
+        //             { label: "Virus", value: "Virus" },
+        //             { label: "Bacterias", value: "Bacterias" },
+        //             { label: "Hongos", value: "Hongos" },
+        //             { label: "Rickettsias", value: "Rickettsias" },
+        //             { label: "Parásitos", value: "Parásitos" },
+        //             { label: "Picaduras", value: "Picaduras" },
+        //             { label: "Mordeduras", value: "Mordeduras" },
+        //             { label: "Fluidos corporales", value: "Fluidos_corporales" }
+        //         ]
+        //     break;
+        //     case "FISICOS":
+        //         this.Peligro = [
+        //             { label: "--Seleccione--", value: null },
+        //             { label: "Ruido (de impacto,intermitente,continuo)", value: "0" },
+        //             { label: "Iluminación (luz visible por exceso o deficiencia)", value: "1" },
+        //             { label: "Vibración (cuerpo entero, segmentaria)", value: "2" },
+        //             { label: "Temperaturas extremas por Calor", value: "3" },
+        //             { label: "Temperaturas extremas por Frio", value: "4" },
+        //             { label: "Presión atmosférica (alta y baja)", value: "5" },
+        //             { label: "Radiaciones ionizantes (rayos x, gama, beta y alfa)", value: "6" },
+        //             { label: "Radiaciones no ionizantes  (láser, ultravioleta, infrarroja, radiofrecuencia, microondas)", value: "7" }
+        //         ]
+        //     break;
+        // }
+        // return this.Peligro;
     }
     test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
         console.log(this.analisisPeligros.get('tipoPeligro').value)
         console.log(this.analisisPeligros.value)
+        console.log(this.tipoPeligroItemList)
+        console.log(this.peligroItemList)
     }
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
+        private tipoPeligroService: TipoPeligroService,
+        private peligroService: PeligroService,
         private sistemaCausaInmdService: SistemaCausaInmediataService,
         private sistemaCausaRaizService: SistemaCausaRaizService,
         private paramNav: ParametroNavegacionService,
@@ -169,8 +210,14 @@ export class AnalisisDesviacionComponent implements OnInit {
     ) {
         this.analisisPeligros = fb.group({
             tipoPeligro: [null, /*Validators.required*/],
-            Peligro: [null, /*Validators.required*/],
+            descripcionPeligro: [null,/*Validators.required*/],
+            aRLfirme: [null, /*Validators.required*/],
         });
+        // this.form = fb.group({
+        //     id: [null],
+        //     tipoPeligro: [null, Validators.required],
+        //     peligro: [null, Validators.required],
+        //   });
 
 
     }
@@ -229,8 +276,67 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultar = true;
             this.consultarAnalisis(this.value.id);
         }
+        this.cargarTiposPeligro();
+        //this.cargarPeligro();
     }
-   
+
+    cargarTiposPeligro() {
+        this.tipoPeligroService.findAll().then(
+          resp => {
+            console.log(resp);
+            this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
+            (<TipoPeligro[]>resp['data']).forEach(
+              data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
+            )
+            // if (this.formtp.value.tipoPeligro != null) {
+            //   for (let i = 0; i < this.tipoPeligroItemList.length; i++) {
+            //     let data = this.tipoPeligroItemList[i].value;
+            //     if (data != null && data.id == this.formtp.value.tipoPeligro.id) {
+            //       this.formtp.patchValue({
+            //         tipoPeligro: this.tipoPeligroItemList[i].value
+            //       });
+            //       break;
+            //     }
+            //   }
+            // }
+    
+          }
+        );
+      }
+      cargarPeligro(idtp) {
+
+        //this.peligroService.findAll().then(
+
+        let filter = new FilterQuery();
+        filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp }];
+        this.peligroService.findByFilter(filter).then(
+          resp => {
+            console.log(resp);
+            this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
+            (<Peligro[]>resp).forEach(
+              data => 
+                {
+                    console.log(data);
+                    this.peligroItemList.push({ label: data.nombre, value: [data.id, data.nombre] })
+                }
+            )
+            console.log(this.peligroItemList);
+            // if (this.formp.value.nombre != null) {
+            //   for (let i = 0; i < this.peligroItemList.length; i++) {
+            //     let data = this.peligroItemList[i].value;
+            //     if (data != null && data.id == this.formp.value.Peligro.id) {
+            //       this.formp.patchValue({
+            //         Peligro: this.peligroItemList[i].value
+            //       });
+            //       break;
+            //     }
+            //   }
+            // }
+          }
+        );
+        //this.peligroItemList.findIndex('id');
+      }
+    
     removeDesv(desviacion: Desviacion) {
         if (this.desviacionesList.length == 1) {
             this.msgs = [];
@@ -429,6 +535,20 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
     modificarAnalisis() {
+
+    
+        // let Pe = new Peligro();
+        // let tp = new TipoPeligro();
+
+        // //Pe.id=this.form.value.peligro.id;
+        // Pe.nombre=this.Peligro1;
+        // console.log(this.analisisPeligros.value);
+        // Pe.tipoPeligro= this.analisisPeligros.value.tipoPeligro.id;
+        
+        // //tp.id=this.form.value.peligro.tipoPeligro.id;
+        // tp.nombre=this.tPeligro1;
+        // //tp.peligroList=this.form.value.peligro;
+
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -460,6 +580,27 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.adicionar = false;
             });
         // }, 1000);
+
+        // // setTimeout(() => {
+        //     this.peligroService.update(Pe).then((data) => {
+        //         console.log(data, "data");
+                
+        //         this.manageResponse(<AnalisisDesviacion>data);
+        //         this.modificar = true;
+        //         this.adicionar = false;
+        //     });
+        // // }, 1000);
+
+        // // setTimeout(() => {
+        //     this.tipoPeligroService.update(tp).then((data) => {
+        //         console.log(data, "data");
+                
+        //         this.manageResponse(<AnalisisDesviacion>data);
+        //         this.modificar = true;
+        //         this.adicionar = false;
+        //     });
+        // // }, 1000);
+
         
         console.log(ad.tareaDesviacionList);
         console.log(ad.flow_chart);
