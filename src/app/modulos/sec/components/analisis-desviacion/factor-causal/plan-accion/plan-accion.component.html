@@ -1,0 +1,113 @@
+<p-toast></p-toast>
+<p-panel header="CAUSA RAIZ">
+    <div class="p-field">
+        <h2>Nombre del Factor Causal</h2>
+        <label>{{planAcciones?.nombreFC}}</label>
+    </div>
+    <div class="p-field">
+        <h2>Causa Raiz</h2>
+        <label>{{planAcciones?.causaRaiz}}</label>
+    </div>
+    <!-- <h2>Nombre del Factor Causal</h2>
+    <label>{{planAcciones?.nombreFC}}</label>
+    <h2>Causa Raiz</h2>
+    <label>{{planAcciones?.causaRaiz}}</label> -->
+</p-panel>
+
+
+
+<p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
+
+
+
+<!-- <button (click)="test()">test</button> -->
+<!-- <div >
+    <h1>{{planAccion[0]?.nombreFC}}</h1>
+</div> -->
+<!-- <span *ngFor="let item of planAcciones; let isLast=last">
+    {{item.nombreFC}}{{isLast ? '' : ', '}}
+ </span> -->
+
+ <p-panel *ngIf="pasoSelect==0" header="ESPECIFICO" [formGroup]="formEspecifico">
+    <div class="p-field">
+        <label>Nombre de Acción Correctiva</label>
+        <input type="text" formControlName="nombreAccionCorrectiva" required autofocus/>
+    </div>
+    <div class="p-field">
+        <label>Acción correctiva</label>
+        <input type="text" formControlName="accionCorrectiva" required autofocus/>
+    </div>
+    <div class="p-field">
+        <label>Fecha Vencimiento</label>
+        <p-calendar [touchUI]="true" formControlName="fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+    <div class="p-field">
+        <label>Responsable Empresa</label>
+        <input type="text" formControlName="responsable" required autofocus/>
+    </div>
+    <div class="p-field">
+        <label>Responsable Externo</label>
+        <input type="text" formControlName="responsable" required autofocus/>
+    </div>
+ </p-panel>
+
+ <p-panel *ngIf="pasoSelect==1" header="RAZONABLE">
+    <div class="p-field">
+        <label>Justificación (Opcional)</label>
+        <input type="text" required autofocus/>
+    </div>
+ </p-panel>
+
+ <p-panel *ngIf="pasoSelect==2" header="MEDIBLE">
+    <div class="p-field">
+        <label>Responsable de Verificar que la acción ha sido compleatada</label>
+        <input type="text" required autofocus/>
+    </div>
+    <div class="p-field">
+        <label>Fecha Vencimiento</label>
+        <p-calendar [touchUI]="true" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+    <div class="p-field">
+        <label>Plan de Verificación</label>
+        <input type="text" required autofocus/>
+    </div>
+ </p-panel>
+
+ <p-panel *ngIf="pasoSelect==3" header="EFICAZ">    
+    <div class="p-field">
+        <label>Responsable Verificar solución</label>
+        <input type="text" required autofocus/>
+    </div>
+    <div class="p-field">
+        <label>Fecha Vencimiento</label>
+        <p-calendar [touchUI]="true" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+    <div class="p-field">
+        <label>Plan de Validación</label>
+        <input type="text" required autofocus/>
+    </div>
+ </p-panel>
+
+ <p-panel *ngIf="pasoSelect==4" header="REVISADO">    
+    <div class="p-field">
+        <label>Revisado</label>
+        <p-radioButton name="groupname" value="Si" [(ngModel)]="selectedValue"></p-radioButton>
+        <p-radioButton name="groupname" value="No" [(ngModel)]="selectedValue"></p-radioButton>
+    </div>
+ </p-panel>
+
+
+
+
+ <div id="msform">
+    <div>
+        <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
+    </div>
+    <div class="divleft">
+        <button class="next action-button" *ngIf="pasoSelect < steps.length-1" (click)="next()">Siguiente</button>
+    </div>
+</div>
+
+<br><br>
+
+<!-- <button (click)="test()">test</button> -->

@@ -1,4 +1,4 @@
-import { Causa_Raiz, FactorCausal, Incapacidad, listFactores } from './../../entities/factor-causal';
+import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion } from './../../entities/factor-causal';
 import { Component, OnInit, Input } from "@angular/core";
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
@@ -50,6 +50,8 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     tareasList: Tarea[];
     flowChartSave: string;
+
+    listPlanAccion: listPlanAccion[] =[]
 
     causaAdminList: TreeNode[] = [];
     causaAdminListSelect: TreeNode[] = [];

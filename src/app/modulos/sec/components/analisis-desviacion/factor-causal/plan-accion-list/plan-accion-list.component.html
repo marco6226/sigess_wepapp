@@ -1,0 +1,44 @@
+<h1>PLAN DE ACCIÓN</h1>
+<br>
+<p-table [value]="planAccionList" [(selection)]="causasListSelect" responsiveLayout="scroll">
+<!-- <p-table responsiveLayout="scroll"> -->
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Nombre del Factor Causal</th>
+            <th>Causa Raiz</th>
+            <th style="width:5rem">Gestionar</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-causa>
+        <tr>
+            <!-- <td>
+                <p-tableCheckbox [value]="causa"></p-tableCheckbox>
+            </td> -->
+            <td>{{causa.nombreFC}}</td>
+            <td>{{causa.causaRaiz}}</td>
+            <td>
+                <button type="button" pButton pRipple icon="pi pi-search" (click)="selectProduct(causa)"></button>
+            </td>
+        </tr>       
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+
+        <!-- <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-pencil" label="Iniciar Plan de Acción" (click)="crearPlanAccion()" [disabled]="causasListSelect == null || causasListSelect.length <= 0"></button> -->
+
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '60vw'}">
+          
+    <div>
+      <app-plan-accion [planAcciones]="planAccionListSelected!"></app-plan-accion>
+    </div>
+
+    <div >
+      <p-button icon="pi pi-check" (click)="confirmCheck()" label="Confirmar" class="p-button-text"></p-button>
+    </div>
+
+  </p-dialog>
+
+
+<!-- <button (click)="confirm()" pButton icon="pi pi-check" label="Confirm"></button> -->
