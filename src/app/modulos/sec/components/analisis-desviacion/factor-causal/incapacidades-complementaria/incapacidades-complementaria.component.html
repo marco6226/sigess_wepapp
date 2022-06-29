@@ -23,8 +23,8 @@ styleClass="select-material">
 
 
 
-<button pButton pRipple label="New" icon="pi pi-plus" (click)="openNew()"></button>
-<button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+<button pButton pRipple label="Nuevo" icon="pi pi-plus" (click)="openNew()"></button>
+<button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
 
 <div >
     
@@ -67,30 +67,28 @@ styleClass="select-material">
     </p-table>
 </div>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregamar Miembro al Equipo" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
 
         <div class="p-field">
             <label for="tipo">Tipo</label>
             <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->
-            <p-dropdown [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione"></p-dropdown>
+            <p-dropdown [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
             <small class="p-invalid" *ngIf="submitted && !tipo">is required.</small>
         </div>
         <div class="p-field">
             <label for="cie10">CIE 10</label>
-            <input type="text" required autofocus [(ngModel)]="cie10" />
-            <small class="p-invalid" *ngIf="submitted && !cie10">is required.</small>
+            
+            <s-cieSelector id="ccide-input" [(ngModel)]="cie10" (dateChange)="test($event)" required>
+            </s-cieSelector>
 
-        </div>
-        <div class="p-field">
-            <label for="diagnostico">Diagnostico</label>
-            <input type="text" required autofocus [(ngModel)]="diagnostico" />
-            <small class="p-invalid" *ngIf="submitted && !diagnostico">is required.</small>
+            
+            <small class="p-invalid" *ngIf="submitted && !cie10">is required.</small>
         </div>
         <div class="p-field">
             <label for="fechaInicio">Fecha Inicio</label>
             <!-- <input type="date" required autofocus [(ngModel)]="fechaInicio" /> -->
             <p-calendar [(ngModel)]="fechaInicio" [touchUI]="true"
-                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required> 
             </p-calendar>
             <small class="p-invalid" *ngIf="submitted && !fechaInicio">is required.</small>            
         </div>
@@ -98,7 +96,7 @@ styleClass="select-material">
             <label for="fechaFin">Fecha Fin</label>
             <!-- <input type="date" required autofocus [(ngModel)]="fechaFin" /> -->
             <p-calendar [(ngModel)]="fechaFin"  [touchUI]="true"
-                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required>
             </p-calendar>
             <small class="p-invalid" *ngIf="submitted && !fechaFin">is required.</small>
 
@@ -106,11 +104,12 @@ styleClass="select-material">
         </div>
         <div class="p-field">
             <label for="diasAusencia">Dias de Ausencia</label>
-            <input type="number" required autofocus [(ngModel)]="diasAusencia" />
+            <input type="number"  autofocus [value]="daysCount" disabled="true"  />
         </div>
 
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
         <!-- <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="test()"></button> -->
    
 </p-dialog>
+

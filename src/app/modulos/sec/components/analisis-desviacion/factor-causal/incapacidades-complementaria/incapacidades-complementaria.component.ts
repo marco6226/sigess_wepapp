@@ -2,6 +2,7 @@ import { locale_es } from './../../../../../rai/enumeraciones/reporte-enumeracio
 import { ConfirmationService } from 'primeng/primeng';
 import { Incapacidad } from './../../../../entities/factor-causal';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-incapacidades-complementaria',
@@ -10,6 +11,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class IncapacidadesComplementariaComponent implements OnInit {
 
+
+  
   @Input() incapacidades: Incapacidad[];
   @Output() listIncapacidades = new EventEmitter<Incapacidad[]>()
   productDialog: boolean;
@@ -19,7 +22,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
   // incapacidades: Incapacidad[];
   incapacidad: Incapacidad;
   tipo: string;
-  cie10: string;
+  cie10: any;
   diagnostico: string;
   fechaInicio: Date;
   fechaFin: Date;
@@ -47,6 +50,17 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     console.log(this.incapacidades);
     
   }
+  get daysCount() {
+
+   
+    let fecha1 = moment(this.fechaInicio);
+
+    let fecha2 = moment(this.fechaFin);
+
+    this.diasAusencia =  Math.abs(fecha1.diff(fecha2, "days"));
+
+    return this.diasAusencia;
+}
 
   openNew(){
     this.incapacidad = {};    
@@ -75,22 +89,24 @@ export class IncapacidadesComplementariaComponent implements OnInit {
   saveProduct(){
     this.submitted = true;
     console.log("save");
+    console.log(this.cie10);
+    
 
     this.incapacidad.tipo = this.tipo
-    this.incapacidad.cie10 = this.cie10
-    this.incapacidad.diagnostico = this.diagnostico
+    this.incapacidad.cie10 = this.cie10.codigo
+    this.incapacidad.diagnostico = this.cie10.nombre
     this.incapacidad.fechaInicio = this.fechaInicio
     this.incapacidad.fechaFin = this.fechaFin
-    this.incapacidad.diasAusencia = this.diasAusencia
+    this.incapacidad.diasAusencia = this.diasAusencia;
 
     this.incapacidades.push(this.incapacidad);
 
     this.listIncapacidades.emit(this.incapacidades);
-
     this.productDialog = false;
     this.incapacidad = {};
 
     this.borrarIncapcidad();
+     
   }
 
   private borrarIncapcidad(){

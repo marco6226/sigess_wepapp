@@ -2,6 +2,8 @@ import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion } f
 import { Component, OnInit, Input } from "@angular/core";
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
 
@@ -48,6 +50,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
 
+    analisisPeligros: FormGroup;
     tareasList: Tarea[];
     flowChartSave: string;
 
@@ -97,6 +100,65 @@ export class AnalisisDesviacionComponent implements OnInit {
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
 
+    tipoPeligro = [
+        { label: "--Seleccione--", value: null },
+        { label: "BIOLOGICO", value: "BIOLOGICO" },
+        { label: "FISICOS", value: "FISICOS" },
+        { label: "QUIMICOS", value: "QUIMICOS" },
+        { label: "PSICOSOCIAL", value: "PSICOSOCIAL" },
+        { label: "BIOMECANICOS", value: "BIOMECANICOS" },
+        { label: "ELECTRICO", value: "ELECTRICO" },
+        { label: "MECANICO", value: "MECANICO" },
+        { label: "FISICOQUIMICO", value: "FISICOQUIMICO" },
+        { label: "LOCATIVOS", value: "LOCATIVOS" },
+        { label: "TRANSITO - VÍAL", value: "TRANSITO-VÍAL" },
+        { label: "PUBLICO", value: "PUBLICO" },
+        { label: "TRABAJO EN ALTURAS", value: "TRABAJO_EN_ALTURAS" },
+        { label: "TAREA DE ALTO RIESGO - CONFINADOS", value: "TAREA_DE_ALTO_RIESGO-CONFINADOS" },
+        { label: "FENOMENOS NATURALES", value: "FENOMENOS_NATURALES" },
+    ]
+    Peligro = [
+        { label: "--Seleccione--", value: null },
+    ]
+
+    SelectPeligro(a: any){
+        switch (a) {
+            case "BIOLOGICO":
+                this.Peligro = [
+                    { label: "--Seleccione--", value: null },
+                    { label: "Virus", value: "Virus" },
+                    { label: "Bacterias", value: "Bacterias" },
+                    { label: "Hongos", value: "Hongos" },
+                    { label: "Rickettsias", value: "Rickettsias" },
+                    { label: "Parásitos", value: "Parásitos" },
+                    { label: "Picaduras", value: "Picaduras" },
+                    { label: "Mordeduras", value: "Mordeduras" },
+                    { label: "Fluidos corporales", value: "Fluidos_corporales" }
+                ]
+            break;
+            case "FISICOS":
+                this.Peligro = [
+                    { label: "--Seleccione--", value: null },
+                    { label: "Ruido (de impacto,intermitente,continuo)", value: "0" },
+                    { label: "Iluminación (luz visible por exceso o deficiencia)", value: "1" },
+                    { label: "Vibración (cuerpo entero, segmentaria)", value: "2" },
+                    { label: "Temperaturas extremas por Calor", value: "3" },
+                    { label: "Temperaturas extremas por Frio", value: "4" },
+                    { label: "Presión atmosférica (alta y baja)", value: "5" },
+                    { label: "Radiaciones ionizantes (rayos x, gama, beta y alfa)", value: "6" },
+                    { label: "Radiaciones no ionizantes  (láser, ultravioleta, infrarroja, radiofrecuencia, microondas)", value: "7" }
+                ]
+            break;
+        }
+        return this.Peligro;
+    }
+    test(){
+        //console.log(this.incapacidadesList);
+        console.log("*****aquí***")
+        console.log(this.analisisPeligros.get('tipoPeligro').value)
+        console.log(this.analisisPeligros.value)
+    }
+
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
@@ -105,7 +167,15 @@ export class AnalisisDesviacionComponent implements OnInit {
         private paramNav: ParametroNavegacionService,
         private authService: AuthService,
         private sesionService: SesionService,
-    ) {}
+        fb: FormBuilder,
+    ) {
+        this.analisisPeligros = fb.group({
+            tipoPeligro: [null, /*Validators.required*/],
+            Peligro: [null, /*Validators.required*/],
+        });
+
+
+    }
 
     ngOnInit() {
         this.idEmpresa = this.sesionService.getEmpresa().id;
@@ -529,10 +599,6 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
    
-    test(){
-        console.log(this.incapacidadesList);
-        
-    }
 
     tempData: listFactores[]=[];
 

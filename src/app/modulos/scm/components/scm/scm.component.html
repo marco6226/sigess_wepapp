@@ -145,9 +145,13 @@
                 <td class="p-text-center">{{case.pkUser.primerNombre}} </td>
                 <td class="p-text-center">{{case.documento}}</td>
                 <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td>
-                <!-- <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td> -->
-                <td class="p-text-center">{{case.prioridadCaso}}</td>
+                <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' :case.casoMedicoLaboral == 2 ? 'En seguimiento':case.casoMedicoLaboral == 3 ?'No aplica':case.casoMedicoLaboral == 0 ?'No':''}}</td>
+                <!-- <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td> -->                
+                <td class="p-text-center status" [ngClass]="{
+                    'status--danger': case.prioridadCaso === 'Alta' , 
+                    'status--success': case.prioridadCaso === 'Baja',
+                    'status--info': case.prioridadCaso === 'Media'
+                }">{{case.prioridadCaso}}</td>
                 <td class="p-text-center">{{case.tipoCaso}}</td>
 
             </tr>
