@@ -68,3 +68,39 @@ export interface listFactores{
   metodologia?: string;
   accion?: string;
 }
+
+export interface listPlanAccion{
+  nombreFC?: string;
+  causaRaiz?: string;
+  especifico?: PlanEspecifico;
+  razonable?: PlanRazonable;
+  medible?: PlanMedible;
+  eficaz?: PlanEficaz;
+  revisado?: PlanRevisado;
+}
+
+export interface PlanEspecifico{
+  nombreAccionCorrectiva: string;
+  accionCorrectiva: string;
+  fechaVencimiento: Date;
+}
+
+export interface PlanRazonable{
+  justificacion?: string;
+}
+
+export interface PlanMedible{
+  responsable: string;
+  fechaVencimiento: Date;
+  planVerificacion: string;
+}
+
+export interface PlanEficaz{
+  responsable: string;
+  fechaVencimiento: Date;
+  planValidacion: string;
+}
+
+export interface PlanRevisado{
+  revisado: boolean;
+}
