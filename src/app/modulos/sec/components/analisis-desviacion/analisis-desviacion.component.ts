@@ -1,4 +1,5 @@
-import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion } from './../../entities/factor-causal';
+import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion} from './../../entities/factor-causal';
+import { InformacionComplementaria} from './../../entities/informacion_complementaria';
 import { Component, OnInit, Input } from "@angular/core";
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
@@ -6,12 +7,17 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
+import { TipoPeligroService } from "app/modulos/ipr/services/tipo-peligro.service";
+import { PeligroService } from "app/modulos/ipr/services/peligro.service";
 
 import { SistemaCausaInmediataService } from "app/modulos/sec/services/sistema-causa-inmediata.service";
 import { SistemaCausaRaizService } from "app/modulos/sec/services/sistema-causa-raiz.service";
 import { SistemaCausaRaiz } from "app/modulos/sec/entities/sistema-causa-raiz";
 import { CausaRaiz } from "app/modulos/sec/entities/causa-raiz";
 import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
+import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
+import { Peligro } from "app/modulos/ipr/entities/peligro";
+
 import { Desviacion } from "app/modulos/sec/entities/desviacion";
 import { TreeNode } from "primeng/primeng";
 import { Message } from "primeng/primeng";
@@ -30,6 +36,7 @@ import { Criteria } from "../../../core/entities/filter";
 import { jerarquia } from "../../entities/jerarquia";
 import { AuthService } from "app/modulos/core/auth.service";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { SelectItem, ConfirmationService } from 'primeng/primeng'
 import * as moment from 'moment';
 import {
     locale_es,
@@ -42,6 +49,7 @@ import {
     templateUrl: "./analisis-desviacion.component.html",
     styleUrls: ["./analisis-desviacion.component.scss"],
     providers: [
+        TipoPeligroService, PeligroService,
         SistemaCausaInmediataService,
         SistemaCausaAdministrativaService,
     ],
@@ -49,10 +57,12 @@ import {
 export class AnalisisDesviacionComponent implements OnInit {
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
-
+    formtp: FormGroup;
+    formp: FormGroup;
     analisisPeligros: FormGroup;
     tareasList: Tarea[];
     flowChartSave: string;
+    form2: Peligro;
 
     listPlanAccion: listPlanAccion[] =[]
 
@@ -77,7 +87,10 @@ export class AnalisisDesviacionComponent implements OnInit {
     documentos: Documento[];
     observacion: string;
     jerarquia: string;
+    informacion_complementaria: string;
     analisisId: string;
+    Peligro1: string;
+    tPeligro1: string;
     msgs: Message[] = [];
     consultar: boolean = false;
     modificar: boolean = false;
@@ -85,7 +98,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     visibleLnkResetPasswd = true;
     idEmpresa: string;
     datasFC: string
-
+    date1: Date;
+    date2: Date;
+    flag:Boolean
     display: boolean = false;
 
     empresaName: string;
@@ -99,69 +114,45 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
+    informacionComplementaria: InformacionComplementaria;
 
-    tipoPeligro = [
+    tipoPeligroItemList: SelectItem[];
+    peligroItemList: SelectItem[];
+
+    fields: string[] = [
+        'id',
+        'nombre',
+        'fk_tipo_peligro'
+      ];
+    ARLfirme= [
         { label: "--Seleccione--", value: null },
-        { label: "BIOLOGICO", value: "BIOLOGICO" },
-        { label: "FISICOS", value: "FISICOS" },
-        { label: "QUIMICOS", value: "QUIMICOS" },
-        { label: "PSICOSOCIAL", value: "PSICOSOCIAL" },
-        { label: "BIOMECANICOS", value: "BIOMECANICOS" },
-        { label: "ELECTRICO", value: "ELECTRICO" },
-        { label: "MECANICO", value: "MECANICO" },
-        { label: "FISICOQUIMICO", value: "FISICOQUIMICO" },
-        { label: "LOCATIVOS", value: "LOCATIVOS" },
-        { label: "TRANSITO - VÍAL", value: "TRANSITO-VÍAL" },
-        { label: "PUBLICO", value: "PUBLICO" },
-        { label: "TRABAJO EN ALTURAS", value: "TRABAJO_EN_ALTURAS" },
-        { label: "TAREA DE ALTO RIESGO - CONFINADOS", value: "TAREA_DE_ALTO_RIESGO-CONFINADOS" },
-        { label: "FENOMENOS NATURALES", value: "FENOMENOS_NATURALES" },
+        { label: "Objetado", value: "Objetado" },
+        { label: "En firme", value: "En firme" },
     ]
     Peligro = [
         { label: "--Seleccione--", value: null },
     ]
 
-    SelectPeligro(a: any){
-        switch (a) {
-            case "BIOLOGICO":
-                this.Peligro = [
-                    { label: "--Seleccione--", value: null },
-                    { label: "Virus", value: "Virus" },
-                    { label: "Bacterias", value: "Bacterias" },
-                    { label: "Hongos", value: "Hongos" },
-                    { label: "Rickettsias", value: "Rickettsias" },
-                    { label: "Parásitos", value: "Parásitos" },
-                    { label: "Picaduras", value: "Picaduras" },
-                    { label: "Mordeduras", value: "Mordeduras" },
-                    { label: "Fluidos corporales", value: "Fluidos_corporales" }
-                ]
-            break;
-            case "FISICOS":
-                this.Peligro = [
-                    { label: "--Seleccione--", value: null },
-                    { label: "Ruido (de impacto,intermitente,continuo)", value: "0" },
-                    { label: "Iluminación (luz visible por exceso o deficiencia)", value: "1" },
-                    { label: "Vibración (cuerpo entero, segmentaria)", value: "2" },
-                    { label: "Temperaturas extremas por Calor", value: "3" },
-                    { label: "Temperaturas extremas por Frio", value: "4" },
-                    { label: "Presión atmosférica (alta y baja)", value: "5" },
-                    { label: "Radiaciones ionizantes (rayos x, gama, beta y alfa)", value: "6" },
-                    { label: "Radiaciones no ionizantes  (láser, ultravioleta, infrarroja, radiofrecuencia, microondas)", value: "7" }
-                ]
-            break;
-        }
-        return this.Peligro;
+    tSelectPeligro(a: string){
+        this.tPeligro1=a;
+    }
+    
+    SelectPeligro(a: string){
+        this.cargarPeligro(a)
     }
     test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
-        console.log(this.analisisPeligros.get('tipoPeligro').value)
-        console.log(this.analisisPeligros.value)
+        // this.informacionComplementaria=this.analisisPeligros.value;
+        console.log(this.informacionComplementaria)
+        console.log(this.analisisPeligros)
     }
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
+        private tipoPeligroService: TipoPeligroService,
+        private peligroService: PeligroService,
         private sistemaCausaInmdService: SistemaCausaInmediataService,
         private sistemaCausaRaizService: SistemaCausaRaizService,
         private paramNav: ParametroNavegacionService,
@@ -170,11 +161,19 @@ export class AnalisisDesviacionComponent implements OnInit {
         fb: FormBuilder,
     ) {
         this.analisisPeligros = fb.group({
-            tipoPeligro: [null, /*Validators.required*/],
             Peligro: [null, /*Validators.required*/],
+            DescripcionPeligro: [null, /*Validators.required*/],
+            EnventoARL: [null, /*Validators.required*/],
+            ReporteControl: [null, /*Validators.required*/],
+            FechaControl: [null, /*Validators.required*/],
+            CopiaTrabajador: [null, /*Validators.required*/],
+            FechaCopia: [null, /*Validators.required*/],
         });
-
-
+        // this.form = fb.group({
+        //     id: [null],
+        //     tipoPeligro: [null, Validators.required],
+        //     peligro: [null, Validators.required],
+        //   });
     }
 
     ngOnInit() {
@@ -231,8 +230,57 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultar = true;
             this.consultarAnalisis(this.value.id);
         }
+        this.cargarTiposPeligro();
+        //this.cargarPeligro();
+        this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
     }
-   
+
+    cargarTiposPeligro() {
+        this.tipoPeligroService.findAll().then(
+          resp => {
+            console.log(resp);
+            this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
+            (<TipoPeligro[]>resp['data']).forEach(
+              data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
+            )   
+          }
+        );
+      }
+      cargarPeligro(idtp) {
+
+        //this.peligroService.findAll().then(
+        if(idtp != null){
+        let filter = new FilterQuery();
+        filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
+        this.peligroService.findByFilter(filter).then(
+          resp => {
+            console.log(resp);
+            this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
+            (<Peligro[]>resp).forEach(
+              data => 
+                {
+                    this.peligroItemList.push({ label: data.nombre, value: {id:data.id,nombre: data.nombre} })
+                }
+            )
+            console.log(this.peligroItemList);
+            // if (this.formp.value.nombre != null) {
+            //   for (let i = 0; i < this.peligroItemList.length; i++) {
+            //     let data = this.peligroItemList[i].value;
+            //     if (data != null && data.id == this.formp.value.Peligro.id) {
+            //       this.formp.patchValue({
+            //         Peligro: this.peligroItemList[i].value
+            //       });
+            //       break;
+            //     }
+            //   }
+            // }
+          }
+        );
+         }else{
+            this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
+         }
+      }
+    
     removeDesv(desviacion: Desviacion) {
         if (this.desviacionesList.length == 1) {
             this.msgs = [];
@@ -313,13 +361,23 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            console.log("----->",resp["data"][0]);
+            console.log("----->",resp);
             
             this.dataFlow = resp["data"][0];
             this.flowChartSave = resp["data"][0].flow_chart;
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
-            console.log(this.factorCusal);
+            this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+            if(this.informacionComplementaria!=null){
+                this.analisisPeligros.value.Peligro=this.informacionComplementaria.Peligro;
+                this.analisisPeligros.value.DescripcionPeligro=this.informacionComplementaria.DescripcionPeligro;
+                this.analisisPeligros.value.EnventoARL=this.informacionComplementaria.EnventoARL;
+                this.analisisPeligros.value.ReporteControl=this.informacionComplementaria.ReporteControl;
+                // this.analisisPeligros.value.FechaControl=this.informacionComplementaria.FechaControl;
+                this.analisisPeligros.value.CopiaTrabajador=this.informacionComplementaria.CopiaTrabajador;
+                // this.analisisPeligros.value.FechaCopia=this.informacionComplementaria.FechaCopia
+            }
+            console.log(this.informacionComplementaria);
             
             // if(this.factorCusal){
                 this.setListDataFactor();
@@ -392,8 +450,71 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         return crList;
     }
+    async imprimir() {
+        let template = document.getElementById('plantilla');
+        if (this.desviacionesList) {
+            const date = new Date (this.desviacionesList[0].concepto);
+            const fechahora = new Date();
+            template.querySelector('#P_lista_nombre').textContent =this.desviacionesList[0].concepto.toString();
+            template.querySelector('#P_codigo').textContent ="texto"
+            template.querySelector('#P_version').textContent = '' + this.desviacionesList[0].concepto;
+            template.querySelector('#P_formulario_nombre').textContent = this.desviacionesList[0].concepto;
+            template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
+          if(this.desviacionesList != null ){
+            template.querySelector('#P_firma').textContent = this.desviacionesList[0].concepto;
+            template.querySelector('#P_cargo').textContent = " Cargo: " + this.desviacionesList[0].concepto;          
+        }else{
+            template.querySelector('#P_firma').textContent = this.desviacionesList[0].concepto;
+           
+        }
+            let  a: string | ArrayBuffer=this.desviacionesList[0].concepto.toString();
+            let b: string | ArrayBuffer=this.desviacionesList[0].concepto.toString();
+           
+            
+
+
+            let camposForm = template.querySelector('#L_campos_formulario');
+            const tr = camposForm.cloneNode(true);
+            tr.childNodes[0].textContent = "Ubicación"
+            tr.childNodes[1].textContent = this.desviacionesList[0].concepto;
+            camposForm.parentElement.appendChild(tr);
+            const tfecha = camposForm.cloneNode(true);
+            tfecha.childNodes[0].textContent = 'Fecha y Hora de realización'
+            tfecha.childNodes[1].textContent = fechahora.toDateString();
+           /* camposForm.parentElement.appendChild(tfecha);
+            this.listaInspeccion.formulario.campoList.forEach(campo => {
+                let tr = camposForm.cloneNode(true);
+                tr.childNodes[0].textContent = campo.nombre;
+                for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
+                    let rc = this.inspeccion.respuestasCampoList[i];
+                    if (rc.campoId == campo.id) {
+                        tr.childNodes[1].textContent = campo.respuestaCampo.valor;
+                        break;
+                    }
+                }
+                camposForm.parentElement.appendChild(tr);
+                
+            });*/
+
+
+            let elemList = template.querySelector('#L_elementos_lista');
+           // this.agregarElementos(<HTMLElement>elemList, this.desviacionesList[0].concepto);
+            elemList.remove();
+            //this.pdfGenerado = true;
+        }
+
+        setTimeout(() => {
+            var WinPrint = window.open('', '_blank');
+            
+            WinPrint.document.write(template.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+        }, 400);
+    }
 
     guardarAnalisis() {
+        this.informacionComplementariaJson();
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -415,7 +536,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         }
 
         ad.jerarquia = ad.jerarquia;
-
+        ad.complementaria=JSON.stringify(this.informacionComplementaria);
         this.analisisDesviacionService.create(ad).then((data) => {
             let analisisDesviacion = <AnalisisDesviacion>data;
             this.manageResponse(analisisDesviacion);
@@ -431,6 +552,8 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
     modificarAnalisis() {
+
+        this.informacionComplementariaJson();
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -447,6 +570,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.participantes = JSON.stringify(this.participantes);
         ad.tareaDesviacionList = this.tareasList;
         ad.jerarquia = this.jerarquia;
+        ad.complementaria=JSON.stringify(this.informacionComplementaria);
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
@@ -462,6 +586,27 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.adicionar = false;
             });
         // }, 1000);
+
+        // // setTimeout(() => {
+        //     this.peligroService.update(Pe).then((data) => {
+        //         console.log(data, "data");
+                
+        //         this.manageResponse(<AnalisisDesviacion>data);
+        //         this.modificar = true;
+        //         this.adicionar = false;
+        //     });
+        // // }, 1000);
+
+        // // setTimeout(() => {
+        //     this.tipoPeligroService.update(tp).then((data) => {
+        //         console.log(data, "data");
+                
+        //         this.manageResponse(<AnalisisDesviacion>data);
+        //         this.modificar = true;
+        //         this.adicionar = false;
+        //     });
+        // // }, 1000);
+
         
         console.log(ad.tareaDesviacionList);
         console.log(ad.flow_chart);

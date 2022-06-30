@@ -110,50 +110,65 @@
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Información complementaria">
                         <p-tabView>
                             <p-tabPanel  *ngIf="idEmpresa == '3'" header="complementaria">
-                                <p-table [value]="desviacionesList"  autoLayout="true" >
+                                <p-table [value]="desviacionesList"  autoLayout="true" [formGroup]="analisisPeligros">
+                                
                                                         
-                                    <ng-template pTemplate="body">
+                                    <ng-template pTemplate="body" let-aus>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Peligro</th>
                                             <!-- <td>{{desviacionesList[0].concepto}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <p-dropdown [options]="tipoPeligro" formControlName="tipoPeligro" (onChange)="SelectPeligro($event.value)">
+                                            <!-- <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" [(ngModel)]="informacionComplementaria.Peligro" optionValue="label"> -->
+                                            <p-dropdown [options]="this.tipoPeligroItemList" formControlName="Peligro" (onChange)="SelectPeligro($event.value)" >
                                             </p-dropdown></th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Descripción del Peligro</th>
                                             <!-- <td>{{desviacionesList[0]?.nombre}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <!-- <p-dropdown [options]="Peligro" formControlName="tipoCaso"></p-dropdown> -->
-                                            <!-- <button (click)="test()"></button> -->
-                                            <p-dropdown [options]="Peligro" formControlName="descripcionPeligro"></p-dropdown>
+                                            <!-- <p-dropdown [options]="this.peligroItemList" formControlName="tipoCaso"></p-dropdown> -->
+                                            <button (click)="test()">test</button>
+                                            <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
                                             </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Estado del evento ante ARL</th>
-                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                            <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                            <p-dropdown [options]="ARLfirme" formControlName="EnventoARL"></p-dropdown>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
                                             </th>
-                                            <td><p-radioButton name="group1" label="Si  " [value]="true"   ></p-radioButton>
-                                                <p-radioButton name="group1" label="No  " [value]="false"  ></p-radioButton>
+                                            <td><p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
+                                                <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" ></p-radioButton>
                                             </td> 
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Fecha de envio a entes de control</th>
-                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                            <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                                <div class="field col-12 md:col-4">
+                                                    <!-- <label for="touchui">Touch UI</label> -->
+                                                    <p-calendar [(ngModel)]="date1" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaControl"></p-calendar>
+                                                </div>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Entrega copia de FURAT  al trabajador</th>
                                            
-                                            <td><p-radioButton name="group2" label="Si  " [value]="true"   ></p-radioButton>
-                                                <p-radioButton name="group2" label="No  " [value]="false"  ></p-radioButton>
+                                            <td><p-radioButton name="group2" label="Si  " [value]="true"  formControlName="CopiaTrabajador" ></p-radioButton>
+                                                <p-radioButton name="group2" label="No  " [value]="false" formControlName="CopiaTrabajador" ></p-radioButton>
                                             </td>                                
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;width: 35%">Fecha entrega copia al trabajador</th>
-                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                                <div class="field col-12 md:col-4">
+                                                    <!-- <label for="touchui">Touch UI</label> -->
+                                                    <p-calendar [(ngModel)]="date2" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaCopia"></p-calendar>
+                                                </div>
+                                            </th>
                                         </tr>
                                         <tr>
                                         <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
@@ -171,125 +186,7 @@
 
                                 <app-incapacidades-complementaria (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList"></app-incapacidades-complementaria>
 
-                                <!-- <p-table [value]="desviacionesList" dataKey="id" editMode="row" styleClass="material-table">
-                                    <ng-template pTemplate="header">
-                                        <tr>
-                                            <th pSortableColumn="tipo">Tipo</th>
-                                            <th pSortableColumn="tipoIntervencion">CIE 10</th>
-                                            <th pSortableColumn="descripcion">Diagnostico</th>
-                                            <th pSortableColumn="fecha">Fecha inicio</th>
-                                            <th pSortableColumn="fecha">Fecha fin</th>
-                                            <th pSortableColumn="fecha">Dias de ausencia</th>
-                                            <th style="width:8rem"></th>
-                                        </tr>
-                                    </ng-template>
-            
-                                    <ng-template pTemplate="body" let-tratamiento let-editing="editing" let-ri="rowIndex">
-                                        <tr [pEditableRow]="desviacionesList">
-            
-                                            <td class="p-text-center">
-                                                <p-cellEditor>
-            
-                                                    <ng-template pTemplate="input">
-            
-                                                        <div class="input-field">
-                                                            <p-dropdown [filter]="true" [options]="tipoList"
-                                                                class="select-material" [(ngModel)]="tratamiento.Tipo"
-                                                                styleClass="select-material">
-                                                            </p-dropdown>
-                                                            
-                                                        </div>
-                                                    </ng-template>
-                                                    <ng-template pTemplate="output">
-                                                       {{tratamiento.Tipo}}
-                                                    </ng-template>
-                                                </p-cellEditor>
-                                            </td>
-                                            <td class="p-text-center">
-                                                <p-cellEditor>
-                                                    <ng-template pTemplate="input">
-                                                        <input pInputText type="text" [(ngModel)]="tratamiento.tipoIntervencion">
-                                                    </ng-template>
-                                                    <ng-template pTemplate="output">
-                                                        {{tratamiento.tipoIntervencion}}
-                                                    </ng-template>
-                                                </p-cellEditor>
-                                            </td>
-                                            <td class="p-text-center">
-                                                <p-cellEditor>
-                                                    <ng-template pTemplate="input">
-                                                        <input pInputText type="text" [(ngModel)]="tratamiento.descripcion">
-                                                    </ng-template>
-                                                    <ng-template pTemplate="output">
-                                                        {{tratamiento.descripcion}}
-                                                    </ng-template>
-                                                </p-cellEditor>
-                                            </td>
-            
-                                            <td class="p-text-center">
-                                                <p-cellEditor>
-                                                    <ng-template pTemplate="input">
-                                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fechaInicio"
-                                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
-                                                        </p-calendar>
-            
-                                                    </ng-template>
-                                                    <ng-template pTemplate="output">
-                                                        {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
-                                                    </ng-template>
-                                                </p-cellEditor>
-            
-                                            </td>
-                                            <td class="p-text-center">
-                                                <p-cellEditor>
-                                                    <ng-template pTemplate="input">
-                                                        <p-calendar [touchUI]="true" [(ngModel)]="tratamiento.fechaFin"
-                                                            dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
-                                                        </p-calendar>
-            
-                                                    </ng-template>
-                                                    <ng-template pTemplate="output">
-                                                        {{tratamiento.fecha | date : 'dd/MM/yyyy'}}
-                                                    </ng-template>
-                                                </p-cellEditor>
-            
-                                            </td>
-                                            <td class="p-text-center">
-                                                <p-cellEditor>
-                                                    <ng-template pTemplate="input">
-                                                        <input pInputText type="number" [(ngModel)]="tratamiento.descripcion">
-                                                    </ng-template>
-                                                    <ng-template pTemplate="output">
-                                                        {{tratamiento.descripcion}}
-                                                    </ng-template>
-                                                </p-cellEditor>
-                                            </td>            
-                                            <td class="p-text-center">
-                                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                                    icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
-                                                    class="p-button-rounded p-button-text p-mr-2"> </button>
-                                                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                                                    (click)="confirm(tratamiento,ri)"
-                                                    class="p-button-rounded p-button-text ui-button-danger">
-                                                </button>
-                                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                                    icon="pi pi-check" (click)="onRowEditSave(tratamiento,'tratamiento')"
-                                                    title="Editar Tratamiento"
-                                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                                    icon="pi pi-times" (click)="onRowEditCancel(tratamiento, ri)"
-                                                    class="p-button-rounded p-button-text ui-button-danger"></button>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-            
-                                    <ng-template pTemplate="summary" let-rowData>
-                                        <button  pButton type="button" icon="fa fa-plus"
-                                            (click)="nuevaIncapacidad()" label="Crear">
-                                        </button>
-                                    </ng-template>
-            
-                                </p-table> -->
+                                
                             </p-tabPanel>
                         </p-tabView>
                         
@@ -303,21 +200,102 @@
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
                         <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
                     </p-tabPanel>
-                    <!-- <p-tabPanel *ngIf="idEmpresa == '3'"  >
-                        <app-factor-causal (dataFC)="dataFactorCausal($event)" factorCausal="data"></app-factor-causal>
-                    </p-tabPanel> -->
+                    
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
-                        <!-- <app-factor-causal [factorCausal]="data"></app-factor-causal> -->
-                        <!-- <app-factor-causal (dataFC)="setFactorCausal($event)" [factorCausal]="data"></app-factor-causal> -->
+                        
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
-                        <app-listado-causas [factores]="dataListFactor" [planAccionList]="listPlanAccion"></app-listado-causas>
+                        <app-listado-causas [factores]="dataListFactor"></app-listado-causas>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion">
-                        <app-plan-accion-list [planAccionList]="listPlanAccion"></app-plan-accion-list>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe">
+                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button>  
+                        <div id="plantilla" style="display: none;">
+                            <div style="background-color: white">
+                              <table width="100%" style="border-collapse: collapse;">
+                                <tr>
+                                  <td rowspan="2" style="width: 30%;border:solid thin #ccc;text-align: center">
+                                    <img style="width:100%;" id="P_empresa_logo" />
+                                  </td>        
+                                  <td style="width: 55%;border:solid thin #ccc;text-align: center">
+                                    SISTEMA DE GESTION DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                  </td>
+                                  <td style="width: 15%;border:solid thin #ccc;text-align: center">
+                                    Código: <label id="P_codigo"></label>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="border:solid thin #ccc;text-align: center">
+                                    <label id="P_lista_nombre"></label>
+                                  </td>
+                                  <td style="border:solid thin #ccc;text-align: center">
+                                    Version <label id="P_version"></label>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  
+                                  <td  colspan="3" style="width: 30%;border:solid thin #ccc;text-align: center">      
+                                    <div>
+                                      <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
+                                          [show]="true" style="display:block;" width="20%" >
+                                      </app-file-uploader>          
+                                    </div>
+                                  </td>        
+                                  
+                                </tr>
+                                <tr>
+                                  <td colspan="3" style="background-color:#eee;border:solid thin #ccc;padding: 8px;-webkit-print-color-adjust: exact;">
+                                    <label id="P_formulario_nombre"></label>
+                                  </td>
+                                </tr>
+                                <tr id="L_campos_formulario">
+                                  <td style="border:solid thin #ccc;padding: 8px;">
+                          
+                                  </td>
+                                  <td style="border:solid thin #ccc;padding: 8px;" colspan="2">
+                          
+                                  </td> 
+                                </tr>
+                              </table>
+                              <table width="100%" style="border-collapse: collapse;">
+                                <tr id="L_elementos_lista">
+                                  <td id="C_codigo" style="border:solid thin #ccc;padding: 8px;">
+                          
+                                  </td>
+                                  <td id="C_nombre" style="border:solid thin #ccc;padding: 8px;">
+                          
+                                  </td>
+                                  <td id="C_opciones" style="border:solid thin #ccc;padding: 8px;">
+                          
+                                  </td>
+                                  <td id="C_recomendacion" style="border:solid thin #ccc;padding: 8px;">
+                          
+                                  </td>
+                                </tr>
+                              </table>
+                              <table width="100%" style="border-collapse: collapse;">
+                                <tr>
+                          
+                                </tr>
+                                <tr>
+                                  <td  colspan="1" style="width: 30%;border:solid thin #ccc;text-align: center">
+                                    Diligenciado por: <label id="P_version"></label>
+                                  </td>             
+                                   
+                                  <td rowspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
+                                        
+                                    <label id="P_firma"></label>
+                                    <label id="P_cargo"></label>
+                                  </td>
+                                  
+                                </tr>
+                                
+                              </table>
+                            </div>
+                        </div>
+
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Parametros"></p-tabPanel>
                     <p-tabPanel header="Establecimiento de causas">
                         <div class="ui-g">
