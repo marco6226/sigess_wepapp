@@ -63,7 +63,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     tareasList: Tarea[];
     flowChartSave: string;
     form2: Peligro;
-
+    listaEvidence
     listPlanAccion: listPlanAccion[] =[]
 
     causaAdminList: TreeNode[] = [];
