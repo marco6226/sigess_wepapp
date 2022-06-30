@@ -1,4 +1,5 @@
-import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion } from './../../entities/factor-causal';
+import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion} from './../../entities/factor-causal';
+import { InformacionComplementaria} from './../../entities/informacion_complementaria';
 import { Component, OnInit, Input } from "@angular/core";
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
@@ -86,6 +87,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     documentos: Documento[];
     observacion: string;
     jerarquia: string;
+    informacion_complementaria: string;
     analisisId: string;
     Peligro1: string;
     tPeligro1: string;
@@ -98,7 +100,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     datasFC: string
     date1: Date;
     date2: Date;
-
+    flag:Boolean
     display: boolean = false;
 
     empresaName: string;
@@ -112,6 +114,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
+    informacionComplementaria: InformacionComplementaria;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -126,23 +129,6 @@ export class AnalisisDesviacionComponent implements OnInit {
         { label: "Objetado", value: "Objetado" },
         { label: "En firme", value: "En firme" },
     ]
-    tipoPeligro = [
-        { label: "--Seleccione--", value: null },
-        { label: "BIOLOGICO", value: "BIOLOGICO" },
-        { label: "FISICOS", value: "FISICOS" },
-        { label: "QUIMICOS", value: "QUIMICOS" },
-        { label: "PSICOSOCIAL", value: "PSICOSOCIAL" },
-        { label: "BIOMECANICOS", value: "BIOMECANICOS" },
-        { label: "ELECTRICO", value: "ELECTRICO" },
-        { label: "MECANICO", value: "MECANICO" },
-        { label: "FISICOQUIMICO", value: "FISICOQUIMICO" },
-        { label: "LOCATIVOS", value: "LOCATIVOS" },
-        { label: "TRANSITO - VÍAL", value: "TRANSITO-VÍAL" },
-        { label: "PUBLICO", value: "PUBLICO" },
-        { label: "TRABAJO EN ALTURAS", value: "TRABAJO_EN_ALTURAS" },
-        { label: "TAREA DE ALTO RIESGO - CONFINADOS", value: "TAREA_DE_ALTO_RIESGO-CONFINADOS" },
-        { label: "FENOMENOS NATURALES", value: "FENOMENOS_NATURALES" },
-    ]
     Peligro = [
         { label: "--Seleccione--", value: null },
     ]
@@ -152,50 +138,14 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
     
     SelectPeligro(a: string){
-        console.log('a');
-        console.log(a['id']);
-        
-        this.Peligro1=a;
-        this.cargarPeligro(a['id']);
-        console.log(this.tipoPeligroItemList);
-        console.log(this.peligroItemList);
-        // switch (a['nombre']) {
-        //     case "BIOLÓGICO":
-        //         this.Peligro = [
-        //             { label: "--Seleccione--", value: null },
-        //             { label: "Virus", value: "Virus" },
-        //             { label: "Bacterias", value: "Bacterias" },
-        //             { label: "Hongos", value: "Hongos" },
-        //             { label: "Rickettsias", value: "Rickettsias" },
-        //             { label: "Parásitos", value: "Parásitos" },
-        //             { label: "Picaduras", value: "Picaduras" },
-        //             { label: "Mordeduras", value: "Mordeduras" },
-        //             { label: "Fluidos corporales", value: "Fluidos_corporales" }
-        //         ]
-        //     break;
-        //     case "FISICOS":
-        //         this.Peligro = [
-        //             { label: "--Seleccione--", value: null },
-        //             { label: "Ruido (de impacto,intermitente,continuo)", value: "0" },
-        //             { label: "Iluminación (luz visible por exceso o deficiencia)", value: "1" },
-        //             { label: "Vibración (cuerpo entero, segmentaria)", value: "2" },
-        //             { label: "Temperaturas extremas por Calor", value: "3" },
-        //             { label: "Temperaturas extremas por Frio", value: "4" },
-        //             { label: "Presión atmosférica (alta y baja)", value: "5" },
-        //             { label: "Radiaciones ionizantes (rayos x, gama, beta y alfa)", value: "6" },
-        //             { label: "Radiaciones no ionizantes  (láser, ultravioleta, infrarroja, radiofrecuencia, microondas)", value: "7" }
-        //         ]
-        //     break;
-        // }
-        // return this.Peligro;
+        this.cargarPeligro(a)
     }
     test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
-        console.log(this.analisisPeligros.get('tipoPeligro').value)
-        console.log(this.analisisPeligros.value)
-        console.log(this.tipoPeligroItemList)
-        console.log(this.peligroItemList)
+        // this.informacionComplementaria=this.analisisPeligros.value;
+        console.log(this.informacionComplementaria)
+        console.log(this.analisisPeligros)
     }
 
     constructor(
@@ -211,17 +161,19 @@ export class AnalisisDesviacionComponent implements OnInit {
         fb: FormBuilder,
     ) {
         this.analisisPeligros = fb.group({
-            tipoPeligro: [null, /*Validators.required*/],
-            descripcionPeligro: [null,/*Validators.required*/],
-            aRLfirme: [null, /*Validators.required*/],
+            Peligro: [null, /*Validators.required*/],
+            DescripcionPeligro: [null, /*Validators.required*/],
+            EnventoARL: [null, /*Validators.required*/],
+            ReporteControl: [null, /*Validators.required*/],
+            FechaControl: [null, /*Validators.required*/],
+            CopiaTrabajador: [null, /*Validators.required*/],
+            FechaCopia: [null, /*Validators.required*/],
         });
         // this.form = fb.group({
         //     id: [null],
         //     tipoPeligro: [null, Validators.required],
         //     peligro: [null, Validators.required],
         //   });
-
-
     }
 
     ngOnInit() {
@@ -280,6 +232,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         }
         this.cargarTiposPeligro();
         //this.cargarPeligro();
+        this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
     }
 
     cargarTiposPeligro() {
@@ -289,28 +242,16 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
             (<TipoPeligro[]>resp['data']).forEach(
               data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
-            )
-            // if (this.formtp.value.tipoPeligro != null) {
-            //   for (let i = 0; i < this.tipoPeligroItemList.length; i++) {
-            //     let data = this.tipoPeligroItemList[i].value;
-            //     if (data != null && data.id == this.formtp.value.tipoPeligro.id) {
-            //       this.formtp.patchValue({
-            //         tipoPeligro: this.tipoPeligroItemList[i].value
-            //       });
-            //       break;
-            //     }
-            //   }
-            // }
-    
+            )   
           }
         );
       }
       cargarPeligro(idtp) {
 
         //this.peligroService.findAll().then(
-
+        if(idtp != null){
         let filter = new FilterQuery();
-        filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp }];
+        filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
         this.peligroService.findByFilter(filter).then(
           resp => {
             console.log(resp);
@@ -318,8 +259,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             (<Peligro[]>resp).forEach(
               data => 
                 {
-                    console.log(data);
-                    this.peligroItemList.push({ label: data.nombre, value: [data.id, data.nombre] })
+                    this.peligroItemList.push({ label: data.nombre, value: {id:data.id,nombre: data.nombre} })
                 }
             )
             console.log(this.peligroItemList);
@@ -336,7 +276,9 @@ export class AnalisisDesviacionComponent implements OnInit {
             // }
           }
         );
-        //this.peligroItemList.findIndex('id');
+         }else{
+            this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
+         }
       }
     
     removeDesv(desviacion: Desviacion) {
@@ -419,13 +361,23 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            console.log("----->",resp["data"][0]);
+            console.log("----->",resp);
             
             this.dataFlow = resp["data"][0];
             this.flowChartSave = resp["data"][0].flow_chart;
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
-            console.log(this.factorCusal);
+            this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+            if(this.informacionComplementaria!=null){
+                this.analisisPeligros.value.Peligro=this.informacionComplementaria.Peligro;
+                this.analisisPeligros.value.DescripcionPeligro=this.informacionComplementaria.DescripcionPeligro;
+                this.analisisPeligros.value.EnventoARL=this.informacionComplementaria.EnventoARL;
+                this.analisisPeligros.value.ReporteControl=this.informacionComplementaria.ReporteControl;
+                // this.analisisPeligros.value.FechaControl=this.informacionComplementaria.FechaControl;
+                this.analisisPeligros.value.CopiaTrabajador=this.informacionComplementaria.CopiaTrabajador;
+                // this.analisisPeligros.value.FechaCopia=this.informacionComplementaria.FechaCopia
+            }
+            console.log(this.informacionComplementaria);
             
             // if(this.factorCusal){
                 this.setListDataFactor();
@@ -498,8 +450,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         return crList;
     }
+    informacionComplementariaJson(){
+        this.informacionComplementaria=this.analisisPeligros.value;
+    }
 
     guardarAnalisis() {
+        this.informacionComplementariaJson();
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -521,7 +477,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         }
 
         ad.jerarquia = ad.jerarquia;
-
+        ad.complementaria=JSON.stringify(this.informacionComplementaria);
         this.analisisDesviacionService.create(ad).then((data) => {
             let analisisDesviacion = <AnalisisDesviacion>data;
             this.manageResponse(analisisDesviacion);
@@ -538,19 +494,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     modificarAnalisis() {
 
-    
-        // let Pe = new Peligro();
-        // let tp = new TipoPeligro();
-
-        // //Pe.id=this.form.value.peligro.id;
-        // Pe.nombre=this.Peligro1;
-        // console.log(this.analisisPeligros.value);
-        // Pe.tipoPeligro= this.analisisPeligros.value.tipoPeligro.id;
-        
-        // //tp.id=this.form.value.peligro.tipoPeligro.id;
-        // tp.nombre=this.tPeligro1;
-        // //tp.peligroList=this.form.value.peligro;
-
+        this.informacionComplementariaJson();
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -567,6 +511,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.participantes = JSON.stringify(this.participantes);
         ad.tareaDesviacionList = this.tareasList;
         ad.jerarquia = this.jerarquia;
+        ad.complementaria=JSON.stringify(this.informacionComplementaria);
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;

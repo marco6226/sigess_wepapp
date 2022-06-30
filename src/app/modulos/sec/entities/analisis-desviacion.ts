@@ -26,4 +26,5 @@ export class AnalisisDesviacion {
   factor_causal: string;
   causa_raiz: string;
   incapacidades: string;
+  complementaria: string;
 }

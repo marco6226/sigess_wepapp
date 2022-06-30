@@ -118,7 +118,8 @@
                                             <th style="border: 1px solid #c8c8c8;">Peligro</th>
                                             <!-- <td>{{desviacionesList[0].concepto}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <p-dropdown [options]="this.tipoPeligroItemList" formControlName="tipoPeligro" (onChange)="SelectPeligro($event.value)">
+                                            <!-- <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" [(ngModel)]="informacionComplementaria.Peligro" optionValue="label"> -->
+                                            <p-dropdown [options]="this.tipoPeligroItemList" formControlName="Peligro" (onChange)="SelectPeligro($event.value)" >
                                             </p-dropdown></th>
                                         </tr>
                                         <tr>
@@ -126,45 +127,48 @@
                                             <!-- <td>{{desviacionesList[0]?.nombre}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                             <!-- <p-dropdown [options]="this.peligroItemList" formControlName="tipoCaso"></p-dropdown> -->
-                                            <!-- <button (click)="test()"></button> -->
-                                            <p-dropdown [options]="this.peligroItemList" formControlName="descripcionPeligro"></p-dropdown>
+                                            <button (click)="test()">test</button>
+                                            <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
                                             </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Estado del evento ante ARL</th>
                                             <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <p-dropdown [options]="ARLfirme" formControlName="aRLfirme"></p-dropdown>
+                                            <p-dropdown [options]="ARLfirme" formControlName="EnventoARL"></p-dropdown>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
                                             </th>
-                                            <td><p-radioButton name="group1" label="Si  " [value]="true"   ></p-radioButton>
-                                                <p-radioButton name="group1" label="No  " [value]="false"  ></p-radioButton>
+                                            <td><p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
+                                                <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" ></p-radioButton>
                                             </td> 
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Fecha de envio a entes de control</th>
                                             <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
-                                            <div class="field col-12 md:col-4">
-                                                <label for="touchui">Touch UI</label>
-                                                <p-calendar [(ngModel)]="date1" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
-                                            </div>
-                                        
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                                <div class="field col-12 md:col-4">
+                                                    <!-- <label for="touchui">Touch UI</label> -->
+                                                    <p-calendar [(ngModel)]="date1" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaControl"></p-calendar>
+                                                </div>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Entrega copia de FURAT  al trabajador</th>
                                            
-                                            <td><p-radioButton name="group2" label="Si  " [value]="true"   ></p-radioButton>
-                                                <p-radioButton name="group2" label="No  " [value]="false"  ></p-radioButton>
+                                            <td><p-radioButton name="group2" label="Si  " [value]="true"  formControlName="CopiaTrabajador" ></p-radioButton>
+                                                <p-radioButton name="group2" label="No  " [value]="false" formControlName="CopiaTrabajador" ></p-radioButton>
                                             </td>                                
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;width: 35%">Fecha entrega copia al trabajador</th>
-                                            <div class="field col-12 md:col-4">
-                                                <label for="touchui">Touch UI</label>
-                                                <p-calendar [(ngModel)]="date2" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
-                                            </div>
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                                <div class="field col-12 md:col-4">
+                                                    <!-- <label for="touchui">Touch UI</label> -->
+                                                    <p-calendar [(ngModel)]="date2" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaCopia"></p-calendar>
+                                                </div>
+                                            </th>
                                         </tr>
                                         <tr>
                                         <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
@@ -323,11 +327,9 @@
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
-                        <app-listado-causas [factores]="dataListFactor" [planAccionList]="listPlanAccion"></app-listado-causas>
+                        <app-listado-causas [factores]="dataListFactor"></app-listado-causas>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion">
-                        <app-plan-accion-list [planAccionList]="listPlanAccion"></app-plan-accion-list>
-                    </p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe"></p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Parametros"></p-tabPanel>
                     <p-tabPanel header="Establecimiento de causas">
