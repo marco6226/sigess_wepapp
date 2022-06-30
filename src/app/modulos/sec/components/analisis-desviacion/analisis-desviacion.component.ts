@@ -512,7 +512,9 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.print();
         }, 400);
     }
-
+    informacionComplementariaJson(){
+        this.informacionComplementaria=this.analisisPeligros.value;
+    }
     guardarAnalisis() {
         this.informacionComplementariaJson();
         let ad = new AnalisisDesviacion();
