@@ -450,8 +450,67 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         return crList;
     }
-    informacionComplementariaJson(){
-        this.informacionComplementaria=this.analisisPeligros.value;
+    async imprimir() {
+        let template = document.getElementById('plantilla');
+        if (this.desviacionesList) {
+            const date = new Date (this.desviacionesList[0].concepto);
+            const fechahora = new Date();
+            template.querySelector('#P_lista_nombre').textContent =this.desviacionesList[0].concepto.toString();
+            template.querySelector('#P_codigo').textContent ="texto"
+            template.querySelector('#P_version').textContent = '' + this.desviacionesList[0].concepto;
+            template.querySelector('#P_formulario_nombre').textContent = this.desviacionesList[0].concepto;
+            template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
+          if(this.desviacionesList != null ){
+            template.querySelector('#P_firma').textContent = this.desviacionesList[0].concepto;
+            template.querySelector('#P_cargo').textContent = " Cargo: " + this.desviacionesList[0].concepto;          
+        }else{
+            template.querySelector('#P_firma').textContent = this.desviacionesList[0].concepto;
+           
+        }
+            let  a: string | ArrayBuffer=this.desviacionesList[0].concepto.toString();
+            let b: string | ArrayBuffer=this.desviacionesList[0].concepto.toString();
+           
+            
+
+
+            let camposForm = template.querySelector('#L_campos_formulario');
+            const tr = camposForm.cloneNode(true);
+            tr.childNodes[0].textContent = "Ubicación"
+            tr.childNodes[1].textContent = this.desviacionesList[0].concepto;
+            camposForm.parentElement.appendChild(tr);
+            const tfecha = camposForm.cloneNode(true);
+            tfecha.childNodes[0].textContent = 'Fecha y Hora de realización'
+            tfecha.childNodes[1].textContent = fechahora.toDateString();
+           /* camposForm.parentElement.appendChild(tfecha);
+            this.listaInspeccion.formulario.campoList.forEach(campo => {
+                let tr = camposForm.cloneNode(true);
+                tr.childNodes[0].textContent = campo.nombre;
+                for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
+                    let rc = this.inspeccion.respuestasCampoList[i];
+                    if (rc.campoId == campo.id) {
+                        tr.childNodes[1].textContent = campo.respuestaCampo.valor;
+                        break;
+                    }
+                }
+                camposForm.parentElement.appendChild(tr);
+                
+            });*/
+
+
+            let elemList = template.querySelector('#L_elementos_lista');
+           // this.agregarElementos(<HTMLElement>elemList, this.desviacionesList[0].concepto);
+            elemList.remove();
+            //this.pdfGenerado = true;
+        }
+
+        setTimeout(() => {
+            var WinPrint = window.open('', '_blank');
+            
+            WinPrint.document.write(template.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+        }, 400);
     }
 
     guardarAnalisis() {
