@@ -110,28 +110,31 @@
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Información complementaria">
                         <p-tabView>
                             <p-tabPanel  *ngIf="idEmpresa == '3'" header="complementaria">
-                                <p-table [value]="desviacionesList"  autoLayout="true" >
+                                <p-table [value]="desviacionesList"  autoLayout="true" [formGroup]="analisisPeligros">
+                                
                                                         
-                                    <ng-template pTemplate="body">
+                                    <ng-template pTemplate="body" let-aus>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Peligro</th>
                                             <!-- <td>{{desviacionesList[0].concepto}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <p-dropdown [options]="tipoPeligro" formControlName="tipoPeligro" (onChange)="SelectPeligro($event.value)">
+                                            <p-dropdown [options]="this.tipoPeligroItemList" formControlName="tipoPeligro" (onChange)="SelectPeligro($event.value)">
                                             </p-dropdown></th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Descripción del Peligro</th>
                                             <!-- <td>{{desviacionesList[0]?.nombre}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <!-- <p-dropdown [options]="Peligro" formControlName="tipoCaso"></p-dropdown> -->
+                                            <!-- <p-dropdown [options]="this.peligroItemList" formControlName="tipoCaso"></p-dropdown> -->
                                             <!-- <button (click)="test()"></button> -->
-                                            <p-dropdown [options]="Peligro" formControlName="descripcionPeligro"></p-dropdown>
+                                            <p-dropdown [options]="this.peligroItemList" formControlName="descripcionPeligro"></p-dropdown>
                                             </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Estado del evento ante ARL</th>
-                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                            <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
+                                            <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
+                                            <p-dropdown [options]="ARLfirme" formControlName="aRLfirme"></p-dropdown>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
@@ -142,7 +145,12 @@
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Fecha de envio a entes de control</th>
-                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                            <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
+                                            <div class="field col-12 md:col-4">
+                                                <label for="touchui">Touch UI</label>
+                                                <p-calendar [(ngModel)]="date1" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
+                                            </div>
+                                        
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Entrega copia de FURAT  al trabajador</th>
@@ -153,7 +161,10 @@
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;width: 35%">Fecha entrega copia al trabajador</th>
-                                            <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+                                            <div class="field col-12 md:col-4">
+                                                <label for="touchui">Touch UI</label>
+                                                <p-calendar [(ngModel)]="date2" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
+                                            </div>
                                         </tr>
                                         <tr>
                                         <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
