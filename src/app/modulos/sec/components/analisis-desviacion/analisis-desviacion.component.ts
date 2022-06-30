@@ -615,11 +615,15 @@ export class AnalisisDesviacionComponent implements OnInit {
                                     data4.causa.forEach(element => {    
     
                                         if (element.esCausa) {      
-                                            if (!this.dataListFactor.find(ele=> {return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC})) {
+                                            if (!this.dataListFactor.find(ele=> {
+                                                console.log(ele,data,data1,data2,element);
+                                                
+                                                return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre
+                                            })) {
                                                 this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
                                             }else{
                                                 this.dataListFactor.forEach(ele =>{
-                                                    if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC){
+                                                    if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre){
                                                         this.tempData.push(ele)                                                
                                                     }
                                                 })
@@ -636,6 +640,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 });
                 
             });
+            console.log(this.tempData);
+            
             this.dataListFactor = this.tempData;
         } catch (error) {
                 
