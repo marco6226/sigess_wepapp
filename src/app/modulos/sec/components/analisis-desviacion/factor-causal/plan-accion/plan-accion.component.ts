@@ -3,6 +3,8 @@ import { listPlanAccion } from './../../../../entities/factor-causal';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { ConfirmationService, MessageService } from 'primeng/primeng';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
+import { Reporte } from 'app/modulos/rai/entities/reporte';
 
 @Component({
   selector: 'app-plan-accion',
@@ -18,7 +20,8 @@ export class PlanAccionComponent implements OnInit {
   formMedible: FormGroup
   formEfizaz: FormGroup
   formRevisado: FormGroup
-
+  empleadoSelect: Empleado;
+  reporteSelect: Reporte;
 
   steps = [
     {label: 'ESPECIFICO'},
@@ -44,7 +47,8 @@ export class PlanAccionComponent implements OnInit {
       nombreAccionCorrectiva: [null, Validators.required],
       accionCorrectiva: [null, Validators.required],
       fechaVencimiento: [null, Validators.required],
-      responsable: [null, Validators.required]
+      responsableEmpresa: [null],
+      responsableExterno: [null],
     })
   }
 

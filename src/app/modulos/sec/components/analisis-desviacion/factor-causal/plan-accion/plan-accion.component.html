@@ -43,11 +43,11 @@
     </div>
     <div class="p-field">
         <label>Responsable Empresa</label>
-        <input type="text" formControlName="responsable" required autofocus/>
+        <s-empleadoSelector [(ngModel)]="empleadoSelect " formControlName="responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
     </div>
     <div class="p-field">
         <label>Responsable Externo</label>
-        <input type="text" formControlName="responsable" required autofocus/>
+        <input type="text" formControlName="responsableExterno" />
     </div>
  </p-panel>
 
@@ -62,6 +62,11 @@
     <div class="p-field">
         <label>Responsable de Verificar que la acción ha sido compleatada</label>
         <input type="text" required autofocus/>
+        <s-empleadoSelector [(ngModel)]="empleadoSelect " [readOnly]="reporteSelect "></s-empleadoSelector>
+    </div>
+    <div class="p-field">
+        <label>Responsable Externo</label>
+        <input type="text"  />
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
@@ -77,6 +82,11 @@
     <div class="p-field">
         <label>Responsable Verificar solución</label>
         <input type="text" required autofocus/>
+        <s-empleadoSelector [(ngModel)]="empleadoSelect " [readOnly]="reporteSelect "></s-empleadoSelector>
+    </div>
+    <div class="p-field">
+        <label>Responsable Externo</label>
+        <input type="text" />
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
@@ -109,5 +119,6 @@
 </div>
 
 <br><br>
+
 
 <!-- <button (click)="test()">test</button> -->

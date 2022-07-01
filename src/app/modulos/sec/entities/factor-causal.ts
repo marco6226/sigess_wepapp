@@ -71,7 +71,12 @@ export interface listFactores{
 
 export interface listPlanAccion{
   nombreFC?: string;
-  causaRaiz?: string;
+  causaRaiz?: planCausaRaiz[];
+}
+
+export interface planCausaRaiz{
+  // id: number;
+  causaRaiz: string;
   especifico?: PlanEspecifico;
   razonable?: PlanRazonable;
   medible?: PlanMedible;

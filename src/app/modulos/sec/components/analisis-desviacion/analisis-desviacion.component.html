@@ -206,9 +206,11 @@
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
-                        <app-listado-causas [factores]="dataListFactor"></app-listado-causas>
+                        <app-listado-causas [factores]="dataListFactor" [planAccionList]="listPlanAccion"></app-listado-causas>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion">
+                        <app-plan-accion-list [planAccionList]="listPlanAccion"></app-plan-accion-list>
+                    </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button>  
                         <div id="plantilla" style="display: none;">

@@ -1,7 +1,6 @@
 <h1>PLAN DE ACCIÓN</h1>
 <br>
-<p-table [value]="planAccionList" [(selection)]="causasListSelect" responsiveLayout="scroll">
-<!-- <p-table responsiveLayout="scroll"> -->
+<!-- <p-table [value]="planAccionList" [(selection)]="causasListSelect" responsiveLayout="scroll">
     <ng-template pTemplate="header">
         <tr>
             <th>Nombre del Factor Causal</th>
@@ -11,9 +10,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-causa>
         <tr>
-            <!-- <td>
-                <p-tableCheckbox [value]="causa"></p-tableCheckbox>
-            </td> -->
             <td>{{causa.nombreFC}}</td>
             <td>{{causa.causaRaiz}}</td>
             <td>
@@ -23,10 +19,8 @@
     </ng-template>
     <ng-template pTemplate="summary" let-rowData>
 
-        <!-- <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-pencil" label="Iniciar Plan de Acción" (click)="crearPlanAccion()" [disabled]="causasListSelect == null || causasListSelect.length <= 0"></button> -->
-
     </ng-template>
-</p-table>
+</p-table> -->
 
 <p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '60vw'}">
           
@@ -42,3 +36,36 @@
 
 
 <!-- <button (click)="confirm()" pButton icon="pi pi-check" label="Confirm"></button> -->
+
+
+<p-accordion [multiple]="true" >
+    <p-accordionTab header="Nombre del Factor Causal: {{data.nombreFC}}" *ngFor="let data of planAccionList">
+        <!-- <p>{{data.causaRaiz}}</p> -->
+        <p-accordionTab header="Causa Raiz: {{causa.causaRaiz}}" *ngFor="let causa of data.causaRaiz">
+          <div>
+            <div>
+                <p-button icon="pi pi-sign-in">ESPECIFICO</p-button>
+                <label>ESPECIFICO</label>
+            </div>
+            <div>
+                <p-button icon="pi pi-sign-in"></p-button>
+                <label>RAZONABLE</label>
+            </div>
+            <div>
+                <p-button icon="pi pi-sign-in"></p-button>
+                <label>MEDIBLE</label>
+            </div>
+            <div>
+                <p-button icon="pi pi-sign-in"></p-button>
+                <label>EFICAZ</label>
+            </div>
+            <div>
+                <p-button icon="pi pi-sign-in"></p-button>
+                <label>REVISADO</label>
+            </div>
+          </div>
+        </p-accordionTab>
+        
+    </p-accordionTab>
+</p-accordion>
+<button (click)="test()">test</button>
