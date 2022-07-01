@@ -1,0 +1,129 @@
+<table width="70%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">Fecha de investigación</th>
+        <td style="border: 1px solid #c8c8c8; text-align: center"> </td> 
+    </tr>
+</table>
+
+<br />
+
+<table width="70%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th colspan="2" style="border: 1px solid #c8c8c8; text-align: center">REPORTE INICIAL</th>
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8; text-align: center">Nombre del evento</th>
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{desviacionesList[0].concepto}}</td> 
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8;">Nombre del colaborador</th>
+        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.nombre}}</td> 
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8;">Fecha del incidente</th>
+        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8;">Hora del incidente</th>
+        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.hora}}</td> 
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8;">Ubicacion</th>
+        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.area.nombre}}</td> 
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8;">Clasificación</th>
+        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.severidad}}</td> 
+    </tr>
+    <tr>
+        <th style="border: 1px solid #c8c8c8;">Descripción</th>
+        
+        <td maxlength="510" *ngIf="!consultar" pInputTextarea rows="10"
+        placeholder="Observaciones de análisis" style="border: 1px solid #c8c8c8;">{{observacion}}</td>
+    </tr>
+</table>
+
+<br />
+
+<table width="70%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th colspan="4" style="border: 1px solid #c8c8c8; text-align: center">MIEMBROS DEL EQUIPO</th>
+    </tr>
+    <tr>
+        <th  style="border: 1px solid #c8c8c8; text-align: center">Nombre </th>
+        <th  style="border: 1px solid #c8c8c8; text-align: center">Cargo </th>
+        <th  style="border: 1px solid #c8c8c8; text-align: center">División</th>
+        <th  style="border: 1px solid #c8c8c8; text-align: center">Localidad </th>
+    </tr>
+
+    <tr *ngFor="let miembro of miembros">
+        <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.nombre}}</td>
+        <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.cargo}}</td>
+        <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.division}}</td>
+        <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.localidad}}</td>
+    </tr>
+
+</table>
+
+<br />
+
+<table width="70%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">SnapChart - Análisis Factor Causal y Raiz</th>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: center"> Imagen Diagrama de flujo</td> 
+    </tr>
+</table>
+
+<br />
+
+<table width="70%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th colspan="6" style="border: 1px solid #c8c8c8; text-align: center" width="50%">RECOLECCIÓN DE EVIDENCIAS</th>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: center">Images</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">New folder</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">Policies</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">Procedures</td>
+        <td style="border: 1px solid #c8c8c8; text-align: center">SnapCaps</td>     
+        <td style="border: 1px solid #c8c8c8; text-align: center">Videos</td>     
+    </tr>
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
+    </tr>
+</table>
+
+<br />
+
+<table width="70%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th colspan="6" style="border: 1px solid #c8c8c8; text-align: center" width="50%">DESCRIPCION DE LAS ACCIONES</th>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #c8c8c8; text-align: center">No</td> 
+        <td colspan="2" style="border: 1px solid #c8c8c8; text-align: center">New folder</td> 
+        <td colspan="3" style="border: 1px solid #c8c8c8; text-align: center">Policies</td> 
+    </tr>   
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: center">Nombre del Factor Causal</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">Causa Raiz</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">Acción correctiva</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">Fecha Vencimiento</td>
+        <td style="border: 1px solid #c8c8c8; text-align: center">Responsable</td> 
+    </tr>
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+    </tr>
+</table>

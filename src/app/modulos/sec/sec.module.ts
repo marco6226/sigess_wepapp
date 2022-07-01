@@ -45,6 +45,7 @@ import { IncapacidadesComplementariaComponent } from './components/analisis-desv
 import { ListadoCausasComponent } from './components/analisis-desviacion/listado-causas/listado-causas.component';
 import { PlanAccionComponent } from './components/analisis-desviacion/factor-causal/plan-accion/plan-accion.component';
 import { PlanAccionListComponent } from './components/analisis-desviacion/factor-causal/plan-accion-list/plan-accion-list.component';
+import { InformeComponent } from './components/analisis-desviacion/factor-causal/informe/informe.component';
 
 @NgModule({
     imports: [
@@ -104,7 +105,8 @@ import { PlanAccionListComponent } from './components/analisis-desviacion/factor
         IncapacidadesComplementariaComponent,
         ListadoCausasComponent,
         PlanAccionComponent,
-        PlanAccionListComponent
+        PlanAccionListComponent,
+        InformeComponent
     ],
     providers: [
         SistemaCausaRaizService,
