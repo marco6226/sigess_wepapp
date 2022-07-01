@@ -65,7 +65,6 @@ export class AnalisisDesviacionComponent implements OnInit {
     form2: Peligro;
     listaEvidence
     listPlanAccion: listPlanAccion[] =[]
-
     causaAdminList: TreeNode[] = [];
     causaAdminListSelect: TreeNode[] = [];
     causaAdminAnalisisList: CausaAdministrativa[];
@@ -231,8 +230,11 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultarAnalisis(this.value.id);
         }
         this.cargarTiposPeligro();
+
+        //this.cargarPeligro(this.analisisPeligros.value['Peligro.id']);
+
         //this.cargarPeligro();
-        this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
+        //this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
     }
 
     cargarTiposPeligro() {
@@ -263,17 +265,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                 }
             )
             console.log(this.peligroItemList);
-            // if (this.formp.value.nombre != null) {
-            //   for (let i = 0; i < this.peligroItemList.length; i++) {
-            //     let data = this.peligroItemList[i].value;
-            //     if (data != null && data.id == this.formp.value.Peligro.id) {
-            //       this.formp.patchValue({
-            //         Peligro: this.peligroItemList[i].value
-            //       });
-            //       break;
-            //     }
-            //   }
-            // }
           }
         );
          }else{
@@ -368,16 +359,21 @@ export class AnalisisDesviacionComponent implements OnInit {
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+            
             if(this.informacionComplementaria!=null){
-                this.analisisPeligros.value.Peligro=this.informacionComplementaria.Peligro;
-                this.analisisPeligros.value.DescripcionPeligro=this.informacionComplementaria.DescripcionPeligro;
-                this.analisisPeligros.value.EnventoARL=this.informacionComplementaria.EnventoARL;
-                this.analisisPeligros.value.ReporteControl=this.informacionComplementaria.ReporteControl;
-                // this.analisisPeligros.value.FechaControl=this.informacionComplementaria.FechaControl;
-                this.analisisPeligros.value.CopiaTrabajador=this.informacionComplementaria.CopiaTrabajador;
-                // this.analisisPeligros.value.FechaCopia=this.informacionComplementaria.FechaCopia
+                this.analisisPeligros.patchValue({
+                    'Peligro': this.informacionComplementaria.Peligro,
+                    'DescripcionPeligro': this.informacionComplementaria.DescripcionPeligro,
+                    'EnventoARL': this.informacionComplementaria.EnventoARL,
+                    'ReporteControl': this.informacionComplementaria.ReporteControl,
+                    'FechaControl': this.informacionComplementaria.FechaControl == null ? null : new Date(this.informacionComplementaria.FechaControl),
+                    'CopiaTrabajador': this.informacionComplementaria.CopiaTrabajador,
+                    'FechaCopia':this.informacionComplementaria.FechaCopia == null ? null : new Date(this.informacionComplementaria.FechaCopia)
+                  });
+                this.cargarPeligro(this.analisisPeligros.value['Peligro'])
             }
-            console.log(this.informacionComplementaria);
+            console.log('este',this.analisisPeligros.value['FechaCopia'])
+
             
             // if(this.factorCusal){
                 this.setListDataFactor();
