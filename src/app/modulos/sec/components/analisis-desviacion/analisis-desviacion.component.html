@@ -200,7 +200,7 @@
                         <app-evidencias></app-evidencias>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
-                        <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
+                        <app-flow-chart (imgDF)="imgIn($event)" (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
                     </p-tabPanel>
                     
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
@@ -245,7 +245,8 @@
                                 [consultar]="consultar" 
                                 [observacion]="observacion"
                                 [miembros]="miembros"
-                                [selectedProducts]="selectedProducts"></app-informe>
+                                [selectedProducts]="selectedProducts"
+                                [diagramaFlujo]="imgIN"></app-informe>
                             </div>
                         </div>
 
@@ -353,7 +354,7 @@
 
 <div style="height: 100px;;"></div>
 
-
+<!-- <app-flow-chart></app-flow-chart> -->
 <!-- <button (click)="setListDataFactor()">vli</button> -->
 <!-- 
 <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"

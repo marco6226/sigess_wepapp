@@ -57,9 +57,9 @@ import {
 })
 export class AnalisisDesviacionComponent implements OnInit {
     @Input("miembros") documento: Documento;
-
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
+    // ImgDF:string;
     formtp: FormGroup;
     formp: FormGroup;
     analisisPeligros: FormGroup;
@@ -136,6 +136,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     ]
     miembros: MiembroEquipo[]
     selectedProducts;
+    imgIN: string;
     
     tSelectPeligro(a: string){
         this.tPeligro1=a;
@@ -151,7 +152,11 @@ export class AnalisisDesviacionComponent implements OnInit {
         console.log(this.informacionComplementaria)
         console.log(this.analisisPeligros)
     }
-
+    // ImagenIn(event){
+    //     console.log('miembros event1')
+    //     console.log(event)
+    //     this.ImgDF=event;
+    // }
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
@@ -441,13 +446,14 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
     miembrosIn(event){
-        console.log('miembros event1')
-        console.log(event)
         this.miembros=event;
     }
+    imgIn(event){
+        // console.log('miembros event1')
+        // console.log(event)
+        this.imgIN=event;
+    }
     selectedProductsIn(event){
-        console.log('miembros event2')
-        console.log(event)
         this.selectedProducts=event;
     }
     buildList(list: any[]): any[] {

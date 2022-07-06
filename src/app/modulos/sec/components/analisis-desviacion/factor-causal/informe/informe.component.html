@@ -50,6 +50,7 @@
         <th colspan="4" style="border: 1px solid #c8c8c8; text-align: center">MIEMBROS DEL EQUIPO</th>
     </tr>
     <tr>
+        <th  style="border: 1px solid #c8c8c8; text-align: center">No </th>
         <th  style="border: 1px solid #c8c8c8; text-align: center">Nombre </th>
         <th  style="border: 1px solid #c8c8c8; text-align: center">Cargo </th>
         <th  style="border: 1px solid #c8c8c8; text-align: center">División</th>
@@ -57,6 +58,7 @@
     </tr>
 
     <tr *ngFor="let miembro of miembros">
+        <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.id}} </td>
         <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.nombre}}</td>
         <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.cargo}}</td>
         <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.division}}</td>
@@ -72,7 +74,8 @@
         <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">SnapChart - Análisis Factor Causal y Raiz</th>
     </tr>
     <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center"> Imagen Diagrama de flujo</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"> <img src={{diagramaFlujo}} width="100%"/>
+</td> 
     </tr>
 </table>
 
@@ -83,12 +86,12 @@
         <th colspan="6" style="border: 1px solid #c8c8c8; text-align: center" width="50%">RECOLECCIÓN DE EVIDENCIAS</th>
     </tr>
     <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center">Images</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">New folder</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Policies</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Procedures</td>
-        <td style="border: 1px solid #c8c8c8; text-align: center">SnapCaps</td>     
-        <td style="border: 1px solid #c8c8c8; text-align: center">Videos</td>     
+        <th style="border: 1px solid #c8c8c8; text-align: center">Images</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">New folder</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Policies</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Procedures</th>
+        <th style="border: 1px solid #c8c8c8; text-align: center">SnapCaps</th>     
+        <th style="border: 1px solid #c8c8c8; text-align: center">Videos</th>     
     </tr>
     <tr>
         <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
@@ -107,16 +110,16 @@
         <th colspan="6" style="border: 1px solid #c8c8c8; text-align: center" width="50%">DESCRIPCION DE LAS ACCIONES</th>
     </tr>
     <tr>
-        <td rowspan="2" style="border: 1px solid #c8c8c8; text-align: center">No</td> 
-        <td colspan="2" style="border: 1px solid #c8c8c8; text-align: center">New folder</td> 
-        <td colspan="3" style="border: 1px solid #c8c8c8; text-align: center">Policies</td> 
+        <th rowspan="2" style="border: 1px solid #c8c8c8; text-align: center">No</th> 
+        <th colspan="2" style="border: 1px solid #c8c8c8; text-align: center">New folder</th> 
+        <th colspan="3" style="border: 1px solid #c8c8c8; text-align: center">Policies</th> 
     </tr>   
     <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center">Nombre del Factor Causal</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Causa Raiz</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Acción correctiva</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Fecha Vencimiento</td>
-        <td style="border: 1px solid #c8c8c8; text-align: center">Responsable</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Nombre del Factor Causal</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Causa Raiz</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Acción correctiva</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Fecha Vencimiento</th>
+        <th style="border: 1px solid #c8c8c8; text-align: center">Responsable</th> 
     </tr>
     <tr>
         <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
@@ -127,3 +130,32 @@
         <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
     </tr>
 </table>
+<!-- 
+<br />
+
+<table width="90%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+    </tr>   
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+    </tr>
+    <tr>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td>
+        <td style="border: 1px solid #c8c8c8; text-align: left">1</td> 
+    </tr>
+</table> -->

@@ -1,14 +1,16 @@
 import { FactorCausal } from './../../../entities/factor-causal';
 import { Component, ViewEncapsulation, ViewChild, Inject, Output, EventEmitter, Input } from '@angular/core';
 import {
-    DiagramComponent, Diagram, NodeModel, UndoRedo, ConnectorModel, PointPortModel, Node, FlowShapeModel, MarginModel, PaletteModel,
+    FileFormats, DiagramComponent, Diagram, PrintAndExport, IExportOptions,BasicShapeModel,NodeModel, UndoRedo, ConnectorModel, PointPortModel, Node, FlowShapeModel, MarginModel, PaletteModel,
     SymbolInfo, DiagramContextMenu, GridlinesModel, SnapSettingsModel, ShapeStyleModel, TextStyleModel, BpmnShape, HtmlModel, IDragEnterEventArgs, SnapConstraints
 } from '@syncfusion/ej2-angular-diagrams';
 import { AsyncSettingsModel } from '@syncfusion/ej2-inputs';
-import { ClickEventArgs, ExpandMode } from '@syncfusion/ej2-navigations';
+import { ClickEventArgs, ExpandMode, MenuEventArgs} from '@syncfusion/ej2-navigations';
 import { AnalisisDesviacion } from 'app/modulos/sec/entities/analisis-desviacion';
+import { ItemModel } from '@syncfusion/ej2-splitbuttons';
+
 // import { showPaletteIcon } from './script/diagram-common';
-Diagram.Inject(UndoRedo, DiagramContextMenu);
+Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 
 @Component({
   selector: 'app-flow-chart',
@@ -17,10 +19,12 @@ Diagram.Inject(UndoRedo, DiagramContextMenu);
 })
 export class FlowChartComponent {
 
+//   @Output()imgDF=new EventEmitter<string>();
   @Output() datosFC = new EventEmitter<FactorCausal[]>();
   listFC: FactorCausal[]=[];
   @Input() dataFlowChart:AnalisisDesviacion;
   @Output() diagramSave = new EventEmitter<string>();
+  @Output() imgDF = new EventEmitter<string>()
 
   precarga: boolean=false;
   public terminator: FlowShapeModel = { type: 'Flow', shape: 'Terminator' };
@@ -38,6 +42,13 @@ export class FlowChartComponent {
       saveUrl: 'https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save',
       removeUrl: 'https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove'
   };
+
+  public multiplePage: boolean = false;
+  public exportTypes: ItemModel[] = [
+    { text: 'JPG' }, { text: 'PNG' },
+    { text: 'BMP' }, { text: 'SVG' }
+];
+
 
 
   @ViewChild('diagram',{static: false})
@@ -66,6 +77,7 @@ export class FlowChartComponent {
 
       
     }, 600);  
+    this.exportImg();
   }
   ​​​​​​​
   public create(args: Object): void {
@@ -191,7 +203,7 @@ export class FlowChartComponent {
               content:'<g xmlns="http://www.w3.org/2000/svg"> <g transform="translate(1 1)"><g>'
           +  ' <path d="M0 0H12V7L6 12 0 7V0" stroke="#41729D" stroke-width="0.3" fill="#5B9BD4"/>'+
           '</g></g>',
-      type:'Native'
+          type:'Native'
           },},
           {id:'RecAmarillo' ,offsetX:50, offsetY:50, shape:{
               content:'<g xmlns="http://www.w3.org/2000/svg"> <g transform="translate(1 1)"><g>'
@@ -221,7 +233,7 @@ export class FlowChartComponent {
     },
       
   ];
-
+  Imag:string;
   public palettes: PaletteModel[] = [
   { id: 'Bpmn', expanded: true, symbols: this.bpmnShapes, iconCss: 'shapes', title: 'Bloques' },
 
@@ -351,6 +363,18 @@ export class FlowChartComponent {
     // console.log(this.diagram.saveDiagram());
     this.diagramSave.emit(this.diagram.saveDiagram())
   }
+
+  exportImg(){
+    let exportOptions: IExportOptions = {};
+    exportOptions.format = 'JPG';
+    exportOptions.mode = 'Data';
+    exportOptions.fileName = 'Export';
+    // exportOptions.pageHeight = 1200;
+    // exportOptions.pageWidth = 1200;
+    this.Imag=this.diagram.exportDiagram(exportOptions).toString();
+    // console.log(this.Imag);
+    this.imgDF.emit(this.Imag);
+}
 };
 
 function paletteIconClick() {
