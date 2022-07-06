@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
-import { listPlanAccion } from './../../../../entities/factor-causal';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { listPlanAccion, planCausaRaiz } from './../../../../entities/factor-causal';
+import { AfterViewInit, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { ConfirmationService, MessageService } from 'primeng/primeng';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
@@ -13,7 +13,10 @@ import { Reporte } from 'app/modulos/rai/entities/reporte';
   providers: [MessageService]
 })
 export class PlanAccionComponent implements OnInit {
-  @Input() planAcciones: listPlanAccion
+  @Input() planAcciones: planCausaRaiz
+  @Input() process: string;
+  @Output() dataTest = new EventEmitter<any>()
+
   selectedValue
 
   formEspecifico: FormGroup
@@ -53,6 +56,7 @@ export class PlanAccionComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.planAcciones);
     
   }
   selectProduct(event) {
@@ -84,8 +88,18 @@ export class PlanAccionComponent implements OnInit {
 
   test(){
     console.log(this.formEspecifico);
+    switch (this.process) {
+      case 'ESPECIFICO':
+        // this.planAcciones.especifico = this.formEspecifico.value //JSON.parse(JSON.stringify(this.formEspecifico.value)) 
+        this.formEspecifico.reset()
+        break;
+    
+      default:
+        break;
+    }
     console.log(this.planAcciones);
 
+    this.dataTest.emit()
     // this.planAcciones.nombreFC='Hola'
     // this.planAcciones.causaRaiz='casua'
   }

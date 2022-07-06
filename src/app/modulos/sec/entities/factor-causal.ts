@@ -1,3 +1,5 @@
+import { Empleado } from "app/modulos/empresa/entities/empleado";
+
 export interface FactorCausal{
     id: number;
     nombre: string;
@@ -88,6 +90,8 @@ export interface PlanEspecifico{
   nombreAccionCorrectiva: string;
   accionCorrectiva: string;
   fechaVencimiento: Date;
+  responsableEmpresa: Empleado
+  responsableExterno: String
 }
 
 export interface PlanRazonable{

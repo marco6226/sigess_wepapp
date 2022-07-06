@@ -66,7 +66,7 @@
                         </div>
                                               
                           
-                        <p-table [value]="desviacionesList"  autoLayout="true">
+                        <p-table [value]="desviacionesList"  autoLayout="true" id="TablaDescripcion">
                                                         
                             <ng-template pTemplate="body">
                                 <tr>
@@ -194,7 +194,7 @@
                         
                     </p-tabPanel>
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
-                        <app-miembros-equipo></app-miembros-equipo>
+                        <app-miembros-equipo (miembrosOut)="miembrosIn($event)" (selectedProductsOUT)="selectedProductsIn($event)"></app-miembros-equipo>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias">
                         <app-evidencias></app-evidencias>
@@ -204,7 +204,6 @@
                     </p-tabPanel>
                     
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
-                        
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
@@ -214,88 +213,41 @@
                         <app-plan-accion-list [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe">
-                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button>  
-                        <div id="plantilla" style="display: none;">
+                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
+
+                        <!-- <div id="plantilla" style="display: none;"> -->
+                        <div id="plantilla" >
                             <div style="background-color: white">
-                              <table width="100%" style="border-collapse: collapse;">
-                                <tr>
-                                  <td rowspan="2" style="width: 30%;border:solid thin #ccc;text-align: center">
-                                    <img style="width:100%;" id="P_empresa_logo" />
-                                  </td>        
-                                  <td style="width: 55%;border:solid thin #ccc;text-align: center">
-                                    SISTEMA DE GESTION DE SEGURIDAD Y SALUD EN EL TRABAJO
-                                  </td>
-                                  <td style="width: 15%;border:solid thin #ccc;text-align: center">
-                                    Código: <label id="P_codigo"></label>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style="border:solid thin #ccc;text-align: center">
-                                    <label id="P_lista_nombre"></label>
-                                  </td>
-                                  <td style="border:solid thin #ccc;text-align: center">
-                                    Version <label id="P_version"></label>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  
-                                  <td  colspan="3" style="width: 30%;border:solid thin #ccc;text-align: center">      
-                                    <div>
-                                      <app-file-uploader *ngFor="let evidence of listaEvidence; let i = index" [img]="evidence" [index]="i"
-                                          [show]="true" style="display:block;" width="20%" >
-                                      </app-file-uploader>          
-                                    </div>
-                                  </td>        
-                                  
-                                </tr>
-                                <tr>
-                                  <td colspan="3" class="pFormularioNombre">
-                                    <label id="P_formulario_nombre"></label>
-                                  </td>
-                                </tr>
-                                <tr id="L_campos_formulario">
-                                  <td style="border:solid thin #ccc;padding: 8px;">
-                          
-                                  </td>
-                                  <td style="border:solid thin #ccc;padding: 8px;" colspan="2">
-                          
-                                  </td> 
-                                </tr>
-                              </table>
-                              <table width="100%" style="border-collapse: collapse;">
-                                <tr id="L_elementos_lista">
-                                  <td id="C_codigo" style="border:solid thin #ccc;padding: 8px;">
-                          
-                                  </td>
-                                  <td id="C_nombre" style="border:solid thin #ccc;padding: 8px;">
-                          
-                                  </td>
-                                  <td id="C_opciones" style="border:solid thin #ccc;padding: 8px;">
-                          
-                                  </td>
-                                  <td id="C_recomendacion" style="border:solid thin #ccc;padding: 8px;">
-                          
-                                  </td>
-                                </tr>
-                              </table>
-                              <table width="100%" style="border-collapse: collapse;">
-                                <tr>
-                          
-                                </tr>
-                                <tr>
-                                  <td  colspan="1" style="width: 30%;border:solid thin #ccc;text-align: center">
-                                    Diligenciado por: <label id="P_version"></label>
-                                  </td>             
-                                   
-                                  <td rowspan="2" style="width: 200px;border:solid thin #ccc;text-align: center">
-                                        
-                                    <label id="P_firma"></label>
-                                    <label id="P_cargo"></label>
-                                  </td>
-                                  
-                                </tr>
                                 
-                              </table>
+                                <table width="100%" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td style="width: 30%;text-align: left">
+                                            <img style="width:50%;" id="P_empresa_logo" />
+                                        </td>        
+                                        <th style="width: 40%;text-align: center">
+                                            INFORME INVESTIGACIÓN DE ACCIDENTE LABORAL
+                                        </th>
+                                        <th style="width: 30%;text-align: center"></th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: left">
+                                            Nombre de la empresa
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: left">
+                                            NIT:
+                                        </th>
+                                    </tr>
+                                </table>
+
+                                <br />
+                                
+                                <app-informe [desviacionesList]="desviacionesList" 
+                                [consultar]="consultar" 
+                                [observacion]="observacion"
+                                [miembros]="miembros"
+                                [selectedProducts]="selectedProducts"></app-informe>
                             </div>
                         </div>
 

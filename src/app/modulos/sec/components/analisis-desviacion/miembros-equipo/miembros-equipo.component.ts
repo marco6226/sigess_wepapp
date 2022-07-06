@@ -1,6 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/primeng';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { MiembroEquipo } from './miembro-equipo';
 
 @Component({
@@ -10,7 +10,8 @@ import { MiembroEquipo } from './miembro-equipo';
   providers: [MessageService]
 })
 export class MiembrosEquipoComponent implements OnInit {
-
+  @Output()miembrosOut=new EventEmitter<MiembroEquipo[]>();
+  @Output()selectedProductsOUT= new EventEmitter<any[]>();
   productDialog: boolean;
   submitted: boolean;
 
@@ -32,6 +33,7 @@ export class MiembrosEquipoComponent implements OnInit {
   ngOnInit(): void {
     // this.productService.getProducts().then(data => this.products = data);
     this.miembros = [];
+    this.salida();
   }
 
   openNew() {
@@ -52,7 +54,10 @@ export class MiembrosEquipoComponent implements OnInit {
         }
     });
 }
-
+salida(){
+    this.miembrosOut.emit(this.miembros);
+    this.selectedProductsOUT.emit(this.selectedProducts);
+}
 editProduct(product: MiembroEquipo) {
     console.log(product);
     

@@ -16,39 +16,31 @@ export class PlanAccionListComponent implements OnInit {
   constructor() { }
   cols: any[];
   files: TreeNode[]
+  validate: string;
+  
+  isRazonable: boolean = true
+  isMedible: boolean = true
+  isEficaz: boolean = true
+  isRevisado: boolean = true
+
+  classSelect ={'height':'2px !important'}
+
+
 
   ngOnInit() {
-//     this.cols = [
-//       { field: 'name', header: 'Name' },
-//       { field: 'size', header: 'Size' },
-//       // { field: 'type', header: 'Type' }
-//   ];
-
-//   this.files=[{data:
-//     [  
-//         {  
-//             data:{  
-//                 name:"Lazy Folder 0",
-//                 size:"75kb",
-//                 type:"Folder"
-//             },
-//             leaf: false
-//         },
-//         {  
-//             data:{  
-//                 name:"Lazy Folder 1",
-//                 size:"150kb",
-//                 type:"Folder"
-//             },
-//             leaf: false
-//         }
-//     ]
-// }]
 
   }
   
+  // value: number = 10;
+
   selectProduct(event) {
     console.log(event);
+    this.planAccionListSelected = event;
+    this.display = true
+  }
+  selectProduct2(event, selection) {
+    console.log(event);
+    this.validate = selection
     this.planAccionListSelected = event;
     this.display = true
   }
@@ -59,9 +51,20 @@ export class PlanAccionListComponent implements OnInit {
 
   test(){
     console.log(this.planAccionList);
-    
+    this.isRevisado = false
   }
  
+  tests="pi pi-sign-in"
+
+
+  habilitar(){
+    console.log(this.planAccionList);
+    this.display = false
+
+    // if (this.planAccionList[0].causaRaiz[0].) {
+      
+    // }
+  }
 
 }
 

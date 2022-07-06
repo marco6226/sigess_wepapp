@@ -10,19 +10,28 @@ p-accordion{
                 div{
                     // background: red;
                     display: flex;
-                    flex-direction: column;
-                    p-button{
-                        // button{
-                        //     width: 100%;
-                        //     height: 100%;
-                        //     background: red !important;
-                        // }
-                        .ui-button {
-                            width: 100% !important;
-                        }
-                    }
+                    flex-direction: column;      
+                    align-items: center;              
                 }
             }
         }
     }
+}
+
+.ui-button {
+    width: 90% !important;
+    width: 90% !important;
+}
+
+.ui-button.ok{
+    background: lightgray !important;
+    // label{
+    //     color: blue;
+    // }
+}
+
+
+.ui-button-icon-only.ui-button-icon-left{
+    top: 60% !important;
+    font-size: 195% !important;
 }
