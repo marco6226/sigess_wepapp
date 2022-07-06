@@ -58,7 +58,8 @@
     "rxjs-compat": "^6.5.2",
     "syncfusion-javascript": "^20.1.47",
     "xlsx": "^0.16.9",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
+    "ngx-capture": "^0.0.3-alpha"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.3",
