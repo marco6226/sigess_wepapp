@@ -46,6 +46,8 @@ import { ListadoCausasComponent } from './components/analisis-desviacion/listado
 import { PlanAccionComponent } from './components/analisis-desviacion/factor-causal/plan-accion/plan-accion.component';
 import { PlanAccionListComponent } from './components/analisis-desviacion/factor-causal/plan-accion-list/plan-accion-list.component';
 import { NgxCaptureModule } from 'ngx-capture';
+import { InformeComponent } from './components/analisis-desviacion/factor-causal/informe/informe.component';
+
 
 @NgModule({
     imports: [
@@ -108,7 +110,7 @@ import { NgxCaptureModule } from 'ngx-capture';
         ListadoCausasComponent,
         PlanAccionComponent,
         PlanAccionListComponent,
-        NgxCaptureModule
+        InformeComponent
     ],
     providers: [
         SistemaCausaRaizService,
