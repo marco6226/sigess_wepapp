@@ -60,16 +60,22 @@ export class PlanAccionListComponent implements OnInit {
   habilitar(){
     console.log(this.planAccionList);
     this.display = false
-
-    // if (this.planAccionList[0].causaRaiz[0].) {
-      
-    // }
+    this.planAccionList.forEach(element => {
+      // console.log(element);
+      element.causaRaiz.forEach(elementIn => {
+        console.log(elementIn);
+        if(elementIn.especifico.accionCorrectiva!=null){
+          this.isRazonable=false;
+          this.isMedible = false;
+        }
+        if(elementIn.medible.planVerificacion!=null){
+          this.isEficaz=false;
+        }
+        if(elementIn.eficaz.planValidacion!=null){
+          this.isRevisado=false;
+        }
+      });
+    });
   }
-
 }
 
-
-// export interface TreeNode {
-//   name?: string;
-//   size?: string;
-//  }

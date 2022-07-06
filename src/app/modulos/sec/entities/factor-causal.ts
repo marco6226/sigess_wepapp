@@ -79,7 +79,7 @@ export interface listPlanAccion{
 export interface planCausaRaiz{
   // id: number;
   causaRaiz: string;
-  especifico?: PlanEspecifico;
+  especifico: PlanEspecifico;
   razonable?: PlanRazonable;
   medible?: PlanMedible;
   eficaz?: PlanEficaz;
@@ -99,13 +99,15 @@ export interface PlanRazonable{
 }
 
 export interface PlanMedible{
-  responsable: string;
+  responsableEmpresa: Empleado
+  responsableExterno: String
   fechaVencimiento: Date;
   planVerificacion: string;
 }
 
 export interface PlanEficaz{
-  responsable: string;
+  responsableEmpresa: Empleado
+  responsableExterno: String
   fechaVencimiento: Date;
   planValidacion: string;
 }

@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
-import { listPlanAccion, planCausaRaiz } from './../../../../entities/factor-causal';
+import { listPlanAccion, planCausaRaiz, PlanEspecifico } from './../../../../entities/factor-causal';
 import { AfterViewInit, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { ConfirmationService, MessageService } from 'primeng/primeng';
@@ -12,12 +12,14 @@ import { Reporte } from 'app/modulos/rai/entities/reporte';
   styleUrls: ['./plan-accion.component.scss'],
   providers: [MessageService]
 })
-export class PlanAccionComponent implements OnInit {
+export class PlanAccionComponent implements OnInit, AfterViewInit {
   @Input() planAcciones: planCausaRaiz
   @Input() process: string;
   @Output() dataTest = new EventEmitter<any>()
 
   selectedValue
+
+  datatest: PlanEspecifico
 
   formEspecifico: FormGroup
   formMedible: FormGroup
@@ -59,6 +61,19 @@ export class PlanAccionComponent implements OnInit {
     console.log(this.planAcciones);
     
   }
+
+  ngAfterViewInit(): void {
+    if(this.planAcciones){
+      console.log("treae datos");
+      
+    }
+    if(!this.planAcciones){
+      console.log("nop trae datos");
+      
+    }
+  }
+
+  
   selectProduct(event) {
     console.log(event);
     this.display = true
@@ -87,21 +102,26 @@ export class PlanAccionComponent implements OnInit {
   }
 
   test(){
-    console.log(this.formEspecifico);
-    switch (this.process) {
-      case 'ESPECIFICO':
-        // this.planAcciones.especifico = this.formEspecifico.value //JSON.parse(JSON.stringify(this.formEspecifico.value)) 
-        this.formEspecifico.reset()
-        break;
+    // console.log(this.formEspecifico, this.planAcciones);
+    // switch (this.process) {
+    //   case 'ESPECIFICO':
+    //     //  this.planAcciones.especifico = this.formEspecifico.value //JSON.parse(JSON.stringify(this.formEspecifico.value)) 
+    //     this.formEspecifico.reset()
+    //     break;
     
-      default:
-        break;
-    }
-    console.log(this.planAcciones);
+    //   default:
+    //     break;
+    // }
+    // console.log(this.planAcciones);
 
     this.dataTest.emit()
     // this.planAcciones.nombreFC='Hola'
     // this.planAcciones.causaRaiz='casua'
+  }
+
+  test2(){
+    // console.log(this.planAcciones, this.dataTest);
+    
   }
   
 

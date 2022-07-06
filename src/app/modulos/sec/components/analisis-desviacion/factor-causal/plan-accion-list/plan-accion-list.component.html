@@ -25,7 +25,7 @@
 <p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '60vw'}">
           
     <div>
-      <app-plan-accion (dataTest)="habilitar()" [process]="validate" [planAcciones]="planAccionListSelected!"></app-plan-accion>
+      <app-plan-accion *ngIf="display" (dataTest)="habilitar()" [process]="validate" [planAcciones]="planAccionListSelected"></app-plan-accion>
     </div>
 
     <!-- <div >
