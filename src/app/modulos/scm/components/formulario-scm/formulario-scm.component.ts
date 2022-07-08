@@ -864,8 +864,10 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     }
 
-    async onCloseModalseguimiento() {
+    async onCloseModalseguimiento() {       
         this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
+        this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+        
         this.modalSeguimientos = false;
         this.seguiSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
