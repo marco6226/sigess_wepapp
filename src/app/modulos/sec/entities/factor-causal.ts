@@ -84,18 +84,21 @@ export interface planCausaRaiz{
   medible?: PlanMedible;
   eficaz?: PlanEficaz;
   revisado?: PlanRevisado;
+  
 }
 
 export interface PlanEspecifico{
   nombreAccionCorrectiva: string;
   accionCorrectiva: string;
   fechaVencimiento: Date;
-  responsableEmpresa: Empleado
-  responsableExterno: String
+  responsableEmpresa: Empleado;
+  responsableExterno: String;
+  isComplete: boolean;
 }
 
 export interface PlanRazonable{
   justificacion?: string;
+  isComplete: boolean;
 }
 
 export interface PlanMedible{
@@ -103,6 +106,7 @@ export interface PlanMedible{
   responsableExterno: String
   fechaVencimiento: Date;
   planVerificacion: string;
+  isComplete: boolean;
 }
 
 export interface PlanEficaz{
@@ -110,8 +114,10 @@ export interface PlanEficaz{
   responsableExterno: String
   fechaVencimiento: Date;
   planValidacion: string;
+  isComplete: boolean;
 }
 
 export interface PlanRevisado{
-  revisado: boolean;
+  revisado: string;
+  isComplete: boolean;
 }

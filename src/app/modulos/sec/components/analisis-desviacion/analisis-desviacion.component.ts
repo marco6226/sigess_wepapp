@@ -104,6 +104,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     date2: Date;
     flag:Boolean
     display: boolean = false;
+    displayInforme: boolean = false;
 
     empresaName: string;
     empresaNit: string;
@@ -144,12 +145,10 @@ export class AnalisisDesviacionComponent implements OnInit {
     SelectPeligro(a: string){
         this.cargarPeligro(a)
     }
-    test(){
+    async test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
-        // this.informacionComplementaria=this.analisisPeligros.value;
-        console.log(this.informacionComplementaria)
-        console.log(this.analisisPeligros)
+        console.log(this.listPlanAccion);        
     }
 
     constructor(
@@ -361,9 +360,12 @@ export class AnalisisDesviacionComponent implements OnInit {
             
             this.dataFlow = resp["data"][0];
             this.flowChartSave = resp["data"][0].flow_chart;
-
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+            if(JSON.parse(resp["data"][0].plan_accion) != null){
+                this.listPlanAccion = JSON.parse(resp["data"][0].plan_accion);
+                this.habilitarInforme();
+            }
             
             if(this.informacionComplementaria!=null){
                 this.analisisPeligros.patchValue({
@@ -489,6 +491,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.factor_causal= JSON.stringify(this.factorCusal);
         this.setListDataFactor();
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
+        ad.plan_accion= JSON.stringify(this.listPlanAccion);
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
@@ -526,6 +529,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.observacion = this.observacion;
         ad.factor_causal= JSON.stringify(this.factorCusal);
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
+        ad.plan_accion= JSON.stringify(this.listPlanAccion);
         this.setListDataFactor();
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
@@ -790,4 +794,19 @@ export class AnalisisDesviacionComponent implements OnInit {
         // });
         
     }
+
+    habilitarInforme(){
+        let validador = true
+        this.listPlanAccion.forEach(element => {
+            let isPlanAccionFinish = element.causaRaiz.find(ele=>{
+                return ele.revisado.isComplete == true
+            })
+              console.log(isPlanAccionFinish);
+              if (isPlanAccionFinish == undefined) {
+                validador = false;
+              }
+        });        
+        this.displayInforme = validador;
+    }
+
 }

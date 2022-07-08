@@ -206,13 +206,13 @@
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
+                    <p-tabPanel *ngIf="idEmpresa == '3' && dataListFactor.length>0" header="Listado de causas">
                         <app-listado-causas [factores]="dataListFactor" [planAccionList]="listPlanAccion"></app-listado-causas>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion">
-                        <app-plan-accion-list [planAccionList]="listPlanAccion"></app-plan-accion-list>
+                    <p-tabPanel *ngIf="idEmpresa == '3' && listPlanAccion.length>0" header="Plan de accion">
+                        <app-plan-accion-list (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe">
+                    <p-tabPanel *ngIf="idEmpresa == '3' && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
 
                         <!-- <div id="plantilla" style="display: none;"> -->
@@ -355,7 +355,7 @@
 
 <div style="height: 100px;;"></div>
 
-
+<!-- <button (click)="test()">test</button> -->
 <!-- <button (click)="setListDataFactor()">vli</button> -->
 <!-- 
 <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"

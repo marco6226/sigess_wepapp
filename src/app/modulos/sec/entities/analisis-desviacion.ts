@@ -27,4 +27,5 @@ export class AnalisisDesviacion {
   causa_raiz: string;
   incapacidades: string;
   complementaria: string;
+  plan_accion: string;
 }
