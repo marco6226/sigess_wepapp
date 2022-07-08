@@ -1,7 +1,6 @@
 <h1>PLAN DE ACCIÓN</h1>
 <br>
-<p-table [value]="planAccionList" [(selection)]="causasListSelect" responsiveLayout="scroll">
-<!-- <p-table responsiveLayout="scroll"> -->
+<!-- <p-table [value]="planAccionList" [(selection)]="causasListSelect" responsiveLayout="scroll">
     <ng-template pTemplate="header">
         <tr>
             <th>Nombre del Factor Causal</th>
@@ -11,9 +10,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-causa>
         <tr>
-            <!-- <td>
-                <p-tableCheckbox [value]="causa"></p-tableCheckbox>
-            </td> -->
             <td>{{causa.nombreFC}}</td>
             <td>{{causa.causaRaiz}}</td>
             <td>
@@ -23,22 +19,90 @@
     </ng-template>
     <ng-template pTemplate="summary" let-rowData>
 
-        <!-- <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-pencil" label="Iniciar Plan de Acción" (click)="crearPlanAccion()" [disabled]="causasListSelect == null || causasListSelect.length <= 0"></button> -->
-
     </ng-template>
-</p-table>
+</p-table> -->
 
 <p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '60vw'}">
           
     <div>
-      <app-plan-accion [planAcciones]="planAccionListSelected!"></app-plan-accion>
+      <app-plan-accion *ngIf="display" (dataTest)="habilitar()" [process]="validate" [planAcciones]="planAccionListSelected"></app-plan-accion>
     </div>
 
-    <div >
+    <!-- <div >
       <p-button icon="pi pi-check" (click)="confirmCheck()" label="Confirmar" class="p-button-text"></p-button>
-    </div>
+    </div> -->
 
-  </p-dialog>
+</p-dialog>
 
-
+<br>
+<br>
 <!-- <button (click)="confirm()" pButton icon="pi pi-check" label="Confirm"></button> -->
+
+<p-accordion [multiple]="true" >
+    <p-accordionTab header="Nombre del Factor Causal: {{data.nombreFC}}" *ngFor="let data of planAccionList">
+        <!-- <p>{{data.causaRaiz}}</p> -->
+        <p-accordionTab header="Causa Raiz: {{causa.causaRaiz}}" *ngFor="let causa of data.causaRaiz">
+            <!-- <p-progressBar [value]="value"></p-progressBar> -->
+            <div>
+                <div >
+                    <label>ESPECIFICO</label>
+
+                    <p-button (onClick)="selectProduct2(causa, 'ESPECIFICO')"   iconPos="right" label="Pendiente">
+                        <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+
+                </div>
+                <div>
+                    <label>RAZONABLE</label>
+                    <p-button [disabled]="isRazonable"  (onClick)="selectProduct2(causa, 'RAZONABLE')"   iconPos="right" label="Pendiente">
+                        <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'RAZONABLE')" class="ok" >RAZONABLE</button> -->
+                </div>
+                <div>
+                    <label>MEDIBLE</label>
+                    <p-button [disabled]="isMedible" (onClick)="selectProduct2(causa, 'MEDIBLE')"   iconPos="right" label="Pendiente">
+                        <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'MEDIBLE')" class="ok" >MEDIBLE</button> -->
+
+                </div>
+                <div>
+                    <label>EFICAZ</label>
+                    <p-button [disabled]="isEficaz" (onClick)="selectProduct2(causa, 'EFICAZ')"   iconPos="right" label="Pendiente">
+                        <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'EFICAZ')" class="ok" >EFICAZ</button> -->
+
+                </div>
+                <div>
+                    <label>REVISADO</label>
+                    <p-button [disabled]="isRevisado" (onClick)="selectProduct2(causa, 'REVISADO')"   iconPos="right" label="Pendiente">
+                        <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'REVISADO')" class="ok" >REVISADO</button> -->
+
+                </div>
+            </div>
+        </p-accordionTab>        
+    </p-accordionTab>
+</p-accordion>
+
+<br>
+<br>
+
+<!-- <button pButton type="button" (click)="test()" label="Primary" class="ui-button-raised"></button>
+<button pButton type="button" label="Secondary" class="ui-button-raised ui-button-secondary"></button>
+
+<button pButton type="button" label="Success" class="ui-button-raised ui-button-success"></button>
+<button pButton type="button" label="Info" class="ui-button-raised ui-button-info"></button>
+<button pButton type="button" label="Warning" class="ui-button-raised ui-button-warning"></button>
+<button pButton  type="button" label="Danger" class="ui-button-raised ui-button-danger"></button>
+
+<p-button icon="pi pi-check" iconPos="top" label="Click"></p-button>
+<p-button icon="pi pi-check" label="Click"></p-button>
+<p-button [icon]="tests" iconPos="left" label="Click"></p-button>
+<p-button icon="pi pi-check" [disabled]="isRevisado" (onClick)="test()" label="Disabled"></p-button>
+
+
+<button (click)="test()">test</button> -->

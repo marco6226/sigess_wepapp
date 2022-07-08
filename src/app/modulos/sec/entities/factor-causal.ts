@@ -1,3 +1,5 @@
+import { Empleado } from "app/modulos/empresa/entities/empleado";
+
 export interface FactorCausal{
     id: number;
     nombre: string;
@@ -71,8 +73,13 @@ export interface listFactores{
 
 export interface listPlanAccion{
   nombreFC?: string;
-  causaRaiz?: string;
-  especifico?: PlanEspecifico;
+  causaRaiz?: planCausaRaiz[];
+}
+
+export interface planCausaRaiz{
+  // id: number;
+  causaRaiz: string;
+  especifico: PlanEspecifico;
   razonable?: PlanRazonable;
   medible?: PlanMedible;
   eficaz?: PlanEficaz;
@@ -83,6 +90,8 @@ export interface PlanEspecifico{
   nombreAccionCorrectiva: string;
   accionCorrectiva: string;
   fechaVencimiento: Date;
+  responsableEmpresa: Empleado
+  responsableExterno: String
 }
 
 export interface PlanRazonable{
@@ -90,13 +99,15 @@ export interface PlanRazonable{
 }
 
 export interface PlanMedible{
-  responsable: string;
+  responsableEmpresa: Empleado
+  responsableExterno: String
   fechaVencimiento: Date;
   planVerificacion: string;
 }
 
 export interface PlanEficaz{
-  responsable: string;
+  responsableEmpresa: Empleado
+  responsableExterno: String
   fechaVencimiento: Date;
   planValidacion: string;
 }

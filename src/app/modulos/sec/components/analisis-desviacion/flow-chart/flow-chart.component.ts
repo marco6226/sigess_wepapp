@@ -1,3 +1,4 @@
+import { NgxCaptureService } from 'ngx-capture';
 import { FactorCausal } from './../../../entities/factor-causal';
 import { Component, ViewEncapsulation, ViewChild, Inject, Output, EventEmitter, Input } from '@angular/core';
 import {
@@ -39,15 +40,19 @@ export class FlowChartComponent {
       removeUrl: 'https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove'
   };
 
+  @ViewChild('screen', { static: true }) screen: any;
 
   @ViewChild('diagram',{static: false})
+
   public diagram: DiagramComponent;
 
   
   styleFC: TextStyleModel = { color: 'red',bold:true,  whiteSpace:'CollapseSpace', strokeWidth: 1, };
 
 
-  constructor() {​​​​​​​
+  constructor(
+    private captureService: NgxCaptureService
+  ) {​​​​​​​
       
   }
 
@@ -351,6 +356,12 @@ export class FlowChartComponent {
     // console.log(this.diagram.saveDiagram());
     this.diagramSave.emit(this.diagram.saveDiagram())
   }
+
+  test(){
+    this.captureService.getImage(this.screen.nativeElement, true).then(ele=>console.log(ele))
+
+  }
+
 };
 
 function paletteIconClick() {

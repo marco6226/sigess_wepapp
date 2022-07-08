@@ -37,6 +37,7 @@ import { jerarquia } from "../../entities/jerarquia";
 import { AuthService } from "app/modulos/core/auth.service";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { SelectItem, ConfirmationService } from 'primeng/primeng'
+import { MiembroEquipo } from './miembros-equipo/miembro-equipo';
 import * as moment from 'moment';
 import {
     locale_es,
@@ -55,6 +56,8 @@ import {
     ],
 })
 export class AnalisisDesviacionComponent implements OnInit {
+    @Input("miembros") documento: Documento;
+
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
     formtp: FormGroup;
@@ -63,9 +66,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     tareasList: Tarea[];
     flowChartSave: string;
     form2: Peligro;
-
+    listaEvidence
     listPlanAccion: listPlanAccion[] =[]
-
     causaAdminList: TreeNode[] = [];
     causaAdminListSelect: TreeNode[] = [];
     causaAdminAnalisisList: CausaAdministrativa[];
@@ -132,7 +134,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     Peligro = [
         { label: "--Seleccione--", value: null },
     ]
-
+    miembros: MiembroEquipo[]
+    selectedProducts;
+    
     tSelectPeligro(a: string){
         this.tPeligro1=a;
     }
@@ -231,8 +235,11 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultarAnalisis(this.value.id);
         }
         this.cargarTiposPeligro();
+
+        //this.cargarPeligro(this.analisisPeligros.value['Peligro.id']);
+
         //this.cargarPeligro();
-        this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
+        //this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
     }
 
     cargarTiposPeligro() {
@@ -263,17 +270,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                 }
             )
             console.log(this.peligroItemList);
-            // if (this.formp.value.nombre != null) {
-            //   for (let i = 0; i < this.peligroItemList.length; i++) {
-            //     let data = this.peligroItemList[i].value;
-            //     if (data != null && data.id == this.formp.value.Peligro.id) {
-            //       this.formp.patchValue({
-            //         Peligro: this.peligroItemList[i].value
-            //       });
-            //       break;
-            //     }
-            //   }
-            // }
           }
         );
          }else{
@@ -368,16 +364,21 @@ export class AnalisisDesviacionComponent implements OnInit {
 
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+            
             if(this.informacionComplementaria!=null){
-                this.analisisPeligros.value.Peligro=this.informacionComplementaria.Peligro;
-                this.analisisPeligros.value.DescripcionPeligro=this.informacionComplementaria.DescripcionPeligro;
-                this.analisisPeligros.value.EnventoARL=this.informacionComplementaria.EnventoARL;
-                this.analisisPeligros.value.ReporteControl=this.informacionComplementaria.ReporteControl;
-                // this.analisisPeligros.value.FechaControl=this.informacionComplementaria.FechaControl;
-                this.analisisPeligros.value.CopiaTrabajador=this.informacionComplementaria.CopiaTrabajador;
-                // this.analisisPeligros.value.FechaCopia=this.informacionComplementaria.FechaCopia
+                this.analisisPeligros.patchValue({
+                    'Peligro': this.informacionComplementaria.Peligro,
+                    'DescripcionPeligro': this.informacionComplementaria.DescripcionPeligro,
+                    'EnventoARL': this.informacionComplementaria.EnventoARL,
+                    'ReporteControl': this.informacionComplementaria.ReporteControl,
+                    'FechaControl': this.informacionComplementaria.FechaControl == null ? null : new Date(this.informacionComplementaria.FechaControl),
+                    'CopiaTrabajador': this.informacionComplementaria.CopiaTrabajador,
+                    'FechaCopia':this.informacionComplementaria.FechaCopia == null ? null : new Date(this.informacionComplementaria.FechaCopia)
+                  });
+                this.cargarPeligro(this.analisisPeligros.value['Peligro'])
             }
-            console.log(this.informacionComplementaria);
+            console.log('este',this.analisisPeligros.value['FechaCopia'])
+
             
             // if(this.factorCusal){
                 this.setListDataFactor();
@@ -439,6 +440,16 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
     }
 
+    miembrosIn(event){
+        console.log('miembros event1')
+        console.log(event)
+        this.miembros=event;
+    }
+    selectedProductsIn(event){
+        console.log('miembros event2')
+        console.log(event)
+        this.selectedProducts=event;
+    }
     buildList(list: any[]): any[] {
         if (list == null) {
             return null;
@@ -452,56 +463,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
     async imprimir() {
         let template = document.getElementById('plantilla');
-        if (this.desviacionesList) {
-            const date = new Date (this.desviacionesList[0].concepto);
-            const fechahora = new Date();
-            template.querySelector('#P_lista_nombre').textContent =this.desviacionesList[0].concepto.toString();
-            template.querySelector('#P_codigo').textContent ="texto"
-            template.querySelector('#P_version').textContent = '' + this.desviacionesList[0].concepto;
-            template.querySelector('#P_formulario_nombre').textContent = this.desviacionesList[0].concepto;
-            template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-          if(this.desviacionesList != null ){
-            template.querySelector('#P_firma').textContent = this.desviacionesList[0].concepto;
-            template.querySelector('#P_cargo').textContent = " Cargo: " + this.desviacionesList[0].concepto;          
-        }else{
-            template.querySelector('#P_firma').textContent = this.desviacionesList[0].concepto;
-           
-        }
-            let  a: string | ArrayBuffer=this.desviacionesList[0].concepto.toString();
-            let b: string | ArrayBuffer=this.desviacionesList[0].concepto.toString();
-           
-            
-
-
-            let camposForm = template.querySelector('#L_campos_formulario');
-            const tr = camposForm.cloneNode(true);
-            tr.childNodes[0].textContent = "Ubicación"
-            tr.childNodes[1].textContent = this.desviacionesList[0].concepto;
-            camposForm.parentElement.appendChild(tr);
-            const tfecha = camposForm.cloneNode(true);
-            tfecha.childNodes[0].textContent = 'Fecha y Hora de realización'
-            tfecha.childNodes[1].textContent = fechahora.toDateString();
-           /* camposForm.parentElement.appendChild(tfecha);
-            this.listaInspeccion.formulario.campoList.forEach(campo => {
-                let tr = camposForm.cloneNode(true);
-                tr.childNodes[0].textContent = campo.nombre;
-                for (let i = 0; i < this.inspeccion.respuestasCampoList.length; i++) {
-                    let rc = this.inspeccion.respuestasCampoList[i];
-                    if (rc.campoId == campo.id) {
-                        tr.childNodes[1].textContent = campo.respuestaCampo.valor;
-                        break;
-                    }
-                }
-                camposForm.parentElement.appendChild(tr);
-                
-            });*/
-
-
-            let elemList = template.querySelector('#L_elementos_lista');
-           // this.agregarElementos(<HTMLElement>elemList, this.desviacionesList[0].concepto);
-            elemList.remove();
-            //this.pdfGenerado = true;
-        }
+        template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
 
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
@@ -512,11 +474,9 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.print();
         }, 400);
     }
-    informacionComplementariaJson(){
-        this.informacionComplementaria=this.analisisPeligros.value;
-    }
+
     guardarAnalisis() {
-        this.informacionComplementariaJson();
+        this.informacionComplementaria=this.analisisPeligros.value;
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -555,7 +515,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     modificarAnalisis() {
 
-        this.informacionComplementariaJson();
+        this.informacionComplementaria=this.analisisPeligros.value;
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
