@@ -1078,7 +1078,7 @@
                                                 dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
                                             </p-calendar>
 
-                                        </ng-template>
+                        </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.fechaSeg | date : 'dd/MM/yyyy'}}
                                         </ng-template>
@@ -1185,7 +1185,7 @@
 
                         <ng-template pTemplate="summary" let-rowData>
                             <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
-                                label="Crear" (click)="nuevoSeguimiento()">
+                                label="Crear"  (click)="openModalSeguimientos()">
 
                             </button>
 
@@ -1485,6 +1485,13 @@
     <app-recomendationsform [id]="caseSelect.id" [recoSelect]="recoSelect" [entity]="entity"
         (eventClose)="onCloseModalrecomendation()">
     </app-recomendationsform>
+</p-dialog>
+<p-dialog *ngIf="caseSelect" [header]="(seguiSelect) ? 'Editar seguimiento' : 'Crear seguimiento'"
+    [(visible)]="modalSeguimientos" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false"
+    [resizable]="false">
+    <app-seguimientosform [id]="caseSelect.id" [recoSelect]="seguiSelect" [entity]="entity"
+        (eventClose)="onCloseModalseguimiento()">
+    </app-seguimientosform>
 </p-dialog>
 
 <!-- Boton de retorno al listado -->

@@ -78,9 +78,10 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     createCase;
     casosList: any[] = [];
     colsActionList: any[];
-    numMaxImg = 3
+    numMaxImg = 3;
     loadingImg = false;
     modalRecomendatios = false;
+    modalSeguimientos = false;
     modalDianostico = false;
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
@@ -99,6 +100,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { value: 3, label: "Paraclínicos" },
         { value: 4, label: "Medicamentos" }];
     recomendationList: TreeNode[];
+    seguimientosList: TreeNode[];
     logsList = []
     empleadosList: Empleado[];
     diagnosticoList = [];
@@ -188,6 +190,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     status;
     recoSelect: any;
     diagSelect: any;
+    seguiSelect: any;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -861,6 +864,14 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     }
 
+    async onCloseModalseguimiento() {
+        this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
+        this.modalSeguimientos = false;
+        this.seguiSelect = null;
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+
+    }
+
     async onCloseModalDianostico() {
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.modalDianostico = false;
@@ -939,6 +950,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         try {
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
+            this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
             this.cargoDescripcion = this.caseSelect.descripcionCargo;
             this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
             this.fechaSeg()
@@ -970,6 +982,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         try {
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
+            this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
             this.cargoDescripcion = this.caseSelect.descripcionCargo;
             this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
             this.fechaSeg()
@@ -1209,6 +1222,11 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     openModalRecomendantions() {
         this.recoSelect = false;
         this.modalRecomendatios = true;
+    }
+
+    openModalSeguimientos() {
+        this.seguiSelect = false;
+        this.modalSeguimientos = true;
     }
 
     

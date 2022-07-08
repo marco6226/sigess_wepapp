@@ -88,6 +88,7 @@ import { ModeloGraficaService } from '../ind/services/modelo-grafica.service';
 import { FormularioScmComponent } from '../scm/components/formulario-scm/formulario-scm.component';
 import { ScmComponent } from '../scm/components/scm/scm.component';
 import { RecomendationsformComponent } from '../scm/components/recomendationsform/recomendationsform.component';
+import { SeguimientosformComponent } from '../scm/components/seguimientosform/seguimientosform.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TareaComponent } from '../sec/components/tarea/tarea.component';
 import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.component';

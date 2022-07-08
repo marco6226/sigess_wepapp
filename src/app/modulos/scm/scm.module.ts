@@ -13,6 +13,7 @@ import { PerfilService } from '../admin/services/perfil.service';
 import { UsuarioService } from '../admin/services/usuario.service';
 import { CieSelectorComponent } from '../comun/components/cie-selector/cie-selector.component';
 import { RecomendationsformComponent, RecomendationStatusPipe } from './components/recomendationsform/recomendationsform.component';
+import { SeguimientosformComponent, SeguimientoStatusPipe } from './components/seguimientosform/seguimientosform.component';
 import { CoreModule } from '../core/core.module';
 import { LogmodalComponent } from './components/logmodal/logmodal.component';
 import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnostico-form.component';
@@ -25,7 +26,7 @@ import { RecursoService } from '../admin/services/recurso.service';
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe, PclComponent, ScmpermisosComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe, PclComponent, ScmpermisosComponent],
     imports: [
         CommonModule,
         ComunModule,
