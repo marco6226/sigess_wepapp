@@ -17,7 +17,7 @@ export class DocumentoUploadComponent implements OnInit {
     @Input('modParam') modParam: string;
     @Input('modulo') modulo: string;
     @Input('caseId') caseId: any;
-
+    @Input('tipoEvidencia') tipoEvidencia: string;
     @Input('directorio') directorio: Directorio;
     @Input('visible') visibleDlg: boolean;
     @Output('visibleChange') visibleChange = new EventEmitter();
@@ -25,6 +25,11 @@ export class DocumentoUploadComponent implements OnInit {
 
     esPrivado: boolean;
     myGroup: any;
+    // tipoEvidenciaf: string ="fotografica";
+    // tipoEvidenciad: "documental";
+    // tipoEvidenciap: "politica";
+    // tipoEvidenciapro: "procedimiento";
+    // tipoEvidenciam: "multimedia";
     form
 
 
@@ -60,7 +65,7 @@ export class DocumentoUploadComponent implements OnInit {
             console.log(event);
 
             console.log('caso de id', this.caseId, this.directorio);
-            event.files[0].descripcion=this.form.value.descripcion
+            event.files[0].descripcion=this.form.value.descripcion;
             if (this.caseId) {
                 // this.directorio.caseId = this.caseId
             }
@@ -73,12 +78,23 @@ export class DocumentoUploadComponent implements OnInit {
             }
     
             let nivelAcceso: string = this.esPrivado ? 'PRIVADO' : 'PUBLICO';
+
+            if(this.tipoEvidencia != null){
+                this.directorioService.uploadv6(event.files[0], directorioPadre, this.modulo, this.modParam, this.caseId,this.tipoEvidencia, nivelAcceso).then((resp) => {
+                    let dir = <Directorio>resp;
+                    this.onVisibleChange(false);
+                    this.onUpload.emit(dir);
+                });
+
+            }
+            else{
     
             this.directorioService.uploadv5(event.files[0], directorioPadre, this.modulo, this.modParam, this.caseId, nivelAcceso).then((resp) => {
                 let dir = <Directorio>resp;
                 this.onVisibleChange(false);
                 this.onUpload.emit(dir);
             });
+            }
         }
         else{
             this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta ingresar la descripción'});

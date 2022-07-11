@@ -1,29 +1,33 @@
 <p>Evidencia Fotografica</p>
 
-<p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
-    accept="image/*" maxFileSize="10000000" fileLimit="3">
-</p-fileUpload>
-
+<div>
+    <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte foto" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="image/*"  fileLimit="3" [(visible)]="visibleDlg" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+</div>
 <p>Evidencia Documental</p>
 
-<p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
-    accept=".pdf,/*" maxFileSize="10000000">
-</p-fileUpload>
+<div>
+    <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte docu" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlg" [modParam]="analisisId"  tipoEvidencia="documental"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+</div>
 
 <p>Evidencia Politicas</p>
 
-<p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
-    accept=".pdf,/*" maxFileSize="10000000">
-</p-fileUpload>
+<div>
+    <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte poli" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlg" [modParam]="analisisId"  tipoEvidencia="politicas"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+</div>
 
 <p>Evidencia Procedimientos</p>
 
-<p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
-    accept=".pdf,/*" maxFileSize="10000000">
-</p-fileUpload>
+<div>
+    <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte pro" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlg" [modParam]="analisisId"  tipoEvidencia="procedimientos"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+</div>
 
 <p>Evidencia Multimedia</p>
 
-<p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
-    accept="video/*" maxFileSize="100000000" fileLimit="3">
-</p-fileUpload>
+<div>
+    <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte m" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="video/*"  fileLimit="3" [(visible)]="visibleDlg" [modParam]="analisisId"  tipoEvidencia="multimedias"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+</div>

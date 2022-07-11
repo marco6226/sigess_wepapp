@@ -142,6 +142,33 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
         });
     }
 
+    uploadv6(fileToUpload, directorioPadreId: string, modulo: string, modParam: string, caseId: string, tipoEvidencia: string, nivelAcceso: string) {
+        let endPoint = modulo == 'cop' ? this.end_point + 'cop/upload' : this.end_point + 'uploadEvidencias';
+
+        let formData: FormData = new FormData();
+
+        if (fileToUpload != null) formData.append('file', fileToUpload, fileToUpload.name);
+        if (fileToUpload != null) formData.append('descripcion',fileToUpload.descripcion);
+        if (modulo != null) formData.append('mod', modulo);
+        if (modParam != null) formData.append('modParam', modParam);
+        if (directorioPadreId != null) formData.append('dpId', directorioPadreId);
+        if (caseId != null) formData.append('caseId', caseId);
+        if (tipoEvidencia != null) formData.append('tipoEvidencias', tipoEvidencia);
+        if (nivelAcceso != null) formData.append('nivelAcceso', nivelAcceso);
+
+        return new Promise((resolve) => {
+            this.httpInt
+                .postFile(endPoint, formData)
+                .map((res) => res)
+                .subscribe(
+                    (res) => {
+                        resolve(res);
+                    },
+                    (err) => this.manageError(err)
+                );
+        });
+    }
+
     UpdateActaulizarVersion(documentoId: string, listaId: string, version: string) {
         let endPoint = this.end_point + 'update';
 

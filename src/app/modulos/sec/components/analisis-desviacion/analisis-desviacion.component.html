@@ -197,7 +197,7 @@
                         <app-miembros-equipo (miembrosOut)="miembrosIn($event)" (selectedProductsOUT)="selectedProductsIn($event)"></app-miembros-equipo>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias">
-                        <app-evidencias></app-evidencias>
+                        <app-evidencias [analisisId]="analisisId"></app-evidencias>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
                         <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
