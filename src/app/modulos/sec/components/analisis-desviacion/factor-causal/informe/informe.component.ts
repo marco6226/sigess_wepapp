@@ -22,6 +22,7 @@ export class InformeComponent implements OnInit {
 @Input() diagramaFlujo;
 @Input() infoIn;
 @Input() factores: listFactores[];
+@Input() planAccionList;
 
 pieDePag: FormGroup;
 localeES: any = locale_es;
@@ -41,14 +42,14 @@ canvas = document.createElement('canvas');
     // console.log(this.infoIn)
     // console.log(this.factores)
     // this.img.onload = this.cutImageUp;
-    this.img.src=this.diagramaFlujo;
-    console.log(this.img);
+    // this.img.src=this.diagramaFlujo;
+    // console.log(this.img);
   
-    var c = document.getElementById("myCanvas") as HTMLCanvasElement | null;
-    var ctx = c.getContext("2d");
-    var img = document.getElementById("scream") as HTMLCanvasElement | null;
-    ctx.drawImage(img, 10, 10, 700, 700);
-
+    // var c = document.getElementById("myCanvas") as HTMLCanvasElement | null;
+    // var ctx = c.getContext("2d");
+    // var img = document.getElementById("scream") as HTMLCanvasElement | null;
+    // ctx.drawImage(img, 10, 10, 700, 700);
+    console.log(this.planAccionList);
   }
   test2(){
     this.img.src;

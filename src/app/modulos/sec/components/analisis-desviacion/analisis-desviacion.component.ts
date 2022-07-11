@@ -124,6 +124,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     informacionComplementaria: InformacionComplementaria;
     informeJson: InformeJson;
 
+    img = new Image();
+    imgString:string;
+
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
     InformeJson:InformeJson[];
@@ -513,14 +516,24 @@ export class AnalisisDesviacionComponent implements OnInit {
         return crList;
     }
     async imprimir() {
+        this.img.src=this.imgIN;
+        console.log(this.img.width)
+        console.log(this.img.height)
+        console.log(Math.round(this.img.width/700))
+        console.log(Math.round(this.img.height/700))
+        
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-        // template.innerHTML='<p>'+'hjkjh'+'<br></p>';
-console.log(template.innerHTML);
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
             
             WinPrint.document.write(template.innerHTML);
+            for (let i = 0; i < Math.round(this.img.height/350); i++) {
+                for (let j = 0; j < Math.round(this.img.width/700); j++) {
+                    WinPrint.document.write('<div align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; margin: auto; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.imgIN,'></div>');
+                    WinPrint.document.write('<p style="page-break-after: always"></p>');
+                }
+            }
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
@@ -608,27 +621,6 @@ console.log(template.innerHTML);
                 this.adicionar = false;
             });
         // }, 1000);
-
-        // // setTimeout(() => {
-        //     this.peligroService.update(Pe).then((data) => {
-        //         console.log(data, "data");
-                
-        //         this.manageResponse(<AnalisisDesviacion>data);
-        //         this.modificar = true;
-        //         this.adicionar = false;
-        //     });
-        // // }, 1000);
-
-        // // setTimeout(() => {
-        //     this.tipoPeligroService.update(tp).then((data) => {
-        //         console.log(data, "data");
-                
-        //         this.manageResponse(<AnalisisDesviacion>data);
-        //         this.modificar = true;
-        //         this.adicionar = false;
-        //     });
-        // // }, 1000);
-
         
         console.log(ad.tareaDesviacionList);
         console.log(ad.flow_chart);

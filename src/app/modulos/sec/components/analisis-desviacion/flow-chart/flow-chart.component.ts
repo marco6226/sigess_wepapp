@@ -72,13 +72,13 @@ export class FlowChartComponent {
         console.log(JSON.parse(this.dataFlowChart.flow_chart));
         
         this.loadFC();
-        
+            this.exportImg();
         }, 600);
 
         
     }, 600); 
      
-    this.exportImg();
+
   }
   ​​​​​​​
   public create(args: Object): void {
