@@ -59,15 +59,29 @@ export class ListadoCausasComponent implements OnInit {
           return ele.nombreFC == tempnombreFC || ele.causaRaiz == tempcausaRaiz
         })
         console.log(isExist);
+        let tempCausa=[]
+        let x =this.planAccionList.find(ele=>{ return ele.nombreFC == tempnombreFC})
 
-        if(isExist==undefined){
-          this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})
-          console.log(this.planAccionList);
-          this.messageService.add({severity:'success', summary: 'Exito', detail: 'Se agrego el plan de acción'});
+        if (x) {
+          console.log(x);
+          this.planAccionList.forEach(ele=>{
+            if (tempnombreFC == ele.nombreFC) {
+              ele.causaRaiz.push({ causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})              
+            }
+          })
+        }else{
+          tempCausa.push({ causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})
+          this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz:tempCausa})
         }
-        else{
-          this.messageService.add({severity:'error', summary: 'Error', detail: 'Ya existe este plan de acción'});
-        }
+
+        // if(isExist==undefined){
+          // this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})
+          // console.log(this.planAccionList);
+          // this.messageService.add({severity:'success', summary: 'Exito', detail: 'Se agrego el plan de acción'});
+        // }
+        // else{
+        //   this.messageService.add({severity:'error', summary: 'Error', detail: 'Ya existe este plan de acción'});
+        // }
       }
     });
 

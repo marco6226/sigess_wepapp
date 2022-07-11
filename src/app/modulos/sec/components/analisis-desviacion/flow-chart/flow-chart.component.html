@@ -101,7 +101,7 @@
 </style>
 
 <div>
-    <button content='Export' (click)='exportImg()'></button>
+    <button content='Export' (click)='exportImg()'>Captura de imagen</button>
     <div style="width:100%;height: 80%">
         <div id="palette-space" class="sb-mobile-palette">
             <ejs-symbolpalette id="symbolpalette" [enableAnimation]='enableAnimation' [expandMode]='expandMode' [palettes]='palettes' (created)='create($event)' width="100%" height="700px" [symbolHeight]=60 [symbolWidth]=60 [symbolMargin]='symbolMargin' [getSymbolInfo]='getSymbolInfo'
@@ -109,9 +109,9 @@
             </ejs-symbolpalette>
         </div>
 
-        <div id="diagram-space" class="sb-mobile-diagram">
+        <div id="diagram-space" class="sb-mobile-diagram" #screen>
             <div class="content-wrapper" >
-                <ejs-diagram #diagram id="diagram" width="100%" height="700px" (textEdit)="changeText($event)" (mousemove)="saveDiagram(); exportImg();">
+                <ejs-diagram #diagram id="diagram" width="100%" height="700px" (textEdit)="changeText($event)" (mousemove)="saveDiagram();">
                 </ejs-diagram>
             </div>
             <ejs-uploader #defaultupload id='fileupload' (success)='onUploadSuccess($event)' [asyncSettings]='asyncSettings'></ejs-uploader>

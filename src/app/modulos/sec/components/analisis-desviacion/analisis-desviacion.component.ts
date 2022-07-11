@@ -17,6 +17,7 @@ import { CausaRaiz } from "app/modulos/sec/entities/causa-raiz";
 import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
 import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
 import { Peligro } from "app/modulos/ipr/entities/peligro";
+import {InformeJson} from "../../entities/informeFinal"
 
 import { Desviacion } from "app/modulos/sec/entities/desviacion";
 import { TreeNode } from "primeng/primeng";
@@ -48,8 +49,9 @@ import {
 @Component({
     selector: "s-analisisDesviacion",
     templateUrl: "./analisis-desviacion.component.html",
-    styleUrls: ["./analisis-desviacion.component.scss"],
+    styleUrls: ["./analisis-desviacion.component.scss","./analisis-desviacion.component.css"],
     providers: [
+
         TipoPeligroService, PeligroService,
         SistemaCausaInmediataService,
         SistemaCausaAdministrativaService,
@@ -66,6 +68,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     tareasList: Tarea[];
     flowChartSave: string;
     form2: Peligro;
+    
     listaEvidence
     listPlanAccion: listPlanAccion[] =[]
     causaAdminList: TreeNode[] = [];
@@ -104,6 +107,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     date2: Date;
     flag:Boolean
     display: boolean = false;
+    nitEmpresa: string;
+    nombreEmpresa: string;
 
     empresaName: string;
     empresaNit: string;
@@ -117,9 +122,11 @@ export class AnalisisDesviacionComponent implements OnInit {
     dataFlow: AnalisisDesviacion;
     factorCusal: FactorCausal[]=[]
     informacionComplementaria: InformacionComplementaria;
+    informeJson: InformeJson;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
+    InformeJson:InformeJson[];
 
     fields: string[] = [
         'id',
@@ -137,6 +144,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     miembros: MiembroEquipo[]
     selectedProducts;
     imgIN: string;
+    infoIn: FormGroup;
     
     tSelectPeligro(a: string){
         this.tPeligro1=a;
@@ -178,6 +186,21 @@ export class AnalisisDesviacionComponent implements OnInit {
             CopiaTrabajador: [null, /*Validators.required*/],
             FechaCopia: [null, /*Validators.required*/],
         });
+        this.infoIn = fb.group({
+            AnexoF: [null, /*Validators.required*/],
+            AnexoO: [null, /*Validators.required*/],
+            RepresentanteLegal: [null, /*Validators.required*/],
+            RepresentanteInvestigacion: [null, /*Validators.required*/],
+            CcLegal: [null, /*Validators.required*/],
+            CcInvestigacion: [null, /*Validators.required*/],
+            Cargo: [null, /*Validators.required*/],
+            Licencia: [null, /*Validators.required*/],
+            Expedida: [null, /*Validators.required*/],
+            FechaEnvio: [null, /*Validators.required*/],
+            FechaI: [null, /*Validators.required*/],
+            Diagrama:[null, /*Validators.required*/],
+        });
+        
         // this.form = fb.group({
         //     id: [null],
         //     tipoPeligro: [null, Validators.required],
@@ -186,6 +209,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.sesionService.getEmpresa());
+        this.nitEmpresa=this.sesionService.getEmpresa().nit;
+        this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
         this.idEmpresa = this.sesionService.getEmpresa().id;
         if (this.value == null) {
             switch (this.paramNav.getAccion<string>()) {
@@ -370,6 +396,8 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
             
+            this.informeJson=JSON.parse(resp["data"][0].informe);
+            console.log(this.informeJson)
             if(this.informacionComplementaria!=null){
                 this.analisisPeligros.patchValue({
                     'Peligro': this.informacionComplementaria.Peligro,
@@ -382,6 +410,24 @@ export class AnalisisDesviacionComponent implements OnInit {
                   });
                 this.cargarPeligro(this.analisisPeligros.value['Peligro'])
             }
+            if(this.informeJson!=null){
+                this.infoIn.patchValue({
+                    'AnexoF': this.informeJson.AnexoF,
+                    'AnexoO': this.informeJson.AnexoO,
+                    'RepresentanteLegal': this.informeJson.RepresentanteLegal,
+                    'RepresentanteInvestigacion': this.informeJson.RepresentanteInvestigacion,
+                    'CcLegal':this.informeJson.CcLegal,
+                    'CcInvestigacion':this.informeJson.CcInvestigacion,
+                    'Cargo':this.informeJson.Cargo,
+                    'Licencia':this.informeJson.Licencia,
+                    'Expedida':this.informeJson.Expedida  == null ? null : new Date(this.informeJson.Expedida),
+                    'FechaEnvio':this.informeJson.FechaEnvio == null ? null : new Date(this.informeJson.FechaEnvio),
+                    'FechaI' :this.informeJson.FechaI == null ? null : new Date(this.informeJson.FechaI),
+                    'Diagrama':this.informeJson.Diagrama,
+                  });
+            }
+
+            console.log(this.infoIn)
             console.log('este',this.analisisPeligros.value['FechaCopia'])
 
             
@@ -449,8 +495,6 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.miembros=event;
     }
     imgIn(event){
-        // console.log('miembros event1')
-        // console.log(event)
         this.imgIN=event;
     }
     selectedProductsIn(event){
@@ -470,7 +514,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     async imprimir() {
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
-
+        // template.innerHTML='<p>'+'hjkjh'+'<br></p>';
+console.log(template.innerHTML);
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
             
@@ -480,9 +525,11 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.print();
         }, 400);
     }
-
+    Salida(){}
     guardarAnalisis() {
         this.informacionComplementaria=this.analisisPeligros.value;
+        this.informeJson=this.infoIn.value;
+        this.informeJson.Diagrama=this.imgIN;
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -505,6 +552,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         ad.jerarquia = ad.jerarquia;
         ad.complementaria=JSON.stringify(this.informacionComplementaria);
+        ad.informe=JSON.stringify(this.informeJson);
         this.analisisDesviacionService.create(ad).then((data) => {
             let analisisDesviacion = <AnalisisDesviacion>data;
             this.manageResponse(analisisDesviacion);
@@ -522,6 +570,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     modificarAnalisis() {
 
         this.informacionComplementaria=this.analisisPeligros.value;
+        this.informeJson=this.infoIn.value;
+        this.informeJson.Diagrama=this.imgIN;
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -539,6 +589,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.tareaDesviacionList = this.tareasList;
         ad.jerarquia = this.jerarquia;
         ad.complementaria=JSON.stringify(this.informacionComplementaria);
+        ad.informe=JSON.stringify(this.informeJson);
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;

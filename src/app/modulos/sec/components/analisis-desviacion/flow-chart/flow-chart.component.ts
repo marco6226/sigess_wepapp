@@ -1,3 +1,4 @@
+import { NgxCaptureService } from 'ngx-capture';
 import { FactorCausal } from './../../../entities/factor-causal';
 import { Component, ViewEncapsulation, ViewChild, Inject, Output, EventEmitter, Input } from '@angular/core';
 import {
@@ -43,22 +44,21 @@ export class FlowChartComponent {
       removeUrl: 'https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove'
   };
 
-  public multiplePage: boolean = false;
-  public exportTypes: ItemModel[] = [
-    { text: 'JPG' }, { text: 'PNG' },
-    { text: 'BMP' }, { text: 'SVG' }
-];
+  @ViewChild('screen', { static: true }) screen: any;
 
 
 
   @ViewChild('diagram',{static: false})
+
   public diagram: DiagramComponent;
 
   
   styleFC: TextStyleModel = { color: 'red',bold:true,  whiteSpace:'CollapseSpace', strokeWidth: 1, };
 
 
-  constructor() {​​​​​​​
+  constructor(
+    private captureService: NgxCaptureService
+  ) {​​​​​​​
       
   }
 
@@ -72,11 +72,12 @@ export class FlowChartComponent {
         console.log(JSON.parse(this.dataFlowChart.flow_chart));
         
         this.loadFC();
-            
+        
         }, 600);
 
-      
-    }, 600);  
+        
+    }, 600); 
+     
     this.exportImg();
   }
   ​​​​​​​
@@ -121,6 +122,7 @@ export class FlowChartComponent {
   public symbolMargin: MarginModel = { left: 15, right: 15, top: 15, bottom: 15 };
   public expandMode: ExpandMode = 'Multiple';
   public enableAnimation: any = true;
+  ele:string;
   //Initialize the flowshapes for the symbol palatte
   private flowshapes: NodeModel[] = [
       { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
@@ -365,15 +367,9 @@ export class FlowChartComponent {
   }
 
   exportImg(){
-    let exportOptions: IExportOptions = {};
-    exportOptions.format = 'JPG';
-    exportOptions.mode = 'Data';
-    exportOptions.fileName = 'Export';
-    // exportOptions.pageHeight = 1200;
-    // exportOptions.pageWidth = 1200;
-    this.Imag=this.diagram.exportDiagram(exportOptions).toString();
-    // console.log(this.Imag);
-    this.imgDF.emit(this.Imag);
+    this.captureService.getImage(this.screen.nativeElement, true).then(h=>{
+        this.imgDF.emit(h);
+    })
 }
 };
 

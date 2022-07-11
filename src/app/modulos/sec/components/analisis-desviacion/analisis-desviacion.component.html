@@ -207,14 +207,72 @@
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Listado de causas">
-                        <app-listado-causas [factores]="dataListFactor"></app-listado-causas>
+                        <app-listado-causas [factores]="dataListFactor" [planAccionList]="listPlanAccion"></app-listado-causas>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion"></p-tabPanel>
+                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Plan de accion">
+                        <app-plan-accion-list [planAccionList]="listPlanAccion"></app-plan-accion-list>
+                    </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
 
-                        <!-- <div id="plantilla" style="display: none;"> -->
-                        <div id="plantilla" >
+                        <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
+                            <tr>
+                                <td  style="text-align: left">Fecha de investigación</td>
+                                <td  style="text-align: left"><p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaI"></p-calendar></td> 
+                            </tr>
+                            <tr>
+                                <td style=" text-align: left">Anexo Furat No</td> 
+                                <td style=" text-align: left"><input type="text" pInputText formControlName="AnexoF" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td> 
+                                <td style=" text-align: left">Anexos Otros</td> 
+                                <td colspan="2" style=" text-align: left"><input type="text" pInputText formControlName="AnexoO" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td>
+                            </tr>   
+                            <tr>
+                                <td colspan="5" style=" text-align: left"></td> 
+                            </tr>
+                            <tr>
+                                <th colspan="2" style=" text-align: left">Representante Legal</th> 
+                                <th colspan="3" style=" text-align: left">Responsable de la Investigación</th> 
+                            </tr>
+                            <tr>
+                                <td style=" text-align: left">Nombre</td> 
+                                <td style=" text-align: left"><input type="text" pInputText formControlName="RepresentanteLegal" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td> 
+                                <td style=" text-align: left"></td> 
+                                <td style=" text-align: left">Nombre</td>
+                                <td style=" text-align: left"><input type="text" pInputText formControlName="RepresentanteInvestigacion" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td>
+                            </tr>
+                            <tr>
+                                <td style=" text-align: left">CC</td> 
+                                <td style=" text-align: left"><input type="number" pInputText formControlName="CcLegal" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td> 
+                                <td style=" text-align: left"></td> 
+                                <td style=" text-align: left">CC</td>
+                                <td style=" text-align: left"><input type="number" pInputText formControlName="CcInvestigacion" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td>
+                            </tr>
+                            <tr>
+                                <td style=" text-align: left">Cargo</td> 
+                                <td style=" text-align: left"><input type="text" formControlName="Cargo" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td> 
+                                <td style=" text-align: left"></td> 
+                                <td style=" text-align: left">Licencia No</td>
+                                <td style=" text-align: left"><input type="number" pInputText formControlName="Licencia" style="border-top: 0px;border-left: 0px;border-right: 0px;" /></td>
+                            </tr>
+                            <tr>
+                                <td style=" text-align: left"></td> 
+                                <td style=" text-align: left"></td> 
+                                <td style=" text-align: left"></td> 
+                                <td style=" text-align: left">Expedida</td>
+                                <td style=" text-align: left"><p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="Expedida"></p-calendar></td>
+                            </tr>
+                            <tr>        
+                                <td colspan="5" style=" text-align: left"></td> 
+                            </tr>
+                            <tr>
+                                <td colspan="4" rowspan="3" style=" text-align: left">Fecha envío investigación y sus recomendaciones a la dirección territorial y oficinas especiales del Ministerio del Trabajo</td> 
+                                <td style=" text-align: left"><p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaEnvio">
+                                </p-calendar></td>
+                                
+                            </tr>
+                        </table>
+                        <div id="plantilla" style="display: none;">
+                        <!-- <div id="plantilla" > -->
                             <div style="background-color: white">
                                 
                                 <table width="100%" style="border-collapse: collapse;">
@@ -231,11 +289,13 @@
                                         <th style="text-align: left">
                                             Nombre de la empresa
                                         </th>
+                                        <td>{{this.nombreEmpresa}}</td>
                                     </tr>
                                     <tr>
                                         <th style="text-align: left">
                                             NIT:
                                         </th>
+                                        <td>{{this.nitEmpresa}}</td>
                                     </tr>
                                 </table>
 
@@ -246,7 +306,9 @@
                                 [observacion]="observacion"
                                 [miembros]="miembros"
                                 [selectedProducts]="selectedProducts"
-                                [diagramaFlujo]="imgIN"></app-informe>
+                                [diagramaFlujo]="imgIN"
+                                [factores]="dataListFactor"
+                                [infoIn]="infoIn"></app-informe>
                             </div>
                         </div>
 
