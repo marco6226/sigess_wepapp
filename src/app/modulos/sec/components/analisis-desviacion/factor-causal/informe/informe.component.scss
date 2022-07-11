@@ -1,0 +1,14 @@
+.clip-me {  
+  
+    /* Example: clip away the element from the top, right, bottom, and left edges */
+    clip-path: inset(10px 20px 30px 40px); /* or "none" */
+    
+    /* Example: clip element into a Heptagon */
+    clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+  
+  
+    /* Deprecated version */
+    position: absolute; /* absolute or fixed positioning required */
+    clip: rect(110px, 160px, 170px, 60px); /* or "auto" */
+    /* values descript a top/left point and bottom/right point */
+  } 

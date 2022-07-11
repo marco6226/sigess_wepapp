@@ -1,7 +1,10 @@
+<!-- <!-- <button (click)="test()">asd</button> -->
+<button (click)="test()">asd</button> -->
 <table width="70%" style="border-collapse: collapse; margin: auto;">
     <tr>
         <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">Fecha de investigación</th>
-        <td style="border: 1px solid #c8c8c8; text-align: center"> </td> 
+        <!-- <td style="border: 1px solid #c8c8c8; text-align: center"><p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar></td>  -->
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{this.infoIn.value['FechaI']  | date: 'dd/MM/yyyy'}}</td> 
     </tr>
 </table>
 
@@ -47,9 +50,10 @@
 
 <table width="70%" style="border-collapse: collapse; margin: auto;">
     <tr>
-        <th colspan="4" style="border: 1px solid #c8c8c8; text-align: center">MIEMBROS DEL EQUIPO</th>
+        <th colspan="5" style="border: 1px solid #c8c8c8; text-align: center">MIEMBROS DEL EQUIPO</th>
     </tr>
     <tr>
+        <th  style="border: 1px solid #c8c8c8; text-align: center">No </th>
         <th  style="border: 1px solid #c8c8c8; text-align: center">Nombre </th>
         <th  style="border: 1px solid #c8c8c8; text-align: center">Cargo </th>
         <th  style="border: 1px solid #c8c8c8; text-align: center">División</th>
@@ -57,6 +61,7 @@
     </tr>
 
     <tr *ngFor="let miembro of miembros">
+        <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.id}} </td>
         <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.nombre}}</td>
         <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.cargo}}</td>
         <td  style="border: 1px solid #c8c8c8; text-align: center">{{miembro.division}}</td>
@@ -69,26 +74,15 @@
 
 <table width="70%" style="border-collapse: collapse; margin: auto;">
     <tr>
-        <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">SnapChart - Análisis Factor Causal y Raiz</th>
-    </tr>
-    <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center"> Imagen Diagrama de flujo</td> 
-    </tr>
-</table>
-
-<br />
-
-<table width="70%" style="border-collapse: collapse; margin: auto;">
-    <tr>
         <th colspan="6" style="border: 1px solid #c8c8c8; text-align: center" width="50%">RECOLECCIÓN DE EVIDENCIAS</th>
     </tr>
     <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center">Images</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">New folder</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Policies</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Procedures</td>
-        <td style="border: 1px solid #c8c8c8; text-align: center">SnapCaps</td>     
-        <td style="border: 1px solid #c8c8c8; text-align: center">Videos</td>     
+        <th style="border: 1px solid #c8c8c8; text-align: center">Images</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">New folder</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Policies</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Procedures</th>
+        <th style="border: 1px solid #c8c8c8; text-align: center">SnapCaps</th>     
+        <th style="border: 1px solid #c8c8c8; text-align: center">Videos</th>     
     </tr>
     <tr>
         <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
@@ -107,23 +101,101 @@
         <th colspan="6" style="border: 1px solid #c8c8c8; text-align: center" width="50%">DESCRIPCION DE LAS ACCIONES</th>
     </tr>
     <tr>
-        <td rowspan="2" style="border: 1px solid #c8c8c8; text-align: center">No</td> 
-        <td colspan="2" style="border: 1px solid #c8c8c8; text-align: center">New folder</td> 
-        <td colspan="3" style="border: 1px solid #c8c8c8; text-align: center">Policies</td> 
+        <th rowspan="2" style="border: 1px solid #c8c8c8; text-align: center">No</th> 
+        <th colspan="2" style="border: 1px solid #c8c8c8; text-align: center">New folder</th> 
+        <th colspan="3" style="border: 1px solid #c8c8c8; text-align: center">Policies</th> 
     </tr>   
     <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center">Nombre del Factor Causal</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Causa Raiz</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Acción correctiva</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">Fecha Vencimiento</td>
-        <td style="border: 1px solid #c8c8c8; text-align: center">Responsable</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Nombre del Factor Causal</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Causa Raiz</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Acción correctiva</th> 
+        <th style="border: 1px solid #c8c8c8; text-align: center">Fecha Vencimiento</th>
+        <th style="border: 1px solid #c8c8c8; text-align: center">Responsable</th> 
+    </tr>
+    <tr *ngFor="let factor of factores">
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factores.indexOf(factor)+1}}</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.nombre}}</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.accion}}</td>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
+        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+    </tr>
+
+</table>
+<br/>
+<table width="90%" style=" margin: auto;">
+    <tr>
+        <td style=" text-align: left">Anexo Furat No.</td> 
+        <td style=" text-align: left">{{this.infoIn.value['AnexoF']}}</td> 
+        <td></td>
+        <td style=" text-align: left">Anexos Otros:</td> 
+        <td style=" text-align: left">{{this.infoIn.value['AnexoO']}}</td>
+    </tr>   
+    <tr><td colspan="5">&nbsp;</td></tr>
+    <tr>
+        <th colspan="2" style=" text-align: left">Representante Legal</th> 
+        <th colspan="3" style=" text-align: left">Responsable de la Investigación</th> 
     </tr>
     <tr>
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+        <td style=" text-align: left">Nombre:</td> 
+        <td style=" text-align: left">{{this.infoIn.value['RepresentanteLegal']}}</td> 
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left">Nombre:</td>
+        <td style=" text-align: left">{{this.infoIn.value['RepresentanteInvestigacion']}}</td>
+    </tr>
+    <tr><td colspan="5">&nbsp;</td></tr>
+    <tr>
+        <td style=" text-align: left">Firma: </td> 
+        <td style=" text-align: left">______________________________</td> 
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left">Firma: </td>
+        <td style=" text-align: left">______________________________</td>
+    </tr>
+    <tr>
+        <td style=" text-align: left">CC.</td> 
+        <td style=" text-align: left">{{this.infoIn.value['CcLegal']}}</td> 
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left">CC.</td>
+        <td style=" text-align: left">{{this.infoIn.value['CcInvestigacion']}}</td>
+    </tr>
+    <tr>
+        <td style=" text-align: left">Cargo:</td> 
+        <td style=" text-align: left">{{this.infoIn.value['Cargo']}}</td> 
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left">Licencia No.</td>
+        <td style=" text-align: left">{{this.infoIn.value['Licencia']}}</td>
+    </tr>
+    <tr>
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left"></td> 
+        <td style=" text-align: left">Expedida:</td>
+        <td style=" text-align: left">{{this.infoIn.value['Expedida']  | date: 'dd/MM/yyyy'}}</td>
+    </tr>
+    <tr>        
+        <td colspan="5" style=" text-align: left"></td> 
+    </tr>
+    <tr>
+        <td colspan="4" rowspan="3" style=" text-align: left">Fecha envío investigación y sus recomendaciones a la dirección territorial y oficinas especiales del Ministerio del Trabajo</td> 
+        <td style=" text-align: left">{{this.infoIn.value['FechaEnvio']  | date: 'dd/MM/yyyy'}}</td>
+        
     </tr>
 </table>
+
+<br/>
+<!-- <p style="page-break-after: always"></p>
+
+<div><h1><strong><u>Anexos:</u></strong></h1></div>
+
+<br/>
+
+<table width="90%" style="border-collapse: collapse; margin: auto;">
+    <tr>
+        <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">SnapChart - Análisis Factor Causal y Raiz</th>
+    </tr>
+</table>
+
+<img style="object-fit: none; object-position: 0px 0px;"  src={{diagramaFlujo}} width="100%"> -->
+<!-- <img style="object-fit: none; object-position: -700px 0px;"  src={{diagramaFlujo}} width="100%">
+
+<P style="border-collapse: collapse; margin: 0;padding:0;border: 2px solid grey; width: 700px; height:700px;"><img style="object-fit: none; object-position: -200px 0px;"  src={{diagramaFlujo}} width=100%; ></P> -->
