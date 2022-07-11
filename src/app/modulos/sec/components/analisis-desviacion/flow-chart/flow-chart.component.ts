@@ -2,14 +2,16 @@ import { NgxCaptureService } from 'ngx-capture';
 import { FactorCausal } from './../../../entities/factor-causal';
 import { Component, ViewEncapsulation, ViewChild, Inject, Output, EventEmitter, Input } from '@angular/core';
 import {
-    DiagramComponent, Diagram, NodeModel, UndoRedo, ConnectorModel, PointPortModel, Node, FlowShapeModel, MarginModel, PaletteModel,
+    FileFormats, DiagramComponent, Diagram, PrintAndExport, IExportOptions,BasicShapeModel,NodeModel, UndoRedo, ConnectorModel, PointPortModel, Node, FlowShapeModel, MarginModel, PaletteModel,
     SymbolInfo, DiagramContextMenu, GridlinesModel, SnapSettingsModel, ShapeStyleModel, TextStyleModel, BpmnShape, HtmlModel, IDragEnterEventArgs, SnapConstraints
 } from '@syncfusion/ej2-angular-diagrams';
 import { AsyncSettingsModel } from '@syncfusion/ej2-inputs';
-import { ClickEventArgs, ExpandMode } from '@syncfusion/ej2-navigations';
+import { ClickEventArgs, ExpandMode, MenuEventArgs} from '@syncfusion/ej2-navigations';
 import { AnalisisDesviacion } from 'app/modulos/sec/entities/analisis-desviacion';
+import { ItemModel } from '@syncfusion/ej2-splitbuttons';
+
 // import { showPaletteIcon } from './script/diagram-common';
-Diagram.Inject(UndoRedo, DiagramContextMenu);
+Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 
 @Component({
   selector: 'app-flow-chart',
@@ -18,10 +20,12 @@ Diagram.Inject(UndoRedo, DiagramContextMenu);
 })
 export class FlowChartComponent {
 
+//   @Output()imgDF=new EventEmitter<string>();
   @Output() datosFC = new EventEmitter<FactorCausal[]>();
   listFC: FactorCausal[]=[];
   @Input() dataFlowChart:AnalisisDesviacion;
   @Output() diagramSave = new EventEmitter<string>();
+  @Output() imgDF = new EventEmitter<string>()
 
   precarga: boolean=false;
   public terminator: FlowShapeModel = { type: 'Flow', shape: 'Terminator' };
@@ -41,6 +45,8 @@ export class FlowChartComponent {
   };
 
   @ViewChild('screen', { static: true }) screen: any;
+
+
 
   @ViewChild('diagram',{static: false})
 
@@ -66,11 +72,13 @@ export class FlowChartComponent {
         console.log(JSON.parse(this.dataFlowChart.flow_chart));
         
         this.loadFC();
-            
+            this.exportImg();
         }, 600);
 
-      
-    }, 600);  
+        
+    }, 600); 
+     
+
   }
   ​​​​​​​
   public create(args: Object): void {
@@ -114,6 +122,7 @@ export class FlowChartComponent {
   public symbolMargin: MarginModel = { left: 15, right: 15, top: 15, bottom: 15 };
   public expandMode: ExpandMode = 'Multiple';
   public enableAnimation: any = true;
+  ele:string;
   //Initialize the flowshapes for the symbol palatte
   private flowshapes: NodeModel[] = [
       { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
@@ -196,7 +205,7 @@ export class FlowChartComponent {
               content:'<g xmlns="http://www.w3.org/2000/svg"> <g transform="translate(1 1)"><g>'
           +  ' <path d="M0 0H12V7L6 12 0 7V0" stroke="#41729D" stroke-width="0.3" fill="#5B9BD4"/>'+
           '</g></g>',
-      type:'Native'
+          type:'Native'
           },},
           {id:'RecAmarillo' ,offsetX:50, offsetY:50, shape:{
               content:'<g xmlns="http://www.w3.org/2000/svg"> <g transform="translate(1 1)"><g>'
@@ -226,7 +235,7 @@ export class FlowChartComponent {
     },
       
   ];
-
+  Imag:string;
   public palettes: PaletteModel[] = [
   { id: 'Bpmn', expanded: true, symbols: this.bpmnShapes, iconCss: 'shapes', title: 'Bloques' },
 
@@ -357,11 +366,11 @@ export class FlowChartComponent {
     this.diagramSave.emit(this.diagram.saveDiagram())
   }
 
-  test(){
-    this.captureService.getImage(this.screen.nativeElement, true).then(ele=>console.log(ele))
-
-  }
-
+  exportImg(){
+    this.captureService.getImage(this.screen.nativeElement, true).then(h=>{
+        this.imgDF.emit(h);
+    })
+}
 };
 
 function paletteIconClick() {

@@ -101,18 +101,28 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     this.pasoSelect--;
   }
 
-  test(){
+  submit(){
     // console.log(this.formEspecifico, this.planAcciones);
     // switch (this.process) {
     //   case 'ESPECIFICO':
-    //     //  this.planAcciones.especifico = this.formEspecifico.value //JSON.parse(JSON.stringify(this.formEspecifico.value)) 
-    //     this.formEspecifico.reset()
+    //     this.planAcciones.especifico.isComplete = true;
     //     break;
-    
+    //   case 'MEDIBLE':
+    //     this.planAcciones.medible.isComplete = true;
+    //     break;
+    //   case 'EFICAZ':
+    //     this.planAcciones.eficaz.isComplete = true;
+    //     break;
+    //   case 'RAZONABLE':
+    //     this.planAcciones.razonable.isComplete = true;
+    //     break;
+    //   case 'REVISADO':
+    //     this.planAcciones.revisado.isComplete = true;
+    //     break;
     //   default:
     //     break;
     // }
-    // console.log(this.planAcciones);
+    console.log(this.planAcciones);
 
     this.dataTest.emit()
     // this.planAcciones.nombreFC='Hola'
@@ -120,9 +130,9 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   }
 
   test2(){
-    // console.log(this.planAcciones, this.dataTest);
+    console.log(this.planAcciones);
+    console.log(this.planAcciones.especifico);
     
   }
-  
 
 }

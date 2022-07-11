@@ -73,25 +73,30 @@ export class ListadoCausasComponent implements OnInit {
                   accionCorrectiva: null,
                   fechaVencimiento: null,
                   responsableEmpresa: null,
-                  responsableExterno: null
+                  responsableExterno: null,
+                  isComplete: false
                 }, 
                 razonable:{
-                  justificacion: null
+                  justificacion: null,
+                  isComplete: false
                 }, 
                 eficaz:{
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
-                  planValidacion: null
+                  planValidacion: null,
+                  isComplete: false
                 }, 
                 medible:{
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
-                  planVerificacion: null
+                  planVerificacion: null,
+                  isComplete: false
                 }, 
                 revisado:{
-                  revisado: null
+                  revisado: null,
+                  isComplete: false
                 }})              
             }
           })
@@ -103,7 +108,8 @@ export class ListadoCausasComponent implements OnInit {
                   accionCorrectiva: null,
                   fechaVencimiento: null,
                   responsableEmpresa: null,
-                  responsableExterno: null
+                  responsableExterno: null,
+                  isComplete: false
                 }, 
                 razonable:{
                   justificacion: null
@@ -112,16 +118,19 @@ export class ListadoCausasComponent implements OnInit {
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
-                  planValidacion: null
+                  planValidacion: null,
+                  isComplete: false
                 }, 
                 medible:{
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
-                  planVerificacion: null
+                  planVerificacion: null,
+                  isComplete: false
                 }, 
                 revisado:{
-                  revisado: null
+                  revisado: null,
+                  isComplete: false
                 }})
           this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz:tempCausa})
         }

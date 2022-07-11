@@ -1,206 +1,96 @@
 <p-toast></p-toast>
-<!-- <div *ngIf="!process">
-    <p-panel header="CAUSA RAIZ">
-        <div class="p-field">
-            <h2>Nombre del Factor Causal</h2>
-            <label>{{planAcciones?.nombreFC}}</label>
-        </div>
-        <div class="p-field">
-            <h2>Causa Raiz</h2>
-            <label>{{planAcciones?.causaRaiz}}</label>
-        </div>
-    </p-panel>
-    
-    
-    
-    <p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
-    
-    
-     <p-panel *ngIf="pasoSelect==0" header="ESPECIFICO" [formGroup]="formEspecifico">
-        <div class="p-field">
-            <label>Nombre de Acción Correctiva</label>
-            <input type="text" formControlName="nombreAccionCorrectiva" required autofocus/>
-        </div>
-        <div class="p-field">
-            <label>Acción correctiva</label>
-            <input type="text" formControlName="accionCorrectiva" required autofocus/>
-        </div>
-        <div class="p-field">
-            <label>Fecha Vencimiento</label>
-            <p-calendar [touchUI]="true" formControlName="fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-        </div>
-        <div class="p-field">
-            <label>Responsable Empresa</label>
-            <s-empleadoSelector [(ngModel)]="empleadoSelect " formControlName="responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
-        </div>
-        <div class="p-field">
-            <label>Responsable Externo</label>
-            <input type="text" formControlName="responsableExterno" />
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="pasoSelect==1" header="RAZONABLE">
-        <div class="p-field">
-            <label>Justificación (Opcional)</label>
-            <input type="text" required autofocus/>
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="pasoSelect==2" header="MEDIBLE">
-        <div class="p-field">
-            <label>Responsable de Verificar que la acción ha sido compleatada</label>
-            <input type="text" required autofocus/>
-            <s-empleadoSelector [(ngModel)]="empleadoSelect " [readOnly]="reporteSelect "></s-empleadoSelector>
-        </div>
-        <div class="p-field">
-            <label>Responsable Externo</label>
-            <input type="text"  />
-        </div>
-        <div class="p-field">
-            <label>Fecha Vencimiento</label>
-            <p-calendar [touchUI]="true" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-        </div>
-        <div class="p-field">
-            <label>Plan de Verificación</label>
-            <input type="text" required autofocus/>
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="pasoSelect==3" header="EFICAZ">    
-        <div class="p-field">
-            <label>Responsable Verificar solución</label>
-            <input type="text" required autofocus/>
-            <s-empleadoSelector [(ngModel)]="empleadoSelect " [readOnly]="reporteSelect "></s-empleadoSelector>
-        </div>
-        <div class="p-field">
-            <label>Responsable Externo</label>
-            <input type="text" />
-        </div>
-        <div class="p-field">
-            <label>Fecha Vencimiento</label>
-            <p-calendar [touchUI]="true" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-        </div>
-        <div class="p-field">
-            <label>Plan de Validación</label>
-            <input type="text" required autofocus/>
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="pasoSelect==4" header="REVISADO">    
-        <div class="p-field">
-            <label>Revisado</label>
-            <p-radioButton name="groupname" value="Si" [(ngModel)]="selectedValue"></p-radioButton>
-            <p-radioButton name="groupname" value="No" [(ngModel)]="selectedValue"></p-radioButton>
-        </div>
-     </p-panel>
-    
-    
-    
-    
-     <div id="msform">
-        <div>
-            <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
-        </div>
-        <div class="divleft">
-            <button class="next action-button" *ngIf="pasoSelect < steps.length-1" (click)="next()">Siguiente</button>
-        </div>
+<p-panel *ngIf="process=='ESPECIFICO'" header="ESPECIFICO">
+<!-- <p-panel *ngIf="process=='ESPECIFICO'" header="ESPECIFICO" [formGroup]="formEspecifico"> -->
+    <div class="p-field">
+        <label>Nombre de Acción Correctiva</label>
+        <input type="text" [(ngModel)]="planAcciones.especifico.nombreAccionCorrectiva" />
+        <!-- <input type="text" formControlName="nombreAccionCorrectiva" /> -->
     </div>
-    
-    <br><br>
-    
-    
-</div> -->
+    <div class="p-field">
+        <label>Acción correctiva</label>
+        <input type="text" [(ngModel)]="planAcciones.especifico.accionCorrectiva" required autofocus/>
+    </div>
+    <div class="p-field">
+        <label>Fecha Vencimiento</label>
+        <p-calendar [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+    <div class="p-field">
+        <label>Responsable Empresa</label>
+        <s-empleadoSelector [(ngModel)]="planAcciones.especifico.responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
+    </div>
+    <div class="p-field">
+        <label>Responsable Externo</label>
+        <input type="text" [(ngModel)]="planAcciones.especifico.responsableExterno" />
+    </div>
+    </p-panel>
 
-<div *ngIf="process">
-    
-    <p-panel *ngIf="process=='ESPECIFICO'" header="ESPECIFICO">
-    <!-- <p-panel *ngIf="process=='ESPECIFICO'" header="ESPECIFICO" [formGroup]="formEspecifico"> -->
-        <div class="p-field">
-            <label>Nombre de Acción Correctiva</label>
-            <input type="text" [(ngModel)]="planAcciones.especifico.nombreAccionCorrectiva" />
-            <!-- <input type="text" formControlName="nombreAccionCorrectiva" /> -->
+    <p-panel *ngIf="process=='RAZONABLE'" header="RAZONABLE">
+    <div class="p-field">
+        <label>Justificación (Opcional)</label>
+        <input type="text" [(ngModel)]="planAcciones.razonable.justificacion" required autofocus/>
+    </div>
+    </p-panel>
+
+    <p-panel *ngIf="process=='MEDIBLE'" header="MEDIBLE">
+    <div class="p-field">
+        <label>Responsable de Verificar que la acción ha sido compleatada</label>
+        <!-- <input type="text" required autofocus/> -->
+        <s-empleadoSelector [(ngModel)]="planAcciones.medible.responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
+    </div>
+    <div class="p-field">
+        <label>Responsable Externo</label>
+        <input type="text" [(ngModel)]="planAcciones.medible.responsableExterno" />
+    </div>
+    <div class="p-field">
+        <label>Fecha Vencimiento</label>
+        <p-calendar [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+    <div class="p-field">
+        <label>Plan de Verificación</label>
+        <input type="text" [(ngModel)]="planAcciones.medible.planVerificacion" required autofocus/>
+    </div>
+    </p-panel>
+
+    <p-panel *ngIf="process=='EFICAZ'" header="EFICAZ">    
+    <div class="p-field">
+        <label>Responsable Verificar solución</label>
+        <!-- <input type="text" required autofocus/> -->
+        <s-empleadoSelector [(ngModel)]="planAcciones.eficaz.responsableEmpresa " [readOnly]="reporteSelect "></s-empleadoSelector>
+    </div>
+    <div class="p-field">
+        <label>Responsable Externo</label>
+        <input type="text" [(ngModel)]="planAcciones.eficaz.responsableExterno"/>
+    </div>
+    <div class="p-field">
+        <label>Fecha Vencimiento</label>
+        <p-calendar [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.medible.fechaVencimiento" [(ngModel)]="planAcciones.eficaz.fechaVencimiento" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+    <div class="p-field">
+        <label>Plan de Validación</label>
+        <input type="text" [(ngModel)]="planAcciones.eficaz.planValidacion" required autofocus/>
+    </div>
+    </p-panel>
+
+    <p-panel *ngIf="process=='REVISADO'" header="REVISADO">    
+    <div class="p-field">
+        <label>Revisado</label>
+        <div class="field-radiobutton">
+            <p-radioButton name="groupname" value="Si" [(ngModel)]="planAcciones.revisado.revisado" ></p-radioButton>
+            <label for="groupname1">Si</label>
         </div>
-        <div class="p-field">
-            <label>Acción correctiva</label>
-            <input type="text" [(ngModel)]="planAcciones.especifico.accionCorrectiva" required autofocus/>
+        <div class="field-radiobutton">
+            <p-radioButton name="groupname" value="No" [(ngModel)]="planAcciones.revisado.revisado" ></p-radioButton>
+            <label for="groupname1">No</label>
         </div>
-        <div class="p-field">
-            <label>Fecha Vencimiento</label>
-            <p-calendar [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-        </div>
-        <div class="p-field">
-            <label>Responsable Empresa</label>
-            <s-empleadoSelector [(ngModel)]="planAcciones.especifico.responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
-        </div>
-        <div class="p-field">
-            <label>Responsable Externo</label>
-            <input type="text" [(ngModel)]="planAcciones.especifico.responsableExterno" />
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="process=='RAZONABLE'" header="RAZONABLE">
-        <div class="p-field">
-            <label>Justificación (Opcional)</label>
-            <input type="text" [(ngModel)]="planAcciones.razonable.justificacion" required autofocus/>
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="process=='MEDIBLE'" header="MEDIBLE">
-        <div class="p-field">
-            <label>Responsable de Verificar que la acción ha sido compleatada</label>
-            <!-- <input type="text" required autofocus/> -->
-            <s-empleadoSelector [(ngModel)]="planAcciones.medible.responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
-        </div>
-        <div class="p-field">
-            <label>Responsable Externo</label>
-            <input type="text" [(ngModel)]="planAcciones.medible.responsableExterno" />
-        </div>
-        <div class="p-field">
-            <label>Fecha Vencimiento</label>
-            <p-calendar [touchUI]="true" [locale]="localeES" [(ngModel)]="planAcciones.medible.fechaVencimiento" dateFormat="dd/mm/yy"></p-calendar>
-        </div>
-        <div class="p-field">
-            <label>Plan de Verificación</label>
-            <input type="text" [(ngModel)]="planAcciones.medible.planVerificacion" required autofocus/>
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="process=='EFICAZ'" header="EFICAZ">    
-        <div class="p-field">
-            <label>Responsable Verificar solución</label>
-            <!-- <input type="text" required autofocus/> -->
-            <s-empleadoSelector [(ngModel)]="planAcciones.eficaz.responsableEmpresa " [readOnly]="reporteSelect "></s-empleadoSelector>
-        </div>
-        <div class="p-field">
-            <label>Responsable Externo</label>
-            <input type="text" [(ngModel)]="planAcciones.eficaz.responsableExterno"/>
-        </div>
-        <div class="p-field">
-            <label>Fecha Vencimiento</label>
-            <p-calendar [touchUI]="true" [locale]="localeES" [(ngModel)]="planAcciones.eficaz.fechaVencimiento" dateFormat="dd/mm/yy"></p-calendar>
-        </div>
-        <div class="p-field">
-            <label>Plan de Validación</label>
-            <input type="text" [(ngModel)]="planAcciones.eficaz.planValidacion" required autofocus/>
-        </div>
-     </p-panel>
-    
-     <p-panel *ngIf="process=='REVISADO'" header="REVISADO">    
-        <div class="p-field">
-            <label>Revisado</label>
-            <div class="field-radiobutton">
-                <p-radioButton name="groupname" value="Si" [(ngModel)]="planAcciones.revisado.revisado" ></p-radioButton>
-                <label for="groupname1">Si</label>
-            </div>
-            <div class="field-radiobutton">
-                <p-radioButton name="groupname" value="No" [(ngModel)]="planAcciones.revisado.revisado" ></p-radioButton>
-                <label for="groupname1">No</label>
-            </div>
-            
-        </div>
-     </p-panel>
-     <br>
-     <br>
-     <button pButton type="button" (click)="test()" label="confirmar" class="ui-button-raised"></button>
-     <button pButton type="button" (click)="test2()" label="confirmar" class="ui-button-raised"></button>
-</div>
+        
+    </div>
+    </p-panel>
+    <br>
+    <br>
+    <button pButton *ngIf="process=='ESPECIFICO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.especifico.accionCorrectiva!=null && planAcciones.especifico.fechaVencimiento!=null && (planAcciones.especifico.responsableEmpresa!=null || planAcciones.especifico.responsableExterno!=null))"></button>
+    <button pButton *ngIf="process=='RAZONABLE'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised"></button>
+    <button pButton *ngIf="process=='MEDIBLE'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.medible.planVerificacion!=null && planAcciones.medible.fechaVencimiento!=null && (planAcciones.medible.responsableEmpresa || planAcciones.medible.responsableExterno))"></button>
+    <button pButton *ngIf="process=='EFICAZ'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.eficaz.planValidacion!=null && planAcciones.eficaz.fechaVencimiento!=null && (planAcciones.eficaz.responsableEmpresa || planAcciones.eficaz.responsableExterno))"></button>
+    <button pButton *ngIf="process=='REVISADO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.revisado.revisado!=null)"></button>
+
+<button (click)="test2()">test</button>

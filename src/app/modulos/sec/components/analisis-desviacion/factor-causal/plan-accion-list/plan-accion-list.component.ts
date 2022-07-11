@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { listPlanAccion } from 'app/modulos/sec/entities/factor-causal';
 import {TreeNode} from 'primeng/api';
 
@@ -10,6 +10,7 @@ import {TreeNode} from 'primeng/api';
 export class PlanAccionListComponent implements OnInit {
 
   @Input() planAccionList: listPlanAccion[] = []
+  @Output() validacionPA = new EventEmitter<any>()
   planAccionListSelected: listPlanAccion;
   causasListSelect
   display: boolean = false;
@@ -64,18 +65,44 @@ export class PlanAccionListComponent implements OnInit {
       // console.log(element);
       element.causaRaiz.forEach(elementIn => {
         console.log(elementIn);
-        if(elementIn.especifico.accionCorrectiva!=null){
-          this.isRazonable=false;
-          this.isMedible = false;
+        if(elementIn.especifico.accionCorrectiva!=null && elementIn.especifico.accionCorrectiva != ""){
+          elementIn.especifico.isComplete = true;
         }
-        if(elementIn.medible.planVerificacion!=null){
-          this.isEficaz=false;
+        else{
+          elementIn.especifico.isComplete = false;
         }
-        if(elementIn.eficaz.planValidacion!=null){
-          this.isRevisado=false;
+
+        if(elementIn.razonable.justificacion!=null && elementIn.razonable.justificacion != ""){
+          elementIn.razonable.isComplete = true
+        }
+        else{
+          elementIn.razonable.isComplete = false;
+        }
+
+        if(elementIn.medible.planVerificacion!=null && elementIn.medible.planVerificacion != ""){
+          elementIn.medible.isComplete = true
+        }
+        else{
+          elementIn.medible.isComplete = false;
+        }
+
+        if(elementIn.eficaz.planValidacion!=null && elementIn.eficaz.planValidacion != ""){
+          elementIn.eficaz.isComplete = true
+        }
+        else{
+          elementIn.eficaz.isComplete = false;
+        }
+
+        if(elementIn.revisado.revisado!=null && elementIn.revisado.revisado != ""){
+          elementIn.revisado.isComplete = true
+        }
+        else{
+          elementIn.revisado.isComplete = false;
         }
       });
+      
     });
+    this.validacionPA.emit()
   }
 }
 
