@@ -1,6 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/primeng';
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter, Input } from '@angular/core';
 import { MiembroEquipo } from './miembro-equipo';
 
 @Component({
@@ -12,6 +12,8 @@ import { MiembroEquipo } from './miembro-equipo';
 export class MiembrosEquipoComponent implements OnInit {
   @Output()miembrosOut=new EventEmitter<MiembroEquipo[]>();
   @Output()selectedProductsOUT= new EventEmitter<any[]>();
+  @Input()miembrosList: MiembroEquipo[] = []
+
   productDialog: boolean;
   submitted: boolean;
 
@@ -32,8 +34,8 @@ export class MiembrosEquipoComponent implements OnInit {
 
   ngOnInit(): void {
     // this.productService.getProducts().then(data => this.products = data);
-    this.miembros = [];
-    this.salida();
+    // this.miembros = [];
+    // this.salida();
   }
 
   openNew() {
@@ -48,7 +50,7 @@ export class MiembrosEquipoComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.miembros = this.miembros.filter(val => !this.selectedProducts.includes(val));
+            this.miembrosList = this.miembrosList.filter(val => !this.selectedProducts.includes(val));
             this.selectedProducts = null;
             // this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
         }
@@ -65,8 +67,17 @@ editProduct(product: MiembroEquipo) {
     this.cargo = product.cargo;
     this.division = product.division;
     this.localidad = product.localidad;
+    this.id = product.id
 
+    // let x = this.miembrosList.find(ele=>{
+    //     return ele.id == product.id
+    // })
+
+    // console.log(x);
+    
     this.miembro = {...product};
+    console.log(this.miembro);
+    
     this.productDialog = true;
 }
 
@@ -76,9 +87,18 @@ deleteProduct(product: MiembroEquipo) {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.miembros = this.miembros.filter(val => val.id !== product.id);
+            // this.miembrosList = this.miembrosList.filter(val => val.id !== product.id);
+            this.miembrosList.splice((product.id-1),1)
+            console.log(this.miembrosList);
+            let tempid=0;
+            this.miembrosList.forEach(element => {
+                console.log(element);
+                tempid++
+                element.id = tempid;
+            });
+            console.log(this.miembrosList);
             this.miembro = {};
-            // this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'miembro Deleted', life: 3000});
         }
     });
 }
@@ -90,18 +110,30 @@ hideDialog() {
 
 saveProduct() {
     this.submitted = true;
-console.log("save");
+    console.log("save");
 
-this.miembro.nombre = this.nombre;
-this.miembro.cargo = this.cargo;
-this.miembro.division = this.division;
-this.miembro.localidad = this.localidad;
+    this.miembro.nombre = this.nombre;
+    this.miembro.cargo = this.cargo;
+    this.miembro.division = this.division;
+    this.miembro.localidad = this.localidad;
+
+    if(this.id){
+        let x = this.miembrosList.find(ele=>{
+            return ele.id == this.id
+        })
+        x.nombre = this.nombre;
+    }else{
+        this.id = this.miembrosList.length;
+        this.id++;
+        this.miembro.id = this.id; 
+        // this.miembros.push(this.miembro);
+        this.miembrosList.push(this.miembro)
+
+    }
 
     // if (this.miembro.nombre.trim()) {
         // if (this.miembro.id) {
-            this.id++;
-            this.miembro.id = this.id; 
-            this.miembros.push(this.miembro);
+            
             // this.miembros[this.findIndexById(this.miembro.id)] = this.miembro;                
             // this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
         // }
@@ -117,8 +149,9 @@ this.miembro.localidad = this.localidad;
         // this.miembros = [...this.miembros];
         this.productDialog = false;
         this.miembro = {};
+        this.id = null;
         this.borrarMiembro();
-        if(this.miembros.length%2==0){
+        if(this.miembrosList.length%2==0){
             this.showError();
         }
     // }

@@ -29,4 +29,5 @@ export class AnalisisDesviacion {
   complementaria: string;
   informe: string;
   plan_accion: string;
+  miembros_equipo: string;
 }
