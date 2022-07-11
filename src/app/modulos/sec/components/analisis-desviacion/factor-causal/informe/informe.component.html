@@ -112,13 +112,14 @@
         <th style="border: 1px solid #c8c8c8; text-align: center">Fecha Vencimiento</th>
         <th style="border: 1px solid #c8c8c8; text-align: center">Responsable</th> 
     </tr>
-    <tr *ngFor="let factor of factores">
-        <td style="border: 1px solid #c8c8c8; text-align: center">{{factores.indexOf(factor)+1}}</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.nombre}}</td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
-        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.accion}}</td>
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td>
-        <td style="border: 1px solid #c8c8c8; text-align: center"></td> 
+
+    <tr *ngFor="let factor of planAccionList">
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factores.indexOf(factor)}}</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.nombreFC}}</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.causaRaiz}}</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.nombreFC}}</td>
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.nombreFC}}</td>
+        <td style="border: 1px solid #c8c8c8; text-align: center">{{factor.nombreFC}}</td> 
     </tr>
 
 </table>
