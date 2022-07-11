@@ -127,7 +127,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
     InformeJson:InformeJson[];
-
+    displayInforme:boolean=false;
     fields: string[] = [
         'id',
         'nombre',
