@@ -153,12 +153,10 @@ export class AnalisisDesviacionComponent implements OnInit {
     SelectPeligro(a: string){
         this.cargarPeligro(a)
     }
-    test(){
+    async test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
-        // this.informacionComplementaria=this.analisisPeligros.value;
-        console.log(this.informacionComplementaria)
-        console.log(this.analisisPeligros)
+        console.log(this.listPlanAccion);        
     }
     // ImagenIn(event){
     //     console.log('miembros event1')
@@ -392,9 +390,12 @@ export class AnalisisDesviacionComponent implements OnInit {
             
             this.dataFlow = resp["data"][0];
             this.flowChartSave = resp["data"][0].flow_chart;
-
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+            if(JSON.parse(resp["data"][0].plan_accion) != null){
+                this.listPlanAccion = JSON.parse(resp["data"][0].plan_accion);
+                this.habilitarInforme();
+            }
             
             this.informeJson=JSON.parse(resp["data"][0].informe);
             console.log(this.informeJson)
@@ -542,6 +543,7 @@ console.log(template.innerHTML);
         ad.factor_causal= JSON.stringify(this.factorCusal);
         this.setListDataFactor();
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
+        ad.plan_accion= JSON.stringify(this.listPlanAccion);
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
@@ -582,6 +584,7 @@ console.log(template.innerHTML);
         ad.observacion = this.observacion;
         ad.factor_causal= JSON.stringify(this.factorCusal);
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
+        ad.plan_accion= JSON.stringify(this.listPlanAccion);
         this.setListDataFactor();
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
@@ -847,4 +850,19 @@ console.log(template.innerHTML);
         // });
         
     }
+
+    habilitarInforme(){
+        let validador = true
+        this.listPlanAccion.forEach(element => {
+            let isPlanAccionFinish = element.causaRaiz.find(ele=>{
+                return ele.revisado.isComplete == true
+            })
+              console.log(isPlanAccionFinish);
+              if (isPlanAccionFinish == undefined) {
+                validador = false;
+              }
+        });        
+        this.displayInforme = validador;
+    }
+
 }

@@ -25,7 +25,7 @@
 <p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '60vw'}">
           
     <div>
-      <app-plan-accion (dataTest)="habilitar()" [process]="validate" [planAcciones]="planAccionListSelected!"></app-plan-accion>
+      <app-plan-accion *ngIf="display" (dataTest)="habilitar()" [process]="validate" [planAcciones]="planAccionListSelected"></app-plan-accion>
     </div>
 
     <!-- <div >
@@ -47,41 +47,53 @@
                 <div >
                     <label>ESPECIFICO</label>
 
-                    <p-button (onClick)="selectProduct2(causa, 'ESPECIFICO')"   iconPos="right" label="Pendiente">
+                    <p-button *ngIf="!causa.especifico.isComplete" (onClick)="selectProduct2(causa, 'ESPECIFICO')"   iconPos="right" label="Pendiente">
                         <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+                    <p-button *ngIf="causa.especifico.isComplete" styleClass="ui-button-success" (onClick)="selectProduct2(causa, 'ESPECIFICO')" iconPos="right" label="Realizado">
+                        <i style="font-size: 40px;" class="pi pi-check"></i>
                     </p-button>
 
                 </div>
                 <div>
                     <label>RAZONABLE</label>
-                    <p-button [disabled]="isRazonable"  (onClick)="selectProduct2(causa, 'RAZONABLE')"   iconPos="right" label="Pendiente">
+                    <p-button *ngIf="!causa.razonable.isComplete" [disabled]="!causa.especifico.isComplete"  (onClick)="selectProduct2(causa, 'RAZONABLE')"   iconPos="right" label="Pendiente">
                         <i style="font-size: 40px;" class="pi pi-clock"></i>
+                    </p-button>
+                    <p-button *ngIf="causa.razonable.isComplete" styleClass="ui-button-success" (onClick)="selectProduct2(causa, 'RAZONABLE')" iconPos="right" label="Realizado">
+                        <i style="font-size: 40px;" class="pi pi-check"></i>
                     </p-button>
                     <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'RAZONABLE')" class="ok" >RAZONABLE</button> -->
                 </div>
                 <div>
                     <label>MEDIBLE</label>
-                    <p-button [disabled]="isMedible" (onClick)="selectProduct2(causa, 'MEDIBLE')"   iconPos="right" label="Pendiente">
+                    <p-button *ngIf="!causa.medible.isComplete" [disabled]="!causa.especifico.isComplete" (onClick)="selectProduct2(causa, 'MEDIBLE')"   iconPos="right" label="Pendiente">
                         <i style="font-size: 40px;" class="pi pi-clock"></i>
                     </p-button>
-                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'MEDIBLE')" class="ok" >MEDIBLE</button> -->
-
+                    <p-button *ngIf="causa.medible.isComplete" styleClass="ui-button-success" (onClick)="selectProduct2(causa, 'MEDIBLE')" iconPos="right" label="Realizado">
+                        <i style="font-size: 40px;" class="pi pi-check"></i>
+                    </p-button>
                 </div>
                 <div>
                     <label>EFICAZ</label>
-                    <p-button [disabled]="isEficaz" (onClick)="selectProduct2(causa, 'EFICAZ')"   iconPos="right" label="Pendiente">
+                    <p-button *ngIf="!causa.eficaz.isComplete" [disabled]="!causa.medible.isComplete" (onClick)="selectProduct2(causa, 'EFICAZ')"   iconPos="right" label="Pendiente">
                         <i style="font-size: 40px;" class="pi pi-clock"></i>
                     </p-button>
-                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'EFICAZ')" class="ok" >EFICAZ</button> -->
-
+                    <p-button *ngIf="causa.eficaz.isComplete" styleClass="ui-button-success" (onClick)="selectProduct2(causa, 'EFICAZ')" iconPos="right" label="Realizado">
+                        <i style="font-size: 40px;" class="pi pi-check"></i>
+                    </p-button>
                 </div>
                 <div>
                     <label>REVISADO</label>
-                    <p-button [disabled]="isRevisado" (onClick)="selectProduct2(causa, 'REVISADO')"   iconPos="right" label="Pendiente">
+                    <p-button *ngIf="!causa.revisado.isComplete" [disabled]="!causa.eficaz.isComplete" (onClick)="selectProduct2(causa, 'REVISADO')"   iconPos="right" label="Pendiente">
                         <i style="font-size: 40px;" class="pi pi-clock"></i>
                     </p-button>
-                    <!-- <button pButton icon="pi pi-sign-in" (click)="selectProduct2(causa, 'REVISADO')" class="ok" >REVISADO</button> -->
-
+                    <p-button *ngIf="causa.revisado.isComplete && causa.revisado.revisado =='Si'" styleClass="ui-button-success" (onClick)="selectProduct2(causa, 'REVISADO')" iconPos="right" label="Realizado">
+                        <i style="font-size: 40px;" class="pi pi-check"></i>
+                    </p-button>
+                    <p-button *ngIf="causa.revisado.isComplete && causa.revisado.revisado =='No'" styleClass="ui-button-danger" (onClick)="selectProduct2(causa, 'REVISADO')" iconPos="right" label="Realizado">
+                        <i style="font-size: 40px;" class="pi pi-times"></i>
+                    </p-button>
                 </div>
             </div>
         </p-accordionTab>        

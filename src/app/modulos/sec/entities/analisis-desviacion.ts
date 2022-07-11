@@ -28,4 +28,5 @@ export class AnalisisDesviacion {
   incapacidades: string;
   complementaria: string;
   informe: string;
+  plan_accion: string;
 }

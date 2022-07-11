@@ -66,11 +66,72 @@ export class ListadoCausasComponent implements OnInit {
           console.log(x);
           this.planAccionList.forEach(ele=>{
             if (tempnombreFC == ele.nombreFC) {
-              ele.causaRaiz.push({ causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})              
+              ele.causaRaiz.push({ 
+                causaRaiz: tempcausaRaiz, 
+                especifico:{
+                  nombreAccionCorrectiva: null,
+                  accionCorrectiva: null,
+                  fechaVencimiento: null,
+                  responsableEmpresa: null,
+                  responsableExterno: null,
+                  isComplete: false
+                }, 
+                razonable:{
+                  justificacion: null,
+                  isComplete: false
+                }, 
+                eficaz:{
+                  responsableEmpresa: null,
+                  responsableExterno: null,
+                  fechaVencimiento: null,
+                  planValidacion: null,
+                  isComplete: false
+                }, 
+                medible:{
+                  responsableEmpresa: null,
+                  responsableExterno: null,
+                  fechaVencimiento: null,
+                  planVerificacion: null,
+                  isComplete: false
+                }, 
+                revisado:{
+                  revisado: null,
+                  isComplete: false
+                }})              
             }
           })
         }else{
-          tempCausa.push({ causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})
+          tempCausa.push({
+            causaRaiz: tempcausaRaiz, 
+                especifico:{
+                  nombreAccionCorrectiva: null,
+                  accionCorrectiva: null,
+                  fechaVencimiento: null,
+                  responsableEmpresa: null,
+                  responsableExterno: null,
+                  isComplete: false
+                }, 
+                razonable:{
+                  justificacion: null
+                }, 
+                eficaz:{
+                  responsableEmpresa: null,
+                  responsableExterno: null,
+                  fechaVencimiento: null,
+                  planValidacion: null,
+                  isComplete: false
+                }, 
+                medible:{
+                  responsableEmpresa: null,
+                  responsableExterno: null,
+                  fechaVencimiento: null,
+                  planVerificacion: null,
+                  isComplete: false
+                }, 
+                revisado:{
+                  revisado: null,
+                  isComplete: false
+                }})
           this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz:tempCausa})
         }
 
