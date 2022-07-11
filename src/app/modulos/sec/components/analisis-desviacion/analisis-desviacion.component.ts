@@ -135,7 +135,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     Peligro = [
         { label: "--Seleccione--", value: null },
     ]
-    miembros: MiembroEquipo[]
+    miembros: MiembroEquipo[] = []
     selectedProducts;
     
     tSelectPeligro(a: string){
@@ -148,7 +148,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     async test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
-        console.log(this.listPlanAccion);        
+        console.log(this.miembros);        
     }
 
     constructor(
@@ -366,6 +366,10 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.listPlanAccion = JSON.parse(resp["data"][0].plan_accion);
                 this.habilitarInforme();
             }
+
+            if(JSON.parse(resp["data"][0].miembros_equipo) != null){
+                this.miembros = JSON.parse(resp["data"][0].miembros_equipo);
+            }
             
             if(this.informacionComplementaria!=null){
                 this.analisisPeligros.patchValue({
@@ -492,6 +496,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.setListDataFactor();
         ad.incapacidades= JSON.stringify(this.incapacidadesList);
         ad.plan_accion= JSON.stringify(this.listPlanAccion);
+        ad.miembros_equipo= JSON.stringify(this.miembros);
         ad.tareaDesviacionList = this.tareasList;
         if  (ad.tareaDesviacionList) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
@@ -537,6 +542,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.tareaDesviacionList = this.tareasList;
         ad.jerarquia = this.jerarquia;
         ad.complementaria=JSON.stringify(this.informacionComplementaria);
+        ad.miembros_equipo= JSON.stringify(this.miembros);
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;

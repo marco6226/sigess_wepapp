@@ -194,7 +194,8 @@
                         
                     </p-tabPanel>
                     <p-tabPanel  *ngIf="idEmpresa == '3'" header="Miembros del equipo">
-                        <app-miembros-equipo (miembrosOut)="miembrosIn($event)" (selectedProductsOUT)="selectedProductsIn($event)"></app-miembros-equipo>
+                        <app-miembros-equipo [miembrosList]="miembros"></app-miembros-equipo>
+                        <!-- <app-miembros-equipo [miembrosList]="miembros" (miembrosOut)="miembrosIn($event)" (selectedProductsOUT)="selectedProductsIn($event)"></app-miembros-equipo> -->
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias">
                         <app-evidencias></app-evidencias>
@@ -355,7 +356,7 @@
 
 <div style="height: 100px;;"></div>
 
-<!-- <button (click)="test()">test</button> -->
+<button (click)="test()">test</button>
 <!-- <button (click)="setListDataFactor()">vli</button> -->
 <!-- 
 <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
