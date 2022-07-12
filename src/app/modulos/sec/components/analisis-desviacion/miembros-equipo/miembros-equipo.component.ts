@@ -21,6 +21,7 @@ export class MiembrosEquipoComponent implements OnInit {
 
   miembros: MiembroEquipo[]
   miembro: MiembroEquipo;
+  cedula: string;
   nombre: string;
   cargo: string;
   division: string;
@@ -62,7 +63,7 @@ salida(){
 }
 editProduct(product: MiembroEquipo) {
     console.log(product);
-    
+    this.cedula = product.cedula;
     this.nombre = product.nombre;
     this.cargo = product.cargo;
     this.division = product.division;
