@@ -34,20 +34,20 @@ export class EvidenciasComponent implements OnInit {
   ngOnInit() {
     if (this.documentos != null) {
       this.documentosList = [];
-      this.documentos.forEach(doc => this.adicionarAGaleria(doc));
+      // this.documentos.forEach(doc => this.adicionarAGaleria(doc));
     }
   }
-  adicionarAGaleria(doc: Documento) {
-    if (this.esImagen(doc)) {
-      this.directorioService.download(doc.id).then(
-        data => {
-          let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
-          this.documentosList.push({ source: urlData, documento: doc });
-          this.documentosList = this.documentosList.slice();
-        }
-      );
-    }
-  }
+  // adicionarAGaleria(doc: Documento) {
+  //   if (this.esImagen(doc)) {
+  //     this.directorioService.download(doc.id).then(
+  //       data => {
+  //         let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
+  //         this.documentosList.push({ source: urlData, documento: doc });
+  //         this.documentosList = this.documentosList.slice();
+  //       }
+  //     );
+  //   }
+  // }
 
   esImagen(doc: Documento) {
     let split = doc.nombre.split('.');
@@ -65,7 +65,7 @@ export class EvidenciasComponent implements OnInit {
     if (this.documentos == null)
       this.documentos = [];
     this.documentos.push(event.documento);
-    this.adicionarAGaleria(event.documento);
+    // this.adicionarAGaleria(event.documento);
     this.documentos = this.documentos.slice();
   }
 

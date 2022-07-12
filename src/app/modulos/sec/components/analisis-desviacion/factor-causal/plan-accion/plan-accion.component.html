@@ -93,4 +93,4 @@
     <button pButton *ngIf="process=='EFICAZ'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.eficaz.planValidacion!=null && planAcciones.eficaz.fechaVencimiento!=null && (planAcciones.eficaz.responsableEmpresa || planAcciones.eficaz.responsableExterno))"></button>
     <button pButton *ngIf="process=='REVISADO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.revisado.revisado!=null)"></button>
 
-<button (click)="test2()">test</button>
+<!-- <button (click)="test2()">test</button> -->

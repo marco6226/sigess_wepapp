@@ -36,6 +36,7 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
+                <th pSortableColumn="doc">Cedula <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="price">Cargo <p-sortIcon field="price"></p-sortIcon></th>
                 <th pSortableColumn="category">División <p-sortIcon field="category"></p-sortIcon></th>
@@ -48,6 +49,7 @@
                 <td>
                     <p-tableCheckbox [value]="miembro"></p-tableCheckbox>
                 </td>
+                <td>{{miembro.cedula}}</td>
                 <td>{{miembro.nombre}}</td>
                 <td>{{miembro.cargo}}</td>
                 <td>{{miembro.division}}</td>
