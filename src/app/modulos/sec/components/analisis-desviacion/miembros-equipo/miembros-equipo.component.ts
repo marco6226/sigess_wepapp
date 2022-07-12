@@ -21,7 +21,7 @@ export class MiembrosEquipoComponent implements OnInit {
 
   miembros: MiembroEquipo[]
   miembro: MiembroEquipo;
-  cedula: string;
+  cedula: number;
   nombre: string;
   cargo: string;
   division: string;
@@ -113,6 +113,7 @@ saveProduct() {
     this.submitted = true;
     console.log("save");
 
+    this.miembro.cedula=this.cedula;
     this.miembro.nombre = this.nombre;
     this.miembro.cargo = this.cargo;
     this.miembro.division = this.division;
@@ -123,7 +124,11 @@ saveProduct() {
             return ele.id == this.id
         })
         x.nombre = this.nombre;
-    }else{
+        x.cargo=this.cargo;
+        x.cedula=this.cedula;
+        x.localidad=this.localidad;
+        x.division=this.division;
+        }else{
         this.id = this.miembrosList.length;
         this.id++;
         this.miembro.id = this.id; 
@@ -180,6 +185,7 @@ findIndexById(id: number): number {
 // }
 
 private borrarMiembro(){
+this.cedula=null;
 this.nombre = '';
 this.cargo = '';
 this.division = '';

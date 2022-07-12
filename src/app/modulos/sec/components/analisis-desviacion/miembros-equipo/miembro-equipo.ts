@@ -1,6 +1,6 @@
 export interface MiembroEquipo {
     id?:number;
-    cedula?:string;
+    cedula?:number;
     nombre?:string;
     cargo?:string;
     division?:string;
