@@ -159,7 +159,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     async test(){
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
-        console.log(this.miembros);        
+        console.log(this.dataListFactor);        
     }
     // ImagenIn(event){
     //     console.log('miembros event1')
@@ -406,6 +406,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             
             this.informeJson=JSON.parse(resp["data"][0].informe);
             console.log(this.informeJson)
+            this.habilitarInforme()
             if(this.informacionComplementaria!=null){
                 this.analisisPeligros.patchValue({
                     'Peligro': this.informacionComplementaria.Peligro,
@@ -859,6 +860,65 @@ export class AnalisisDesviacionComponent implements OnInit {
               if (isPlanAccionFinish == undefined) {
                 validador = false;
               }
+            //   isPlanAccionFinish.forEach(element => {
+            //     this.dataListFactor
+            //   });
+            console.log(element);
+            
+            element.causaRaiz.forEach(causa => {
+                if (causa.revisado.isComplete) {
+                    let nombre = element.nombreFC.split(', ')
+                    let causas = causa.causaRaiz.split(', ')
+                    console.log(causas,nombre);
+
+
+                    for (let index = 0; index < nombre.length; index++) {
+                        console.log(nombre[index],causas[index]);
+                        
+                        let dataFactor = this.dataListFactor.find(ele=> {
+                            return ele.nombre == nombre[index] && ele.metodologia == causas[index]
+                        })
+
+                        console.log(dataFactor);
+
+                        if (dataFactor) {
+                            dataFactor.accion = 'Con Plan de Accion'                            
+                        }
+                        
+                    }
+                    
+                    // element.nombreFC.split(', ').forEach(eleNombre => {
+                        
+                    //     // console.log(dataFactor);
+                    //     causa.causaRaiz.split(', ').forEach(causaele => {
+                    //         console.log(eleNombre,causaele);
+                            
+                    //         let dataFactor = this.dataListFactor.find(ele=> {
+                    //             return ele.nombre == eleNombre && ele.metodologia == causaele
+                    //         })
+                        
+                    //         // let dataFactorCausa = this.dataListFactor.find(ele=> {
+                    //         //     return ele.nombre == eleNombre && ele.metodologia == causas
+                    //         // })
+                    //         if (dataFactor) {
+                    //             dataFactor.accion = 'Con Plan de Accion'                            
+                    //         }
+                    //         // else{
+                    //         //     dataFactor.accion = 'Sin Plan de Accion'
+                    //         // }
+                    //         console.log(dataFactor);
+                    //     });
+                    // });
+                }
+            });
+
+            
+            
+
+            // let dataFactor2 = this.dataListFactor.splice()
+            // console.log(dataFactor2);
+
+            
         });        
         this.displayInforme = validador;
     }

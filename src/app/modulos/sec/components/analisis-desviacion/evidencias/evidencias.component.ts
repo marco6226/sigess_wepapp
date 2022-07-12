@@ -21,7 +21,11 @@ export class EvidenciasComponent implements OnInit {
   @Output('onUpdate') onUpdate = new EventEmitter<Documento>();
   @Input('readOnly') readOnly: boolean;
   documentosList: any[];
-  visibleDlg: boolean;
+  visibleDlgFoto: boolean;
+  visibleDlgDocumento: boolean;
+  visibleDlgPoliticas: boolean;
+  visibleDlgProcedimientos: boolean;
+  visibleDlgMultimedia: boolean;
   modulo = Modulo.SEC.value;
   msgs: Message[];
 
@@ -57,8 +61,28 @@ export class EvidenciasComponent implements OnInit {
     return (extension != null && (extension.extension == 'png' || extension.extension == 'jpg'));
   }
 
-  showDialog() {
-    this.visibleDlg = true;
+  showDialog(tipo: string) {
+    switch (tipo) {
+      case 'foto':
+        this.visibleDlgFoto = true
+        break;
+      case 'documento':
+        this.visibleDlgDocumento = true
+        break;
+      case 'politicas':
+        this.visibleDlgPoliticas = true
+        break;
+      case 'procedimientos':
+        this.visibleDlgProcedimientos = true
+        break;
+      case 'multimedia':
+        this.visibleDlgMultimedia = true
+        break;
+    
+      default:
+        break;
+    }
+    // this.visibleDlg = true;
   }
 
   onUpload(event: Directorio) {
