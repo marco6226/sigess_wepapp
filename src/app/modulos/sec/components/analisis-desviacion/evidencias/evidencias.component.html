@@ -1,60 +1,152 @@
 <p-messages [(value)]="msgs" [closable]="true"></p-messages>
 <p>Evidencia Fotografica</p> 
 <div>  
-    <button pButton type="button" (click)="showDialog1()" icon="fa fa-plus" label="Adjuntar soporte foto" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
-<s-documentoUpload accept="image/*"  fileLimit="3" [(visible)]="visibleDlg1" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-plus" label="Adjuntar soporte foto" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="image/*"  fileLimit="3" [(visible)]="visibleDlgFoto" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
 </div>
 <div class="ui-g" style="margin-top: 10px;">
-    <div class="ui-g-12 ui-sm-12 ui-md-10">
-      <ng-template ngFor let-doc [ngForOf]="documentos" let-i="index">
-        <table class="dwrapper">
-          <tr>
-            <td>
-              <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
-              <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
-            </td>
-            <td style="text-align: right;">
-              <a class="fa fa-pencil" title="Actualizar descripci髇" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripci髇" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
-            </td>
-          </tr>
-        </table>
-      </ng-template>
-    </div>
-    <div class="ui-g-12 ui-sm-12 ui-md-6">
-      <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
+  <div class="ui-g-12 ui-sm-12 ui-md-10">
+    <div *ngFor="let doc of documentos">
+      <table class="dwrapper" *ngIf="doc.proceso=='fotografica'">
+        <tr>
+          <td>
+            <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+            <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+          </td>
+          <td style="text-align: right;">
+            <a class="fa fa-pencil" title="Actualizar Descripci贸n" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripci贸n" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
+</div>
 <p>Evidencia Documental</p>
 
 <div>
-    <button pButton type="button" (click)="showDialog2()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
-<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlg2" [modParam]="analisisId"  tipoEvidencia="documental"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('documento')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgDocumento" [modParam]="analisisId"  tipoEvidencia="documental"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
 </div>
-
+<div class="ui-g" style="margin-top: 10px;">
+  <div class="ui-g-12 ui-sm-12 ui-md-10">
+    <div *ngFor="let doc of documentos">
+      <table class="dwrapper" *ngIf="doc.proceso=='documental'">
+        <tr>
+          <td>
+            <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+            <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+          </td>
+          <td style="text-align: right;">
+            <a class="fa fa-pencil" title="Actualizar Descripci贸n" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripci贸n" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 <p>Evidencia Politicas</p>
 
 <div>
-    <button pButton type="button" (click)="showDialog3()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
-<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlg3" [modParam]="analisisId"  tipoEvidencia="politica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('politicas')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgPoliticas" [modParam]="analisisId"  tipoEvidencia="politica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
 <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
 </div>
-
+<div class="ui-g" style="margin-top: 10px;">
+  <div class="ui-g-12 ui-sm-12 ui-md-10">
+    <div *ngFor="let doc of documentos">
+      <table class="dwrapper" *ngIf="doc.proceso=='politica'">
+        <tr>
+          <td>
+            <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+            <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+          </td>
+          <td style="text-align: right;">
+            <a class="fa fa-pencil" title="Actualizar Descripci贸n" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripci贸n" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 <p>Evidencia Procedimientos</p>
 
 <div>
-    <button pButton type="button" (click)="showDialog4()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
-<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlg4" [modParam]="analisisId"  tipoEvidencia="procedimientos"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('procedimientos')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgProcedimientos" [modParam]="analisisId"  tipoEvidencia="procedimientos"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
 <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
 </div>
-
+<div class="ui-g" style="margin-top: 10px;">
+  <div class="ui-g-12 ui-sm-12 ui-md-10">
+    <div *ngFor="let doc of documentos">
+      <table class="dwrapper" *ngIf="doc.proceso=='procedimientos'">
+        <tr>
+          <td>
+            <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+            <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+          </td>
+          <td style="text-align: right;">
+            <a class="fa fa-pencil" title="Actualizar Descripci贸n" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripci贸n" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 <p>Evidencia Multimedia</p>
 
 <div>
-    <button pButton type="button" (click)="showDialog5()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
-<s-documentoUpload accept="video/*"  fileLimit="3" [(visible)]="visibleDlg5" [modParam]="analisisId"  tipoEvidencia="multimedia"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('multimedia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+<s-documentoUpload accept="video/*"  fileLimit="3" [(visible)]="visibleDlgMultimedia" [modParam]="analisisId"  tipoEvidencia="multimedia"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+</div>
+<div class="ui-g" style="margin-top: 10px;">
+  <div class="ui-g-12 ui-sm-12 ui-md-10">
+    <div *ngFor="let doc of documentos">
+      <table class="dwrapper" *ngIf="doc.proceso=='multimedia'">
+        <tr>
+          <td>
+            <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+            <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+          </td>
+          <td style="text-align: right;">
+            <a class="fa fa-pencil" title="Actualizar Descripci贸n" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripci贸n" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<button (click)="test()">test</button>
+
+<!-- {{separador()}} -->
+
+<div *ngFor="let doc of documentos">
+  <div *ngIf="doc.proceso=='fotografica'">
+    <p>{{doc.extension.extension}}</p>
+  </div>
 </div>
