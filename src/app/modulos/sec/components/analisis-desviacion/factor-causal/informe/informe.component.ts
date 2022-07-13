@@ -23,18 +23,21 @@ export class InformeComponent implements OnInit {
 @Input() infoIn;
 @Input() factores: listFactores[];
 @Input() planAccionList;
+@Input() contFotografia;
+@Input() contDocumental;
+@Input() contPoliticas;
+@Input() contProcedimientos;
+@Input() contMultimedias;
 
-cont: number=0;
-id:number[]=[]
 prueba:ValorCausas[]=[]
-numero:number=0
-i1:number=0;
-j1:number=0;
-// cont2: number=0;
-flag: boolean=false;
-pieDePag: FormGroup;
 localeES: any = locale_es;
-img = new Image();
+
+// contFotografia:number=0;
+// contDocumental:number=0;
+// contPoliticas:number=0;
+// contProcedimientos:number=0;
+// contMultimedias:number=0;
+
 
 canvas = document.createElement('canvas');
 
@@ -43,9 +46,9 @@ canvas = document.createElement('canvas');
 
   ngOnInit() {
     this.numerarCausal()
+    this.evidencias()
   }
 
- 
   numerarCausal(){
     this.prueba=[]
     let variab:number=0;
@@ -59,33 +62,38 @@ canvas = document.createElement('canvas');
           accionCorrectiva:element2.especifico.accionCorrectiva,
           fechaVencimiento:element2.especifico.fechaVencimiento,
           responsableEmpresa : element2.especifico.responsableEmpresa == null ? null : element2.especifico.responsableEmpresa.primerNombre+" "+element2.especifico.responsableEmpresa.primerApellido,
-         
-          // responsableEmpresa:element2.especifico.responsableEmpresa.primerNombre+" "+element2.especifico.responsableEmpresa.primerApellido,
           responsableExterno:element2.especifico.responsableExterno,
         }
-        // variab2.id=1;
-        // variab2.NcausaRaiz=element.nombreFC;
-        // variab2.causaRaiz=element2.causaRaiz;
-        // variab2.accionCorrectiva=element2.especifico.accionCorrectiva;
-        // variab2.fechaVencimiento=element2.especifico.fechaVencimiento;
-        // variab2.responsableEmpresa=element2.especifico.responsableEmpresa.primerNombre+" "+element2.especifico.responsableEmpresa.primerApellido;
-        // variab2.responsableExterno=element2.especifico.responsableExterno;
-
         this.prueba.push(variab2)
-        // console.log(this.prueba)
       })
     });
     }
 
-
-    // for(let i=0;i<3;i++){
-
-
+  evidencias(){
+    // for(let i=0; i< this.Evidencias.length; i++){
+    //   let value=this.Evidencias[i].proceso;
+    //   switch (value) {
+    //     case 'fotografica':
+    //       this.contFotografia++;
+    //       break;
+    //     case 'documental':
+    //       this.contDocumental++;
+    //       break;
+    //     case 'politicas':
+    //       this.contPoliticas++;
+    //       break;
+    //     case 'procedimientos':
+    //       this.contProcedimientos++;
+    //       break;
+    //     case 'multimedias':
+    //       this.contMultimedias++;
+    //       break;
+    //     default:
+    //       break;
+    //   }
     // }
-  
+  }
   test(){
-    this.img.src;
-    console.log(this.img.x,this.img.y)
-    // console.log(this.img.height,this.img.width)
+    // console.log(this.Evidencias)
   }
 }

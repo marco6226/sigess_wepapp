@@ -14,3 +14,7 @@ export class InformeJson {
     FechaI: Date;
     Diagrama:string;
 }
+
+export class Diagrama {
+    Diagrama:string;
+}

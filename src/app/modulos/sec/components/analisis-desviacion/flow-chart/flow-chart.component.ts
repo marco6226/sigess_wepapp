@@ -55,7 +55,7 @@ export class FlowChartComponent {
   
   styleFC: TextStyleModel = { color: 'red',bold:true,  whiteSpace:'CollapseSpace', strokeWidth: 1, };
 
-
+  timeoutID;
   constructor(
     private captureService: NgxCaptureService
   ) {​​​​​​​
@@ -72,13 +72,13 @@ export class FlowChartComponent {
         console.log(JSON.parse(this.dataFlowChart.flow_chart));
         
         this.loadFC();
-            this.exportImg();
+        this.startTimer();
         }, 600);
 
         
     }, 600); 
      
-
+    
   }
   ​​​​​​​
   public create(args: Object): void {
@@ -287,7 +287,7 @@ export class FlowChartComponent {
     } else {
         this.download(this.diagram.saveDiagram());
     }
-}
+    }
 
 
   public download(data: string): void {
@@ -367,11 +367,22 @@ export class FlowChartComponent {
   }
 
   exportImg(){
+    console.log('export')
     this.captureService.getImage(this.screen.nativeElement, true).then(h=>{
         this.imgDF.emit(h);
     })
+
+    }
+    startTimer() {
+        console.log('timer')
+        this.timeoutID = window.setInterval(() => { this.exportImg() }, 5000);
+    }
 }
-};
+//   goInactive() {
+//     this.expired = true;
+//     this.intervalID = setInterval(() => this.countInterval(), 50);
+//   }
+
 
 function paletteIconClick() {
   throw new Error('Function not implemented.');

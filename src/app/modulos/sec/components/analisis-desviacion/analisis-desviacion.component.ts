@@ -17,7 +17,7 @@ import { CausaRaiz } from "app/modulos/sec/entities/causa-raiz";
 import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
 import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
 import { Peligro } from "app/modulos/ipr/entities/peligro";
-import {InformeJson} from "../../entities/informeFinal"
+import {Diagrama, InformeJson} from "../../entities/informeFinal"
 
 import { Desviacion } from "app/modulos/sec/entities/desviacion";
 import { TreeNode } from "primeng/primeng";
@@ -123,9 +123,16 @@ export class AnalisisDesviacionComponent implements OnInit {
     factorCusal: FactorCausal[]=[]
     informacionComplementaria: InformacionComplementaria;
     informeJson: InformeJson;
-
+    diagrama: Diagrama;
+    Evidencias: string | any[];
     img = new Image();
+    img2 = new Image();
     imgString:string;
+    contFotografia:number=0;
+    contDocumental:number=0;
+    contPoliticas:number=0;
+    contProcedimientos:number=0;
+    contMultimedias:number=0;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -160,6 +167,23 @@ export class AnalisisDesviacionComponent implements OnInit {
         //console.log(this.incapacidadesList);
         console.log("*****aquí***")
         console.log(this.dataListFactor);        
+    }
+    test2(){
+        // let a=this.paramNav.getParametro<Desviacion>();
+        // this.analisisDesviacionService.getClassName();
+        // console.log(a)
+        // this.img2.src=this.infoIn.value['Diagrama'];
+        // console.log(this.imgIN.data);
+        // console.log(this.infoIn.value['Diagrama'].w);
+        console.log()
+        if(this.imgIN=='data:,'){
+            console.log(1); 
+        }else{console.log(5); }
+        if(this.infoIn.value['Diagrama'].data==undefined){
+            console.log(2); 
+        }
+
+        
     }
     // ImagenIn(event){
     //     console.log('miembros event1')
@@ -382,6 +406,18 @@ export class AnalisisDesviacionComponent implements OnInit {
         node.expanded = true;
     }
 
+    
+// mirar
+    consultarEvidencia(){
+        let fq = new FilterQuery();
+        fq.filterList = [
+            { criteria: Criteria.EQUALS, field: "id", value1: this.paramNav.getParametro<Desviacion>().analisisId },
+        ];
+        this.analisisDesviacionService.findByFilter(fq).then((resp) => {
+            let analisis = <AnalisisDesviacion>resp["data"][0];
+            console.log("----->",resp['data'][0].documentosList);
+            this.Evidencias=resp['data'][0].documentosList;});
+    }
     consultarAnalisis(analisisId: string) {
         let fq = new FilterQuery();
         fq.filterList = [
@@ -389,8 +425,9 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            console.log("----->",resp);
-            
+            console.log("----->",resp['data'][0].documentosList);
+            this.Evidencias=resp['data'][0].documentosList;
+            console.log(this.Evidencias);
             this.dataFlow = resp["data"][0];
             this.flowChartSave = resp["data"][0].flow_chart;
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
@@ -405,7 +442,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             }
             
             this.informeJson=JSON.parse(resp["data"][0].informe);
-            console.log(this.informeJson)
+            console.log(this.dataFlow.documentosList)
             this.habilitarInforme()
             if(this.informacionComplementaria!=null){
                 this.analisisPeligros.patchValue({
@@ -443,6 +480,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             // if(this.factorCusal){
                 this.setListDataFactor();
             // }
+            
 
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
             
@@ -522,7 +560,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         return crList;
     }
     async imprimir() {
-        this.img.src=this.imgIN;
+        this.consultarEvidencia()
+        this.nitEmpresa=this.sesionService.getEmpresa().nit;
+        this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
+        this.idEmpresa = this.sesionService.getEmpresa().id;
+        this.evidencias();
+        
+        this.img.src=this.infoIn.value['Diagrama'];
         console.log(this.img.width)
         console.log(this.img.height)
         console.log(Math.round(this.img.width/700))
@@ -536,20 +580,20 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.document.write(template.innerHTML);
             for (let i = 0; i < Math.round(this.img.height/350); i++) {
                 for (let j = 0; j < Math.round(this.img.width/700); j++) {
-                    WinPrint.document.write('<div align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; margin: auto; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.imgIN,'></div>');
+                    WinPrint.document.write('<div align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; margin: auto; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
                     WinPrint.document.write('<p style="page-break-after: always"></p>');
                 }
             }
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-        }, 400);
+        }, 1000);
     }
     Salida(){}
     guardarAnalisis() {
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
-        this.informeJson.Diagrama=this.imgIN;
+        if(this.imgIN!='data:,'){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -593,7 +637,8 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
-        this.informeJson.Diagrama=this.imgIN;
+        // this.diagrama.Diagrama=this.imgIN;
+        if(this.imgIN!='data:,'){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -765,7 +810,35 @@ export class AnalisisDesviacionComponent implements OnInit {
         
     }
 
-   
+    evidencias(){
+        this.contFotografia=0;
+        this.contDocumental=0;
+        this.contPoliticas=0;
+        this.contProcedimientos=0;
+        this.contMultimedias=0;
+        for(let i=0; i< this.Evidencias.length; i++){
+          let value=this.Evidencias[i].proceso;
+          switch (value) {
+            case 'fotografica':
+              this.contFotografia++;
+              break;
+            case 'documental':
+              this.contDocumental++;
+              break;
+            case 'politicas':
+              this.contPoliticas++;
+              break;
+            case 'procedimientos':
+              this.contProcedimientos++;
+              break;
+            case 'multimedias':
+              this.contMultimedias++;
+              break;
+            default:
+              break;
+          }
+        }
+      }
 
     tempData: listFactores[]=[];
 
