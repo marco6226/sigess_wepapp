@@ -215,7 +215,7 @@
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3' && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
-                        <button (click)="test()" class="soft-icon">hi</button> 
+                        <button  (click)="test2()" >test</button> 
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
                             <tr>
                                 <td  style="text-align: left">Fecha de investigación</td>
@@ -272,8 +272,8 @@
                                 
                             </tr>
                         </table>
-                        <!-- <div id="plantilla" style="display: none;"> -->
-                        <div id="plantilla" >
+                        <div id="plantilla" style="display: none;">
+                        <!-- <div id="plantilla" > -->
                             <div style="background-color: white">
                                 
                                 <table width="100%" style="border-collapse: collapse;">
@@ -290,13 +290,13 @@
                                         <th style="text-align: left">
                                             Nombre de la empresa
                                         </th>
-                                        <td>{{this.nombreEmpresa}}</td>
+                                        <td>{{desviacionesList[0].empresa}}</td>
                                     </tr>
                                     <tr>
                                         <th style="text-align: left">
                                             NIT:
                                         </th>
-                                        <td>{{this.nitEmpresa}}</td>
+                                        <td>{{desviacionesList[0].nit}}</td>
                                     </tr>
                                 </table>
 
@@ -310,7 +310,12 @@
                                 [diagramaFlujo]="imgIN"
                                 [factores]="dataListFactor"
                                 [infoIn]="infoIn"
-                                [planAccionList]="listPlanAccion">
+                                [planAccionList]="listPlanAccion"
+                                [contFotografia]="contFotografia"
+                                [contDocumental]="contDocumental"
+                                [contPoliticas]="contPoliticas"
+                                [contProcedimientos]="contProcedimientos"
+                                [contMultimedias]="contMultimedias">
                                 </app-informe>
                             </div>
                             <p style="page-break-after: always"></p>
@@ -323,16 +328,6 @@
                                     <th style="text-align: center" width="50%">SnapChart - Análisis Factor Causal y Raiz</th>
                                 </tr>
                             </table>
-
-                            <!-- <ng-container *ngFor="let i of posY">
-                                <ng-container *ngFor="let j of posX">
-                                    <div>
-                                    <img id="Dflujo" width="100%" style="border-collapse: collapse; margin: auto; object-fit: none; object-position: 0px 0px;"  src={{imgIN}}>
-                                    <p style="page-break-after: always"></p>
-                                    </div>
-                                </ng-container>
-                            </ng-container> -->
-
                         </div>
 
                     </p-tabPanel>
