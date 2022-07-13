@@ -1,3 +1,4 @@
+import { NumericTextBoxAllModule } from "@syncfusion/ej2-angular-inputs";
 import { Empleado } from "app/modulos/empresa/entities/empleado";
 
 export interface FactorCausal{
@@ -120,4 +121,14 @@ export interface PlanEficaz{
 export interface PlanRevisado{
   revisado: string;
   isComplete: boolean;
+}
+
+export interface ValorCausas{
+  id:number;
+  NcausaRaiz:string;
+  causaRaiz:string;
+  accionCorrectiva:string;
+  fechaVencimiento: Date;
+  responsableEmpresa?:string;
+  responsableExterno?:string;
 }

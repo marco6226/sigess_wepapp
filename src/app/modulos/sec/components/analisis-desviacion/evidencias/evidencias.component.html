@@ -14,12 +14,12 @@
               <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
             </td>
             <td style="text-align: right;">
-              <a class="fa fa-pencil" title="Actualizar descripciÃ³n" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+              <a class="fa fa-pencil" title="Actualizar descripción" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
             </td>
           </tr>
           <tr>
             <td colspan="2">
-              <textarea [disabled]="readOnly" pInputTextarea placeholder="DescripciÃ³n" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+              <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
             </td>
           </tr>
         </table>

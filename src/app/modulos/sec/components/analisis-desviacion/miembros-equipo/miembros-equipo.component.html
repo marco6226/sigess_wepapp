@@ -36,7 +36,7 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="doc">Cedula <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="doc">Cedula <p-sortIcon field="doc"></p-sortIcon></th>
                 <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="price">Cargo <p-sortIcon field="price"></p-sortIcon></th>
                 <th pSortableColumn="category">División <p-sortIcon field="category"></p-sortIcon></th>
@@ -73,7 +73,10 @@
 </div>
 
 <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregar Miembro al Equipo" [modal]="true" styleClass="p-fluid">
-
+        <div class="p-field">
+            <label for="Cedula">Cédula</label>
+            <input type="number" required autofocus [(ngModel)]="cedula" />
+        </div>
         <div class="p-field">
             <label for="Nombre">Nombre</label>
             <input type="text" required autofocus [(ngModel)]="nombre" />

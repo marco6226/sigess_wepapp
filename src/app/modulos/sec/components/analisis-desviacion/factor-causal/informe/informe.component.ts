@@ -5,7 +5,7 @@ import {
   tipo_identificacion,
   tipo_vinculacion,
 } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
-import { listFactores } from '../../../../entities/factor-causal';
+import { listFactores, ValorCausas } from '../../../../entities/factor-causal';
 // import { listFactores } from './../../../entities/factor-causal';
 
 @Component({
@@ -24,6 +24,14 @@ export class InformeComponent implements OnInit {
 @Input() factores: listFactores[];
 @Input() planAccionList;
 
+cont: number=0;
+id:number[]=[]
+prueba:ValorCausas[]=[]
+numero:number=0
+i1:number=0;
+j1:number=0;
+// cont2: number=0;
+flag: boolean=false;
 pieDePag: FormGroup;
 localeES: any = locale_es;
 img = new Image();
@@ -34,24 +42,48 @@ canvas = document.createElement('canvas');
    }
 
   ngOnInit() {
+    this.numerarCausal()
   }
-  test(){
-    // console.log('base64',this.diagramaFlujo)
-    // console.log('normal',btoa(this.diagramaFlujo))
-    // console.log(this.pieDePag)
-    // console.log(this.infoIn)
-    // console.log(this.factores)
-    // this.img.onload = this.cutImageUp;
-    // this.img.src=this.diagramaFlujo;
-    // console.log(this.img);
+
+ 
+  numerarCausal(){
+    this.prueba=[]
+    let variab:number=0;
+    this.planAccionList.forEach(element => {
+      element.causaRaiz.forEach(element2 =>{
+        variab++;
+        let variab2:ValorCausas={
+          id:variab,
+          NcausaRaiz:element.nombreFC,
+          causaRaiz:element2.causaRaiz,
+          accionCorrectiva:element2.especifico.accionCorrectiva,
+          fechaVencimiento:element2.especifico.fechaVencimiento,
+          responsableEmpresa : element2.especifico.responsableEmpresa == null ? null : element2.especifico.responsableEmpresa.primerNombre+" "+element2.especifico.responsableEmpresa.primerApellido,
+         
+          // responsableEmpresa:element2.especifico.responsableEmpresa.primerNombre+" "+element2.especifico.responsableEmpresa.primerApellido,
+          responsableExterno:element2.especifico.responsableExterno,
+        }
+        // variab2.id=1;
+        // variab2.NcausaRaiz=element.nombreFC;
+        // variab2.causaRaiz=element2.causaRaiz;
+        // variab2.accionCorrectiva=element2.especifico.accionCorrectiva;
+        // variab2.fechaVencimiento=element2.especifico.fechaVencimiento;
+        // variab2.responsableEmpresa=element2.especifico.responsableEmpresa.primerNombre+" "+element2.especifico.responsableEmpresa.primerApellido;
+        // variab2.responsableExterno=element2.especifico.responsableExterno;
+
+        this.prueba.push(variab2)
+        // console.log(this.prueba)
+      })
+    });
+    }
+
+
+    // for(let i=0;i<3;i++){
+
+
+    // }
   
-    // var c = document.getElementById("myCanvas") as HTMLCanvasElement | null;
-    // var ctx = c.getContext("2d");
-    // var img = document.getElementById("scream") as HTMLCanvasElement | null;
-    // ctx.drawImage(img, 10, 10, 700, 700);
-    console.log(this.planAccionList);
-  }
-  test2(){
+  test(){
     this.img.src;
     console.log(this.img.x,this.img.y)
     // console.log(this.img.height,this.img.width)

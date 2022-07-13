@@ -215,7 +215,7 @@
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3' && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
-                        <!-- <button  pButton icon="fa fa-print" (click)="test()" class="soft-icon"></button>  -->
+                        <button (click)="test()" class="soft-icon">hi</button> 
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
                             <tr>
                                 <td  style="text-align: left">Fecha de investigación</td>
@@ -272,8 +272,8 @@
                                 
                             </tr>
                         </table>
-                        <div id="plantilla" style="display: none;">
-                        <!-- <div id="plantilla" > -->
+                        <!-- <div id="plantilla" style="display: none;"> -->
+                        <div id="plantilla" >
                             <div style="background-color: white">
                                 
                                 <table width="100%" style="border-collapse: collapse;">
@@ -309,8 +309,9 @@
                                 [selectedProducts]="selectedProducts"
                                 [diagramaFlujo]="imgIN"
                                 [factores]="dataListFactor"
-                                [infoIn]="infoIn">
-                                [planAccionList]="listPlanAccion"</app-informe>
+                                [infoIn]="infoIn"
+                                [planAccionList]="listPlanAccion">
+                                </app-informe>
                             </div>
                             <p style="page-break-after: always"></p>
                             <div><h1><strong><u>Anexos:</u></strong></h1></div>
