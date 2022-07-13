@@ -21,7 +21,11 @@ export class EvidenciasComponent implements OnInit {
   @Output('onUpdate') onUpdate = new EventEmitter<Documento>();
   @Input('readOnly') readOnly: boolean;
   documentosList: any[];
-  visibleDlg: boolean;
+  visibleDlg1: boolean;
+  visibleDlg2: boolean;
+  visibleDlg3: boolean;
+  visibleDlg4: boolean;
+  visibleDlg5: boolean;
   modulo = Modulo.SEC.value;
   msgs: Message[];
 
@@ -34,20 +38,22 @@ export class EvidenciasComponent implements OnInit {
   ngOnInit() {
     if (this.documentos != null) {
       this.documentosList = [];
-      // this.documentos.forEach(doc => this.adicionarAGaleria(doc));
+       this.documentos.forEach(doc => this.adicionarAGaleria(doc));
     }
   }
-  // adicionarAGaleria(doc: Documento) {
-  //   if (this.esImagen(doc)) {
-  //     this.directorioService.download(doc.id).then(
-  //       data => {
-  //         let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
-  //         this.documentosList.push({ source: urlData, documento: doc });
-  //         this.documentosList = this.documentosList.slice();
-  //       }
-  //     );
-  //   }
-  // }
+  adicionarAGaleria(doc: Documento) {
+    if (this.esImagen(doc)) {
+      this.directorioService.download(doc.id).then(
+        data => {
+          let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
+          if(doc.proceso == "politica")
+          this.documentosList.push({ source: urlData, documento: doc });
+          this.documentosList = this.documentosList.slice();
+          console.log(this.documentosList)
+        }
+      );
+    }
+  }
 
   esImagen(doc: Documento) {
     let split = doc.nombre.split('.');
@@ -57,16 +63,29 @@ export class EvidenciasComponent implements OnInit {
     return (extension != null && (extension.extension == 'png' || extension.extension == 'jpg'));
   }
 
-  showDialog() {
-    this.visibleDlg = true;
+  showDialog1() {
+    this.visibleDlg1 = true;
+  }
+  showDialog2() {
+    this.visibleDlg2 = true;
+  }
+  showDialog3() {
+    this.visibleDlg3 = true;
+  }
+  showDialog4() {
+    this.visibleDlg4 = true;
+  }
+  showDialog5() {
+    this.visibleDlg5 = true;
   }
 
   onUpload(event: Directorio) {
     if (this.documentos == null)
       this.documentos = [];
     this.documentos.push(event.documento);
-    // this.adicionarAGaleria(event.documento);
+    this.adicionarAGaleria(event.documento);
     this.documentos = this.documentos.slice();
+    console.log(this.documentos)
   }
 
   actualizarDesc(doc: Documento) {
