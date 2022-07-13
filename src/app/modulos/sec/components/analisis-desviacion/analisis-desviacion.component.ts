@@ -535,6 +535,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                             this.causaInmediataListSelect
                         ))
                 );
+                this.habilitarInforme()
         });
     }
 

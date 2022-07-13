@@ -198,8 +198,8 @@
                         <!-- <app-miembros-equipo [miembrosList]="miembros" (miembrosOut)="miembrosIn($event)" (selectedProductsOUT)="selectedProductsIn($event)"></app-miembros-equipo> -->
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Evidencias">
-                        <app-evidencias [analisisId]="analisisId"></app-evidencias>
-                    </p-tabPanel>
+                        <app-evidencias [analisisId]="analisisId" [documentos]="documentos"></app-evidencias>
+                    </p-tabPanel>                    
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
                         <app-flow-chart (imgDF)="imgIn($event)" (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
                     </p-tabPanel>
@@ -400,7 +400,7 @@
                             label="Adicionar participante" (click)="adicionarParticipante()"></button>
                     </p-tabPanel>
 
-                    <p-tabPanel header="Documentación" [disabled]="adicionar">
+                    <p-tabPanel *ngIf="idEmpresa != '3'" header="Documentación" [disabled]="adicionar">
                         <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
                             [documentos]="documentos" (onUpdate)="confirmarActualizacion($event)"
                             [readOnly]="consultar"></s-documentosAnalisisDesviacion>

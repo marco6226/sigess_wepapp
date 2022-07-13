@@ -21,5 +21,6 @@ export class Documento {
   ubicacionFisica: string;
   modulo: string;
   public: boolean;
+  extension;
 
 }
