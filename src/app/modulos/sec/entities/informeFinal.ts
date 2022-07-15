@@ -16,5 +16,5 @@ export class InformeJson {
 }
 
 export class Diagrama {
-    Diagrama:string;
+    Diagrama?:string;
 }

@@ -35,12 +35,12 @@ export class PlanAccionListComponent implements OnInit {
   // value: number = 10;
 
   selectProduct(event) {
-    console.log(event);
+    // console.log(event);
     this.planAccionListSelected = event;
     this.display = true
   }
   selectProduct2(event, selection) {
-    console.log(event);
+    // console.log(event);
     this.validate = selection
     this.planAccionListSelected = event;
     this.display = true
@@ -51,7 +51,7 @@ export class PlanAccionListComponent implements OnInit {
   }
 
   test(){
-    console.log(this.planAccionList);
+    // console.log(this.planAccionList);
     this.isRevisado = false
   }
  
@@ -59,12 +59,12 @@ export class PlanAccionListComponent implements OnInit {
 
 
   habilitar(){
-    console.log(this.planAccionList);
+    // console.log(this.planAccionList);
     this.display = false
     this.planAccionList.forEach(element => {
       // console.log(element);
       element.causaRaiz.forEach(elementIn => {
-        console.log(elementIn);
+        // console.log(elementIn);
         if(elementIn.especifico.accionCorrectiva!=null && elementIn.especifico.accionCorrectiva != ""){
           elementIn.especifico.isComplete = true;
         }
