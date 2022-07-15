@@ -102,6 +102,7 @@
 
 <div>
     <!-- <button content='Export' (click)='exportImg()'>Captura de imagen</button> -->
+    <button content='Export' (click)='exportDF()'>Guardar diagrama</button>
     <div style="width:100%;height: 80%">
         <div id="palette-space" class="sb-mobile-palette">
             <ejs-symbolpalette id="symbolpalette" [enableAnimation]='enableAnimation' [expandMode]='expandMode' [palettes]='palettes' (created)='create($event)' width="100%" height="700px" [symbolHeight]=60 [symbolWidth]=60 [symbolMargin]='symbolMargin' [getSymbolInfo]='getSymbolInfo'
@@ -112,11 +113,22 @@
         <div id="diagram-space" class="sb-mobile-diagram" #screen>
             <div class="content-wrapper" >
                 <ejs-diagram #diagram id="diagram" width="100%" height="700px" (textEdit)="changeText($event)" (mousemove)="saveDiagram();">
+                    <!-- <e-nodes>
+                        <e-node [offsetX]=580 [offsetY]=580>
+                        </e-node>            
+                    </e-nodes> -->
                 </ejs-diagram>
+                <!-- <ejs-diagram id="diagram" width="100%" height="580px" [getNodeDefaults]='nodeDefaults'>
+                    <e-nodes>
+                        <e-node [offsetX]=580 [offsetY]=580>
+                        </e-node>            
+                    </e-nodes>
+                </ejs-diagram> -->
             </div>
             <ejs-uploader #defaultupload id='fileupload' (success)='onUploadSuccess($event)' [asyncSettings]='asyncSettings'></ejs-uploader>
         </div>
     </div>
+    
     <!-- {{exportImg()}} -->
-    <button content='Export' (click)='exportImg()'>Captura de imagen</button>
+
 </div>

@@ -19,7 +19,7 @@ export class InformeComponent implements OnInit {
 @Input() observacion;
 @Input() miembros;
 @Input() selectedProducts;
-@Input() diagramaFlujo;
+// @Input() diagramaFlujo;
 @Input() infoIn;
 @Input() factores: listFactores[];
 @Input() planAccionList;

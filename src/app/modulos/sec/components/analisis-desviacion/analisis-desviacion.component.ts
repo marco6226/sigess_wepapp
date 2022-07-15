@@ -175,13 +175,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         // this.img2.src=this.infoIn.value['Diagrama'];
         // console.log(this.imgIN.data);
         // console.log(this.infoIn.value['Diagrama'].w);
-        console.log()
-        if(this.imgIN=='data:,'){
-            console.log(1); 
-        }else{console.log(5); }
-        if(this.infoIn.value['Diagrama'].data==undefined){
-            console.log(2); 
-        }
+        console.log(this.imgIN)
+        // if(this.imgIN=='data:,'){
+        //     console.log(1); 
+        // }else{console.log(5); }
+        // if(this.infoIn.value['Diagrama'].data==undefined){
+        //     console.log(2); 
+        // }
 
         
     }
@@ -560,26 +560,32 @@ export class AnalisisDesviacionComponent implements OnInit {
         return crList;
     }
     async imprimir() {
-        this.consultarEvidencia()
+        // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
         this.idEmpresa = this.sesionService.getEmpresa().id;
         this.evidencias();
         
-        this.img.src=this.infoIn.value['Diagrama'];
-        console.log(this.img.width)
-        console.log(this.img.height)
-        console.log(Math.round(this.img.width/700))
-        console.log(Math.round(this.img.height/700))
+        this.img.src=(this.infoIn.value['Diagrama']==undefined)?'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAfSURBVDhPY/wPBAwkACYoTTQY1UAMGNVADKC1BgYGAF6OBBwFRhtVAAAAAElFTkSuQmCC':this.infoIn.value['Diagrama'];
+        // console.log(this.img.width)
+        // console.log(this.img.height)
+        // console.log(Math.round(this.img.width/700))
+        // console.log(Math.round(this.img.height/700))
         
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
-            
+    
             WinPrint.document.write(template.innerHTML);
-            for (let i = 0; i < Math.round(this.img.height/350); i++) {
-                for (let j = 0; j < Math.round(this.img.width/700); j++) {
+
+            let h;
+            h=(Math.round(this.img.height/350)==0) ? 1 : Math.round(this.img.height/350);
+            let w;
+            w=(Math.round(this.img.width/350)==0) ? 1 : Math.round(this.img.height/350);
+
+            for (let i = 0; i < h; i++) {
+                for (let j = 0; j < w; j++) {
                     WinPrint.document.write('<div align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; margin: auto; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
                     WinPrint.document.write('<p style="page-break-after: always"></p>');
                 }
@@ -587,13 +593,14 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-        }, 1000);
+        }, 2000);
     }
     Salida(){}
     guardarAnalisis() {
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
-        if(this.imgIN!='data:,'){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+        // this.informeJson.Diagrama=this.imgIN;
+        if(this.imgIN!=undefined){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -637,8 +644,8 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
-        // this.diagrama.Diagrama=this.imgIN;
-        if(this.imgIN!='data:,'){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+        // this.informeJson.Diagrama=this.imgIN;
+        if(this.imgIN!=undefined){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -811,33 +818,43 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
     evidencias(){
-        this.contFotografia=0;
-        this.contDocumental=0;
-        this.contPoliticas=0;
-        this.contProcedimientos=0;
-        this.contMultimedias=0;
-        for(let i=0; i< this.Evidencias.length; i++){
-          let value=this.Evidencias[i].proceso;
-          switch (value) {
-            case 'fotografica':
-              this.contFotografia++;
-              break;
-            case 'documental':
-              this.contDocumental++;
-              break;
-            case 'politicas':
-              this.contPoliticas++;
-              break;
-            case 'procedimientos':
-              this.contProcedimientos++;
-              break;
-            case 'multimedias':
-              this.contMultimedias++;
-              break;
-            default:
-              break;
-          }
-        }
+        let fq = new FilterQuery();
+        fq.filterList = [
+            { criteria: Criteria.EQUALS, field: "id", value1: this.paramNav.getParametro<Desviacion>().analisisId },
+        ];
+        this.analisisDesviacionService.findByFilter(fq).then((resp) => {
+            let analisis = <AnalisisDesviacion>resp["data"][0];
+            console.log("----->",resp['data'][0].documentosList);
+            this.Evidencias=resp['data'][0].documentosList;});
+            setTimeout(() => {
+                this.contFotografia=0;
+                this.contDocumental=0;
+                this.contPoliticas=0;
+                this.contProcedimientos=0;
+                this.contMultimedias=0;
+                for(let i=0; i< this.Evidencias.length; i++){
+                let value=this.Evidencias[i].proceso;
+                switch (value) {
+                    case 'fotografica':
+                    this.contFotografia++;
+                    break;
+                    case 'documental':
+                    this.contDocumental++;
+                    break;
+                    case 'politicas':
+                    this.contPoliticas++;
+                    break;
+                    case 'procedimientos':
+                    this.contProcedimientos++;
+                    break;
+                    case 'multimedias':
+                    this.contMultimedias++;
+                    break;
+                    default:
+                    break;
+                }
+                }
+         }, 1000);
       }
 
     tempData: listFactores[]=[];
