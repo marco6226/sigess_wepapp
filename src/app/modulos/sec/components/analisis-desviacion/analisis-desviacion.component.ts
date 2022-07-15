@@ -944,62 +944,48 @@ export class AnalisisDesviacionComponent implements OnInit {
     habilitarInforme(){
         let validador = true
         this.listPlanAccion.forEach(element => {
-            let isPlanAccionFinish = element.causaRaiz.find(ele=>{
-                return ele.revisado.isComplete == true
-            })
-              console.log(isPlanAccionFinish);
-              if (isPlanAccionFinish == undefined) {
-                validador = false;
-              }
+
+
+
+            // let isPlanAccionFinish = element.causaRaiz.find(ele=>{
+            //     return ele.revisado.isComplete == true
+            // })
+            // //   console.log(isPlanAccionFinish);
+            //   if (isPlanAccionFinish == undefined) {
+            //     validador = false;
+            //   }
             //   isPlanAccionFinish.forEach(element => {
             //     this.dataListFactor
             //   });
             console.log(element);
             
             element.causaRaiz.forEach(causa => {
+                console.log(causa);
+
                 if (causa.revisado.isComplete) {
                     let nombre = element.nombreFC.split(', ')
                     let causas = causa.causaRaiz.split(', ')
-                    console.log(causas,nombre);
+                    
 
 
                     for (let index = 0; index < nombre.length; index++) {
-                        console.log(nombre[index],causas[index]);
+                        // console.log(nombre[index],causas[index]);
                         
                         let dataFactor = this.dataListFactor.find(ele=> {
                             return ele.nombre == nombre[index] && ele.metodologia == causas[index]
                         })
 
-                        console.log(dataFactor);
+                        // console.log(dataFactor);
 
                         if (dataFactor) {
                             dataFactor.accion = 'Con Plan de Accion'                            
                         }
                         
                     }
-                    
-                    // element.nombreFC.split(', ').forEach(eleNombre => {
-                        
-                    //     // console.log(dataFactor);
-                    //     causa.causaRaiz.split(', ').forEach(causaele => {
-                    //         console.log(eleNombre,causaele);
-                            
-                    //         let dataFactor = this.dataListFactor.find(ele=> {
-                    //             return ele.nombre == eleNombre && ele.metodologia == causaele
-                    //         })
-                        
-                    //         // let dataFactorCausa = this.dataListFactor.find(ele=> {
-                    //         //     return ele.nombre == eleNombre && ele.metodologia == causas
-                    //         // })
-                    //         if (dataFactor) {
-                    //             dataFactor.accion = 'Con Plan de Accion'                            
-                    //         }
-                    //         // else{
-                    //         //     dataFactor.accion = 'Sin Plan de Accion'
-                    //         // }
-                    //         console.log(dataFactor);
-                    //     });
-                    // });
+                }
+                else{
+                    console.log("algo no es verdad");
+                    validador = false
                 }
             });
 
