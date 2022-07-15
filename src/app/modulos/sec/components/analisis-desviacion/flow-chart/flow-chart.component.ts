@@ -9,7 +9,6 @@ import { AsyncSettingsModel } from '@syncfusion/ej2-inputs';
 import { ClickEventArgs, ExpandMode, MenuEventArgs} from '@syncfusion/ej2-navigations';
 import { AnalisisDesviacion } from 'app/modulos/sec/entities/analisis-desviacion';
 import { ItemModel } from '@syncfusion/ej2-splitbuttons';
-import {Canvg} from "canvg";
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 // import { showPaletteIcon } from './script/diagram-common';
 Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
