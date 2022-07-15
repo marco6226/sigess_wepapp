@@ -9,7 +9,7 @@ import { AsyncSettingsModel } from '@syncfusion/ej2-inputs';
 import { ClickEventArgs, ExpandMode, MenuEventArgs} from '@syncfusion/ej2-navigations';
 import { AnalisisDesviacion } from 'app/modulos/sec/entities/analisis-desviacion';
 import { ItemModel } from '@syncfusion/ej2-splitbuttons';
-import {Canvg} from "canvg";
+// import {Canvg} from "canvg";
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 // import { showPaletteIcon } from './script/diagram-common';
 Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
@@ -187,6 +187,15 @@ export class FlowChartComponent {
           style: { strokeWidth: 2, strokeColor: '#757575' }, targetDecorator: { shape: 'None' }
       }
   ];
+  public getNodeDefaults(node: NodeModel): NodeModel {
+    node.height = 100;
+    node.width = 100;
+    node.style.fill = "#6BA5D7";
+    node.style.strokeColor = "White";
+    // Flip the node in Horizontal Direction
+    node.flip = 'Horizontal';
+    return node;
+  }
 
 
   public bpmnShapes: NodeModel[] = [
