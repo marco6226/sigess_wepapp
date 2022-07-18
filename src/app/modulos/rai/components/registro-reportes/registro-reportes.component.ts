@@ -115,7 +115,7 @@ async  ngOnInit() {
       this.msgs.push({
         severity: 'success',
         summary: 'Reporte realizado',
-        detail: `Se ha registrado el reporte de  ${this.reporteSelect.tipo} RAI-${reporte.id}`
+        detail: `Se ha registrado el reporte de  ${this.reporteSelect.tipo} RAI-${reporte}`
       });
     } else if (this.modificar) {
       this.msgs.push({
@@ -125,6 +125,7 @@ async  ngOnInit() {
         
       });
       console.log(reporte);
+      console.log("id del at");
     }
     this.limpiarCampos();
   }
