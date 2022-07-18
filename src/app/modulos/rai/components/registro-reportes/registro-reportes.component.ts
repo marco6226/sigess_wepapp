@@ -34,6 +34,8 @@ export class RegistroReportesComponent implements OnInit {
 async  ngOnInit() {
   
     console.log( this.Zeller(24,9,1983));
+    console.log( this.consultar, this.modificar);
+
     let repParam = this.paramNav.getParametro<Reporte>();
     if (repParam != null) {
       this.consultar = this.paramNav.getAccion<string>() == 'GET';
