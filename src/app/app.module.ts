@@ -31,11 +31,11 @@ import { ScmModule } from './modulos/scm/scm.module';
 
 declare global {
     interface Navigator {
-        msSaveBlob?: (blob: any, defaultName?: string) => boolean
+        msSaveBlob?: (blob: any, defaultName?: string) => boolean;
     }
-    interface Navigator {
-        msSaveOrOpenBlob: (blob: Blob) => void
-      }
+    // interface Navigator {
+    //     msSaveOrOpenBlob: (blob: Blob) => void;
+    //   }
 }
 
 
