@@ -46,10 +46,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     }
   }
 
-  test(){
-    console.log(this.incapacidades);
-    
-  }
+  
   get daysCount() {
 
    

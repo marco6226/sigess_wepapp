@@ -43,7 +43,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" (onInput)="test()" dateFormat="dd/mm/yy"></p-calendar>
     </div>
     <div class="p-field">
         <label>Plan de Verificación</label>

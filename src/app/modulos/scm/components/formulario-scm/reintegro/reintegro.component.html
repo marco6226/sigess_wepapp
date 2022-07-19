@@ -1,0 +1,73 @@
+<!-- <h5>Tipo Reintegro</h5> -->
+<div class="input-field">
+
+    <label class="active" for="">Tipo de reintegro</label>
+    <p-dropdown [options]="reintegroTipos" [(ngModel)]="reintegroTipo" placeholder="Seleccione"></p-dropdown>
+</div>
+<br>
+
+<p-panel *ngIf="reintegroTipo==1">
+    <div class="input-field">
+        <label class="active" for="">Descripción</label>
+        <input type="text">
+    </div>
+    <div class="input-field">
+        <label class="active" for="">Permanencia</label>
+        <p-dropdown styleClass="form-material-autocomplete" [options]="temporals" [(ngModel)]="temporal" placeholder="Seleccione"></p-dropdown>
+    </div>
+    <div class="input-field" *ngIf="temporal">
+        <label class="active" for="">Periocidad</label>
+        <p-dropdown *ngIf="temporal==1" [options]="periocidadesTemp" [(ngModel)]="periocidadTemp" placeholder="Seleccione"></p-dropdown>
+        <p-dropdown *ngIf="temporal==2" [options]="periocidadesPerm" [(ngModel)]="periocidadPerm" placeholder="Seleccione"></p-dropdown>
+    </div>
+    <div class="input-field" *ngIf="temporal==2">
+        <label class="active"  for="">Reintegro Exitoso</label>
+        <br>
+        <p-radioButton *ngIf="temporal==2" label="Si" name="groupname" value="Si" [(ngModel)]="selectedValue"></p-radioButton>
+        <label class="active" for=""></label>
+        <p-radioButton *ngIf="temporal==2" label="No" name="groupname" value="No" [(ngModel)]="selectedValue"></p-radioButton>
+    </div>
+</p-panel>
+
+<p-panel *ngIf="reintegroTipo==2">
+    <div class="input-field">
+        <label class="active" for="">Descripción</label>
+        <input type="text">
+    </div>
+    <div class="input-field">
+        <p-dropdown [options]="temporals" [(ngModel)]="temporal" placeholder="Seleccione"></p-dropdown>
+        <label class="active" for="">Permanencia</label>
+    </div>
+    <div class="input-field" *ngIf="temporal">
+        <label class="active" for="">Periocidad</label>
+        <p-dropdown *ngIf="temporal==1" [options]="periocidadesTemp" [(ngModel)]="periocidadTemp" placeholder="Seleccione"></p-dropdown>
+        <p-dropdown *ngIf="temporal==2" [options]="periocidadesPerm" [(ngModel)]="periocidadPerm" placeholder="Seleccione"></p-dropdown>
+    </div>
+
+</p-panel>
+
+<p-panel *ngIf="reintegroTipo==3">
+    <div class="input-field">
+        <label class="active" for="">Descripción</label>
+        <input type="text">
+    </div>
+    <div class="input-field">
+
+        <label class="active" for="">Periocidad</label>
+        <p-dropdown [options]="periocidadesTemp" [(ngModel)]="periocidadTemp" placeholder="Seleccione"></p-dropdown>
+    </div>
+
+</p-panel>
+
+<p-panel *ngIf="reintegroTipo">
+    <div class="input-field">
+        <label class="active" for="">Fecha Cierre</label>
+        <p-calendar></p-calendar>
+    </div>
+    <div class="input-field">
+        <label class="active" for="">Observación</label>
+        <input type="text">
+    </div>
+</p-panel>
+
+<button (click)="test()">test</button>

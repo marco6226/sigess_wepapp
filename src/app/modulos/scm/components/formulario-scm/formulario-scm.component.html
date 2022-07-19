@@ -1197,6 +1197,24 @@
     </ng-container>
     <!-- Finaliza seguimientos -->
 
+    <!-- Inicio reintegro -->
+    <ng-container *sTienePermiso="'SCM_GET_CASE_SEG'">
+        <!-- <p-tabPanel header="Reintegro" *ngIf="caseSelect">
+        </p-tabPanel> -->
+        <p-tabPanel header="Reintegro" >
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h5 class="title-header p-mb-2">Programa de reintegro laboral</h5>
+                </div>
+                <div class="ui-g-12">
+                    <app-reintegro></app-reintegro>
+        
+                </div>
+            </div>
+        </p-tabPanel>
+    </ng-container>
+    <!-- Finaliza reintegro -->
+
     <!-- Inicio tratamientos -->
     <ng-container *sTienePermiso="'SCM_GET_CASE_TRAT'">
         <p-tabPanel header="Tratamientos" *ngIf="caseSelect">

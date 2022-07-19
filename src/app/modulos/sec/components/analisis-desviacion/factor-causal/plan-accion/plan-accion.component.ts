@@ -58,24 +58,24 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this.planAcciones);
+    // //console.log(this.planAcciones);
     
   }
 
   ngAfterViewInit(): void {
     if(this.planAcciones){
-      console.log("treae datos");
+      //console.log("treae datos");
       
     }
     if(!this.planAcciones){
-      console.log("nop trae datos");
+      //console.log("nop trae datos");
       
     }
   }
 
   
   selectProduct(event) {
-    console.log(event);
+    //console.log(event);
     this.display = true
   }
 
@@ -102,7 +102,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   }
 
   submit(){
-    // console.log(this.formEspecifico, this.planAcciones);
+    // //console.log(this.formEspecifico, this.planAcciones);
     // switch (this.process) {
     //   case 'ESPECIFICO':
     //     this.planAcciones.especifico.isComplete = true;
@@ -122,7 +122,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     //   default:
     //     break;
     // }
-    console.log(this.planAcciones);
+    //console.log(this.planAcciones);
 
     this.dataTest.emit()
     // this.planAcciones.nombreFC='Hola'
@@ -130,8 +130,13 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   }
 
   test2(){
-    console.log(this.planAcciones);
-    console.log(this.planAcciones.especifico);
+    //console.log(this.planAcciones);
+    //console.log(this.planAcciones.especifico);
+    
+  }
+
+  test(){
+    console.log("******************");
     
   }
 
