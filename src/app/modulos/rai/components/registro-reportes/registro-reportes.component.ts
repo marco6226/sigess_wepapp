@@ -34,6 +34,8 @@ export class RegistroReportesComponent implements OnInit {
 async  ngOnInit() {
   
     console.log( this.Zeller(24,9,1983));
+    console.log( this.consultar, this.modificar);
+
     let repParam = this.paramNav.getParametro<Reporte>();
     if (repParam != null) {
       this.consultar = this.paramNav.getAccion<string>() == 'GET';
@@ -115,7 +117,7 @@ async  ngOnInit() {
       this.msgs.push({
         severity: 'success',
         summary: 'Reporte realizado',
-        detail: `Se ha registrado el reporte de  ${this.reporteSelect.tipo} RAI-${reporte.id}`
+        detail: `Se ha registrado el reporte de  ${this.reporteSelect.tipo} RAI-${reporte}`
       });
     } else if (this.modificar) {
       this.msgs.push({
@@ -125,6 +127,7 @@ async  ngOnInit() {
         
       });
       console.log(reporte);
+      console.log("id del at");
     }
     this.limpiarCampos();
   }
