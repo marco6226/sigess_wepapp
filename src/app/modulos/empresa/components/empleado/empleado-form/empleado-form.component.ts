@@ -60,11 +60,9 @@ export class EmpleadoFormComponent implements OnInit {
     set empleadoSelectInput(empleadoInput: Empleado){
         
         this.empleadoSelect = empleadoInput
-        console.log(empleadoInput, this.empleadoSelect);
-
-        this.empresaForm.value.nit = empleadoInput.nit
-        console.log( this.empresaForm);
-
+        this.empresaForm.value.nit = this.empleadoSelect.nit
+        this.empresaSelect2 = this.empresaForm.value.empresa = {nit:this.empleadoSelect.nit, label:this.empleadoSelect.empresa, empresa:this.empleadoSelect.empresa}
+ 
     }
     @Input() isUpdate: boolean;
     @Input() show: boolean;
@@ -575,13 +573,6 @@ export class EmpleadoFormComponent implements OnInit {
         }
     }
 
-    test(){
-        console.log(this.empresaForm.value,this.empleadoSelect,this.empresaSelect2)
-        this.empresaForm.value.nit = this.empleadoSelect.nit
-        this.empresaSelect2.nit = this.empleadoSelect.nit
-        console.log( this.empresaForm);
-
-    }
 }
 
 interface empresaNit{
