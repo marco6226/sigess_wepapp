@@ -48,11 +48,11 @@
                         <div class="ui-g">
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
-                                {{desviacionesList[0].empresa}}
+                                {{desviacionesList[0]?.empresa}}
                             </div>
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">NIT</h4>
-                                {{desviacionesList[0].nit}}
+                                {{desviacionesList[0]?.nit}}
                             </div>    
                                                   
                         </div>
@@ -71,7 +71,7 @@
                             <ng-template pTemplate="body">
                                 <tr>
                                     <th style="border: 1px solid #c8c8c8;">Nombre del evento</th>
-                                    <td>{{desviacionesList[0].concepto}}</td> 
+                                    <td>{{desviacionesList[0]?.concepto}}</td> 
                                 </tr>
                                 <tr>
                                     <th style="border: 1px solid #c8c8c8;">Nombre del colaborador</th>
@@ -290,13 +290,13 @@
                                         <th style="text-align: left">
                                             Nombre de la empresa
                                         </th>
-                                        <td>{{desviacionesList[0].empresa}}</td>
+                                        <td>{{desviacionesList[0]?.empresa}}</td>
                                     </tr>
                                     <tr>
                                         <th style="text-align: left">
                                             NIT:
                                         </th>
-                                        <td>{{desviacionesList[0].nit}}</td>
+                                        <td>{{desviacionesList[0]?.nit}}</td>
                                     </tr>
                                 </table>
 
@@ -402,13 +402,13 @@
                             label="Adicionar participante" (click)="adicionarParticipante()"></button>
                     </p-tabPanel>
 
-                    <p-tabPanel *ngIf="idEmpresa == '3'" header="Documentación" [disabled]="adicionar">
+                    <p-tabPanel *ngIf="idEmpresa != '22' " header="Documentación" [disabled]="adicionar">
                         <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
                             [documentos]="documentos" (onUpdate)="confirmarActualizacion($event)"
                             [readOnly]="consultar"></s-documentosAnalisisDesviacion>
                     </p-tabPanel>
 
-                    <p-tabPanel header="Observaciones">
+                    <p-tabPanel  *ngIf="idEmpresa != '22' " header="Observaciones">
                         <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="7"
                             placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
                         <div *ngIf="consultar">
@@ -420,7 +420,7 @@
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel header="PLAN DE TRABAJO">
+    <p-tabPanel  *ngIf="idEmpresa != '22' " header="PLAN DE TRABAJO">
         <s-gestionTareas (onEvent)="onEvent($event)" [tareasList]="tareasList" [readOnly]="consultar"></s-gestionTareas>
     </p-tabPanel>
 </p-tabView>

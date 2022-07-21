@@ -85,6 +85,16 @@
     text-anchor: middle;
     font-family: serif;
 }
+
+.e-diagram .e-diagram-text-edit {
+    background: white;
+    border-color: red;
+    border-style: dashed;
+    border-width: 1px;
+    box-sizing: content-box;
+    color: black;
+    min-width: 50px;
+  }
 // #embeddedSVG {
 //     background-color: #D2B48C;
 //     display: block;
