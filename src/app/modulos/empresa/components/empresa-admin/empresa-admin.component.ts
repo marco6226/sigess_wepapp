@@ -261,4 +261,9 @@ export class EmpresaAdminComponent implements OnInit {
     onDelete() {
 
     }
+
+    test(){
+        console.log(this.empresaSelect);
+        
+    }
 }

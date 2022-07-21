@@ -54,7 +54,18 @@ export class EmpleadoFormComponent implements OnInit {
     @Output() onEmpleadoCreate = new EventEmitter();
     @Output() onEmpleadoUpdate = new EventEmitter();
     @Output() onCancel = new EventEmitter();
-    @Input() empleadoSelect: Empleado;
+    // @Input() empleadoSelect: Empleado;
+    empleadoSelect?: Empleado;
+    @Input('empleadoSelect') 
+    set empleadoSelectInput(empleadoInput: Empleado){
+        
+        this.empleadoSelect = empleadoInput
+        console.log(empleadoInput, this.empleadoSelect);
+
+        this.empresaForm.value.nit = empleadoInput.nit
+        console.log( this.empresaForm);
+
+    }
     @Input() isUpdate: boolean;
     @Input() show: boolean;
     @Input() editable: boolean;
@@ -563,10 +574,18 @@ export class EmpleadoFormComponent implements OnInit {
             console.log(e);
         }
     }
+
+    test(){
+        console.log(this.empresaForm.value,this.empleadoSelect,this.empresaSelect2)
+        this.empresaForm.value.nit = this.empleadoSelect.nit
+        this.empresaSelect2.nit = this.empleadoSelect.nit
+        console.log( this.empresaForm);
+
+    }
 }
 
 interface empresaNit{
  label: string;
- empresa: string;
+ empresa;
  nit: string;
 }
