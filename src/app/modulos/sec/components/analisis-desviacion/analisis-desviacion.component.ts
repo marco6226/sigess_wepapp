@@ -665,13 +665,15 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.jerarquia = this.jerarquia;
         ad.complementaria=JSON.stringify(this.informacionComplementaria);
         ad.informe=JSON.stringify(this.informeJson);
+
 		ad.miembros_equipo= JSON.stringify(this.miembros);
+        if(ad.tareaDesviacionList){
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
             console.log(ad.tareaDesviacionList);
         }
-
+    }
         // setTimeout(() => {
             this.analisisDesviacionService.update(ad).then((data) => {
                 console.log(data, "data");

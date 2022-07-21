@@ -197,7 +197,7 @@
                         <app-miembros-equipo [miembrosList]="miembros"></app-miembros-equipo>
                         <!-- <app-miembros-equipo [miembrosList]="miembros" (miembrosOut)="miembrosIn($event)" (selectedProductsOUT)="selectedProductsIn($event)"></app-miembros-equipo> -->
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '22'" header="Evidencias">
+                    <p-tabPanel *ngIf="idEmpresa == '22'" header="Evidencias" [disabled]="adicionar">
                         <app-evidencias [analisisId]="analisisId" [documentos]="documentos"></app-evidencias>
                     </p-tabPanel>                    
                     <p-tabPanel *ngIf="idEmpresa == '22'" header="Diagrama de flujo">
@@ -327,14 +327,14 @@
 
                             <table width="90%" style="border-collapse: collapse; margin: auto;">
                                 <tr>
-                                    <th style="text-align: center" width="50%">SnapChart - Análisis Factor Causal y Raiz</th>
+                                    <th style="text-align: center" width="50%">Diagrama de flujo - Análisis Factor Causal y Raiz</th>
                                 </tr>
                             </table>
                         </div>
 
                     </p-tabPanel>
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Parametros"></p-tabPanel>
-                    <p-tabPanel header="Establecimiento de causas">
+                    <p-tabPanel *ngIf="idEmpresa != '22' " header="Establecimiento de causas">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Causas inmediatas</h4>
