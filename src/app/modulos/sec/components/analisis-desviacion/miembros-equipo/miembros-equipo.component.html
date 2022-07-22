@@ -21,7 +21,7 @@
 
     <p-table #dt [value]="miembrosList" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
         [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-         [showCurrentPageReport]="true">
+         [showCurrentPageReport]="false">
         <!-- <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
                 <h5 class="p-m-0">Miembros del equipo</h5>
