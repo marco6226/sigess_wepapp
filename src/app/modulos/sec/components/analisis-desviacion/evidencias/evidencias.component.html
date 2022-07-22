@@ -2,6 +2,7 @@
 <p>Evidencia Fotografica</p> 
 <div>  
     <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-plus" label="Adjuntar soporte foto" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+    <!-- <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-trash" style="margin-bottom: 10px; background-color: red;" *ngIf="!readOnly"></button> -->
 <s-documentoUpload accept="image/*"  fileLimit="3" [(visible)]="visibleDlgFoto" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
 </div>
 <div class="ui-g" style="margin-top: 10px;">
@@ -15,6 +16,8 @@
           </td>
           <td style="text-align: right;">
             <a class="fa fa-pencil" title="Actualizar Descripción" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+            <a>&nbsp;</a>
+            <a class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" *ngIf="!readOnly" style="color: red;"></a>
           </td>
         </tr>
         <tr>

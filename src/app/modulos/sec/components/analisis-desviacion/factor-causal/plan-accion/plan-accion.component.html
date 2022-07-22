@@ -12,7 +12,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
     </div>
     <div class="p-field">
         <label>Responsable Empresa</label>
@@ -43,7 +43,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" (onInput)="test()" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" (onInput)="test()" dateFormat="dd/mm/yy" required></p-calendar>
     </div>
     <div class="p-field">
         <label>Plan de Verificación</label>
@@ -63,7 +63,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.medible.fechaVencimiento" [(ngModel)]="planAcciones.eficaz.fechaVencimiento" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [yearNavigator]="true" yearRange="1900:2030" [monthNavigator]="true" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.medible.fechaVencimiento" [(ngModel)]="planAcciones.eficaz.fechaVencimiento" dateFormat="dd/mm/yy" required></p-calendar>
     </div>
     <div class="p-field">
         <label>Plan de Validación</label>
@@ -92,5 +92,6 @@
     <button pButton *ngIf="process=='MEDIBLE'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.medible.planVerificacion!=null && planAcciones.medible.fechaVencimiento!=null && (planAcciones.medible.responsableEmpresa || planAcciones.medible.responsableExterno))"></button>
     <button pButton *ngIf="process=='EFICAZ'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.eficaz.planValidacion!=null && planAcciones.eficaz.fechaVencimiento!=null && (planAcciones.eficaz.responsableEmpresa || planAcciones.eficaz.responsableExterno))"></button>
     <button pButton *ngIf="process=='REVISADO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.revisado.revisado!=null)"></button>
+    <!-- <button (click)="cerrar()" pButton type="button" label="x" class="ui-button-raised ui-button-danger" style="position:absolute; top:0; right:0; height: 20px;width: 20px;"></button> -->
 
 <!-- <button (click)="test2()">test</button> -->

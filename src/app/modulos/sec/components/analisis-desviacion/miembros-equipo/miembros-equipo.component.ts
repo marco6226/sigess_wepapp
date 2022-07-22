@@ -13,12 +13,13 @@ export class MiembrosEquipoComponent implements OnInit {
   @Output()miembrosOut=new EventEmitter<MiembroEquipo[]>();
   @Output()selectedProductsOUT= new EventEmitter<any[]>();
   @Input()miembrosList: MiembroEquipo[] = []
+  @Output() disable = new EventEmitter<boolean>();
 
   productDialog: boolean;
   submitted: boolean;
 
   selectedProducts;
-
+//   disable:boolean=false;
   miembros: MiembroEquipo[]
   miembro: MiembroEquipo;
   cedula: number;
@@ -37,6 +38,7 @@ export class MiembrosEquipoComponent implements OnInit {
     // this.productService.getProducts().then(data => this.products = data);
     // this.miembros = [];
     // this.salida();
+    this.disable.emit(false)
   }
 
   openNew() {
@@ -47,8 +49,8 @@ export class MiembrosEquipoComponent implements OnInit {
 
   deleteSelectedProducts() {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete the selected products?',
-        header: 'Confirm',
+        message: '¿Está seguro de que desea eliminar los productos seleccionados?',
+        header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.miembrosList = this.miembrosList.filter(val => !this.selectedProducts.includes(val));
@@ -84,8 +86,8 @@ editProduct(product: MiembroEquipo) {
 
 deleteProduct(product: MiembroEquipo) {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete ' + product.nombre + '?',
-        header: 'Confirm',
+        message: '¿Estás seguro de que quieres eliminar ' + product.nombre + '?',
+        header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             // this.miembrosList = this.miembrosList.filter(val => val.id !== product.id);
@@ -158,7 +160,12 @@ saveProduct() {
         this.id = null;
         this.borrarMiembro();
         if(this.miembrosList.length%2==0){
+            this.disable.emit(true)
+            // this.disable=true;
             this.showError();
+        }else{
+            this.disable.emit(false)
+            // this.disable=false;
         }
     // }
 }

@@ -22,10 +22,17 @@
     </ng-template>
 </p-table> -->
 
-<p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '60vw'}">
-          
+<p-dialog [(visible)]="display" [closable]="true"	 [style]="{width: '60vw'}">
+    <!-- <button type="button" class="btn-close" aria-label="Close" style="position:absolute; top:0; right:0;" (click)="cerrar()"></button>      -->
+
+    <!-- <div style="position:absolute; right:50px; height: 20px;width: 20px;"> -->
+        
+    <!-- </div> -->
+     
     <div>
+      <!-- <button pButton (click)="cerrar()" type="button" label="x" class="ui-button-raised ui-button-danger" style="position:absolute; right:50px; height: 20px;width: 20px;"></button> -->
       <app-plan-accion *ngIf="display" (dataTest)="habilitar()" [process]="validate" [planAcciones]="planAccionListSelected"></app-plan-accion>
+      
     </div>
 
     <!-- <div >

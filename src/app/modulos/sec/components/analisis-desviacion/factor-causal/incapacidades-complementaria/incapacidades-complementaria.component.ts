@@ -67,8 +67,8 @@ export class IncapacidadesComplementariaComponent implements OnInit {
 
   deleteSelectedProducts(){
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
+      message: '¿Está seguro de que desea eliminar los productos seleccionados?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
           this.incapacidades = this.incapacidades.filter(val => !this.selectedProducts.includes(val));
@@ -131,8 +131,8 @@ export class IncapacidadesComplementariaComponent implements OnInit {
 
 deleteProduct(product: Incapacidad) {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete ' + product.cie10 + '?',
-        header: 'Confirm',
+        message: '¿Estás seguro de que quieres eliminar ' + product.cie10 + '?',
+        header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.incapacidades = this.incapacidades.filter(val => val.cie10 !== product.cie10);

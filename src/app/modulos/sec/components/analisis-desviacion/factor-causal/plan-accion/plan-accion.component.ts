@@ -59,7 +59,9 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // //console.log(this.planAcciones);
-    
+    this.planAcciones.eficaz.fechaVencimiento = new Date(this.planAcciones.eficaz.fechaVencimiento)
+    this.planAcciones.medible.fechaVencimiento = new Date(this.planAcciones.medible.fechaVencimiento)
+    this.planAcciones.especifico.fechaVencimiento = new Date(this.planAcciones.especifico.fechaVencimiento)
   }
 
   ngAfterViewInit(): void {
@@ -128,7 +130,9 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     // this.planAcciones.nombreFC='Hola'
     // this.planAcciones.causaRaiz='casua'
   }
-
+  // cerrar(){
+  //   this.display=false;
+  //  }
   test2(){
     //console.log(this.planAcciones);
     //console.log(this.planAcciones.especifico);
