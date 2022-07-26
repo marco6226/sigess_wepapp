@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ReintegroCreate } from './../../../entities/reintegro.interface';
+import { CasosMedicosService } from './../../../services/casos-medicos.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Reintegro } from 'app/modulos/scm/entities/reintegro.interface';
 
 @Component({
   selector: 'app-reintegro',
@@ -7,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReintegroComponent implements OnInit {
 
+  @Input() idCase=null;
   selectedValue
 
   reintegroTipos=[
@@ -41,7 +45,9 @@ export class ReintegroComponent implements OnInit {
 
   periocidadPerm
 
-  constructor() { }
+  constructor(
+    private casosMedicosService: CasosMedicosService
+  ) { }
 
   ngOnInit() {
   }
@@ -49,6 +55,14 @@ export class ReintegroComponent implements OnInit {
   test(){
     console.log(this.reintegroTipo);
     
+  }
+  saveReintegro(){
+    console.log("hola");
+    let reintegro: ReintegroCreate={
+      reintegro: 'test2',
+      pk_case: this.idCase
+    }
+    this.casosMedicosService.createReintegro(reintegro)
   }
 
 }

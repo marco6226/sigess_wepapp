@@ -483,7 +483,7 @@
                             <div class="input-field">
                                 <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5"
                                     required></textarea>
-                                <label for="" class="active">Descripción completa del caso</label>
+                                <label for="" class="active">Descripción general del caso</label>
                             </div>
                         </div>
 
@@ -1201,17 +1201,20 @@
     <ng-container *sTienePermiso="'SCM_GET_CASE_SEG'">
         <!-- <p-tabPanel header="Reintegro" *ngIf="caseSelect">
         </p-tabPanel> -->
-        <p-tabPanel header="Reintegro" >
+        <p-tabPanel header="PRL" *ngIf="caseSelect">
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Programa de reintegro laboral</h5>
+                    <h5 class="title-header p-mb-2">Programa de retorno laboral</h5>
                 </div>
                 <div class="ui-g-12">
-                    <app-reintegro></app-reintegro>
-        
+                    <app-reintegro-list [idCase]="caseSelect.id"></app-reintegro-list>        
                 </div>
             </div>
         </p-tabPanel>
+        <!-- <button pButton *ngIf="solicitando == false || !this.consultar" (click)="saveReintegro()" icon="fa fa-floppy-o"
+                        class="float-btn" [disabled]="this.consultar" style="bottom: 100px;"
+        title="Guardar reintegro"></button> -->
+        
     </ng-container>
     <!-- Finaliza reintegro -->
 

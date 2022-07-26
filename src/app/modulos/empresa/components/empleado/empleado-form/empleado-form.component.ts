@@ -58,11 +58,11 @@ export class EmpleadoFormComponent implements OnInit {
     empleadoSelect?: Empleado;
     @Input('empleadoSelect') 
     set empleadoSelectInput(empleadoInput: Empleado){
-        
-        this.empleadoSelect = empleadoInput
-        this.empresaForm.value.nit = this.empleadoSelect.nit
-        this.empresaSelect2 = this.empresaForm.value.empresa = {nit:this.empleadoSelect.nit, label:this.empleadoSelect.empresa, empresa:this.empleadoSelect.empresa}
- 
+        if(empleadoInput){
+            this.empleadoSelect = empleadoInput
+            this.empresaForm.value.nit = this.empleadoSelect.nit
+            this.empresaSelect2 = this.empresaForm.value.empresa = {nit:this.empleadoSelect.nit, label:this.empleadoSelect.empresa, empresa:this.empleadoSelect.empresa}
+        }
     }
     @Input() isUpdate: boolean;
     @Input() show: boolean;

@@ -586,6 +586,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     }
 
     async onSubmit() {
+        console.log("hi");
+        
         this.msgs = [];
         if (!this.casoMedicoForm.valid) {
             this.msgs.push({
@@ -1242,6 +1244,10 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             this.itemInPCL=true;
            }
         }); 
+    }
+
+    saveReintegro(){
+
     }
     
 }
