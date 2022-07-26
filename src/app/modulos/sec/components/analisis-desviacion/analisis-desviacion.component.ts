@@ -754,6 +754,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
     confirmarActualizacion(event: Documento) {
+        
+        // this.Evidencias= this.Evidencias.filter(val => val.id !== event.id);
         this.msgs = [];
         this.msgs.push({
             severity: "success",
@@ -761,7 +763,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             detail: "Se ha actualizado la descripción del documento",
         });
     }
-
+    
     adicionarParticipante() {
         if (this.participantes == null) this.participantes = [];
         this.participantes.push({});
