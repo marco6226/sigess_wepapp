@@ -54,7 +54,9 @@ export class PlanAccionListComponent implements OnInit {
     // console.log(this.planAccionList);
     this.isRevisado = false
   }
- 
+ cerrar(){
+  this.display=false;
+ }
   tests="pi pi-sign-in"
 
 

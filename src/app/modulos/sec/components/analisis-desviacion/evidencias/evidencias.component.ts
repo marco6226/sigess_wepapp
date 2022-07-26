@@ -133,6 +133,10 @@ export class EvidenciasComponent implements OnInit {
     );
   }
 
+  eliminarDocument(doc: Documento) {
+
+  }
+
   descargarDocumento(doc: Documento) {
     let msg = { severity: 'info', summary: 'Descargando documento...', detail: 'Archivo \"' + doc.nombre + "\" en proceso de descarga" };
     this.msgs = [];

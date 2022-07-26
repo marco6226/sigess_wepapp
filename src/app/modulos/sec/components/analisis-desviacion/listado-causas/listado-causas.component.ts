@@ -33,6 +33,7 @@ export class ListadoCausasComponent implements OnInit {
 
   crearPlanAccion(){
     this.confirmationService.confirm({
+      header:'Confirmar',
       message: '¿Desea realizar este plan de acción?',
       accept: () => {
         console.log("hola", this.causasListSelect);

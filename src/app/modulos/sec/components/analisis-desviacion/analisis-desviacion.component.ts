@@ -133,6 +133,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     contPoliticas:number=0;
     contProcedimientos:number=0;
     contMultimedias:number=0;
+    disabled:boolean=false;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -434,6 +435,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
             if(JSON.parse(resp["data"][0].plan_accion) != null){
                 this.listPlanAccion = JSON.parse(resp["data"][0].plan_accion);
+                console.log(this.listPlanAccion);
                 this.habilitarInforme();
             }
 
@@ -538,7 +540,9 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.habilitarInforme()
         });
     }
-
+    guardadModificar(event){
+        this.disabled=event;
+    }
     miembrosIn(event){
         this.miembros=event;
     }
