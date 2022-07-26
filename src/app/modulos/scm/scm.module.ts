@@ -24,10 +24,11 @@ import { AdminModule } from '../admin/admin.module';
 import { PermisoService } from '../admin/services/permiso.service';
 import { RecursoService } from '../admin/services/recurso.service';
 import { ReintegroComponent } from './components/formulario-scm/reintegro/reintegro.component';
+import { ReintegroListComponent } from './components/formulario-scm/reintegro-list/reintegro-list.component';
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe, PclComponent, ScmpermisosComponent, ReintegroComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe, PclComponent, ScmpermisosComponent, ReintegroComponent, ReintegroListComponent],
     imports: [
         CommonModule,
         ComunModule,

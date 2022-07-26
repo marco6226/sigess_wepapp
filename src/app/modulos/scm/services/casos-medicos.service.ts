@@ -1,3 +1,4 @@
+import { Reintegro, ReintegroCreate } from './../entities/reintegro.interface';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FilterQuery } from "app/modulos/core/entities/filter-query";
@@ -124,6 +125,18 @@ export class CasosMedicosService {
     }
     deletePcl(pcl) {
         return this.http.put(`${endPoints.scm}pcl/delete`, pcl, this.getRequestHeaders(this.headers)).toPromise();
+    }
+
+    //reintegro
+
+    createReintegro(reintegro: ReintegroCreate){
+        return this.http.post<[Reintegro]>(`${endPoints.scm}reintegro/`, reintegro, this.getRequestHeaders(this.headers)).toPromise();
+    }
+    editReintegro(){
+        
+    }
+    deleteReintegro(){
+        
     }
 
 
