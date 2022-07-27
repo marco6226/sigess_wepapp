@@ -14,4 +14,5 @@ export class ElementoInspeccion {
   criticidad:string;
   numero: number;
   calificacion: Calificacion;
+  data2?:any[];
 }

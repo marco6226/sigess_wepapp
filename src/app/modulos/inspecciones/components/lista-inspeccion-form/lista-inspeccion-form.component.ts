@@ -99,6 +99,8 @@ export class ListaInspeccionFormComponent implements OnInit {
             this.value = [];
         this.value.push(elemento);
     }
+    EnviarImagen(elem){
+    this.onElementoClick.emit(elem)}
 
     elementoClick(elem: ElementoInspeccion) {
         if (elem.calificacion == null) {
@@ -116,6 +118,7 @@ export class ListaInspeccionFormComponent implements OnInit {
         if (elem.calificacion.tipoHallazgo == null) {
             elem.calificacion.tipoHallazgo = new TipoHallazgo();
         }
+        this.EnviarImagen(elem)
         this.elementoSelect = elem;
         this.imagenesList = [];
         let elemImgs: any[] = this.imgMap[elem.id];
@@ -146,7 +149,9 @@ export class ListaInspeccionFormComponent implements OnInit {
         }
         this.visibleDlg = true;
     }
-
+test(){
+ console.log(this.imgMap)   
+}
     onArchivoSelect(event) {
         let file = event.target.files[0];
         if (file.type != "image/jpeg" && file.type != "image/png") {
