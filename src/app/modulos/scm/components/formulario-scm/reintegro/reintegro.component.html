@@ -1,94 +1,111 @@
 <!-- <h5>Tipo Reintegro</h5> -->
-<div class="input-field">
+<div class="contenedor-full" [formGroup]="form">
+    <div class="input-field">
 
-    <label class="active" for="">Tipo de retorno</label>
-    <p-dropdown [options]="reintegroTipos" [(ngModel)]="reintegroTipo" placeholder="Seleccione"></p-dropdown>
+        <label class="active" for="">Tipo de retorno</label>
+        <p-dropdown [options]="reintegroTipos" formControlName="tipo_retorno" placeholder="Seleccione"></p-dropdown>
+    </div>
+    <br>
+
+    <p-panel header="Reintegro" *ngIf="form.value.tipo_retorno=='Reintegro'">
+        <div class="input-field">
+            <label class="active" for="">Descripción</label>
+            <textarea name="" id="" cols="30" rows="10" formControlName="descripcion"></textarea>
+            <!-- <input type="text"> -->
+        </div>
+        <div class="input-field">
+            <label class="active" for="">Permanencia</label>
+            <p-dropdown styleClass="form-material-autocomplete" [options]="temporals" formControlName="permanencia" placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="input-field" *ngIf="form.value.permanencia">
+            <label class="active" for="">Periodo seguimiento</label>
+            <p-dropdown *ngIf="form.value.permanencia=='Temporal'" [options]="periocidadesTemp" formControlName="periodo_seguimiento" placeholder="Seleccione"></p-dropdown>
+            <p-dropdown *ngIf="form.value.permanencia=='Permanente'" [options]="periocidadesPerm" formControlName="periodo_seguimiento" placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
+            <label class="active"  for="">Reintegro Exitoso</label>
+            <br>
+            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="Si" name="groupname" value="Si" formControlName="reintegro_exitoso"></p-radioButton>
+            <label class="active" for=""></label>
+            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="No" name="groupname" value="No" formControlName="reintegro_exitoso"></p-radioButton>
+        </div>
+    </p-panel>
+
+    <p-panel header="Reubicación" *ngIf="form.value.tipo_retorno=='Reubicación'">
+        <div class="input-field">
+            <label class="active" for="">Descripción</label>
+            <!-- <input type="text"> -->
+            <textarea name="" id="" cols="30" rows="10" formControlName="descripcion"></textarea>
+        </div>
+        <div class="input-field">
+            <p-dropdown [options]="temporals" formControlName="permanencia" placeholder="Seleccione"></p-dropdown>
+            <label class="active" for="">Permanencia</label>
+        </div>
+        <div class="input-field" *ngIf="form.value.permanencia">
+            <label class="active" for="">Periodo seguimiento</label>
+            <p-dropdown *ngIf="form.value.permanencia=='Temporal'" [options]="periocidadesTemp" formControlName="periodo_seguimiento" placeholder="Seleccione"></p-dropdown>
+            <p-dropdown *ngIf="form.value.permanencia=='Permanente'" [options]="periocidadesPerm" formControlName="periodo_seguimiento" placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
+            <label class="active"  for="">Reintegro Exitoso</label>
+            <br>
+            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="Si" name="groupname" value="Si" formControlName="reintegro_exitoso"></p-radioButton>
+            <label class="active" for=""></label>
+            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="No" name="groupname" value="No" formControlName="reintegro_exitoso"></p-radioButton>
+        </div>
+
+    </p-panel>
+
+    <p-panel header="Reconversión" *ngIf="form.value.tipo_retorno=='Reconversión'">
+        <div class="input-field">
+            <label class="active" for="">Descripción</label>
+            <!-- <input type="text"> -->
+            <textarea name="" id="" cols="30" rows="10" formControlName="descripcion"></textarea>
+        </div>
+        <div class="input-field">
+
+            <label class="active" for="">Periodo seguimiento</label>
+            <p-dropdown [options]="periocidadesTemp" formControlName="periodo_seguimiento" placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
+            <label class="active"  for="">Reintegro Exitoso</label>
+            <br>
+            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="Si" name="groupname" value="Si" formControlName="reintegro_exitoso"></p-radioButton>
+            <label class="active" for=""></label>
+            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="No" name="groupname" value="No" formControlName="reintegro_exitoso"></p-radioButton>
+        </div>
+
+    </p-panel>
+    <br>
+    <p-panel header="Cierre" *ngIf="form.value.tipo_retorno">
+        <div class="input-field">
+            <label class="active" for="">Fecha Cierre</label>
+            <p-calendar formControlName="fecha_cierre"></p-calendar>
+        </div>
+        <div class="input-field">
+            <label class="active" for="">Observación</label>
+            <textarea name="" id="" cols="30" rows="10" formControlName="observacion"></textarea>
+            <!-- <input type="text"> -->
+        </div>
+    </p-panel>
+
+    <br>
+<!-- 
+    <div class="button" *ngIf="true">
+        <button *sTienePermiso="'SCM_CREATE_REINTEGRO'" pButton type="button" icon="fa fa-plus"
+        label="Crear"  (click)="GuardarRetorno()">
+        </button>
+    </div> -->
+
+    <div class="button" *ngIf="form.valid">
+        <button *sTienePermiso="'SCM_CREATE_REINTEGRO'" pButton type="button" icon="fa fa-plus"
+        label="Crear"  (click)="saveReintegro()">
+        </button>
+    </div>
+    
+
+    <!-- <button (click)="test()">test</button> -->
+    <!-- <button pButton  (click)="saveReintegro()" icon="fa fa-floppy-o"
+                            class="float-btn" style="bottom: 100px;"
+                            title="Guardar reintegro"></button> -->
 </div>
-<br>
-
-<p-panel header="Reintegro" *ngIf="reintegroTipo==1">
-    <div class="input-field">
-        <label class="active" for="">Descripción</label>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <!-- <input type="text"> -->
-    </div>
-    <div class="input-field">
-        <label class="active" for="">Permanencia</label>
-        <p-dropdown styleClass="form-material-autocomplete" [options]="temporals" [(ngModel)]="temporal" placeholder="Seleccione"></p-dropdown>
-    </div>
-    <div class="input-field" *ngIf="temporal">
-        <label class="active" for="">Periodo seguimiento</label>
-        <p-dropdown *ngIf="temporal==1" [options]="periocidadesTemp" [(ngModel)]="periocidadTemp" placeholder="Seleccione"></p-dropdown>
-        <p-dropdown *ngIf="temporal==2" [options]="periocidadesPerm" [(ngModel)]="periocidadPerm" placeholder="Seleccione"></p-dropdown>
-    </div>
-    <div class="input-field" *ngIf="temporal==2">
-        <label class="active"  for="">Reintegro Exitoso</label>
-        <br>
-        <p-radioButton *ngIf="temporal==2" label="Si" name="groupname" value="Si" [(ngModel)]="selectedValue"></p-radioButton>
-        <label class="active" for=""></label>
-        <p-radioButton *ngIf="temporal==2" label="No" name="groupname" value="No" [(ngModel)]="selectedValue"></p-radioButton>
-    </div>
-</p-panel>
-
-<p-panel header="Reubicación" *ngIf="reintegroTipo==2">
-    <div class="input-field">
-        <label class="active" for="">Descripción</label>
-        <!-- <input type="text"> -->
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-    </div>
-    <div class="input-field">
-        <p-dropdown [options]="temporals" [(ngModel)]="temporal" placeholder="Seleccione"></p-dropdown>
-        <label class="active" for="">Permanencia</label>
-    </div>
-    <div class="input-field" *ngIf="temporal">
-        <label class="active" for="">Periodo seguimiento</label>
-        <p-dropdown *ngIf="temporal==1" [options]="periocidadesTemp" [(ngModel)]="periocidadTemp" placeholder="Seleccione"></p-dropdown>
-        <p-dropdown *ngIf="temporal==2" [options]="periocidadesPerm" [(ngModel)]="periocidadPerm" placeholder="Seleccione"></p-dropdown>
-    </div>
-    <div class="input-field" *ngIf="temporal==2">
-        <label class="active"  for="">Reintegro Exitoso</label>
-        <br>
-        <p-radioButton *ngIf="temporal==2" label="Si" name="groupname" value="Si" [(ngModel)]="selectedValue"></p-radioButton>
-        <label class="active" for=""></label>
-        <p-radioButton *ngIf="temporal==2" label="No" name="groupname" value="No" [(ngModel)]="selectedValue"></p-radioButton>
-    </div>
-
-</p-panel>
-
-<p-panel header="Reconversión" *ngIf="reintegroTipo==3">
-    <div class="input-field">
-        <label class="active" for="">Descripción</label>
-        <!-- <input type="text"> -->
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-    </div>
-    <div class="input-field">
-
-        <label class="active" for="">Periodo seguimiento</label>
-        <p-dropdown [options]="periocidadesTemp" [(ngModel)]="periocidadTemp" placeholder="Seleccione"></p-dropdown>
-    </div>
-    <div class="input-field" *ngIf="temporal==2">
-        <label class="active"  for="">Reintegro Exitoso</label>
-        <br>
-        <p-radioButton *ngIf="temporal==2" label="Si" name="groupname" value="Si" [(ngModel)]="selectedValue"></p-radioButton>
-        <label class="active" for=""></label>
-        <p-radioButton *ngIf="temporal==2" label="No" name="groupname" value="No" [(ngModel)]="selectedValue"></p-radioButton>
-    </div>
-
-</p-panel>
-<br>
-<p-panel header="Cierre" *ngIf="reintegroTipo">
-    <div class="input-field">
-        <label class="active" for="">Fecha Cierre</label>
-        <p-calendar></p-calendar>
-    </div>
-    <div class="input-field">
-        <label class="active" for="">Observación</label>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <!-- <input type="text"> -->
-    </div>
-</p-panel>
-
-<!-- <button (click)="test()">test</button> -->
-<button pButton  (click)="saveReintegro()" icon="fa fa-floppy-o"
-                        class="float-btn" style="bottom: 100px;"
-                        title="Guardar reintegro"></button>
