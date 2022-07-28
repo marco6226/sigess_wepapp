@@ -60,10 +60,40 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.loadAreas();
-    this.areaSelected = this.name
-    //console.log(this.name,"63 line");
+    this.areaSelected = this.name;
+    
+  
   }
 
+  collapseAll(){
+    this.areasNodes.forEach( node => {
+        this.expandRecursive(node, false);
+    } );
+    
+  
+}
+
+collapseAllhijos(){
+  this.areasNodes[0].children.forEach( node => {
+      this.expandRecursive(node, false);
+  } );
+  console.log(this.areasNodes)
+}
+
+collapseAllsedes(){
+  this.sedesNodes.forEach( node => {
+      this.expandRecursive(node, false);
+  } );
+}
+
+private expandRecursive(node:TreeNode, isExpand:boolean){
+  node.expanded = isExpand;
+  if (node.children){
+      node.children.forEach( childNode => {
+          this.expandRecursive(childNode, isExpand);
+      } );
+  }
+}
 
   writeValue(value: Area) {
     this.value = value;
@@ -93,7 +123,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   // Component methods
-  loadAreas() {
+  async loadAreas() {
     let allComplete = {
       organi: false,
       fisica: false
@@ -110,7 +140,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
         let root: TreeNode = {
           label: '',
           selectable: false,
-          expanded: true,
+          expanded: false,
         };
         let nodos = this.createTreeNode(<Area[]>data['data'], null);
         root.children = nodos;
@@ -130,12 +160,12 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
       { field: 'areaPadre', criteria: Criteria.IS_NULL, value1: null, value2: null },
       { field: 'estructura', criteria: Criteria.EQUALS, value1: Estructura.FISICA.toString(), value2: null }
     ];
-    this.areaService.findByFilter(filterSedesQuery)
+    await this.areaService.findByFilter(filterSedesQuery)
       .then(data => {
         let root: TreeNode = {
           label: '',
           selectable: false,
-          expanded: true,
+          expanded: false,
         };
 
         let nodos = this.createTreeNode(<Area[]>data['data'], null);
@@ -145,10 +175,13 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
         if (allComplete.organi == true && allComplete.fisica == true) {
           this.loading = false
         }
-      })
+      }
+      )
       .catch(err => {
         this.loading = false
       });
+      this.collapseAll();
+      this.collapseAllhijos();
   }
 
   createTreeNode(areas: Area[], nodoPadre: TreeNode): TreeNode[] {
@@ -161,7 +194,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
         descripcion: area.descripcion,
         tipoAreaId: area.tipoArea.id,
         estructura: area.estructura,
-        expanded: true,
+        expanded: false,
         nodoPadre: nodoPadre,
         children: null,
         selected: true
