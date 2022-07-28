@@ -43,5 +43,6 @@ export class ReintegroListComponent implements OnInit {
     this.casosMedicosService.getReintegroByCaseId(this.idCase).subscribe(data=>{
       this.reintegroList = data
     })
+    this.modalRetorno=false
   }
 }

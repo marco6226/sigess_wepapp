@@ -67,12 +67,12 @@
             <label class="active" for="">Periodo seguimiento</label>
             <p-dropdown [options]="periocidadesTemp" formControlName="periodo_seguimiento" placeholder="Seleccione"></p-dropdown>
         </div>
-        <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
+        <div class="input-field">
             <label class="active"  for="">Reintegro Exitoso</label>
             <br>
-            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="Si" name="groupname" value="Si" formControlName="reintegro_exitoso"></p-radioButton>
+            <p-radioButton label="Si" name="groupname" value="Si" formControlName="reintegro_exitoso"></p-radioButton>
             <label class="active" for=""></label>
-            <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="No" name="groupname" value="No" formControlName="reintegro_exitoso"></p-radioButton>
+            <p-radioButton label="No" name="groupname" value="No" formControlName="reintegro_exitoso"></p-radioButton>
         </div>
 
     </p-panel>

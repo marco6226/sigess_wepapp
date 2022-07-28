@@ -60,7 +60,7 @@ export class ReintegroComponent implements OnInit {
     this.form = fb.group({
       tipo_retorno: [null, Validators.required],
       descripcion: [null, Validators.required],
-      permanencia: [null, Validators.required],
+      permanencia: [null],
       periodo_seguimiento: [null, Validators.required],
       reintegro_exitoso: [null],
       fecha_cierre: [new Date(), Validators.required],
@@ -79,6 +79,11 @@ export class ReintegroComponent implements OnInit {
   }
   async saveReintegro(){
     this.form.value.pk_case=this.idCase
+
+    if(!this.form.value.permanencia){
+      this.form.value.permanencia='Permanente'
+    }
+
     console.log("hola");
     let reintegro: ReintegroCreate={
       pk_case: this.form.value.pk_case,
