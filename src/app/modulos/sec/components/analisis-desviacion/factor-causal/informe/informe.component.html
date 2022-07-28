@@ -1,10 +1,10 @@
 <!-- <!-- <button (click)="test()">asd</button> -->
 <!-- <button (click)="evidencias()">asd</button> -->
-<table width="70%" style="border-collapse: collapse; margin: auto;">
+<table width="85%" style="border-collapse: collapse; margin: auto;">
     <tr>
-        <th style="border: 1px solid #c8c8c8; text-align: center" width="50%">Fecha de investigación</th>
+        <th style="border: 1px solid #c8c8c8; text-align: left" width="21%">Fecha de investigación</th>
         <!-- <td style="border: 1px solid #c8c8c8; text-align: center"><p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar></td>  -->
-        <td style="border: 1px solid #c8c8c8; text-align: center">{{this.infoIn.value['FechaI']  | date: 'dd/MM/yyyy'}}</td> 
+        <td style="border: 1px solid #c8c8c8; text-align: left">{{this.infoIn.value['FechaI']  | date: 'dd/MM/yyyy'}}</td> 
     </tr>
 </table>
 
@@ -15,31 +15,31 @@
         <th colspan="2" style="border: 1px solid #c8c8c8; text-align: center">REPORTE INICIAL</th>
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8; text-align: center">Nombre del evento</th>
-        <td style="border: 1px solid #c8c8c8; text-align: center">{{desviacionesList[0].concepto}}</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: left">Nombre del evento</th>
+        <td style="border: 1px solid #c8c8c8; ">{{desviacionesList[0].concepto}}</td> 
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8;">Nombre del colaborador</th>
-        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.nombre}}</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: left">Nombre del colaborador</th>
+        <td style="border: 1px solid #c8c8c8; ">{{desviacionesList[0]?.nombre}}</td> 
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8;">Fecha del incidente</th>
-        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: left">Fecha del incidente</th>
+        <td style="border: 1px solid #c8c8c8; ">{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td> 
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8;">Hora del incidente</th>
-        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.hora}}</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: left">Hora del incidente</th>
+        <td style="border: 1px solid #c8c8c8; ">{{desviacionesList[0]?.hora}}</td> 
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8;">Ubicacion</th>
-        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.area.nombre}}</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: left">Ubicacion</th>
+        <td style="border: 1px solid #c8c8c8; ">{{desviacionesList[0]?.area.nombre}}</td> 
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8;">Clasificación</th>
-        <td style="border: 1px solid #c8c8c8;">{{desviacionesList[0]?.severidad}}</td> 
+        <th style="border: 1px solid #c8c8c8; text-align: left">Clasificación</th>
+        <td style="border: 1px solid #c8c8c8; ">{{desviacionesList[0]?.severidad}}</td> 
     </tr>
     <tr>
-        <th style="border: 1px solid #c8c8c8;">Descripción</th>
+        <th style="border: 1px solid #c8c8c8; text-align: left">Descripción</th>
         
         <td maxlength="510" *ngIf="!consultar" pInputTextarea rows="10"
         placeholder="Observaciones de análisis" style="border: 1px solid #c8c8c8;">{{observacion}}</td>
