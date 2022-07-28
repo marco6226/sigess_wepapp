@@ -1,0 +1,23 @@
+::ng-deep .p-tree .p-treenode-children .p-treenode {
+    border-left: 1px dashed black;
+  }
+
+
+  ::ng-deep  .ui-tree {    
+    width: 100%;
+   // height: 100%;
+}
+
+::ng-deep  .ui-tree .ui-tree-container {
+    overflow: scroll;
+    overflow-y: scroll !important;
+}
+
+::ng-deep .ui-tabview .ui-tabview-panels{
+    height:365%;
+}
+
+::ng-deep .ui-dialog .ui-dialog-content {
+
+    overflow-y: scroll !important;
+}
