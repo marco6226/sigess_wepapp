@@ -333,8 +333,7 @@
                         </div>
 
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Parametros"></p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa != '3' " header="Establecimiento de causas">
+                    <p-tabPanel *ngIf="idEmpresa != '22' " header="Establecimiento de causas">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Causas inmediatas</h4>
@@ -402,13 +401,13 @@
                             label="Adicionar participante" (click)="adicionarParticipante()"></button>
                     </p-tabPanel>
 
-                    <p-tabPanel *ngIf="idEmpresa != '3' " header="Documentación" [disabled]="adicionar">
+                    <p-tabPanel *ngIf="idEmpresa != '22' " header="Documentación" [disabled]="adicionar">
                         <s-documentosAnalisisDesviacion *ngIf="documentos" [analisisId]="analisisId"
                             [documentos]="documentos" (onUpdate)="confirmarActualizacion($event)"
                             [readOnly]="consultar"></s-documentosAnalisisDesviacion>
                     </p-tabPanel>
 
-                    <p-tabPanel  *ngIf="idEmpresa != '3' " header="Observaciones">
+                    <p-tabPanel  *ngIf="idEmpresa != '22' " header="Observaciones">
                         <textarea maxlength="510" *ngIf="!consultar" pInputTextarea rows="7"
                             placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
                         <div *ngIf="consultar">
