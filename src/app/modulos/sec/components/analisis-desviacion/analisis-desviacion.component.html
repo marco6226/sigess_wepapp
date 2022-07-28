@@ -201,7 +201,7 @@
                         <app-evidencias [analisisId]="analisisId" [documentos]="documentos"></app-evidencias>
                     </p-tabPanel>                    
                     <p-tabPanel *ngIf="idEmpresa == '3'" header="Diagrama de flujo">
-                        <app-flow-chart (imgDF)="imgIn($event)" (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
+                        <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
                     </p-tabPanel>
                     
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">

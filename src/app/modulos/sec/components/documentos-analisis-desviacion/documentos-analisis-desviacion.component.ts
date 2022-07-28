@@ -38,15 +38,15 @@ export class DocumentosAnalisisDesviacionComponent implements OnInit {
     }
   }
   adicionarAGaleria(doc: Documento) {
-    if (this.esImagen(doc)) {
-      this.directorioService.download(doc.id).then(
-        data => {
-          let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
-          this.documentosList.push({ source: urlData, documento: doc });
-          this.documentosList = this.documentosList.slice();
-        }
-      );
-    }
+    // if (this.esImagen(doc)) {
+    //   this.directorioService.download(doc.id).then(
+    //     data => {
+    //       let urlData = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(<any>data));
+    //       this.documentosList.push({ source: urlData, documento: doc });
+    //       this.documentosList = this.documentosList.slice();
+    //     }
+    //   );
+    // }
   }
 
   esImagen(doc: Documento) {

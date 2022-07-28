@@ -7,6 +7,7 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
 import { Util } from '../../../../comun/util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Message } from 'primeng/api';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-evidencias',
@@ -20,6 +21,7 @@ export class EvidenciasComponent implements OnInit {
   @Input('documentos') documentos: Documento[];
   @Output('onUpdate') onUpdate = new EventEmitter<Documento>();
   @Input('readOnly') readOnly: boolean;
+  // @Output()DocID: new EventEmitter<>
   documentosList: any[];
   documentosListFoto: any[]=[];
   documentosListDocumental: any[]=[];
@@ -45,6 +47,7 @@ export class EvidenciasComponent implements OnInit {
   constructor(
     private domSanitizer: DomSanitizer,
     private directorioService: DirectorioService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -132,9 +135,39 @@ export class EvidenciasComponent implements OnInit {
       }
     );
   }
+  eliminarPorName(name){
+    console.log(this.documentos)
+    this.documentos.forEach(function(currentValue, index, arr){
+    if(this.documentos.hobbies[index].name==name){
+      this.documentos.hobbies.splice(index, index);     
+     }
+    })
+    console.log(this.documentos)
+  }
+  
+  
 
   eliminarDocument(doc: Documento) {
-
+    console.log(doc)
+    console.log(this.documentos)
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.onUpdate.emit(doc);
+          this.directorioService.eliminarDocumento(doc.id).then(
+            data => {
+              this.documentos = this.documentos.filter(val => val.id !== doc.id);
+              console.log(this.documentos)
+              // this.eliminarPorName(doc.id);
+              // this.onUpload()
+              // this.actualizarDesc(doc)
+              // this.onUpdate.emit(doc);
+            }
+          );
+      }
+  });
   }
 
   descargarDocumento(doc: Documento) {

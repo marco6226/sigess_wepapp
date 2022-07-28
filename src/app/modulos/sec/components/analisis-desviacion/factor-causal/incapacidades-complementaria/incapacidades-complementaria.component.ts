@@ -13,13 +13,14 @@ export class IncapacidadesComplementariaComponent implements OnInit {
 
 
   
-  @Input() incapacidades: Incapacidad[];
+  @Input() incapacidades: Incapacidad[] = [];
   @Output() listIncapacidades = new EventEmitter<Incapacidad[]>()
   productDialog: boolean;
   submitted: boolean;
   selectedProducts;
+  GuardadoEdicion :boolean=false;
 
-  // incapacidades: Incapacidad[];
+  incapacidadess: Incapacidad[];
   incapacidad: Incapacidad;
   tipo: string;
   cie10: any;
@@ -28,6 +29,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
   fechaFin: Date;
   diasAusencia: number;
   localeES: any = locale_es;
+  id: number=0;
 
   tipoList = [
     // { label: 'Seleccione', value: null },
@@ -44,6 +46,10 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     if (this.incapacidades==null) {
       this.incapacidades = [];
     }
+    console.log(this.incapacidades)
+    // else{
+    // this.incapacidad.fechaInicio= new Date(this.incapacidad.fechaInicio);
+    // this.incapacidad.fechaFin= new Date(this.incapacidad.fechaFin);}
   }
 
   
@@ -60,6 +66,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
 }
 
   openNew(){
+    this.GuardadoEdicion=true;
     this.incapacidad = {};    
     this.submitted = false;
     this.productDialog = true;
@@ -86,25 +93,62 @@ export class IncapacidadesComplementariaComponent implements OnInit {
   saveProduct(){
     this.submitted = true;
     console.log("save");
-    console.log(this.cie10);
+    console.log(this.incapacidad.cie10);
     
 
+    
+    // this.tipo == null ? this.incapacidad.tipo:this.tipo
+    // this.cie10.codigo == null ?  this.incapacidad.cie10: this.cie10.codigo
+    // this.cie10.nombre == null ?  this.incapacidad.diagnostico:this.cie10.nombre
+    // this.fechaInicio == null ?  this.incapacidad.fechaInicio:this.fechaInicio
+    // this.fechaFin == null ?  this.incapacidad.fechaFin:this.fechaFin
+    // this.diasAusencia == null ?  this.incapacidad.diasAusencia:this.diasAusencia
+
     this.incapacidad.tipo = this.tipo
-    this.incapacidad.cie10 = this.cie10.codigo
+    this.incapacidad.cie10 = this.cie10
     this.incapacidad.diagnostico = this.cie10.nombre
     this.incapacidad.fechaInicio = this.fechaInicio
     this.incapacidad.fechaFin = this.fechaFin
     this.incapacidad.diasAusencia = this.diasAusencia;
 
-    this.incapacidades.push(this.incapacidad);
+    if(this.id){
+      let x = this.incapacidades.find(ele=>{
+          return ele.id == this.id
+      })
+      x.tipo = this.tipo;
+      x.cie10=this.cie10;
+      x.diagnostico=this.cie10.nombre;
+      x.fechaInicio=this.fechaInicio;
+      x.fechaFin=this.fechaFin;
+      x.diasAusencia=this.diasAusencia;
+
+      }else{
+      this.id = this.incapacidades.length;
+      this.id++;
+      this.incapacidad.id = this.id; 
+      // this.miembros.push(this.miembro);
+      this.incapacidades.push(this.incapacidad)
+
+  }
 
     this.listIncapacidades.emit(this.incapacidades);
     this.productDialog = false;
     this.incapacidad = {};
-
+    this.id = null;
     this.borrarIncapcidad();
      
   }
+  findIndexById(id: number): number {
+    let index = -1;
+    for (let i = 0; i < this.incapacidadess.length; i++) {
+        if (this.incapacidadess[i].id === id) {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
 
   private borrarIncapcidad(){
     this.tipo = null;
@@ -116,17 +160,50 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     }
 
   editProduct(product: Incapacidad) {
+    this.GuardadoEdicion=false;
     console.log(product);
     
     this.tipo = product.tipo;
     this.cie10 = product.cie10;
     this.diagnostico = product.diagnostico;
-    this.fechaInicio = product.fechaInicio;
-    this.fechaFin = product.fechaFin;
+    this.fechaInicio = new Date(product.fechaInicio);
+    this.fechaFin = new Date(product.fechaFin);
     this.diasAusencia = product.diasAusencia;
+    this.id = product.id  
 
     this.incapacidad = {...product};
     this.productDialog = true;
+}
+
+editarProduct(){
+  this.submitted = true;
+  console.log("save");
+  console.log(this.cie10);
+  
+
+  
+  this.tipo == null ? this.incapacidad.tipo:this.tipo
+  this.cie10.codigo == null ?  this.incapacidad.cie10: this.cie10.codigo
+  this.cie10.nombre == null ?  this.incapacidad.diagnostico:this.cie10.nombre
+  this.fechaInicio == null ?  this.incapacidad.fechaInicio:this.fechaInicio
+  this.fechaFin == null ?  this.incapacidad.fechaFin:this.fechaFin
+  this.diasAusencia == null ?  this.incapacidad.diasAusencia:this.diasAusencia
+
+  this.incapacidad.tipo = this.tipo
+  this.incapacidad.cie10 = this.cie10.codigo
+  this.incapacidad.diagnostico = this.cie10.nombre
+  this.incapacidad.fechaInicio = this.fechaInicio
+  this.incapacidad.fechaFin = this.fechaFin
+  this.incapacidad.diasAusencia = this.diasAusencia;
+
+  this.incapacidades.push(this.incapacidad);
+
+  this.listIncapacidades.emit(this.incapacidades);
+  this.productDialog = false;
+  this.incapacidad = {};
+
+  this.borrarIncapcidad();
+   
 }
 
 deleteProduct(product: Incapacidad) {
@@ -135,9 +212,22 @@ deleteProduct(product: Incapacidad) {
         header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.incapacidades = this.incapacidades.filter(val => val.cie10 !== product.cie10);
-            this.incapacidad = {};
+
+            // this.incapacidades = this.incapacidades.filter(val => val.cie10 !== product.cie10);
+            // this.incapacidad = {};
             // this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+
+            this.incapacidades.splice((product.id-1),1)
+            console.log(this.incapacidades);
+            let tempid=0;
+            this.incapacidades.forEach(element => {
+                console.log(element);
+                tempid++
+                element.id = tempid;
+            });
+            console.log(this.incapacidades);
+            this.incapacidad = {};
+            // this.messageService.add({severity:'success', summary: 'Successful', detail: 'miembro Deleted', life: 3000});
         }
     });
 }

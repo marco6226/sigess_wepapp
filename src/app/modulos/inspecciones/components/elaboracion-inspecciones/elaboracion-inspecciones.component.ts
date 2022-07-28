@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ListaInspeccion } from 'app/modulos/inspecciones/entities/lista-inspeccion'
 import { Inspeccion } from 'app/modulos/inspecciones/entities/inspeccion'
 import { Calificacion } from 'app/modulos/inspecciones/entities/calificacion'
@@ -12,7 +12,7 @@ import { SistemaNivelRiesgo } from 'app/modulos/core/entities/sistema-nivel-ries
 import { Router, ActivatedRoute } from '@angular/router';
 import { Empleado } from 'app/modulos/empresa/entities/empleado';
 import { Message, SelectItem } from 'primeng/primeng';
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { ListaInspeccionFormComponent } from '../lista-inspeccion-form/lista-inspeccion-form.component';
@@ -43,6 +43,7 @@ export class ElaboracionInspeccionesComponent implements OnInit {
 
     pdfGenerado: boolean;
     @ViewChild('listaInspeccionForm', { static: false }) listaInspeccionForm: ListaInspeccionFormComponent;
+    elementoSelect:ElementoInspeccion;
     msgs: Message[];
     listaInspeccion: ListaInspeccion;
     ElementoInspeccionList: ElementoInspeccion;
@@ -70,7 +71,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     version;
     matriz: any[][];
     accion;
-
+    evidencias:string;
+    idDoc: any
     localeES: any = locale_es;
     FormHseq: FormGroup;
     FormIng: FormGroup;
@@ -85,7 +87,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
     mostarHseGet: boolean=true;
     mostarIngGet: boolean=true;
     existeEnArray :boolean=false;
-
+    imagenesList: any[] = [];
+    imgMap: any= {};
+    imgMap2: any = {};
     isEmpleadoValid: boolean;
     equipo: string;
     observacion: string;
@@ -111,7 +115,8 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         private sesionService: SesionService,
         private datePipe : DatePipe,
         private authService: AuthService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private domSanitizer: DomSanitizer
     ) {}
 
     ngOnInit() {
@@ -259,7 +264,11 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         }
         
         
-        this.paramNav.reset();        
+        this.paramNav.reset(); 
+        
+        setTimeout(() => {
+            this.imprimirImagen();
+        }, 1000);
     }
 
     findMatrizValue(fecha: Date) {
@@ -589,6 +598,33 @@ if(dato.length > 0){
         return true;
     }
 
+    x:ElementoInspeccion[]=[];
+    imprimirImagen(){
+        this.x=[]
+        this.inspeccion.calificacionList.forEach(element => {
+            if(element.opcionCalificacion.nombre=='Existe riesgo'){
+                this.imagenesList=[]
+                let url=[]
+                element.elementoInspeccion.data2=[]
+                this.x.push(element.elementoInspeccion)
+                element.documentosList.forEach(element2 => {
+                    
+                    this.directorioService.download(element2.id).then(async (data?: any) => {
+                        let urlData = await this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+                        let y=this.x.find(data =>{
+                            return data.id==element.elementoInspeccion.id
+                        })
+                        y.data2.push({ source: urlData })
+                    })
+                    .catch(err => {
+                        this.imagenesList.push({});
+                    });
+                })         
+            }
+        });
+    }
+
+    // 
     private extraerCalificaciones(elemList: ElementoInspeccion[], calificacionList: Calificacion[]) {
         for (let i = 0; i < elemList.length; i++) {
             if (elemList[i].elementoInspeccionList != null && elemList[i].elementoInspeccionList.length > 0) {
@@ -625,7 +661,9 @@ if(dato.length > 0){
             [this.redireccion]
         );
     }
+    onElementoClick(event){
 
+    }
 
     agregarElementos(nodoPlant: HTMLElement, elemInspList: ElementoInspeccion[]) {
         elemInspList.forEach(el => {
@@ -656,8 +694,11 @@ if(dato.length > 0){
             tr.childNodes[2].remove();
         });
     }
-
+    test(){
+        console.log(this.x)
+    }
     async imprimir() {
+        this.imprimirImagen()
         let template = document.getElementById('plantilla');
         if (!this.pdfGenerado) {
             const date = new Date (this.inspeccion.fechaRealizada);
@@ -721,19 +762,22 @@ if(dato.length > 0){
     }
 
     async getTareaEvidences(lista_id: number, version_id: number) {
+        console.log(lista_id)
+        console.log(version_id)
         try {
             let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
-           
+            // console.log(res)
             if (res) {
                 res.files.forEach(async (evidence) => {
                     let ev: any = await this.directorioService.download(evidence);
-                   
+                    this.evidencias=ev;
                     let blob = new Blob([ev]);
                     let reader = new FileReader();
                     reader.readAsDataURL(blob);
                     reader.onloadend = () => {
                         if (ev) {
                             this.listaEvidence.push(reader.result);
+                            console.log(reader.result)
                         } else {
                             throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
                         }
@@ -744,7 +788,38 @@ if(dato.length > 0){
         } catch (e) {
             
         }
+        console.log(this.evidencias)
     }
+    
+    // async getImagen(lista_id: number, version_id: number) {
+    //     console.log(lista_id)
+    //     console.log(version_id)
+    //     try {
+    //         let res: any = await this.listaInspeccionService.getInspeccionImagen(lista_id, version_id);
+    //         // console.log(res)
+    //         if (res) {
+    //             res.files.forEach(async (evidence) => {
+    //                 let ev: any = await this.directorioService.download(evidence);
+    //                 this.evidencias=ev;
+    //                 let blob = new Blob([ev]);
+    //                 let reader = new FileReader();
+    //                 reader.readAsDataURL(blob);
+    //                 reader.onloadend = () => {
+    //                     if (ev) {
+    //                         this.listaEvidence.push(reader.result);
+    //                         console.log(reader.result)
+    //                     } else {
+    //                         throw new Error("Ocurrió un problema al consultar las evidencias de la tarea");
+    //                     }
+    //                 }
+    //             });
+    //         }
+
+    //     } catch (e) {
+            
+    //     }
+    //     console.log(this.evidencias)
+    // }
 
 
     rangoFechaCierre(){
@@ -930,3 +1005,16 @@ if(dato.length > 0){
         
     }
 }
+// export interface printImg{
+//     data1: ElementoInspeccion;
+//     data2?: [{
+//         id: string;
+//         source: string;
+//     }]
+// }
+
+// export interface printImg2 extends ElementoInspeccion{
+//     data2?: [{
+//         source: SafeUrl;
+//     }]
+// }

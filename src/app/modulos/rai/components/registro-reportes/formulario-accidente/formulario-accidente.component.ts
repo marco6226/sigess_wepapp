@@ -81,6 +81,7 @@ export class FormularioAccidenteComponent implements OnInit {
     ngOnInit() {
         this.idEmpresa = this.sesionService.getEmpresa().id;
         console.log(this.idEmpresa)
+        console.log(this.reporte)
         this.infoEmpresa()
         this.form = this.fb.group({
             id: this.reporte.id,

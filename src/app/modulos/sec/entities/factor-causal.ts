@@ -1,4 +1,5 @@
 import { NumericTextBoxAllModule } from "@syncfusion/ej2-angular-inputs";
+import { Cie } from "app/modulos/comun/entities/cie";
 import { Empleado } from "app/modulos/empresa/entities/empleado";
 
 export interface FactorCausal{
@@ -57,7 +58,7 @@ export interface Causa_Raiz{
 
 export interface Incapacidad{
   id?:number;
-  cie10?: string;
+  cie10?: Cie;
   diagnostico?: string;
   fechaInicio?: Date;
   fechaFin?: Date;
