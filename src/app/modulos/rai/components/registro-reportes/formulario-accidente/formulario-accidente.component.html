@@ -302,10 +302,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
                         <p-dropdown [options]="tipoVinculacionList" formControlName="tipoVinculacion"></p-dropdown>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div  class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         Código
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="codigoTipoVinculacion" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
@@ -314,10 +314,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
                         <input pInputText formControlName="ocupacionHabitual" />
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         Código
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="codigoOcupacionHabitual" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
@@ -409,10 +409,10 @@
                         <input pInputText formControlName="nombreLaborHabitual" />
                     </div>
 
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         Código labor habitual
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="codigoLaborHabitual" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
