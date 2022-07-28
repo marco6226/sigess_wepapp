@@ -20,7 +20,7 @@
             <td >{{reintegro.permanencia}}</td>
             <td>{{reintegro.periodo_seguimiento}}</td>
             <td>{{reintegro.reintegro_exitoso}}</td>
-            <td>{{reintegro.fecha_cierre | date:'dd-mm-yyyy'}}</td>
+            <td>{{reintegro.fecha_cierre | date}}</td>
             <td>{{reintegro.observacion}}</td>
         </tr>
     </ng-template>
@@ -33,8 +33,6 @@
 
     </ng-template>
 </p-table>
-
-<!-- <button (click)="test()">test</button> -->
 
 <p-dialog header="Nuevo Retorno"
     [(visible)]="modalRetorno" [style]="{heigth: '800px'}" [modal]="true" [closable]="true" [draggable]="true"

@@ -28,11 +28,6 @@ export class ReintegroListComponent implements OnInit {
   ngOnInit() {
   }
 
-  test(){
-    console.log(this.idCase);
-    
-  }
-
   createRetorno(){
     this.modalRetorno = true
   }
