@@ -1,4 +1,6 @@
+import { CasosMedicosService } from './../../../services/casos-medicos.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { Reintegro } from 'app/modulos/scm/entities/reintegro.interface';
 
 @Component({
   selector: 'app-reintegro-list',
@@ -6,12 +8,36 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./reintegro-list.component.scss']
 })
 export class ReintegroListComponent implements OnInit {
+  idCase=null;
+  @Input('idCase') 
+  set reintegroSet(idCasoMed){
+    console.log(idCasoMed);
+    
+    this.idCase=idCasoMed
+    this.casosMedicosService.getReintegroByCaseId(this.idCase).subscribe(data=>{
+      this.reintegroList = data
+    })
+  }
+  reintegroList: Reintegro[] =[]
+  modalRetorno: boolean = false
 
-  @Input() idCase=null;
-
-  constructor() { }
+  constructor(
+    private casosMedicosService: CasosMedicosService
+  ) { }
 
   ngOnInit() {
   }
 
+  createRetorno(){
+    this.modalRetorno = true
+  }
+
+  reload(){
+    console.log("ok");
+    
+    this.casosMedicosService.getReintegroByCaseId(this.idCase).subscribe(data=>{
+      this.reintegroList = data
+    })
+    this.modalRetorno=false
+  }
 }

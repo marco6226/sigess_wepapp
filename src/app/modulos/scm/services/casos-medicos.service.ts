@@ -132,13 +132,19 @@ export class CasosMedicosService {
     createReintegro(reintegro: ReintegroCreate){
         return this.http.post<[Reintegro]>(`${endPoints.scm}reintegro/`, reintegro, this.getRequestHeaders(this.headers)).toPromise();
     }
+
+    getReintegroByCaseId(idCaso: string):any{
+        return this.http.get<Reintegro>(`${endPoints.scm}reintegro/${idCaso}`, this.getRequestHeaders(this.headers))
+    }
+
     editReintegro(){
         
     }
     deleteReintegro(){
         
     }
-
+    
+    // finish reintegro
 
     findByFilter(filterQuery?: FilterQuery) {
         // console.log(filterQuery, "filtro linea 71");

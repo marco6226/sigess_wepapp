@@ -1,19 +1,44 @@
 
-<p-table editMode="row" styleClass="material-table">
+<p-table editMode="row" [value]="reintegroList" styleClass="material-table">
     <ng-template pTemplate="header">
         <tr>
             <th>Tipo Retorno</th>
-            <th colspan="3">Descripcion</th>
+            <th >Descripcion</th>
+            <th>permanencia</th>
             <th>Periodo seguimiento</th>
+            <th>reintegro_exitoso</th>
             <th>Fecha Cierre</th>
             <th>Observacion</th>
 
-            <th style="width:10rem"></th>
+            <!-- <th style="width:10rem"></th> -->
         </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-reintegro>
+        <tr>
+            <td>{{reintegro.tipo_retorno}}</td>
+            <td >{{reintegro.descripcion}}</td>
+            <td >{{reintegro.permanencia}}</td>
+            <td>{{reintegro.periodo_seguimiento}}</td>
+            <td>{{reintegro.reintegro_exitoso}}</td>
+            <td>{{reintegro.fecha_cierre | date}}</td>
+            <td>{{reintegro.observacion}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <br>
+        <button *sTienePermiso="'SCM_CREATE_REINTEGRO'" pButton type="button" icon="fa fa-plus"
+            label="Crear"  (click)="createRetorno()">
+
+        </button>
+
     </ng-template>
 </p-table>
 
-
+<p-dialog header="Nuevo Retorno"
+    [(visible)]="modalRetorno" [style]="{heigth: '800px'}" [modal]="true" [closable]="true" [draggable]="true"
+    [resizable]="false">
+    <app-reintegro [idCase]="idCase" (isCreate)="reload()"></app-reintegro>
+</p-dialog>
 
 
 

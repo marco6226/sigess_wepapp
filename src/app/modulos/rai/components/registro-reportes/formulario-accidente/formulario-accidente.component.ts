@@ -55,7 +55,11 @@ export class FormularioAccidenteComponent implements OnInit {
     testigoReporteList: TestigoReporte[];
     visibleCamposAccidente: boolean;
     idEmpresa: string;
-
+    fechaIngreso:Date;
+    fechaAccidente:Date;
+    deltaFecha:Date;
+    deltaDia:number;
+    deltaMes:number;
     constructor(
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
@@ -82,6 +86,27 @@ export class FormularioAccidenteComponent implements OnInit {
         this.idEmpresa = this.sesionService.getEmpresa().id;
         console.log(this.idEmpresa)
         console.log(this.reporte)
+        console.log(this.reporte.fechaIngresoEmpleado)
+        console.log(this.reporte.fechaAccidente)
+        if(this.reporte.fechaIngresoEmpleado != null && this.reporte.fechaAccidente != null){
+            console.log('a')
+            this.fechaIngreso=new Date(this.reporte.fechaIngresoEmpleado)
+            this.fechaAccidente=new Date(this.reporte.fechaAccidente)
+            this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
+            // this.deltaDia=this.deltaFecha.getDate()
+            // console.log(this.deltaDia)
+            // this.deltaMes=this.deltaFecha.getMonth()+1
+            // console.log(this.deltaMes)
+            this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
+            this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
+        }else{
+            console.log('b')
+            // this.deltaMes=null
+            // this.deltaDia=null
+            this.reporte.diasLaborHabitual=null
+            this.reporte.mesesLaborHabitual=null
+        }
+
         this.infoEmpresa()
         this.form = this.fb.group({
             id: this.reporte.id,
@@ -130,8 +155,10 @@ export class FormularioAccidenteComponent implements OnInit {
             cargoEmpleado: this.reporte.cargoEmpleado,
             ocupacionHabitual: this.reporte.ocupacionHabitual,
             codigoOcupacionHabitual: this.reporte.codigoOcupacionHabitual,
-            diasLaborHabitual: this.reporte.diasLaborHabitual,
-            mesesLaborHabitual: this.reporte.mesesLaborHabitual,
+            // diasLaborHabitual: this.deltaDia,
+            // mesesLaborHabitual: this.deltaMes,
+            diasLaborHabitual:this.reporte.diasLaborHabitual,
+            mesesLaborHabitual:this.reporte.mesesLaborHabitual,
             salario: this.reporte.salario,
             jornadaHabitual: this.reporte.jornadaHabitual,
             fechaAccidente: this.reporte.fechaAccidente == null ? null : new Date(this.reporte.fechaAccidente),

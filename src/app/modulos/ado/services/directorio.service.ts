@@ -342,7 +342,7 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
 
     download(directorioId: string, modulo?: string) {
         let endPoint = modulo == null ? this.end_point + 'download/' : this.end_point + modulo + '/download/';
-        return new Promise((resolve) => {
+        return new Promise(async (resolve) => {
             let options: any = {
                 responseType: 'blob',
                 headers: new HttpHeaders()
@@ -351,7 +351,7 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
                     .set('Authorization', this.httpInt.getSesionService().getBearerAuthToken()),
                 withCredentials: true,
             };
-            this.httpInt.http
+            await this.httpInt.http
                 .get(endPoint + directorioId, options)
                 .map((res) => res)
                 .subscribe(

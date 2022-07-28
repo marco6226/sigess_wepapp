@@ -39,7 +39,7 @@
   <s-lista-inspeccion-form [value]="listaInspeccion?.elementoInspeccionList" [opciones]="listaInspeccion?.opcionCalificacionList"
     [editable]="false" [disabled]="consultar" [nivelRiesgoList]="nivelRiesgoList" diligenciable="true" #listaInspeccionForm
     [usarNivelRiesgo]="listaInspeccion?.usarNivelRiesgo" [usarTipoHallazgo]="listaInspeccion?.usarTipoHallazgo"></s-lista-inspeccion-form>
-   
+    <!-- (elementoSelect)="onElementoClick($event)" -->
   <br>
   <p-panel *sTienePermiso="'INP_GET_ESTADO'">
     <p-header>
@@ -208,6 +208,7 @@
         </td> 
       </tr>
     </table>
+
     <table width="100%" style="border-collapse: collapse;">
       <tr id="L_elementos_lista">
         <td id="C_codigo" style="border:solid thin #ccc;padding: 8px;">
@@ -224,6 +225,7 @@
         </td>
       </tr>
     </table>
+    
     <table width="100%" style="border-collapse: collapse;">
       <tr>
 
@@ -361,4 +363,23 @@
     </table>
 
   </div>
+
+  <p style="page-break-after: always"></p>
+  <div><h1><strong><u>Anexos:</u></strong></h1></div>
+
+  <br/> 
+<ng-container *ngFor="let a of x">
+  <table width="100%" style="border-collapse: collapse;" >
+    <tr>  
+      <td style="text-align: left">
+      <h3>{{a.codigo+" "+a.nombre}}:</h3>
+      </td>
+    </tr>   
+    <tr>
+      <td *ngFor="let i of a.data2" style="text-align: center">
+        <img [src]="i.source" style="width: 100%;">
+      </td>
+    </tr>
+  </table>
+</ng-container>
 </div>
