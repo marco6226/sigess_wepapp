@@ -45,6 +45,14 @@ import {
     tipo_identificacion,
     tipo_vinculacion,
 } from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
+import {FlowChartComponent} from './flow-chart/flow-chart.component'
+import {
+    FileFormats, DiagramComponent, Diagram, PrintAndExport, IExportOptions,BasicShapeModel,NodeModel, UndoRedo, ConnectorModel, PointPortModel, Node, FlowShapeModel, MarginModel, PaletteModel,
+    SymbolInfo, DiagramContextMenu, GridlinesModel, SnapSettingsModel, ShapeStyleModel, TextStyleModel, BpmnShape, HtmlModel, IDragEnterEventArgs, SnapConstraints
+} from '@syncfusion/ej2-angular-diagrams';
+import {FlowchartService} from '../../services/flowchart.service'
+
+Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 
 @Component({
     selector: "s-analisisDesviacion",
@@ -55,12 +63,15 @@ import {
         TipoPeligroService, PeligroService,
         SistemaCausaInmediataService,
         SistemaCausaAdministrativaService,
+        FlowChartComponent
     ],
 })
 export class AnalisisDesviacionComponent implements OnInit {
     @Input("miembros") documento: Documento;
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
+
+    diagram:DiagramComponent;
     // ImgDF:string;
     formtp: FormGroup;
     formp: FormGroup;
@@ -169,28 +180,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         console.log("*****aquí***")
         console.log(this.dataListFactor);        
     }
-    test2(){
-        // let a=this.paramNav.getParametro<Desviacion>();
-        // this.analisisDesviacionService.getClassName();
-        // console.log(a)
-        // this.img2.src=this.infoIn.value['Diagrama'];
-        // console.log(this.imgIN.data);
-        // console.log(this.infoIn.value['Diagrama'].w);
-        console.log(this.imgIN)
-        // if(this.imgIN=='data:,'){
-        //     console.log(1); 
-        // }else{console.log(5); }
-        // if(this.infoIn.value['Diagrama'].data==undefined){
-        //     console.log(2); 
-        // }
 
-        
-    }
-    // ImagenIn(event){
-    //     console.log('miembros event1')
-    //     console.log(event)
-    //     this.ImgDF=event;
-    // }
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
@@ -201,6 +191,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         private paramNav: ParametroNavegacionService,
         private authService: AuthService,
         private sesionService: SesionService,
+        private comp: FlowChartComponent,
+        private FlowchartService:FlowchartService,
         fb: FormBuilder,
     ) {
         this.analisisPeligros = fb.group({
@@ -292,6 +284,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultarAnalisis(this.value.id);
         }
         this.cargarTiposPeligro();
+        this.diagram=this.FlowchartService.getDiagram();
 
         //this.cargarPeligro(this.analisisPeligros.value['Peligro.id']);
 
@@ -546,9 +539,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     miembrosIn(event){
         this.miembros=event;
     }
-    imgIn(event){
-        this.imgIN=event;
-    }
+
     selectedProductsIn(event){
         this.selectedProducts=event;
     }
@@ -563,7 +554,20 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         return crList;
     }
+    
+    a:string;
     async imprimir() {
+        // this.diagram=this.FlowchartService.getDiagram();
+        // let printOptions: IExportOptions = {};
+        // printOptions.mode = 'Data';
+        // printOptions.region = 'PageSettings';
+
+        // // this.diagram  = this.comp.exportDF2();
+        // console.log(this.diagram)
+        // this.a=this.diagram.exportDiagram(printOptions).toString()
+        
+        console.log(this.a)
+        setTimeout(() => {
         // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
@@ -598,13 +602,21 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.focus();
             WinPrint.print();
         }, 2000);
+    }, 500);
     }
     Salida(){}
     guardarAnalisis() {
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
         // this.informeJson.Diagrama=this.imgIN;
-        if(this.imgIN!=undefined){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+        this.diagram=this.FlowchartService.getDiagram();
+        let printOptions: IExportOptions = {};
+        printOptions.mode = 'Data';
+        printOptions.region = 'PageSettings';
+        this.imgIN=this.diagram.exportDiagram(printOptions).toString()
+        // console.log(this.diagram)
+        if(this.imgIN!=undefined){
+            this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -649,7 +661,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
         // this.informeJson.Diagrama=this.imgIN;
-        if(this.imgIN!=undefined){this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+        this.diagram=this.FlowchartService.getDiagram();
+        let printOptions: IExportOptions = {};
+        printOptions.mode = 'Data';
+        printOptions.region = 'PageSettings';
+        this.imgIN=this.diagram.exportDiagram(printOptions).toString()
+        if(this.imgIN!=undefined){
+            this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);

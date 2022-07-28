@@ -12,6 +12,7 @@ import { ItemModel } from '@syncfusion/ej2-splitbuttons';
 
 // import {Canvg} from "canvg";
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
+import {FlowchartService} from '../../../services/flowchart.service'
 // import { showPaletteIcon } from './script/diagram-common';
 Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 
@@ -22,12 +23,11 @@ Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 })
 export class FlowChartComponent {
 
-//   @Output()imgDF=new EventEmitter<string>();
   @Output() datosFC = new EventEmitter<FactorCausal[]>();
   listFC: FactorCausal[]=[];
   @Input() dataFlowChart:AnalisisDesviacion;
   @Output() diagramSave = new EventEmitter<string>();
-  @Output() imgDF = new EventEmitter<string>()
+  // @Output() imgDF = new EventEmitter<string>()
   
   precarga: boolean=false;
   public terminator: FlowShapeModel = { type: 'Flow', shape: 'Terminator' };
@@ -61,7 +61,8 @@ export class FlowChartComponent {
   timeoutID;
   
   constructor(
-    private captureService: NgxCaptureService
+    private captureService: NgxCaptureService,
+    private FlowchartService: FlowchartService,
   ) {​​​​​​​
       
   }
@@ -77,6 +78,7 @@ export class FlowChartComponent {
         
         this.loadFC();
         // this.startTimer();
+        this.FlowchartService.setDiagram(this.diagram)
         }, 600);
 
         
@@ -379,48 +381,8 @@ export class FlowChartComponent {
   saveDiagram(){
     // console.log(this.diagram.saveDiagram());
     this.diagramSave.emit(this.diagram.saveDiagram())
+    this.FlowchartService.setDiagram(this.diagram)
   }
-
-  exportImg(){
-
-
-    // this.compressImage(img.src, 100, 100).then(compressed => {
-    //     console.log(compressed)
-    //   })
-    this.captureService.getImage(this.screen.nativeElement, true).then(h=>{
-        let printOptions: IExportOptions = {};
-        printOptions.mode = 'Data';
-        printOptions.region = 'PageSettings';
-    
-        var img = new Image();
-        img.src =this.diagram.exportDiagram(printOptions).toString(); 
-
-        this.compressImage(h, img.width, img.height).then(resize => {
-            this.imgDF.emit(resize.toString());
-            console.log(resize.toString())
-          })
-    })
-    // console.log('export')
-    // this.captureService.getImage(this.screen.nativeElement, true).then(h=>{
-    //     let printOptions: IExportOptions = {};
-    //     printOptions.mode = 'Data';
-    //     printOptions.region = 'PageSettings';
-
-    //     var img = new Image();
-    //     img.src =this.diagram.exportDiagram(printOptions).toString(); 
-
-    //     var img2 = new Image();
-
-    //     var resizebase64 = require('resize-base64');  
-    //     img2.src = resizebase64(h, 500, 500); 
- 
-    //     console.log(img.width)
-    //     console.log(img2.width)
-    //     console.log(img.src)
-    //     console.log(img2.src)
-    // })
-
-    }
     // startTimer() {
     //     console.log('timer')
     //     this.timeoutID = window.setInterval(() => { this.exportImg() }, 5000);
@@ -441,19 +403,15 @@ export class FlowChartComponent {
           img.onerror = error => rej(error);
         })
     }
-    exportDF() {
+    // public exportDF() {
        
-            let printOptions: IExportOptions = {};
-            printOptions.mode = 'Data';
-            printOptions.region = 'PageSettings';
-        
-            // var img = new Image();
-            // img.src =this.diagram.exportDiagram(printOptions).toString(); 
-    
+    //         let printOptions: IExportOptions = {};
+    //         printOptions.mode = 'Data';
+    //         printOptions.region = 'PageSettings';
+    //         console.log(this.diagram)
+    //         this.imgDF.emit(this.diagram.exportDiagram(printOptions).toString());
+    // }
 
-            this.imgDF.emit(this.diagram.exportDiagram(printOptions).toString());
-
-    }
     svg(){
         // svg = this.diagram.exportDiagram(options);
         let printOptions: IExportOptions = {};
