@@ -86,8 +86,8 @@ export class FormularioAccidenteComponent implements OnInit {
         this.idEmpresa = this.sesionService.getEmpresa().id;
         console.log(this.idEmpresa)
         console.log(this.reporte)
-        console.log(this.reporte.fechaIngresoEmpleado)
-        console.log(this.reporte.fechaAccidente)
+        // console.log(this.reporte.fechaIngresoEmpleado)
+        // console.log(this.reporte.fechaAccidente)
         if(this.reporte.fechaIngresoEmpleado != null && this.reporte.fechaAccidente != null){
             console.log('a')
             this.fechaIngreso=new Date(this.reporte.fechaIngresoEmpleado)
@@ -269,5 +269,4 @@ export class FormularioAccidenteComponent implements OnInit {
             );
         }
     }
-
 }

@@ -333,8 +333,8 @@
                         Tiempo ocupación habitual
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <input pInputText placeholder="DD" style="width: 48%;" formControlName="diasLaborHabitual" />
-                        <input pInputText placeholder="MM" style="width: 48%;" formControlName="mesesLaborHabitual" />
+                        Días: <input pInputText placeholder="DD" style="width: 24%;" formControlName="diasLaborHabitual" readonly/>
+                        Meses: <input pInputText placeholder="MM" style="width: 24%;" formControlName="mesesLaborHabitual" readonly/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Salario u honorarios
@@ -363,10 +363,10 @@
             <p-accordionTab
                 [header]="visibleCamposAccidente ? 'III. INFORMACIÓN SOBRE EL ACCIDENTE':'II. INFORMACIÓN SOBRE EL INCIDENTE'">
                 <div class="ui-g">
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa == '3'">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa == '3' || idEmpresa == '22'">
                         Numero de FURAT
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa == '3'" >
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa == '3' || idEmpresa == '22'" >
                         <input pInputText formControlName="numero_furat" required />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
