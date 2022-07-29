@@ -106,22 +106,22 @@ export const severidad = [
 ];
 
 export const tipo_lesion = [
-    { value: 'FRACTURA', label: 'Fractura' },
-    { value: 'LUXACION', label: 'Luxación' },
-    { value: 'TORCEDURA_ESGUINCE', label: 'Torcedura, esguince, desgarro muscular, hernia o laceración de músculo o tendón sin herida' },
-    { value: 'CONMOCION_TRAUMA', label: 'Conmoción o trauma interno' },
-    { value: 'AMPUTACION_ENUCLEACION', label: 'Amputación o enucleación (Exclusión o pérdida del ojo)' },
-    { value: 'HERIDA', label: 'Herida' },
-    { value: 'TRAUMA_SUPERFICIAL', label: 'Trauma superficial (Incluye rasguño, punción o pinchazo y lesión en ojo por cuerpo extraño)' },
-    { value: 'GOLPE_CONTUSION', label: 'Golpe, contusión o aplastamiento' },
-    { value: 'QUEMADURA', label: 'Quemadura' },
-    { value: 'ENVENAMIENTO_INTOXICACION', label: 'Envenenamiento o intoxicación aguda o alergia' },
-    { value: 'EFECTO_TIEMPO', label: 'Efecto del tiempo, del clima, u otro relacionado con el ambiente' },
-    { value: 'ASFIXIA', label: 'Asfixia' },
-    { value: 'EFECTO_ELECTRICIDAD', label: 'Efecto de la electricidad' },
-    { value: 'EFECTO_RADIACION', label: 'Efecto nocivo de la radiación' },
-    { value: 'LESIONES_MULTIPLES', label: 'Lesiones múltiples' },
-    { value: 'OTRO', label: 'Otro (Especifique)' },
+    {value:'AMPUTACION_ENUCLEACION', label: 'Amputación o enucleación (Exclusión o pérdida del ojo)'},
+    {value:'ASFIXIA', label: 'Asfixia' },
+    {value:'CONMOCION_TRAUMA', label: 'Conmoción o trauma interno' },
+    {value:'EFECTO_ELECTRICIDAD', label: 'Efecto de la electricidad' },
+    {value:'EFECTO_RADIACION', label: 'Efecto nocivo de la radiación' },
+    {value:'EFECTO_TIEMPO', label: 'Efecto del tiempo, del clima, u otro relacionado con el ambiente' },
+    {value:'ENVENAMIENTO_INTOXICACION', label: 'Envenenamiento o intoxicación aguda o alergia' },
+    {value:'FRACTURA', label: 'Fractura' },
+    {value:'GOLPE_CONTUSION', label: 'Golpe, contusión o aplastamiento' },
+    {value:'HERIDA', label: 'Herida' },
+    {value:'LESIONES_MULTIPLES', label: 'Lesiones múltiples' },
+    {value:'LUXACION', label: 'Luxación' },
+    {value:'OTRO', label: 'Otro (Especifique)' },
+    {value:'QUEMADURA', label: 'Quemadura' },
+    {value:'TORCEDURA_ESGUINCE', label: 'Torcedura, esguince, desgarro muscular, hernia o laceraciónde músculo o tendón sin herida' },
+    {value:'TRAUMA_SUPERFICIAL', label: 'Trauma superficial (Incluye rasguño, punción o pinchazo y lesión en ojo por cuerpo extraño)' },
 ];
 
 export const parte_cuerpo = [
