@@ -929,6 +929,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         } catch (error) {
                 
         }
+        this.habilitarInforme()
     }
 
     selectCausaRaiz(nombre, pregunta ,datos){
@@ -1028,6 +1029,16 @@ export class AnalisisDesviacionComponent implements OnInit {
         }else{
             validador=false
         }   
+
+        if(this.dataListFactor){
+            console.log("datalist", this.dataListFactor);
+            this.dataListFactor.forEach(element => {
+                if(element.accion=="Sin Plan de Accion"){
+                    validador=false
+                }
+            });
+        }
+
         this.displayInforme = validador;
     }
 
