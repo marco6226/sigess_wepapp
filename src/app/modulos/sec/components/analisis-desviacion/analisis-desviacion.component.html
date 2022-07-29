@@ -213,7 +213,7 @@
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3' && listPlanAccion.length>0" header="Plan de accion">
                         <app-plan-accion-list (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3' && displayInforme" header="Informe">
+                    <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
                         <!-- <button  (click)="test2()" >test</button>  -->
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">

@@ -58,6 +58,8 @@ export class EmpleadoFormComponent implements OnInit {
     empleadoSelect?: Empleado;
     @Input('empleadoSelect') 
     set empleadoSelectInput(empleadoInput: Empleado){
+        console.log(empleadoInput);
+        this.empresaForm.reset()
         if(empleadoInput){
             this.empleadoSelect = empleadoInput
             this.empresaForm.value.nit = this.empleadoSelect.nit
@@ -571,6 +573,15 @@ export class EmpleadoFormComponent implements OnInit {
         } catch (e) {
             console.log(e);
         }
+    }
+
+    test(){
+        console.log(this.empresaSelect2);
+        console.log(this.empleado);
+        console.log(this.empresaForm.value);
+        console.log(this.empleadoSelect);
+        
+        
     }
 
 }

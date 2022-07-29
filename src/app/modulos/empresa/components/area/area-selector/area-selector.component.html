@@ -13,16 +13,16 @@
   <button *ngIf="loading == false" [disabled]="disabled" type="button" (click)="showDialog()" pButton icon="fa fa-sitemap"></button>
 </div>
 
-<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-width':'1600px', 'max-height':'620px','min-width':'1600px', 'min-height':'520px'}">
+<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-width':'100%', 'max-height':'620px','min-width':'100%', 'min-height':'420px' ,'overflow':'scroll'}">
 
   <p-tabView>
 
     <p-tabPanel header="Organigrama">
-      <p-tree [value]="areasNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="single" [(selection)]="areaSelected"></p-tree>
+      <p-tree  [value]="areasNodes" *ngIf="displayDialog" layout="vertical" selectionMode="single" [(selection)]="areaSelected"></p-tree>
     </p-tabPanel>
 
     <p-tabPanel header="Estructura física">
-      <p-tree [value]="sedesNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="single" [(selection)]="areaSelected"></p-tree>
+      <p-tree  [value]="sedesNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="single" [(selection)]="areaSelected"></p-tree>
     </p-tabPanel>
 
   </p-tabView>
