@@ -268,24 +268,20 @@ export class FormularioAccidenteComponent implements OnInit {
         }
     }
     changeCalendar(){
-        
-// console.log(this.form.value.fechaIngresoEmpleado)
-// console.log(this.form)
-//         if(this.form.value.fechaIngresoEmpleado != null && this.form.value.fechaAccidente != null){
-//             console.log('entre')
-//                 this.fechaIngreso=new Date(this.form.value.fechaIngresoEmpleado)
-//                 this.fechaAccidente=new Date(this.form.value.fechaAccidente)
-//                 this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
-//                 // this.deltaDia=this.deltaFecha.getDate()
-//                 // console.log(this.deltaDia)
-//                 // this.deltaMes=this.deltaFecha.getMonth()+1
-//                 // console.log(this.deltaMes)
-//                 this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
-//                 this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
-//                 this.form = this.fb.group({
-//                     diasLaborHabitual: this.reporte.diasLaborHabitual,
-//                     mesesLaborHabitual: this.reporte.mesesLaborHabitual,
-//                 });
-//             }
+        if(this.form.value.fechaIngresoEmpleado != null && this.form.value.fechaAccidente != null){
+                this.fechaIngreso=new Date(this.form.value.fechaIngresoEmpleado)
+                this.fechaAccidente=new Date(this.form.value.fechaAccidente)
+                this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
+                // this.deltaDia=this.deltaFecha.getDate()
+                // console.log(this.deltaDia)
+                // this.deltaMes=this.deltaFecha.getMonth()+1
+                // console.log(this.deltaMes)
+                this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
+                this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
+                this.form.patchValue({
+                    diasLaborHabitual: this.reporte.diasLaborHabitual,
+                    mesesLaborHabitual: this.reporte.mesesLaborHabitual,
+                });
+            }
     }
 }
