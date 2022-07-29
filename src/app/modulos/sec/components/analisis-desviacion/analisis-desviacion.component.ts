@@ -929,6 +929,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         } catch (error) {
                 
         }
+        this.habilitarInforme()
     }
 
     selectCausaRaiz(nombre, pregunta ,datos){
@@ -969,60 +970,75 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     habilitarInforme(){
         let validador = true
-        this.listPlanAccion.forEach(element => {
+        if(this.listPlanAccion.length>0){
+        
+            this.listPlanAccion.forEach(element => {
 
 
 
-            // let isPlanAccionFinish = element.causaRaiz.find(ele=>{
-            //     return ele.revisado.isComplete == true
-            // })
-            // //   console.log(isPlanAccionFinish);
-            //   if (isPlanAccionFinish == undefined) {
-            //     validador = false;
-            //   }
-            //   isPlanAccionFinish.forEach(element => {
-            //     this.dataListFactor
-            //   });
-            console.log(element);
-            
-            element.causaRaiz.forEach(causa => {
-                console.log(causa);
+                // let isPlanAccionFinish = element.causaRaiz.find(ele=>{
+                //     return ele.revisado.isComplete == true
+                // })
+                // //   console.log(isPlanAccionFinish);
+                //   if (isPlanAccionFinish == undefined) {
+                //     validador = false;
+                //   }
+                //   isPlanAccionFinish.forEach(element => {
+                //     this.dataListFactor
+                //   });
+                console.log(element);
+                
+                element.causaRaiz.forEach(causa => {
+                    console.log(causa);
 
-                if (causa.revisado.isComplete) {
-                    let nombre = element.nombreFC.split(', ')
-                    let causas = causa.causaRaiz.split(', ')
-                    
-
-
-                    for (let index = 0; index < nombre.length; index++) {
-                        // console.log(nombre[index],causas[index]);
+                    if (causa.revisado.isComplete) {
+                        let nombre = element.nombreFC.split(', ')
+                        let causas = causa.causaRaiz.split(', ')
                         
-                        let dataFactor = this.dataListFactor.find(ele=> {
-                            return ele.nombre == nombre[index] && ele.metodologia == causas[index]
-                        })
 
-                        // console.log(dataFactor);
 
-                        if (dataFactor) {
-                            dataFactor.accion = 'Con Plan de Accion'                            
+                        for (let index = 0; index < nombre.length; index++) {
+                            // console.log(nombre[index],causas[index]);
+                            
+                            let dataFactor = this.dataListFactor.find(ele=> {
+                                return ele.nombre == nombre[index] && ele.metodologia == causas[index]
+                            })
+
+                            // console.log(dataFactor);
+
+                            if (dataFactor) {
+                                dataFactor.accion = 'Con Plan de Accion'                            
+                            }
+                            
                         }
-                        
                     }
-                }
-                else{
-                    console.log("algo no es verdad");
-                    validador = false
+                    else{
+                        console.log("algo no es verdad");
+                        validador = false
+                    }
+                });
+
+                
+                
+
+                // let dataFactor2 = this.dataListFactor.splice()
+                // console.log(dataFactor2);
+
+                
+            });     
+        }else{
+            validador=false
+        }   
+
+        if(this.dataListFactor){
+            console.log("datalist", this.dataListFactor);
+            this.dataListFactor.forEach(element => {
+                if(element.accion=="Sin Plan de Accion"){
+                    validador=false
                 }
             });
+        }
 
-            
-            
-
-            // let dataFactor2 = this.dataListFactor.splice()
-            // console.log(dataFactor2);
-
-            
-        });        
         this.displayInforme = validador;
     }
 

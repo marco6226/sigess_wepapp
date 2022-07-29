@@ -208,7 +208,7 @@
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && dataListFactor.length>0" header="Listado de causas">
-                        <app-listado-causas [factores]="dataListFactor" [planAccionList]="listPlanAccion"></app-listado-causas>
+                        <app-listado-causas [factores]="dataListFactor" (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-listado-causas>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && listPlanAccion.length>0" header="Plan de accion">
                         <app-plan-accion-list (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-plan-accion-list>
