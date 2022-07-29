@@ -566,7 +566,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.diagram)
         // this.a=this.diagram.exportDiagram(printOptions).toString()
         
-        console.log(this.a)
+        // console.log(this.a)
         setTimeout(() => {
         // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;

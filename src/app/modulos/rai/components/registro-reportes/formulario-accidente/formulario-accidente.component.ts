@@ -86,10 +86,9 @@ export class FormularioAccidenteComponent implements OnInit {
         this.idEmpresa = this.sesionService.getEmpresa().id;
         console.log(this.idEmpresa)
         console.log(this.reporte)
-        console.log(this.reporte.fechaIngresoEmpleado)
-        console.log(this.reporte.fechaAccidente)
+        // console.log(this.reporte.fechaIngresoEmpleado)
+        // console.log(this.reporte.fechaAccidente)
         if(this.reporte.fechaIngresoEmpleado != null && this.reporte.fechaAccidente != null){
-            console.log('a')
             this.fechaIngreso=new Date(this.reporte.fechaIngresoEmpleado)
             this.fechaAccidente=new Date(this.reporte.fechaAccidente)
             this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
@@ -100,7 +99,6 @@ export class FormularioAccidenteComponent implements OnInit {
             this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
             this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
         }else{
-            console.log('b')
             // this.deltaMes=null
             // this.deltaDia=null
             this.reporte.diasLaborHabitual=null
@@ -269,5 +267,25 @@ export class FormularioAccidenteComponent implements OnInit {
             );
         }
     }
-
+    changeCalendar(){
+        
+// console.log(this.form.value.fechaIngresoEmpleado)
+// console.log(this.form)
+//         if(this.form.value.fechaIngresoEmpleado != null && this.form.value.fechaAccidente != null){
+//             console.log('entre')
+//                 this.fechaIngreso=new Date(this.form.value.fechaIngresoEmpleado)
+//                 this.fechaAccidente=new Date(this.form.value.fechaAccidente)
+//                 this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
+//                 // this.deltaDia=this.deltaFecha.getDate()
+//                 // console.log(this.deltaDia)
+//                 // this.deltaMes=this.deltaFecha.getMonth()+1
+//                 // console.log(this.deltaMes)
+//                 this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
+//                 this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
+//                 this.form = this.fb.group({
+//                     diasLaborHabitual: this.reporte.diasLaborHabitual,
+//                     mesesLaborHabitual: this.reporte.mesesLaborHabitual,
+//                 });
+//             }
+    }
 }

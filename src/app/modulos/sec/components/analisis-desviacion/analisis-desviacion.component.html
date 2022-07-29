@@ -71,7 +71,7 @@
                             <ng-template pTemplate="body">
                                 <tr>
                                     <th style="border: 1px solid #c8c8c8;">Nombre del evento</th>
-                                    <td>{{desviacionesList[0]?.concepto}}</td> 
+                                    <td>{{desviacionesList[0]?.concepto}}</td>
                                 </tr>
                                 <tr>
                                     <th style="border: 1px solid #c8c8c8;">Nombre del colaborador</th>
@@ -207,13 +207,13 @@
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
                         <app-factor-causal (dataFC)="setListDataFactor()" [factorCausal]="data"></app-factor-causal>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3' && dataListFactor.length>0" header="Listado de causas">
+                    <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && dataListFactor.length>0" header="Listado de causas">
                         <app-listado-causas [factores]="dataListFactor" (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-listado-causas>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3' && listPlanAccion.length>0" header="Plan de accion">
+                    <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && listPlanAccion.length>0" header="Plan de accion">
                         <app-plan-accion-list (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
-                    <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3' && displayInforme" header="Informe">
+                    <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
                         <!-- <button  (click)="test2()" >test</button>  -->
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
@@ -286,17 +286,19 @@
                                         </th>
                                         <th style="width: 30%;text-align: center"></th>
                                     </tr>
+                                </table>
+                                <table width="95%" style="border-collapse: collapse;margin: auto;">
                                     <tr>
-                                        <th style="text-align: left">
+                                        <th style="text-align: left" width="30%">
                                             Nombre de la empresa
                                         </th>
-                                        <td>{{desviacionesList[0]?.empresa}}</td>
+                                        <td style="text-align: left">{{desviacionesList[0]?.empresa}}</td>
                                     </tr>
                                     <tr>
-                                        <th style="text-align: left">
+                                        <th style="text-align: left" width="30%">
                                             NIT:
                                         </th>
-                                        <td>{{desviacionesList[0]?.nit}}</td>
+                                        <td style="text-align: left">{{desviacionesList[0]?.nit}}</td>
                                     </tr>
                                 </table>
 
