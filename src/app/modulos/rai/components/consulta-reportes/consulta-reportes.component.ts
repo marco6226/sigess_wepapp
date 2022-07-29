@@ -4,6 +4,7 @@ import { Reporte } from 'app/modulos/rai/entities/reporte'
 import { ReporteService } from 'app/modulos/rai/services/reporte.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
+import { ConsuModReporteService } from 'app/modulos/sec/services/consu-mod-reporte.service'
 
 @Component({
   selector: 'app-consulta-reportes',
@@ -30,6 +31,7 @@ export class ConsultaReportesComponent implements OnInit {
   constructor(
     private reporteService: ReporteService,
     private paramNav: ParametroNavegacionService,
+    private ConsuModReporteService: ConsuModReporteService,
   ) { }
 
   ngOnInit() {
@@ -60,17 +62,20 @@ export class ConsultaReportesComponent implements OnInit {
       }
     );
   }
-
+  RegistratR:boolean=false;
   consultarDetalle() {
     this.paramNav.setAccion<string>('GET');
     this.paramNav.setParametro<Reporte>(this.reporteSelect);
     this.paramNav.redirect('app/rai/registroReporte');
+    this.RegistratR=true;
+    this.ConsuModReporteService.setflagR(true);
   }
 
   modificar() {
     this.paramNav.setAccion<string>('PUT');
     this.paramNav.setParametro<Reporte>(this.reporteSelect);
     this.paramNav.redirect('app/rai/registroReporte');
+    this.ConsuModReporteService.setflagR(true);
   }
 
   navegar() {

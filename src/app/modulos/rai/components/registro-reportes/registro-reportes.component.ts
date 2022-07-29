@@ -8,6 +8,7 @@ import { Message } from 'primeng/primeng';
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Criteria, Filter } from '../../../core/entities/filter';
+import { ConsuModReporteService } from 'app/modulos/sec/services/consu-mod-reporte.service'
 
 @Component({
   selector: 'app-registro-reportes',
@@ -24,25 +25,28 @@ export class RegistroReportesComponent implements OnInit {
   consultar: boolean;
   modificar: boolean;
   adicionar: boolean;
+  flagR:boolean=false;
 
   constructor(
     private empleadoService: EmpleadoService,
     private reporteService: ReporteService,
     private paramNav: ParametroNavegacionService,
+    private ConsuModReporteService:ConsuModReporteService,
   ) { }
 
 async  ngOnInit() {
-  
+    this.flagR=this.ConsuModReporteService.getflagR();
     console.log( this.Zeller(24,9,1983));
     console.log( this.consultar, this.modificar);
-
-    let repParam = this.paramNav.getParametro<Reporte>();
-
-
+    
+    let repParam;
+    repParam = (this.flagR)?this.paramNav.getParametro<Reporte>():null;
+    
+    console.log('repParam',repParam);
     if (repParam != null) {
       this.consultar = this.paramNav.getAccion<string>() == 'GET';
       this.modificar = this.paramNav.getAccion<string>() == 'PUT';
-console.log(repParam);
+
       let filterQuery = new FilterQuery();
       if (repParam.id != null) {
       filterQuery.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1:  repParam.id.toString(), value2: null }];
@@ -64,6 +68,7 @@ console.log(repParam);
       this.adicionar = true;
     }
     this.paramNav.reset();
+    this.ConsuModReporteService.setflagR(false);
   }
 
   buscarEmpleado(empleadoIdentificacion: string) {
