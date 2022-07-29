@@ -1,6 +1,6 @@
 import { ConfirmationService, MessageService } from 'primeng/primeng';
 import { FactorCausal, listFactores, listPlanAccion } from './../../../entities/factor-causal';
-import { Component, Injectable, Input, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 
@@ -12,6 +12,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 })
 export class ListadoCausasComponent implements OnInit {
 
+  @Output() validacionPA = new EventEmitter<any>()
   @Input() factores: listFactores[];
   @Input() planAccionList: listPlanAccion[]=[];
 
@@ -135,19 +136,9 @@ export class ListadoCausasComponent implements OnInit {
                 }})
           this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz:tempCausa})
         }
+        this.validacionPA.emit();
 
-        // if(isExist==undefined){
-          // this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz: tempcausaRaiz, especifico:null, razonable:null, eficaz:null, medible:null, revisado:null})
-          // console.log(this.planAccionList);
-          // this.messageService.add({severity:'success', summary: 'Exito', detail: 'Se agrego el plan de acción'});
-        // }
-        // else{
-        //   this.messageService.add({severity:'error', summary: 'Error', detail: 'Ya existe este plan de acción'});
-        // }
       }
     });
-
   }
-
-
 }
