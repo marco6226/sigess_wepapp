@@ -280,7 +280,9 @@
                         Fecha ingreso
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngresoEmpleado">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngresoEmpleado" (ngModelChange)="changeCalendar()" >
+                            <!-- [formControl]="form.controls['fechaIngresoEmpleado']" -->
+                            <!-- formControlName="fechaIngresoEmpleado" -->
                         </p-calendar>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
@@ -373,7 +375,7 @@
                         Fecha {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaAccidente">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaAccidente" (onSelect)="changeCalendar()">
                         </p-calendar>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
