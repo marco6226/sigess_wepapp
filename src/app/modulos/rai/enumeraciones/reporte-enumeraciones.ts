@@ -5,23 +5,24 @@ export const tipo_reporte = [
 
 
 export const tipo_vinculacion = [
-    { value: 'PLANTA', label: 'Planta' },
-    { value: 'MISION', label: 'Misión' },
     { value: 'COOPERADO', label: 'Cooperado' },
     { value: 'ESTUDIANTE_APRENDIZ', label: 'Estudiante/Aprendiz' },
     { value: 'INDEPENDIENTE', label: 'Independiente' },
+    { value: 'MISION', label: 'Misión' },
+    { value: 'PLANTA', label: 'Planta' },    
 ];
 
 export const perfil_educativo = [
     { value: 'Bachiller', label: 'Bachiller' },
-    { value: 'Técnico', label: 'Técnico' },
-    { value: 'Tecnólogo', label: 'Tecnólogo' },
-    { value: 'Profesional', label: 'Profesional' },
-    { value: 'Maestria', label: 'Maestria' },
     { value: 'Doctorado', label: 'Doctorado' },
+    { value: 'Estudiante', label: 'Estudiante' },
+    { value: 'Maestria', label: 'Maestria' },
     { value: 'No requiere', label: 'No requiere' },
     { value: 'Practicante', label: 'Practicante' },
-    { value: 'Estudiante', label: 'Estudiante' },
+    { value: 'Profesional', label: 'Profesional' },
+    { value: 'Técnico', label: 'Técnico' },
+    { value: 'Tecnólogo', label: 'Tecnólogo' },
+    
 ];
 
 export const competencias = [
@@ -29,35 +30,35 @@ export const competencias = [
         value: 'ESTRATEGICAS',
         label: 'Estratégicas',
         items: [
+            { value: 'Habilidad Analítica', label: 'Habilidad Analítica' },
             { value: 'Liderazgo', label: 'Liderazgo' },
-            { value: 'Toma de decisiones', label: 'Toma de decisiones' },
             { value: 'Planeación Estratégica', label: 'Planeación Estratégica' },
             { value: 'Solución de Problemas', label: 'Solución de Problemas' },
-            { value: 'Habilidad Analítica', label: 'Habilidad Analítica' }
+            { value: 'Toma de decisiones', label: 'Toma de decisiones' },
         ]
     },
     {
         value: 'ORGANIZACIONALES',
         label: 'Organizacionales',
         items: [
-            { value: 'Conocimiento y Habilidad Técnica', label: 'Conocimiento y Habilidad Técnica' },
-            { value: 'Orientación a Resultados', label: 'Orientación a Resultados' },
             { value: 'Calidad en el Trabajo', label: 'Calidad en el Trabajo' },
-            { value: 'Planeación y Organización', label: 'Planeación y Organización' },
             { value: 'Comunicación', label: 'Comunicación' },
-            { value: 'Orientación al Cliente', label: 'Orientación al Cliente' },
-            { value: 'Prudencia', label: 'Prudencia' },
-            { value: 'Iniciativa', label: 'Iniciativa' },
-            { value: 'Trabajo en Equipo', label: 'Trabajo en Equipo' },
-            { value: 'Relaciones Interpersonales', label: 'Relaciones Interpersonales' },
+            { value: 'Conocimiento y Habilidad Técnica', label: 'Conocimiento y Habilidad Técnica' },
             { value: 'Dinamismo y Energía', label: 'Dinamismo y Energía' },
+            { value: 'Iniciativa', label: 'Iniciativa' },
+            { value: 'Orientación a Resultados', label: 'Orientación a Resultados' },
+            { value: 'Orientación al Cliente', label: 'Orientación al Cliente' },
+            { value: 'Planeación y Organización', label: 'Planeación y Organización' },
+            { value: 'Prudencia', label: 'Prudencia' },
+            { value: 'Relaciones Interpersonales', label: 'Relaciones Interpersonales' },
+            { value: 'Trabajo en Equipo', label: 'Trabajo en Equipo' },
         ]
     },
 ];
 
 export const genero = [
     { value: 'M', label: 'Masculino' },
-    { value: 'F', label: 'Femenino' }
+    { value: 'F', label: 'Femenino' },
 ];
 export const zona = [
     { value: 'U', label: 'Urbana' },
@@ -66,9 +67,9 @@ export const zona = [
 
 export const jornada_trabajo = [
     { value: 'DIURNO', label: 'Diurno' },
-    { value: 'NOCTURNO', label: 'Nocturno' },
     { value: 'MIXTO', label: 'Mixto' },
-    { value: 'TURNOS', label: 'Turnos' },
+    { value: 'NOCTURNO', label: 'Nocturno' },
+    { value: 'TURNOS', label: 'Turnos' },    
 ];
 
 export const tipo_identificacion = [
@@ -91,9 +92,9 @@ export const sitio = [
     { value: 'AREAS_RECREATIVAS', label: 'Áreas recreativas o deportivas' },
     { value: 'CORREDORES', label: 'Corredores o pasillos' },
     { value: 'ESCALERAS', label: 'Escaleras' },
-    { value: 'PARQUEADEROS', label: 'Parqueaderos o áreas de circulación vehicular' },
     { value: 'OFICINAS', label: 'Oficinas' },
     { value: 'OTRAS_AREAS', label: 'Otras áreas comunes' },
+    { value: 'PARQUEADEROS', label: 'Parqueaderos o áreas de circulación vehicular' },
     { value: 'OTRO', label: 'Otro (Especifique)' },
 ];
 
@@ -118,55 +119,55 @@ export const tipo_lesion = [
     {value:'HERIDA', label: 'Herida' },
     {value:'LESIONES_MULTIPLES', label: 'Lesiones múltiples' },
     {value:'LUXACION', label: 'Luxación' },
-    {value:'OTRO', label: 'Otro (Especifique)' },
     {value:'QUEMADURA', label: 'Quemadura' },
     {value:'TORCEDURA_ESGUINCE', label: 'Torcedura, esguince, desgarro muscular, hernia o laceraciónde músculo o tendón sin herida' },
     {value:'TRAUMA_SUPERFICIAL', label: 'Trauma superficial (Incluye rasguño, punción o pinchazo y lesión en ojo por cuerpo extraño)' },
+    {value:'OTRO', label: 'Otro (Especifique)' },
 ];
 
 export const parte_cuerpo = [
-    { value: 'CABEZA', label: 'Cabeza' },
-    { value: 'OJO', label: 'Ojos' },
-    { value: 'CUELLO', label: 'Cuello' },
-    { value: 'TRONCO', label: 'Tronco (incluye espalda, columna vertebral, médula espinal, pélvis)' },
-    { value: 'TORAX', label: 'Tórax' },
     { value: 'ABDOMEN', label: 'Abdomen' },
-    { value: 'MIEMBRO_SUPERIOR', label: 'Miembros superiores' },
+    { value: 'CABEZA', label: 'Cabeza' },
+    { value: 'CUELLO', label: 'Cuello' },
+    { value: 'LESIONES_GENERALES', label: 'Lesiones generales u otras' },
     { value: 'MANOS', label: 'Manos' },
     { value: 'MIEMBRO_INFERIOR', label: 'Miembros inferiores' },
+    { value: 'MIEMBRO_SUPERIOR', label: 'Miembros superiores' },
+    { value: 'OJO', label: 'Ojos' },
     { value: 'PIES', label: 'Pies' },
-    { value: 'UBICACIONES_MULTIPLES', label: 'Ubicaciones múltiples' },
-    { value: 'LESIONES_GENERALES', label: 'Lesiones generales u otras' },
+    { value: 'TORAX', label: 'Tórax' },
+    { value: 'TRONCO', label: 'Tronco (incluye espalda, columna vertebral, médula espinal, pélvis)' },
+    { value: 'UBICACIONES_MULTIPLES', label: 'Ubicaciones múltiples' },    
 ]
 
 
 export const agente = [
-    { value: 'MAQUINAS_EQUIPOS', label: 'Máquinas y/o equipos' },
-    { value: 'MEDIOS_TRANSPORTE', label: 'Medios de transporte' },
-    { value: 'APARATOS', label: 'Aparatos' },
-    { value: 'HERRAMIENTAS', label: 'Herramientas, implementos, o utensilios' },
-    { value: 'MATERIALES_SUSTANCIAS', label: 'Materiales o sustancias' },
-    { value: 'RADIACIONES', label: 'Radiaciones' },
-    { value: 'AMBIENTE_TRABAJO', label: 'Ambiente de trabajo (Incluye superficies de tránsito y de trabajo, muebles, tejados, en el exterior, interior o subterráneos)' },
-    { value: 'NO_CLASIFICADOS', label: 'Otros agentes no clasificados' },
-    { value: 'ANIMALES', label: 'Animales (Vivos o productos animales)' },
-    { value: 'NO_CLASIFICADOS_FALTA_DATOS', label: 'Agentes no clasificados por falta de datos' },
     { value: 'AGUJA_MAT_CORTOPUNZANTE', label: 'Aguja/material cortopunzante' },
+    { value: 'AMBIENTE_TRABAJO', label: 'Ambiente de trabajo (Incluye superficies de tránsito y de trabajo, muebles, tejados, en el exterior, interior o subterráneos)' },
+    { value: 'ANIMALES', label: 'Animales (Vivos o productos animales)' },
+    { value: 'APARATOS', label: 'Aparatos' },
     { value: 'ARMA_FUEGO_CORTOPUNZANTE', label: 'Arma de fuego/cortopunzante' },
     { value: 'EXPLOSIVOS', label: 'Explosivos' },
+    { value: 'HERRAMIENTAS', label: 'Herramientas, implementos, o utensilios' },
+    { value: 'MAQUINAS_EQUIPOS', label: 'Máquinas y/o equipos' },
+    { value: 'MATERIALES_SUSTANCIAS', label: 'Materiales o sustancias' },
+    { value: 'MEDIOS_TRANSPORTE', label: 'Medios de transporte' },
+    { value: 'NO_CLASIFICADOS', label: 'Otros agentes no clasificados' },
+    { value: 'NO_CLASIFICADOS_FALTA_DATOS', label: 'Agentes no clasificados por falta de datos' },
+    { value: 'RADIACIONES', label: 'Radiaciones' },
 ];
 
 export const mecanismo = [
-    { value: 'CAIDA_PERSONAS', label: 'Caída de personas' },
-    { value: 'CAIDA_OBJETOS', label: 'Caída de objetos' },
-    { value: 'PISADA_CHOQUES', label: 'Pisadas, choques, o golpes' },
     { value: 'ATRAPAMIENTOS', label: 'Atrapamientos' },
-    { value: 'SOBREESFUERZO_EXCESIVO', label: 'Sobreesfuerzo, esfuerzo excesivo, o falso movimiento' },
-    { value: 'EXPOSICION_TEMPERATURA', label: 'Exposición o contacto con temperatura extrema' },
+    { value: 'CAIDA_OBJETOS', label: 'Caída de objetos' },
+    { value: 'CAIDA_PERSONAS', label: 'Caída de personas' },
     { value: 'EXPOSICION_ELECTRICIDAD', label: 'Exposición o contacto con la electricidad' },
-    { value: 'EXPOSICION_SUSTUNIVERSAL', label: 'Exposición ocontacto con líquidos de precaución universal (líquidos/ secresiones corporales)' },
     { value: 'EXPOSICION_SUSTANCIAS', label: 'Exposición o contacto con sustancias nocivas, radiaciones o salpicaduras' },
+    { value: 'EXPOSICION_SUSTUNIVERSAL', label: 'Exposición ocontacto con líquidos de precaución universal (líquidos/ secresiones corporales)' },
+    { value: 'EXPOSICION_TEMPERATURA', label: 'Exposición o contacto con temperatura extrema' },
     { value: 'MORDEDURA_PICADURA', label: "Mordedura o picadura" },
+    { value: 'PISADA_CHOQUES', label: 'Pisadas, choques, o golpes' },
+    { value: 'SOBREESFUERZO_EXCESIVO', label: 'Sobreesfuerzo, esfuerzo excesivo, o falso movimiento' },    
     { value: 'OTRO', label: 'Otro (Especifique)' },
 ];
 
@@ -177,11 +178,11 @@ export const lugar = [
 ];
 
 export const tipoAccidente = [
-    { value: 'VIOLENCIA', label: 'Violencia' },
-    { value: 'TRANSITO', label: 'Tránsito' },
     { value: 'DEPORTIVO', label: 'Deportivo' },
-    { value: 'RECREATIVO_CULTURAL', label: 'Recreativo o cultural' },
     { value: 'PROPIOS_TRABAJO', label: 'Propios del trabajo' },
+    { value: 'RECREATIVO_CULTURAL', label: 'Recreativo o cultural' },
+    { value: 'TRANSITO', label: 'Tránsito' },
+    { value: 'VIOLENCIA', label: 'Violencia' },    
 ];
 
 export const locale_es = {
