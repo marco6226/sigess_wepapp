@@ -633,7 +633,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.plan_accion= JSON.stringify(this.listPlanAccion);
         ad.miembros_equipo= JSON.stringify(this.miembros);
         ad.tareaDesviacionList = this.tareasList;
-        if  (ad.tareaDesviacionList) {
+        if  (ad.tareaDesviacionList.length > 0) {
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
@@ -690,7 +690,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         ad.informe=JSON.stringify(this.informeJson);
 
 		ad.miembros_equipo= JSON.stringify(this.miembros);
-        if(ad.tareaDesviacionList){
+        if(ad.tareaDesviacionList.length > 0){
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
@@ -713,6 +713,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     manageResponse(ad: AnalisisDesviacion) {
         this.msgs = [];
+        if(ad.tareaDesviacionList.length > 0){
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
@@ -771,6 +772,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 " correctamente la investigación",
         });
     }
+}
 
     confirmarActualizacion(event: Documento) {
         
