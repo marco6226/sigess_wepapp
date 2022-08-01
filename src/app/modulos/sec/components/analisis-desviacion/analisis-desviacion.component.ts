@@ -589,14 +589,14 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.document.write(template.innerHTML);
 
 
-            let tamx=600;
-            let h=(Math.ceil(this.img.height/tamx)==0) ? 1 : Math.ceil(this.img.height/tamx);
-            let tamy=1000;
-            let w=(Math.ceil(this.img.width/tamy)==0) ? 1 : Math.ceil(this.img.height/tamy);
+            let tamy=600;
+            let h=(Math.ceil(this.img.height/tamy)==0) ? 1 : Math.ceil(this.img.height/tamy);
+            let tamx=1000;
+            let w=(Math.ceil(this.img.width/tamx)==0) ? 1 : Math.ceil(this.img.height/tamx);
 
             for (let i = 0; i < h; i++) {
                 for (let j = 0; j < w; j++) {
-                    WinPrint.document.write('<div style="size: auto;  margin: 0mm; padding:0mm" align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="150%" width="100%" style="display:block; border-collapse: collapse; object-fit: none; object-position: ',(j*(-tamy)).toString(),'px ',(i*(-tamx)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
+                    WinPrint.document.write('<div style="size: auto;  margin: 0mm; padding:0mm" align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="150%" width="100%" style="display:block; border-collapse: collapse; object-fit: none; object-position: ',(j*(-tamx)).toString(),'px ',(i*(-tamy)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
                     WinPrint.document.write('<p style="page-break-after: always"></p>');
                 }
             }
