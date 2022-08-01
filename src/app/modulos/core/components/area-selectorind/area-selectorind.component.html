@@ -20,11 +20,11 @@
   <p-tabView>
 
     <p-tabPanel header="Organigrama">
-      <p-tree [value]="areasNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="checkbox" [(selection)]="areaSelected"></p-tree>
+      <p-tree [value]="areasNodes" *ngIf="displayDialog" layout="vertical" selectionMode="checkbox" [(selection)]="areaSelected"></p-tree>
     </p-tabPanel>
 
     <p-tabPanel header="Estructura física">
-      <p-tree [value]="sedesNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="checkbox" [(selection)]="areaSelected"></p-tree>
+      <p-tree [value]="sedesNodes" *ngIf="displayDialog" layout="vertical" selectionMode="checkbox" [(selection)]="areaSelected"></p-tree>
     </p-tabPanel>
 
   </p-tabView>

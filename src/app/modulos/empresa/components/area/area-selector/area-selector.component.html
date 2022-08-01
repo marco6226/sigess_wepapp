@@ -22,7 +22,7 @@
     </p-tabPanel>
 
     <p-tabPanel header="Estructura física">
-      <p-tree  [value]="sedesNodes" *ngIf="displayDialog" layout="horizontal" selectionMode="single" [(selection)]="areaSelected"></p-tree>
+      <p-tree  [value]="sedesNodes" *ngIf="displayDialog" layout="vertical" selectionMode="single" [(selection)]="areaSelected"></p-tree>
     </p-tabPanel>
 
   </p-tabView>
