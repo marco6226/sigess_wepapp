@@ -1,6 +1,8 @@
 .ui-dialog{
     z-index: 10 !important;
     top: 1px !important;
+    // height: 500px !important;
+
 }
 
 ::ng-deep .p-tree .p-treenode-children .p-treenode {
@@ -26,3 +28,16 @@
 
     overflow-y: scroll !important;
 }
+
+::ng-deep .ui-dialog-content .ui-widget-content{
+    height: calc(100vh - 136px);
+}
+
+:ng-deep .ui-dialog{
+    z-index: 1005; left: 0px; top: 0px; transform: none; opacity: 1; width: 100vw; height: 100vh;
+}
+
+// ::ng-deep .ui-dynamicdialog {
+//     max-height: 100%; // or unset  
+//     height: 500px;
+// }
