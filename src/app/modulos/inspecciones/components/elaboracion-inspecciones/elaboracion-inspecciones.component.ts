@@ -602,7 +602,7 @@ if(dato.length > 0){
     imprimirImagen(){
         this.x=[]
         this.inspeccion.calificacionList.forEach(element => {
-            if(element.opcionCalificacion.nombre=='Existe riesgo'){
+            if(element.documentosList.length>0){
                 this.imagenesList=[]
                 let url=[]
                 element.elementoInspeccion.data2=[]
@@ -619,9 +619,11 @@ if(dato.length > 0){
                     .catch(err => {
                         this.imagenesList.push({});
                     });
-                })         
+                })   
+                console.log(element.documentosList)      
             }
         });
+        
     }
 
     // 

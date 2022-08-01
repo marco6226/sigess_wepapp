@@ -579,12 +579,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.img.height)
         // console.log(Math.round(this.img.width/700))
         // console.log(Math.round(this.img.height/700))
-        
+        let print = document.getElementById('print');
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
     
+            WinPrint.document.write('<style id="print">@page{size:auto;margin: 10mm 0mm 10mm 0mm; padding:0mm}</style>');
             WinPrint.document.write(template.innerHTML);
 
             let h;
@@ -594,7 +595,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
             for (let i = 0; i < h; i++) {
                 for (let j = 0; j < w; j++) {
-                    WinPrint.document.write('<div align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; margin: auto; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
+                    WinPrint.document.write('<div style="size: auto;  margin: 0mm; padding:0mm" align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
                     WinPrint.document.write('<p style="page-break-after: always"></p>');
                 }
             }
