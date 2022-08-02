@@ -43,7 +43,7 @@ styleClass="select-material">
                 <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-incapacidad>
+        <ng-template pTemplate="body" let-incapacidad >
             <tr>
                 <td>
                     <p-tableCheckbox [value]="incapacidad"></p-tableCheckbox>
@@ -52,7 +52,7 @@ styleClass="select-material">
                 <td *ngIf="incapacidad['cie10'];else other_content">{{incapacidad?.cie10?.codigo}}</td>
                 <ng-template #other_content>&nbsp;</ng-template>
                 <td>{{incapacidad.diagnostico}}</td>
-                <td>{{incapacidad.fechaInicio | date}}</td>
+                <td >{{incapacidad.fechaInicio | date}}</td>
                 <td>{{incapacidad.fechaFin | date}}</td>
                 <td>{{incapacidad.diasAusencia}}</td>
                 <td>
