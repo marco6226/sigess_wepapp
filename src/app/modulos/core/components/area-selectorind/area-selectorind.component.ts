@@ -179,8 +179,10 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
       .catch(err => {
         this.loading = false
       });
-      this.collapseAll();
-      this.collapseAllhijos();
+      setTimeout(async () => {
+        this.collapseAll();
+        this.collapseAllhijos();
+    }, 3000);
   }
 
   createTreeNode(areas: Area[], nodoPadre: TreeNode): TreeNode[] {
