@@ -478,7 +478,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             
 
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
-            
+            console.log(this.incapacidadesList)
             this.desviacionesList = analisis.desviacionesList;
             this.observacion = analisis.observacion;
             this.analisisId = analisis.id;
@@ -579,22 +579,24 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.img.height)
         // console.log(Math.round(this.img.width/700))
         // console.log(Math.round(this.img.height/700))
-        
+        let print = document.getElementById('print');
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
         setTimeout(() => {
             var WinPrint = window.open('', '_blank');
     
+            WinPrint.document.write('<style id="print">@page{size:auto;margin: 10mm 0mm 10mm 0mm; padding:0mm;size: landscape}</style>');
             WinPrint.document.write(template.innerHTML);
 
-            let h;
-            h=(Math.round(this.img.height/350)==0) ? 1 : Math.round(this.img.height/350);
-            let w;
-            w=(Math.round(this.img.width/350)==0) ? 1 : Math.round(this.img.height/350);
+
+            let tamy=600;
+            let h=(Math.ceil(this.img.height/tamy)==0) ? 1 : Math.ceil(this.img.height/tamy);
+            let tamx=1000;
+            let w=(Math.ceil(this.img.width/tamx)==0) ? 1 : Math.ceil(this.img.height/tamx);
 
             for (let i = 0; i < h; i++) {
                 for (let j = 0; j < w; j++) {
-                    WinPrint.document.write('<div align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="100%" width="100%" style="display:block; border-collapse: collapse; margin: auto; object-fit: none; object-position: ',(j*(-700)).toString(),'px ',(i*(-350)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
+                    WinPrint.document.write('<div style="size: auto;  margin: 0mm; padding:0mm" align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="150%" width="100%" style="display:block; border-collapse: collapse; object-fit: none; object-position: ',(j*(-tamx)).toString(),'px ',(i*(-tamy)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
                     WinPrint.document.write('<p style="page-break-after: always"></p>');
                 }
             }
@@ -712,6 +714,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     manageResponse(ad: AnalisisDesviacion) {
         this.msgs = [];
+        if(ad.tareaDesviacionList){
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
@@ -770,6 +773,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 " correctamente la investigación",
         });
     }
+}
 
     confirmarActualizacion(event: Documento) {
         
