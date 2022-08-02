@@ -35,7 +35,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     // { label: 'Seleccione', value: null },
     { label: 'Inicial', value: 'Inicial' },
     { label: 'Prorroga', value: 'Prorroga' },
-  ];
+  ]
 
   constructor(
     private confirmationService: ConfirmationService
@@ -105,7 +105,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     // this.diasAusencia == null ?  this.incapacidad.diasAusencia:this.diasAusencia
 
     this.incapacidad.tipo = this.tipo
-    this.incapacidad.cie10 = this.cie10
+    this.incapacidad.cie10 = (this.cie10)?this.cie10:null;
     this.incapacidad.diagnostico = this.cie10.nombre
     this.incapacidad.fechaInicio = this.fechaInicio
     this.incapacidad.fechaFin = this.fechaFin
@@ -190,7 +190,7 @@ editarProduct(){
   this.diasAusencia == null ?  this.incapacidad.diasAusencia:this.diasAusencia
 
   this.incapacidad.tipo = this.tipo
-  this.incapacidad.cie10 = this.cie10.codigo
+  this.incapacidad.cie10 = (this.cie10.codigo)?this.cie10.codigo:null;
   this.incapacidad.diagnostico = this.cie10.nombre
   this.incapacidad.fechaInicio = this.fechaInicio
   this.incapacidad.fechaFin = this.fechaFin

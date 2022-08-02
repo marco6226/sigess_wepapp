@@ -49,7 +49,8 @@ styleClass="select-material">
                     <p-tableCheckbox [value]="incapacidad"></p-tableCheckbox>
                 </td>
                 <td>{{incapacidad.tipo}}</td>
-                <td>{{incapacidad.cie10.codigo}}</td>
+                <td *ngIf="incapacidad['cie10'];else other_content">{{incapacidad?.cie10?.codigo}}</td>
+                <ng-template #other_content>&nbsp;</ng-template>
                 <td>{{incapacidad.diagnostico}}</td>
                 <td>{{incapacidad.fechaInicio | date}}</td>
                 <td>{{incapacidad.fechaFin | date}}</td>
@@ -68,7 +69,8 @@ styleClass="select-material">
         <div class="p-field">
             <label for="tipo">Tipo</label>
             <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->
-            <p-dropdown [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+            <!-- <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" required></p-dropdown> -->
             <small class="p-invalid" *ngIf="submitted && !tipo">is required.</small>
         </div>
         <div class="p-field">
