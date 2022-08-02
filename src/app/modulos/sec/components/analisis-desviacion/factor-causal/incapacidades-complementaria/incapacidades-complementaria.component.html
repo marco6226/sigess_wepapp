@@ -52,8 +52,8 @@ styleClass="select-material">
                 <td *ngIf="incapacidad['cie10'];else other_content">{{incapacidad?.cie10?.codigo}}</td>
                 <ng-template #other_content>&nbsp;</ng-template>
                 <td>{{incapacidad.diagnostico}}</td>
-                <td>{{incapacidad.fechaInicio | date}}</td>
-                <td>{{incapacidad.fechaFin | date}}</td>
+                <td>{{incapacidad.fechaInicio | date: 'dd/MM/yyyy'}}</td>
+                <td>{{incapacidad.fechaFin | date: 'dd/MM/yyyy'}}</td>
                 <td>{{incapacidad.diasAusencia}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(incapacidad)"></button>

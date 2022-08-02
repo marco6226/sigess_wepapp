@@ -614,11 +614,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.diagram=this.FlowchartService.getDiagram();
         let printOptions: IExportOptions = {};
         printOptions.mode = 'Data';
-        printOptions.region = 'PageSettings';
-        this.imgIN=this.diagram.exportDiagram(printOptions).toString()
-        // console.log(this.diagram)
+        printOptions.region = 'PageSettings'; 
+        console.log(this.diagram);
+        if(this.diagram){       
+        this.imgIN=this.diagram.exportDiagram(printOptions).toString();
         if(this.imgIN!=undefined){
             this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+        }
         let ad = new AnalisisDesviacion();
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
         ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
@@ -667,9 +669,11 @@ export class AnalisisDesviacionComponent implements OnInit {
         let printOptions: IExportOptions = {};
         printOptions.mode = 'Data';
         printOptions.region = 'PageSettings';
+        if(this.diagram){     
         this.imgIN=this.diagram.exportDiagram(printOptions).toString()
         if(this.imgIN!=undefined){
             this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+        }
         let ad = new AnalisisDesviacion();
         ad.id = this.analisisId;
         ad.causaRaizList = this.buildList(this.causaRaizListSelect);
