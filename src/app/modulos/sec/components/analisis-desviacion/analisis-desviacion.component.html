@@ -46,11 +46,11 @@
                 <p-tabView>
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Descripción">
                         <div class="ui-g">
-                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                            <div *ngIf="desviacionesList" class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
                                 {{desviacionesList[0]?.empresa}}
                             </div>
-                            <div class="ui-g-12 ui-sm-12 ui-xl-4">
+                            <div *ngIf="desviacionesList" class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">NIT</h4>
                                 {{desviacionesList[0]?.nit}}
                             </div>    
