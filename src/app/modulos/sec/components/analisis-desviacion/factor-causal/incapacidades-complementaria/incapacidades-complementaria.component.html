@@ -69,7 +69,8 @@ styleClass="select-material">
         <div class="p-field">
             <label for="tipo">Tipo</label>
             <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->
-            <p-dropdown [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+            <!-- <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" required></p-dropdown> -->
             <small class="p-invalid" *ngIf="submitted && !tipo">is required.</small>
         </div>
         <div class="p-field">

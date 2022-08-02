@@ -35,7 +35,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
     // { label: 'Seleccione', value: null },
     { label: 'Inicial', value: 'Inicial' },
     { label: 'Prorroga', value: 'Prorroga' },
-  ];
+  ]
 
   constructor(
     private confirmationService: ConfirmationService
