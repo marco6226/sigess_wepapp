@@ -478,7 +478,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             
 
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
-            
+            console.log(this.incapacidadesList)
             this.desviacionesList = analisis.desviacionesList;
             this.observacion = analisis.observacion;
             this.analisisId = analisis.id;
