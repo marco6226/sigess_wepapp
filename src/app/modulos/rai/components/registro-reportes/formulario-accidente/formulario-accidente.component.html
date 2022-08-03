@@ -315,10 +315,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22';else blanco4">
                         <input pInputText formControlName="codigoTipoVinculacion" />
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22';else blanco2">
                         Ocupación habitual
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22';">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22';else blanco4">
                         <input pInputText formControlName="ocupacionHabitual" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22';else blanco2">
@@ -540,7 +540,7 @@
 
 
             <p-accordionTab
-                [header]="visibleCamposAccidente ? 'IV. DESCRIPCIÓN DEL ACCIDENTE':'III. DESCRIPCIÓN DEL INCIDENTE'">
+                [header]="visibleCamposAccidente ? 'IV. DESCRIPCIÓN PRELIMINAR DEL ACCIDENTE':'III. DESCRIPCIÓN DEL INCIDENTE'">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-sm-12 ">
                         Describa detalladamente dentro de la información del {{visibleCamposAccidente ?
