@@ -17,7 +17,11 @@ import { Message } from 'primeng/api';
 export class DocumentosAnalisisDesviacionComponent implements OnInit {
 
   @Input('analisisId') analisisId: string;
-  @Input('documentos') documentos: Documento[];
+  documentos: Documento[];
+  @Input('documentos') 
+  set documentosIn(documentos: Documento[]){
+    this.documentos = documentos.filter((element:Documento)=> element.proceso == null)
+  }
   @Output('onUpdate') onUpdate = new EventEmitter<Documento>();
   @Input('readOnly') readOnly: boolean;
   documentosList: any[];
@@ -32,11 +36,14 @@ export class DocumentosAnalisisDesviacionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.documentos != null) {
-      this.documentosList = [];
-      this.documentos.forEach(doc => this.adicionarAGaleria(doc));
-    }
+    console.log("--------------------------");
+    
+    // if (this.documentos != null) {
+    //   this.documentosList = [];
+    //   this.documentos.forEach(doc => this.adicionarAGaleria(doc));
+    // }
   }
+
   adicionarAGaleria(doc: Documento) {
     // if (this.esImagen(doc)) {
     //   this.directorioService.download(doc.id).then(
