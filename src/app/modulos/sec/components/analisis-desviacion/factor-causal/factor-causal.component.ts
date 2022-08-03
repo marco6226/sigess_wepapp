@@ -17,6 +17,7 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   @Input() factorCausal: FactorCausal;
   @Input() causasRaiz: Causa_Raiz;
   @Output() dataFC = new EventEmitter<FactorCausal>();
+  @Output() validators2 =new EventEmitter<boolean>();
   // @Output() dataCR = new EventEmitter<Causa_Raiz[]>();
 
   pasoSelect=0;
@@ -89,10 +90,12 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {  
-
-
+    this.validator();
   }
 
+  validator(){
+    this.validators2.emit(this.validators)
+  }
   ngAfterViewInit(){
 
     if(!this.factorCausal.seccion){
@@ -166,6 +169,7 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
     this.dataFC.emit(this.factorCausal);
 
     this.validacion();
+    this.validator();
   }
 
   validacion(){
