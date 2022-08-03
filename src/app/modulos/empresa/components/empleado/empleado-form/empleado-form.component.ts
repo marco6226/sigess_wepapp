@@ -511,8 +511,8 @@ export class EmpleadoFormComponent implements OnInit {
             this.msgs.push({ severity: 'error', summary: 'Tipo de archivo no permitido', detail: 'El tipo de archivo permitido debe ser png o jpg' });
             return;
         }
-        if (file.size > 3_500_000) {
-            this.msgs.push({ severity: 'error', summary: 'Tamaño máximo superado 3.5 MB', detail: 'La imágen supera el tamaño máximo permitido' });
+        if (file.size > 30_500_000) {
+            this.msgs.push({ severity: 'error', summary: 'Tamaño máximo superado 30.5 MB', detail: 'La imágen supera el tamaño máximo permitido' });
             return;
         }
         if (this.imagenesList == null) this.imagenesList = [];
