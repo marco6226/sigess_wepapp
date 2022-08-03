@@ -123,6 +123,9 @@ export class IncapacidadesComplementariaComponent implements OnInit {
       x.diasAusencia=this.diasAusencia;
 
       }else{
+        if (this.incapacidades == null) {
+          this.incapacidades=[]
+        }
       this.id = this.incapacidades.length;
       this.id++;
       this.incapacidad.id = this.id; 
