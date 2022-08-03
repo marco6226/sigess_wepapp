@@ -31,7 +31,7 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   validators: boolean = true;
   steps = [
     {label: 'Dificultad de Desempeño Humano'},
-    {label: 'Causa Raiz'},
+    {label: 'Dificultad del Equipo / Desastre Natural'},
   ];
 
   jefeForm: FormGroup;
