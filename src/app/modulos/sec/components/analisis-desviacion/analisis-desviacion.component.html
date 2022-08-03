@@ -21,7 +21,7 @@
                     {{rowData.hashId}}
                 </td>
                 <td>
-                    {{rowData.area_nombre}}
+                    {{rowData.area.nombre}}
                 </td>
                 <td>
                     {{rowData.concepto}}
@@ -94,7 +94,7 @@
                                     <td>{{desviacionesList[0]?.severidad}}</td> 
                                 </tr>
                                 <tr>
-                                    <th style="border: 1px solid #c8c8c8;">Descripción</th>
+                                    <th style="border: 1px solid #c8c8c8;">Descripción detallada del AT</th>
                                    
                                     <textarea maxlength="1000" *ngIf="!consultar" pInputTextarea rows="10"
                             placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
