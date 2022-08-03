@@ -939,7 +939,10 @@ export class AnalisisDesviacionComponent implements OnInit {
         }
         this.habilitarInforme()
     }
-
+    validators:boolean=true;
+    getValidator(event){
+        this.validators=event;
+    }
     selectCausaRaiz(nombre, pregunta ,datos){
         console.log(datos);
 
