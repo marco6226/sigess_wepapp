@@ -79,10 +79,10 @@ export class FlowChartComponent {
         this.loadFC();
         // this.startTimer();
         this.FlowchartService.setDiagram(this.diagram)
-        }, 600);
+        }, 3000);
 
         
-    }, 600); 
+    }, 3600); 
      
     
   }
@@ -379,7 +379,6 @@ export class FlowChartComponent {
   }
 
   saveDiagram(){
-    // console.log(this.diagram.saveDiagram());
     this.diagramSave.emit(this.diagram.saveDiagram())
     this.FlowchartService.setDiagram(this.diagram)
   }
