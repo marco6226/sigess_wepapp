@@ -87,8 +87,8 @@
             <input type="text" required autofocus [(ngModel)]="cargo" />
         </div>
         <div class="p-field">
-            <label for="Division">División</label>
-            <input type="text" required autofocus [(ngModel)]="division" />
+            <label for="Division">División</label>             
+            <p-dropdown [options]="DivisionList" [(ngModel)]="division"></p-dropdown>
         </div>
         <div class="p-field">
             <label for="Localidad">Localidad</label>

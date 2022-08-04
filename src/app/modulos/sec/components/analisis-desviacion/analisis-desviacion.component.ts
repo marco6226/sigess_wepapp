@@ -145,6 +145,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     contProcedimientos:number=0;
     contMultimedias:number=0;
     disabled:boolean=false;
+    tabIndex:number;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -168,6 +169,16 @@ export class AnalisisDesviacionComponent implements OnInit {
     imgIN: string;
     infoIn: FormGroup;
     
+    changeTab(event){
+        this.tabIndex=event;
+    }
+    eliminarPlandeAccion(event){
+        let eliminar=event;
+        console.log(eliminar)
+        if(this.listPlanAccion[eliminar[1]].causaRaiz.length==0){
+            this.listPlanAccion=this.listPlanAccion.filter((item) => item!==eliminar[0]);}
+    }
+
     tSelectPeligro(a: string){
         this.tPeligro1=a;
     }
@@ -177,8 +188,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
     async test(){
         //console.log(this.incapacidadesList);
-        console.log("*****aquí***")
-        console.log(this.dataListFactor);        
+        // console.log("*****aquí***")
+        // console.log(this.dataListFactor);        
+        this.tabIndex=9;
     }
 
     constructor(

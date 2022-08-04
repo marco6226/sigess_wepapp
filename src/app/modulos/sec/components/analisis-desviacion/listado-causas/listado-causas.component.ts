@@ -13,6 +13,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 export class ListadoCausasComponent implements OnInit {
 
   @Output() validacionPA = new EventEmitter<any>()
+  @Output() tabIndex = new EventEmitter<number>()
   @Input() factores: listFactores[];
   @Input() planAccionList: listPlanAccion[]=[];
 
@@ -137,7 +138,7 @@ export class ListadoCausasComponent implements OnInit {
           this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz:tempCausa})
         }
         this.validacionPA.emit();
-
+        this.tabIndex.emit(9);
       }
     });
   }

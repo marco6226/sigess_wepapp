@@ -63,10 +63,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <input pInputText formControlName="nombreCiiu" />
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
                         Código
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
                         <input pInputText formControlName="codigoCiiu" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
@@ -127,10 +127,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <s-ciudadSelector formControlName="ciudadEmpresa"></s-ciudadSelector>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
                         Código
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
 
                     </div>
 
@@ -154,10 +154,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <input pInputText formControlName="nombreCentroTrabajo" />
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
                         Código
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
                         <input pInputText formControlName="codigoCentroTrabajo" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
@@ -166,10 +166,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <input pInputText formControlName="nombreCiiuCentroTrabajo" />
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
                         Código
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
                         <input pInputText formControlName="ciiuCentroTrabajo" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
@@ -500,7 +500,7 @@
                         ¿Cual?
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <input pInputText formControlName="cualTipoLesion" />
+                        <input pInputText formControlName="cualTipoLesion" placeholder="Tipo lesión" />
                     </div>
 
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
@@ -513,7 +513,7 @@
                         ¿Cual?
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <input pInputText formControlName="cualAgente" />
+                        <input pInputText formControlName="cualAgente" placeholder="Agente" />
                     </div>
 
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
