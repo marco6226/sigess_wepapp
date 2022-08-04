@@ -13,7 +13,7 @@
   <button *ngIf="loading == false" [disabled]="disabled" type="button" (click)="showDialog()" pButton icon="fa fa-sitemap"></button>
 </div>
 
-<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-width':'100%', 'max-height':'620px','min-width':'100%', 'min-height':'420px' ,'overflow':'scroll'}">
+<p-dialog header="Áreas" [(visible)]="displayDialog" [contentStyle]="{'max-height':'70%'}" [style]="{width: '80%', height: '70%'}">
 
   <p-tabView>
 
