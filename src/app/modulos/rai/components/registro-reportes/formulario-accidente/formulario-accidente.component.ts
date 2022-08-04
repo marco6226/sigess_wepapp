@@ -92,12 +92,12 @@ export class FormularioAccidenteComponent implements OnInit {
             this.fechaIngreso=new Date(this.reporte.fechaIngresoEmpleado)
             this.fechaAccidente=new Date(this.reporte.fechaAccidente)
             this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
-            // this.deltaDia=this.deltaFecha.getDate()
-            // console.log(this.deltaDia)
-            // this.deltaMes=this.deltaFecha.getMonth()+1
-            // console.log(this.deltaMes)
-            this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
-            this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
+            this.reporte.mesesLaborHabitual=(this.deltaFecha.getMonth())+12*(this.deltaFecha.getFullYear()-1970);
+            this.reporte.diasLaborHabitual=(this.deltaFecha.getDate()==31)?0:this.deltaFecha.getDate();
+            if(this.reporte.mesesLaborHabitual<0){
+                this.reporte.mesesLaborHabitual=0;
+                this.reporte.diasLaborHabitual=0;
+            }
         }else{
             // this.deltaMes=null
             // this.deltaDia=null
@@ -268,16 +268,16 @@ export class FormularioAccidenteComponent implements OnInit {
         }
     }
     changeCalendar(){
-        if(this.form.value.fechaIngresoEmpleado != null && this.form.value.fechaAccidente != null){
+        if((this.form.value.fechaIngresoEmpleado != null && this.form.value.fechaAccidente != null)){
                 this.fechaIngreso=new Date(this.form.value.fechaIngresoEmpleado)
                 this.fechaAccidente=new Date(this.form.value.fechaAccidente)
                 this.deltaFecha=new Date(this.fechaAccidente.getTime()-this.fechaIngreso.getTime())
-                // this.deltaDia=this.deltaFecha.getDate()
-                // console.log(this.deltaDia)
-                // this.deltaMes=this.deltaFecha.getMonth()+1
-                // console.log(this.deltaMes)
-                this.reporte.diasLaborHabitual=this.deltaFecha.getDate()
-                this.reporte.mesesLaborHabitual=this.deltaFecha.getMonth()+1
+                this.reporte.mesesLaborHabitual=(this.deltaFecha.getMonth())+12*(this.deltaFecha.getFullYear()-1970);
+                this.reporte.diasLaborHabitual=(this.deltaFecha.getDate()==31)?0:this.deltaFecha.getDate();
+                if(this.reporte.mesesLaborHabitual<0){
+                    this.reporte.mesesLaborHabitual=0;
+                    this.reporte.diasLaborHabitual=0;
+                }
                 this.form.patchValue({
                     diasLaborHabitual: this.reporte.diasLaborHabitual,
                     mesesLaborHabitual: this.reporte.mesesLaborHabitual,

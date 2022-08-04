@@ -285,6 +285,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         }
         this.cargarTiposPeligro();
         this.diagram=this.FlowchartService.getDiagram();
+        this.evidencias();
 
         //this.cargarPeligro(this.analisisPeligros.value['Peligro.id']);
 
@@ -567,12 +568,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         // this.a=this.diagram.exportDiagram(printOptions).toString()
         
         // console.log(this.a)
-        setTimeout(() => {
+        setTimeout(async () => {
         // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
         this.idEmpresa = this.sesionService.getEmpresa().id;
-        this.evidencias();
+
+        await this.evidencias();
         
         this.img.src=(this.infoIn.value['Diagrama']==undefined)?'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAfSURBVDhPY/wPBAwkACYoTTQY1UAMGNVADKC1BgYGAF6OBBwFRhtVAAAAAElFTkSuQmCC':this.infoIn.value['Diagrama'];
         // console.log(this.img.width)
@@ -665,6 +667,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
         // this.informeJson.Diagrama=this.imgIN;
+        setTimeout(() => {
         this.diagram=this.FlowchartService.getDiagram();
         let printOptions: IExportOptions = {};
         printOptions.mode = 'Data';
@@ -701,6 +704,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
             console.log(ad.tareaDesviacionList);
         }
+        
     }
         // setTimeout(() => {
             this.analisisDesviacionService.update(ad).then((data) => {
@@ -714,6 +718,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         
         console.log(ad.tareaDesviacionList);
         console.log(ad.flow_chart);
+    }, 2000);
     }
 
     manageResponse(ad: AnalisisDesviacion) {
@@ -851,12 +856,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         
     }
 
-    evidencias(){
+    async evidencias(){
         let fq = new FilterQuery();
         fq.filterList = [
             { criteria: Criteria.EQUALS, field: "id", value1: this.paramNav.getParametro<Desviacion>().analisisId },
         ];
-        this.analisisDesviacionService.findByFilter(fq).then((resp) => {
+        await this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
             console.log("----->",resp['data'][0].documentosList);
             this.Evidencias=resp['data'][0].documentosList;});
@@ -888,7 +893,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     break;
                 }
                 }
-         }, 1000);
+         }, 300);
       }
 
     tempData: listFactores[]=[];
