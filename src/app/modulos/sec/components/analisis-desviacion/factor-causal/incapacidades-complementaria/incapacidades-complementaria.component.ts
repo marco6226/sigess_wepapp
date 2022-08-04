@@ -93,7 +93,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
   saveProduct(){
     this.submitted = true;
     console.log("save");
-    console.log(this.incapacidad.cie10);
+    console.log(this.incapacidad);
     
 
     
