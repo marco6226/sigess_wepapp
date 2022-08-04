@@ -19,7 +19,10 @@
             <td>{{factor.pregunta}}</td>
             <td>{{factor.nombre}}</td>
             <td>{{factor.metodologia}}</td>
-            <td>{{factor.accion}}</td>
+            <td><label class="badge" [ngClass]="{'success': factor.accion== 'Con Plan de Accion',  'warning': factor.accion == 'Sin Plan de Accion'}">
+                {{factor.accion}}
+            </label>
+            </td>
         </tr>       
     </ng-template>
     <ng-template pTemplate="summary" let-rowData>

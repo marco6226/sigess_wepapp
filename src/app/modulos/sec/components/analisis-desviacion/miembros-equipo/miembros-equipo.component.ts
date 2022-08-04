@@ -28,6 +28,18 @@ export class MiembrosEquipoComponent implements OnInit {
   division: string;
   localidad: string;
   id: number=0;
+
+  DivisionList= [
+    { label: "--Seleccione--", value: null },
+    { label: "Almacenes Corona", value: "Almacenes Corona" },
+    { label: "Bathrooms and Kitchen", value: "Bathrooms and Kitchen" },
+    { label: "Comercial Corona Colombia", value: "Comercial Corona Colombia" },
+    { label: "Funciones Transversales", value: "Funciones Transversales" },
+    { label: "Insumos Industriales y Energias", value: "Insumos Industriales y Energias" },
+    { label: "Mesa Servida", value: "Mesa Servida" },
+    { label: "Superficies, materiales y pinturas", value: "Superficies, materiales y pinturas" },
+
+]
   constructor(
     // private productService: ProductService,
     private messageService: MessageService,
