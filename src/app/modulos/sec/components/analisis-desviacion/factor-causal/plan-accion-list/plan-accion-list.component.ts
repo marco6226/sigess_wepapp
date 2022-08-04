@@ -11,6 +11,7 @@ export class PlanAccionListComponent implements OnInit {
 
   @Input() planAccionList: listPlanAccion[] = []
   @Output() validacionPA = new EventEmitter<any>()
+  @Output() flagPlanAccionlist =new EventEmitter<any>()
   planAccionListSelected: listPlanAccion;
   causasListSelect
   display: boolean = false;
@@ -31,9 +32,22 @@ export class PlanAccionListComponent implements OnInit {
   ngOnInit() {
 
   }
-  
-  // value: number = 10;
 
+  // value: number = 10;
+  eliminar(data,causa,i,j){
+    // console.log(this.planAccionList);
+    // console.log(i,j)
+    // console.log('eliminar');
+    // this.planAccionList.splice(0, 1)
+    // console.log(this.planAccionList[i].causaRaiz.length)
+    this.planAccionList[i].causaRaiz=this.planAccionList[i].causaRaiz.filter((item) => item!==causa);
+    // console.log(this.planAccionList[i].causaRaiz.length)
+    if(this.planAccionList[i].causaRaiz.length==0){
+      this.planAccionList=this.planAccionList.filter((item) => item!==data);}
+    let eliminar=[data,i]
+    this.flagPlanAccionlist.emit(eliminar)
+
+  }
   selectProduct(event) {
     // console.log(event);
     this.planAccionListSelected = event;
