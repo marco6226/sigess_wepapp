@@ -1,4 +1,8 @@
 ::ng-deep body .ui-autocomplete .ui-autocomplete-input{
-width: 300px!important;
+width: 320px!important;
 }
 
+
+::ng-deep .ui-button.ui-button-icon-only .ui-button-text{
+    width: 30px!important;
+}

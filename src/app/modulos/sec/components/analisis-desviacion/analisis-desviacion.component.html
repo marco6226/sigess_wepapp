@@ -21,7 +21,7 @@
                     {{rowData.hashId}}
                 </td>
                 <td>
-                    {{rowData.area_nombre}}
+                    {{rowData.area.nombre}}
                 </td>
                 <td>
                     {{rowData.concepto}}
@@ -94,7 +94,7 @@
                                     <td>{{desviacionesList[0]?.severidad}}</td> 
                                 </tr>
                                 <tr>
-                                    <th style="border: 1px solid #c8c8c8;">Descripción</th>
+                                    <th style="border: 1px solid #c8c8c8;">Descripción detallada del AT</th>
                                    
                                     <textarea maxlength="1000" *ngIf="!consultar" pInputTextarea rows="10"
                             placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
@@ -223,7 +223,7 @@
                             </tr>
                             <tr>
                                 <td style=" text-align: left">Anexo Furat No</td> 
-                                <td style=" text-align: left"><input type="text" pInputText formControlName="AnexoF" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td> 
+                                <td style=" text-align: left">{{desviacionesList[0]?.furat}}</td> 
                                 <td style=" text-align: left">Anexos Otros</td> 
                                 <td colspan="2" style=" text-align: left"><input type="text" pInputText formControlName="AnexoO" style="border-top: 0px;border-left: 0px;border-right: 0px;"/></td>
                             </tr>   
@@ -421,7 +421,7 @@
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel  *ngIf="idEmpresa != '3' " header="PLAN DE TRABAJO">
+    <p-tabPanel  *ngIf="idEmpresa != '22' " header="PLAN DE TRABAJO">
         <s-gestionTareas (onEvent)="onEvent($event)" [tareasList]="tareasList" [readOnly]="consultar"></s-gestionTareas>
     </p-tabPanel>
 </p-tabView>
