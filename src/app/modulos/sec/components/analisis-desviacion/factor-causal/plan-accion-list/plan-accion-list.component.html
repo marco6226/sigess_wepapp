@@ -46,9 +46,9 @@
 <!-- <button (click)="confirm()" pButton icon="pi pi-check" label="Confirm"></button> -->
 
 <p-accordion [multiple]="true" >
-    <p-accordionTab header="Nombre del Factor Causal: {{data.nombreFC}}" *ngFor="let data of planAccionList">
+    <p-accordionTab header="Nombre del Factor Causal: {{data.nombreFC}}" *ngFor="let data of planAccionList; let i = index">
         <!-- <p>{{data.causaRaiz}}</p> -->
-        <p-accordionTab header="Causa Raiz: {{causa.causaRaiz}}" *ngFor="let causa of data.causaRaiz">
+        <p-accordionTab header="Causa Raiz: {{causa.causaRaiz}}" *ngFor="let causa of data.causaRaiz; let j = index">
             <!-- <p-progressBar [value]="value"></p-progressBar> -->
             <div>
                 <div >
@@ -102,6 +102,13 @@
                         <i style="font-size: 40px;" class="pi pi-times"></i>
                     </p-button>
                 </div>
+                <div>
+                    <label>Eliminar</label>
+                    <p-button styleClass="ui-button-danger" iconPos="right" label="eliminar" (onClick)="eliminar(data,causa,i,j)">
+                        <i style="font-size: 40px;" class="pi pi-times"></i>
+                    </p-button>
+                </div>
+                
             </div>
         </p-accordionTab>        
     </p-accordionTab>
