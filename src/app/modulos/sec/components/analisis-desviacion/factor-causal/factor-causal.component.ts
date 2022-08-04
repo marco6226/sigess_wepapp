@@ -279,11 +279,17 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
        }
 
     }
+
+    cancelCheck(){
+      this.display=false
+      console.log(this.selectIdentificacionFC)
+     this.selectIdentificacionFC.selected=false;
+
+    }
     
     test(){
     //  console.log("---->", this.factorCausal);
      console.log("---->", this.selectIdentificacionFC);
-     
       
     }
 }
