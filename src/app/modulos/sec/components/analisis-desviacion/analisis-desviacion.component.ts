@@ -146,6 +146,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     contMultimedias:number=0;
     disabled:boolean=false;
     tabIndex:number;
+    imgCompress:string;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -580,6 +581,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         // this.a=this.diagram.exportDiagram(printOptions).toString()
         
         // console.log(this.a)
+
         setTimeout(async () => {
         // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
@@ -588,11 +590,21 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         await this.evidencias();
         
-        this.img.src=(this.infoIn.value['Diagrama']==undefined)?'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAfSURBVDhPY/wPBAwkACYoTTQY1UAMGNVADKC1BgYGAF6OBBwFRhtVAAAAAElFTkSuQmCC':this.infoIn.value['Diagrama'];
-        // console.log(this.img.width)
-        // console.log(this.img.height)
-        // console.log(Math.round(this.img.width/700))
-        // console.log(Math.round(this.img.height/700))
+        this.img.src=await (this.infoIn.value['Diagrama']==undefined)?'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAfSURBVDhPY/wPBAwkACYoTTQY1UAMGNVADKC1BgYGAF6OBBwFRhtVAAAAAElFTkSuQmCC':this.infoIn.value['Diagrama'];
+
+        setTimeout(async () => {
+        let porcentaje=90;//%
+        console.log(this.img.width,this.img.height)
+        let pixelX= await Math.ceil(this.img.width*Math.sqrt(porcentaje/100));
+        let pixelY=await Math.ceil(this.img.height*Math.sqrt(porcentaje/100));
+        console.log(pixelX,pixelY)
+        await this.compressImage(this.img.src, pixelX,pixelY).then(compressed => {
+            this.img.src = compressed.toString();
+          })
+
+          console.log(Math.ceil(this.img.width*Math.sqrt(porcentaje/100)),Math.ceil(this.img.height*Math.sqrt(porcentaje/100)))
+
+          
         let print = document.getElementById('print');
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
@@ -606,21 +618,40 @@ export class AnalisisDesviacionComponent implements OnInit {
             let tamy=600;
             let h=(Math.ceil(this.img.height/tamy)==0) ? 1 : Math.ceil(this.img.height/tamy);
             let tamx=1000;
-            let w=(Math.ceil(this.img.width/tamx)==0) ? 1 : Math.ceil(this.img.height/tamx);
+            let w=(Math.ceil(this.img.width/tamx)==0) ? 1 : Math.ceil(this.img.width/tamx);
 
+
+            // let img = this.infoIn.value['Diagrama']
+            
             for (let i = 0; i < h; i++) {
                 for (let j = 0; j < w; j++) {
-                    WinPrint.document.write('<div style="size: auto;  margin: 0mm; padding:0mm" align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="150%" width="100%" style="display:block; border-collapse: collapse; object-fit: none; object-position: ',(j*(-tamx)).toString(),'px ',(i*(-tamy)).toString(),'px;"  src=',this.infoIn.value['Diagrama'],'></div>');
+                    WinPrint.document.write('<div style="size: auto;  margin: 0mm; padding:0mm" align="center"><h2>Imagen:',(i+1).toString(),'-',(j+1).toString(),'</h2><img height="150%" width="100%" style="display:block; border-collapse: collapse; object-fit: none; object-position: ',(j*(-tamx)).toString(),'px ',(i*(-tamy)).toString(),'px;"  src=',this.img.src,'></div>');
                     WinPrint.document.write('<p style="page-break-after: always"></p>');
                 }
             }
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
+        }, 500);
         }, 2000);
     }, 500);
     }
-    Salida(){}
+    compressImage(src, newX, newY) {
+        return new Promise((res, rej) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = () => {
+            const elem = document.createElement('canvas');
+            elem.width = newX;
+            elem.height = newY;
+            const ctx = elem.getContext('2d');
+            ctx.drawImage(img, 0, 0, newX, newY);
+            const data = ctx.canvas.toDataURL();
+            res(data);
+          }
+          img.onerror = error => rej(error);
+        })
+    }
     guardarAnalisis() {
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
