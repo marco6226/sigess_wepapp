@@ -89,12 +89,14 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
     private messageService: MessageService
   ) { }
 
-  ngOnInit(): void {  
+  ngOnInit(){  
+    this.validacion();
     this.validator();
   }
 
   validator(){
     this.validators2.emit(this.validators)
+    console.log(this.validators)
   }
   ngAfterViewInit(){
 
