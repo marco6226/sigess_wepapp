@@ -383,7 +383,7 @@
                         Fecha {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaAccidente" (onSelect)="changeCalendar()">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaAccidente" (onSelect)="changeCalendar()" required>
                         </p-calendar>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">

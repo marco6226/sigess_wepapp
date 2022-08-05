@@ -104,7 +104,7 @@ export class FormularioAccidenteComponent implements OnInit {
             this.reporte.diasLaborHabitual=null
             this.reporte.mesesLaborHabitual=null
         }
-
+        console.log(this.reporte.ciudadEmpresa)
         this.infoEmpresa()
         this.form = this.fb.group({
             id: this.reporte.id,

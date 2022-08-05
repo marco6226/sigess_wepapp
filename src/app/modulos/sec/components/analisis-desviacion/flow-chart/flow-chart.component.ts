@@ -68,12 +68,14 @@ export class FlowChartComponent {
   }
 
   ngOnInit() {
-    
+    if(this.dataFlowChart!=undefined){
     setTimeout(() => {
         this.precarga=true;
         
         setTimeout(() => {
+          console.log(this.dataFlowChart)
         this.diagram.loadDiagram(this.dataFlowChart.flow_chart);
+        console.log('1')
         console.log(JSON.parse(this.dataFlowChart.flow_chart));
         
         this.loadFC();
@@ -83,7 +85,7 @@ export class FlowChartComponent {
 
         
     }, 3600); 
-     
+  }
     
   }
   ​​​​​​​  public nodeDefaults(node: NodeModel): NodeModel {
