@@ -46,7 +46,7 @@ export class PlanAccionListComponent implements OnInit {
       this.planAccionList=this.planAccionList.filter((item) => item!==data);}
     let eliminar=[data,i]
     this.flagPlanAccionlist.emit(eliminar)
-
+    this.habilitar()
   }
   selectProduct(event) {
     // console.log(event);
