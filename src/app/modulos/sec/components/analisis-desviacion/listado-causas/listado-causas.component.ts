@@ -42,14 +42,40 @@ export class ListadoCausasComponent implements OnInit {
         let tempnombreFC;
         let tempcausaRaiz;
 
+
+        var sortedArray: listFactores[] = this.causasListSelect.sort((obj1, obj2) => {
+          if (obj1.nombre > obj2.nombre) {
+              return 1;
+          }
+      
+          if (obj1.nombre < obj2.nombre) {
+              return -1;
+          }
+      
+          return 0;
+      });
         
+      console.log(sortedArray)
 
         this.causasListSelect.forEach(element => {
-          if (tempnombreFC) {
-            tempnombreFC = tempnombreFC + ', ' + element.nombre            
-          } else {
-            tempnombreFC = element.nombre            
+          console.log(element);
+        
+          
+          var re = element.nombre; 
+          if(tempnombreFC==undefined){
+            tempnombreFC=""
           }
+          var str = tempnombreFC
+          console.log(str.search(re))
+          if (str.search(re) == -1 ) { 
+            if (tempnombreFC) {
+              tempnombreFC = tempnombreFC + ', ' + element.nombre            
+            } else {
+              tempnombreFC = element.nombre            
+            }
+          }
+          
+          
 
           if (tempcausaRaiz) {
             tempcausaRaiz = tempcausaRaiz + ', ' + element.metodologia            
