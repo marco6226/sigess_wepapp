@@ -224,16 +224,16 @@
                     <div class="ui-g-12 ui-md-4">
                     <input type="text" pInputText formControlName="corporativePhone" />
                     </div>                  
-                    <div class="ui-g-12 ui-md-2">
+                    <div class="ui-g-12 ui-md-2" *ngIf="empresaId =='8';else blanco2">
                         Regional
                     </div>
-                    <div class="ui-g-12 ui-md-4">
+                    <div class="ui-g-12 ui-md-4" *ngIf="empresaId =='8';else blanco4">
                         <input type="text" pInputText formControlName="regional" placeholder="Regional" />
                     </div>
-                    <div class="ui-g-12 ui-md-2">
+                    <div class="ui-g-12 ui-md-2" *ngIf="empresaId =='8';else blanco2">
                         Direccion gerencia
                     </div>
-                    <div class="ui-g-12 ui-md-4">
+                    <div class="ui-g-12 ui-md-4" *ngIf="empresaId =='8';else blanco4">
                         <input type="text" pInputText formControlName="direccionGerencia"
                             placeholder="Direccion Gerencia" />
                     </div>
@@ -452,3 +452,9 @@
 
 <button pButton *ngIf="solicitando == false" type="button" icon="fa fa-chevron-left" class="float-btn"
     (click)="closeForm()" title="Volver a listado de empleados"></button>
+    <ng-template #blanco2><div class="ui-g-12 ui-sm-12 ui-md-2">
+        &nbsp;
+    </div></ng-template>
+    <ng-template #blanco4><div class="ui-g-12 ui-sm-12 ui-md-4">
+        &nbsp;
+    </div></ng-template>
