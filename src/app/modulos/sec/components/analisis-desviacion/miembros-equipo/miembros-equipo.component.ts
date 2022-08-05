@@ -57,6 +57,7 @@ export class MiembrosEquipoComponent implements OnInit {
     this.miembro = {};    
     this.submitted = false;
     this.productDialog = true;
+    this.cedula = this.cargo = this.division = this.nombre = this.localidad = null
   }
 
   deleteSelectedProducts() {
@@ -127,6 +128,13 @@ saveProduct() {
     this.submitted = true;
     console.log("save");
 
+    if (!this.cedula || !this.nombre || !this.cargo || !this.division || !this.localidad) {
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta diligenciar todos los campso'});
+    }
+    else{
+
+    
+
     this.miembro.cedula=this.cedula;
     this.miembro.nombre = this.nombre;
     this.miembro.cargo = this.cargo;
@@ -180,6 +188,7 @@ saveProduct() {
             // this.disable=false;
         }
     // }
+    }
 }
 
 findIndexById(id: number): number {
