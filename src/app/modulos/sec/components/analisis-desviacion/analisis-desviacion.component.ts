@@ -169,9 +169,33 @@ export class AnalisisDesviacionComponent implements OnInit {
     selectedProducts;
     imgIN: string;
     infoIn: FormGroup;
-    
-    changeTab(event){
-        this.tabIndex=event;
+
+    tabIndex0:number;
+    cont:number=0;
+
+    indexTab(event){
+        this.tabIndex0=event.index;
+    }
+    async changeTab(){
+        this.cont=0;
+        await this.dataListFactor.forEach( factor =>{
+            console.log(factor.accion)
+            this.cont=(factor.accion=='Sin Plan de Accion')?this.cont=this.cont+1:this.cont;
+        })
+        if (this.cont>0){
+            this.msgs = [];
+            if(this.cont==1){
+                this.msgs.push({
+                    severity: "warn",
+                    detail: "Queda ("+this.cont+") listado de causa sin plan de acción",
+                });
+            }
+        }else{
+            this.msgs.push({
+                severity: "warn",
+                detail: "Quedan ("+this.cont+") listados de causa sin plan de acción",
+            });}
+        this.tabIndex=this.tabIndex0+1;
     }
     eliminarPlandeAccion(event){
         let eliminar=event;

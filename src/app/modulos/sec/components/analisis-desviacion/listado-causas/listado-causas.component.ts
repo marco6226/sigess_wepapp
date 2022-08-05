@@ -164,7 +164,7 @@ export class ListadoCausasComponent implements OnInit {
           this.planAccionList.push({nombreFC: tempnombreFC, causaRaiz:tempCausa})
         }
         this.validacionPA.emit();
-        this.tabIndex.emit(9);
+        this.tabIndex.emit();
       }
     });
   }
