@@ -20,6 +20,8 @@ export class ReintegroListComponent implements OnInit {
   }
   reintegroList: Reintegro[] =[]
   modalRetorno: boolean = false
+  editRetorno: Reintegro;
+
 
   constructor(
     private casosMedicosService: CasosMedicosService
@@ -30,6 +32,12 @@ export class ReintegroListComponent implements OnInit {
 
   createRetorno(){
     this.modalRetorno = true
+  }
+
+  onRowEditInit(reintegro){
+    this.modalRetorno=true;
+    console.log(reintegro);
+    
   }
 
   reload(){

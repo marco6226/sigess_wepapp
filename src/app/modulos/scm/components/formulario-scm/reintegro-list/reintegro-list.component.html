@@ -9,11 +9,12 @@
             <th>reintegro_exitoso</th>
             <th>Fecha Cierre</th>
             <th>Observacion</th>
+            <th style="width:10rem"></th>
 
             <!-- <th style="width:10rem"></th> -->
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-reintegro>
+    <ng-template pTemplate="body" let-reintegro let-editing="editing">
         <tr>
             <td>{{reintegro.tipo_retorno}}</td>
             <td >{{reintegro.descripcion}}</td>
@@ -22,6 +23,13 @@
             <td>{{reintegro.reintegro_exitoso}}</td>
             <td>{{reintegro.fecha_cierre | date}}</td>
             <td>{{reintegro.observacion}}</td>
+            <td class="p-text-center">
+                <!-- <button title="Editar Seguimiento"></button> -->
+                <button pButton pRipple type="button"
+                    icon="pi pi-pencil" (click)="onRowEditInit(reintegro)"
+                    title="Editar Seguimiento"
+                    class="p-button-rounded p-button-text p-mr-2"></button>
+            </td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary" let-rowData>
@@ -37,7 +45,7 @@
 <p-dialog header="Nuevo Retorno"
     [(visible)]="modalRetorno" [style]="{heigth: '800px'}" [modal]="true" [closable]="true" [draggable]="true"
     [resizable]="false">
-    <app-reintegro [idCase]="idCase" (isCreate)="reload()"></app-reintegro>
+    <app-reintegro [idCase]="idCase" [isEdit]="editRetorno" (isCreate)="reload()"></app-reintegro>
 </p-dialog>
 
 

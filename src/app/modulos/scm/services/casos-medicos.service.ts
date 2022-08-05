@@ -137,8 +137,8 @@ export class CasosMedicosService {
         return this.http.get<Reintegro>(`${endPoints.scm}reintegro/${idCaso}`, this.getRequestHeaders(this.headers))
     }
 
-    editReintegro(){
-        
+    editReintegro(reintegro: Reintegro){
+        return this.http.put<[Reintegro]>(`${endPoints.scm}reintegro/`, reintegro, this.getRequestHeaders(this.headers))
     }
     deleteReintegro(){
         
