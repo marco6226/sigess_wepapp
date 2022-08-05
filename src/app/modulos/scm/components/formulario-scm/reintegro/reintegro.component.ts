@@ -18,6 +18,21 @@ export class ReintegroComponent implements OnInit {
   set reintegroIdSet(idCasoMed){
     this.idCase=idCasoMed
   }
+  isEdit: Reintegro;
+  @Input('isEdit')
+  set onEditRetorno(isEdit: Reintegro){
+      // this.form.value.pk_case=isEdit.pk_case
+      // id: 1
+      // this.form.value.pk_case,
+      // this.form.value.tipo_retorno,
+      // this.form.value.descripcion,
+      // this.form.value.permanencia,
+      // this.form.value.periodo_seguimiento,
+      // this.form.value.reintegro_exitoso,
+      // this.form.value.fecha_cierre,
+      // this.form.value.observacion,
+    
+  }
 
   @Output() isCreate = new EventEmitter<any>()
 
@@ -73,10 +88,6 @@ export class ReintegroComponent implements OnInit {
    
   }
 
-  test(){
-    console.log(this.reintegroTipo);
-    
-  }
   async saveReintegro(){
     this.form.value.pk_case=this.idCase
 
@@ -107,6 +118,24 @@ export class ReintegroComponent implements OnInit {
     
     
     
+  }
+
+  test(){
+    this.form.value.pk_case=this.idCase
+    let reintegro: Reintegro={
+      pk_case: this.form.value.pk_case,
+      tipo_retorno: this.form.value.tipo_retorno,
+      descripcion: this.form.value.descripcion,
+      permanencia: this.form.value.permanencia,
+      periodo_seguimiento: this.form.value.periodo_seguimiento,
+      reintegro_exitoso: this.form.value.reintegro_exitoso,
+      fecha_cierre: this.form.value.fecha_cierre,
+      observacion: this.form.value.observacion,
+      id: 1
+    }
+    this.casosMedicosService.editReintegro(reintegro).subscribe(element=>{
+      console.log(element)
+    })
   }
 
 }

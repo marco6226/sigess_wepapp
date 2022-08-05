@@ -1124,9 +1124,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         }
     }
 
-    test(t) {
-        console.log(t);
-    }
 
     async deleteRecomendation(id) {
         this.msgs = [];
@@ -1244,10 +1241,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             this.itemInPCL=true;
            }
         }); 
-    }
-
-    saveReintegro(){
-
-    }
+    }    
     
 }
