@@ -20,8 +20,18 @@ export class ReintegroListComponent implements OnInit {
   }
   reintegroList: Reintegro[] =[]
   modalRetorno: boolean = false
-  editRetorno: Reintegro;
-
+  editRetorno: Reintegro = {
+    id: 0,
+    tipo_retorno: '',
+    descripcion: '',
+    permanencia: '',
+    periodo_seguimiento: '',
+    reintegro_exitoso: '',
+    fecha_cierre: undefined,
+    observacion: '',
+    pk_case: ''
+  };
+  onEdit: boolean=false;
 
   constructor(
     private casosMedicosService: CasosMedicosService
@@ -31,10 +41,13 @@ export class ReintegroListComponent implements OnInit {
   }
 
   createRetorno(){
+    this.onEdit=false;
     this.modalRetorno = true
   }
 
   onRowEditInit(reintegro){
+    this.onEdit=true;
+    this.editRetorno = reintegro
     this.modalRetorno=true;
     console.log(reintegro);
     
@@ -47,5 +60,22 @@ export class ReintegroListComponent implements OnInit {
       this.reintegroList = data
     })
     this.modalRetorno=false
+  }
+
+  onHideDialog(){
+    this.editRetorno= {
+      id: 0,
+      tipo_retorno: '',
+      descripcion: '',
+      permanencia: '',
+      periodo_seguimiento: '',
+      reintegro_exitoso: '',
+      fecha_cierre: undefined,
+      observacion: '',
+      pk_case: ''
+    };
+    this.onEdit=false;
+    console.log(this.editRetorno);
+    
   }
 }
