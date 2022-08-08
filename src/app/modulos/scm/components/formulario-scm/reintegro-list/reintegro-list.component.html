@@ -6,7 +6,7 @@
             <th >Descripcion</th>
             <th>permanencia</th>
             <th>Periodo seguimiento</th>
-            <th>reintegro_exitoso</th>
+            <th>Reintegro Exitoso</th>
             <th>Fecha Cierre</th>
             <th>Observacion</th>
             <th style="width:10rem"></th>
@@ -21,11 +21,11 @@
             <td >{{reintegro.permanencia}}</td>
             <td>{{reintegro.periodo_seguimiento}}</td>
             <td>{{reintegro.reintegro_exitoso}}</td>
-            <td>{{reintegro.fecha_cierre | date}}</td>
+            <td>{{reintegro.fecha_cierre | date:'dd/MM/yyyy'}}</td>
             <td>{{reintegro.observacion}}</td>
             <td class="p-text-center">
                 <!-- <button title="Editar Seguimiento"></button> -->
-                <button pButton pRipple type="button"
+                <button *sTienePermiso="'SCM_PUT_REINTEGRO'" pButton pRipple type="button"
                     icon="pi pi-pencil" (click)="onRowEditInit(reintegro)"
                     title="Editar Seguimiento"
                     class="p-button-rounded p-button-text p-mr-2"></button>
@@ -44,8 +44,9 @@
 
 <p-dialog header="Nuevo Retorno"
     [(visible)]="modalRetorno" [style]="{heigth: '800px'}" [modal]="true" [closable]="true" [draggable]="true"
-    [resizable]="false">
-    <app-reintegro [idCase]="idCase" [isEdit]="editRetorno" (isCreate)="reload()"></app-reintegro>
+    [resizable]="false"
+    (onHide)="onHideDialog()">
+    <app-reintegro [idCase]="idCase" [isEdit]="editRetorno" [onEdit]="onEdit" (isCreate)="reload()"></app-reintegro>
 </p-dialog>
 
 

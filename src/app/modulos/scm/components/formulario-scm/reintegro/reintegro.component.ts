@@ -18,19 +18,47 @@ export class ReintegroComponent implements OnInit {
   set reintegroIdSet(idCasoMed){
     this.idCase=idCasoMed
   }
-  isEdit: Reintegro;
+  @Input() onEdit: boolean=false;
+  isEdit: Reintegro={
+    id: 0,
+    tipo_retorno: '',
+    descripcion: '',
+    permanencia: '',
+    periodo_seguimiento: '',
+    reintegro_exitoso: '',
+    fecha_cierre: undefined,
+    observacion: '',
+    pk_case: ''
+  };
   @Input('isEdit')
   set onEditRetorno(isEdit: Reintegro){
-      // this.form.value.pk_case=isEdit.pk_case
-      // id: 1
-      // this.form.value.pk_case,
-      // this.form.value.tipo_retorno,
-      // this.form.value.descripcion,
-      // this.form.value.permanencia,
-      // this.form.value.periodo_seguimiento,
-      // this.form.value.reintegro_exitoso,
-      // this.form.value.fecha_cierre,
-      // this.form.value.observacion,
+console.log("---------<<<",isEdit);
+
+    if(isEdit.id!=0){
+
+      this.form.value.descripcion = this.isEdit.descripcion = isEdit.descripcion
+      this.form.value.fecha_cierre = this.isEdit.fecha_cierre = new Date(isEdit.fecha_cierre)
+      this.isEdit.id = isEdit.id
+      this.form.value.observacion = this.isEdit.observacion = isEdit.observacion
+      this.form.value.periodo_seguimiento = this.isEdit.periodo_seguimiento = isEdit.periodo_seguimiento
+      this.form.value.permanencia = this.isEdit.permanencia = isEdit.permanencia
+      this.isEdit.pk_case = isEdit.pk_case
+      this.form.value.reintegro_exitoso = this.isEdit.reintegro_exitoso = isEdit.reintegro_exitoso
+      this.form.value.tipo_retorno = this.isEdit.tipo_retorno = isEdit.tipo_retorno
+      
+    }else{
+      this.form.reset()
+    }
+
+    // this.isEdit.descripcion = isEdit.descripcion
+    // this.isEdit.fecha_cierre = isEdit.fecha_cierre
+    // this.isEdit.id = isEdit.id
+    // this.isEdit.observacion = isEdit.observacion
+    // this.isEdit.periodo_seguimiento = isEdit.periodo_seguimiento
+    // this.isEdit.permanencia = isEdit.permanencia
+    // this.isEdit.pk_case = isEdit.pk_case
+    // this.isEdit.reintegro_exitoso = isEdit.reintegro_exitoso
+    // this.isEdit.tipo_retorno = isEdit.tipo_retorno
     
   }
 
@@ -72,6 +100,8 @@ export class ReintegroComponent implements OnInit {
     private casosMedicosService: CasosMedicosService,
     public fb: FormBuilder,
   ) {
+    console.log("---------------------------");
+    
     this.form = fb.group({
       tipo_retorno: [null, Validators.required],
       descripcion: [null, Validators.required],
@@ -107,36 +137,41 @@ export class ReintegroComponent implements OnInit {
       observacion: this.form.value.observacion
     }
     await this.casosMedicosService.createReintegro(reintegro)
-    this.isCreate.emit()
+    // this.isCreate.emit()
+    this.LimpiarDatos()
   }
 
-  GuardarRetorno(){
-    console.log("hola",this.reintegroTipo);
-    console.log(this.form.value);
-
-    console.log(this.form);
+  async editReintegro(){
+    console.log('Primero');
     
-    
-    
-  }
-
-  test(){
-    this.form.value.pk_case=this.idCase
-    let reintegro: Reintegro={
-      pk_case: this.form.value.pk_case,
-      tipo_retorno: this.form.value.tipo_retorno,
-      descripcion: this.form.value.descripcion,
-      permanencia: this.form.value.permanencia,
-      periodo_seguimiento: this.form.value.periodo_seguimiento,
-      reintegro_exitoso: this.form.value.reintegro_exitoso,
-      fecha_cierre: this.form.value.fecha_cierre,
-      observacion: this.form.value.observacion,
-      id: 1
-    }
-    this.casosMedicosService.editReintegro(reintegro).subscribe(element=>{
+    await this.casosMedicosService.editReintegro(this.isEdit).subscribe(element=>{
       console.log(element)
+      console.log('segundo');
+      this.LimpiarDatos()
     })
+    console.log('tercero');
+
   }
+
+  LimpiarDatos(){
+
+    this.isEdit={
+      id: 0,
+      tipo_retorno: '',
+      descripcion: '',
+      permanencia: '',
+      periodo_seguimiento: '',
+      reintegro_exitoso: '',
+      fecha_cierre: undefined,
+      observacion: '',
+      pk_case: ''
+    }
+    this.form.reset();
+    this.isCreate.emit()
+    console.log(this.form.value);
+    
+  }
+  
 
 }
 
