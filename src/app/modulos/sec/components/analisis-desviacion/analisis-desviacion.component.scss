@@ -15,3 +15,8 @@ div#Selector{
 .pFormularioNombre{
   background-color:#eee;border:solid thin #ccc;padding: 8px;-webkit-print-color-adjust: exact;
 }
+
+
+::ng-deep .ui-tabview .ui-tabview-panel{
+  padding:2px 0em!important;
+}
