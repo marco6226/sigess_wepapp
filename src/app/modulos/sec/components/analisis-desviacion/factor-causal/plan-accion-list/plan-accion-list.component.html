@@ -102,9 +102,9 @@
                         <i style="font-size: 40px;" class="pi pi-times"></i>
                     </p-button>
                 </div>
-                <div>
+                <div *sTienePermiso="'SEC_DELETE_PLANACCION'">
                     <label>Eliminar</label>
-                    <p-button styleClass="ui-button-danger" iconPos="right" label="eliminar" (onClick)="eliminar(data,causa,i,j)">
+                    <p-button  styleClass="ui-button-danger" iconPos="right" label="eliminar" (onClick)="eliminar(data,causa,i,j)">
                         <i style="font-size: 40px;" class="pi pi-times"></i>
                     </p-button>
                 </div>
