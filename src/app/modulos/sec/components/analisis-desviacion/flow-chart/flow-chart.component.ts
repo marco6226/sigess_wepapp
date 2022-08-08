@@ -59,6 +59,7 @@ export class FlowChartComponent {
   styleFC2: TextStyleModel = { color: 'black',bold:false,  whiteSpace:'CollapseSpace', strokeWidth: 1, fontSize:15,};
   svg2:string;
   timeoutID;
+  loading:boolean=true;
   
   constructor(
     private captureService: NgxCaptureService,
@@ -68,24 +69,32 @@ export class FlowChartComponent {
   }
 
   ngOnInit() {
-    if(this.dataFlowChart!=undefined){
+
+
     setTimeout(() => {
         this.precarga=true;
         
-        setTimeout(() => {
-          console.log(this.dataFlowChart)
-        this.diagram.loadDiagram(this.dataFlowChart.flow_chart);
-        console.log('1')
-        console.log(JSON.parse(this.dataFlowChart.flow_chart));
-        
-        this.loadFC();
-        // this.startTimer();
-        this.FlowchartService.setDiagram(this.diagram)
+        setTimeout(async () => {
+          console.log('1a')
+          if(this.dataFlowChart!=undefined){
+            this.loading=false;
+            console.log(this.dataFlowChart)
+            await this.diagram.loadDiagram(this.dataFlowChart.flow_chart);
+            console.log('2a')
+            console.log(JSON.parse(this.dataFlowChart.flow_chart));
+            
+            this.loadFC();
+            // this.startTimer();
+            this.FlowchartService.setDiagram(this.diagram)
+            
+          }
+          this.loading=false;
+          console.log('3a')
         }, 3000);
 
         
     }, 3600); 
-  }
+
     
   }
   ​​​​​​​  public nodeDefaults(node: NodeModel): NodeModel {
