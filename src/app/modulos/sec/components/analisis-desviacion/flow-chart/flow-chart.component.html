@@ -133,20 +133,13 @@
                     
                     <!-- <ng-template #diagrama> -->
                         <div class="loader" *ngIf="loading" style="position:absolute; top:530px; left:53%; "></div>
-                        <ejs-diagram #diagram id="diagram" width="100%" height="695px" top="10px" (textEdit)="changeText($event)" (mousemove)="saveDiagram();" [class.diagramaflujo]="loading">
+                        <ejs-diagram style="position:absolute; top:10px; left:16px;" #diagram id="diagram" width="100%" height="695px" top="10px" (textEdit)="changeText($event)" (mousemove)="saveDiagram();" [class.diagramaflujo]="loading">
                             <!-- style="visibility :hidden;" -->
                             <e-nodes>
                                 <e-node  [offsetX]=1100 [offsetY]=700 [maxHeight]=1 [maxWidth]=1>
                                 </e-node>            
                             </e-nodes>
                         </ejs-diagram> 
-                    <!-- </ng-template> -->
-                    <!-- <ejs-diagram id="diagram" width="100%" height="580px" [getNodeDefaults]='nodeDefaults'>
-                        <e-nodes>
-                            <e-node id="muroAzul" [offsetX]=580 [offsetY]=580>
-                            </e-node>            
-                        </e-nodes>
-                    </ejs-diagram> -->
                 </div>
                 <ejs-uploader #defaultupload id='fileupload' (success)='onUploadSuccess($event)' [asyncSettings]='asyncSettings'></ejs-uploader>
             </div>
