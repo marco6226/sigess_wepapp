@@ -266,9 +266,9 @@ export class ElaboracionInspeccionesComponent implements OnInit {
         
         this.paramNav.reset(); 
         
-        setTimeout(() => {
-            this.imprimirImagen();
-        }, 1000);
+        // setTimeout(() => {
+        //     this.imprimirImagen();
+        // }, 1000);
     }
 
     findMatrizValue(fecha: Date) {
@@ -600,29 +600,51 @@ if(dato.length > 0){
 
     x:ElementoInspeccion[]=[];
     imprimirImagen(){
+        let cont1=0;
+        let cont2=0;
+        this.inspeccion.calificacionList.forEach(async element => {
+            
+            if(element.documentosList.length>0){cont1++;}})
+
         this.x=[]
-        this.inspeccion.calificacionList.forEach(element => {
+        this.inspeccion.calificacionList.forEach(async element => {
+
             if(element.documentosList.length>0){
                 this.imagenesList=[]
                 let url=[]
                 element.elementoInspeccion.data2=[]
                 this.x.push(element.elementoInspeccion)
-                element.documentosList.forEach(element2 => {
+                await element.documentosList.forEach(async element2 => {
                     
-                    this.directorioService.download(element2.id).then(async (data?: any) => {
-                        let urlData = await this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+                    await this.directorioService.download(element2.id).then(async (data?: any) => {
+                        let urlData = await this.domSanitizer.bypassSecurityTrustUrl(await URL.createObjectURL(data));
                         let y=this.x.find(data =>{
                             return data.id==element.elementoInspeccion.id
                         })
                         y.data2.push({ source: urlData })
+                        // console.log(y.data2)
+                        const img = new Image();
+                        // console.log(y.data2['source'])
+                        // if(img.width>=img.height){y.flagwidht.push(true)}
+                        // else{y.flagwidht.push(false)}
+                        cont2++;
+                        if(cont1==cont2){
+                            this.imprimir();
+                        }
                     })
                     .catch(err => {
                         this.imagenesList.push({});
+                        console.log('error descarga')
+                        // cont2++;
+                        // if(cont1==cont2){
+                        //     this.imprimir();
+                        // }
                     });
                 })   
                 console.log(element.documentosList)      
             }
         });
+        
         
     }
 
@@ -700,7 +722,8 @@ if(dato.length > 0){
         console.log(this.x)
     }
     async imprimir() {
-        this.imprimirImagen()
+        
+        // this.imprimirImagen()
         let template = document.getElementById('plantilla');
         if (!this.pdfGenerado) {
             const date = new Date (this.inspeccion.fechaRealizada);
@@ -760,7 +783,7 @@ if(dato.length > 0){
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-        }, 400);
+        }, 1000);
     }
 
     async getTareaEvidences(lista_id: number, version_id: number) {
