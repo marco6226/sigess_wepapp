@@ -364,8 +364,8 @@
 
   </div>
 
-  <p style="page-break-after: always"></p>
-  <div><h1><strong><u>Anexos:</u></strong></h1></div>
+  <p style="page-break-after: always" *ngIf="flagImprimir"></p>
+  <div *ngIf="flagImprimir"><h1><strong><u>Anexos:</u></strong></h1></div>
 
   <br/> 
   <ng-container *ngFor="let a of x; let index1 = index">

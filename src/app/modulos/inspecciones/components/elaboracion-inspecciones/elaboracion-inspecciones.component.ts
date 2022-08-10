@@ -600,12 +600,17 @@ if(dato.length > 0){
 
     x:ElementoInspeccion[]=[];
     y=new Array();
+    flagImprimir:boolean;
     imprimirImagen(){
         let cont1=0;
         let cont2=0;
         this.inspeccion.calificacionList.forEach(async element => {
             
             if(element.documentosList.length>0){cont1++;}})
+        if(cont1==0){
+            this.flagImprimir=false;
+            this.imprimir();
+        }else{this.flagImprimir=true;}
 
         this.x=[]
         this.y=[]
