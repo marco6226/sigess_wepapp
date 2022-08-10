@@ -599,6 +599,7 @@ if(dato.length > 0){
     }
 
     x:ElementoInspeccion[]=[];
+    y=new Array();
     imprimirImagen(){
         let cont1=0;
         let cont2=0;
@@ -607,13 +608,15 @@ if(dato.length > 0){
             if(element.documentosList.length>0){cont1++;}})
 
         this.x=[]
+        this.y=[]
         this.inspeccion.calificacionList.forEach(async element => {
-
             if(element.documentosList.length>0){
                 this.imagenesList=[]
                 let url=[]
                 element.elementoInspeccion.data2=[]
                 this.x.push(element.elementoInspeccion)
+                this.y.push(element.recomendacion)
+                // this.x.push(element.opcionCalificacion)
                 await element.documentosList.forEach(async element2 => {
                     
                     await this.directorioService.download(element2.id).then(async (data?: any) => {
@@ -644,6 +647,7 @@ if(dato.length > 0){
                 console.log(element.documentosList)      
             }
         });
+        console.log(this.x)
         
         
     }

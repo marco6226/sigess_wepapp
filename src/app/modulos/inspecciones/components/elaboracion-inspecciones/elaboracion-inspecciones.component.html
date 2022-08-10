@@ -368,21 +368,36 @@
   <div><h1><strong><u>Anexos:</u></strong></h1></div>
 
   <br/> 
-<ng-container *ngFor="let a of x; let index1 = index">
-  <table width="100%" style="border-collapse: collapse;" >
-    <p style="page-break-after: always" *ngIf="index1>0"></p>
+  <ng-container *ngFor="let a of x; let index1 = index">
+  <table width="100%" style="border-collapse: collapse;margin: auto;" >
+    
+    <!-- <p style="page-break-after: always" *ngIf="index1>0"></p> -->
     <tr>  
       <td style="text-align: left">
       <h3>{{a.codigo+" "+a.nombre}}:</h3>
       </td>
     </tr>   
-    <tr *ngFor="let i of a.data2; let index2 = index">
-      <td  style="text-align: center">
-        <p style="page-break-after: always" *ngIf="index2>0"></p>
-        <!-- width="500px" height="800px"  -->
-        <img [src]="i.source" style="max-height: 800px;max-width: 600px;width:100%">
+    <tr>
+      <td  style="text-align: center"  *ngFor="let i of a.data2; let index2 = index">
+        <img [src]="i.source" style="max-height: 350px;max-width: 250px;width:100%">
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">
+        {{a.calificacion}}        
+      </td>
+    </tr> 
+
+  </table>
+  <table width="90%"  style="margin: auto;">
+    <tr >
+      <td style="text-align: center" >
+          {{y[index1]}}
       </td>
     </tr>
   </table>
+  <p style="page-break-after: always" *ngIf="(index1%2)!=0 && index1>0"></p>
+  <ng-container *ngIf="(index1%2)==0 && index1>1" ><br/></ng-container>
 </ng-container>
+
 </div>
