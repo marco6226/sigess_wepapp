@@ -56,7 +56,7 @@ async  ngOnInit() {
           this.reporteSelect = <Reporte>(resp['data'][0]);
           console.log(this.reporteSelect);
           // let dayact = this.reporteSelect.fechaAccidente.getDay();
-          //           console.log(dayact);
+          // console.log(dayact);
           console.log(new Date(this.reporteSelect.fechaAccidente).getMonth());
           this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
     
