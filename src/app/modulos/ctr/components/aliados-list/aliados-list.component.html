@@ -1,0 +1,44 @@
+<s-dataNotFound *ngIf="!aliadosList || aliadosList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Aliados">
+        <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear"></button>
+</s-dataNotFound>
+
+<p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
+  <p-tabView>
+    <p-table [columns]="cols" [value]="aliadosList" responsiveLayout="scroll">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+            <!-- <tr class="filters">
+
+            </tr> -->
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="val"></p-tableCheckbox>
+                </td>
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear"></button>    
+            <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="ngOnInit()" [disabled]="!caseSelect"></button>    
+            <button pButton type="button" icon="fa fa-search" label="Consultar" class="ui-button-warning" (click)="ngOnInit()" [disabled]="!caseSelect"></button>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9" class="p-text-center">No hay registro con los términos de filtro usados
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </p-tabView>
+</p-panel>

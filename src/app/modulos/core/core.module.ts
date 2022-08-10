@@ -1,3 +1,4 @@
+import { AliadosListComponent } from './../ctr/components/aliados-list/aliados-list.component';
 import { NgModule } from '@angular/core';
 
 // CommonModule se encuentra en ComunModule (personalizado) por lo que no es
@@ -130,6 +131,7 @@ const appRoutes: Routes = [
                 canActivate: [AuthGuardService],
                 children: [
                     { path: 'adminContratistas', component: AdminContratistasComponent },
+                    { path: 'listadoAliados', component: AliadosListComponent },
                     { path: 'seguimientoContratistas', component: SeguimientoContratistasComponent },
                 ]
             },
