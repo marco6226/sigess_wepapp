@@ -787,7 +787,7 @@ if(dato.length > 0){
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
-        }, 1000);
+        }, 2000);
     }
 
     async getTareaEvidences(lista_id: number, version_id: number) {

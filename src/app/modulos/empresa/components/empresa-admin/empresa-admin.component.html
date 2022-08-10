@@ -3,7 +3,7 @@
 <p-panel header="Empresas">
 
     <p-table #dt [value]="empresasList" [(selection)]="empresaSelect" autoLayout="true" selectionMode="single"
-        [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)"
+        [rows]="20" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)"
         [totalRecords]="totalRecords" [loading]="loading">
         <ng-template pTemplate="header">
             <tr>
