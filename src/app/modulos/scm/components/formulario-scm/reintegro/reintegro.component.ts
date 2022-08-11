@@ -103,13 +103,13 @@ console.log("---------<<<",isEdit);
     console.log("---------------------------");
     
     this.form = fb.group({
-      tipo_retorno: [null, Validators.required],
-      descripcion: [null, Validators.required],
+      tipo_retorno: [null, /*Validators.required*/],
+      descripcion: [null, /*Validators.required*/],
       permanencia: [null],
-      periodo_seguimiento: [null, Validators.required],
+      periodo_seguimiento: [null, /*Validators.required*/],
       reintegro_exitoso: [null],
-      fecha_cierre: [new Date(), Validators.required],
-      observacion: [null, Validators.required],
+      fecha_cierre: [new Date(), /*Validators.required*/],
+      observacion: [null, /*Validators.required*/ ],
       pk_case: [null]
     })
    }

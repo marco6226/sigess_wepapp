@@ -43,9 +43,9 @@
 </p-table>
 
 <p-dialog header="Nuevo Retorno"
-    [(visible)]="modalRetorno" [style]="{heigth: '800px'}" [modal]="true" [closable]="true" [draggable]="true"
+    [(visible)]="modalRetorno" [style]="{heigth:'850px'}" [modal]="true" [closable]="true" [draggable]="true"
     [resizable]="false"
-    (onHide)="onHideDialog()">
+    (onHide)="onHideDialog()" >
     <app-reintegro [idCase]="idCase" [isEdit]="editRetorno" [onEdit]="onEdit" (isCreate)="reload()"></app-reintegro>
 </p-dialog>
 
