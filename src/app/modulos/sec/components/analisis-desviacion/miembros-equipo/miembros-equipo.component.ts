@@ -129,7 +129,7 @@ saveProduct() {
     console.log("save");
 
     if (!this.cedula || !this.nombre || !this.cargo || !this.division || !this.localidad) {
-        this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta diligenciar todos los campso'});
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta diligenciar todos los campos'});
     }
     else{
 
