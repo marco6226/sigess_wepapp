@@ -739,6 +739,7 @@ if(dato.length > 0){
             const fechahora = this.datePipe.transform(date, 'dd/MM/yyyy HH:mm');
             template.querySelector('#P_lista_nombre').textContent = await this.listaInspeccion.nombre;
             template.querySelector('#P_codigo').textContent = this.listaInspeccion.codigo;
+            template.querySelector('#P_numero').textContent = this.inspeccion.id.toString();
             template.querySelector('#P_version').textContent = '' + this.listaInspeccion.listaInspeccionPK.version;
             template.querySelector('#P_formulario_nombre').textContent = this.listaInspeccion.formulario.nombre;
             template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
