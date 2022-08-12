@@ -1,6 +1,6 @@
 export interface Aliados {
     nit: string;
-    nombre: string;
+    razonSocial: string;
     tipo: string;
     fecha: Date;
     estado: string;

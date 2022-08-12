@@ -1,3 +1,4 @@
+import { AliadosComponent } from './../ctr/components/aliados/aliados.component';
 import { AliadosListComponent } from './../ctr/components/aliados-list/aliados-list.component';
 import { NgModule } from '@angular/core';
 
@@ -131,6 +132,7 @@ const appRoutes: Routes = [
                 canActivate: [AuthGuardService],
                 children: [
                     { path: 'adminContratistas', component: AdminContratistasComponent },
+                    { path: 'aliado', component: AliadosComponent },
                     { path: 'listadoAliados', component: AliadosListComponent },
                     { path: 'seguimientoContratistas', component: SeguimientoContratistasComponent },
                 ]

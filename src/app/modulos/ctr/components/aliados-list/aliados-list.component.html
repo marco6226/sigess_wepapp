@@ -1,5 +1,5 @@
 <s-dataNotFound *ngIf="!aliadosList || aliadosList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Aliados">
-        <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear"></button>
+        <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/ctr/aliado']" label="Crear"></button>
 </s-dataNotFound>
 
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
@@ -29,7 +29,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
-            <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/scm/creacion']" label="Crear"></button>    
+            <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/ctr/aliado']" label="Crear"></button>    
             <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="ngOnInit()" [disabled]="!caseSelect"></button>    
             <button pButton type="button" icon="fa fa-search" label="Consultar" class="ui-button-warning" (click)="ngOnInit()" [disabled]="!caseSelect"></button>
         </ng-template>

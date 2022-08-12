@@ -17,3 +17,19 @@ export class Empresa {
   logo:string;
   empresasContratistasList: Empresa[];
 }
+
+
+export interface EmpresaAlidada {
+  // nombreComercial: string;
+  razonSocial: string;
+  nit: string;
+  // direccion: string;
+  telefono: string;
+  email: string;
+  // web: string;
+  // numeroSedes: Number;
+  // arl: Arl;
+  // ciiu: Ciiu;
+  // logo:string;
+  // empresasContratistasList: Empresa[];
+}

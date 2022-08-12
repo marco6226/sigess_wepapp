@@ -1,0 +1,74 @@
+<p-panel header="Creación de Aliado">
+    <div class="ui-g" style="width:250px;margin-bottom:10px">
+        <div class="ui-g-12"><p-radioButton name="group1" value="Natural" label="Natural" [(ngModel)]="seleccion" [disabled]="isSelected" inputId="opt1"></p-radioButton></div>
+        <div class="ui-g-12"><p-radioButton name="group1" value="Jurídica" label="Jurídica" [(ngModel)]="seleccion" [disabled]="isSelected" inputId="opt2"></p-radioButton></div>
+    </div>
+    <p-button label="Continuar" icon="pi pi-check" (click)="continuar()" [disabled]="isSelected"></p-button>
+</p-panel >
+
+<br>
+
+<p-panel *ngIf="onSeleccion=='Natural'" header="Persona Natural">
+    <div class="cols" [formGroup]="form">
+        <div class="input-field">
+            <input type="text" pInputText formControlName="razonSocial" placeholder="Nombre o Razón social"
+                class="form-material"/>
+            <label for="" class="active">Nombre o Razón social</label>            
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="Número de identificación"
+            class="form-material"/>
+            <label for="" class="active">Número de identificación</label>
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="Email"
+            class="form-material"/>
+            <label for="" class="active">Email</label>
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="Telefono"
+            class="form-material"/>
+            <label for="" class="active">Telefono</label>
+        </div>
+        <div class="input-field">
+            <p-dropdown placeholder="Actividades contratadas"></p-dropdown>
+            <label for="" class="active">Actividades contratadas</label>
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="Localidad"
+            class="form-material"/>
+            <label for="" class="active">Localidad</label>
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="División"
+            class="form-material"/>
+            <label for="" class="active">División</label>
+        </div>
+    </div>
+</p-panel>
+
+<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica">
+    <div class="cols">
+        <div class="input-field">
+            <input type="text" pInputText formControlName="razonSocial" placeholder="Razón social"
+                class="form-material"/>
+            <label for="" class="active">Razón social</label>            
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="NIT"
+            class="form-material"/>
+            <label for="" class="active">NIT</label>
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="Nombre comercial"
+            class="form-material"/>
+            <label for="" class="active">Nombre comercial</label>
+        </div>
+        <div class="input-field">
+            <input type="text" pInputText  placeholder="Email"
+            class="form-material"/>
+            <label for="" class="active">Email</label>
+        </div>        
+    </div>
+</p-panel>
+<!-- <button (click)="test()">test</button> -->
