@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { listPlanAccion } from 'app/modulos/sec/entities/factor-causal';
+import { Message, SelectItem, ConfirmationService } from 'primeng/primeng';
 import {TreeNode} from 'primeng/api';
 
 @Component({
@@ -15,7 +16,9 @@ export class PlanAccionListComponent implements OnInit {
   planAccionListSelected: listPlanAccion;
   causasListSelect
   display: boolean = false;
-  constructor() { }
+  constructor(
+    private confirmationService: ConfirmationService,
+  ) {}
   cols: any[];
   files: TreeNode[]
   validate: string;
@@ -35,19 +38,24 @@ export class PlanAccionListComponent implements OnInit {
 
   // value: number = 10;
   eliminar(data,causa,i,j){
-    // console.log(this.planAccionList);
-    // console.log(i,j)
-    // console.log('eliminar');
-    // this.planAccionList.splice(0, 1)
-    // console.log(this.planAccionList[i].causaRaiz.length)
-    this.planAccionList[i].causaRaiz=this.planAccionList[i].causaRaiz.filter((item) => item!==causa);
-    // console.log(this.planAccionList[i].causaRaiz.length)
-    if(this.planAccionList[i].causaRaiz.length==0){
-      this.planAccionList=this.planAccionList.filter((item) => item!==data);}
-    let eliminar=[data,i]
-    this.flagPlanAccionlist.emit(eliminar)
-    this.habilitar()
+    this.confirmationService.confirm({
+      header: 'Confirmar acción',
+      message: 'La causa raíz:' + this.planAccionList[i].causaRaiz[j].causaRaiz + ', del factor causal :'+this.planAccionList[i].nombreFC+'), será eliminado y no podrá deshacer esta acción, ¿Dese continuar?',
+      // message: 'La causa raíz seleccionada será eliminada, no podrá deshacer esta acción, ¿Dese continuar?',
+      accept: () =>{
+        this.planAccionList[i].causaRaiz=this.planAccionList[i].causaRaiz.filter((item) => item!==causa);
+        if(this.planAccionList[i].causaRaiz.length==0){
+          this.planAccionList=this.planAccionList.filter((item) => item!==data);}
+        let eliminar=[data,i]
+        this.flagPlanAccionlist.emit(eliminar)
+        this.habilitar()
+      },
+			reject: () => {
+				console.log(this.planAccionList[i].causaRaiz)
+			},
+    });
   }
+
   selectProduct(event) {
     // console.log(event);
     this.planAccionListSelected = event;
