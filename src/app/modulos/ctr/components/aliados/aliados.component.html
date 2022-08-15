@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <p-panel header="Creación de Aliado">
     <div class="ui-g" style="width:250px;margin-bottom:10px">
         <div class="ui-g-12"><p-radioButton name="group1" value="Natural" label="Natural" [(ngModel)]="seleccion" [disabled]="isSelected" inputId="opt1"></p-radioButton></div>
@@ -8,46 +10,46 @@
 
 <br>
 
-<p-panel *ngIf="onSeleccion=='Natural'" header="Persona Natural">
-    <div class="cols" [formGroup]="form">
+<p-panel *ngIf="onSeleccion=='Natural'" header="Persona Natural" [formGroup]="formNatural">
+    <div class="cols" >
         <div class="input-field">
             <input type="text" pInputText formControlName="razonSocial" placeholder="Nombre o Razón social"
                 class="form-material"/>
             <label for="" class="active">Nombre o Razón social</label>            
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="Número de identificación"
+            <input type="text" pInputText formControlName="identificacion" placeholder="Número de identificación"
             class="form-material"/>
             <label for="" class="active">Número de identificación</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="Email"
+            <input type="text" pInputText formControlName="email" placeholder="Email"
             class="form-material"/>
             <label for="" class="active">Email</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="Telefono"
+            <input type="text" pInputText formControlName="telefono" placeholder="Telefono"
             class="form-material"/>
             <label for="" class="active">Telefono</label>
         </div>
         <div class="input-field">
-            <p-dropdown placeholder="Actividades contratadas"></p-dropdown>
+            <p-dropdown class="form-material" formControlName="actividadesContratadas" [options]="actividadesContratadasList"></p-dropdown>
             <label for="" class="active">Actividades contratadas</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="Localidad"
-            class="form-material"/>
-            <label for="" class="active">Localidad</label>
+            <!-- <p-dropdown class="form-material" appendTo="body" formControlName="division" [options]="divisionList"></p-dropdown> -->
+            <p-multiSelect class="form-material"  defaultLabel="--seleccione division--" [options]="divisionList" formControlName="division"> </p-multiSelect>
+            <label for="" class="active">División</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="División"
+            <input type="text" pInputText formControlName="localidad" placeholder="Localidad"
             class="form-material"/>
-            <label for="" class="active">División</label>
+            <label for="" class="active">Localidad</label>
         </div>
     </div>
 </p-panel>
 
-<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica">
+<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica" [formGroup]="formJuridica">
     <div class="cols">
         <div class="input-field">
             <input type="text" pInputText formControlName="razonSocial" placeholder="Razón social"
@@ -55,20 +57,24 @@
             <label for="" class="active">Razón social</label>            
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="NIT"
+            <input type="text" pInputText formControlName="identificacion" placeholder="NIT"
             class="form-material"/>
             <label for="" class="active">NIT</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="Nombre comercial"
+            <input type="text" pInputText formControlName="nombreComercial" placeholder="Nombre comercial"
             class="form-material"/>
             <label for="" class="active">Nombre comercial</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText  placeholder="Email"
+            <input type="text" pInputText formControlName="email" placeholder="Email"
             class="form-material"/>
             <label for="" class="active">Email</label>
         </div>        
     </div>
 </p-panel>
 <!-- <button (click)="test()">test</button> -->
+<ng-container *ngIf="formNatural.valid || formJuridica.valid">
+    <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliado"
+        (click)="saveAliado()" class="float-btn"></button>
+</ng-container>

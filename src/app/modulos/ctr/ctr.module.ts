@@ -4,13 +4,14 @@ import { AdminContratistasComponent } from 'app/modulos/ctr/components/admin-con
 import { SeguimientoContratistasComponent } from 'app/modulos/ctr/components/seguimiento-contratistas/seguimiento-contratistas.component'
 import { EmpresaDashComponent } from 'app/modulos/comun/components/empresa-dash/empresa-dash.component';
 import { AliadosListComponent } from './components/aliados-list/aliados-list.component';
-import { AliadosComponent } from './components/aliados/aliados.component'
+import { AliadosComponent } from './components/aliados/aliados.component';
+import { AliadosActualizarComponent } from './components/aliados-actualizar/aliados-actualizar.component'
 
 @NgModule({
   imports: [
     ComunModule,
   ],
-  declarations: [AdminContratistasComponent, SeguimientoContratistasComponent, EmpresaDashComponent, AliadosListComponent, AliadosComponent],
+  declarations: [AdminContratistasComponent, SeguimientoContratistasComponent, EmpresaDashComponent, AliadosListComponent, AliadosComponent, AliadosActualizarComponent],
   providers: []
 })
 export class CtrModule { }

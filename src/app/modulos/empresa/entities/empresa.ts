@@ -16,6 +16,10 @@ export class Empresa {
   ciiu: Ciiu;
   logo:string;
   empresasContratistasList: Empresa[];
+  tipo_persona?: string;
+  actividades_contratadas?: string;
+  localidad?: string;
+  division?: string;
 }
 
 
