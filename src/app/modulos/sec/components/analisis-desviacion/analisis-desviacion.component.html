@@ -96,7 +96,7 @@
                                 <tr>
                                     <th style="border: 1px solid #c8c8c8;">Descripción detallada del AT</th>
                                    
-                                    <textarea maxlength="1000" *ngIf="!consultar" pInputTextarea rows="10"
+                                    <textarea maxlength="5000" *ngIf="!consultar" pInputTextarea rows="20"
                             placeholder="Observaciones de análisis" [(ngModel)]="observacion"></textarea>
                         <div *ngIf="consultar">
                             {{observacion}}
