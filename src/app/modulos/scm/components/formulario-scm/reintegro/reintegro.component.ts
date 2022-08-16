@@ -37,7 +37,7 @@ console.log("---------<<<",isEdit);
     if(isEdit.id!=0){
 
       this.form.value.descripcion = this.isEdit.descripcion = isEdit.descripcion
-      this.form.value.fecha_cierre = this.isEdit.fecha_cierre = new Date(isEdit.fecha_cierre)
+      this.form.value.fecha_cierre = this.isEdit.fecha_cierre = (isEdit.fecha_cierre==null)?null:new Date(isEdit.fecha_cierre);
       this.isEdit.id = isEdit.id
       this.form.value.observacion = this.isEdit.observacion = isEdit.observacion
       this.form.value.periodo_seguimiento = this.isEdit.periodo_seguimiento = isEdit.periodo_seguimiento

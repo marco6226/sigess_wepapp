@@ -97,7 +97,7 @@
         </button>
     </div> -->
     <!-- *ngIf="form.valid && !onEdit" -->
-    <div class="button"  >
+    <div class="button"  *ngIf="form.valid && !onEdit">
         <button *sTienePermiso="'SCM_CREATE_REINTEGRO'" pButton type="button" icon="fa fa-plus"
         label="Crear"  (click)="saveReintegro()" [disabled]="!form.valid">
         </button>
