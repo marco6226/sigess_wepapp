@@ -182,20 +182,24 @@ export class AnalisisDesviacionComponent implements OnInit {
             console.log(factor.accion)
             this.cont=(factor.accion=='Sin Plan de Accion')?this.cont=this.cont+1:this.cont;
         })
+        // this.cont=0
         if (this.cont>0){
             this.msgs = [];
             if(this.cont==1){
                 this.msgs.push({
                     severity: "warn",
                     detail: "Queda ("+this.cont+") listado de causa sin plan de acción",
-                });
-            }
-        }else{
-            this.msgs.push({
-                severity: "warn",
-                detail: "Quedan ("+this.cont+") listados de causa sin plan de acción",
-            });}
-        this.tabIndex=this.tabIndex0+1;
+                });}else{
+                    this.msgs.push({
+                        severity: "warn",
+                        detail: "Quedan ("+this.cont+") listados de causa sin plan de acción",
+                    });}
+        }
+
+            setTimeout(() => {
+                this.tabIndex=this.tabIndex0+1;
+            }, 500);
+        // console.log(this.cont)
     }
     eliminarPlandeAccion(event){
         let eliminar=event;
