@@ -133,7 +133,7 @@
                     
                     <!-- <ng-template #diagrama> -->
                         <div class="loader" *ngIf="loading" style="position:absolute; top:340px; left:53%; "></div>
-                        <ejs-diagram style="position:absolute; top:10px; left:16px;" #diagram id="diagram" width="100%" height="695px" top="10px" (textEdit)="changeText($event)" (mousemove)="saveDiagram();" [class.diagramaflujo]="loading">
+                        <ejs-diagram style="position:absolute; top:10px; left:16px;" #diagram id="diagram" width="100%" height="695px" top="10px" (textEdit)="changeText($event)" (mousemove)="saveDiagram();" (keyUp)="test($event)" [class.diagramaflujo]="loading">
                             <!-- style="visibility :hidden;" -->
                             <e-nodes>
                                 <e-node  [offsetX]=1470 [offsetY]=700 [maxHeight]=1 [maxWidth]=1>
