@@ -1071,7 +1071,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 // console.log(element);
                 
                 element.causaRaiz.forEach(causa => {
-                    // console.log(causa);
+                     console.log(causa);
 
                     if (causa.revisado.isComplete) {
                         let nombre = element.nombreFC.split(', ')
@@ -1080,22 +1080,23 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
                         for (let index = 0; index < nombre.length; index++) {
-                            // console.log(nombre[index],causas[index]);
+                             console.log(nombre[index],causas[index]);
                             
                             let dataFactor = this.dataListFactor.find(ele=> {
                                 return ele.nombre == nombre[index] && ele.metodologia == causas[index]
                             })
 
-                            // console.log(dataFactor);
+                             console.log(dataFactor);
 
                             if (dataFactor) {
+                                console.log(dataFactor)
                                 dataFactor.accion = 'Con Plan de Accion'                            
                             }
                             
                         }
                     }
                     else{
-                        // console.log("algo no es verdad");
+                         console.log("algo no es verdad");
                         validador = false
                     }
                 });

@@ -20,4 +20,5 @@ export class ListaInspeccion {
   usarNivelRiesgo:boolean;
   fkdocumento: number;
   version: number;
+  numeroPreguntas: number;
 }

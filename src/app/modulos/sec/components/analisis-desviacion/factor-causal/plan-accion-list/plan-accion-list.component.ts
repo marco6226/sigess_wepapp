@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { listPlanAccion } from 'app/modulos/sec/entities/factor-causal';
 import { Message, SelectItem, ConfirmationService } from 'primeng/primeng';
 import {TreeNode} from 'primeng/api';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-plan-accion-list',
@@ -118,12 +119,15 @@ export class PlanAccionListComponent implements OnInit {
         }
 
         if(elementIn.revisado.revisado!=null && elementIn.revisado.revisado != ""){
+          console.log(elementIn);
           elementIn.revisado.isComplete = true
         }
         else{
           elementIn.revisado.isComplete = false;
         }
+        console.log(elementIn);
       });
+      
       
     });
     this.validacionPA.emit()

@@ -119,8 +119,8 @@ export class CiudadSelectorComponent implements OnInit, ControlValueAccessor {
             } else {
                 console.log(this.value, "cut");
     
-                this.departamentoSelectId = null;
-                this.ciudadesItems.splice(1, this.ciudadesItems.length);
+               // this.departamentoSelectId = null;
+               // this.ciudadesItems.splice(1, this.ciudadesItems.length);
             } 
         }, 3000);
     }

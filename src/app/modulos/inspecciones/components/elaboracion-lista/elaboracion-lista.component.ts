@@ -261,9 +261,12 @@ export class ElaboracionListaComponent implements OnInit {
         listInp.opcionCalificacionList = this.opcionesCalifList;
         listInp.elementoInspeccionList = this.elementoInspeccionList;
         listInp.formulario = this.formularioConstructor.formulario;
+        // tslint:disable-next-line: triple-equals
         let param = actualizarVersion == false ? null : 'actualizarVersion=true';
         if (actualizarVersion == true) {
             listInp.estado = 'inactivo';
+            listInp.numeroPreguntas = listInp.numeroPreguntas;
+
             versiondato = listInp.listaInspeccionPK.version + 1;
             this.listaInspeccionService.update(listInp, 'actualizarVersion=false');
         }
