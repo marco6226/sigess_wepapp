@@ -36,8 +36,8 @@ export class FormularioAccidenteComponent implements OnInit {
     @Input('modificar') modificar: boolean;
     @Input('adicionar') adicionar: boolean;
     @Output('onSave') onSave = new EventEmitter<Reporte>();
-
-
+    fechaActual = new Date();
+    yearRange: string = '1900:' + this.fechaActual.getFullYear();
     tipoVinculacionList: SelectItem[];
     jornadaTrabajoList: SelectItem[];
     tipoIdentificacion: SelectItem[];

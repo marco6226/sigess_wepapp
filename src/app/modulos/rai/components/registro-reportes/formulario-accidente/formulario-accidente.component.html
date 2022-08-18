@@ -251,7 +251,7 @@
                         Fecha nacimiento
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaNacimientoEmpleado">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [monthNavigator]="true"  [yearNavigator]="true" [yearRange]="yearRange" formControlName="fechaNacimientoEmpleado">
                         </p-calendar>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
