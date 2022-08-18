@@ -14,7 +14,13 @@ export class ListadoCausasComponent implements OnInit {
 
   @Output() validacionPA = new EventEmitter<any>()
   @Output() tabIndex = new EventEmitter<number>()
-  @Input() factores: listFactores[];
+
+  factores: listFactores[];
+  @Input("factores")
+  set factores2(factores: listFactores[]){
+    this.factores=factores
+}
+
   @Input() planAccionList: listPlanAccion[]=[];
 
   causasListSelect: listFactores[];
@@ -69,7 +75,7 @@ export class ListadoCausasComponent implements OnInit {
           console.log(str.search(re))
           if (str.search(re) == -1 ) { 
             if (tempnombreFC) {
-              tempnombreFC = tempnombreFC + ', ' + element.nombre            
+              tempnombreFC = tempnombreFC + '**' + element.nombre            
             } else {
               tempnombreFC = element.nombre            
             }
@@ -78,7 +84,7 @@ export class ListadoCausasComponent implements OnInit {
           
 
           if (tempcausaRaiz) {
-            tempcausaRaiz = tempcausaRaiz + ', ' + element.metodologia            
+            tempcausaRaiz = tempcausaRaiz + '**' + element.metodologia            
           } else {
             tempcausaRaiz = element.metodologia            
           }

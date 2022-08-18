@@ -344,24 +344,24 @@ export class FlowChartComponent {
         // console.log(evento.newValue);
   
         if(evento.element.properties.id.includes('factor')){
-        // console.log("ok");
+          console.log("ok");
   
-        let x = this.listFC.find((x)=>x.nombre == evento.oldValue)
-            console.log(x);
-  
-        if(x!=undefined){
-          this.listFC.forEach(element => {
-            if(element.id===x.id){
-              element.nombre = evento.newValue;
-            }
-          });
-        }else{
-          this.listFC.push({id:this.listFC.length+1, nombre:evento.newValue});
-        }
-  
-        console.log(this.listFC);
-        
-        this.datosFC.emit(this.listFC);
+          let x = this.listFC.find((x)=>x.nombre == evento.oldValue)
+              console.log(x);
+    
+          if(x!=undefined){
+            this.listFC.forEach(element => {
+              if(element.id===x.id){
+                element.nombre = evento.newValue;
+              }
+            });
+          }else{
+            this.listFC.push({id:this.listFC.length+1, nombre:evento.newValue});
+          }
+    
+          console.log(this.listFC);
+          
+          this.datosFC.emit(this.listFC);
         }
     } catch (error) {
         console.log("error",error);
@@ -391,7 +391,11 @@ export class FlowChartComponent {
 
 
   }
+test(event){
+console.log(event)
 
+
+}
   saveDiagram(){
     this.diagramSave.emit(this.diagram.saveDiagram())
     this.FlowchartService.setDiagram(this.diagram)

@@ -969,50 +969,61 @@ export class AnalisisDesviacionComponent implements OnInit {
     tempData: listFactores[]=[];
 
     setListDataFactor(){
-        try {          
-            this.tempData = []
-            this.factorCusal.forEach(data => {
-                // console.log(data);            
-                data.seccion.forEach(data1 => {
-                    data1.desempeno.forEach(data2 => {   
-                        if (data2.selected) {
-                            data2.areas.forEach(data3 => {
-                                data3.subProd.forEach(data4 => {
-                                    data4.causa.forEach(element => {    
-    
-                                        if (element.esCausa) {      
-                                            if (!this.dataListFactor.find(ele=> {
-                                                // console.log(ele,data,data1,data2,element);
-                                                
-                                                return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre
-                                            })) {
-                                                this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
-                                            }else{
-                                                this.dataListFactor.forEach(ele =>{
-                                                    if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre){
-                                                        this.tempData.push(ele)                                                
-                                                    }
-                                                })
-                                            }
-                                        }                                
+        this.tempData = []
+        this.dataListFactor = []
+        // setTimeout(() => {
+            console.log(this.dataListFactor); 
+            try {          
+                this.tempData = []
+                this.factorCusal.forEach(data => {
+                    // console.log(data);            
+                    data.seccion.forEach(data1 => {
+                        data1.desempeno.forEach(data2 => {   
+                            if (data2.selected) {
+                                data2.areas.forEach(data3 => {
+                                    data3.subProd.forEach(data4 => {
+                                        data4.causa.forEach(element => {    
+        
+                                            if (element.esCausa) {   
+                                                // console.log(this.dataListFactor)   
+                                                if (!this.dataListFactor.find(ele=> {
+                                                    // console.log(ele,data,data1,data2,element);
+                                                    
+                                                    return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre
+                                                })) {
+                                                    this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
+                                                    console.log('c');
+                                                }else{
+                                                    this.dataListFactor.forEach(ele =>{
+                                                        if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre){
+                                                            this.tempData.push(ele) 
+                                                            console.log('d'); 
+                                                            console.log(ele)                                              
+                                                        }
+                                                    })
+                                                }
+                                            }                                
+                                        });
                                     });
-                                });
-                            });    
-                        }                        
+                                });    
+                            }                        
+                        });
                     });
+                    data.causa_Raiz.forEach(data1 => {
+                        this.selectCausaRaiz(data.nombre, data1.label, data1)
+                    });
+                    
                 });
-                data.causa_Raiz.forEach(data1 => {
-                    this.selectCausaRaiz(data.nombre, data1.label, data1)
-                });
-                
-            });
-            // console.log(this.tempData);
-            
-            this.dataListFactor = this.tempData;
-        } catch (error) {
-                
-        }
-        this.habilitarInforme()
+                // console.log(this.tempData);
+                // this.dataListFactor = []
+                this.dataListFactor = this.tempData;
+                console.log(this.dataListFactor);  
+            } catch (error) {
+                    
+            }
+            this.habilitarInforme()
+        // }, 1);
+       
     }
     validators:boolean=true;
     getValidator(event){
@@ -1024,17 +1035,17 @@ export class AnalisisDesviacionComponent implements OnInit {
         if (datos.data.name=='Si') {
             if (!this.dataListFactor.find(ele=> {return ele.pregunta == pregunta && ele.metodologia == datos.label})) {
                 this.tempData.push({nombre:nombre, pregunta: pregunta,metodologia: datos.label, accion:'Sin Plan de Accion'})
+                console.log('a');
             }else{
                 this.dataListFactor.forEach(ele =>{
                     if(ele.pregunta == pregunta && ele.metodologia == datos.label){
-                        this.tempData.push(ele)                                                
+                        this.tempData.push(ele)    
+                        console.log('b');                                            
                     }
                 })
             }
             // this.tempData.push({nombre:nombre, pregunta:pregunta, metodologia: datos.label, accion:'Sin Plan de Accion'})            
-        }
-
-        if(datos.children){
+        }else if(datos.children){
             datos.children.forEach(element => {
                 this.selectCausaRaiz(nombre, pregunta ,element)
             });
@@ -1078,8 +1089,9 @@ export class AnalisisDesviacionComponent implements OnInit {
                     // console.log(causa);
 
                     if (causa.revisado.isComplete) {
-                        let nombre = element.nombreFC.split(', ')
-                        let causas = causa.causaRaiz.split(', ')
+                        let nombre = element.nombreFC.split('**')
+                        let causas = causa.causaRaiz.split('**')
+                        console.log(nombre)
                         
 
 
