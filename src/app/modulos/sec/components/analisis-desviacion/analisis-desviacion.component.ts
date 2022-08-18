@@ -1035,12 +1035,10 @@ export class AnalisisDesviacionComponent implements OnInit {
         if (datos.data.name=='Si') {
             if (!this.dataListFactor.find(ele=> {return ele.pregunta == pregunta && ele.metodologia == datos.label})) {
                 this.tempData.push({nombre:nombre, pregunta: pregunta,metodologia: datos.label, accion:'Sin Plan de Accion'})
-                console.log('a');
             }else{
                 this.dataListFactor.forEach(ele =>{
                     if(ele.pregunta == pregunta && ele.metodologia == datos.label){
-                        this.tempData.push(ele)    
-                        console.log('b');                                            
+                        this.tempData.push(ele)                                              
                     }
                 })
             }
@@ -1096,10 +1094,14 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
                         for (let index = 0; index < nombre.length; index++) {
+                            for (let index2 = 0; index2 < causas.length; index2++) {
                             // console.log(nombre[index],causas[index]);
-                            
-                            let dataFactor = this.dataListFactor.find(ele=> {
-                                return ele.nombre == nombre[index] && ele.metodologia == causas[index]
+                            let dataFactor:any=[]
+                            console.log(nombre[index])
+                            console.log(causas[index2])
+                            console.log(this.dataListFactor)
+                            dataFactor = this.dataListFactor.find(ele=> {
+                                return ele.nombre == nombre[index] && ele.metodologia == causas[index2]
                             })
 
                             // console.log(dataFactor);
@@ -1107,7 +1109,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                             if (dataFactor) {
                                 dataFactor.accion = 'Con Plan de Accion'                            
                             }
-                            
+                        }
                         }
                     }
                     else{
