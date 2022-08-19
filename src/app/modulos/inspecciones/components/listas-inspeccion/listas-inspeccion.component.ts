@@ -142,7 +142,7 @@ export class ListasInspeccionComponent implements OnInit {
   eliminar() {
     this.confirmationService.confirm({
       header: 'Confirmar acción',
-      message: 'La lista de inspección ' + this.listaInpSelect.nombre + ' será eliminada, no podrá deshacer esta acción, ¿Dese continuar?',
+      message: 'La lista de inspección ' + this.listaInpSelect.nombre + ' será eliminada, no podrá deshacer esta acción, ¿Desea continuar?',
       accept: () =>
         this.listaInspeccionService.delete(this.listaInpSelect.codigo)
     });

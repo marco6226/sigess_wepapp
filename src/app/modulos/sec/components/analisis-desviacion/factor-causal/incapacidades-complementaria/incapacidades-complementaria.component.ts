@@ -60,7 +60,7 @@ export class IncapacidadesComplementariaComponent implements OnInit {
 
     let fecha2 = moment(this.fechaFin);
 
-    this.diasAusencia =  Math.abs(fecha1.diff(fecha2, "days"));
+    this.diasAusencia =  Math.abs(fecha1.diff(fecha2, "days"))+1;
 
     return this.diasAusencia;
 }

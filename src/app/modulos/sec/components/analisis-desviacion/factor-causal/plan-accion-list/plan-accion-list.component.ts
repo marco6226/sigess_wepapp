@@ -41,8 +41,8 @@ export class PlanAccionListComponent implements OnInit {
   eliminar(data,causa,i,j){
     this.confirmationService.confirm({
       header: 'Confirmar acción',
-      message: 'La causa raíz:' + this.planAccionList[i].causaRaiz[j].causaRaiz + ', del factor causal :'+this.planAccionList[i].nombreFC+'), será eliminado y no podrá deshacer esta acción, ¿Dese continuar?',
-      // message: 'La causa raíz seleccionada será eliminada, no podrá deshacer esta acción, ¿Dese continuar?',
+      message: 'La causa raíz:' + this.planAccionList[i].causaRaiz[j].causaRaiz + ', del factor causal :'+this.planAccionList[i].nombreFC+'), será eliminado y no podrá deshacer esta acción, ¿Desea continuar?',
+      // message: 'La causa raíz seleccionada será eliminada, no podrá deshacer esta acción, ¿Desea continuar?',
       accept: () =>{
         this.planAccionList[i].causaRaiz=this.planAccionList[i].causaRaiz.filter((item) => item!==causa);
         if(this.planAccionList[i].causaRaiz.length==0){
