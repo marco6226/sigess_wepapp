@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AliadosActualizarComponent implements OnInit {
 
-  constructor() { }
+  id: number = -1;
+
+  constructor(
+    private rutaActiva: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.id = this.rutaActiva.snapshot.params.id;
+  }
+
+  test(){
+    console.log(this.rutaActiva.snapshot.params.id);
+    
+    
   }
 
 }

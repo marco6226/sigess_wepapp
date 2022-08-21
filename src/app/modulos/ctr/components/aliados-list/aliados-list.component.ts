@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { formatDate } from '@angular/common';
@@ -22,6 +23,7 @@ export class AliadosListComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -59,7 +61,8 @@ export class AliadosListComponent implements OnInit {
   }
 
   onEdit(event){
-    console.log(event);
+    console.log(event.id);
+    this.router.navigate([`/app/ctr/actualizarAliado/${event.id}`])
     
   }
 

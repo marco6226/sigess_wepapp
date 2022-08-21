@@ -95,6 +95,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TareaComponent } from '../sec/components/tarea/tarea.component';
 import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { AliadosActualizarComponent } from '../ctr/components/aliados-actualizar/aliados-actualizar.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -134,6 +135,7 @@ const appRoutes: Routes = [
                     { path: 'adminContratistas', component: AdminContratistasComponent },
                     { path: 'aliado', component: AliadosComponent },
                     { path: 'listadoAliados', component: AliadosListComponent },
+                    { path: 'actualizarAliado/:id', component: AliadosActualizarComponent },
                     { path: 'seguimientoContratistas', component: SeguimientoContratistasComponent },
                 ]
             },
