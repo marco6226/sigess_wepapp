@@ -110,7 +110,8 @@ export class AliadosComponent implements OnInit {
         division: JSON.stringify(this.formNatural.value.division),
         estado:'Creado',
         calificacion:'Bajo',
-        fechaCreacion: new Date()
+        fechaCreacion: new Date(),
+        activo: true
       }
       
     } else if (this.formJuridica.valid){
@@ -131,7 +132,8 @@ export class AliadosComponent implements OnInit {
         tipo_persona: this.formJuridica.value.tipo_persona,
         estado:'Creado',
         calificacion:'Bajo',
-        fechaCreacion: new Date()
+        fechaCreacion: new Date(),
+        activo: true
       }
     }
 

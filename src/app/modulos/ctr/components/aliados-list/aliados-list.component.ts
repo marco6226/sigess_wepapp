@@ -16,8 +16,9 @@ export class AliadosListComponent implements OnInit {
   aliadosList: Empresa[]=[]
 
   caseSelect: boolean=false
-  totalRecords: number;
   loading: boolean = false;
+  selectedList: any[]=[];
+
 
   constructor(
     private empresaService: EmpresaService,
@@ -57,13 +58,16 @@ export class AliadosListComponent implements OnInit {
     
   }
 
-  DecodificacionEstado(valor){
-
+  onEdit(event){
+    console.log(event);
+    
   }
-  DecodificacionSiNo(valor){
 
-  }
-  lazyLoad(valor){
-
+  onRowSelect(event){
+    if (this.selectedList.length>0) {
+      this.caseSelect=true;      
+    } else {
+      this.caseSelect=false;      
+    }
   }
 }

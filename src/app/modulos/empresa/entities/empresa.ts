@@ -25,6 +25,7 @@ export class Empresa {
   calificacion?: string;
   estado?: string;
   vigencia?: string;
+  activo?: boolean;
 }
 
 
