@@ -4,27 +4,63 @@
 
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
   <p-tabView>
-    <p-table [columns]="cols" [value]="aliadosList" responsiveLayout="scroll">
+    <p-table [value]="aliadosList" responsiveLayout="scroll">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns">
-                    {{col.header}}
+                <!-- <th pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                        Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </div>
+                </th> -->
+                <th>
+                    Nombre o Razón Social
+                </th>
+                <th>
+                    Tipo de Persona
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Calificación
+                </th>
+                <th>
+                    Fecha Creación
+                </th>
+                <th>
+                    Fecha Modificación
                 </th>
             </tr>
             <!-- <tr class="filters">
 
             </tr> -->
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData>
             <tr>
                 <td>
-                    <p-tableCheckbox [value]="val"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                 </td>
-                <td *ngFor="let col of columns">
-                    {{rowData[col.field]}}
+                <td>
+                    {{rowData.razonSocial}}
+                </td>
+                <td>
+                    {{rowData.tipo_persona}}
+                </td>
+                <td>
+                    {{rowData.estado}}
+                </td>
+                <td>
+                    {{rowData.calificacion}}
+                </td>
+                <td>
+                    {{rowData.fechaCreacion | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    {{rowData.fechaActualizacion | date:'dd/MM/yyyy'}}
                 </td>
             </tr>
         </ng-template>
@@ -42,3 +78,5 @@
     </p-table>
   </p-tabView>
 </p-panel>
+
+<!-- <button (click)="loadData()">test</button> -->

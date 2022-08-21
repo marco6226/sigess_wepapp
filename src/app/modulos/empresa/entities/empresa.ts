@@ -20,6 +20,11 @@ export class Empresa {
   actividades_contratadas?: string;
   localidad?: string;
   division?: string;
+  fechaCreacion?: Date;
+  fechaActualizacion?: Date;
+  calificacion?: string;
+  estado?: string;
+  vigencia?: string;
 }
 
 
