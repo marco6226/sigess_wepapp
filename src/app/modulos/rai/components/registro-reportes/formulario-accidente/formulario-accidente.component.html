@@ -42,9 +42,27 @@
                     </div>
                 </div>
             </p-accordionTab>
-
-            <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DEL EMPLEADOR, CONTRATANTE O COOPERATIVA"
+            <ng-template #icorona>
+                <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA"
                 *ngIf="visibleCamposAccidente">
+                 <div class="ui-g">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Nombre o razon social
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <input pInputText formControlName="razonSocial" />
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Nit.
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <input pInputText formControlName="identificacionEmpresa" />
+                    </div>
+                 </div>
+                </p-accordionTab>
+            </ng-template>
+            <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DEL EMPLEADOR, CONTRATANTE O COOPERATIVA"
+                *ngIf="visibleCamposAccidente  && idEmpresa !='22';else icorona">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Tipo vinculador
@@ -110,7 +128,7 @@
                         Correo electrónico
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="emailEmpresa" />
+                        <input pInputText formControlName="emailEmpresa"/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Zona
@@ -263,11 +281,17 @@
                         <p-radioButton name="generoEmpleado" label="F" value="F" formControlName="generoEmpleado">
                         </p-radioButton>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         Dirección
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="direccionEmpleado" />
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        Correo
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <input pInputText formControlName="correoEmpleado" readonly/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Teléfono

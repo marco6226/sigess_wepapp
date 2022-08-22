@@ -23,6 +23,10 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { FilterQuery } from 'app/modulos/core/entities/filter-query'
+import { Criteria, Filter } from '../../../../core/entities/filter';
+import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service'
+import { Empleado } from 'app/modulos/empresa/entities/empleado'
 
 @Component({
     selector: 's-form-accidente',
@@ -60,12 +64,15 @@ export class FormularioAccidenteComponent implements OnInit {
     deltaFecha:Date;
     deltaDia:number;
     deltaMes:number;
+    empleadoSelect: Empleado;
+
     constructor(
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
         private reporteService: ReporteService,
         private empresaService: EmpresaService,
         private sesionService: SesionService,
+        private empleadoService: EmpleadoService,
     ) {
         let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
         this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
@@ -83,6 +90,7 @@ export class FormularioAccidenteComponent implements OnInit {
     }
 
     ngOnInit() {
+        
         this.idEmpresa = this.sesionService.getEmpresa().id;
         console.log(this.idEmpresa)
         console.log(this.reporte)
@@ -104,6 +112,7 @@ export class FormularioAccidenteComponent implements OnInit {
             this.reporte.diasLaborHabitual=null
             this.reporte.mesesLaborHabitual=null
         }
+        console.log(this.reporte.numeroIdentificacionEmpleado)
         console.log(this.reporte.ciudadEmpresa)
         this.infoEmpresa()
         this.form = this.fb.group({
@@ -146,6 +155,7 @@ export class FormularioAccidenteComponent implements OnInit {
             fechaNacimientoEmpleado: this.reporte.fechaNacimientoEmpleado == null ? null : new Date(this.reporte.fechaNacimientoEmpleado),
             generoEmpleado: this.reporte.generoEmpleado,
             direccionEmpleado: this.reporte.direccionEmpleado,
+            correoEmpleado: this.reporte.emailEmpleado,//usuario.email
             telefonoEmpleado: this.reporte.telefonoEmpleado,
             telefono2Empleado: this.reporte.telefono2Empleado,
             fechaIngresoEmpleado: this.reporte.fechaIngresoEmpleado == null ? null : new Date(this.reporte.fechaIngresoEmpleado),
@@ -213,6 +223,7 @@ export class FormularioAccidenteComponent implements OnInit {
 
         this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
         this.cdRef.detectChanges();
+        console.log(this.empleadoSelect.usuario.email)
 
     }
 

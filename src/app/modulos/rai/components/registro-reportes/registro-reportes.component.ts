@@ -72,6 +72,7 @@ async  ngOnInit() {
   }
 
   buscarEmpleado(empleadoIdentificacion: string) {
+    console.log(empleadoIdentificacion)
     let fq = new FilterQuery();
     fq.fieldList = [
       'id',
@@ -91,16 +92,19 @@ async  ngOnInit() {
       resp => {
         let empleado = <Empleado>FilterQuery.dtoToObject((resp['data'])[0]);
         this.empleadoSelect = empleado;
+          console.log(this.empleadoSelect.usuario.email)
+        
       }
     );
   }
 
   inicializarReporte() {
-    console.log(this.tipoReporte);
+    console.log(this.empleadoSelect.usuario.email);
     this.reporteService.inicializarReporte(this.empleadoSelect.id).then(
       data => {
         this.reporteSelect = <Reporte>data;
         this.reporteSelect.tipo = this.tipoReporte;
+        this.reporteSelect.emailEmpleado=this.empleadoSelect.usuario.email;
       }
     );
   }

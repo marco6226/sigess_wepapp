@@ -23,6 +23,7 @@ export class Reporte {
   direccionEmpresa: string;
   telefonoEmpresa: string;
   telefono2Empresa: string;
+  emailEmpleado:string;
   emailEmpresa: string;
   zonaEmpresa: string;
   centrTrabIgualSedePrinc: boolean;
