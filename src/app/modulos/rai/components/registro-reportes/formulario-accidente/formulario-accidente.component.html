@@ -291,7 +291,7 @@
                         Correo
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
-                        <input pInputText formControlName="correoEmpleado" readonly/>
+                        <input pInputText formControlName="emailEmpleado" readonly/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Teléfono
@@ -436,10 +436,10 @@
                         <p-radioButton name="laborHabitual" label="No" [value]="false"
                             formControlName="realizandoLaborHabitual"></p-radioButton>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.realizandoLaborHabitual=='false'|| idEmpresa!='22');else blanco2">
                         ¿Cual?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.realizandoLaborHabitual=='false'|| idEmpresa!='22');else blanco4">
                         <input pInputText formControlName="nombreLaborHabitual" />
                     </div>
 
