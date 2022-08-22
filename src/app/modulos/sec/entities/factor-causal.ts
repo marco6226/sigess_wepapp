@@ -80,12 +80,14 @@ export interface listPlanAccion{
 
 export interface planCausaRaiz{
   // id: number;
+  nombreFC2?: string;
   causaRaiz: string;
   especifico: PlanEspecifico;
   razonable?: PlanRazonable;
   medible?: PlanMedible;
   eficaz?: PlanEficaz;
   revisado?: PlanRevisado;
+  preguntas?:string;
   
 }
 

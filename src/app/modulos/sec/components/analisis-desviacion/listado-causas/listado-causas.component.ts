@@ -2,6 +2,7 @@ import { ConfirmationService, MessageService } from 'primeng/primeng';
 import { FactorCausal, listFactores, listPlanAccion } from './../../../entities/factor-causal';
 import { Component, Injectable, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+// import { element } from 'protractor';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ListadoCausasComponent implements OnInit {
 }
 
   @Input() planAccionList: listPlanAccion[]=[];
+  // @Input() planAccionList2: listPlanAccion[]=[];
 
   causasListSelect: listFactores[];
 
@@ -46,8 +48,14 @@ export class ListadoCausasComponent implements OnInit {
       accept: () => {
         console.log("hola", this.causasListSelect);
         let tempnombreFC;
+        let tempnombreFC2;
         let tempcausaRaiz;
+        let preguntas;
 
+        tempnombreFC=""
+        tempnombreFC2=""
+        tempcausaRaiz=""
+        preguntas=""
 
         var sortedArray: listFactores[] = this.causasListSelect.sort((obj1, obj2) => {
           if (obj1.nombre > obj2.nombre) {
@@ -59,18 +67,22 @@ export class ListadoCausasComponent implements OnInit {
           }
       
           return 0;
-      });
-        
-      console.log(sortedArray)
+        });
 
         this.causasListSelect.forEach(element => {
           console.log(element);
         
           
           var re = element.nombre; 
-          if(tempnombreFC==undefined){
-            tempnombreFC=""
-          }
+          // if(tempnombreFC==undefined){
+          //   tempnombreFC=""
+          // }
+          // if(tempnombreFC2==undefined){
+          //   tempnombreFC2=""
+          // }
+          // if(tempcausaRaiz==undefined){
+          //   tempcausaRaiz=""
+          // }
           var str = tempnombreFC
           console.log(str.search(re))
           if (str.search(re) == -1 ) { 
@@ -80,16 +92,26 @@ export class ListadoCausasComponent implements OnInit {
               tempnombreFC = element.nombre            
             }
           }
+          if (tempnombreFC2) {
+            tempnombreFC2 = tempnombreFC2 + '**' + element.nombre           
+          } else {
+            tempnombreFC2 = element.nombre        
+          }
           
-          
-
           if (tempcausaRaiz) {
             tempcausaRaiz = tempcausaRaiz + '**' + element.metodologia            
           } else {
             tempcausaRaiz = element.metodologia            
           }
-        });
 
+          if (preguntas) {
+            preguntas = preguntas + '**' + element.pregunta            
+          } else {
+            preguntas = element.pregunta
+          }
+        });
+        // console.log(element)
+        
         let isExist = this.planAccionList.find(ele=>{
           return ele.nombreFC == tempnombreFC || ele.causaRaiz == tempcausaRaiz
         })
@@ -101,7 +123,14 @@ export class ListadoCausasComponent implements OnInit {
           console.log(x);
           this.planAccionList.forEach(ele=>{
             if (tempnombreFC == ele.nombreFC) {
+              // ele.preguntas.
+              // ele.preguntas=preguntas
+              // ele.causaRaiz2=tempcausaRaiz
+              // ele.nombreFC2=tempnombreFC2
               ele.causaRaiz.push({ 
+                // id:1,
+                nombreFC2:tempnombreFC2,
+                preguntas: preguntas,
                 causaRaiz: tempcausaRaiz, 
                 especifico:{
                   nombreAccionCorrectiva: null,
@@ -136,7 +165,10 @@ export class ListadoCausasComponent implements OnInit {
             }
           })
         }else{
+          // preguntas.push(preguntas)
           tempCausa.push({
+            nombreFC2:tempnombreFC2,
+            preguntas:preguntas,
             causaRaiz: tempcausaRaiz, 
                 especifico:{
                   nombreAccionCorrectiva: null,

@@ -82,6 +82,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     
     listaEvidence
     listPlanAccion: listPlanAccion[] =[]
+    listPlanAccion2: listPlanAccion[] =[]
     causaAdminList: TreeNode[] = [];
     causaAdminListSelect: TreeNode[] = [];
     causaAdminAnalisisList: CausaAdministrativa[];
@@ -1068,9 +1069,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         if(this.listPlanAccion.length>0){
         
             this.listPlanAccion.forEach(element => {
+                // console.log(element)
 
-
-
+                        let nombre:string[]=[];
+                        let causas:string[]=[];
+                        let preguntas:string[]=[];
+                        let id:number;
                 // let isPlanAccionFinish = element.causaRaiz.find(ele=>{
                 //     return ele.revisado.isComplete == true
                 // })
@@ -1087,30 +1091,22 @@ export class AnalisisDesviacionComponent implements OnInit {
                      console.log(causa);
 
                     if (causa.revisado.isComplete) {
-                        let nombre = element.nombreFC.split('**')
-                        let causas = causa.causaRaiz.split('**')
-                        console.log(nombre)
+
+                        nombre = causa.nombreFC2.split('**')
+                        causas = causa.causaRaiz.split('**')
+                        preguntas=causa.preguntas.split('**')
                         
-
-
                         for (let index = 0; index < nombre.length; index++) {
-                            for (let index2 = 0; index2 < causas.length; index2++) {
-                            // console.log(nombre[index],causas[index]);
-                            let dataFactor:any=[]
-                            console.log(nombre[index])
-                            console.log(causas[index2])
-                            console.log(this.dataListFactor)
-                            dataFactor = this.dataListFactor.find(ele=> {
-                                return ele.nombre == nombre[index] && ele.metodologia == causas[index2]
-                            })
+                            
+                                let dataFactor:any=[]
+                                dataFactor = this.dataListFactor.find(ele=> {
+                                    return ele.nombre == nombre[index] && ele.metodologia == causas[index] && ele.pregunta == preguntas[index]
+                                })
 
-                             console.log(dataFactor);
-
-                            if (dataFactor) {
-                                console.log(dataFactor)
-                                dataFactor.accion = 'Con Plan de Accion'                            
-                            }
-                        }
+                                if (dataFactor) {
+                                    console.log(dataFactor)
+                                    dataFactor.accion = 'Con Plan de Accion'                            
+                                }
                         }
                     }
                     else{
