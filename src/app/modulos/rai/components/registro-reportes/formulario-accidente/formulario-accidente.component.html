@@ -285,7 +285,7 @@
                         Fecha ingreso
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngresoEmpleado" (ngModelChange)="changeCalendar()" >
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngresoEmpleado" (ngModelChange)="changeCalendar()" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange">
                             <!-- [formControl]="form.controls['fechaIngresoEmpleado']" -->
                             <!-- formControlName="fechaIngresoEmpleado" -->
                         </p-calendar>
@@ -328,10 +328,10 @@
                         <input pInputText formControlName="codigoOcupacionHabitual" />
                     </div>
                     
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
                         Zona residencia
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
                         <p-radioButton name="zonaEmpleado" label="Urbana" value="U" formControlName="zonaEmpleado">
                         </p-radioButton>
                         <p-radioButton name="zonaEmpleado" label="Rural" value="R" formControlName="zonaEmpleado">
