@@ -3,8 +3,6 @@ import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { EmpresaAlidada } from './../../../empresa/entities/empresa';
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
-import { FilterQuery } from 'app/modulos/core/entities/filter-query';
-import { Criteria, Filter } from 'app/modulos/core/entities/filter';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/primeng';
 
@@ -25,15 +23,6 @@ export class AliadosComponent implements OnInit {
 
   formNatural: FormGroup
   formJuridica: FormGroup
-
-  fields: string[] = [
-    'id',
-    'razonSocial',
-    'nombreComercial',
-    'nit',
-    'email',
-    
-  ];
 
   divisionList= [
     { label: "Almacenes Corona", value: "Almacenes Corona" },
@@ -119,6 +108,10 @@ export class AliadosComponent implements OnInit {
         actividades_contratadas: this.formNatural.value.actividadesContratadas,
         localidad: this.formNatural.value.localidad,
         division: JSON.stringify(this.formNatural.value.division),
+        estado:'Creado',
+        calificacion:'Bajo',
+        fechaCreacion: new Date(),
+        activo: true
       }
       
     } else if (this.formJuridica.valid){
@@ -137,6 +130,10 @@ export class AliadosComponent implements OnInit {
         logo: null,
         empresasContratistasList: [],
         tipo_persona: this.formJuridica.value.tipo_persona,
+        estado:'Creado',
+        calificacion:'Bajo',
+        fechaCreacion: new Date(),
+        activo: true
       }
     }
 
@@ -151,57 +148,4 @@ export class AliadosComponent implements OnInit {
     })
   }
 
-  test(){
- 
-    
-    this.formNatural.value.tipo_persona = this.seleccion
-
-    console.log(this.formNatural.value);
-    console.log(this.formNatural.valid);
-
-    console.log(this.formJuridica.value);
-    console.log(this.formJuridica.valid);
-    
-
-    // console.log(this.empresaService.obtenerContratistas('2').then(elem=>{
-    //   console.log(elem);
-      
-    // }))
-
-    // this.empresaService.getAliadoById(27).subscribe(elem=>{
-    //   console.log(elem);
-      
-    // })
-
-    // this.loading = true;
-        let filterQuery = new FilterQuery();
-        // filterQuery.sortField = event.sortField;
-        // filterQuery.sortOrder = event.sortOrder;
-        // filterQuery.offset = event.first;
-        // filterQuery.rows = event.rows;
-        filterQuery.count = true;
-        filterQuery.groupBy = "nit";
-        filterQuery.fieldList = this.fields;
-        filterQuery.filterList = [];
-
-        let filtPadre = new Filter();
-        filtPadre.criteria = Criteria.IS_NOT_NULL;
-        filtPadre.field = 'tipo_persona';
-        filterQuery.filterList.push(filtPadre);
-
-        // filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-
-        this.empresaService.findByFilter(filterQuery).then(
-            resp => {
-              console.log(resp);
-              
-                // this.totalRecords = (<any[]>resp['data']).length;
-                // this.loading = false;
-                // this.empresasList = [];
-                // (<any[]>resp['data']).forEach(dto => this.empresasList.push(FilterQuery.dtoToObject(dto)));
-            }
-        );
-    
-  }
-  
 }

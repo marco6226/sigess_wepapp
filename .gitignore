@@ -4,3 +4,4 @@ dist
 /src/app/modulos/core/auth.service.ts
 .vscode/settings.json
 .gitignore
+generador-componentes.txt
