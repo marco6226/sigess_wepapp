@@ -507,10 +507,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <p-dropdown [options]="sitioList" formControlName="sitio"></p-dropdown>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.sitio=='OTRO'|| idEmpresa!='22');else blanco2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.sitio=='OTRO');else blanco2">
                         ¿Cual?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.sitio=='OTRO'|| idEmpresa!='22');else blanco4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.sitio=='OTRO');else blanco4">
                         <input pInputText formControlName="cualSitio" placeholder="Sitio del accidente" />
                     </div>
 
@@ -520,10 +520,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
                         <p-dropdown [options]="tipoLesionList" formControlName="tipoLesion"></p-dropdown>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.tipoLesion=='OTRO'|| idEmpresa!='22');else blanco2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.tipoLesion=='OTRO');else blanco2">
                         ¿Cual?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.tipoLesion=='OTRO'|| idEmpresa!='22');else blanco4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.tipoLesion=='OTRO');else blanco4">
                         <input pInputText formControlName="cualTipoLesion" placeholder="Tipo lesión" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente ">
@@ -532,10 +532,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
                         <p-dropdown [options]="agenteList" formControlName="agente"></p-dropdown>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.agente=='NO_CLASIFICADOS'|| idEmpresa!='22');else blanco2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.agente=='NO_CLASIFICADOS');else blanco2">
                         ¿Cual?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.agente=='NO_CLASIFICADOS'|| idEmpresa!='22');else blanco4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.agente=='NO_CLASIFICADOS');else blanco4">
                         <input pInputText formControlName="cualAgente" placeholder="Agente" />
                     </div>
 
@@ -545,10 +545,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <p-dropdown [options]="mecanismoList" formControlName="mecanismo"></p-dropdown>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2 " *ngIf="(form.value.mecanismo=='OTRO'|| idEmpresa!='22');else blanco2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2 " *ngIf="(form.value.mecanismo=='OTRO');else blanco2">
                         ¿Cual?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="form.value.mecanismo=='OTRO'|| idEmpresa!='22';else blanco4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="form.value.mecanismo=='OTRO';else blanco4">
                         <input pInputText formControlName="cualMecanismo" placeholder="Mecanismo" />
                     </div>
 
