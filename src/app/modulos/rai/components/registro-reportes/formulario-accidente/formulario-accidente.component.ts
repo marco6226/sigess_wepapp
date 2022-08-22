@@ -155,7 +155,7 @@ export class FormularioAccidenteComponent implements OnInit {
             fechaNacimientoEmpleado: this.reporte.fechaNacimientoEmpleado == null ? null : new Date(this.reporte.fechaNacimientoEmpleado),
             generoEmpleado: this.reporte.generoEmpleado,
             direccionEmpleado: this.reporte.direccionEmpleado,
-            correoEmpleado: this.reporte.emailEmpleado,//usuario.email
+            emailEmpleado: this.reporte.emailEmpleado,//usuario.email
             telefonoEmpleado: this.reporte.telefonoEmpleado,
             telefono2Empleado: this.reporte.telefono2Empleado,
             fechaIngresoEmpleado: this.reporte.fechaIngresoEmpleado == null ? null : new Date(this.reporte.fechaIngresoEmpleado),
