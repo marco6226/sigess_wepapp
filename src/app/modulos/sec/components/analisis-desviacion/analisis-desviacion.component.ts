@@ -223,12 +223,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.dataListFactor);        
         this.tabIndex=9;
     }
-    test2(){
-        setTimeout(() => {
-            this.setListDataFactor();
-        }, 1000);
+    // test2(){
+    //     setTimeout(() => {
+    //         this.setListDataFactor();
+    //     }, 1000);
         
-    }
+    // }
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
