@@ -207,6 +207,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(eliminar)
         if(this.listPlanAccion[eliminar[1]].causaRaiz.length==0){
             this.listPlanAccion=this.listPlanAccion.filter((item) => item!==eliminar[0]);}
+        this.setListDataFactor();
     }
 
     tSelectPeligro(a: string){
@@ -222,6 +223,12 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.dataListFactor);        
         this.tabIndex=9;
     }
+    // test2(){
+    //     setTimeout(() => {
+    //         this.setListDataFactor();
+    //     }, 1000);
+        
+    // }
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,

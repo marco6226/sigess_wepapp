@@ -211,7 +211,7 @@
                         <app-listado-causas [factores]="dataListFactor" (tabIndex)="changeTab()" (validacionPA)="habilitarInforme()" [planAccionList]="listPlanAccion"></app-listado-causas>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && listPlanAccion.length>0" header="Plan de accion">
-                        <app-plan-accion-list (validacionPA)="habilitarInforme()" (flagPlanAccionlist)="eliminarPlandeAccion($event)" [planAccionList]="listPlanAccion"></app-plan-accion-list>
+                        <app-plan-accion-list (actualizar)="setListDataFactor()" (validacionPA)="habilitarInforme()" (flagPlanAccionlist)="eliminarPlandeAccion($event)" [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
@@ -436,7 +436,7 @@
 </ng-container>
 
 <div style="height: 100px;;"></div>
-
+<!-- <button (click)="test2()">test2</button> -->
 <!-- <button (click)="test()">test</button> -->
 <!-- <button (click)="setListDataFactor()">vli</button> -->
 <!-- 

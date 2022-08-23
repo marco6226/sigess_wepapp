@@ -38,7 +38,7 @@ export class ListadoCausasComponent implements OnInit {
 
   test(){
     console.log(this.factores);
-    
+    this.causasListSelect=[]
   }
 
   crearPlanAccion(){
@@ -203,7 +203,13 @@ export class ListadoCausasComponent implements OnInit {
         }
         this.validacionPA.emit();
         this.tabIndex.emit();
+        // console.log(this.factores)
+        this.causasListSelect=[]
       }
+      
     });
+    // setTimeout(() => {
+    //   this.causasListSelect=[]
+    // }, 5000);
   }
 }

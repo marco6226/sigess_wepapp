@@ -14,6 +14,7 @@ export class PlanAccionListComponent implements OnInit {
   @Input() planAccionList: listPlanAccion[] = []
   @Output() validacionPA = new EventEmitter<any>()
   @Output() flagPlanAccionlist =new EventEmitter<any>()
+  @Output() actualizar =new EventEmitter<any>()
   planAccionListSelected: listPlanAccion;
   causasListSelect
   display: boolean = false;
@@ -55,6 +56,7 @@ export class PlanAccionListComponent implements OnInit {
 				console.log(this.planAccionList[i].causaRaiz)
 			},
     });
+    this.actualizar.emit()
   }
 
   selectProduct(event) {
