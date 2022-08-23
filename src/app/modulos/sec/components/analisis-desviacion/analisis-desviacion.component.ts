@@ -334,7 +334,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         }
         this.cargarTiposPeligro();
         this.diagram=this.FlowchartService.getDiagram();
-        this.evidencias();
+        // this.evidencias();
 
         //this.cargarPeligro(this.analisisPeligros.value['Peligro.id']);
 
@@ -606,18 +606,9 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
     
     a:string;
+    buttonPrint:boolean=false;
     async imprimir() {
-        // this.diagram=this.FlowchartService.getDiagram();
-        // let printOptions: IExportOptions = {};
-        // printOptions.mode = 'Data';
-        // printOptions.region = 'PageSettings';
-
-        // // this.diagram  = this.comp.exportDF2();
-        // console.log(this.diagram)
-        // this.a=this.diagram.exportDiagram(printOptions).toString()
-        
-        // console.log(this.a)
-
+        this.buttonPrint=true;
         setTimeout(async () => {
         // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
@@ -667,6 +658,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
+            this.buttonPrint=false;
         }, 500);
         }, 2000);
     }, 500);
@@ -741,7 +733,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
     modificarAnalisis() {
-
+        this.buttonPrint=true;
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
         // this.informeJson.Diagrama=this.imgIN;
@@ -795,6 +787,10 @@ export class AnalisisDesviacionComponent implements OnInit {
         // }, 1000);
         
         // console.log(ad.tareaDesviacionList);
+        setTimeout(() => {
+            this.buttonPrint=false;
+        }, 1000);
+        
         // console.log(ad.flow_chart);
     }, 2000);
     }

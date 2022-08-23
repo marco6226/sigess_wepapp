@@ -214,7 +214,7 @@
                         <app-plan-accion-list (actualizar)="setListDataFactor()" (validacionPA)="habilitarInforme()" (flagPlanAccionlist)="eliminarPlandeAccion($event)" [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && displayInforme" header="Informe">
-                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
+                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon" [disabled]="buttonPrint"></button> 
                         <!-- <button  (click)="test2()" >test</button>  -->
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
                             <tr>
