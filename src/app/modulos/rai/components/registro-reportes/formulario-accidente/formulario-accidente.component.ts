@@ -205,8 +205,8 @@ export class FormularioAccidenteComponent implements OnInit {
             tipoIdentificacionResponsable: this.reporte.tipoIdentificacionResponsable,
             numeroIdentificacionResponsable: this.reporte.numeroIdentificacionResponsable,
             cargoResponsable: this.reporte.cargoResponsable,
-            fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte)
-            //console.log(empresa)
+            fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte),
+           
         });
 
 

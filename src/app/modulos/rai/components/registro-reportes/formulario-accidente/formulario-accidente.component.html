@@ -385,7 +385,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <area-selector formControlName="areaAccidente" style="
-                        width: 320px;
+                        width: 350px;
                     "
                             [name]="this.reporte.areaAccidente ?this.reporte.areaAccidente.nombre:''" required>
                         </area-selector>
@@ -436,10 +436,10 @@
                         <p-radioButton name="laborHabitual" label="No" [value]="false"
                             formControlName="realizandoLaborHabitual"></p-radioButton>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.realizandoLaborHabitual=='false'|| idEmpresa!='22');else blanco2">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.realizandoLaborHabitual==false);else blanco2">
                         ¿Cual?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.realizandoLaborHabitual=='false'|| idEmpresa!='22');else blanco4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && (form.value.realizandoLaborHabitual==false);else blanco4">
                         <input pInputText formControlName="nombreLaborHabitual" />
                     </div>
 
