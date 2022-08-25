@@ -22,7 +22,9 @@
 			<div id="avatar-content">
 				
 				<img *ngIf="empresaSelect.id == '22'" [src]="empresaSelect.logo" style="width: 140px;margin-top: -25px;" />
-				
+				<img *ngIf="empresaSelect.id != '22'" [src]="empresaSelect.logo" style="width: 140px;margin-top: -25px;visibility: hidden" />
+				<!-- <img  [src]="empresaSelect.logo" style="width: 140px;margin-top: -25px;" /> -->
+				<!-- <button (click)="test()">test</button> -->
 			</div>
 			
 		</div>
