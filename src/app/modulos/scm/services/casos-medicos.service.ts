@@ -137,6 +137,18 @@ export class CasosMedicosService {
         return this.http.get<Reintegro>(`${endPoints.scm}reintegro/${idCaso}`, this.getRequestHeaders(this.headers))
     }
 
+    // getReintegroByCaseId(idCaso: string):any{
+    //     return new Promise(resolve => {
+    //         this.http.get<Reintegro>(`${endPoints.scm}reintegro/${idCaso}`, this.getRequestHeaders(this.headers))
+    //         .map(res => res)
+    //         .subscribe(
+    //         res => {
+    //           resolve(res);
+    //         }
+    //         )
+    //     });
+    // }
+
     editReintegro(reintegro: Reintegro){
         return this.http.put<[Reintegro]>(`${endPoints.scm}reintegro/`, reintegro, this.getRequestHeaders(this.headers))
     }

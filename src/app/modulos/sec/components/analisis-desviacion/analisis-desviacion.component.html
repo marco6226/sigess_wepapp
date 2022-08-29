@@ -45,6 +45,7 @@
             <div class="ui-g-12 ui-sm-12">
                 <p-tabView [(activeIndex)]="tabIndex" (onChange)="indexTab($event)">
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Descripción">
+                        <!-- <button (click)="test2()">test2</button> -->
                         <div class="ui-g">
                             <div *ngIf="desviacionesList" class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
@@ -127,7 +128,7 @@
                                             <!-- <td>{{desviacionesList[0]?.nombre}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                             <!-- <p-dropdown [options]="this.peligroItemList" formControlName="tipoCaso"></p-dropdown> -->
-                                            <!-- <button (click)="test()">test</button> -->
+                                            
                                             <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
                                             </th>
                                         </tr>

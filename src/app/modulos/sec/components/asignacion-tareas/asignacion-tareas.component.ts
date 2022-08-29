@@ -9,6 +9,7 @@ import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Filter, Criteria } from '../../../core/entities/filter';
 
+
 import * as XLSX from 'xlsx'; 
 import {DragDropModule} from 'primeng/dragdrop';
 
@@ -27,6 +28,7 @@ export class AsignacionTareasComponent implements OnInit {
     msgs: Message[] = [];
     observacionesRealizacion: string;
     arrayIdsareas  = [];
+    idEmpresa: string;
      
     modalExcel = false;
     fileName= 'ListadoSeguimiento.xlsx';
@@ -38,6 +40,7 @@ export class AsignacionTareasComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.idEmpresa = this.sesionService.getEmpresa().id;
 
         let date = new Date().getFullYear().toString();
 

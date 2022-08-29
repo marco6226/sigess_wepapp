@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
+import { TareaService } from "app/modulos/sec/services/tarea.service";
 import { TipoPeligroService } from "app/modulos/ipr/services/tipo-peligro.service";
 import { PeligroService } from "app/modulos/ipr/services/peligro.service";
 
@@ -15,6 +16,7 @@ import { SistemaCausaRaizService } from "app/modulos/sec/services/sistema-causa-
 import { SistemaCausaRaiz } from "app/modulos/sec/entities/sistema-causa-raiz";
 import { CausaRaiz } from "app/modulos/sec/entities/causa-raiz";
 import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
+// import { Tarea } from "app/modulos/sec/entities/tarea";
 import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
 import { Peligro } from "app/modulos/ipr/entities/peligro";
 import {Diagrama, InformeJson} from "../../entities/informeFinal"
@@ -77,6 +79,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     formp: FormGroup;
     analisisPeligros: FormGroup;
     tareasList: Tarea[];
+    // tareasList2: Tarea[];
     flowChartSave: string;
     form2: Peligro;
     
@@ -132,6 +135,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     dataListFactor: listFactores[]=[];
 
     dataFlow: AnalisisDesviacion;
+    tarea: Tarea
     factorCusal: FactorCausal[]=[]
     informacionComplementaria: InformacionComplementaria;
     informeJson: InformeJson;
@@ -148,6 +152,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     disabled:boolean=false;
     tabIndex:number;
     imgCompress:string;
+
+    // tarea:Tarea;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -233,6 +239,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
         private analisisDesviacionService: AnalisisDesviacionService,
+        private tareaService: TareaService,
         private tipoPeligroService: TipoPeligroService,
         private peligroService: PeligroService,
         private sistemaCausaInmdService: SistemaCausaInmediataService,
@@ -332,6 +339,11 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultar = true;
             this.consultarAnalisis(this.value.id);
         }
+        // console.log(this.analisisId)
+        // setTimeout(() => {
+        //     console.log(this.analisisId)
+        // }, 5000);
+        // console.log(this.value)
         this.cargarTiposPeligro();
         this.diagram=this.FlowchartService.getDiagram();
         // this.evidencias();
@@ -340,8 +352,34 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         //this.cargarPeligro();
         //this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
+        this.tarea={
+            id: '',
+            nombre: 'hola',
+            descripcion: '',
+            tipoAccion: '',
+            jerarquia: '',
+            estado: '',
+            fechaProyectada: undefined,
+            fechaRealizacion: undefined,
+            fechaVerificacion: undefined,
+            areaResponsable: null,
+            empResponsable: null,
+            observacionesRealizacion: '',
+            observacionesVerificacion: '',
+            usuarioRealiza: null,
+            usuarioVerifica: null,
+            analisisDesviacionList: [],
+            modulo: '',
+            codigo: ''
+        }
+        // console.log(this.tarea)
+        console.log(this.tareasList)
     }
-
+// test2(){
+//     console.log(this.tarea)
+//     this.tarea.nombre='hola2';
+//     console.log(this.tarea)
+// }
     cargarTiposPeligro() {
         this.tipoPeligroService.findAll().then(
           resp => {
@@ -582,6 +620,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 );
                 this.habilitarInforme()
         });
+        console.log(this.tareasList)
     }
     guardadModificar(event){
         this.disabled=event;
@@ -726,13 +765,12 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.modificar = true;
             this.adicionar = false;
         });
-
-        // console.log(ad.tareaDesviacionList);
     }
 
 
 
     modificarAnalisis() {
+        if(this.idEmpresa=='22'){this.tareaList2();}
         this.buttonPrint=true;
         this.informacionComplementaria=this.analisisPeligros.value;
         this.informeJson=this.infoIn.value;
@@ -762,7 +800,9 @@ export class AnalisisDesviacionComponent implements OnInit {
         // ad.flow_chart = JSON.stringify(this.flowChartSave);
         ad.flow_chart = this.flowChartSave;
         ad.participantes = JSON.stringify(this.participantes);
+        
         ad.tareaDesviacionList = this.tareasList;
+
         ad.jerarquia = this.jerarquia;
         ad.complementaria=JSON.stringify(this.informacionComplementaria);
         ad.informe=JSON.stringify(this.informeJson);
@@ -784,15 +824,111 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.modificar = true;
                 this.adicionar = false;
             });
+            console.log(this.tareasList)
         // }, 1000);
-        
-        // console.log(ad.tareaDesviacionList);
         setTimeout(() => {
             this.buttonPrint=false;
         }, 1000);
         
         // console.log(ad.flow_chart);
     }, 2000);
+    }
+
+    tareaList2(){
+        // this.tareasList2=this.tareasList
+        console.log(this.tareasList)
+        this.listPlanAccion.forEach(element => {
+            element.causaRaiz.forEach(async element2 => {
+                let x=await this.tareasList.find(data=>{
+                    // console.log(new Date(data.fechaProyectada))
+                    // return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && (data.descripcion==element2.especifico.accionCorrectiva));
+                     return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
+                })
+                let y=await this.tareasList.find(data=>{
+                    return ( data.nombre==element2.medible.planVerificacion && new Date(data.fechaProyectada).toDateString()==new Date(element2.medible.fechaVencimiento).toDateString() && (data.empResponsable.primerNombre==element2.medible.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.medible.responsableEmpresa.id));
+                })
+                let z=await this.tareasList.find(data=>{
+                    return ( data.nombre==element2.eficaz.planValidacion && new Date(data.fechaProyectada).toDateString()==new Date(element2.eficaz.fechaVencimiento).toDateString() && (data.empResponsable.primerNombre==element2.eficaz.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.eficaz.responsableEmpresa.id));
+                })
+                for (let index = 0; index < 3; index++) {
+                    //  console.log(x)
+                    //  console.log(y)
+                    //  console.log(z)
+                    //  console.log(element2.medible.fechaVencimiento)
+                    //  console.log(new Date(element2.especifico.fechaVencimiento).toDateString())
+                    if(index==0 && element2.especifico.isComplete && x==undefined){
+                        let tarea:Tarea={
+                            id: '',
+                            nombre: element2.especifico.nombreAccionCorrectiva,
+                            descripcion: element2.especifico.accionCorrectiva,
+                            tipoAccion: '',
+                            jerarquia: '',
+                            estado: 'NUEVO',
+                            fechaProyectada: new Date(element2.especifico.fechaVencimiento),
+                            fechaRealizacion: undefined,
+                            fechaVerificacion: undefined,
+                            areaResponsable: null,
+                            empResponsable: element2.especifico.responsableEmpresa,
+                            observacionesRealizacion: '',
+                            observacionesVerificacion: '',
+                            usuarioRealiza: null,
+                            usuarioVerifica: null,
+                            analisisDesviacionList: [],
+                            modulo: '',
+                            codigo: '',
+                        };
+                        this.tareasList.push(tarea)
+                    }else if (index==1 && element2.medible.isComplete && y==undefined) {
+                        let tarea:Tarea={
+                            id: '',
+                            nombre: element2.medible.planVerificacion,
+                            descripcion:'',
+                            tipoAccion: '',
+                            jerarquia: '',
+                            estado: 'NUEVO',
+                            fechaProyectada: new Date(element2.medible.fechaVencimiento),
+                            fechaRealizacion: undefined,
+                            fechaVerificacion: undefined,
+                            areaResponsable: null,
+                            empResponsable: element2.medible.responsableEmpresa,
+                            observacionesRealizacion: '',
+                            observacionesVerificacion: '',
+                            usuarioRealiza: null,
+                            usuarioVerifica: null,
+                            analisisDesviacionList: [],
+                            modulo: '',
+                            codigo: '',
+                        };
+                        this.tareasList.push(tarea)
+                    } else if(index==2 && element2.eficaz.isComplete && z==undefined){
+                        let tarea:Tarea={
+                            id: '',
+                            nombre: element2.eficaz.planValidacion,
+                            descripcion: '',
+                            tipoAccion: '',
+                            jerarquia: '',
+                            estado: 'NUEVO',
+                            fechaProyectada: new Date(element2.eficaz.fechaVencimiento),
+                            fechaRealizacion: undefined,
+                            fechaVerificacion: undefined,
+                            areaResponsable: null,
+                            empResponsable: element2.eficaz.responsableEmpresa,
+                            observacionesRealizacion: '',
+                            observacionesVerificacion: '',
+                            usuarioRealiza: null,
+                            usuarioVerifica: null,
+                            analisisDesviacionList: [],
+                            modulo: '',
+                            codigo: '',
+                        };
+                        this.tareasList.push(tarea)
+                    }
+                }     
+            });
+        });   
+        console.log(this.listPlanAccion)
+        console.log(this.tareasList)
+        // console.log(this.tareasList2)
     }
 
     manageResponse(ad: AnalisisDesviacion) {
@@ -880,6 +1016,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     /************************ TAREAS ***************************** */
     onEvent(event) {
+        console.log(event.data)
         this.tareasList = event.data;
         // console.log(this.tareasList, ": Las tareas");
     }
@@ -976,7 +1113,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.tempData = []
         this.dataListFactor = []
         // setTimeout(() => {
-            console.log(this.dataListFactor); 
+            // console.log(this.dataListFactor); 
             try {          
                 this.tempData = []
                 this.factorCusal.forEach(data => {
@@ -1021,7 +1158,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 // console.log(this.tempData);
                 // this.dataListFactor = []
                 this.dataListFactor = this.tempData;
-                console.log(this.dataListFactor);  
+                // console.log(this.dataListFactor);  
             } catch (error) {
                     
             }
@@ -1091,7 +1228,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 // console.log(element);
                 
                 element.causaRaiz.forEach(causa => {
-                     console.log(causa);
+                    //  console.log(causa);
 
                     if (causa.revisado.isComplete) {
 
@@ -1107,13 +1244,13 @@ export class AnalisisDesviacionComponent implements OnInit {
                                 })
 
                                 if (dataFactor) {
-                                    console.log(dataFactor)
+                                    // console.log(dataFactor)
                                     dataFactor.accion = 'Con Plan de Accion'                            
                                 }
                         }
                     }
                     else{
-                         console.log("algo no es verdad");
+                        //  console.log("algo no es verdad");
                         validador = false
                     }
                 });

@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { Ipecr } from 'app/modulos/ipr/entities/ipecr'
 import { IpecrService } from 'app/modulos/ipr/services/ipecr.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { Reintegro } from 'app/modulos/scm/entities/reintegro.interface';
 
 @Component({
     selector: 'app-scm',
@@ -20,10 +22,13 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 })
 
 export class ScmComponent implements OnInit {
+    reintegroList: Reintegro[] =[]
+    idEmpresa: string;
     valor2: string;
     valor3: string;
     empresaId: string;
     casosList: any;
+    casosList2: any;
     usuarioSelect: Usuario;
     perfilList: SelectItem[] = [];
     visibleDlg: boolean;
@@ -62,7 +67,8 @@ export class ScmComponent implements OnInit {
     constructor(
         private scmService: CasosMedicosService,
         private cargoService: CargoService,
-        private router: Router
+        private router: Router,
+        private sesionService: SesionService
     ) { }
 
     async ngOnInit() {
@@ -77,9 +83,15 @@ export class ScmComponent implements OnInit {
                 //this.cargoList = this.cargoList.slice();
             }
         );
+        this.idEmpresa = this.sesionService.getEmpresa().id;
+        setTimeout(() => {
+            console.log(this.idEmpresa)
+        }, 2000);
     }
 
-    onSubmit() { }
+    onSubmit() { 
+
+    }
 
     openCase() {
         localStorage.setItem('scmShowCase', 'false');
@@ -131,6 +143,8 @@ export class ScmComponent implements OnInit {
             let res: any = await this.scmService.findByFilter(filterQuery);
             this.casosList = res.data;
             this.totalRecords = res.count;
+            console.log(res)
+            this.test()
 
         } catch (error) {
             console.log(error)
@@ -138,4 +152,67 @@ export class ScmComponent implements OnInit {
 
 
     }
+    async test(){
+        this.casosList2=[]
+        console.log(this.casosList)
+        await this.casosList.forEach(async element => {
+            // if(this.casosList2){
+                // console.log('1')
+                await this.scmService.getReintegroByCaseId(element.id).subscribe(data=>{
+                    this.reintegroList = (data!=[])?data:null;
+                    
+                    this.reintegroList.sort((a, b) => {
+                        if(a.id == b.id) {
+                        return 0; 
+                        }
+                        if(a.id > b.id) {
+                        return -1;
+                        }
+                        return 1;
+                    });
+
+                    this.casosList2.push({id:element.id, fechaCreacion:element.fechaCreacion, region:element.region, ciudad:element.ciudad, primerApellido: element.pkUser.primerApellido, primerNombre: element.pkUser.primerNombre, documento: element.documento, statusCaso:element.statusCaso, prioridadCaso: element.prioridadCaso, tipoCaso: element.tipoCaso, tipoReporte:this.reintegroList[0].tipo_retorno})
+                    // console.log(this.reintegroList)
+                  }).catch( 
+                    this.casosList2.push({id:element.id, fechaCreacion:element.fechaCreacion, region:element.region, ciudad:element.ciudad, primerApellido: element.pkUser.primerApellido, primerNombre: element.pkUser.primerNombre, documento: element.documento, statusCaso:element.statusCaso, prioridadCaso: element.prioridadCaso, tipoCaso: element.tipoCaso, tipoReporte:null})
+                  )
+
+            
+        });
+        console.log(this.casosList)
+        // cargoList
+    }
+    async test2(){
+        await this.scmService.getReintegroByCaseId('0').subscribe(data=>{
+            this.reintegroList = (data!=null)?data:null;
+          })
+
+          setTimeout(() => {
+            this.reintegroList.sort((a, b) => {
+                if(a.id == b.id) {
+                  return 0; 
+                }
+                if(a.id > b.id) {
+                  return -1;
+                }
+                return 1;
+              });
+              console.log(this.reintegroList)
+            //   this.test()
+          }, 1000);
+        // this.reintegroList.sort((a, b) => {
+        //     if(a == b) {
+        //       return 0; 
+        //     }
+        //     if(a < b) {
+        //       return -1;
+        //     }
+        //     return 1;
+        //   });
+    }
 }
+
+// SELECT id, tipo_retorno, descripcion, permanencia, periodo_seguimiento, reintegro_exitoso, observacion, pk_case, fecha_cierre
+// 	FROM scm.reintegros where pk_case=65
+//     SELECT pk_user, status_caso, observaciones, origen, codigo_cie10, sistema_afectado, diagnostico, caso_medico_laboral, razon, pcl, porcentaje_pcl, emision_pcl_fecha, pcl_emit_entidad, status_de_calificacion, fecha_calificacion, entidad_emite_calificacion, concept_rehabilitacion, fecha_concept_rehabilitacion, entidad_emite_concepto, requiere_intervencion, sve, professional_area, justification, id, region, ciudad, names, salud_status, cargo, fecha_creacion, documento, descripcion_cargo, fk_empresa_id, entidad_emitida, entidad_emitidatwo, fecha_concept_rehabilitaciontwo, concept_rehabilitaciontwo, entidad_emite_conceptotwo, eliminado, prioridad_caso, tipo_caso, fecha_final
+// 	FROM scm.casos_medicos where id =65

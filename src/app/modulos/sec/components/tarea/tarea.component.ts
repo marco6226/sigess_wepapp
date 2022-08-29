@@ -15,6 +15,7 @@ import { formatDate } from "@angular/common";
 import { CapitalizePipe } from "../../utils/pipes/capitalize.pipe";
 import { DirectorioService } from "app/modulos/ado/services/directorio.service";
 import { SesionService } from "app/modulos/core/services/sesion.service";
+import { Empresa } from 'app/modulos/empresa/entities/empresa'
 
 @Component({
     selector: "app-tarea",
@@ -40,11 +41,13 @@ export class TareaComponent implements OnInit {
     loading: boolean;
     fullName = "";
     empleado: Empleado;
+    empresaSelect: Empresa;
     empleadosList: Empleado[];
     status = 0;
     statuses;
     tareaEvidences = [];
     fechavisible = false;
+    idEmpresa: string;
 
     constructor(
         fb: FormBuilder,
@@ -68,6 +71,7 @@ export class TareaComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.idEmpresa = this.sesionService.getEmpresa().id;
         this.tareaId = this.route.snapshot.paramMap.get("id");
         this.getTarea();
 
