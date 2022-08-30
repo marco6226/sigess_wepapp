@@ -1,4 +1,27 @@
-<p>aliados-actualizar works!</p>
-<p>empresa id={{id}}</p>
+<p-panel header="Seguimiento contratistas" >
+    <p-tabView>
+      <!-- <p-tabPanel [header]="emp" *ngFor="let emp of empresasList">
+        <s-empresaDash [empresa]="emp"></s-empresaDash>
+      </p-tabPanel> -->
+      <p-tabPanel header="Información">
+        <app-aliados [valueEmpresa]="aliado" ></app-aliados>
+      </p-tabPanel>
+      <p-tabPanel header="SST"> <!-- Salud Seguridad Trabajo -->
 
-<button (click)="test()">test</button>
+      </p-tabPanel>
+      <p-tabPanel header="Cargue Documentos">
+
+      </p-tabPanel>
+      <p-tabPanel header="Actividades Contratadas">
+
+      </p-tabPanel>
+      <p-tabPanel header="Clasificación">
+
+      </p-tabPanel>
+      <p-tabPanel header="Asignacion Colider">
+
+      </p-tabPanel>
+    </p-tabView>
+</p-panel>
+
+<!-- <button (click)="test()">test</button> -->

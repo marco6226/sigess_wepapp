@@ -65,8 +65,8 @@
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
-                    <button pButton pRipple icon="pi pi-power-off" *ngIf="rowData.activo" class="p-button-rounded ui-button-success p-mr-2" (click)="onEdit(rowData)" title="Desactivar Alidado"></button>
-                    <button pButton pRipple icon="pi pi-power-off" *ngIf="!rowData.activo" class="p-button-rounded ui-button-danger p-mr-2" (click)="onEdit(rowData)" title="Activar Alidado"></button>
+                    <button pButton pRipple icon="pi pi-power-off" *ngIf="rowData.activo" class="p-button-rounded ui-button-success p-mr-2" (click)="onChangeStatusAliado(rowData, 'Desactivar')" title="Desactivar Alidado"></button>
+                    <button pButton pRipple icon="pi pi-power-off" *ngIf="!rowData.activo" class="p-button-rounded ui-button-danger p-mr-2" (click)="onChangeStatusAliado(rowData, 'Activar')" title="Activar Alidado"></button>
                     <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onEdit(rowData)" title="Enviar correo"></button>
                 </td>
             </tr>
@@ -86,4 +86,4 @@
   </p-tabView>
 </p-panel>
 
-<!-- <button (click)="loadData()">test</button> -->
+<!-- <button (click)="test()">test</button> -->
