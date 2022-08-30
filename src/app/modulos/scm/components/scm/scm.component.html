@@ -14,10 +14,16 @@
                 <th pSortableColumn="fechaCreacion">Fecha de apertura
                     <p-sortIcon field="fechaCreacion"></p-sortIcon>
                 </th>
-                <th pSortableColumn="region">Regional
+                <th pSortableColumn="region" *ngIf="idEmpresa!='22'">Regional
                     <p-sortIcon field="region"></p-sortIcon>
                 </th>
-                <th pSortableColumn="ciudad">Ciudad
+                <th pSortableColumn="region" *ngIf="idEmpresa=='22'">División/Unidad
+                    <p-sortIcon field="region"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ciudad" *ngIf="idEmpresa!='22'">Ciudad
+                    <p-sortIcon field="ciudad"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ciudad" *ngIf="idEmpresa=='22'">Ubicación
                     <p-sortIcon field="ciudad"></p-sortIcon>
                 </th>
                 <th pSortableColumn="pkUser">Apellido
