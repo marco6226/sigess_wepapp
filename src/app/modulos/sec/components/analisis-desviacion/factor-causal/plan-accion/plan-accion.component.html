@@ -3,7 +3,7 @@
 <!-- <p-panel *ngIf="process=='ESPECIFICO'" header="ESPECIFICO" [formGroup]="formEspecifico"> -->
     <div class="p-field">
         <label>Nombre de Acción Correctiva</label>
-        <input type="text" [(ngModel)]="planAcciones.especifico.nombreAccionCorrectiva" />
+        <input type="text" [(ngModel)]="planAcciones.especifico.nombreAccionCorrectiva" required/>
         <!-- <input type="text" formControlName="nombreAccionCorrectiva" /> -->
     </div>
     <div class="p-field">
@@ -16,7 +16,7 @@
     </div>
     <div class="p-field">
         <label>Responsable Empresa</label>
-        <s-empleadoSelector [(ngModel)]="planAcciones.especifico.responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
+        <s-empleadoSelector [(ngModel)]="planAcciones.especifico.responsableEmpresa" [readOnly]="reporteSelect " required></s-empleadoSelector>
     </div>
     <div class="p-field">
         <label>Responsable Externo</label>
@@ -35,7 +35,7 @@
     <div class="p-field">
         <label>Responsable de Verificar que la acción ha sido compleatada</label>
         <!-- <input type="text" required autofocus/> -->
-        <s-empleadoSelector [(ngModel)]="planAcciones.medible.responsableEmpresa" [readOnly]="reporteSelect "></s-empleadoSelector>
+        <s-empleadoSelector [(ngModel)]="planAcciones.medible.responsableEmpresa" [readOnly]="reporteSelect " required></s-empleadoSelector>
     </div>
     <div class="p-field">
         <label>Responsable Externo</label>
@@ -55,7 +55,7 @@
     <div class="p-field">
         <label>Responsable Verificar solución</label>
         <!-- <input type="text" required autofocus/> -->
-        <s-empleadoSelector [(ngModel)]="planAcciones.eficaz.responsableEmpresa " [readOnly]="reporteSelect "></s-empleadoSelector>
+        <s-empleadoSelector [(ngModel)]="planAcciones.eficaz.responsableEmpresa " [readOnly]="reporteSelect " required></s-empleadoSelector>
     </div>
     <div class="p-field">
         <label>Responsable Externo</label>
