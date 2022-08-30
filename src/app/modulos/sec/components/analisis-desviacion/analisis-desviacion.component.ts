@@ -852,7 +852,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.msgs = [];
             this.msgs.push({
                 severity: "error",
-                detail: "Faltan campos por llenar",
+                detail: "Faltan campos por llenar..",
             });
         }
     }
