@@ -55,6 +55,10 @@ export class GestionTareasComponent implements OnInit {
         this.adicionar = !this.readOnly;
         this.modificar = false;
     }
+
+    guardarAnalisis() {}
+    modificarAnalisis() {}
+
     
     onSubmit() {
         let tarea = new Tarea();
