@@ -93,8 +93,11 @@ export class TareaComponent implements OnInit {
         };
 
         // console.log(this.statuses[this.status])
-    }
 
+    }
+    test(){
+        console.log(this.tarea)
+    }
     async getTarea(event?) {
         this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
@@ -126,7 +129,7 @@ export class TareaComponent implements OnInit {
                     ? true
                     : false;
 
-            this.getTareaEvidences();
+            await this.getTareaEvidences();
 
             console.log(this.tarea);
 
@@ -155,6 +158,7 @@ export class TareaComponent implements OnInit {
                             (nombre || "") + " " + (apellido || "");
                     }
                 });
+                // this.tarea.responsable=this.tarea.empResponsable.primer_nombre+" "+this.tarea.empResponsable.primer_apellido
             }
 
             if (this.status === 3 || this.status === 4) {
