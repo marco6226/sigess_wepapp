@@ -70,10 +70,12 @@ Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 })
 export class AnalisisDesviacionComponent implements OnInit {
     @Input("miembros") documento: Documento;
+    // @Input() severidad: string;
     @Input("collapsed") collapsed: boolean;
     @Input("value") value: AnalisisDesviacion;
 
     diagram:DiagramComponent;
+    
     // ImgDF:string;
     formtp: FormGroup;
     formp: FormGroup;
@@ -102,6 +104,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     reporteSelect: Reporte[];
 
     desviacionesList: Desviacion[];
+    severidad: string;
+    severidadFlag:boolean;
     analisisCosto: AnalisisCosto = new AnalisisCosto();
     participantes: any[];
     documentos: Documento[];
@@ -229,12 +233,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         // console.log(this.dataListFactor);        
         this.tabIndex=9;
     }
-    // test2(){
-    //     setTimeout(() => {
-    //         this.setListDataFactor();
-    //     }, 1000);
+    test2(){
+        setTimeout(() => {
+            console.log(this.severidad)
+            console.log(this.analisisPeligros.invalid)//=false si no se selecciona
+        }, 1000);
         
-    // }
+    }
 
     constructor(
         private sistCausAdminService: SistemaCausaAdministrativaService,
@@ -568,6 +573,8 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
             // console.log(this.incapacidadesList)
             this.desviacionesList = analisis.desviacionesList;
+            this.severidad=this.desviacionesList[0].severidad;
+            this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false;
             this.observacion = analisis.observacion;
             this.analisisId = analisis.id;
             this.analisisCosto =
@@ -719,119 +726,135 @@ export class AnalisisDesviacionComponent implements OnInit {
         })
     }
     guardarAnalisis() {
-        this.informacionComplementaria=this.analisisPeligros.value;
-        this.informeJson=this.infoIn.value;
-        // this.informeJson.Diagrama=this.imgIN;
-        this.diagram=this.FlowchartService.getDiagram();
-        let printOptions: IExportOptions = {};
-        printOptions.mode = 'Data';
-        printOptions.region = 'PageSettings'; 
-     //   console.log(this.diagram);
-        if(this.diagram){       
-        this.imgIN=this.diagram.exportDiagram(printOptions).toString();
-        if(this.imgIN!=undefined){
-            this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
-        }
-        let ad = new AnalisisDesviacion();
-        ad.causaRaizList = this.buildList(this.causaRaizListSelect);
-        ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
-        ad.causasAdminList = this.buildList(this.causaAdminListSelect);
-        ad.desviacionesList = this.desviacionesList;
-        ad.analisisCosto = this.analisisCosto;
-        ad.observacion = this.observacion;
-        ad.participantes = JSON.stringify(this.participantes);
-        ad.flow_chart = this.flowChartSave;
-        ad.factor_causal= JSON.stringify(this.factorCusal);
-        this.setListDataFactor();
-        ad.incapacidades= JSON.stringify(this.incapacidadesList);
-        ad.plan_accion= JSON.stringify(this.listPlanAccion);
-        ad.miembros_equipo= JSON.stringify(this.miembros);
-        ad.tareaDesviacionList = this.tareasList;
-        if  (ad.tareaDesviacionList) {
-        for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
-            ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
-            ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
-        }
-        }
+        if(!this.analisisPeligros.invalid){
+            this.informacionComplementaria=this.analisisPeligros.value;
+            this.informeJson=this.infoIn.value;
+            // this.informeJson.Diagrama=this.imgIN;
+            this.diagram=this.FlowchartService.getDiagram();
+            let printOptions: IExportOptions = {};
+            printOptions.mode = 'Data';
+            printOptions.region = 'PageSettings'; 
+        //   console.log(this.diagram);
+            if(this.diagram){       
+            this.imgIN=this.diagram.exportDiagram(printOptions).toString();
+            if(this.imgIN!=undefined){
+                this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+            }
+            let ad = new AnalisisDesviacion();
+            ad.causaRaizList = this.buildList(this.causaRaizListSelect);
+            ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
+            ad.causasAdminList = this.buildList(this.causaAdminListSelect);
+            ad.desviacionesList = this.desviacionesList;
+            ad.analisisCosto = this.analisisCosto;
+            ad.observacion = this.observacion;
+            ad.participantes = JSON.stringify(this.participantes);
+            ad.flow_chart = this.flowChartSave;
+            ad.factor_causal= JSON.stringify(this.factorCusal);
+            this.setListDataFactor();
+            ad.incapacidades= JSON.stringify(this.incapacidadesList);
+            ad.plan_accion= JSON.stringify(this.listPlanAccion);
+            ad.miembros_equipo= JSON.stringify(this.miembros);
+            ad.tareaDesviacionList = this.tareasList;
+            if  (ad.tareaDesviacionList) {
+            for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
+                ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
+                ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+            }
+            }
 
-        ad.jerarquia = ad.jerarquia;
-        ad.complementaria=JSON.stringify(this.informacionComplementaria);
-        ad.informe=JSON.stringify(this.informeJson);
-        this.analisisDesviacionService.create(ad).then((data) => {
-            let analisisDesviacion = <AnalisisDesviacion>data;
-            this.manageResponse(analisisDesviacion);
-            this.analisisId = analisisDesviacion.id;
-            this.documentos = [];
-            this.modificar = true;
-            this.adicionar = false;
-        });
+            ad.jerarquia = ad.jerarquia;
+            ad.complementaria=JSON.stringify(this.informacionComplementaria);
+            ad.informe=JSON.stringify(this.informeJson);
+            this.analisisDesviacionService.create(ad).then((data) => {
+                let analisisDesviacion = <AnalisisDesviacion>data;
+                this.manageResponse(analisisDesviacion);
+                this.analisisId = analisisDesviacion.id;
+                this.documentos = [];
+                this.modificar = true;
+                this.adicionar = false;
+            });
+        }else{
+            this.msgs = [];
+            this.msgs.push({
+                severity: "error",
+                detail: "Faltan campos por llenar",
+            });
+        }
     }
 
 
 
     modificarAnalisis() {
-        if(this.idEmpresa=='22'){this.tareaList2();}
-        this.buttonPrint=true;
-        this.informacionComplementaria=this.analisisPeligros.value;
-        this.informeJson=this.infoIn.value;
-        // this.informeJson.Diagrama=this.imgIN;
-        setTimeout(() => {
-        this.diagram=this.FlowchartService.getDiagram();
-        let printOptions: IExportOptions = {};
-        printOptions.mode = 'Data';
-        printOptions.region = 'PageSettings';
-        if(this.diagram){     
-        this.imgIN=this.diagram.exportDiagram(printOptions).toString()
-        if(this.imgIN!=undefined){
-            this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
-        }
-        let ad = new AnalisisDesviacion();
-        ad.id = this.analisisId;
-        ad.causaRaizList = this.buildList(this.causaRaizListSelect);
-        ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
-        ad.causasAdminList = this.buildList(this.causaAdminListSelect);
-        ad.desviacionesList = this.desviacionesList;
-        ad.analisisCosto = this.analisisCosto;
-        ad.observacion = this.observacion;
-        ad.factor_causal= JSON.stringify(this.factorCusal);
-        ad.incapacidades= JSON.stringify(this.incapacidadesList);
-        ad.plan_accion= JSON.stringify(this.listPlanAccion);
-        this.setListDataFactor();
-        // ad.flow_chart = JSON.stringify(this.flowChartSave);
-        ad.flow_chart = this.flowChartSave;
-        ad.participantes = JSON.stringify(this.participantes);
-        
-        ad.tareaDesviacionList = this.tareasList;
-
-        ad.jerarquia = this.jerarquia;
-        ad.complementaria=JSON.stringify(this.informacionComplementaria);
-        ad.informe=JSON.stringify(this.informeJson);
-
-		ad.miembros_equipo= JSON.stringify(this.miembros);
-        if(ad.tareaDesviacionList){
-        for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
-            ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
-            ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
-            // console.log(ad.tareaDesviacionList);
-        }
-        
-    }
-        // setTimeout(() => {
-            this.analisisDesviacionService.update(ad).then((data) => {
-                // console.log(data, "data");
+        if(!this.analisisPeligros.invalid){
+                if(this.idEmpresa=='22'){this.tareaList2();}
+                this.buttonPrint=true;
+                this.informacionComplementaria=this.analisisPeligros.value;
+                this.informeJson=this.infoIn.value;
+                // this.informeJson.Diagrama=this.imgIN;
+                setTimeout(() => {
+                this.diagram=this.FlowchartService.getDiagram();
+                let printOptions: IExportOptions = {};
+                printOptions.mode = 'Data';
+                printOptions.region = 'PageSettings';
+                if(this.diagram){     
+                this.imgIN=this.diagram.exportDiagram(printOptions).toString()
+                if(this.imgIN!=undefined){
+                    this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+                }
+                let ad = new AnalisisDesviacion();
+                ad.id = this.analisisId;
+                ad.causaRaizList = this.buildList(this.causaRaizListSelect);
+                ad.causaInmediataList = this.buildList(this.causaInmediataListSelect);
+                ad.causasAdminList = this.buildList(this.causaAdminListSelect);
+                ad.desviacionesList = this.desviacionesList;
+                ad.analisisCosto = this.analisisCosto;
+                ad.observacion = this.observacion;
+                ad.factor_causal= JSON.stringify(this.factorCusal);
+                ad.incapacidades= JSON.stringify(this.incapacidadesList);
+                ad.plan_accion= JSON.stringify(this.listPlanAccion);
+                this.setListDataFactor();
+                // ad.flow_chart = JSON.stringify(this.flowChartSave);
+                ad.flow_chart = this.flowChartSave;
+                ad.participantes = JSON.stringify(this.participantes);
                 
-                this.manageResponse(<AnalisisDesviacion>data);
-                this.modificar = true;
-                this.adicionar = false;
+                ad.tareaDesviacionList = this.tareasList;
+
+                ad.jerarquia = this.jerarquia;
+                ad.complementaria=JSON.stringify(this.informacionComplementaria);
+                ad.informe=JSON.stringify(this.informeJson);
+
+                ad.miembros_equipo= JSON.stringify(this.miembros);
+                if(ad.tareaDesviacionList){
+                for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
+                    ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
+                    ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
+                    // console.log(ad.tareaDesviacionList);
+                }
+                
+            }
+                // setTimeout(() => {
+                    this.analisisDesviacionService.update(ad).then((data) => {
+                        // console.log(data, "data");
+                        
+                        this.manageResponse(<AnalisisDesviacion>data);
+                        this.modificar = true;
+                        this.adicionar = false;
+                    });
+                    console.log(this.tareasList)
+                // }, 1000);
+                setTimeout(() => {
+                    this.buttonPrint=false;
+                }, 1000);
+                
+                // console.log(ad.flow_chart);
+            }, 2000);
+        }else{
+            this.msgs = [];
+            this.msgs.push({
+                severity: "error",
+                detail: "Faltan campos por llenar",
             });
-            console.log(this.tareasList)
-        // }, 1000);
-        setTimeout(() => {
-            this.buttonPrint=false;
-        }, 1000);
-        
-        // console.log(ad.flow_chart);
-    }, 2000);
+        }
     }
 
     tareaList2(){

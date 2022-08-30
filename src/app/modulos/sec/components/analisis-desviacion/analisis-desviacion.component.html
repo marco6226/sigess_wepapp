@@ -141,8 +141,13 @@
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
                                             </th>
-                                            <td><p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
+                                            <td *ngIf="!severidadFlag">
+                                                <p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
                                                 <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" ></p-radioButton>
+                                            </td> 
+                                            <td *ngIf="severidadFlag">
+                                                <p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" required class="fieldgroup"></p-radioButton>
+                                                <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" class="fieldgroup"></p-radioButton>
                                             </td> 
                                         </tr>
                                         <tr>
@@ -437,7 +442,7 @@
 </ng-container>
 
 <div style="height: 100px;;"></div>
-<!-- <button (click)="test2()">test2</button> -->
+<!-- <button (click)="test2()" >test2</button> -->
 <!-- <button (click)="test()">test</button> -->
 <!-- <button (click)="setListDataFactor()">vli</button> -->
 <!-- 
