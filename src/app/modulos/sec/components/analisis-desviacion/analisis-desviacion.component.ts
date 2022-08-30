@@ -858,27 +858,27 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
     tareaList2(){
-        // this.tareasList2=this.tareasList
         console.log(this.tareasList)
         this.listPlanAccion.forEach(element => {
             element.causaRaiz.forEach(async element2 => {
-                let x=await this.tareasList.find(data=>{
-                    // console.log(new Date(data.fechaProyectada))
-                    // return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && (data.descripcion==element2.especifico.accionCorrectiva));
-                     return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
+                let x;
+                let y;
+                let z;
+                if(this.tareasList!=[]){
+                    x=await this.tareasList.find(data=>{
+                    return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
                 })
-                let y=await this.tareasList.find(data=>{
+                    y=await this.tareasList.find(data=>{
                     return ( data.nombre==element2.medible.planVerificacion && new Date(data.fechaProyectada).toDateString()==new Date(element2.medible.fechaVencimiento).toDateString() && (data.empResponsable.primerNombre==element2.medible.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.medible.responsableEmpresa.id));
                 })
-                let z=await this.tareasList.find(data=>{
+                    z=await this.tareasList.find(data=>{
                     return ( data.nombre==element2.eficaz.planValidacion && new Date(data.fechaProyectada).toDateString()==new Date(element2.eficaz.fechaVencimiento).toDateString() && (data.empResponsable.primerNombre==element2.eficaz.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.eficaz.responsableEmpresa.id));
-                })
+                })}else{
+                    x=undefined
+                    y=undefined
+                    z=undefined
+                }
                 for (let index = 0; index < 3; index++) {
-                    //  console.log(x)
-                    //  console.log(y)
-                    //  console.log(z)
-                    //  console.log(element2.medible.fechaVencimiento)
-                    //  console.log(new Date(element2.especifico.fechaVencimiento).toDateString())
                     if(index==0 && element2.especifico.isComplete && x==undefined){
                         let tarea:Tarea={
                             id: '',
