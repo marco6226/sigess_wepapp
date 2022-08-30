@@ -1,7 +1,8 @@
+import { SesionService } from './../../../core/services/sesion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { EmpresaAlidada } from './../../../empresa/entities/empresa';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/primeng';
@@ -14,6 +15,32 @@ import { MessageService } from 'primeng/primeng';
 
 })
 export class AliadosComponent implements OnInit {
+
+  valueEmpresa: Empresa={
+    id: '',
+    nombreComercial: '',
+    razonSocial: '',
+    nit: '',
+    direccion: '',
+    telefono: '',
+    email: '',
+    web: '',
+    numeroSedes: undefined,
+    arl: null,
+    ciiu: null,
+    logo: '',
+    empresasContratistasList: [],
+    tipo_persona: '',
+  };
+
+  @Input('valueEmpresa') 
+  set valuesIn (value: Empresa){
+    this.valueEmpresa = value
+    this.valueEmpresa.division = JSON.parse( this.valueEmpresa.division)
+    this.loadDataIn();
+  }
+
+  isCreate: boolean=true;
 
   nameAndLastName: string=''
 
@@ -48,28 +75,31 @@ export class AliadosComponent implements OnInit {
     private empresaService: EmpresaService,
     private fb: FormBuilder,
     private router: Router,
+    private sesionService: SesionService,
     private messageService: MessageService
   ) {
     this.formNatural = fb.group({
-      'razonSocial':[null, Validators.required],
-      'tipo_persona':[null],
-      'identificacion':[null, Validators.required],
-      'email':[null, Validators.required],
-      'telefono':[null, Validators.required],
-      'actividadesContratadas':[null, Validators.required],
-      'localidad':[null, Validators.required],
-      'division':[null, Validators.required],
+      razonSocial:[null, Validators.required],
+      tipo_persona:[null],
+      identificacion:[null, Validators.required],
+      email:[null, Validators.required],
+      telefono:[null, Validators.required],
+      actividadesContratadas:[null, Validators.required],
+      localidad:[null, Validators.required],
+      division:[null, Validators.required],
     })
     this.formJuridica = fb.group({
-      'razonSocial':[null, Validators.required],
-      'tipo_persona':[null],
-      'identificacion':[null, Validators.required],
-      'email':[null, Validators.required],
-      'nombreComercial':[null, Validators.required]
+      razonSocial:[null, Validators.required],
+      tipo_persona:[null],
+      identificacion:[null, Validators.required],
+      email:[null, Validators.required],
+      nombreComercial:[null, Validators.required]
     })
    }
+  
 
   ngOnInit() {
+   
   }
 
   continuar(){
@@ -80,7 +110,7 @@ export class AliadosComponent implements OnInit {
 
   }
 
-  saveAliado(){
+  async saveAliado(){
     this.formJuridica.value.tipo_persona = this.formNatural.value.tipo_persona = this.seleccion
     console.log(this.formNatural.value);
 
@@ -111,7 +141,8 @@ export class AliadosComponent implements OnInit {
         estado:'Creado',
         calificacion:'Bajo',
         fechaCreacion: new Date(),
-        activo: true
+        activo: true,
+        idEmpresaAliada: Number(await this.sesionService.getEmpresa().id),
       }
       
     } else if (this.formJuridica.valid){
@@ -133,7 +164,8 @@ export class AliadosComponent implements OnInit {
         estado:'Creado',
         calificacion:'Bajo',
         fechaCreacion: new Date(),
-        activo: true
+        activo: true,
+        idEmpresaAliada: Number(await this.sesionService.getEmpresa().id),
       }
     }
 
@@ -146,6 +178,13 @@ export class AliadosComponent implements OnInit {
     }).catch(error=>{
       this.messageService.add({severity:'error', summary: 'Error', detail: 'No se pudo crear el Aliado, intente de nuevo'});
     })
+  }
+
+  loadDataIn(){
+    console.log(this.valueEmpresa)
+    console.log(this.formNatural.value)
+    this.onSeleccion = this.seleccion = this.valueEmpresa.tipo_persona
+    this.isCreate = false;
   }
 
 }
