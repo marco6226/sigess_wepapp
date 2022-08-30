@@ -143,8 +143,8 @@ export class ScmComponent implements OnInit {
             let res: any = await this.scmService.findByFilter(filterQuery);
             this.casosList = res.data;
             this.totalRecords = res.count;
-            console.log(res)
-            this.test()
+            // console.log(res)
+            this.List2()
 
         } catch (error) {
             console.log(error)
@@ -152,15 +152,18 @@ export class ScmComponent implements OnInit {
 
 
     }
-    async test(){
+    async List2(){
         this.casosList2=[]
         console.log(this.casosList)
+        let cont1=0;
+        let cont2=0;
         await this.casosList.forEach(async element => {
-            // if(this.casosList2){
-                // console.log('1')
-                await this.scmService.getReintegroByCaseId(element.id).subscribe(data=>{
-                    this.reintegroList = (data!=[])?data:null;
-                    
+            cont1++
+                await this.scmService.getReintegroByCaseId2(element.id).subscribe(data=>{
+                    console.log(data)
+                    this.reintegroList = (data.length!=0)?data:null;
+                    console.log(this.reintegroList)
+                    if(this.reintegroList!=null){
                     this.reintegroList.sort((a, b) => {
                         if(a.id == b.id) {
                         return 0; 
@@ -170,45 +173,23 @@ export class ScmComponent implements OnInit {
                         }
                         return 1;
                     });
-
-                    this.casosList2.push({id:element.id, fechaCreacion:element.fechaCreacion, region:element.region, ciudad:element.ciudad, primerApellido: element.pkUser.primerApellido, primerNombre: element.pkUser.primerNombre, documento: element.documento, statusCaso:element.statusCaso, prioridadCaso: element.prioridadCaso, tipoCaso: element.tipoCaso, tipoReporte:this.reintegroList[0].tipo_retorno})
-                    // console.log(this.reintegroList)
-                  }).catch( 
-                    this.casosList2.push({id:element.id, fechaCreacion:element.fechaCreacion, region:element.region, ciudad:element.ciudad, primerApellido: element.pkUser.primerApellido, primerNombre: element.pkUser.primerNombre, documento: element.documento, statusCaso:element.statusCaso, prioridadCaso: element.prioridadCaso, tipoCaso: element.tipoCaso, tipoReporte:null})
-                  )
-
-            
-        });
-        console.log(this.casosList)
-        // cargoList
-    }
-    async test2(){
-        await this.scmService.getReintegroByCaseId('0').subscribe(data=>{
-            this.reintegroList = (data!=null)?data:null;
-          })
-
-          setTimeout(() => {
-            this.reintegroList.sort((a, b) => {
-                if(a.id == b.id) {
-                  return 0; 
-                }
-                if(a.id > b.id) {
-                  return -1;
-                }
-                return 1;
-              });
-              console.log(this.reintegroList)
-            //   this.test()
-          }, 1000);
-        // this.reintegroList.sort((a, b) => {
-        //     if(a == b) {
-        //       return 0; 
-        //     }
-        //     if(a < b) {
-        //       return -1;
-        //     }
-        //     return 1;
-        //   });
+                    }
+                    this.casosList2.push({
+                        id:element.id, 
+                        fechaCreacion:element.fechaCreacion, 
+                        region:element.region, 
+                        ciudad:element.ciudad, 
+                        primerApellido: element.pkUser.primerApellido, 
+                        primerNombre: element.pkUser.primerNombre, 
+                        documento: element.documento, 
+                        statusCaso:element.statusCaso, 
+                        prioridadCaso: element.prioridadCaso, 
+                        tipoCaso: element.tipoCaso, 
+                        casoMedicoLaboral:element.casoMedicoLaboral,
+                        tipoReporte:(this.reintegroList==null)?null:this.reintegroList[0].tipo_retorno
+                    })
+                  })
+             });
     }
 }
 

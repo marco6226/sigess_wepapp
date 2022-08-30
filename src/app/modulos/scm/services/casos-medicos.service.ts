@@ -136,6 +136,9 @@ export class CasosMedicosService {
     getReintegroByCaseId(idCaso: string):any{
         return this.http.get<Reintegro>(`${endPoints.scm}reintegro/${idCaso}`, this.getRequestHeaders(this.headers))
     }
+    getReintegroByCaseId2(idCaso: string):any{
+        return this.http.get(`${endPoints.scm}reintegro/${idCaso}`, this.getRequestHeaders(this.headers))
+    }
 
     // getReintegroByCaseId(idCaso: string):any{
     //     return new Promise(resolve => {
