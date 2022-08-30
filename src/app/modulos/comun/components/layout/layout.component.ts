@@ -69,6 +69,9 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		
 
 	}
+	test(){
+		console.log(this.empresaSelect.logo)
+	}
 	showNotification(from, align){
 		const type = ['','info','success','warning','danger'];
   

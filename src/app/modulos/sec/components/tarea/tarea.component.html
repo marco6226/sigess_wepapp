@@ -35,7 +35,8 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
                     <textarea pInputTextarea rows="3" readonly="true">{{ tarea?.concepto }}</textarea>
-                    <label for="" class="active">Concepto</label>
+                    <label for="" class="active" *ngIf="idEmpresa=='22'">Nombre del evento</label>
+                    <label for="" class="active" *ngIf="idEmpresa!='22'">Concepto</label>
                 </div>
             </div>
 
@@ -58,15 +59,15 @@
                 <h5 class="title-header p-mb-2">Tarea asignada</h5>
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="idEmpresa!='22'">
                 <div class="input-field">
                     <input type="text" pInputText placeholder="Tipo de Accion" class="form-material"
                         [value]="tarea?.tipo_accion" readonly="true" />
-                    <label for="" class="active">Tipo de Acción</label>
+                    <label for="" class="active" >Tipo de Acción</label>
                 </div>
             </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="idEmpresa!='22'">
                 <div class="input-field">
                     <input type="text" pInputText placeholder="Jerarquia de control" class="form-material"
                         [value]="tarea?.jerarquia" readonly="true" />
@@ -101,7 +102,8 @@
                 <div class="input-field">
                     <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.regional"
                         readonly="true" />
-                    <label for="" class="active">Regional</label>
+                    <label for="" class="active" *ngIf="idEmpresa!='22'">Regional</label>
+                    <label for="" class="active" *ngIf="idEmpresa=='22'">División o región</label>
                 </div>
             </div>
 
@@ -109,7 +111,8 @@
                 <div class="input-field">
                     <input type="text" pInputText placeholder="Area" class="form-material" [value]="tarea?.area"
                         readonly="true" />
-                    <label for="" class="active">Sede</label>
+                    <label for="" class="active" *ngIf="idEmpresa!='22'">Sede</label>
+                    <label for="" class="active" *ngIf="idEmpresa=='22'">Ubicación</label>
                 </div>
             </div>
 

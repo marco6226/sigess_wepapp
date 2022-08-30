@@ -1,3 +1,5 @@
+import { ConfirmationService } from 'primeng/primeng';
+import { SesionService } from './../../../core/services/sesion.service';
 import { Router } from '@angular/router';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
@@ -23,14 +25,16 @@ export class AliadosListComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
-    private router: Router
+    private sesionService: SesionService,
+    private router: Router,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {
     this.loadData();
   }
 
-  loadData(){
+  async loadData(){
  
     this.aliadosList=[]
     let filterQuery = new FilterQuery();
@@ -39,7 +43,14 @@ export class AliadosListComponent implements OnInit {
     let filtPadre = new Filter();
     filtPadre.criteria = Criteria.IS_NOT_NULL;
     filtPadre.field = 'tipoPersona';
+
+    let filterAliadoID = new Filter();
+    filterAliadoID.criteria = Criteria.EQUALS;
+    filterAliadoID.field = 'idEmpresaAliada';
+    filterAliadoID.value1 = await this.sesionService.getEmpresa().id
+
     filterQuery.filterList.push(filtPadre);
+    filterQuery.filterList.push(filterAliadoID);
     this.empresaService.findByFilter(filterQuery).then(
         resp => {
           console.log(resp);
@@ -52,11 +63,6 @@ export class AliadosListComponent implements OnInit {
           console.log(this.aliadosList);
         }
     );
-        
-    this.empresaService.findAll().then(ele=>{
-      console.log(ele);
-      
-    })
     
   }
 
@@ -66,11 +72,38 @@ export class AliadosListComponent implements OnInit {
     
   }
 
+  onChangeStatusAliado(row, tipo){
+    console.log(row);
+    
+    if (tipo=='Activar') {
+      this.confirmationService.confirm({
+        header: 'Confirmar acción',
+        message: 'Esta seguro que desea Activar este Aliado:',
+        accept: () =>{
+          row.activo = true
+          this.empresaService.update(row)
+        },})
+        
+    } else {
+      this.confirmationService.confirm({
+        header: 'Confirmar acción',
+        message: 'Esta seguro que desea Desactivar este Aliado:',
+        accept: () =>{
+          row.activo = false
+          this.empresaService.update(row)
+        },})
+    }
+  }
+
   onRowSelect(event){
     if (this.selectedList.length>0) {
       this.caseSelect=true;      
     } else {
       this.caseSelect=false;      
     }
+  }
+
+  test(){
+    console.log(this.sesionService.getEmpresa());
   }
 }

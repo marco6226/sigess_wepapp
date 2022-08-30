@@ -15,6 +15,7 @@ import { formatDate } from "@angular/common";
 import { CapitalizePipe } from "../../utils/pipes/capitalize.pipe";
 import { DirectorioService } from "app/modulos/ado/services/directorio.service";
 import { SesionService } from "app/modulos/core/services/sesion.service";
+import { Empresa } from 'app/modulos/empresa/entities/empresa'
 
 @Component({
     selector: "app-tarea",
@@ -40,11 +41,13 @@ export class TareaComponent implements OnInit {
     loading: boolean;
     fullName = "";
     empleado: Empleado;
+    empresaSelect: Empresa;
     empleadosList: Empleado[];
     status = 0;
     statuses;
     tareaEvidences = [];
     fechavisible = false;
+    idEmpresa: string;
 
     constructor(
         fb: FormBuilder,
@@ -68,6 +71,7 @@ export class TareaComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.idEmpresa = this.sesionService.getEmpresa().id;
         this.tareaId = this.route.snapshot.paramMap.get("id");
         this.getTarea();
 
@@ -89,8 +93,11 @@ export class TareaComponent implements OnInit {
         };
 
         // console.log(this.statuses[this.status])
-    }
 
+    }
+    test(){
+        console.log(this.tarea)
+    }
     async getTarea(event?) {
         this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
@@ -122,7 +129,7 @@ export class TareaComponent implements OnInit {
                     ? true
                     : false;
 
-            this.getTareaEvidences();
+            await this.getTareaEvidences();
 
             console.log(this.tarea);
 
@@ -151,6 +158,7 @@ export class TareaComponent implements OnInit {
                             (nombre || "") + " " + (apellido || "");
                     }
                 });
+                // this.tarea.responsable=this.tarea.empResponsable.primer_nombre+" "+this.tarea.empResponsable.primer_apellido
             }
 
             if (this.status === 3 || this.status === 4) {

@@ -21,10 +21,16 @@
                         <th pSortableColumn="fecha_reporte">Fecha de reporte
                             <p-sortIcon field="fecha_reporte"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="regional"> Regional
+                        <th pSortableColumn="regional" *ngIf="idEmpresa!='22'"> Regional
                             <p-sortIcon field="regional"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="area"> Sede
+                        <th pSortableColumn="regional" *ngIf="idEmpresa=='22'"> División o región
+                            <p-sortIcon field="regional"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="area" *ngIf="idEmpresa!='22'"> Sede
+                            <p-sortIcon field="area"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="area" *ngIf="idEmpresa=='22'"> Ubicación
                             <p-sortIcon field="area"></p-sortIcon>
                         </th>
                         <th pSortableColumn="hash_id"> Código

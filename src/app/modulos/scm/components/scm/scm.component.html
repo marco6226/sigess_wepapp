@@ -4,7 +4,7 @@
         Casos médicos
     </p-header>
 
-    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="11" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
+    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList2" [paginator]="true" [rows]="11" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
         [totalRecords]="totalRecords">
         <ng-template pTemplate="header" let-columns>
             <tr>
@@ -39,6 +39,9 @@
                     <p-sortIcon field="prioridadCaso"></p-sortIcon>
                 </th>
                 <th pSortableColumn="tipoCaso">Tipo de caso
+                    <p-sortIcon field="tipoCaso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tipoCaso" *ngIf="idEmpresa=='22'">Tipo de retorno
                     <p-sortIcon field="tipoCaso"></p-sortIcon>
                 </th>
             </tr>
@@ -80,6 +83,7 @@
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
+                        <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerApellido')"> -->
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerApellido')">
                     </div>
                 </td>
@@ -88,6 +92,7 @@
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
+                        <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerNombre')"> -->
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'pkUser.primerNombre')">
                     </div>
                 </td>
@@ -132,6 +137,14 @@
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoCaso','contains')">
                     </div>
                 </td>
+                <td *ngIf="idEmpresa=='22'">
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoReporte','contains')">
+                    </div>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-case>
@@ -141,8 +154,8 @@
                 <td class="p-text-center">{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
                 <td class="p-text-center">{{case.region}}</td>
                 <td class="p-text-center">{{case.ciudad}}</td>
-                <td class="p-text-center">{{case.pkUser.primerApellido}}</td>
-                <td class="p-text-center">{{case.pkUser.primerNombre}} </td>
+                <td class="p-text-center">{{case.primerApellido}}</td>
+                <td class="p-text-center">{{case.primerNombre}} </td>
                 <td class="p-text-center">{{case.documento}}</td>
                 <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                 <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' :case.casoMedicoLaboral == 2 ? 'En seguimiento':case.casoMedicoLaboral == 3 ?'No aplica':case.casoMedicoLaboral == 0 ?'No':''}}</td>
@@ -153,6 +166,7 @@
                     'status--info': case.prioridadCaso === 'Media'
                 }">{{case.prioridadCaso}}</td>
                 <td class="p-text-center">{{case.tipoCaso}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.tipoReporte}}</td>
 
             </tr>
         </ng-template>
@@ -175,6 +189,7 @@
 
 
 </p-panel>
+<!-- <button (click)="test2()">test</button> -->
 
 <!-- <div>
     <app-formulario-scm *ngIf="visibleForm && caseSelect" (onCancel)="onCancel()" [consultar]="consultar" [caseSelect]="caseSelect">

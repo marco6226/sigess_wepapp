@@ -45,6 +45,7 @@
             <div class="ui-g-12 ui-sm-12">
                 <p-tabView [(activeIndex)]="tabIndex" (onChange)="indexTab($event)">
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Descripción">
+                        <!-- <button (click)="test2()">test2</button> -->
                         <div class="ui-g">
                             <div *ngIf="desviacionesList" class="ui-g-12 ui-sm-12 ui-xl-4">
                                 <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
@@ -127,7 +128,7 @@
                                             <!-- <td>{{desviacionesList[0]?.nombre}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                             <!-- <p-dropdown [options]="this.peligroItemList" formControlName="tipoCaso"></p-dropdown> -->
-                                            <!-- <button (click)="test()">test</button> -->
+                                            
                                             <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
                                             </th>
                                         </tr>
@@ -140,8 +141,13 @@
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
                                             </th>
-                                            <td><p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
+                                            <td *ngIf="!severidadFlag">
+                                                <p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
                                                 <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" ></p-radioButton>
+                                            </td> 
+                                            <td *ngIf="severidadFlag">
+                                                <p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" required class="fieldgroup"></p-radioButton>
+                                                <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" class="fieldgroup"></p-radioButton>
                                             </td> 
                                         </tr>
                                         <tr>
@@ -214,7 +220,7 @@
                         <app-plan-accion-list (actualizar)="setListDataFactor()" (validacionPA)="habilitarInforme()" (flagPlanAccionlist)="eliminarPlandeAccion($event)" [planAccionList]="listPlanAccion"></app-plan-accion-list>
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && displayInforme" header="Informe">
-                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon"></button> 
+                        <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon" [disabled]="buttonPrint"></button> 
                         <!-- <button  (click)="test2()" >test</button>  -->
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
                             <tr>
@@ -436,7 +442,7 @@
 </ng-container>
 
 <div style="height: 100px;;"></div>
-<!-- <button (click)="test2()">test2</button> -->
+<!-- <button (click)="test2()" >test2</button> -->
 <!-- <button (click)="test()">test</button> -->
 <!-- <button (click)="setListDataFactor()">vli</button> -->
 <!-- 

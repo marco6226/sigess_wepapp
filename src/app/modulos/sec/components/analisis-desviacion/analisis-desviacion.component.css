@@ -8,6 +8,11 @@
   width: 700px;
   height: 700;
 }
+.fieldgroup{
+  float: left;
+  width: auto;
+  margin-left: 0em;
+}
 /* @media print {
   html, body {
       width: 210mm;

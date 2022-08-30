@@ -56,7 +56,10 @@ export class DocumentoUploadComponent implements OnInit {
     onVisibleChange(event: boolean) {
         this.visibleChange.emit(event);
     }
-
+    test(){
+        console.log('aqui')
+    }
+    myfiles: any = [];
     upload(event) {
         console.log(this.form);
         
@@ -95,6 +98,8 @@ export class DocumentoUploadComponent implements OnInit {
                 this.onUpload.emit(dir);
             });
             }
+            this.myfiles = [];
+            this.form.reset();
         }
         else{
             this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta ingresar la descripción'});
