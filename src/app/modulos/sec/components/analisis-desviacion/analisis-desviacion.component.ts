@@ -295,12 +295,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         if (this.value == null) {
             switch (this.paramNav.getAccion<string>()) {
                 case "GET":
-                    this.consultar = true;
+                    this.consultar = true; 
                     await this.consultarAnalisis(
                         this.paramNav.getParametro<Desviacion>().analisisId
                     );
                     break;
                 case "POST":
+                    await this.severidadPost(this.paramNav.getParametro<Desviacion>().analisisId);
                     this.sistCausAdminService
                         .findDefault()
                         .then((resp: SistemaCausaAdministrativa) => {
@@ -505,6 +506,19 @@ export class AnalisisDesviacionComponent implements OnInit {
             let analisis = <AnalisisDesviacion>resp["data"][0];
             // console.log("----->",resp['data'][0].documentosList);
             this.Evidencias=resp['data'][0].documentosList;});
+    }
+    async severidadPost(analisisId: string){
+        let fq = new FilterQuery();
+        fq.filterList = [
+            { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
+        ];
+        await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
+            let analisis = <AnalisisDesviacion>resp["data"][0];
+            this.desviacionesList = analisis.desviacionesList;
+            this.severidad=this.desviacionesList[0].severidad;
+            console.log(this.severidad)
+            this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false;
+        })
     }
     async consultarAnalisis(analisisId: string) {
         let fq = new FilterQuery();
