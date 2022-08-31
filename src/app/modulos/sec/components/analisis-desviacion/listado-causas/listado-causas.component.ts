@@ -133,30 +133,36 @@ export class ListadoCausasComponent implements OnInit {
                 preguntas: preguntas,
                 causaRaiz: tempcausaRaiz, 
                 especifico:{
+                  id: null,
                   nombreAccionCorrectiva: null,
                   accionCorrectiva: null,
                   fechaVencimiento: null,
                   responsableEmpresa: null,
                   responsableExterno: null,
-                  isComplete: false
+                  isComplete: false,
+                  email: false
                 }, 
                 razonable:{
                   justificacion: null,
                   isComplete: false
                 }, 
                 eficaz:{
+                  id: null,
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
                   planValidacion: null,
-                  isComplete: false
+                  isComplete: false,
+                  email: false
                 }, 
                 medible:{
+                  id: null,
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
                   planVerificacion: null,
-                  isComplete: false
+                  isComplete: false,
+                  email: false
                 }, 
                 revisado:{
                   revisado: null,
@@ -171,29 +177,35 @@ export class ListadoCausasComponent implements OnInit {
             preguntas:preguntas,
             causaRaiz: tempcausaRaiz, 
                 especifico:{
+                  id: null,
                   nombreAccionCorrectiva: null,
                   accionCorrectiva: null,
                   fechaVencimiento: null,
                   responsableEmpresa: null,
                   responsableExterno: null,
-                  isComplete: false
+                  isComplete: false,
+                  email: false
                 }, 
                 razonable:{
                   justificacion: null
                 }, 
                 eficaz:{
+                  id: null,
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
                   planValidacion: null,
-                  isComplete: false
+                  isComplete: false,
+                  email: false
                 }, 
                 medible:{
+                  id: null,
                   responsableEmpresa: null,
                   responsableExterno: null,
                   fechaVencimiento: null,
                   planVerificacion: null,
-                  isComplete: false
+                  isComplete: false,
+                  email: false
                 }, 
                 revisado:{
                   revisado: null,

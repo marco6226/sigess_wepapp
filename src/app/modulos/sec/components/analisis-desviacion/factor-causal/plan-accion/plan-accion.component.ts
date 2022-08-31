@@ -140,7 +140,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   // }
 
   test(){
-    console.log("******************");
+    console.log(this.planAcciones);
     
   }
 

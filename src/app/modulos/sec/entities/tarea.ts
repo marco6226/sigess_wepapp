@@ -22,5 +22,6 @@ export class Tarea {
     analisisDesviacionList: AnalisisDesviacion[];
     modulo: string;
     codigo: string;
+    envioCorreo: boolean;
     // plandeAccion
 }

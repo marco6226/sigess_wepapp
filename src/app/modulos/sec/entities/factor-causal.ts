@@ -92,12 +92,14 @@ export interface planCausaRaiz{
 }
 
 export interface PlanEspecifico{
+  id:string;
   nombreAccionCorrectiva: string;
   accionCorrectiva: string;
   fechaVencimiento: Date;
   responsableEmpresa: Empleado;
   responsableExterno: String;
   isComplete: boolean;
+  email:boolean;
 }
 
 export interface PlanRazonable{
@@ -106,19 +108,23 @@ export interface PlanRazonable{
 }
 
 export interface PlanMedible{
+  id:string;
   responsableEmpresa: Empleado
   responsableExterno: String
   fechaVencimiento: Date;
   planVerificacion: string;
   isComplete: boolean;
+  email:boolean;
 }
 
 export interface PlanEficaz{
+  id:string;
   responsableEmpresa: Empleado
   responsableExterno: String
   fechaVencimiento: Date;
   planValidacion: string;
   isComplete: boolean;
+  email:boolean;
 }
 
 export interface PlanRevisado{
