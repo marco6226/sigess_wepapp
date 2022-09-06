@@ -107,7 +107,7 @@ export class AsignacionTareasComponent implements OnInit {
 
     async verifyStatus(tarea) {
 
-        let trackings = tarea.trackings
+        let trackings = tarea.trackings;
         let isFollow = (trackings > 0) ? true : false;
 
         /* Vars */

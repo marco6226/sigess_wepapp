@@ -379,6 +379,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             razon: [{ value: null, disabled: this.disabled }, /*Validators.required*/],
             names: [null, /*Validators.required*/],
             observaciones: [null, /*Validators.required*/],
+            //if(){}
             statusCaso: ["1", /*Validators.required*/],
             requiereIntervencion: [null, /*Validators.required*/],
             professionalArea: [null, /*Validators.required*/],
