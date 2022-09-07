@@ -1,3 +1,5 @@
+import { EquipoSstListComponent } from './components/equipo-sst-list/equipo-sst-list.component';
+import { EquipoSstComponent } from './components/equipo-sst/equipo-sst.component';
 import { NgModule } from '@angular/core';
 import { ComunModule } from 'app/modulos/comun/comun.module';
 import { AdminContratistasComponent } from 'app/modulos/ctr/components/admin-contratistas/admin-contratistas.component'
@@ -11,7 +13,16 @@ import { AliadosActualizarComponent } from './components/aliados-actualizar/alia
   imports: [
     ComunModule,
   ],
-  declarations: [AdminContratistasComponent, SeguimientoContratistasComponent, EmpresaDashComponent, AliadosListComponent, AliadosComponent, AliadosActualizarComponent],
+  declarations: [
+    AdminContratistasComponent, 
+    SeguimientoContratistasComponent, 
+    EmpresaDashComponent, 
+    AliadosListComponent, 
+    AliadosComponent, 
+    AliadosActualizarComponent,
+    EquipoSstComponent,
+    EquipoSstListComponent
+  ],
   providers: []
 })
 export class CtrModule { }
