@@ -52,13 +52,17 @@ export class ElaboracionListaComponent implements OnInit {
     listaEvidence = [];
 
     tipoListaOpts: SelectItem[] = [
+        { label: 'Ambiente', value: 'Ambiente' },
         { label: 'Bioseguridad', value: 'Bioseguridad' },
+        { label: 'Bodega - almacén', value: 'Bodega - almacén' },
         { label: 'COPASST', value: 'COPASST' },
         { label: 'Eléctrico', value: 'Eléctrico' },
         { label: 'Emergencias', value: 'Emergencias' },
         { label: 'EPP', value: 'EPP' },
         { label: 'Equipos', value: 'Equipos' },
         { label: 'Ergonomía', value: 'Ergonomía' },
+        { label: 'Gestión', value: 'Gestión' },
+        { label: 'Herramienta', value: 'Herramienta' },
         { label: 'Higiene Industrial', value: 'Higiene Industrial' },
         { label: 'Instalaciones', value: 'Instalaciones' },
         { label: 'Legal', value: 'Legal' },
