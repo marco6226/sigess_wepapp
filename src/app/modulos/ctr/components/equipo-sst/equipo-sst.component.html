@@ -1,0 +1,30 @@
+<div class="cols" [formGroup]="form">
+    <div class="input-field">
+        <input type="text" pInputText formControlName="nombre" placeholder="Nombre"
+            class="form-material"/>
+        <label for="" class="active">Nombre</label>            
+    </div>
+    <div class="input-field">
+        <input type="text" pInputText formControlName="correo" placeholder="Correo"
+        class="form-material"/>
+        <label for="" class="active">Correo</label>
+    </div>   
+    <div class="input-field">
+        <input type="text" pInputText formControlName="telefono" placeholder="Telefono"
+        class="form-material"/>
+        <label for="" class="active">Telefono</label>
+    </div> 
+    <div class="input-field">
+        <input type="text" pInputText formControlName="licenciaSST" placeholder="LicenciaSST"
+        class="form-material"/>
+        <label for="" class="active">Licencia SST</label>
+    </div> 
+</div>
+
+<div class="button-container">
+    <!-- <button pButton type="button" icon="fa fa-plus" label="Cancelar"></button>     -->
+    <button pButton icon="pi pi-times" class="p-button-rounded ui-button-danger p-mr-2" (click)="CloseDialog()" label="Cancelar"></button>
+
+    <button pButton icon="fa fa-plus" class="rigth-button p-button-rounded p-mr-2" [disabled]="form.invalid" (click)="agregar()" label="Agregar"></button>    
+</div>
+

@@ -1,0 +1,17 @@
+.cols{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.ui-dialog .ui-dialog-content{
+    border-radius: 0 0 8px 8px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    .rigth-button{
+        margin-left: 15px;
+    }
+}

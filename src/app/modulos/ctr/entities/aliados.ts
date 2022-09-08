@@ -7,3 +7,10 @@ export interface Aliados {
     calificacion: string;
     vigencia: string;    
 }
+
+export interface EquipoSST{
+    nombre: string;
+    correo: string;
+    telefono: string;
+    licenciaSST: string;
+}
