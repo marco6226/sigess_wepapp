@@ -6,6 +6,7 @@ import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/primeng';
+import { _actividadesContratadasList, _divisionList } from '../../entities/aliados';
 
 @Component({
   selector: 'app-aliados',
@@ -36,7 +37,9 @@ export class AliadosComponent implements OnInit {
   @Input('valueEmpresa') 
   set valuesIn (value: Empresa){
     this.valueEmpresa = value
-    this.valueEmpresa.division = JSON.parse( this.valueEmpresa.division)
+    if (this.valueEmpresa.division) {
+      this.valueEmpresa.division = JSON.parse( this.valueEmpresa.division)      
+    }
     this.loadDataIn();
   }
 
@@ -51,23 +54,9 @@ export class AliadosComponent implements OnInit {
   formNatural: FormGroup
   formJuridica: FormGroup
 
-  divisionList= [
-    { label: "Almacenes Corona", value: "Almacenes Corona" },
-    { label: "Bathrooms and Kitchen", value: "Bathrooms and Kitchen" },
-    { label: "Comercial Corona Colombia", value: "Comercial Corona Colombia" },
-    { label: "Funciones Transversales", value: "Funciones Transversales" },
-    { label: "Insumos Industriales y Energias", value: "Insumos Industriales y Energias" },
-    { label: "Mesa Servida", value: "Mesa Servida" },
-    { label: "Superficies, materiales y pinturas", value: "Superficies, materiales y pinturas" },
-  ]
+  divisionList= _divisionList
 
-  actividadesContratadasList = [
-    { label: "--Seleccione--", value: null },
-    {label: "actividad 1", value: "actividad1"},
-    {label: "actividad 2", value: "actividad2"},
-    {label: "actividad 3", value: "actividad3"},
-    {label: "actividad 4", value: "actividad4"},
-  ]
+  actividadesContratadasList = _actividadesContratadasList
 
   
 

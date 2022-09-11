@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipoSST } from '../../entities/aliados';
+import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 
 @Component({
   selector: 'app-equipo-sst-list',
@@ -7,17 +7,13 @@ import { EquipoSST } from '../../entities/aliados';
   styleUrls: ['./equipo-sst-list.component.scss']
 })
 export class EquipoSstListComponent implements OnInit {
-  
-  aliadosList: any[] =[{
-    razonSocial:'a',
-    tipo_persona:'s',
-    estado:'x',
-    calificacion:'s'
-  }]
-
+ 
   visibleDlg: boolean = false;
 
   equipoList: EquipoSST[]=[]
+
+  responsableList: ResponsableSST[]=[]
+
 
   selectedList: EquipoSST={
     nombre: '',

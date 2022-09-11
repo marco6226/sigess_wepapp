@@ -1,3 +1,8 @@
+import { LocalidadesComponent } from './components/localidades/localidades.component';
+import { AsignacionColiderComponent } from './components/asignacion-colider/asignacion-colider.component';
+import { CalificacionComponent } from './components/calificacion/calificacion.component';
+import { CargueDocumentosComponent } from './components/cargue-documentos/cargue-documentos.component';
+import { ActividadesContratadasComponent } from './components/actividades-contratadas/actividades-contratadas.component';
 import { EquipoSstListComponent } from './components/equipo-sst-list/equipo-sst-list.component';
 import { EquipoSstComponent } from './components/equipo-sst/equipo-sst.component';
 import { NgModule } from '@angular/core';
@@ -8,6 +13,7 @@ import { EmpresaDashComponent } from 'app/modulos/comun/components/empresa-dash/
 import { AliadosListComponent } from './components/aliados-list/aliados-list.component';
 import { AliadosComponent } from './components/aliados/aliados.component';
 import { AliadosActualizarComponent } from './components/aliados-actualizar/aliados-actualizar.component'
+
 
 @NgModule({
   imports: [
@@ -21,7 +27,12 @@ import { AliadosActualizarComponent } from './components/aliados-actualizar/alia
     AliadosComponent, 
     AliadosActualizarComponent,
     EquipoSstComponent,
-    EquipoSstListComponent
+    EquipoSstListComponent,
+    ActividadesContratadasComponent,
+    CargueDocumentosComponent,
+    CalificacionComponent,
+    AsignacionColiderComponent,
+    LocalidadesComponent
   ],
   providers: []
 })
