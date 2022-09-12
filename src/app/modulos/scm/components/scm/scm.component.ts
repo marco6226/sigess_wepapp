@@ -186,7 +186,8 @@ export class ScmComponent implements OnInit {
                         prioridadCaso: element.prioridadCaso, 
                         tipoCaso: element.tipoCaso, 
                         casoMedicoLaboral:element.casoMedicoLaboral,
-                        tipoReporte:(this.reintegroList==null)?null:this.reintegroList[0].tipo_retorno
+                        tipoReporte:(this.reintegroList==null)?null:this.reintegroList[0].tipo_retorno,
+                        nombrePadre:element.pkUser.area.padreNombre
                     })
                   })
              });
