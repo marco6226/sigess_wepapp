@@ -24,8 +24,8 @@
                         <th pSortableColumn="regional" *ngIf="idEmpresa!='22'"> Regional
                             <p-sortIcon field="regional"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="regional" *ngIf="idEmpresa=='22'"> División / Unidad
-                            <p-sortIcon field="regional"></p-sortIcon>
+                        <th pSortableColumn="division" *ngIf="idEmpresa=='22'"> División / Unidad
+                            <p-sortIcon field="division"></p-sortIcon>
                         </th>
                         <th pSortableColumn="area" *ngIf="idEmpresa!='22'"> Sede
                             <p-sortIcon field="area"></p-sortIcon>
@@ -70,7 +70,15 @@
                                     inputStyleClass="ui-inputclean" readonlyInput="true"></p-calendar>
                             </div>
                         </td>
-                        <td>
+                        <td *ngIf="idEmpresa=='22'">
+                            <div class="ui-inputgroup">
+                                <span class="ui-inputgroup-addon">
+                                    <em class="pi pi-search"></em>
+                                </span>
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'division', 'contains')">
+                            </div>
+                        </td>
+                        <td *ngIf="idEmpresa!='22'">
                             <div class="ui-inputgroup">
                                 <span class="ui-inputgroup-addon">
                                     <em class="pi pi-search"></em>
@@ -136,7 +144,8 @@
 
                         <td class="p-text-center">{{tarea.module}}</td>
                         <td class="p-text-center">{{tarea.fecha_reporte | date:'dd-MM-yyyy' : 'UTC'}}</td>
-                        <td>{{tarea.regional}}</td>
+                        <td *ngIf="idEmpresa!='22'">{{tarea.regional}}</td>
+                        <td *ngIf="idEmpresa=='22'">{{tarea.division}}</td>
                         <td>{{tarea.area}}</td>
                         <td>{{tarea.hash_id}}</td>
                         <td>{{tarea.nombre}}</td>
