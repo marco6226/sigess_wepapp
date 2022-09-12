@@ -4,7 +4,7 @@
 
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
   <p-tabView>
-    <p-table [value]="aliadosList" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+    <p-table [value]="aliadosList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 3rem">

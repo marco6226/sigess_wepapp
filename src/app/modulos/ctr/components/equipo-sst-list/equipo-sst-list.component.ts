@@ -38,10 +38,6 @@ export class EquipoSstListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onRowSelect(){
-
-  }
-
   crearMiembros(){
     this.visibleDlg = true
   }

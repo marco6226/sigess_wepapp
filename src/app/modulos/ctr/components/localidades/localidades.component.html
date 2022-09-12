@@ -4,7 +4,7 @@
 
 <p-panel header="Lista de División" *ngIf="actividadesList.length > 0">
     <p-tabView>
-        <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+        <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width: 3rem">
