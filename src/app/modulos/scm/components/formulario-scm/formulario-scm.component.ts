@@ -447,18 +447,20 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         //console.log(this.caseSelect.id, "wenas");
 
         try {
-            this.caseSelect = await this.scmService.getCase(this.route.snapshot.paramMap.get("id"));
+            console.log("entro");
+           // 
 
-            if (this.caseSelect) {
+           // if (this.caseSelect) {
                 let res: any = await this.scmService.getSvelist();
                 this.sveOptionList.push({ label: "--Seleccione--", value: null });
                 res.forEach((sve) => {
                     this.sveOptionList.push({ label: sve.nombre, value: sve.id.toString() });
                 });
-
+                
+                this.caseSelect = await this.scmService.getCase(this.route.snapshot.paramMap.get("id"));
                 this.onLoadInit();
                 this.modifyCase();
-            }
+          //  }
         } catch (e) {
             console.log(e);
         }
@@ -998,7 +1000,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             console.log(error);
         }
         this.empleadoForm.disable();
-        this.casoMedicoForm.disable()
+        this.casoMedicoForm.disable();
 
     }
 

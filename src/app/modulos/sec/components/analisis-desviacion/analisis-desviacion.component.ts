@@ -302,7 +302,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     );
                     break;
                 case "POST":
-                    await this.severidadPost(await this.paramNav.getParametro<Desviacion>().analisisId);
+                   // await this.severidadPost(this.paramNav.getParametro<Desviacion>().analisisId);
                     this.sistCausAdminService
                         .findDefault()
                         .then((resp: SistemaCausaAdministrativa) => {
@@ -379,9 +379,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             modulo: '',
             codigo: '',
             envioCorreo:false
-        }
-        // console.log(this.tarea)
-        console.log(this.tareasList)
+        }        
     }
 // test2(){
 //     console.log(this.tarea)
