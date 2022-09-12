@@ -53,6 +53,8 @@ import {
     SymbolInfo, DiagramContextMenu, GridlinesModel, SnapSettingsModel, ShapeStyleModel, TextStyleModel, BpmnShape, HtmlModel, IDragEnterEventArgs, SnapConstraints
 } from '@syncfusion/ej2-angular-diagrams';
 import {FlowchartService} from '../../services/flowchart.service'
+import { Usuario } from 'app/modulos/empresa/entities/usuario'
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service'
 
 Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 
@@ -158,6 +160,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     tabIndex:number;
     imgCompress:string;
 
+    usuario: Usuario;
     // tarea:Tarea;
 
     tipoPeligroItemList: SelectItem[];
@@ -255,6 +258,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         private sesionService: SesionService,
         private comp: FlowChartComponent,
         private FlowchartService:FlowchartService,
+        private empresaService: EmpresaService,
         fb: FormBuilder,
     ) {
         this.analisisPeligros = fb.group({
@@ -324,14 +328,14 @@ export class AnalisisDesviacionComponent implements OnInit {
                         });
                     this.sistemaCausaRaizService
                         .findDefault()
-                        .then((data: SistemaCausaRaiz) => {
+                        .then(async (data: SistemaCausaRaiz) => {
                             this.causaRaizList = this.buildTreeNode(
                                 data.causaRaizList,
                                 null,
                                 "causaRaizList"
                             );
                             this.desviacionesList =
-                                this.paramNav.getParametro<Desviacion[]>();
+                                await this.paramNav.getParametro<Desviacion[]>();
                             this.adicionar = true;
                         });
                     break;
@@ -380,6 +384,14 @@ export class AnalisisDesviacionComponent implements OnInit {
             codigo: '',
             envioCorreo:false
         }        
+        setTimeout(() => {
+            console.log('aquí')
+            this.severidad=this.desviacionesList[0].severidad;
+            console.log(this.severidad)
+            this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false; 
+        }, 3000);
+		this.usuario = await this.sesionService.getUsuario();		
+		this.idUsuario=this.usuario.id
     }
 // test2(){
 //     console.log(this.tarea)
@@ -506,21 +518,21 @@ export class AnalisisDesviacionComponent implements OnInit {
             // console.log("----->",resp['data'][0].documentosList);
             this.Evidencias=resp['data'][0].documentosList;});
     }
-    async severidadPost(analisisId: string){
-        console.log(analisisId)
-        let fq = new FilterQuery();
-        fq.filterList = [
-            { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
-        ];
-        await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
-            let analisis = <AnalisisDesviacion>resp["data"][0];
-            console.log(analisis)
-            this.desviacionesList = analisis.desviacionesList;
-            this.severidad=this.desviacionesList[0].severidad;
-            console.log(this.severidad)
-            this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false;
-        })
-    }
+    // async severidadPost(analisisId: string){
+    //     console.log(analisisId)
+    //     let fq = new FilterQuery();
+    //     fq.filterList = [
+    //         { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
+    //     ];
+    //     await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
+    //         let analisis = <AnalisisDesviacion>resp["data"][0];
+    //         console.log(analisis)
+    //         this.desviacionesList = analisis.desviacionesList;
+    //         this.severidad=this.desviacionesList[0].severidad;
+    //         console.log(this.severidad)
+    //         this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false;
+    //     })
+    // }
     async consultarAnalisis(analisisId: string) {
         let fq = new FilterQuery();
         fq.filterList = [
