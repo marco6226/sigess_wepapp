@@ -1,0 +1,58 @@
+<s-dataNotFound *ngIf="!actividadesList || actividadesList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades contratadas">
+    <button pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
+</s-dataNotFound>
+
+<p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList.length > 0">
+    <p-tabView>
+        <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width: 3rem">
+                        #
+                    </th>
+                    <th>
+                        Nombre Actividad
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData  let-i="rowIndex">
+                <tr>
+                    <td class="my-center-text">
+                        {{i+1}}
+                    </td>
+                    <td>
+                        {{rowData}}
+                    </td> 
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo()" label="Modificar Actividades"></button>    
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="9" class="p-text-center">No hay registro con los términos de filtro usados
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabView>
+</p-panel>
+
+<p-dialog header="Lista de Actividades" [(visible)]="visibleDlg" [style]="{width: '20vw'}">
+    
+    <div class="input-field">
+        <label for="" class="active">Actividades contratadas</label>
+    </div>
+
+    <div class="ui-g" style="width:250px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
+        <div class="ui-g-12">
+            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividad"></p-checkbox>
+        </div>
+    </div>
+
+    <p-footer>
+        <button pButton type="button" (click)="agregarActividad()" label="Aceptar"></button>
+        <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
+    </p-footer>
+</p-dialog>
+  

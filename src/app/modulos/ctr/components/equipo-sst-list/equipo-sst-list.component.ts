@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipoSST } from '../../entities/aliados';
+import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 
 @Component({
   selector: 'app-equipo-sst-list',
@@ -7,24 +7,31 @@ import { EquipoSST } from '../../entities/aliados';
   styleUrls: ['./equipo-sst-list.component.scss']
 })
 export class EquipoSstListComponent implements OnInit {
-  
-  aliadosList: any[] =[{
-    razonSocial:'a',
-    tipo_persona:'s',
-    estado:'x',
-    calificacion:'s'
-  }]
-
+ 
+  visibleDlgResponsable: boolean = false;
   visibleDlg: boolean = false;
 
   equipoList: EquipoSST[]=[]
 
-  selectedList: EquipoSST={
+  responsableList: ResponsableSST[]=[]
+
+
+  selectedResponsableList: ResponsableSST={
     nombre: '',
     correo: '',
     telefono: '',
     licenciaSST: ''
   };
+
+  selectedList: EquipoSST={
+    nombre: '',
+    documento: '',
+    division: '',
+    localidad: '',
+    cargo: '',
+    licenciaSST: ''
+  };
+
 
   constructor() { }
 
@@ -38,20 +45,27 @@ export class EquipoSstListComponent implements OnInit {
   crearMiembros(){
     this.visibleDlg = true
   }
-  display: boolean = false;
 
-  showDialog() {
-      this.display = true;
+  crearResponsableMiembros(){
+    this.visibleDlgResponsable = true
   }
 
   closeDialog(){
     this.visibleDlg = false
+    this.visibleDlgResponsable = false
+
+  }
+
+  agregarResponsableSST(event: ResponsableSST){
+    console.log(event);
+    this.responsableList.push(event);
   }
 
   agregarMiembroSST(event: EquipoSST){
     console.log(event);
     this.equipoList.push(event);
   }
+
 
   onEdit(event){
 

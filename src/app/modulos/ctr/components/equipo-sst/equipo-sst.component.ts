@@ -1,6 +1,7 @@
+import { _divisionList } from './../../entities/aliados';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { EquipoSST } from '../../entities/aliados';
+import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 
 @Component({
   selector: 'app-equipo-sst',
@@ -11,24 +12,46 @@ export class EquipoSstComponent implements OnInit {
 
   @Output() closeDialog = new EventEmitter();
   @Output() createMiembroSST = new EventEmitter<EquipoSST>();
-  // @Input()
+  @Output() createResponsableSST = new EventEmitter<ResponsableSST>();
+  @Input() isResponsable: boolean = false;
 
-  equipoSST: EquipoSST={
+  responsableSST: ResponsableSST={
     nombre: '',
     correo: '',
     telefono: '',
     licenciaSST: ''
   }
 
-  form: FormGroup;
+  equipoSST: EquipoSST={
+    nombre: '',
+    documento: '',
+    division: '',
+    localidad: '',
+    cargo: '',
+    licenciaSST: ''
+  }
+
+  divisionList= _divisionList
+
+  formResponsable: FormGroup;
+  formEquipo: FormGroup;
 
   constructor(
     private fb: FormBuilder
   ) { 
-    this.form = fb.group({
+    this.formResponsable = fb.group({
       nombre: ['', Validators.required],
       correo: ['', Validators.required],
       telefono: ['', Validators.required],
+      licenciaSST: ['', Validators.required],
+    })
+
+    this.formEquipo = fb.group({
+      nombre: ['', Validators.required],
+      documento: ['', Validators.required],
+      division: ['', Validators.required],
+      localidad: ['', Validators.required],
+      cargo: ['', Validators.required],
       licenciaSST: ['', Validators.required],
     })
   }
@@ -37,29 +60,47 @@ export class EquipoSstComponent implements OnInit {
   }
 
   CloseDialog(){
-    this.form.reset();
+    this.formResponsable.reset();
+    this.formEquipo.reset();
     this.closeDialog.emit();
   }
 
   agregar(){
-    console.log(this.form.value)
+    console.log(this.formResponsable.value)
 
-    // this.equipoSST.nombre = this.form.value.nombre;
-    // this.equipoSST.correo = this.form.value.correo;
-    // this.equipoSST.telefono = this.form.value.telefono;
-    // this.equipoSST.licenciaSST = this.form.value.licenciaSST;
+    if (this.isResponsable) {
+      this.responsableSST = {
+        nombre: this.formResponsable.value.nombre,
+        correo: this.formResponsable.value.correo,
+        telefono:this.formResponsable.value.telefono,
+        licenciaSST: this.formResponsable.value.licenciaSST
+      }
+  
+      console.log(this.responsableSST);
+      
+      this.createResponsableSST.emit(this.responsableSST)  
+    } else {
 
-    this.equipoSST = {
-      nombre: this.form.value.nombre,
-      correo: this.form.value.correo,
-      telefono:this.form.value.telefono,
-      licenciaSST: this.form.value.licenciaSST
+      this.equipoSST = {
+        nombre: this.formEquipo.value.nombre,
+        documento: this.formEquipo.value.documento,
+        division:this.formEquipo.value.division,
+        localidad:this.formEquipo.value.localidad,
+        cargo:this.formEquipo.value.cargo,
+        licenciaSST: this.formEquipo.value.licenciaSST
+      }
+      
+      this.createMiembroSST.emit(this.equipoSST)        
     }
 
-    console.log(this.equipoSST);
+
     
-    this.createMiembroSST.emit(this.equipoSST)
     this.CloseDialog();
+  }
+
+  test(){
+    console.log(this.isResponsable);
+    
   }
 
 }
