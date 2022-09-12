@@ -121,6 +121,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     adicionar: boolean = false;
     visibleLnkResetPasswd = true;
     idEmpresa: string;
+    idUsuario: string;
     datasFC: string
     date1: Date;
     date2: Date;
@@ -301,7 +302,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     );
                     break;
                 case "POST":
-                    await this.severidadPost(this.paramNav.getParametro<Desviacion>().analisisId);
+                    await this.severidadPost(await this.paramNav.getParametro<Desviacion>().analisisId);
                     this.sistCausAdminService
                         .findDefault()
                         .then((resp: SistemaCausaAdministrativa) => {
@@ -508,12 +509,14 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.Evidencias=resp['data'][0].documentosList;});
     }
     async severidadPost(analisisId: string){
+        console.log(analisisId)
         let fq = new FilterQuery();
         fq.filterList = [
             { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
         ];
         await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
+            console.log(analisis)
             this.desviacionesList = analisis.desviacionesList;
             this.severidad=this.desviacionesList[0].severidad;
             console.log(this.severidad)
@@ -788,6 +791,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.analisisDesviacionService.create(ad).then((data) => {
                 let analisisDesviacion = <AnalisisDesviacion>data;
                 this.manageResponse(analisisDesviacion);
+                //this.idUsuario=analisisDesviacion
                 this.analisisId = analisisDesviacion.id;
                 this.documentos = [];
                 this.modificar = true;
@@ -906,7 +910,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 let x;
                 let y;
                 let z;
-                if(this.tareasList!=[]){
+                // if(this.tareasList!=[]){
+                if(this.tareasList.length>0){
                     x=await this.tareasList.find(data=>{
                     return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
                 })
@@ -995,7 +1000,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 }
                 console.log(this.tareasList)
                 // modificar
-                if(this.tareasList!=[]){
+                // if(this.tareasList!=[]){
+                if(this.tareasList.length>0){
                     this.tareasList.forEach(element3 => {
                         if(element3.id!=null){
                             if(element3.id==element2.especifico.id && (element3.nombre!=element2.especifico.nombreAccionCorrectiva || element3.descripcion!=element2.especifico.accionCorrectiva || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.especifico.fechaVencimiento).toDateString() || element3.empResponsable.primerNombre!=element2.especifico.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.especifico.responsableEmpresa.id)){
@@ -1046,7 +1052,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 let x;
                 let y;
                 let z;
-                if(this.tareasList!=[]){
+                // if(this.tareasList!=[]){
+                if(this.tareasList.length>0){
                     x=await this.tareasList.find(data=>{
                         return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
                     })
@@ -1070,7 +1077,9 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         console.log(this.listPlanAccion)
     }
-
+testmsng(){
+    this.authService.callmsng()
+}
     manageResponse(ad: AnalisisDesviacion) {
         this.msgs = [];
         if(ad.tareaDesviacionList){
@@ -1095,6 +1104,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.authService
                     .sendNotification(email, ad.tareaDesviacionList[i])
                     .then((resp) => {
+                        if(resp["mensaje"]!="Enviado"){
                         this.msgs = [];
                         this.msgs.push({
                             severity: resp["tipoMensaje"],
@@ -1102,6 +1112,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                             summary: resp["mensaje"],
                         });
                         this.visibleLnkResetPasswd = true;
+                    }
                     })
                     .catch((err) => {
                         this.msgs = [];

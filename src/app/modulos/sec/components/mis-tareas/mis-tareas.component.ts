@@ -27,6 +27,7 @@ export class MisTareasComponent implements OnInit {
     loading: boolean = false;
     yearRange;
     es: any;
+    idEmpresa: string;
 
 
     constructor(
@@ -52,6 +53,7 @@ export class MisTareasComponent implements OnInit {
 //        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
 let empleadoid = this.sesionService.getEmpleado().id;
         let id = this.sesionService.getUsuario().id;
+        this.idEmpresa=this.sesionService.getEmpresa().id;
         let fq = new FilterQuery();
         fq.count = true;
         fq.filterList = [{ field: 'empResponsable.usuario.id', value1: id, criteria: Criteria.CONTAINS }];
@@ -59,6 +61,7 @@ let empleadoid = this.sesionService.getEmpleado().id;
                
         this.tareaService.findByDetailsByEmpleado(id).then(
             async resp => { 
+                console.log(resp)
                 this.tareasList = resp;
                 this.tareasList = await Promise.all(this.tareasList.map(async tarea => {
                     let status = await this.verifyStatus(tarea);

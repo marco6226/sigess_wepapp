@@ -87,11 +87,11 @@
     </p-panel>
     <br>
     <br>
-    <button pButton *ngIf="process=='ESPECIFICO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.especifico.accionCorrectiva!=null && planAcciones.especifico.fechaVencimiento!=null && (planAcciones.especifico.responsableEmpresa!=null || planAcciones.especifico.responsableExterno!=null))"></button>
+    <button pButton *ngIf="process=='ESPECIFICO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.especifico.accionCorrectiva!=null && planAcciones.especifico.fechaVencimiento!=null && (planAcciones.especifico.responsableEmpresa!=null))"></button>
     <button pButton *ngIf="process=='RAZONABLE'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised"></button>
-    <button pButton *ngIf="process=='MEDIBLE'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.medible.planVerificacion!=null && planAcciones.medible.fechaVencimiento!=null && (planAcciones.medible.responsableEmpresa || planAcciones.medible.responsableExterno))"></button>
-    <button pButton *ngIf="process=='EFICAZ'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.eficaz.planValidacion!=null && planAcciones.eficaz.fechaVencimiento!=null && (planAcciones.eficaz.responsableEmpresa || planAcciones.eficaz.responsableExterno))"></button>
+    <button pButton *ngIf="process=='MEDIBLE'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.medible.planVerificacion!=null && planAcciones.medible.fechaVencimiento!=null && (planAcciones.medible.responsableEmpresa))"></button>
+    <button pButton *ngIf="process=='EFICAZ'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.eficaz.planValidacion!=null && planAcciones.eficaz.fechaVencimiento!=null && (planAcciones.eficaz.responsableEmpresa))"></button>
     <button pButton *ngIf="process=='REVISADO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.revisado.revisado!=null)"></button>
     <!-- <button (click)="cerrar()" pButton type="button" label="x" class="ui-button-raised ui-button-danger" style="position:absolute; top:0; right:0; height: 20px;width: 20px;"></button> -->
 
-<button (click)="test()">test</button>
+<!-- <button (click)="test()">test</button> -->
