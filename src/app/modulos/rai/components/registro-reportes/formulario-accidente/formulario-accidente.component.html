@@ -478,11 +478,11 @@
                         <p-radioButton name="zonaAcc" label="Rural" value="R" formControlName="zonaAccidente">
                         </p-radioButton>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa =='22';else blanco2">
                         Clasificación del evento
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-dropdown [options]="severidadList" formControlName="severidad"></p-dropdown>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22';else blanco4">
+                        <p-dropdown [options]="severidadList" formControlName="severidad" required></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         ¿Causó muerte?
