@@ -8,6 +8,7 @@ import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 })
 export class EquipoSstListComponent implements OnInit {
  
+  visibleDlgResponsable: boolean = false;
   visibleDlg: boolean = false;
 
   equipoList: EquipoSST[]=[]
@@ -15,12 +16,22 @@ export class EquipoSstListComponent implements OnInit {
   responsableList: ResponsableSST[]=[]
 
 
-  selectedList: EquipoSST={
+  selectedResponsableList: ResponsableSST={
     nombre: '',
     correo: '',
     telefono: '',
     licenciaSST: ''
   };
+
+  selectedList: EquipoSST={
+    nombre: '',
+    documento: '',
+    division: '',
+    localidad: '',
+    cargo: '',
+    licenciaSST: ''
+  };
+
 
   constructor() { }
 
@@ -34,20 +45,27 @@ export class EquipoSstListComponent implements OnInit {
   crearMiembros(){
     this.visibleDlg = true
   }
-  display: boolean = false;
 
-  showDialog() {
-      this.display = true;
+  crearResponsableMiembros(){
+    this.visibleDlgResponsable = true
   }
 
   closeDialog(){
     this.visibleDlg = false
+    this.visibleDlgResponsable = false
+
+  }
+
+  agregarResponsableSST(event: ResponsableSST){
+    console.log(event);
+    this.responsableList.push(event);
   }
 
   agregarMiembroSST(event: EquipoSST){
     console.log(event);
     this.equipoList.push(event);
   }
+
 
   onEdit(event){
 

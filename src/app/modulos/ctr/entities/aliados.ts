@@ -10,8 +10,10 @@ export interface Aliados {
 
 export interface EquipoSST{
     nombre: string;
-    correo: string;
-    telefono: string;
+    documento: string;
+    division: string;
+    localidad: string;
+    cargo: string;
     licenciaSST: string;
 }
 

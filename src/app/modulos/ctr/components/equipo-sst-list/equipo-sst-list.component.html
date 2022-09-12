@@ -1,14 +1,10 @@
-<s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros del equipo de Salud Seguridad Trabajo">
-    <button pButton type="button" (click)="crearMiembros()" icon="fa fa-plus" label="Crear"></button>
-</s-dataNotFound>
-
-<s-dataNotFound *ngIf="!equipoList || equipoList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros del equipo de Salud Seguridad Trabajo">
-    <button pButton type="button" (click)="crearMiembros()" icon="fa fa-plus" label="Crear"></button>
+<s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros del Responsable SST">
+    <button pButton type="button" (click)="crearResponsableMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
 
 <p-panel header="Responsable SST" [style.display]="responsableList && responsableList.length > 0 ? 'block':'none'">
     <p-tabView>
-        <p-table [value]="equipoList" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+        <p-table [value]="responsableList" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedResponsableList">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>
@@ -59,6 +55,14 @@
     </p-tabView>
 </p-panel>
 
+<br>
+
+<s-dataNotFound *ngIf="(!equipoList || equipoList.length <= 0) && responsableList.length > 0" icon="fa-handshake-o" message="No se encontraron registros del equipo de Salud Seguridad Trabajo">
+    <button pButton type="button" (click)="crearMiembros()" icon="fa fa-plus" label="Crear"></button>
+</s-dataNotFound>
+
+<br>
+
 <p-panel header="Lista de Aliados" [style.display]="equipoList && equipoList.length > 0 ? 'block':'none'">
     <p-tabView>
         <p-table [value]="equipoList" responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
@@ -68,10 +72,16 @@
                         Nombre
                     </th>
                     <th>
-                        Correo
+                        Documento
                     </th>
                     <th>
-                        Telefono
+                        División
+                    </th>
+                    <th>
+                        Localidad
+                    </th>
+                    <th>
+                        Rol o Cargo
                     </th>
                     <th>
                         Licencia SST
@@ -85,10 +95,16 @@
                         {{rowData.nombre}}
                     </td>
                     <td>
-                        {{rowData.correo}}
+                        {{rowData.documento}}
                     </td>
                     <td>
-                        {{rowData.telefono}}
+                        {{rowData.division}}
+                    </td>
+                    <td>
+                        {{rowData.localidad}}
+                    </td>
+                    <td>
+                        {{rowData.cargo}}
                     </td>
                     <td>
                         {{rowData.licenciaSST}}
@@ -112,8 +128,8 @@
     </p-tabView>
 </p-panel>
 
-<p-dialog header="Responsable SST" [(visible)]="visibleDlg" [style]="{width: '50vw'}">
-  <app-equipo-sst (closeDialog)="closeDialog()" (createMiembroSST)="agregarMiembroSST($event)"></app-equipo-sst>
+<p-dialog header="Responsable SST" [(visible)]="visibleDlgResponsable" [style]="{width: '50vw'}">
+  <app-equipo-sst (closeDialog)="closeDialog()" (createResponsableSST)="agregarResponsableSST($event)" [isResponsable]="true"></app-equipo-sst>
 </p-dialog>
 
 <p-dialog header="Miembro SST" [(visible)]="visibleDlg" [style]="{width: '50vw'}">
