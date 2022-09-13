@@ -1,1 +1,8 @@
-<p>asignacion-colider works!</p>
+<div *ngIf="empleadoSelect?.id !=null || (!consultar && !modificar) ">
+    <strong>Seleccione Colider</strong>
+    <br/>
+    <br/>
+    <s-empleadoSelector [(ngModel)]="empleadoSelect " [readOnly]="reporteSelect "></s-empleadoSelector>
+    <br/>
+    <br/>
+</div>
