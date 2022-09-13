@@ -7,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalificacionComponent implements OnInit {
 
-  val2: string = 'Option 2';
   val1: string;
+  val2: string;
+  val3: string;
+  val4: string;
+  val5: string;
 
   constructor() { }
 
