@@ -1,1 +1,65 @@
-<p>cargue-documentos works!</p>
+<p>Certificado ARL</p>
+
+<div>
+    <button pButton type="button" (click)="showDialog('politicas')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId"  tipoEvidencia="politica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
+</div>
+
+<div class="ui-g" style="margin-top: 10px;">
+    <div class="ui-g-12 ui-sm-12 ui-md-10">
+        <div *ngFor="let doc of documentos">
+            <table class="dwrapper" *ngIf="doc.proceso=='politica'">
+                <tr>
+                <td>
+                    <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                    <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+                </td>
+                <td style="text-align: right;">
+                    <a class="fa fa-pencil" title="Actualizar Descripción" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+                    <a>&nbsp;</a>
+                    <a class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" *ngIf="!readOnly" style="color: red;"></a>
+                </td>
+                </tr>
+                <tr>
+                <td colspan="2">
+                    <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<p>Licencia SST</p>
+
+<div>
+    <button pButton type="button" (click)="showDialog('politicas')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" *ngIf="!readOnly"></button>
+    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId"  tipoEvidencia="politica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
+</div>
+
+<div class="ui-g" style="margin-top: 10px;">
+    <div class="ui-g-12 ui-sm-12 ui-md-10">
+        <div *ngFor="let doc of documentos">
+            <table class="dwrapper" *ngIf="doc.proceso=='politica'">
+                <tr>
+                <td>
+                    <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                    <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+                </td>
+                <td style="text-align: right;">
+                    <a class="fa fa-pencil" title="Actualizar Descripción" (click)="actualizarDesc(doc)" *ngIf="!readOnly"></a>
+                    <a>&nbsp;</a>
+                    <a class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" *ngIf="!readOnly" style="color: red;"></a>
+                </td>
+                </tr>
+                <tr>
+                <td colspan="2">
+                    <textarea [disabled]="readOnly" pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

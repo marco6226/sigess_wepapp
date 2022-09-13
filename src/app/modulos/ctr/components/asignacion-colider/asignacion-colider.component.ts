@@ -1,4 +1,6 @@
+import { Empleado } from './../../../empresa/entities/empleado';
 import { Component, OnInit } from '@angular/core';
+import { Reporte } from 'app/modulos/rai/entities/reporte';
 
 @Component({
   selector: 'app-asignacion-colider',
@@ -6,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./asignacion-colider.component.scss']
 })
 export class AsignacionColiderComponent implements OnInit {
+
+  empleadoSelect: Empleado;
+  reporteSelect: Reporte;
 
   constructor() { }
 
