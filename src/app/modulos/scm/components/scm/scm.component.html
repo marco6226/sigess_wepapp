@@ -186,8 +186,10 @@
                 <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.nombrePadre}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.ciudad}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.region}}</td>
-                <td class="p-text-center">{{case.primerApellido}}</td>
-                <td class="p-text-center">{{case.primerNombre}} </td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.primerApellido}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.pkUser.primerApellido}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.primerNombre}} </td>
+                <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.pkUser.primerNombre}} </td>
                 <td class="p-text-center">{{case.documento}}</td>
                 <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
                 <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' :case.casoMedicoLaboral == 2 ? 'En seguimiento':case.casoMedicoLaboral == 3 ?'No aplica':case.casoMedicoLaboral == 0 ?'No':''}}</td>
