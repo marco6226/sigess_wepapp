@@ -811,7 +811,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.msgs = [];
             this.msgs.push({
                 severity: "error",
-                detail: "Faltan campos por llenar",
+                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control.",
             });
         }
     }

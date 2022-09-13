@@ -45,7 +45,7 @@
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "jspdf": "^1.5.3",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "ng-circle-progress": "^1.6.0",
     "ng2-smooth-scroll": "^1.0.1",
     "ngx-capture": "^0.0.3-alpha",

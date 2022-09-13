@@ -150,14 +150,15 @@
                                                 <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" class="fieldgroup"></p-radioButton>
                                             </td> 
                                         </tr>
-                                        <tr>
+                                        <tr *ngIf="analisisPeligros.get('ReporteControl').value == true">
+                                            
                                             <th style="border: 1px solid #c8c8c8;">Fecha de envio a entes de control</th>
                                             <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                                 <div class="field col-12 md:col-4">
                                                     <!-- <label for="touchui">Touch UI</label> -->
                                                     <!-- <p-calendar [(ngModel)]="date1" [touchUI]="true" [readonlyInput]="true" inputId="touchui" [(ngModel)]="FechaControl"></p-calendar> -->
-                                                    <p-calendar [yearNavigator]="true" yearRange="1900:2030" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" formControlName="FechaControl"></p-calendar>
+                                                    <p-calendar [yearNavigator]="true" yearRange="1900:2030" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" required inputId="touchui" formControlName="FechaControl"></p-calendar>
                                                 </div>
                                             </th>
                                         </tr>
@@ -168,7 +169,7 @@
                                                 <p-radioButton name="group2" label="No  " [value]="false" formControlName="CopiaTrabajador" ></p-radioButton>
                                             </td>                                
                                         </tr>
-                                        <tr>
+                                        <tr *ngIf="analisisPeligros.get('CopiaTrabajador').value == true">
                                             <th style="border: 1px solid #c8c8c8;width: 35%">Fecha entrega copia al trabajador</th>
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                                 <div class="field col-12 md:col-4">
