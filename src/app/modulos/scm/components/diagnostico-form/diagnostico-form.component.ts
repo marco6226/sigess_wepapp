@@ -147,7 +147,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
             }
 
             if (res) {
-                this.eventClose.emit();
+                
                 this.clearInputs();
                 this.msgs.push({
                     severity: "success",
@@ -155,6 +155,10 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
                     detail: this.diagSelect ? "El diagnóstico fue actualizado exitosamente" : 'El diagnóstico fue creado exitosamente',
                     //detail: `Su numero de caso es ${status}`,
                 });
+                
+                setTimeout(() => {
+                    this.eventClose.emit();
+                }, 1500);
             }
         } catch (error) {
 
