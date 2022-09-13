@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalificacionComponent implements OnInit {
 
+  val2: string = 'Option 2';
+  val1: string;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -1,1 +1,46 @@
-<p>calificacion works!</p>
+<p-panel header="Formulario Calificación" >
+    <!-- <div class="input-field">
+        <input type="text" pInputText formControlName="telefono" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.telefono" placeholder="Telefono"
+        class="form-material"/>
+        <label for="" class="active">Telefono</label>
+    </div> -->
+    <br>
+    <div class="cols" >
+        <p-panel class="input-field" header="Pregunta 1">
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val1" inputId="opt1"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val1" inputId="opt2"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div>
+            </div>
+        </p-panel>
+        <p-panel class="input-field" header="Pregunta 2">
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val2" inputId="opt1"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val2" inputId="opt2"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val2" inputId="opt3"></p-radioButton></div>
+            </div>
+        </p-panel>
+        <p-panel class="input-field" header="Pregunta 3">
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val3" inputId="opt1"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val3" inputId="opt2"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val3" inputId="opt3"></p-radioButton></div>
+            </div>
+        </p-panel>
+        <p-panel class="input-field" header="Pregunta 4">
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val4" inputId="opt1"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val4" inputId="opt2"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val4" inputId="opt3"></p-radioButton></div>
+            </div>
+        </p-panel>
+        <p-panel class="input-field" header="Pregunta 5">
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val5" inputId="opt1"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val5" inputId="opt2"></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val5" inputId="opt3"></p-radioButton></div>
+            </div>
+        </p-panel>
+    </div>    
+    <br>
+</p-panel>
