@@ -3,11 +3,11 @@
     <div class="input-field">
 
         <label class="active" for="">Tipo de retorno</label>
-        <p-dropdown [options]="reintegroTipos" [(ngModel)]="isEdit.tipo_retorno" formControlName="tipo_retorno" placeholder="Seleccione" required></p-dropdown>
+        <p-dropdown appendTo="body" [options]="reintegroTipos" [(ngModel)]="isEdit.tipo_retorno" formControlName="tipo_retorno" placeholder="Seleccione" required (onChange)="clear()"></p-dropdown>
     </div>
     <br>
 
-    <p-panel header="Reintegro" *ngIf="form.value.tipo_retorno=='Reintegro'">
+    <p-panel header="Reintegro" *ngIf="form.value.tipo_retorno=='Reintegro' && form.value.tipo_retorno!='Reubicación'&& form.value.tipo_retorno!='Reconversión'">
         <div class="input-field">
             <label class="active" for="">Descripción</label>
             <textarea name="" id="" cols="30" rows="8" [(ngModel)]="isEdit.descripcion" formControlName="descripcion" required></textarea>
@@ -15,12 +15,12 @@
         </div>
         <div class="input-field">
             <label class="active" for="">Permanencia</label>
-            <p-dropdown styleClass="form-material-autocomplete" [(ngModel)]="isEdit.permanencia" [options]="temporals" formControlName="permanencia" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown *ngIf="form.value.tipo_retorno!='Reconversión'" appendTo="body" styleClass="form-material-autocomplete" [(ngModel)]="isEdit.permanencia" [options]="temporals" formControlName="permanencia" placeholder="Seleccione" required></p-dropdown>
         </div>
-        <div class="input-field" *ngIf="form.value.permanencia">
+        <div class="input-field" *ngIf="form.value.permanencia && form.value.tipo_retorno!='Reconversión'">
             <label class="active" for="">Periodo seguimiento</label>
-            <p-dropdown *ngIf="form.value.permanencia=='Temporal'" [(ngModel)]="isEdit.periodo_seguimiento" [options]="periocidadesTemp" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
-            <p-dropdown *ngIf="form.value.permanencia=='Permanente'" [(ngModel)]="isEdit.periodo_seguimiento" [options]="periocidadesPerm" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" *ngIf="form.value.permanencia=='Temporal' && form.value.tipo_retorno!='Reconversión'" [(ngModel)]="isEdit.periodo_seguimiento" [options]="periocidadesTemp" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" *ngIf="form.value.permanencia=='Permanente' && form.value.tipo_retorno!='Reconversión'" [(ngModel)]="isEdit.periodo_seguimiento" [options]="periocidadesPerm" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
         </div>
         <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
             <label class="active"  for="">Reintegro Exitoso</label>
@@ -31,20 +31,20 @@
         </div>
     </p-panel>
 
-    <p-panel header="Reubicación" *ngIf="form.value.tipo_retorno=='Reubicación'">
+    <p-panel header="Reubicación" *ngIf="form.value.tipo_retorno=='Reubicación' && form.value.tipo_retorno!='Reintegro'&& form.value.tipo_retorno!='Reconversión'">
         <div class="input-field">
             <label class="active" for="">Descripción</label>
             <!-- <input type="text"> -->
             <textarea name="" id="" cols="30" rows="8" [(ngModel)]="isEdit.descripcion" formControlName="descripcion" required></textarea>
         </div>
         <div class="input-field">
-            <p-dropdown [options]="temporals" [(ngModel)]="isEdit.permanencia" formControlName="permanencia" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown *ngIf="form.value.tipo_retorno!='Reconversión'" appendTo="body" [options]="temporals" [(ngModel)]="isEdit.permanencia" formControlName="permanencia" placeholder="Seleccione" required></p-dropdown>
             <label class="active" for="">Permanencia</label>
         </div>
         <div class="input-field" *ngIf="form.value.permanencia">
             <label class="active" for="">Periodo seguimiento</label>
-            <p-dropdown *ngIf="form.value.permanencia=='Temporal'" [options]="periocidadesTemp" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
-            <p-dropdown *ngIf="form.value.permanencia=='Permanente'" [options]="periocidadesPerm" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" *ngIf="form.value.permanencia=='Temporal' && form.value.tipo_retorno=='Reubicación'" [options]="periocidadesTemp" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" *ngIf="form.value.permanencia=='Permanente' && form.value.tipo_retorno=='Reubicación'" [options]="periocidadesPerm" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
         </div>
         <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
             <label class="active"  for="">Reintegro Exitoso</label>
@@ -56,7 +56,7 @@
 
     </p-panel>
 
-    <p-panel header="Reconversión" *ngIf="form.value.tipo_retorno=='Reconversión'">
+    <p-panel header="Reconversión" *ngIf="form.value.tipo_retorno=='Reconversión' && form.value.tipo_retorno!='Reubicación'&& form.value.tipo_retorno!='Reintegro'">
         <div class="input-field">
             <label class="active" for="">Descripción</label>
             <!-- <input type="text"> -->
@@ -65,7 +65,7 @@
         <div class="input-field">
 
             <label class="active" for="">Periodo seguimiento</label>
-            <p-dropdown [options]="periocidadesTemp" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
+            <p-dropdown appendTo="body" [options]="periocidadesTemp" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
         </div>
         <div class="input-field">
             <label class="active"  for="">Reintegro Exitoso</label>
@@ -80,7 +80,7 @@
     <p-panel header="Cierre" *ngIf="form.value.tipo_retorno">
         <div class="input-field">
             <label class="active" for="">Fecha Cierre</label>
-            <p-calendar [(ngModel)]="isEdit.fecha_cierre" dateFormat="dd/mm/yy" formControlName="fecha_cierre"></p-calendar>
+            <p-calendar [(ngModel)]="isEdit.fecha_cierre" dateFormat="dd/mm/yy" formControlName="fecha_cierre" [locale]="localeES"></p-calendar>
         </div>
         <div class="input-field">
             <label class="active" for="">Observación</label>

@@ -5,6 +5,7 @@ import { ReintegroCreate } from './../../../entities/reintegro.interface';
 import { CasosMedicosService } from './../../../services/casos-medicos.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Reintegro } from 'app/modulos/scm/entities/reintegro.interface';
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 
 @Component({
   selector: 'app-reintegro',
@@ -64,8 +65,7 @@ console.log("---------<<<",isEdit);
 
   @Output() isCreate = new EventEmitter<any>()
 
-
-
+  localeES: any = locale_es;
   form: FormGroup;
 
   reintegroTipos=[
@@ -170,6 +170,15 @@ console.log("---------<<<",isEdit);
     this.isCreate.emit()
     console.log(this.form.value);
     
+  }
+  clear() {
+    console.log(this.form.value.tipo_retorno)
+    if (this.form.value.tipo_retorno=='Reconversión') {
+        this.form.patchValue({
+          periodo_seguimiento: [null, /*Validators.required*/],
+        })
+      }
+    // this.form.reset();
   }
   
 

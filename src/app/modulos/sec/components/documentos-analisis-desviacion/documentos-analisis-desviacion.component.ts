@@ -7,6 +7,7 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
 import { Util } from '../../../comun/util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Message } from 'primeng/api';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 's-documentosAnalisisDesviacion',
@@ -33,6 +34,7 @@ export class DocumentosAnalisisDesviacionComponent implements OnInit {
   constructor(
     private domSanitizer: DomSanitizer,
     private directorioService: DirectorioService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,29 @@ export class DocumentosAnalisisDesviacionComponent implements OnInit {
     //   this.documentosList = [];
     //   this.documentos.forEach(doc => this.adicionarAGaleria(doc));
     // }
+  }
+
+  eliminarDocument(doc: Documento) {
+    console.log(doc)
+    console.log(this.documentos)
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.onUpdate.emit(doc);
+          this.directorioService.eliminarDocumento(doc.id).then(
+            data => {
+              this.documentos = this.documentos.filter(val => val.id !== doc.id);
+              console.log(this.documentos)
+              // this.eliminarPorName(doc.id);
+              // this.onUpload()
+              // this.actualizarDesc(doc)
+              // this.onUpdate.emit(doc);
+            }
+          );
+      }
+  });
   }
 
   adicionarAGaleria(doc: Documento) {
