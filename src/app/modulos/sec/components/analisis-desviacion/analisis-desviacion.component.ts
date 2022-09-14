@@ -1022,6 +1022,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                                 element3.envioCorreo=false
                             }
                             if(element3.id==element2.medible.id && (element3.nombre!=element2.medible.planVerificacion || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.medible.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.medible.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.medible.responsableEmpresa.id))){
+                                console.log(new Date(element3.fechaProyectada).toDateString())
+                                console.log(new Date(element2.medible.fechaVencimiento).toDateString())
                                 element3.nombre=element2.medible.planVerificacion
                                 element3.fechaProyectada=new Date(element2.medible.fechaVencimiento)
                                 element3.empResponsable=element2.medible.responsableEmpresa
@@ -1056,6 +1058,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
     async tareaList3(){
+        this.disabled=true;
         console.log(this.listPlanAccion)
         this.listPlanAccion.forEach(element => {
             element.causaRaiz.forEach(async element2 => {
@@ -1086,6 +1089,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             });
         });
         console.log(this.listPlanAccion)
+        this.disabled=false;
     }
 testmsng(){
     this.authService.callmsng()
