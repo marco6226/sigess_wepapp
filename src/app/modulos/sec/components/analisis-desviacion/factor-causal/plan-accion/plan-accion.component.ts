@@ -40,7 +40,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
 
   causasListSelect
   display: boolean = false;
-
+  fechaActual = new Date();
 
 
   constructor(

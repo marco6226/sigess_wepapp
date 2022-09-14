@@ -12,7 +12,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [defaultDate]="fechaActual" [minDate]="fechaActual" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
     </div>
     <div class="p-field">
         <label>Responsable Empresa</label>
@@ -43,7 +43,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" (onInput)="test()" dateFormat="dd/mm/yy" required></p-calendar>
+        <p-calendar [defaultDate]="planAcciones.especifico.fechaVencimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" (onInput)="test()" dateFormat="dd/mm/yy" required></p-calendar>
     </div>
     <div class="p-field">
         <label>Plan de Verificación</label>
@@ -63,7 +63,7 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [yearNavigator]="true" yearRange="1900:2030" [monthNavigator]="true" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.medible.fechaVencimiento" [(ngModel)]="planAcciones.eficaz.fechaVencimiento" dateFormat="dd/mm/yy" required></p-calendar>
+        <p-calendar [defaultDate]="planAcciones.medible.fechaVencimiento" [yearNavigator]="true" yearRange="1900:2030" [monthNavigator]="true" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.medible.fechaVencimiento" [(ngModel)]="planAcciones.eficaz.fechaVencimiento" dateFormat="dd/mm/yy" required></p-calendar>
     </div>
     <div class="p-field">
         <label>Plan de Validación</label>

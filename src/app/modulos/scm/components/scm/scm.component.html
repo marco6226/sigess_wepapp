@@ -6,6 +6,7 @@
 
     <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="(idEmpresa=='22')?casosList2:casosList" [paginator]="true" [rows]="12" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
         [totalRecords]="totalRecords">
+        <!-- [value]="(idEmpresa=='22')?casosList2:casosList" -->
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th pSortableColumn="id">#CASO
@@ -48,7 +49,7 @@
                     <p-sortIcon field="tipoCaso"></p-sortIcon>
                 </th>
                 <th pSortableColumn="tipoReporte" *ngIf="idEmpresa=='22'">Tipo de retorno
-                    <!-- <p-sortIcon field="tipoReporte"></p-sortIcon> -->
+                    <p-sortIcon field="tipoReporte"></p-sortIcon>
                 </th>
             </tr>
             <tr class="filters">
@@ -161,20 +162,12 @@
                 </td>
                 <td *ngIf="idEmpresa=='22'">
                     <div class="ui-inputgroup">
-                        <!-- <span class="ui-inputgroup-addon">
-                            <em class="pi pi-search"></em>
-                        </span> -->
-                        <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoReporte')"> -->
-                    </div>
-                </td>
-                <!-- <td *ngIf="idEmpresa=='22'">
-                    <div class="ui-inputgroup">
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoReporte')">
                     </div>
-                </td> -->
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-case>
