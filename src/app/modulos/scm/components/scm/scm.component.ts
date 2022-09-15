@@ -28,7 +28,6 @@ export class ScmComponent implements OnInit {
     valor3: string;
     empresaId: string;
     casosList: any;
-    casosList2: any;
     usuarioSelect: Usuario;
     perfilList: SelectItem[] = [];
     visibleDlg: boolean;
@@ -144,55 +143,11 @@ export class ScmComponent implements OnInit {
             let res: any = await this.scmService.findByFilter(filterQuery);
             this.casosList = res.data;
             this.totalRecords = res.count;
-            // console.log(res)
-            this.List2()
-
         } catch (error) {
             console.log(error)
         }
 
 
-    }
-    async List2(){
-        this.casosList2=[]
-        console.log(this.casosList)
-        let cont1=0;
-        let cont2=0;
-        await this.casosList.forEach(async element => {
-            cont1++
-                await this.scmService.getReintegroByCaseId2(element.id).subscribe(data=>{
-                    console.log(data)
-                    this.reintegroList = (data.length!=0)?data:null;
-                    console.log(this.reintegroList)
-                    if(this.reintegroList!=null){
-                    this.reintegroList.sort((a, b) => {
-                        if(a.id == b.id) {
-                        return 0; 
-                        }
-                        if(a.id > b.id) {
-                        return -1;
-                        }
-                        return 1;
-                    });
-                    }
-                    this.casosList2.push({
-                        id:element.id, 
-                        fechaCreacion:element.fechaCreacion, 
-                        region:element.region, 
-                        ciudad:element.ciudad, 
-                        primerApellido: element.pkUser.primerApellido, 
-                        primerNombre: element.pkUser.primerNombre, 
-                        documento: element.documento, 
-                        statusCaso:element.statusCaso, 
-                        prioridadCaso: element.prioridadCaso, 
-                        tipoCaso: element.tipoCaso, 
-                        casoMedicoLaboral:element.casoMedicoLaboral,
-                        // tipoReporte:(this.reintegroList==null)?null:this.reintegroList[0].tipo_retorno,
-                        tipoReporte:element.tipoReporte,
-                        nombrePadre:element.pkUser.area.padreNombre
-                    })
-                  })
-             });
     }
 }
 

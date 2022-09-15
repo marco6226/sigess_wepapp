@@ -4,7 +4,7 @@
         Casos médicos
     </p-header>
 
-    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="(idEmpresa=='22')?casosList2:casosList" [paginator]="true" [rows]="12" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
+    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="12" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
         [totalRecords]="totalRecords">
         <!-- [value]="(idEmpresa=='22')?casosList2:casosList" -->
         <ng-template pTemplate="header" let-columns>
@@ -176,12 +176,12 @@
                 <td class="p-text-center">{{case.id}}</td>
                 <td class="p-text-center">{{case.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.region}}</td>
-                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.nombrePadre}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.pkUser.area.padreNombre}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.ciudad}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.region}}</td>
-                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.primerApellido}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.pkUser.primerApellido}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.pkUser.primerApellido}}</td>
-                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.primerNombre}} </td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.pkUser.primerNombre}} </td>
                 <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.pkUser.primerNombre}} </td>
                 <td class="p-text-center">{{case.documento}}</td>
                 <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
