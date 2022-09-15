@@ -100,7 +100,9 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <input type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.regional"
+                    <input *ngIf="idEmpresa!='22'" type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.regional"
+                        readonly="true" />
+                    <input *ngIf="idEmpresa=='22'" type="text" pInputText placeholder="Regional" class="form-material" [value]="tarea?.division"
                         readonly="true" />
                     <label for="" class="active" *ngIf="idEmpresa!='22'">Regional</label>
                     <label for="" class="active" *ngIf="idEmpresa=='22'">División / Unidad</label>
