@@ -223,6 +223,16 @@ export class TareaComponent implements OnInit {
     }
 
     verifyStatus(isFollowsExist = false) {
+
+        
+        // this.statuses = {
+        //     0: "N/A",
+        //     1: "En seguimiento",
+        //     2: "Abierta",
+        //     3: "Cerrada en el tiempo",
+        //     4: "Cerrada fuera de tiempo",
+        //     5: "Vencida",
+        // };
         console.log("Existe seguimiento? ", isFollowsExist);
 
         /* Vars */
@@ -230,17 +240,11 @@ export class TareaComponent implements OnInit {
         let fecha_cierre = moment(this.tarea.fecha_cierre);
         let fecha_proyectada = moment(this.tarea.fecha_proyectada);
 
-        if (
-            !fecha_cierre.isValid() &&
-            
-            isFollowsExist
-        )
-            return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now))
-            return 2;
-        if (fecha_cierre.isValid() && fecha_proyectada.isAfter(now)) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 4;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now)) return 5;
+        if (!fecha_cierre.isValid() && isFollowsExist) return 1;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day'))return 2;
+        if (fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) return 3;
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 4;
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 5;
 
         return 0;
     }
