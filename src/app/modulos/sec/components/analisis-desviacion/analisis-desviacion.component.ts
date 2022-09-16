@@ -1257,6 +1257,7 @@ testmsng(){
                 this.contPoliticas=0;
                 this.contProcedimientos=0;
                 this.contMultimedias=0;
+                console.log(this.Evidencias)
                 for(let i=0; i< this.Evidencias.length; i++){
                 let value=this.Evidencias[i].proceso;
                 switch (value) {
@@ -1266,13 +1267,13 @@ testmsng(){
                     case 'documental':
                     this.contDocumental++;
                     break;
-                    case 'politicas':
+                    case 'politica':
                     this.contPoliticas++;
                     break;
                     case 'procedimientos':
                     this.contProcedimientos++;
                     break;
-                    case 'multimedias':
+                    case 'multimedia':
                     this.contMultimedias++;
                     break;
                     default:
