@@ -68,7 +68,10 @@ export class SeguimientosTareasComponent implements OnInit {
 
             if (changes) {
                 console.log('changes detected');
-                this.getSeg();
+                setTimeout(() => {
+                    this.getSeg();
+                }, 1500);
+                
                 changes.forEachChangedItem(r => {
                     this.cd.markForCheck();
                 });
