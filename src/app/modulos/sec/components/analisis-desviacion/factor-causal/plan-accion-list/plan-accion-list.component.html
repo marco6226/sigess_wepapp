@@ -102,13 +102,14 @@
                         <i style="font-size: 40px;" class="pi pi-times"></i>
                     </p-button>
                 </div>
-                <div *sTienePermiso="'SEC_DELETE_PLANACCION'">
+                <ng-container *ngIf="!causa.especifico.isComplete" >
+                <div *sTienePermiso="'SEC_DELETE_PLANACCION'" >
                     <label>Eliminar</label>
                     <p-button  styleClass="ui-button-danger" iconPos="right" label="eliminar" (onClick)="eliminar(data,causa,i,j)">
                         <i style="font-size: 40px;" class="pi pi-times"></i>
                     </p-button>
                 </div>
-                
+            </ng-container>
             </div>
         </p-accordionTab>        
     </p-accordionTab>
