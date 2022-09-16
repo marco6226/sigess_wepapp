@@ -107,7 +107,7 @@ export class TareaComponent implements OnInit {
             let fecha_cierre = moment(this.tarea.fecha_cierre);
 
             let permiso =
-                this.sesionService.getPermisosMap()["SEC_CHANGE_FECHACIERRE"];
+                await this.sesionService.getPermisosMap()["SEC_CHANGE_FECHACIERRE"];
             if (permiso != null && permiso.valido == true) {
                 this.fechavisible = true;
             } else {
@@ -143,7 +143,7 @@ export class TareaComponent implements OnInit {
                         value2: null,
                     },
                 ];
-                this.empleadoService.findByFilter(fq).then(async (resp) => {
+                await this.empleadoService.findByFilter(fq).then(async (resp) => {
                     console.log(resp);
                     if (resp["data"].length > 0) {
                         let empleado = resp["data"][0];
@@ -221,9 +221,10 @@ export class TareaComponent implements OnInit {
             console.log(e);
         }
     }
-
+ cont :number=0;
     verifyStatus(isFollowsExist = false) {
-
+        this.cont++;
+        console.log('cont:',this.cont)
         
         // this.statuses = {
         //     0: "N/A",
@@ -241,11 +242,11 @@ export class TareaComponent implements OnInit {
         let fecha_proyectada = moment(this.tarea.fecha_proyectada);
 
         if (!fecha_cierre.isValid() && isFollowsExist) return 1;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day'))return 2;
-        if (fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) return 3;
-        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 4;
-        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) return 5;
-
+        if (!fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')){ return 2;}
+        if (fecha_cierre.isValid() && fecha_proyectada.isSameOrAfter(now,'day')) { return 3;}
+        if (fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) {return 4;}
+        if (!fecha_cierre.isValid() && fecha_proyectada.isBefore(now,'day')) {return 5;}
+        // this.getTarea()
         return 0;
     }
 
@@ -279,7 +280,9 @@ export class TareaComponent implements OnInit {
         this.status = 0;
         console.log("Funciona el emit");
         setTimeout(() => {
+            //this.getTarea()
             this.status = this.verifyStatus(data);
+            console.log('hola')
         }, 300);
     }
 
