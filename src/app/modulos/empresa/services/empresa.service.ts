@@ -1,3 +1,4 @@
+import { EquipoSST, ResponsableSST } from './../../ctr/entities/aliados';
 import { Injectable } from '@angular/core';
 import { Empresa } from './../entities/empresa'
 
@@ -68,6 +69,42 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
 
     getClassName(): string {
         return "EmpresaService";
+    }
+
+    createEquipoSST(equipoSST: EquipoSST){
+        let entity:EquipoSST;
+
+        let body = JSON.stringify(entity);
+        
+        return new Promise(resolve =>{
+            this.httpInt.post(endPoints.EmpresaService + "createEquipoSST",body)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                }
+                ,
+                err => this.manageError(err)
+            )
+        })
+    }
+
+    createResponsableSST(responsableSST: ResponsableSST){
+        let entity:EquipoSST;
+
+        let body = JSON.stringify(entity);
+        
+        return new Promise(resolve =>{
+            this.httpInt.post(endPoints.EmpresaService + "createEquipoSST",body)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                }
+                ,
+                err => this.manageError(err)
+            )
+        })
     }
 
 }

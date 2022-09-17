@@ -40,6 +40,7 @@ export class AliadosListComponent implements OnInit {
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [];
 
+
     let filtPadre = new Filter();
     filtPadre.criteria = Criteria.IS_NOT_NULL;
     filtPadre.field = 'tipoPersona';
@@ -51,6 +52,9 @@ export class AliadosListComponent implements OnInit {
 
     filterQuery.filterList.push(filtPadre);
     filterQuery.filterList.push(filterAliadoID);
+    filterQuery.sortField = "idEmpresaAliada";
+    filterQuery.sortOrder = 1;
+
     this.empresaService.findByFilter(filterQuery).then(
         resp => {
           console.log(resp);

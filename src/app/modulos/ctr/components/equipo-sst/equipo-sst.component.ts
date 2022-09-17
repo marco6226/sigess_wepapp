@@ -1,3 +1,4 @@
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { _divisionList } from './../../entities/aliados';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -37,7 +38,8 @@ export class EquipoSstComponent implements OnInit {
   formEquipo: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private empresaService: EmpresaService
   ) { 
     this.formResponsable = fb.group({
       nombre: ['', Validators.required],
@@ -90,7 +92,8 @@ export class EquipoSstComponent implements OnInit {
         licenciaSST: this.formEquipo.value.licenciaSST
       }
       
-      this.createMiembroSST.emit(this.equipoSST)        
+      this.createMiembroSST.emit(this.equipoSST)     
+      this.empresaService.createEquipoSST(this.equipoSST)
     }
 
 
