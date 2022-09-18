@@ -1,4 +1,4 @@
-import { EquipoSST, ResponsableSST } from './../../ctr/entities/aliados';
+import { AliadoInformacion, EquipoSST, ResponsableSST, SST } from './../../ctr/entities/aliados';
 import { Injectable } from '@angular/core';
 import { Empresa } from './../entities/empresa'
 
@@ -71,10 +71,9 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         return "EmpresaService";
     }
 
-    createEquipoSST(equipoSST: EquipoSST){
-        let entity:EquipoSST;
-
-        let body = JSON.stringify(entity);
+    createEquipoSST(equipoSST: SST){
+     
+        let body = JSON.stringify(equipoSST);
         
         return new Promise(resolve =>{
             this.httpInt.post(endPoints.EmpresaService + "createEquipoSST",body)
@@ -89,13 +88,10 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         })
     }
 
-    createResponsableSST(responsableSST: ResponsableSST){
-        let entity:EquipoSST;
-
-        let body = JSON.stringify(entity);
-        
+    getEquipoSST(aliadoId: number){
+       
         return new Promise(resolve =>{
-            this.httpInt.post(endPoints.EmpresaService + "createEquipoSST",body)
+            this.httpInt.get(endPoints.EmpresaService + "getEquipoSST/"+aliadoId)
             .map(res => res)
             .subscribe(
                 res => {
@@ -107,4 +103,36 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         })
     }
 
+
+    saveAliadoInformacion(aliadoInformacion: AliadoInformacion){
+     
+        let body = JSON.stringify(aliadoInformacion);
+        
+        return new Promise(resolve =>{
+            this.httpInt.put(endPoints.EmpresaService + "saveAliadoInformacion",body)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                }
+                ,
+                err => this.manageError(err)
+            )
+        })
+    }
+
+    getAliadoInformacion(aliadoId: number){
+       
+        return new Promise(resolve =>{
+            this.httpInt.get(endPoints.EmpresaService + "getAliadoInformacion/"+aliadoId)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                }
+                ,
+                err => this.manageError(err)
+            )
+        })
+    }
 }

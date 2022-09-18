@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { SST } from './../../entities/aliados';
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 
 @Component({
@@ -8,6 +10,8 @@ import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 })
 export class EquipoSstListComponent implements OnInit {
  
+  @Input() alidadoId: number= -1;
+
   visibleDlgResponsable: boolean = false;
   visibleDlg: boolean = false;
 
@@ -33,9 +37,12 @@ export class EquipoSstListComponent implements OnInit {
   };
 
 
-  constructor() { }
+  constructor(
+    private empresaService: EmpresaService
+  ) { }
 
   ngOnInit(): void {
+    this.onLoad()
   }
 
   crearMiembros(){
@@ -53,18 +60,88 @@ export class EquipoSstListComponent implements OnInit {
   }
 
   agregarResponsableSST(event: ResponsableSST){
+
+    let dataSST: SST={
+      id_empresa: this.alidadoId,
+      responsable: null,
+      nombre: event.nombre,
+      correo: event.correo,
+      telefono: event.telefono,
+      licenciasst: event.licenciaSST,
+      documento: null,
+      division: null,
+      localidad: null,
+      cargo: null,
+      encargado: true
+    };
+
+    this.onCreateEquipo(dataSST);
+
     console.log(event);
-    this.responsableList.push(event);
   }
 
   agregarMiembroSST(event: EquipoSST){
+
+    let dataSST: SST={
+      id_empresa: this.alidadoId,
+      responsable: null,
+      nombre: event.nombre,
+      correo: null,
+      telefono: null,
+      licenciasst: event.licenciaSST,
+      documento: event.documento,
+      division: JSON.stringify(event.division),
+      localidad: JSON.stringify(event.localidad),
+      cargo: event.cargo,
+      encargado: false
+    };
+
+    this.onCreateEquipo(dataSST);
     console.log(event);
-    this.equipoList.push(event);
   }
 
 
   onEdit(event){
 
   }
+
+  onLoad(){
+    this.responsableList = [];
+    this.equipoList = [];
+    this.empresaService.getEquipoSST(this.alidadoId).then((element: SST[]) =>{
+      console.log(element);
+      element.forEach(elem => {
+        if(elem.encargado){
+          let data: ResponsableSST={
+            nombre: elem.nombre,
+            correo: elem.correo,
+            telefono: elem.telefono,
+            licenciaSST: elem.licenciasst
+          }
+          this.responsableList.push(data);    
+        }
+        else{
+          let data: EquipoSST={
+            nombre: elem.nombre,
+            documento: elem.documento,
+            division: JSON.parse(elem.division),
+            localidad: JSON.parse(elem.localidad),
+            cargo: elem.cargo,
+            licenciaSST: elem.licenciasst
+          }
+          this.equipoList.push(data);
+        }
+            
+      });
+      
+      
+    })
+  }
+
+  async onCreateEquipo(dataSST: SST){
+    await this.empresaService.createEquipoSST(dataSST)
+    this.onLoad()
+  }
+
 }
 

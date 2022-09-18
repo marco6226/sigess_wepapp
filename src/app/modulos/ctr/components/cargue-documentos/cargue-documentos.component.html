@@ -1,15 +1,15 @@
 <p>Certificado ARL</p>
 
 <div>
-    <button pButton type="button" (click)="showDialog('politicas')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
-    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId"  tipoEvidencia="politica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId"  tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
     <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
 </div>
 
 <div class="ui-g" style="margin-top: 10px;">
     <div class="ui-g-12 ui-sm-12 ui-md-10">
         <div *ngFor="let doc of documentos">
-            <table class="dwrapper" *ngIf="doc.proceso=='politica'">
+            <table class="dwrapper" *ngIf="doc.proceso=='arl'">
                 <tr>
                 <td>
                     <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
@@ -34,15 +34,15 @@
 <p>Licencia SST</p>
 
 <div>
-    <button pButton type="button" (click)="showDialog('politicas')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
-    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId"  tipoEvidencia="politica"  [modulo]="modulo"  (onUpload)="onUpload($event)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
+    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId"  tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
     <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
 </div>
 
 <div class="ui-g" style="margin-top: 10px;">
     <div class="ui-g-12 ui-sm-12 ui-md-10">
         <div *ngFor="let doc of documentos">
-            <table class="dwrapper" *ngIf="doc.proceso=='politica'">
+            <table class="dwrapper" *ngIf="doc.proceso=='licencia'">
                 <tr>
                 <td>
                     <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>

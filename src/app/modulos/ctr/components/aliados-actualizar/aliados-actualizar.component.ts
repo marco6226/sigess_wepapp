@@ -4,6 +4,7 @@ import { EmpresaService } from './../../../empresa/services/empresa.service';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { AliadoInformacion } from '../../entities/aliados';
 
 @Component({
   selector: 'app-aliados-actualizar',
@@ -29,6 +30,15 @@ export class AliadosActualizarComponent implements OnInit {
     empresasContratistasList: []
   };
 
+  aliadoInformacion: AliadoInformacion={
+    // id: 0,
+    id_empresa: 0,
+    actividad_contratada: null,
+    division: null,
+    localidad: null,
+    calificacion: null,
+    colider: null
+  }
   
   constructor(
     private rutaActiva: ActivatedRoute,
@@ -58,12 +68,70 @@ export class AliadosActualizarComponent implements OnInit {
           });
         }
     );
+    this.loadInformacionAliado()
   }
 
-  test(){
-    console.log(this.rutaActiva.snapshot.params.id);
-    this.loadData();
-    // console.log(this.empresasList);
+  async loadInformacionAliado(){
+    this.aliadoInformacion.id_empresa = this.id;
+    await this.empresaService.getAliadoInformacion(this.id).then((ele: AliadoInformacion[])=>{
+      if(ele[0] != undefined){
+        this.aliadoInformacion = ele[0];
+        console.log(this.aliadoInformacion);     
+      }      
+    });
+
+    this.saveInformacionAliado();
+    if(this.aliadoInformacion.id == null){
+      this.loadInformacionAliado();
+    }
+  }
+
+  async saveInformacionAliado(){
+    await this.empresaService.saveAliadoInformacion(this.aliadoInformacion).then((ele)=>{      
+      console.log(ele);
+      
+    });
+  }
+
+  onReciveData(event: string, tipe: string){
+    // this.loadInformacionAliado()
+    switch (tipe) {
+      case 'actividades':
+        this.aliadoInformacion.actividad_contratada = event        
+        break;
+        
+      case 'division':
+        this.aliadoInformacion.division = event        
+        break;
+
+        
+      case 'localidad':
+        this.aliadoInformacion.localidad = event        
+        break;
+
+        
+      case 'calificacion':
+        this.aliadoInformacion.calificacion = event        
+        break;
+
+        
+      case 'colider':
+        this.aliadoInformacion.colider = event        
+        break;
+    
+      default:
+        break;
+    }
+    console.log(this.aliadoInformacion);
+    
+    this.saveInformacionAliado()
+  }
+
+  test(event: string){
+    console.log(event);
+    this.aliadoInformacion.actividad_contratada = event
+   console.log(this.aliadoInformacion);
+  //  this.aliadoInformacion.actividad_contratada = '["Almacenes Corona","Comercial Corona Colombia"]'
     
   }
 

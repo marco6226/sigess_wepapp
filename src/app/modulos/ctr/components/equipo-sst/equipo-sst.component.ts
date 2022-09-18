@@ -93,10 +93,7 @@ export class EquipoSstComponent implements OnInit {
       }
       
       this.createMiembroSST.emit(this.equipoSST)     
-      this.empresaService.createEquipoSST(this.equipoSST)
     }
-
-
     
     this.CloseDialog();
   }
