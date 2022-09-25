@@ -47,6 +47,7 @@ export interface AliadoInformacion{
     localidad: string;
     calificacion: string;
     colider: string;
+    documentos: string;
 }
 
 export const _actividadesContratadasList = [

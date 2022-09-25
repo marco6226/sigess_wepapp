@@ -1,30 +1,27 @@
+<p-messages [(value)]="msgs" [closable]="true"></p-messages>
+
 <p>Certificado ARL</p>
 
 <div>
     <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
-    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId"  tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
-    <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
+    <s-documentoUpload [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
 </div>
 
 <div class="ui-g" style="margin-top: 10px;">
     <div class="ui-g-12 ui-sm-12 ui-md-10">
-        <div *ngFor="let doc of documentos">
-            <table class="dwrapper" *ngIf="doc.proceso=='arl'">
+        <div *ngFor="let doc of directorios">
+            <table class="dwrapper" *ngIf="doc!.documento.proceso=='arl'">
                 <tr>
-                <td>
-                    <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
-                    <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
-                </td>
-                <td style="text-align: right;">
-                    <a class="fa fa-pencil" title="Actualizar Descripción" (click)="actualizarDesc(doc)" ></a>
-                    <a>&nbsp;</a>
-                    <a class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)"  style="color: red;"></a>
-                </td>
+                    <td>
+                        <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                        <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
+                    </td>              
                 </tr>
                 <tr>
-                <td colspan="2">
-                    <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
-                </td>
+                    <td colspan="2">
+                        <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
+                        <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -35,31 +32,29 @@
 
 <div>
     <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
-    <s-documentoUpload accept="pdf/*"  fileLimit="3" [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId"  tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
-    <s-galeria *ngIf="documentosList?.length > 0" [images]="documentosList" [readOnly]="true"></s-galeria>
+    <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
 </div>
 
 <div class="ui-g" style="margin-top: 10px;">
     <div class="ui-g-12 ui-sm-12 ui-md-10">
-        <div *ngFor="let doc of documentos">
-            <table class="dwrapper" *ngIf="doc.proceso=='licencia'">
+        <div *ngFor="let doc of directorios">
+            <table class="dwrapper" *ngIf="doc!.documento.proceso=='licencia'">
                 <tr>
-                <td>
-                    <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
-                    <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
-                </td>
-                <td style="text-align: right;">
-                    <a class="fa fa-pencil" title="Actualizar Descripción" (click)="actualizarDesc(doc)" ></a>
-                    <a>&nbsp;</a>
-                    <a class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" style="color: red;"></a>
-                </td>
+                    <td>
+                        <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                        <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
+                    </td>              
                 </tr>
                 <tr>
-                <td colspan="2">
-                    <textarea pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253"></textarea>
-                </td>
+                    <td colspan="2">
+                        <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
+                        <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
+                    </td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
+<a style="visibility: hidden" id="dwldLink"></a>
+
+<!-- <button (click)="test()">test</button> -->

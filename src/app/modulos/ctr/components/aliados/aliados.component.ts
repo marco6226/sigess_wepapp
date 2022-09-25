@@ -137,6 +137,7 @@ export class AliadosComponent implements OnInit {
         fechaCreacion: new Date(),
         activo: true,
         idEmpresaAliada: Number(await this.sesionService.getEmpresa().id),
+        correoAliadoCreador: JSON.parse(localStorage.getItem('session')).usuario.email
       }
       
     } else if (this.formJuridica.valid){
@@ -160,6 +161,7 @@ export class AliadosComponent implements OnInit {
         fechaCreacion: new Date(),
         activo: true,
         idEmpresaAliada: Number(await this.sesionService.getEmpresa().id),
+        correoAliadoCreador: JSON.parse(localStorage.getItem('session')).usuario.email
       }
     }
 
@@ -204,22 +206,25 @@ export class AliadosComponent implements OnInit {
   }
 
   test(){
-      let ue = new UsuarioEmpresa();
+    let x = JSON.parse(localStorage.getItem('session'))
+     console.log(x.usuario.email);
+    //  console.log(JSON.parse(x));
+    let ue = new UsuarioEmpresa();
       
-      ue.perfil = new Perfil();
-      ue.perfil.id = '311';
-
-      let user = new Usuario()
-      user.id= null,
-      user.email= 'asdf@asdfa.com',
-      user.estado= null,
-      user.usuarioEmpresaList= [],
-      user.ipPermitida= ['0.0.0.0/0'],
-      user.numeroMovil= null,
-      user.mfa= null
-
-      user.usuarioEmpresaList.push(ue)
-      this.usuarioService.createUsuarioAliado(user,'36');
+        ue.perfil = new Perfil();
+        ue.perfil.id = '311';
+        
+    let user = new Usuario()
+        user.id= null,
+        user.email= this.formJuridica.value.email,
+        user.estado= null,
+        user.usuarioEmpresaList= [],
+        user.ipPermitida= ['0.0.0.0/0'],
+        user.numeroMovil= null,
+        user.mfa= null
+  
+        user.usuarioEmpresaList.push(ue)
+     
   }
 }
 

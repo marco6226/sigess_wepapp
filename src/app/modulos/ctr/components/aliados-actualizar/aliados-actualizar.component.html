@@ -10,7 +10,7 @@
         <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>
       </p-tabPanel>
       <p-tabPanel header="Cargue Documentos">
-        <app-cargue-documentos></app-cargue-documentos>
+        <app-cargue-documentos [analisisId]="id" (idDoc)="reciveIdDoc($event)" [documentos]="documentos"></app-cargue-documentos>
       </p-tabPanel>
       <p-tabPanel header="Actividades Contratadas">
         <app-actividades-contratadas [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
@@ -26,5 +26,8 @@
       </p-tabPanel>
     </p-tabView>
 </p-panel>
-
+<ng-container>
+  <button pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliado"
+      (click)="actualizarAliado()" class="float-btn"></button>
+</ng-container>
 <!-- <button (click)="test()">test</button> -->

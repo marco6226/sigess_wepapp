@@ -1,3 +1,7 @@
+import { UsuarioService } from 'app/modulos/admin/services/usuario.service';
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+import { Directorio } from 'app/modulos/ado/entities/directorio';
+import { Documento } from 'app/modulos/ado/entities/documento';
 import { FilterQuery } from './../../../core/entities/filter-query';
 import { Criteria, Filter } from 'app/modulos/core/entities/filter';
 import { EmpresaService } from './../../../empresa/services/empresa.service';
@@ -37,12 +41,17 @@ export class AliadosActualizarComponent implements OnInit {
     division: null,
     localidad: null,
     calificacion: null,
-    colider: null
+    colider: null,
+    documentos: null
   }
+
+  documentos: Directorio[]=[]
   
   constructor(
     private rutaActiva: ActivatedRoute,
     private empresaService: EmpresaService,
+    private directorioService: DirectorioService,
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit() {
@@ -51,6 +60,8 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   async loadData(){
+    console.log("---------------------------------");
+    
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [];
 
@@ -60,7 +71,7 @@ export class AliadosActualizarComponent implements OnInit {
     filtro.value1 = this.id.toString();
 
     filterQuery.filterList.push(filtro);
-    this.empresaService.findByFilter(filterQuery).then(
+    await this.empresaService.findByFilter(filterQuery).then(
         resp => {
           console.log(resp);
           resp['data'].forEach(element => {
@@ -80,6 +91,8 @@ export class AliadosActualizarComponent implements OnInit {
       }      
     });
 
+    this.loadDocumentos()
+
     this.saveInformacionAliado();
     if(this.aliadoInformacion.id == null){
       this.loadInformacionAliado();
@@ -91,6 +104,19 @@ export class AliadosActualizarComponent implements OnInit {
       console.log(ele);
       
     });
+  }
+
+  loadDocumentos(){
+    // debugger
+    JSON.parse(this.aliadoInformacion.documentos).forEach(async element => {
+      await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{
+        console.log(elem);      
+        this.documentos.push(elem[0])
+      })
+    console.log(this.documentos);
+
+    });
+    
   }
 
   onReciveData(event: string, tipe: string){
@@ -127,12 +153,37 @@ export class AliadosActualizarComponent implements OnInit {
     this.saveInformacionAliado()
   }
 
-  test(event: string){
-    console.log(event);
-    this.aliadoInformacion.actividad_contratada = event
-   console.log(this.aliadoInformacion);
+  test(){
+   
+    let x = JSON.parse(this.aliadoInformacion.documentos)
+    console.log(this.aliadoInformacion.documentos);    
+    console.log(x);
+    x.push(99)
+    console.log(x);
+    this.aliadoInformacion.documentos = JSON.stringify(x)
+    console.log(this.aliadoInformacion.documentos);    
+    
   //  this.aliadoInformacion.actividad_contratada = '["Almacenes Corona","Comercial Corona Colombia"]'
     
+  }
+
+  reciveIdDoc(event: string){
+    console.log(event);
+    let dataList = JSON.parse(this.aliadoInformacion.documentos)
+    // console.log(this.aliadoInformacion.documentos);    
+    // console.log(dataList);
+    dataList.push(Number.parseInt(event))
+    console.log(dataList);
+    this.aliadoInformacion.documentos = JSON.stringify(dataList)
+    console.log(this.aliadoInformacion.documentos);    
+    this.saveInformacionAliado()
+    
+  }
+
+  actualizarAliado(){
+    this.aliado.fechaActualizacion = new Date();
+    this.empresaService.update(this.aliado)
+    this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
   }
 
 }

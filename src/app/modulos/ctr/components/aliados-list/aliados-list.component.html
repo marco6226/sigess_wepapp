@@ -4,7 +4,7 @@
 
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
   <p-tabView>
-    <p-table [value]="aliadosList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+    <p-table [value]="aliadosList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedList">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 3rem">
@@ -67,14 +67,14 @@
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
                     <button pButton pRipple icon="pi pi-power-off" *ngIf="rowData.activo" class="p-button-rounded ui-button-success p-mr-2" (click)="onChangeStatusAliado(rowData, 'Desactivar')" title="Desactivar Alidado"></button>
                     <button pButton pRipple icon="pi pi-power-off" *ngIf="!rowData.activo" class="p-button-rounded ui-button-danger p-mr-2" (click)="onChangeStatusAliado(rowData, 'Activar')" title="Activar Alidado"></button>
-                    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onEdit(rowData)" title="Enviar correo"></button>
+                    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onSendMail(rowData)" title="Enviar correo"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>
             <button pButton type="button" icon="fa fa-plus" [routerLink]="['/app/ctr/aliado']" label="Crear"></button>    
             <!-- <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="onEdit(rowData)" [disabled]="!caseSelect"></button>     -->
-            <button pButton type="button" icon="pi pi-envelope" label="Enviar Correos" class="ui-button-warning" (click)="ngOnInit()" [disabled]="!caseSelect"></button>
+            <button pButton type="button" icon="pi pi-envelope" label="Enviar Correos" class="ui-button-warning" (click)="sendMultiplesEmails()" [disabled]="!caseSelect"></button>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>

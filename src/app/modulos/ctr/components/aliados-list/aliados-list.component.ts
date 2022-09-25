@@ -1,3 +1,4 @@
+import { UsuarioService } from 'app/modulos/admin/services/usuario.service';
 import { ConfirmationService } from 'primeng/primeng';
 import { SesionService } from './../../../core/services/sesion.service';
 import { Router } from '@angular/router';
@@ -28,6 +29,7 @@ export class AliadosListComponent implements OnInit {
     private sesionService: SesionService,
     private router: Router,
     private confirmationService: ConfirmationService,
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit() {
@@ -76,6 +78,11 @@ export class AliadosListComponent implements OnInit {
     
   }
 
+  async onSendMail(event){
+    console.log(event);
+    await this.usuarioService.sendMailAliadoActualizar(event.email,event.id);
+  }
+
   onChangeStatusAliado(row, tipo){
     console.log(row);
     
@@ -107,7 +114,15 @@ export class AliadosListComponent implements OnInit {
     }
   }
 
+  sendMultiplesEmails(){
+    this.selectedList.forEach(element => {
+      this.onSendMail(element)
+    });
+  }
+
   test(){
-    console.log(this.sesionService.getEmpresa());
+    console.log(this.caseSelect);
+    console.log(this.selectedList);   
+    
   }
 }
