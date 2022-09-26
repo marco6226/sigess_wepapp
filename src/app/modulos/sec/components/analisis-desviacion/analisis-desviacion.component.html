@@ -434,7 +434,7 @@
 </p-tabView>
 <ng-container *ngIf="adicionar && !consultar">
     <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Análisis"
-        (click)="guardarAnalisis()" class="float-btn" [disabled]="disabled"></button>
+        (click)="guardarAnalisis()" class="float-btn" [disabled]="disabled "></button>
 </ng-container>
 
 <ng-container *ngIf="modificar && !consultar">
