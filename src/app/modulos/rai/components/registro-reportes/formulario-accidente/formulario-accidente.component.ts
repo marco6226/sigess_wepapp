@@ -223,7 +223,7 @@ export class FormularioAccidenteComponent implements OnInit {
 
         this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
         this.cdRef.detectChanges();
-        console.log(this.empleadoSelect.usuario.email)
+        
 
     }
 
