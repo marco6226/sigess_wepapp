@@ -315,14 +315,26 @@ export class EmpleadoFormComponent implements OnInit {
     async buildPerfilesIdList() {
         ////console.log(this.empleadoSelect.id, "181");
         let filterQuery = new FilterQuery();
+        if(this.empleadoSelect.usuario.id){
+
         filterQuery.filterList = [
             {
                 field: 'usuarioEmpresaList.usuario.id',
-                criteria: Criteria.EQUALS,
-                value1: this.empleadoSelect.usuario.id,
+                criteria: Criteria.EQUALS,              
+                value1: await this.empleadoSelect.usuario.id,
                 value2: null,
             },
+
         ];
+            }
+            else{
+                filterQuery.filterList = [
+                    {
+                       
+                    },
+        
+                ];
+            }
         this.perfilService.update;
         await this.perfilService.findByFilter(filterQuery).then((resp) => {
             let perfilesId = [];
