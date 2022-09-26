@@ -160,6 +160,8 @@ export class AnalisisDesviacionComponent implements OnInit {
     tabIndex:number;
     imgCompress:string;
 
+    flagModificar:boolean =false;
+
     usuario: Usuario;
     // tarea:Tarea;
 
@@ -819,6 +821,8 @@ export class AnalisisDesviacionComponent implements OnInit {
 
 
     modificarAnalisis() {
+        this.disabled=true
+        // this.flagModificar=true;
         if(!this.analisisPeligros.invalid){
                 if(this.idEmpresa=='22'){this.tareaList2();}
                 this.buttonPrint=true;
@@ -873,6 +877,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     this.manageResponse(<AnalisisDesviacion>data);
                     this.modificar = true;
                     this.adicionar = false;
+                    this.disabled=false;
                 });
                     // this.recargarTareasList()
                 console.log(this.tareasList)

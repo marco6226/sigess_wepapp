@@ -476,7 +476,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         }
 
-        this.comunService.findAllAfp().then((data) => {
+        await this.comunService.findAllAfp().then((data) => {
             this.afpList = [];
             this.afpList.push({ label: "--Seleccione--", value: null });
             (<Afp[]>data).forEach((afp) => {
@@ -486,7 +486,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         });
 
-        this.comunService.findAllEps().then((data) => {
+        await this.comunService.findAllEps().then((data) => {
             this.epsList = [];
             this.epsList.push({ label: "--Seleccione--", value: null });
             (<Eps[]>data).forEach((eps) => {
@@ -496,7 +496,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             this.entity.EPS = this.epsList;
         });
 
-        this.comunService.findAllArl().then((data) => {
+        await this.comunService.findAllArl().then((data) => {
             this.arlList = [];
             this.arlList.push({ label: "--Seleccione--", value: null });
             (<Arl[]>data).forEach((arl) => {
@@ -506,7 +506,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             console.log(this.arlList);
         });
 
-        this.comunService.findAllPrepagadas().then((data) => {
+        await this.comunService.findAllPrepagadas().then((data) => {
             this.prepagadasList = [];
             this.prepagadasList.push({ label: "--Seleccione--", value: null });
             (<Prepagadas[]>data).forEach((prepagadas) => {
@@ -516,7 +516,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             console.log(this.prepagadasList);
         });
 
-        this.comunService.findAllProvSalud().then((data) => {
+        await this.comunService.findAllProvSalud().then((data) => {
             this.provsaludList = [];
             this.provsaludList.push({ label: "--Seleccione--", value: null });
             (<Proveedor[]>data).forEach((prov) => {
@@ -528,7 +528,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
 
         console.log(this.entity);
-        this.cargoService.findAll().then((resp) => {
+        await this.cargoService.findAll().then((resp) => {
             this.cargoList = [];
             this.cargoList.push({ label: "--Seleccione--", value: null });
             (<Cargo[]>resp["data"]).forEach((cargo) => {
@@ -536,18 +536,32 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             });
 
         });
-        this.perfilService.findAll().then((resp) => {
+        await this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
                 this.perfilList.push({ label: perfil.nombre, value: perfil.id });
             });
+            console.log('perfilService')
             if (this.isUpdate === true || this.show === true)
                 setTimeout(() => {
+                    
                     this.buildPerfilesIdList();
                 }, 500);
         });
 
     }
 
+    async perfilPermisos(){
+        await this.perfilService.findAll().then((resp) => {
+            (<Perfil[]>resp["data"]).forEach((perfil) => {
+                this.perfilList.push({ label: perfil.nombre, value: perfil.id });
+            });
+            console.log('perfilService')
+            if (this.isUpdate === true || this.show === true)
+                setTimeout(() => {
+                    this.buildPerfilesIdList();
+                }, 500);
+        });
+    }
     onClick(){
         console.log(this.sesionService.getPermisosMap())
         console.log(this.sesionService.getPermisosMap()["SCM_DEL_CASE_DIAG"])
@@ -678,8 +692,30 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         await this.perfilService.findByFilter(filterQuery).then((resp) => {
             let perfilesId = [];
             resp["data"].forEach((ident) => perfilesId.push(ident.id));
-
             this.empleadoForm.patchValue({ perfilesId: perfilesId });
+            console.log(resp["data"])
+        });
+        console.log(this.empleadoForm)
+    }
+
+    usuarioP:any;
+    async usuarioPermisos() {
+        this.usuarioP=[];
+        // this.usuarioEmpresaList.usuario.id;
+        let filterQuery = new FilterQuery();
+        filterQuery.filterList = [
+            {
+                field: "usuarioEmpresaList.usuario.id",
+                criteria: Criteria.EQUALS,
+                value1: this.empleadoSelect.usuario.id,
+            },
+        ];
+        //this.perfilService.update;
+        await this.perfilService.findByFilter(filterQuery).then((resp) => {
+            resp["data"].forEach((ident) => {this.usuarioP.push(ident.id);
+            });
+            
+                console.log(this.usuarioP)
         });
     }
 
@@ -735,6 +771,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         if (this.empleadoSelect.jefeInmediato) {
             this.onSelectionJefeInmediato(this.empleadoSelect.jefeInmediato);
         }
+        await this.usuarioPermisos()
         this.empleadoForm.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -757,7 +794,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             'zonaResidencia': this.empleadoSelect.zonaResidencia,
             'area': this.empleadoSelect.area,
             'cargoId': this.empleadoSelect.cargo.id,
-            'perfilesId': [4],
+            'perfilesId': this.usuarioP,
             "corporativePhone": this.empleadoSelect.corporativePhone,
             "emergencyContact": this.empleadoSelect.emergencyContact,
             "phoneEmergencyContact": this.empleadoSelect.phoneEmergencyContact,
@@ -772,7 +809,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     }
 
 
-    submitEmp() {
+    async submitEmp() {
+        // await this.usuarioPermisos();
         let empleado = new Empleado();
 
         empleado.id = this.empleadoForm.value.id;
@@ -826,6 +864,11 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         });
         this.solicitando = true;
         empleado.usuario.id = this.empleadoSelect.usuario.id;
+        empleado.usuario.ipPermitida=this.empleadoSelect.usuario.ipPermitida
+        console.log(this.empleadoSelect.usuario)
+        // let ipPermitida=this.usuarioService.find(empleado.id)
+        // console.log(this.empleadoSelect.usuario.ipPermitida)
+
         this.usuarioService.update(empleado.usuario)
             .then(resp => {
 
@@ -833,7 +876,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             })
             .catch(err => {
                 this.solicitando = false;
-            });;
+            });
         this.empleadoService.update(empleado)
             .then(data => {
                 //  this.manageUpdateResponse(<Empleado>data);
