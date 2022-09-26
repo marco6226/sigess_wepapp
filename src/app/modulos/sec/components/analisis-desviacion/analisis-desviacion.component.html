@@ -439,10 +439,10 @@
 
 <ng-container *ngIf="modificar && !consultar">
     <button *sTienePermiso="'SEC_PUT_ANADESV'" pButton type="button" icon="fa fa-pencil" title="Modificar Análisis"
-        (click)="modificarAnalisis()" class="ui-button-success float-btn" [disabled]="disabled"></button>
+        (click)="modificarAnalisis()" class="ui-button-success float-btn" [disabled]="disabled" style="z-index: 100;"></button>
 </ng-container>
 
-<div style="height: 100px;;"></div>
+<div style="height: 100px;"></div>
 <!-- <button (click)="tareaList3()" >test2</button> -->
 <button (click)="testmsng()" *ngIf="idUsuario=='214'">Envio correo periodico</button>
 <!-- <button (click)="testmsng()" >Envio correo periodico</button> -->
