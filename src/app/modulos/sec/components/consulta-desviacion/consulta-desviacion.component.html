@@ -17,6 +17,9 @@
                         <th pSortableColumn="modulo" style="width: 9%;">Módulo
                             <p-sortIcon field="modulo"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="modulo" style="width: 9%;" *ngIf="empresaId=='22'">FURAT
+                            <p-sortIcon field="modulo"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="hashId" style="width: 11%;">Código
                             <p-sortIcon field="hashId"></p-sortIcon>
                         </th>
@@ -42,6 +45,9 @@
                         </td>
                         <td>
                             <p-dropdown [options]="opcionesModulos" [style]="{'min-width':'0em'}" (onChange)="dt.filter($event.value, 'modulo', 'equals')"></p-dropdown>
+                        </td>
+                        <td *ngIf="empresaId=='22'">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'furat', 'contains')"> 
                         </td>
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'hashId', 'contains')"> 
@@ -73,6 +79,7 @@
                             <p-tableCheckbox [value]="desviacion" *ngIf="!desviacion.analisisId"></p-tableCheckbox>
                         </td>
                         <td>{{desviacion.modulo}}</td>
+                        <td *ngIf="empresaId=='22'">{{desviacion.furat}}</td>
                         <td>{{desviacion.hashId}}</td>
                         <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td>
                         <td>{{desviacion.area.nombre}}</td>

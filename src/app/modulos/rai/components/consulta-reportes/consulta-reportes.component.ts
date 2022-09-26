@@ -6,6 +6,8 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { ConsuModReporteService } from 'app/modulos/sec/services/consu-mod-reporte.service'
 
+import { SesionService } from 'app/modulos/core/services/sesion.service';
+
 @Component({
   selector: 'app-consulta-reportes',
   templateUrl: './consulta-reportes.component.html',
@@ -13,6 +15,7 @@ import { ConsuModReporteService } from 'app/modulos/sec/services/consu-mod-repor
 })
 export class ConsultaReportesComponent implements OnInit {
 
+  idEmpresa: string;
   reporteSelect: Reporte;
   reportesList: Reporte[];
   loading: boolean;
@@ -25,16 +28,19 @@ export class ConsultaReportesComponent implements OnInit {
     'primerNombreEmpleado',
     'primerApellidoEmpleado',
     'numeroIdentificacionEmpleado',
-    'tipo'
+    'tipo',
+    'numerofurat'
   ];
 
   constructor(
     private reporteService: ReporteService,
     private paramNav: ParametroNavegacionService,
     private ConsuModReporteService: ConsuModReporteService,
+    private sesionService: SesionService,
   ) { }
 
   ngOnInit() {
+    this.idEmpresa = this.sesionService.getEmpresa().id;
     this.loading = true;
     console.log();
     
