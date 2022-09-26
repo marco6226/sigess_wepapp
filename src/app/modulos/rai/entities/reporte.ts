@@ -59,7 +59,7 @@ export class Reporte {
   jornadaHabitual: string;
   fechaAccidente: Date;
   horaAccidente: Date;
-  numero_furat: string;
+  numerofurat: string;
   jornadaAccidente: string;
   realizandoLaborHabitual: boolean;
   nombreLaborHabitual: string;
