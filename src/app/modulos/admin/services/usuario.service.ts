@@ -22,6 +22,65 @@ export class UsuarioService extends ServiceCRUD<Usuario>{
     });
   }
 
+  createUsuarioAliado(entity: Usuario, aliadoId: string) {
+    let body = JSON.stringify(entity);
+    return new Promise((resolve, reject) => {
+        this.httpInt
+            .post(this.end_point + 'aliado/' +aliadoId, body)
+            .retryWhen(this.retryFunction)
+            .map((res) => res)
+            .subscribe(
+                (res) => {
+                    resolve(res);
+                },
+                (err) => {
+                    reject(err);
+                    this.manageError(err);
+                }
+            );
+    });
+  }
+
+  sendMailAliadoActualizar(entity: string, aliadoId: string) {
+    let body = entity;
+    // let body = JSON.stringify(entity);
+    return new Promise((resolve, reject) => {
+        this.httpInt
+            .put(this.end_point + 'aliadoActualizar/' +aliadoId, body)
+            .retryWhen(this.retryFunction)
+            .map((res) => res)
+            .subscribe(
+                (res) => {
+                    resolve(res);
+                },
+                (err) => {
+                    reject(err);
+                    this.manageError(err);
+                }
+            );
+    });
+  }
+
+  emailAliadoActualizado(entity: string, aliadoId: string) {
+    let body = entity;
+    // let body = JSON.stringify(entity);
+    return new Promise((resolve, reject) => {
+        this.httpInt
+            .put(this.end_point + 'emailAliadoActualizado/' +aliadoId, body)
+            .retryWhen(this.retryFunction)
+            .map((res) => res)
+            .subscribe(
+                (res) => {
+                    resolve(res);
+                },
+                (err) => {
+                    reject(err);
+                    this.manageError(err);
+                }
+            );
+    });
+  }
+
   consultarHistoriaLogin(){
     return new Promise(resolve => {
       this.httpInt.get(this.end_point + 'historiaLogin/')

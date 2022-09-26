@@ -27,6 +27,7 @@ export class Empresa {
   vigencia?: string;
   activo?: boolean;
   idEmpresaAliada?: number;
+  correoAliadoCreador?: string;
 }
 
 

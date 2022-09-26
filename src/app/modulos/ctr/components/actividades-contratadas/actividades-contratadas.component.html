@@ -1,8 +1,8 @@
-<s-dataNotFound *ngIf="!actividadesList || actividadesList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades contratadas">
+<s-dataNotFound *ngIf="!actividadesList || actividadesList?.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades contratadas">
     <button pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
 </s-dataNotFound>
 
-<p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList.length > 0">
+<p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList?.length > 0">
     <p-tabView>
         <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
             <ng-template pTemplate="header" let-columns>
@@ -55,4 +55,3 @@
         <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
     </p-footer>
 </p-dialog>
-  

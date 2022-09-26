@@ -1,8 +1,9 @@
-<s-dataNotFound *ngIf="!actividadesList || actividadesList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Divisiones o Localidades">
+<s-dataNotFound *ngIf="!actividadesList || actividadesList!.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Divisiones o Localidades">
     <button pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar División"></button>
 </s-dataNotFound>
 
-<p-panel header="Lista de División" *ngIf="actividadesList.length > 0">
+<p-panel header="Lista de División" *ngIf="actividadesList!.length > 0">
+<!-- <p-panel header="Lista de División" > -->
     <p-tabView>
         <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
             <ng-template pTemplate="header" let-columns>
@@ -41,7 +42,7 @@
 <p-panel header="Localidades" *ngIf="actividadesList.length > 0">
     <p-tabView>
         <div class="input-field">
-            <p-chips [(ngModel)]="locadidadList"></p-chips>
+            <p-chips [(ngModel)]="locadidadList" (onAdd)="onAddLocalidad()" (onRemove)="onAddLocalidad()"></p-chips>
             <label for="" class="active">Localidad</label>
         </div>
     </p-tabView>

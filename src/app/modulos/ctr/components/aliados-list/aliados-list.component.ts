@@ -1,3 +1,4 @@
+import { UsuarioService } from 'app/modulos/admin/services/usuario.service';
 import { ConfirmationService } from 'primeng/primeng';
 import { SesionService } from './../../../core/services/sesion.service';
 import { Router } from '@angular/router';
@@ -28,6 +29,7 @@ export class AliadosListComponent implements OnInit {
     private sesionService: SesionService,
     private router: Router,
     private confirmationService: ConfirmationService,
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class AliadosListComponent implements OnInit {
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [];
 
+
     let filtPadre = new Filter();
     filtPadre.criteria = Criteria.IS_NOT_NULL;
     filtPadre.field = 'tipoPersona';
@@ -51,6 +54,9 @@ export class AliadosListComponent implements OnInit {
 
     filterQuery.filterList.push(filtPadre);
     filterQuery.filterList.push(filterAliadoID);
+    filterQuery.sortField = "idEmpresaAliada";
+    filterQuery.sortOrder = 1;
+
     this.empresaService.findByFilter(filterQuery).then(
         resp => {
           console.log(resp);
@@ -70,6 +76,11 @@ export class AliadosListComponent implements OnInit {
     console.log(event.id);
     this.router.navigate([`/app/ctr/actualizarAliado/${event.id}`])
     
+  }
+
+  async onSendMail(event){
+    console.log(event);
+    await this.usuarioService.sendMailAliadoActualizar(event.email,event.id);
   }
 
   onChangeStatusAliado(row, tipo){
@@ -103,7 +114,15 @@ export class AliadosListComponent implements OnInit {
     }
   }
 
+  sendMultiplesEmails(){
+    this.selectedList.forEach(element => {
+      this.onSendMail(element)
+    });
+  }
+
   test(){
-    console.log(this.sesionService.getEmpresa());
+    console.log(this.caseSelect);
+    console.log(this.selectedList);   
+    
   }
 }

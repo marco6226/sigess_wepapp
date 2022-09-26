@@ -326,6 +326,21 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
         });
     }
 
+    buscarDocumentosById(parametro: string) {
+        return new Promise((resolve) => {
+            this.httpInt
+                .get(this.end_point + 'buscarDocumentosById/' + parametro)
+                .map((res) => res)
+                .subscribe(
+                    (res) => {
+                        resolve(res);
+                    },
+                    (err) => this.manageError(err)
+                );
+        });
+    }
+
+
     findByUsuario() {
         return new Promise((resolve) => {
             this.httpInt

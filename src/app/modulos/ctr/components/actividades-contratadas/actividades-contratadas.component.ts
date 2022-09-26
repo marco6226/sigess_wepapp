@@ -1,5 +1,5 @@
 import { _actividadesContratadasList } from './../../entities/aliados';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-actividades-contratadas',
@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./actividades-contratadas.component.scss']
 })
 export class ActividadesContratadasComponent implements OnInit {
+
+  @Input('selectActividad') 
+  set actividadesIn(actividades: string){
+    if (actividades != null) {
+      console.log(actividades);
+      this.selectActividad = JSON.parse(actividades)
+      this.agregarActividad()
+    }    
+  }
+
+  @Output() data = new EventEmitter<String>();
 
   visibleDlg: boolean =false;
 
@@ -24,6 +35,7 @@ export class ActividadesContratadasComponent implements OnInit {
   agregarActividad(){
     this.actividadesList = this.selectActividad;
     this.cerrarDialogo();
+    this.data.emit(JSON.stringify(this.actividadesList));
   }
 
   abrirDialogo(param: string =null){

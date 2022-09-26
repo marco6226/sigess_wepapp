@@ -1,3 +1,7 @@
+import { UsuarioEmpresa } from './../../../empresa/entities/usuario-empresa';
+import { Perfil } from './../../../empresa/entities/perfil';
+import { Usuario } from './../../../empresa/entities/usuario';
+import { UsuarioService } from './../../../admin/services/usuario.service';
 import { SesionService } from './../../../core/services/sesion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
@@ -65,7 +69,8 @@ export class AliadosComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private sesionService: SesionService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private usuarioService: UsuarioService
   ) {
     this.formNatural = fb.group({
       razonSocial:[null, Validators.required],
@@ -132,6 +137,7 @@ export class AliadosComponent implements OnInit {
         fechaCreacion: new Date(),
         activo: true,
         idEmpresaAliada: Number(await this.sesionService.getEmpresa().id),
+        correoAliadoCreador: JSON.parse(localStorage.getItem('session')).usuario.email
       }
       
     } else if (this.formJuridica.valid){
@@ -155,12 +161,35 @@ export class AliadosComponent implements OnInit {
         fechaCreacion: new Date(),
         activo: true,
         idEmpresaAliada: Number(await this.sesionService.getEmpresa().id),
+        correoAliadoCreador: JSON.parse(localStorage.getItem('session')).usuario.email
       }
     }
 
-    this.empresaService.create(createEmpresa).then(ele=>{
+    this.empresaService.create(createEmpresa).then((ele:Empresa)=>{
       console.log(ele);      
       this.messageService.add({severity:'success', summary: 'Creación Alidado', detail: 'Se agrego un Aliado nuevo'});
+      console.log(ele);
+      
+      if (this.formJuridica.valid) {
+
+        let ue = new UsuarioEmpresa();
+      
+        ue.perfil = new Perfil();
+        ue.perfil.id = '311';
+  
+        let user = new Usuario()
+        user.id= null,
+        user.email= this.formJuridica.value.email,
+        user.estado= null,
+        user.usuarioEmpresaList= [],
+        user.ipPermitida= ['0.0.0.0/0'],
+        user.numeroMovil= null,
+        user.mfa= null
+  
+        user.usuarioEmpresaList.push(ue)
+        this.usuarioService.createUsuarioAliado(user,ele.id);
+
+      }
       setTimeout(() => {
         this.router.navigate(['/app/ctr/listadoAliados']);
       }, 500);
@@ -176,4 +205,26 @@ export class AliadosComponent implements OnInit {
     this.isCreate = false;
   }
 
+  test(){
+    let x = JSON.parse(localStorage.getItem('session'))
+     console.log(x.usuario.email);
+    //  console.log(JSON.parse(x));
+    let ue = new UsuarioEmpresa();
+      
+        ue.perfil = new Perfil();
+        ue.perfil.id = '311';
+        
+    let user = new Usuario()
+        user.id= null,
+        user.email= this.formJuridica.value.email,
+        user.estado= null,
+        user.usuarioEmpresaList= [],
+        user.ipPermitida= ['0.0.0.0/0'],
+        user.numeroMovil= null,
+        user.mfa= null
+  
+        user.usuarioEmpresaList.push(ue)
+     
+  }
 }
+

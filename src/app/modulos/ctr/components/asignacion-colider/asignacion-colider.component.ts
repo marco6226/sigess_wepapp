@@ -1,5 +1,5 @@
 import { Empleado } from './../../../empresa/entities/empleado';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
 @Component({
@@ -9,6 +9,14 @@ import { Reporte } from 'app/modulos/rai/entities/reporte';
 })
 export class AsignacionColiderComponent implements OnInit {
 
+  @Input('dataIn')
+  set dataIn(data: string){
+    if (data != null) {
+      this.empleadoSelect = JSON.parse(data);
+    }
+  }
+  @Output() coliderData = new EventEmitter<string>();
+
   empleadoSelect: Empleado;
   reporteSelect: Reporte;
 
@@ -16,5 +24,11 @@ export class AsignacionColiderComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  onData(){
+    this.coliderData.emit(JSON.stringify(this.empleadoSelect))
+  }
+
+  
 
 }
