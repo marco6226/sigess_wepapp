@@ -368,8 +368,8 @@
                             [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                     </div>
                 </form>
-                <form [formGroup]="bussinessParner">
-                    <div class="ui-g p-py-2">
+                <form [formGroup]="bussinessParner" >
+                    <div class="ui-g p-py-2" *ngIf="empresaId != '22'">
                         <div class="ui-g-12">
                             <div class="ui-g-12">
                                 <h5 class="title-header p-mb-2">Datos del Business Partner</h5>
