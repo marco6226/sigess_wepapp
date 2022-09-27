@@ -578,12 +578,11 @@
                         ¿Hubo personas que presenciaron el {{visibleCamposAccidente ? 'accidente':'incidente'}}?
                     </div>
                     <div class="ui-g-1">
-                        <p-radioButton name="huboTestigos" label="Si" value=true formControlName="reporte.huboTestigos">
+                        <p-radioButton name="huboTestigos" label="Si" [value]="true" formControlName="huboTestigos">
                         </p-radioButton>
-                        {{this.reporte.huboTestigos}}
                     </div>
                     <div class="ui-g-1">
-                        <p-radioButton name="huboTestigos" label="No" value=false formControlName="reporte.huboTestigos">
+                        <p-radioButton name="huboTestigos" label="No" [value]="false" formControlName="huboTestigos">
                         </p-radioButton>
                     </div>
                     
