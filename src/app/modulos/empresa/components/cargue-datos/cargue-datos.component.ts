@@ -110,6 +110,7 @@ export class CargueDatosComponent implements OnInit {
             { label: "E-Mail", nombre: "usuario.email" },
             { label: "Email de emergencia", nombre: "emailEmergencyContact" },
             { label: "Contacto de emergencia ", nombre: "emergencyContact" },
+            { label: "empresa", nombre: "empresa" },
             { label: "EPS", nombre: "eps", data: "epsData" }, // 17
             { label: "Fecha ingreso", nombre: "fechaIngreso" },
             { label: "Fecha nacimiento", nombre: "fechaNacimiento" },
@@ -118,6 +119,7 @@ export class CargueDatosComponent implements OnInit {
                 nombre: "genero",
                 opciones: this.defaultItem.concat(genero),
             },
+            { label: "NIT", nombre: "nit" },
             { label: "Número identificación", nombre: "numeroIdentificacion" },
             {
                 label: "Perfil",
@@ -128,6 +130,7 @@ export class CargueDatosComponent implements OnInit {
                 label: "Numero de contacto emergencia",
                 nombre: "phoneEmergencyContact",
             },
+            
             { label: "Primer apellido", nombre: "primerApellido" },
             { label: "Primer nombre", nombre: "primerNombre" },
             { label: "Regional", nombre: "regional" },
