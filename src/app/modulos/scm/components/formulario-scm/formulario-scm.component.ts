@@ -63,6 +63,7 @@ export interface TreeNode {
     providers: [DirectorioService, EmpresaService]
 })
 export class FormularioScmComponent implements OnInit, OnDestroy {
+    
 
     listaPCL;
     itemInPCL:boolean=false;
@@ -167,7 +168,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { label: "Terapia ocupacional", value: "Terapia ocupacional" }
 
     ]
-
+    
     @Input() empleadoSelect: Empleado;
     @Output() onEmpleadoUpdate = new EventEmitter();
     @Output() onCancel = new EventEmitter();
@@ -185,6 +186,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { label: "Entre 16 y 20 años", range: "16,17,18,19,20" },
         { label: "Mayor a 20", range: "21,22,23,24,25,26,27,28,29" },
     ]
+    division:string=null;
     empleadoForm: FormGroup;
     empresaId = this.sesionService.getEmpresa().id;
     fechaActual = new Date();
@@ -372,6 +374,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             jefeInmediato: [null],
             correoPersonal: [null],
             ciudadGerencia: [null],
+            division:[null],
         });
 
         this.casoMedicoForm = fb.group({
@@ -563,8 +566,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 }, 500);
         });
 
+        
     }
-
+    areaChange(event){
+        this.division=event;
+        this.empleadoForm.patchValue({division: this.division})
+        console.log(event)
+    }
     async perfilPermisos(){
         await this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
@@ -747,6 +755,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.empleadoSelect = null;
         this.casoMedicoForm.reset();
         let emp = <Empleado>this.value;
+        // console.log(emp.area['padreNombre'])
 
 
         this.casosList = await this.scmService.getCaseList(emp.id);
@@ -818,6 +827,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             regional: this.empleadoSelect.regional,
             correoPersonal: this.empleadoSelect.correoPersonal,
             ciudadGerencia: this.empleadoSelect.ciudadGerencia,
+            division: this.empleadoSelect.area['padreNombre'],
 
             'email': [this.empleadoSelect.usuario.email]
         });

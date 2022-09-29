@@ -8,7 +8,7 @@ import { config } from 'app/config'
 import { Session } from 'app/modulos/core/entities/session';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Criteria } from '../../../../core/entities/filter';
-
+import { SesionService } from "app/modulos/core/services/sesion.service";
 @Component({
   selector: 'area-selector',
   templateUrl: './area-selector.component.html',
@@ -43,6 +43,8 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   @Input() _value: Area;
   @Input() disabled: boolean;
   @Output() onAreaSelect = new EventEmitter();
+  @Output() onDivision = new EventEmitter();
+
   areaSelected: any;
 
   niveles: number = 1;
@@ -52,17 +54,35 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   lblBtn: string;
   sugerenciasList: TreeNode[];
   loading: boolean = false;
+  division:string=null;
+  empresaId = this.sesionService.getEmpresa().id;
   propagateChange = (_: any) => { };
 
-  constructor(private areaService: AreaService) { }
+  constructor(private areaService: AreaService,
+    private sesionService: SesionService) { }
 
   // Interface implements
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadAreas();
     this.areaSelected = this.name;
-    
-  
+
+
+  }
+
+
+  async padreArea(idarea){
+    let filterAreaQuery = new FilterQuery();
+    // filterAreaQuery.fieldList = ["nombre", "padreNombre"];
+    filterAreaQuery.fieldList = ["padreNombre"];
+    filterAreaQuery.filterList = [
+      { field: 'id', criteria: Criteria.EQUALS, value1: idarea, value2: null }
+    ];
+    await this.areaService.findByFilter(filterAreaQuery).then((data) => 
+    {
+      this.division=data['data'][0]['padreNombre'].toString()
+    })
+
   }
 
   collapseAll(){
@@ -237,7 +257,7 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
     return nodeFound;
   }
 
-  onAreaChange() {
+  async onAreaChange() {
     this.msgs = [];
     if (this.areaSelected == null) {
       this.msgs.push({ detail: 'Debe seleccionar un área', severity: 'warn' });
@@ -250,7 +270,11 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
       this.value = area;
       this.onAreaSelect.emit(area);
       this.closeDialog();
-    }
+
+      if(this.empresaId=='22'){
+      await this.padreArea(area.id)
+      this.onDivision.emit(this.division)
+    }}
   }
 
   showDialog() {
@@ -280,12 +304,16 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
     }
   }
 
-  onSelection(event: any) {
+  async onSelection(event: any) {
     let area = new Area();
     area.id = event.id;
     area.nombre = event.label;
     area.descripcion = event.descripcion;
     this.value = area;
     this.onAreaSelect.emit(area);
-  }
+
+    if(this.empresaId=='22'){
+    await this.padreArea(area.id)
+    this.onDivision.emit(this.division)
+    }}
 }

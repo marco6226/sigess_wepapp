@@ -68,13 +68,22 @@
                             <label for="" class="active">Apellidos y nombres</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId!='22'">
                         <div class="input-field">
                             <input type="text" pInputText formControlName="direccionGerencia"
                                 placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia1" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
                     </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId=='22'">
+                        <div class="input-field">
+                            <input readonly type="text" pInputText formControlName="division"
+                                placeholder="División/Unidad" class="form-material" id="division" />
+                            <label for="" class="active">División/Unidad</label>
+                        </div>
+                    </div>
+                    
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
                             <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
@@ -143,9 +152,17 @@
                             <label for="" class="active">Ciudad</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId!='22'">
                         <div class="input-field">
                             <area-selector formControlName="area"
+                                [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required>
+                            </area-selector>
+                            <label for="" class="active">Ubicación</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId=='22'">
+                        <div class="input-field">
+                            <area-selector (onDivision)="areaChange($event)" formControlName="area"
                                 [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required>
                             </area-selector>
                             <label for="" class="active">Ubicación</label>
