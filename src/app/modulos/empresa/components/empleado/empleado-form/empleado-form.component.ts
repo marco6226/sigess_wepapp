@@ -43,6 +43,7 @@ import { ListaInspeccionService } from 'app/modulos/inspecciones/services/lista-
 import { TareaService } from 'app/modulos/sec/services/tarea.service';
 import { SeguimientosService } from 'app/modulos/sec/services/seguimientos.service';
 
+import { SortOrder } from "app/modulos/core/entities/filter";
 
 @Component({
     selector: 's-empleadoForm',
@@ -313,14 +314,36 @@ export class EmpleadoFormComponent implements OnInit {
             });
         });
 
-        this.cargoService.findAll().then((resp) => {
+      
+        // let fq = new FilterQuery();
+        // fq.filterList = [
+        // //   { field: 'id', criteria: Criteria.IS_NULL, value1: null, value2: null },
+        //   { field: 'nombre', criteria: Criteria.EQUALS, value1: 'Gerente', value2: null }
+        // ];
+        let cargofiltQuery = new FilterQuery();
+        cargofiltQuery.sortOrder = SortOrder.ASC;
+        cargofiltQuery.sortField = "nombre";
+        cargofiltQuery.fieldList = ["id", "nombre"];
+        //fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empresaId, value2: null }];
+        this.cargoService.findByFilter(cargofiltQuery).then((resp) => {
+            // resp['data'].forEach((ident) => perfilesId.push(ident.id));
+            // this.form.patchValue({ perfilesId: perfilesId });
+            // console.log(resp['data'])
             this.cargoList = [];
             this.cargoList.push({ label: '--Seleccione--', value: null });
             (<Cargo[]>resp['data']).forEach((cargo) => {
                 this.cargoList.push({ label: cargo.nombre, value: cargo.id });
             });
-            //this.cargoList = this.cargoList.slice();
         });
+
+        // this.cargoService.findAll().then((resp) => {
+        //     this.cargoList = [];
+        //     this.cargoList.push({ label: '--Seleccione--', value: null });
+        //     (<Cargo[]>resp['data']).forEach((cargo) => {
+        //         this.cargoList.push({ label: cargo.nombre, value: cargo.id });
+        //     });
+        // });
+
         this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp['data']).forEach((perfil) => {
                 this.perfilList.push({ label: perfil.nombre, value: perfil.id });
@@ -626,3 +649,4 @@ interface empresaNit{
  empresa;
  nit: string;
 }
+  
