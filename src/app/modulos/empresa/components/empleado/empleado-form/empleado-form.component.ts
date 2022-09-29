@@ -314,21 +314,11 @@ export class EmpleadoFormComponent implements OnInit {
             });
         });
 
-      
-        // let fq = new FilterQuery();
-        // fq.filterList = [
-        // //   { field: 'id', criteria: Criteria.IS_NULL, value1: null, value2: null },
-        //   { field: 'nombre', criteria: Criteria.EQUALS, value1: 'Gerente', value2: null }
-        // ];
         let cargofiltQuery = new FilterQuery();
         cargofiltQuery.sortOrder = SortOrder.ASC;
         cargofiltQuery.sortField = "nombre";
         cargofiltQuery.fieldList = ["id", "nombre"];
-        //fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empresaId, value2: null }];
         this.cargoService.findByFilter(cargofiltQuery).then((resp) => {
-            // resp['data'].forEach((ident) => perfilesId.push(ident.id));
-            // this.form.patchValue({ perfilesId: perfilesId });
-            // console.log(resp['data'])
             this.cargoList = [];
             this.cargoList.push({ label: '--Seleccione--', value: null });
             (<Cargo[]>resp['data']).forEach((cargo) => {

@@ -48,6 +48,8 @@ import { ActivatedRoute } from "@angular/router";
 import { Proveedor } from "app/modulos/comun/entities/proveedor";
 import { Router } from '@angular/router';
 
+import { SortOrder } from "app/modulos/core/entities/filter";
+
 export interface TreeNode {
     data?: any;
     children?: TreeNode[];
@@ -527,15 +529,28 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         });
 
 
-        console.log(this.entity);
-        await this.cargoService.findAll().then((resp) => {
+        // console.log(this.entity);
+        // await this.cargoService.findAll().then((resp) => {
+        //     this.cargoList = [];
+        //     this.cargoList.push({ label: "--Seleccione--", value: null });
+        //     (<Cargo[]>resp["data"]).forEach((cargo) => {
+        //         this.cargoList.push({ label: cargo.nombre, value: cargo.id });
+        //     });
+
+        // });
+
+        let cargofiltQuery = new FilterQuery();
+        cargofiltQuery.sortOrder = SortOrder.ASC;
+        cargofiltQuery.sortField = "nombre";
+        cargofiltQuery.fieldList = ["id", "nombre"];
+        this.cargoService.findByFilter(cargofiltQuery).then((resp) => {
             this.cargoList = [];
-            this.cargoList.push({ label: "--Seleccione--", value: null });
-            (<Cargo[]>resp["data"]).forEach((cargo) => {
+            this.cargoList.push({ label: '--Seleccione--', value: null });
+            (<Cargo[]>resp['data']).forEach((cargo) => {
                 this.cargoList.push({ label: cargo.nombre, value: cargo.id });
             });
-
         });
+
         await this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
                 this.perfilList.push({ label: perfil.nombre, value: perfil.id });

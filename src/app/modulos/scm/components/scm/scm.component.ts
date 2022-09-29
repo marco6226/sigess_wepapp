@@ -14,6 +14,7 @@ import { IpecrService } from 'app/modulos/ipr/services/ipecr.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { Reintegro } from 'app/modulos/scm/entities/reintegro.interface';
+import { SortOrder } from "app/modulos/core/entities/filter";
 
 @Component({
     selector: 'app-scm',
@@ -73,16 +74,27 @@ export class ScmComponent implements OnInit {
 
     async ngOnInit() {
 
-        await this.cargoService.findAll().then(
-            resp => {
-                this.cargoList = [];
-                this.cargoList.push({ label: '--Seleccione--', value: null });
-                (<Cargo[]>resp['data']).forEach(cargo => {
-                    this.cargoList.push({ label: cargo.nombre, value: cargo.id });
-                });
-                //this.cargoList = this.cargoList.slice();
-            }
-        );
+        // await this.cargoService.findAll().then(
+        //     resp => {
+        //         this.cargoList = [];
+        //         this.cargoList.push({ label: '--Seleccione--', value: null });
+        //         (<Cargo[]>resp['data']).forEach(cargo => {
+        //             this.cargoList.push({ label: cargo.nombre, value: cargo.id });
+        //         });
+        //         //this.cargoList = this.cargoList.slice();
+        //     }
+        // );
+        let cargofiltQuery = new FilterQuery();
+        cargofiltQuery.sortOrder = SortOrder.ASC;
+        cargofiltQuery.sortField = "nombre";
+        cargofiltQuery.fieldList = ["id", "nombre"];
+        this.cargoService.findByFilter(cargofiltQuery).then((resp) => {
+            this.cargoList = [];
+            this.cargoList.push({ label: '--Seleccione--', value: null });
+            (<Cargo[]>resp['data']).forEach((cargo) => {
+                this.cargoList.push({ label: cargo.nombre, value: cargo.id });
+            });
+        });
         this.idEmpresa = this.sesionService.getEmpresa().id;
         setTimeout(() => {
             console.log(this.idEmpresa)
