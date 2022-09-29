@@ -21,7 +21,7 @@ import { AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
 
 import { AccumulationAnnotationService, AccumulationDataLabelService, AccumulationLegendService, AccumulationTooltipService, ChartAllModule } from '@syncfusion/ej2-angular-charts';
 
-import { DiagramModule,DiagramAllModule, SymbolPaletteAllModule, OverviewAllModule } from '@syncfusion/ej2-angular-diagrams';
+import { DiagramModule,DiagramContextMenuService,DiagramAllModule, SymbolPaletteAllModule, OverviewAllModule } from '@syncfusion/ej2-angular-diagrams';
 import { SymbolPaletteModule } from '@syncfusion/ej2-angular-diagrams';
 import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 
@@ -78,6 +78,6 @@ import { BrowserModule } from '@angular/platform-browser';
     CargaArchivoComponent,
     // FlowChartComponent
   ],
-  providers: [ReporteService]
+  providers: [ReporteService,DiagramContextMenuService]
 })
 export class RaiModule { }

@@ -99,7 +99,7 @@ import { CambioPasswdComponent } from './components/cambio-passwd/cambio-passwd.
 import { LoginComponent } from '../core/components/login/login.component';
 import { ContactoComponent } from '../core/components/contacto/contacto.component';
 import { IdleTimeoutComponent } from './components/idle-timeout/idle-timeout.component';
-import { DiagramAllModule, DiagramModule, OverviewAllModule, SymbolPaletteAllModule, SymbolPaletteModule } from '@syncfusion/ej2-angular-diagrams';
+import { DiagramAllModule, DiagramContextMenuService,DiagramModule, OverviewAllModule, SymbolPaletteAllModule, SymbolPaletteModule } from '@syncfusion/ej2-angular-diagrams';
 
 import {ToastModule} from 'primeng/toast';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -318,6 +318,7 @@ const modules = [
 		CambioPasswdService,
 		ParametroNavegacionService,
 		SistemaNivelRiesgoService,
+		DiagramContextMenuService
 	]
 })
 export class ComunModule { }

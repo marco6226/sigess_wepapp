@@ -31,7 +31,7 @@ import { VerificacionTareaComponent } from './components/verificacion-tarea/veri
 import { CapitalizePipe } from './utils/pipes/capitalize.pipe';
 import { MiembrosEquipoComponent } from './components/analisis-desviacion/miembros-equipo/miembros-equipo.component';
 import { FlowChartComponent } from './components/analisis-desviacion/flow-chart/flow-chart.component';
-import { DiagramModule, SymbolPaletteModule, DiagramAllModule, OverviewAllModule, SymbolPaletteAllModule } from '@syncfusion/ej2-angular-diagrams';
+import { DiagramModule, DiagramContextMenuService,SymbolPaletteModule, DiagramAllModule, OverviewAllModule, SymbolPaletteAllModule } from '@syncfusion/ej2-angular-diagrams';
 import { NumericTextBoxModule, TextBoxModule, UploaderModule } from '@syncfusion/ej2-angular-inputs';
 import { BrowserModule } from '@angular/platform-browser';
 import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
@@ -117,7 +117,8 @@ import { InformeComponent } from './components/analisis-desviacion/factor-causal
         DesviacionService,
         AnalisisDesviacionService,
         TareaService,
-        CapitalizePipe
+        CapitalizePipe,
+        DiagramContextMenuService
     ]
 })
 export class SecModule { }

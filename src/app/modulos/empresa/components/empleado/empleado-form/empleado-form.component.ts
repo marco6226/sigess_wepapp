@@ -198,6 +198,26 @@ export class EmpleadoFormComponent implements OnInit {
             ciudadGerencia: [null],
         });
     }
+    usuarioP:any;
+    async usuarioPermisos() {
+        this.usuarioP=[];
+        // this.usuarioEmpresaList.usuario.id;
+        let filterQuery = new FilterQuery();
+        filterQuery.filterList = [
+            {
+                field: "usuarioEmpresaList.usuario.id",
+                criteria: Criteria.EQUALS,
+                value1: this.empleadoSelect.usuario.id,
+            },
+        ];
+        //this.perfilService.update;
+        await this.perfilService.findByFilter(filterQuery).then((resp) => {
+            resp["data"].forEach((ident) => {this.usuarioP.push(ident.id);
+            });
+            
+                console.log(this.usuarioP)
+        });
+    }
 
     ngOnInit() {
       //  console.log(this.empleadoSelect);
@@ -207,7 +227,7 @@ export class EmpleadoFormComponent implements OnInit {
             let fq = new FilterQuery();
             fq.filterList = [{ criteria: Criteria.EQUALS, field: 'id', value1: this.empleadoSelect.id, value2: null }];
             //console.log(fq,this.empleadoSelect.id);
-            this.empleadoService.findByFilter(fq).then((resp) => {
+            this.empleadoService.findByFilter(fq).then(async (resp) => {
                 console.log(resp);
                 this.empleadoSelect = <Empleado>resp['data'][0];
                 this.loaded = true;
@@ -218,6 +238,7 @@ export class EmpleadoFormComponent implements OnInit {
                 if (this.empleadoSelect.jefeInmediato) {
                     this.onSelectionJefeInmediato(this.empleadoSelect.jefeInmediato);
                 }
+                await this.usuarioPermisos()
                 this.form.patchValue({
                     id: this.empleadoSelect.id,
                     primerNombre: this.empleadoSelect.primerNombre,
@@ -240,7 +261,7 @@ export class EmpleadoFormComponent implements OnInit {
                     zonaResidencia: this.empleadoSelect.zonaResidencia,
                     area: this.empleadoSelect.area,
                     cargoId: this.empleadoSelect.cargo.id,
-                    perfilesId: [4],
+                    perfilesId: this.usuarioP,
                     corporativePhone: this.empleadoSelect.corporativePhone,
                     empresa: this.empleadoSelect.empresa,
                     nit: this.empleadoSelect.nit,
@@ -307,7 +328,7 @@ export class EmpleadoFormComponent implements OnInit {
             if (this.isUpdate === true || this.show === true)
                 setTimeout(() => {
                     this.buildPerfilesIdList();
-                }, 500);
+                }, 3000);
         });
         this.getTareaEvidences();
     }
@@ -315,26 +336,17 @@ export class EmpleadoFormComponent implements OnInit {
     async buildPerfilesIdList() {
         ////console.log(this.empleadoSelect.id, "181");
         let filterQuery = new FilterQuery();
-        if(this.empleadoSelect.usuario.id){
 
         filterQuery.filterList = [
             {
                 field: 'usuarioEmpresaList.usuario.id',
                 criteria: Criteria.EQUALS,              
-                value1: await this.empleadoSelect.usuario.id,
+                value1: this.empleadoSelect.usuario.id,
                 value2: null,
             },
 
         ];
-            }
-            else{
-                filterQuery.filterList = [
-                    {
-                       
-                    },
-        
-                ];
-            }
+
         this.perfilService.update;
         await this.perfilService.findByFilter(filterQuery).then((resp) => {
             let perfilesId = [];
@@ -343,6 +355,17 @@ export class EmpleadoFormComponent implements OnInit {
             console.log(resp['data']);
             this.form.patchValue({ perfilesId: perfilesId });
         });
+
+        // let perfilList=[];
+
+        // this.perfilService.findAll()
+        // .then(resp => {
+        //   (<Perfil[]>resp['data']).forEach(perfil => {
+        //     perfilList.push(perfil.id)
+        //   })
+        // });
+        // this.form.patchValue({ perfilesId: perfilList })
+        // console.log(this.form)
     }
 
     onSubmit() {
