@@ -53,7 +53,8 @@
                             <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'hashId', 'contains')"> 
                         </td>
                         <td>
-                            <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaReporte', 'contains')">
+                            <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaReporte', 'bt')"> -->
+                            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaReporte', 'bt')"></s-rangoFechaSelector>     
                         </td>
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'area.nombre', 'contains')">
@@ -81,7 +82,8 @@
                         <td>{{desviacion.modulo}}</td>
                         <td *ngIf="empresaId=='22'">{{desviacion.furat}}</td>
                         <td>{{desviacion.hashId}}</td>
-                        <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td>
+                        <!-- <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td> -->
+                        <td>{{desviacion.fechaReporte | date:'dd/MM/yyyy'}}</td>
                         <td>{{desviacion.area.nombre}}</td>
                         <td>{{desviacion.concepto}}</td>
                         <td [pTooltip]="desviacion.aspectoCausante" tooltipPosition="top">{{desviacion.aspectoCausante | slice:0:100}}...</td>

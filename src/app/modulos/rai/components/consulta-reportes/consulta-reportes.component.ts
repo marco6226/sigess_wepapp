@@ -38,11 +38,11 @@ export class ConsultaReportesComponent implements OnInit {
     private ConsuModReporteService: ConsuModReporteService,
     private sesionService: SesionService,
   ) { }
-
-  ngOnInit() {
-    this.idEmpresa = this.sesionService.getEmpresa().id;
+sortedTable:string;
+  async ngOnInit() {
+    this.idEmpresa = await this.sesionService.getEmpresa().id;
     this.loading = true;
-    console.log();
+    this.sortedTable=(this.idEmpresa=='22')?"fechaAccidente":"fechaReporte";
     
   }
 

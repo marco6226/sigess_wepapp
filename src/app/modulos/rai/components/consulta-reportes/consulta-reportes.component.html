@@ -1,5 +1,5 @@
 <p-panel header="Reportes A/I" >
-  <p-table #dt sortField="fechaReporte" sortOrder="1" [value]="reportesList" autoLayout="true" selectionMode="single" [(selection)]="reporteSelect"
+  <p-table #dt sortField={{sortedTable}} sortOrder="1" [value]="reportesList" autoLayout="true" selectionMode="single" [(selection)]="reporteSelect"
     [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
     [loading]="loading">
     <ng-template pTemplate="header">
