@@ -74,7 +74,7 @@ export class ConsultaDesviacionComponent implements OnInit {
   }
   
 
-  lazyLoad(event: any) {
+  async lazyLoad(event: any) {
     console.log(event)
     this.loading = true;
     let filterQuery = new FilterQuery();
@@ -84,11 +84,11 @@ export class ConsultaDesviacionComponent implements OnInit {
     filterQuery.rows = event.rows;
     filterQuery.count = true;
    
-    // filterQuery.fieldList = this.fields;
+    //filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
 
-    this.desviacionService.findByFilter(filterQuery).then(
+    await this.desviacionService.findByFilter(filterQuery).then(
       resp => {
         this.totalRecords = resp['count'];
         this.loading = false;
@@ -104,11 +104,11 @@ export class ConsultaDesviacionComponent implements OnInit {
     filterQuery2.offset = event.first;
     filterQuery2.count = true;
    
-    // filterQuery.fieldList = this.fields;
+    //filterQuery.fieldList = this.fields;
     filterQuery2.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery2.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
 
-    this.desviacionService.findByFilter(filterQuery2).then(
+    await this.desviacionService.findByFilter(filterQuery2).then(
       resp => {
         
         this.getDatosDesv = resp['data'];
