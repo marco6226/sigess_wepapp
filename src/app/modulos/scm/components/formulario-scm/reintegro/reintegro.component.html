@@ -23,7 +23,7 @@
             <p-dropdown appendTo="body" *ngIf="form.value.permanencia=='Permanente' && form.value.tipo_retorno!='Reconversión'" [(ngModel)]="isEdit.periodo_seguimiento" [options]="periocidadesPerm" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
         </div>
         <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
-            <label class="active"  for="">Reintegro Exitoso</label>
+            <label class="active"  for="">Proceso Exitoso</label>
             <br>
             <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="Si" name="groupname" value="Si" [(ngModel)]="isEdit.reintegro_exitoso" formControlName="reintegro_exitoso"></p-radioButton>
             <label class="active" for=""></label>
@@ -47,7 +47,7 @@
             <p-dropdown appendTo="body" *ngIf="form.value.permanencia=='Permanente' && form.value.tipo_retorno=='Reubicación'" [options]="periocidadesPerm" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
         </div>
         <div class="input-field" *ngIf="form.value.permanencia=='Permanente'">
-            <label class="active"  for="">Reintegro Exitoso</label>
+            <label class="active"  for="">Proceso Exitoso</label>
             <br>
             <p-radioButton *ngIf="form.value.permanencia=='Permanente'" label="Si" name="groupname" value="Si" [(ngModel)]="isEdit.reintegro_exitoso" formControlName="reintegro_exitoso"></p-radioButton>
             <label class="active" for=""></label>
@@ -68,7 +68,7 @@
             <p-dropdown appendTo="body" [options]="periocidadesTemp" [(ngModel)]="isEdit.periodo_seguimiento" formControlName="periodo_seguimiento" placeholder="Seleccione" required></p-dropdown>
         </div>
         <div class="input-field">
-            <label class="active"  for="">Reintegro Exitoso</label>
+            <label class="active"  for="">Proceso Exitoso</label>
             <br>
             <p-radioButton label="Si" name="groupname" value="Si" [(ngModel)]="isEdit.reintegro_exitoso" formControlName="reintegro_exitoso"></p-radioButton>
             <label class="active" for=""></label>

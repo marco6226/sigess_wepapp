@@ -176,6 +176,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     @Input() isUpdate: boolean;
     @Input() show: boolean;
     @Input() consultar: boolean = false;
+    consultar2:boolean=false;
     @Input("disabled") disabled: boolean = false;
     @Input() editable: boolean;
     @ViewChild("autocomplete", { static: true }) autoC: ElementRef;
@@ -448,6 +449,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         ];
 
         this.consultar = (localStorage.getItem('scmShowCase') === 'true') ? true : false;
+        this.consultar2 = (localStorage.getItem('scmShowCase') === 'true') ? true : false;
+        console.log(this.consultar2)
 
         //console.log(this.caseSelect.id, "wenas");
 
@@ -561,12 +564,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             console.log('perfilService')
             if (this.isUpdate === true || this.show === true)
                 setTimeout(() => {
-                    
+                    console.log(this.isUpdate)
+                    console.log(this.show) 
                     this.buildPerfilesIdList();
                 }, 500);
         });
 
-        
+
     }
     areaChange(event){
         this.division=event;
