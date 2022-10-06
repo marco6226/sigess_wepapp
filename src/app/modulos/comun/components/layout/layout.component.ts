@@ -110,7 +110,9 @@ export class LayoutComponent implements OnInit, AfterContentInit {
         }, 5000);
 		this.ActPosition();
 
-		
+		setTimeout(() => {           
+			this.closeMenu();
+        }, 10000);
 	}
 
 	logout() {
