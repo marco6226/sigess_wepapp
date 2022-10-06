@@ -376,7 +376,10 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="!this.consultar" style="text-align: center; width: 100%;">
+                    <!-- <div>
+                        {{this.consultar2}}
+                    </div> -->
+                    <div *ngIf="!consultar2" style="text-align: center; width: 100%;">
                         <button pButton *ngIf="solicitando == false" (click)="submitEmp()" type="submit"
                             icon="fa fa-floppy-o" class="float-btn" style="bottom: 100px;"
                             title="Guardar datos de Empleado"></button>
@@ -508,7 +511,7 @@
                             <div class="input-field">
                                 <textarea pInputTextarea formControlName="descripcionCargo" rows="4"
                                     required></textarea>
-                                <label for="" class="active">Descripción del cargo - actividades</label>
+                                <label for="" class="active">Descripción del cargo / Funciones actuales</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
@@ -681,7 +684,7 @@
                     <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()"
                         icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()"
                         title="Volver a listado de empleados"></button>
-                    <button pButton *ngIf="solicitando == false || !this.consultar" type="submit" icon="fa fa-floppy-o"
+                    <button pButton *ngIf="solicitando == false && !this.consultar2" type="submit" icon="fa fa-floppy-o"
                         class="float-btn" [disabled]="this.consultar" style="bottom: 100px;"
                         title="Guardar datos medicos"></button>
 
@@ -824,15 +827,19 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="summary" let-rowData>
-                            <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect"
+                            <ng-container *ngIf="!consultar2"><button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton [disabled]="diagSelect"
                                 type="button" icon="fa fa-plus" label="Crear"
-                                (click)="diagSelect = null; modalDianostico = true"></button>
+                                (click)="diagSelect = null; modalDianostico = true" ></button>
                             <button *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-pencil"
                                 label="Modificar" class="ui-button-success" (click)="showModalDiagnostico()"
                                 [disabled]="!diagSelect"></button>
                             <button *sTienePermiso="['SCM_DEL_CASE_DIAG']" pButton type="button" icon="fa fa-trash"
                                 label="Eliminar" class="ui-button-danger" (click)="deleteDiagnostico(diagSelect.id)"
-                                [disabled]="!diagSelect"></button>
+                                [disabled]="!diagSelect"></button></ng-container>
+
+                            <ng-container *ngIf="consultar2"><button *sTienePermiso="'SCM_PUT_CASE_DIAG'" pButton type="button" icon="fa fa-search"
+                                label="Consultar" class="ui-button-warning" (click)="showModalDiagnostico()"
+                                [disabled]="!diagSelect"></button></ng-container>
 
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
