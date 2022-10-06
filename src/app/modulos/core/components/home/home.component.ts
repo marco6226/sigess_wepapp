@@ -489,14 +489,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => {
             this.show = true
             this.showData = true;
+            this.testing = false;
             this.loadAreas();
         }, 3000);
-        let arrtest = [1, 2, 4, 5, 4];
+        //let arrtest = [1, 2, 4, 5, 4];
 
 
-        this.usuarioService.consultarHistoriaLogin().then(
-            resp => this.evtLogList = resp['data']
-        );
+        // this.usuarioService.consultarHistoriaLogin().then(
+        //     resp => this.evtLogList = resp['data']
+        // );
 
         
     }
@@ -507,7 +508,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         for (const area of areas) {
             this.arrayIds.push(area.id)
         }
-        this.testing = false;
+      //  this.testing = false;
         this.updateCharts();
         this.updateCharts2();
         this.updateCharts3();
