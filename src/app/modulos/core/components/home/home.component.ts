@@ -487,11 +487,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     async ngOnInit() {
 
         setTimeout(() => {
-            this.show = true
-            this.showData = true;
             this.testing = false;
+            this.show = true
+            this.showData = true;            
             this.loadAreas();
-        }, 3000);
+        }, 2000);
         //let arrtest = [1, 2, 4, 5, 4];
 
 
