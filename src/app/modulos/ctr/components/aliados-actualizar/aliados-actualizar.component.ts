@@ -91,9 +91,9 @@ export class AliadosActualizarComponent implements OnInit {
       }      
     });
 
-    this.loadDocumentos()
+    await this.loadDocumentos()
 
-    this.saveInformacionAliado();
+    await this.saveInformacionAliado();
     if(this.aliadoInformacion.id == null){
       this.loadInformacionAliado();
     }
@@ -104,23 +104,24 @@ export class AliadosActualizarComponent implements OnInit {
       console.log(ele);
       
     });
+    // this.saveInformacionAliado()
   }
 
   loadDocumentos(){
     // debugger
-    JSON.parse(this.aliadoInformacion.documentos).forEach(async element => {
-      await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{
-        console.log(elem);      
-        this.documentos.push(elem[0])
-      })
-    console.log(this.documentos);
-
-    });
+    if(this.aliadoInformacion.documentos){
+      JSON.parse(this.aliadoInformacion.documentos).forEach(async element => {
+        await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{
+          console.log(elem);      
+          this.documentos.push(elem[0])
+        })
+      console.log(this.documentos);
+      });      
+    }
     
   }
 
-  onReciveData(event: string, tipe: string){
-    // this.loadInformacionAliado()
+  async onReciveData(event: string, tipe: string){
     switch (tipe) {
       case 'actividades':
         this.aliadoInformacion.actividad_contratada = event        
@@ -150,7 +151,7 @@ export class AliadosActualizarComponent implements OnInit {
     }
     console.log(this.aliadoInformacion);
     
-    this.saveInformacionAliado()
+    await this.saveInformacionAliado()
   }
 
   test(){

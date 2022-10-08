@@ -175,7 +175,7 @@ export class AliadosComponent implements OnInit {
         let ue = new UsuarioEmpresa();
       
         ue.perfil = new Perfil();
-        ue.perfil.id = '311';
+        ue.perfil.id = '4';
   
         let user = new Usuario()
         user.id= null,
@@ -199,31 +199,17 @@ export class AliadosComponent implements OnInit {
   }
 
   loadDataIn(){
+    // debugger
     console.log(this.valueEmpresa)
     console.log(this.formNatural.value)
-    this.onSeleccion = this.seleccion = this.valueEmpresa.tipo_persona
+    this.onSeleccion = this.valueEmpresa.tipo_persona
+    this.seleccion = this.valueEmpresa.tipo_persona
     this.isCreate = false;
   }
 
   test(){
-    let x = JSON.parse(localStorage.getItem('session'))
-     console.log(x.usuario.email);
-    //  console.log(JSON.parse(x));
-    let ue = new UsuarioEmpresa();
-      
-        ue.perfil = new Perfil();
-        ue.perfil.id = '311';
-        
-    let user = new Usuario()
-        user.id= null,
-        user.email= this.formJuridica.value.email,
-        user.estado= null,
-        user.usuarioEmpresaList= [],
-        user.ipPermitida= ['0.0.0.0/0'],
-        user.numeroMovil= null,
-        user.mfa= null
-  
-        user.usuarioEmpresaList.push(ue)
+   console.log(this.seleccion, this.onSeleccion, this.valueEmpresa);
+   
      
   }
 }

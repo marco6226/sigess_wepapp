@@ -58,9 +58,9 @@ export class SesionService {
         return this.session.empresa;
     }
 
-    public setEmpresa(empresa: Empresa) {
+    public async setEmpresa(empresa: Empresa) {
         this.session.empresa = empresa;
-        localStorage.setItem(config.session_id, JSON.stringify(this.session));
+        await localStorage.setItem(config.session_id, JSON.stringify(this.session));
     }
 
     public getParamEmp(): string {

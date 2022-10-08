@@ -26,8 +26,8 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
         private navService: ParametroNavegacionService,
     ) { }
 
-    ngOnInit() {
-        this.empresaId = this.sesionService.getEmpresa().id
+    async ngOnInit() {
+        this.empresaId = await this.sesionService.getEmpresa().id
     }
 
     irHome() {

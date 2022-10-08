@@ -168,9 +168,9 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 			this.empresasItems.push({ label: emp.nombreComercial, value: emp });
 		});
 		if (this.sesionService.getEmpresa() == null) {
-			this.sesionService.setEmpresa(empresas[0]);
+			await this.sesionService.setEmpresa(empresas[0]);
 		}
-		this.empresaSelect = this.sesionService.getEmpresa();
+		this.empresaSelect = await this.sesionService.getEmpresa();
 		this.empresaSelectOld = this.empresaSelect;
 
 		this.confGenService.obtenerPorEmpresa()
