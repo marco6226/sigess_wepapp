@@ -51,7 +51,8 @@ export class AliadosActualizarComponent implements OnInit {
     private rutaActiva: ActivatedRoute,
     private empresaService: EmpresaService,
     private directorioService: DirectorioService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -104,11 +105,9 @@ export class AliadosActualizarComponent implements OnInit {
       console.log(ele);
       
     });
-    // this.saveInformacionAliado()
   }
 
   loadDocumentos(){
-    // debugger
     if(this.aliadoInformacion.documentos){
       JSON.parse(this.aliadoInformacion.documentos).forEach(async element => {
         await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{
@@ -154,25 +153,12 @@ export class AliadosActualizarComponent implements OnInit {
     await this.saveInformacionAliado()
   }
 
-  test(){
-   
-    let x = JSON.parse(this.aliadoInformacion.documentos)
-    console.log(this.aliadoInformacion.documentos);    
-    console.log(x);
-    x.push(99)
-    console.log(x);
-    this.aliadoInformacion.documentos = JSON.stringify(x)
-    console.log(this.aliadoInformacion.documentos);    
-    
-  //  this.aliadoInformacion.actividad_contratada = '["Almacenes Corona","Comercial Corona Colombia"]'
-    
-  }
-
   reciveIdDoc(event: string){
     console.log(event);
-    let dataList = JSON.parse(this.aliadoInformacion.documentos)
-    // console.log(this.aliadoInformacion.documentos);    
-    // console.log(dataList);
+    let dataList = []
+    if(this.aliadoInformacion.documentos){
+      dataList = JSON.parse(this.aliadoInformacion.documentos)
+    }
     dataList.push(Number.parseInt(event))
     console.log(dataList);
     this.aliadoInformacion.documentos = JSON.stringify(dataList)
@@ -181,10 +167,14 @@ export class AliadosActualizarComponent implements OnInit {
     
   }
 
-  actualizarAliado(){
+  async actualizarAliado(){
     this.aliado.fechaActualizacion = new Date();
-    this.empresaService.update(this.aliado)
-    this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+    if(this.aliado.division !== null){
+      this.aliado.division = JSON.stringify(this.aliado.division)
+    }
+    await this.empresaService.update(this.aliado)
+    await this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+    this.router.navigate(['/app/ctr/listadoAliados']);
   }
 
 }
