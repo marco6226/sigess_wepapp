@@ -90,9 +90,9 @@
                                             <!-- <input pInputText formControlName="HHT"/> -->
                                             <input pInputText [(ngModel)]="mesesHHT1[i][j][u].HHT" (keyup)="sumaTotalArea(i,j,'HHT')" type="number"/>
                                         </div>
-                                        <div class="ui-g-12 ui-sm-12 ui-md-3">
+                                        <!-- <div class="ui-g-12 ui-sm-12 ui-md-3">
                                             <button pButton class="ui-button-success" icon="pi pi-pencil"></button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </p-accordionTab>
                             </ng-container>
@@ -104,9 +104,14 @@
     </p-accordion>
 </p-panel>
 
-<ng-container>
+<ng-container *ngIf="guardarFlag && flagAnio && flagEmpresa">
     <button pButton type="button" icon="fa fa-floppy-o" title="Guardar"
         (click)="guardarHht()" class="float-btn" [disabled]="disabled "></button>
         <!-- guardarHht() -->
+</ng-container>
+
+<ng-container *ngIf="!guardarFlag && flagAnio && flagEmpresa">
+    <button  pButton type="button" icon="fa fa-pencil" title="Modificar"
+        (click)="modificarHht()" class="ui-button-success float-btn" [disabled]="disabled" style="z-index: 100;"></button>
 </ng-container>
 
