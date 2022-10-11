@@ -71,7 +71,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                         { label: 'Talento humano', codigo: 'EMP_GET_EMPL', routerLink: ['/app/empresa/empleado'], class: 'fa fa-users' },
                         { label: 'Evaluación desempeño', codigo: 'EMP_GET_EVALDES', routerLink: ['/app/empresa/evaluacionDesempeno'], class: 'fa fa-list' },
                         { label: 'Cargue datos', codigo: 'EMP_POST_LOADEMP', routerLink: ['/app/empresa/cargueDatos'], class: 'fa fa-database' },
-                        { label: 'HHT', codigo: 'EMP_GET_HHT', routerLink: ['/app/empresa/hht'], class: 'fa fa-database'}
+                        //{ label: 'HHT', codigo: 'EMP_GET_HHT', routerLink: ['/app/empresa/hht'], class: 'fa fa-database'}
                     ]
             },
             {
