@@ -1,8 +1,5 @@
 <p-panel header="Seguimiento contratistas" >
     <p-tabView>
-      <!-- <p-tabPanel [header]="emp" *ngFor="let emp of empresasList">
-        <s-empresaDash [empresa]="emp"></s-empresaDash>
-      </p-tabPanel> -->
       <p-tabPanel header="Información">
         <app-aliados [valueEmpresa]="aliado" ></app-aliados>
       </p-tabPanel>
@@ -30,4 +27,3 @@
   <button pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliado"
       (click)="actualizarAliado()" class="float-btn"></button>
 </ng-container>
-<!-- <button (click)="test()">test</button> -->

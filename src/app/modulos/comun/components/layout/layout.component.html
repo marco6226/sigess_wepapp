@@ -19,7 +19,7 @@
 			<label style="align-self: center;font-size: 14px;margin-left: 10px;">{{usuario.email}}</label>
 		</div>
 		<div id="avatar3">
-			<div id="avatar-content">
+			<div id="avatar-content" *ngIf="empresaSelect">
 				
 				<img *ngIf="empresaSelect.id == '22'" [src]="empresaSelect.logo" style="width: 140px;margin-top: 6px;" />
 				<img *ngIf="empresaSelect.id != '22' && empresaSelect.id != '8'  " [src]="empresaSelect.logo" style="width: 140px;margin-top: -25px;visibility: hidden" />
