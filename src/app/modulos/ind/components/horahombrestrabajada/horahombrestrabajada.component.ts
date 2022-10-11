@@ -32,8 +32,11 @@ export class HorahombrestrabajadaComponent implements OnInit {
   TotalAnioNH;
   TotalAnioHHT;
   mesesHHT1;
+  idHHT1;
   flagAnio:boolean=false;
   flagEmpresa:boolean=false;
+  flagID:boolean=false;
+  guardarFlag:boolean=true;
   // empresasHHT: FormGroup;
   // areaHHT: FormGroup;
   // mesesHHT: FormGroup;
@@ -131,7 +134,7 @@ Temporales= [
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
     this.CreateMesesHHT1()
-    await this.cargarHHT()
+    
   }
 
   anioSelecionado(event){
@@ -162,11 +165,16 @@ Temporales= [
         await this.hhtService.findByFilter(hhtfiltQuery).then((resp) => {
           
           if(resp['data'].length>0){
+            this.guardarFlag=false;
             this.mesesHHT1=[]
+            this.idHHT1=[]
             resp['data'].forEach(element => {
               this.mesesHHT1.push(JSON.parse(element.valor))
+              this.idHHT1.push({id:element.id,mes:element.mes})
             });
+            // console.log(this.idHHT1)
           }else{
+            this.guardarFlag=true;
             this.CreateMesesHHT1()
           }
           this.sumaTotalMesAño()
@@ -276,26 +284,76 @@ Temporales= [
   }
 
   async cargarHHT(){
-    await this.hhtService.findAll().then((resp)=>{
-      this.idHHT=resp['data'].length+1;
-      });
+    let idhttquery = new FilterQuery();
+      idhttquery.sortOrder = SortOrder.DESC;
+      idhttquery.sortField = "id";
+      idhttquery.fieldList = ["id"];
+
+      await this.hhtService.findByFilter(idhttquery).then(
+        resp => {
+          if(resp['data'].length>0){
+          this.idHHT=resp['data'][0].id
+          }
+          else{
+            this.idHHT=1;
+          }
+          this.flagID=true
+        }
+    );
+
+      // await this.hhtService.findAll().then((resp)=>{
+      //   this.idHHT=resp['data'].length+1;
+      //   });
 
   }
   async guardarHht(){
+    if(!this.flagID){
+      await this.cargarHHT()
+    }
+    let cont=0;
+    this.meses.forEach(async element => {
+      cont=cont+1
+      let ad = new Hht();
+      ad.anio=this.anioSelect;
+      this.idHHT=this.idHHT+1;
+      ad.id=this.idHHT.toString();
+      ad.mes=element.label;
+      ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
+      ad.empresaSelect=this.empresaSelect;
+      await this.hhtService.create(ad);
+      
+    });
+    
+  }
 
-      let cont=0;
-      this.meses.forEach(async element => {
-        cont=cont+1
-        let ad = new Hht();
-        ad.anio=this.anioSelect;
-        ad.id=this.idHHT.toString();
-        this.idHHT=this.idHHT+1;
-        ad.mes=element.label;
-        ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
-        ad.empresaSelect=this.empresaSelect;
-        await this.hhtService.create(ad);
-        
-      });
+  async modificarHht(){
+
+    let x
+    let cont=0;
+    this.meses.forEach(async element => {
+
+
+      x=await this.idHHT1.find(data=>{
+        // console.log(data)
+        // console.log(element.label)
+        return ( (data.mes==element.label));
+      })
+      cont=cont+1
+      let ad = new Hht();
+      ad.anio=this.anioSelect;
+      // console.log(x.id)
+      // this.idHHT=x.id;
+      // ad.id=
+      ad.id=x.id.toString();
+      ad.mes=element.label;
+      console.log(this.mesesHHT1)
+      console.log(cont)
+      console.log(this.mesesHHT1[cont-1])
+      ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
+      ad.empresaSelect=this.empresaSelect;
+      await this.hhtService.update(ad);
+      
+    });
     
   }
 
