@@ -1,0 +1,112 @@
+<p-panel [header]="'HORA HOMBRES TRABAJADA'">
+    <p-accordion [multiple]="true">
+        <div class="p-fluid p-grid p-formgrid">
+            <div class="ui-g-12 ui-sm-12 ui-md-2">
+                Seleccionar año:
+            </div>
+            <div class="p-field p-col-12 p-md-4">
+                <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="anioSelecionado($event)"></p-dropdown>
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-2">
+                Seleccionar empresa:
+            </div>
+            <div class="ui-g-12 ui-sm-12 ui-md-4">
+                <p-dropdown appendTo="body" [options]="Temporales" placeholder="Seleccionar empresa" (onChange)="empresaSelecionado($event)"></p-dropdown>
+            </div>
+        </div>
+        <!-- <ng-container *ngIf="true" [formGroup]="Meses"> -->
+        <ng-container *ngIf="flagAnio && flagEmpresa">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    Total año No. PERSONAS:
+                </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <input pInputText readonly [(ngModel)]="TotalAnioNH"/>
+                </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-2" >
+                    Total año HHT:
+                </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <input pInputText readonly [(ngModel)]="TotalAnioHHT"/>
+                </div>
+            </div>
+            <ng-container *ngFor="let mes of meses; let i = index" >
+                <!-- <p-accordionTab header={{mes.label}} formGroupName={{mes.label}}> -->
+                <p-accordionTab header={{mes.label}}>
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-sm-12 ui-md-2">
+                            Total mes No. PERSONAS:
+                        </div>
+                        <div class="ui-g-12 ui-sm-12 ui-md-4">
+                            <input pInputText  readonly [(ngModel)]="Meses[i].NH" />
+                            <!-- [(ngModel)]="Meses[i].NH" -->
+                        </div>
+                        <div class="ui-g-12 ui-sm-12 ui-md-2" >
+                            Total mes HHT:
+                        </div>
+                        <div class="ui-g-12 ui-sm-12 ui-md-4">
+                            <input pInputText  readonly [(ngModel)]="Meses[i].HHT"/>
+                            <!-- [(ngModel)]="Meses[i].HHT" -->
+                        </div>
+                    </div>
+                    
+                    <ng-container *ngFor="let area of areaList; let j = index">
+                        <!-- <p-accordionTab header={{area.nombre}} formGroupName={{area.nombre}}> -->
+                            <p-accordionTab header={{area.nombre}} >
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-sm-12 ui-md-2">
+                                    Total area No. PERSONAS:
+                                </div>
+                                <div class="ui-g-12 ui-sm-12 ui-md-4">
+                                    <input pInputText  readonly [(ngModel)]="mesesHHT1[i][j].Total3NH"/>
+                                </div>
+                                <div class="ui-g-12 ui-sm-12 ui-md-2" >
+                                    Total area HHT:
+                                </div>
+                                <div class="ui-g-12 ui-sm-12 ui-md-4">
+                                    <input pInputText  readonly  [(ngModel)]="mesesHHT1[i][j].Total3HHT"/>
+                                </div>
+                            </div>
+
+                            <ng-container *ngFor="let u of Ubicacion">
+                                <!-- <p-accordionTab header={{u}} formGroupName={{u}}> -->
+                                <p-accordionTab header={{u}}>
+                                    <div class="ui-g">
+                                        <div class="ui-g-12 ui-sm-12 ui-md-2">
+                                            No. PERSONAS:
+                                        </div>
+                                        <div class="ui-g-12 ui-sm-12 ui-md-3">
+                                            <!-- <input pInputText formControlName="NH"/> -->
+                                            <input pInputText [(ngModel)]="mesesHHT1[i][j][u].NH" (keyup)="sumaTotalArea(i,j,'NH')" type="number"/>
+                                            <!-- <div>
+                                                {{i}}+{{j}}
+                                            </div> -->
+                                        </div>
+                                        <div class="ui-g-12 ui-sm-12 ui-md-1" >
+                                            HHT:
+                                        </div>
+                                        <div class="ui-g-12 ui-sm-12 ui-md-3">
+                                            <!-- <input pInputText formControlName="HHT"/> -->
+                                            <input pInputText [(ngModel)]="mesesHHT1[i][j][u].HHT" (keyup)="sumaTotalArea(i,j,'HHT')" type="number"/>
+                                        </div>
+                                        <div class="ui-g-12 ui-sm-12 ui-md-3">
+                                            <button pButton class="ui-button-success" icon="pi pi-pencil"></button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </ng-container>
+                        </p-accordionTab>
+                    </ng-container>
+                </p-accordionTab>
+            </ng-container>
+        </ng-container>
+    </p-accordion>
+</p-panel>
+
+<ng-container>
+    <button pButton type="button" icon="fa fa-floppy-o" title="Guardar"
+        (click)="guardarHht()" class="float-btn" [disabled]="disabled "></button>
+        <!-- guardarHht() -->
+</ng-container>
+

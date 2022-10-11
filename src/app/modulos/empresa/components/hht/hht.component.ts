@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones'
-import { Hht } from 'app/modulos/empresa/entities/hht'
+import { Hht, AreaHht,UbicacionHht,ValorHht} from 'app/modulos/empresa/entities/hht'
 import { SelectItem, Message } from 'primeng/primeng'
 import { HhtService } from 'app/modulos/empresa/services/hht.service'
 
@@ -15,6 +15,9 @@ export class HhtComponent implements OnInit {
 
   msgs: Message[];
   hhtList: Hht[];
+  areaHht:AreaHht[];
+  ubicacionHht:UbicacionHht[];
+  valorHht:ValorHht[];
   aniosList: SelectItem[];
   anioSelect = new Date().getFullYear();
 
@@ -45,7 +48,7 @@ export class HhtComponent implements OnInit {
   cargarHht(anio: number) {
     this.hhtList = [];
     for (let i = 0; i < locale_es.monthNames.length; i++) {
-      this.hhtList.push({ id: null, anio: this.anioSelect, mes: i + 1, nombreMes: locale_es.monthNames[i].toUpperCase(), valor: null });
+      //this.hhtList.push({ id: null, anio: this.anioSelect, mes: i + 1, nombreMes: locale_es.monthNames[i].toUpperCase(), valor: null });
     }
 
     this.hhtService.findByAnio(anio).then(
@@ -53,8 +56,8 @@ export class HhtComponent implements OnInit {
         let resp = <Hht[]>data;
         if (resp != null && resp.length > 0) {
           resp.forEach(hht => {
-            this.hhtList[hht.mes - 1].id = hht.id;
-            this.hhtList[hht.mes - 1].valor = hht.valor;
+            // this.hhtList[hht.mes - 1].id = hht.id;
+            // this.hhtList[hht.mes - 1].valor = hht.valor;
           });
         }        
       }

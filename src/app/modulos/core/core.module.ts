@@ -79,6 +79,7 @@ import { ContextoOrganizacionComponent } from '../empresa/components/contexto-or
 import { HomeComponent } from './components/home/home.component';
 import { ElaboracionTableroComponent } from '../ind/components/elaboracion-tablero/elaboracion-tablero.component';
 import { ConsultaTableroComponent } from '../ind/components/consulta-tablero/consulta-tablero.component';
+import { HorahombrestrabajadaComponent } from '../ind/components/horahombrestrabajada/horahombrestrabajada.component';
 import { ConsultaActasComponent } from '../cop/components/consulta-actas/consulta-actas.component';
 import { CargaArchivoComponent } from '../rai/components/carga-archivo/carga-archivo.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
@@ -235,6 +236,7 @@ const appRoutes: Routes = [
                 canActivate: [AuthGuardService],
                 children: [
                     // { path: 'elaboracionTablero', component: ElaboracionTableroComponent },
+                    { path: 'horahombrestrabajada', component: HorahombrestrabajadaComponent },
                     { path: 'consultaTablero', component: ConsultaTableroComponent },
                     { path: 'emp', component: IndicadoresEmpComponent },
                     { path: 'ausentismo', component: IndicadoresAusentismoComponent },
