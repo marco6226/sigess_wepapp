@@ -1,6 +1,6 @@
 <p-growl [value]="msgs"></p-growl>
 <p-panel styleClass="material-panel">
-    <p-header>
+    <p-header >
         Casos médicos
     </p-header>
 
@@ -39,8 +39,11 @@
                 <th pSortableColumn="statusCaso">Estado de caso
                     <p-sortIcon field="statusCaso"></p-sortIcon>
                 </th>
-                <th pSortableColumn="casoMedicoLaboral">Caso de mesa laboral
+                <th pSortableColumn="casoMedicoLaboral" *ngIf="idEmpresa!='22'">Caso de mesa laboral
                     <p-sortIcon field="casoMedicoLaboral"></p-sortIcon>
+                </th>
+                <th pSortableColumn="diagnostico" *ngIf="idEmpresa=='22'">Diagnostico
+                    <p-sortIcon field="diagnostico"></p-sortIcon>
                 </th>
                 <th pSortableColumn="prioridadCaso">Prioridad
                     <p-sortIcon field="prioridadCaso"></p-sortIcon>
@@ -135,13 +138,22 @@
                         <input pInputText type="text" (input)="dt.filter(DecodificacionEstado($event.target.value), 'statusCaso', 'contains')">
                     </div>
                 </td>
-                <td>
+                <td *ngIf="idEmpresa!='22'">
                     <div class="ui-inputgroup">
                         <span class="ui-inputgroup-addon">
                             <em class="pi pi-search"></em>
                         </span>
                         <!-- <input pInputText type="text" (input)="dt.filter( $event.target.value=='Si'?'1':'0', 'casoMedicoLaboral', 'contains')"> -->
                         <input pInputText type="text" (input)="dt.filter(DecodificacionSiNo($event.target.value), 'casoMedicoLaboral', 'contains')">
+                    </div>
+                </td>
+                <td *ngIf="idEmpresa=='22'">
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <!-- <input pInputText type="text" (input)="dt.filter( $event.target.value=='Si'?'1':'0', 'casoMedicoLaboral', 'contains')"> -->
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'diagnostico', 'contains')">
                     </div>
                 </td>
                 <td>
@@ -185,7 +197,8 @@
                 <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.pkUser.primerNombre}} </td>
                 <td class="p-text-center">{{case.documento}}</td>
                 <td class="p-text-center">{{case.statusCaso == 1 ? 'Abierto' : 'Cerrado'}}</td>
-                <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' :case.casoMedicoLaboral == 2 ? 'En seguimiento':case.casoMedicoLaboral == 3 ?'No aplica':case.casoMedicoLaboral == 0 ?'No':''}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa!='22'">{{case.casoMedicoLaboral == 1 ? 'Si' :case.casoMedicoLaboral == 2 ? 'En seguimiento':case.casoMedicoLaboral == 3 ?'No aplica':case.casoMedicoLaboral == 0 ?'No':''}}</td>
+                <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.diagnostico}}</td>
                 <!-- <td class="p-text-center">{{case.casoMedicoLaboral == 1 ? 'Si' : 'No'}}</td> -->                
                 <td class="p-text-center status" [ngClass]="{
                     'status--danger': case.prioridadCaso === 'Alta' , 
