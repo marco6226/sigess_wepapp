@@ -5,6 +5,7 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { SelectItem } from 'primeng/primeng';
 import { epsorarl } from '../../entities/eps-or-arl';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
+import { SesionService } from "app/modulos/core/services/sesion.service";
 
 @Component({
     selector: 'app-pcl',
@@ -35,14 +36,8 @@ export class PclComponent implements OnInit {
         { label: "En apelación", value: "0" }
     ]
 
-    origenList = [
-        { label: 'Seleccione', value: null },
-        { label: 'Común', value: 'Común' },
-        { label: 'Accidente De Trabajo', value: 'Accidente De Trabajo' },
-        { label: 'Accidente De Transito', value: 'Accidente De Transito' },
-        { label: 'Mixto', value: 'Mixto' },
-        { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
-    ];
+    origenList
+    idEmpresa: string;
 
     differ: any;
     diagList: SelectItem[] = [{ label: "--Seleccione--", value: null }];
@@ -61,6 +56,7 @@ export class PclComponent implements OnInit {
         private differs: KeyValueDiffers,
         private cd: ChangeDetectorRef,
         private confirmService: ConfirmService,
+        private sesionService: SesionService,
 
     ) {
         this.differ = differs.find({}).create();
@@ -85,12 +81,31 @@ export class PclComponent implements OnInit {
     }
 
     async ngOnInit() {
-
+        this.idEmpresa =this.sesionService.getEmpresa().id;
+        this.createOrigenList()
         this.loadDiagnostics();
         await this.iniciarPcl();
         this.dlistaPCL.emit(this.pclList);
     }
+    createOrigenList(){
+        if(this.idEmpresa=='22'){
+            this.origenList = [
+                { label: 'Seleccione', value: null },
+                { label: 'Común', value: 'Común' },
+                { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
+            ];
+        }else{
+            this.origenList = [
+                { label: 'Seleccione', value: null },
+                { label: 'Común', value: 'Común' },
+                { label: 'Accidente De Trabajo', value: 'Accidente De Trabajo' },
+                { label: 'Accidente De Transito', value: 'Accidente De Transito' },
+                { label: 'Mixto', value: 'Mixto' },
+                { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
+            ];
+        }
 
+    }
     loadDiagnostics(val?) {
         if (val) {
             this.diagList = this.diagList.filter(diagnostic => this.diagnosticos.some((diagOr) => diagnostic.value === null || diagnostic.value === diagOr.id.toString()));
