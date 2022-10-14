@@ -50,7 +50,7 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
 
   questionIndividual:Desempeno[]=[
     {id:0,pregunta:'¿Estaba la persona excesivamente fatigada, impedida, molesta, aburrida, distraida o abrumada?',dq:"Dq1",areas:[this.identificacionFC[5],this.identificacionFC[6]],selected:null},
-    {id:1,pregunta:'¿Debería la persona haber tenido y usado un procedimiento escrito, pero no fue así?',dq:"Dq2",areas:[this.identificacionFC[0]],selected:null},
+    {id:1,pregunta:'¿Debería la persona haber tenido y usado un procedimiento escrito, pero no fue así?',dq:"Dq2",areas:[this.identificacionFC[0],this.identificacionFC[5],this.identificacionFC[6]],selected:null},
     {id:2,pregunta:'¿Se cometió un error mientras se usaba un procedimiento?',dq:"Dq3",areas:[this.identificacionFC[0]],selected:null},
     {id:3,pregunta:'¿No estaban disponibles las alarmas o indicadores o se entendieron mal para reconocer o responder a una problema?',dq:"Dq4",areas:[this.identificacionFC[5]],selected:null},
     {id:4,pregunta:'¿Se identificaron o manejaron mal los indicadores, alarmas, controles, herramienta o equipo?',dq:"Dq5",areas:[this.identificacionFC[3]],selected:null},
