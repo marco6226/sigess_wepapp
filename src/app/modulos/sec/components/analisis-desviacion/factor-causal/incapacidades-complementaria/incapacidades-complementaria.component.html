@@ -65,7 +65,12 @@ styleClass="select-material">
 </div>
 
 <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
-
+        <div class="p-field">
+            <label for="tipo">El evento generó incapacidad?</label>
+            <p-radioButton [name]="" value="true" label="Si" [formControlName]="" [attr.required]=""></p-radioButton>
+            <p-radioButton [name]="" value="false" label="No" [formControlName]=""[attr.required]=""></p-radioButton>
+        
+        </div>
         <div class="p-field">
             <label for="tipo">Tipo</label>
             <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->

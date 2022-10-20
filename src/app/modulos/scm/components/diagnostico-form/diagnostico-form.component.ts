@@ -25,14 +25,30 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
     @Output() closeModal = new EventEmitter<any>()
     @Input() diagSelect: any;
 
-    origenList = [
-        { label: 'Seleccione', value: null },
-        { label: 'Común', value: 'Común' },
-        { label: 'Accidente de trabajo', value: 'Accidente Laboral' },
-        { label: 'Mixto', value: 'Mixto' },
-        { label: 'Enfermedad laboral', value: 'Enfermedad Laboral' },
+    origenList
+    idEmpresa: string;
 
-    ];
+    createOrigenList(){
+        if(this.idEmpresa=='22'){
+            this.origenList = [
+                { label: 'Seleccione', value: null },
+                { label: 'Común', value: 'Común' },
+                { label: 'Accidente de trabajo', value: 'Accidente Laboral' },
+                { label: 'Enfermedad laboral', value: 'Enfermedad Laboral' },
+    
+            ];
+        }else{
+            this.origenList = [
+                { label: 'Seleccione', value: null },
+                { label: 'Común', value: 'Común' },
+                { label: 'Accidente de trabajo', value: 'Accidente Laboral' },
+                { label: 'Mixto', value: 'Mixto' },
+                { label: 'Enfermedad laboral', value: 'Enfermedad Laboral' },
+    
+            ];
+        }
+
+    }
     localeES: any = locale_es;
     es: any;
     fechaActual = new Date();
@@ -64,6 +80,8 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
     get origen() { return this.diagnosticoForm.get('origen'); }
 
     async ngOnInit() {
+        this.idEmpresa =this.sesionService.getEmpresa().id;
+        this.createOrigenList()
         let resp: any = await this.scmService.getSistemasAFectados();
 
 

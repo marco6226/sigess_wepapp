@@ -204,7 +204,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                 items:
                     [
                         // { label: 'Elaboracion tableros', codigo: 'IND_POST_TAB', routerLink: '/app/ind/elaboracionTablero', class: 'fa fa-wrench' },
-                        { label: 'Pestaña uno', codigo: 'IND_GET_HHT', routerLink: '/app/ind/horahombrestrabajada', class: 'fa fa-building' },
+                        { label: 'HHT', codigo: 'IND_GET_HHT', routerLink: '/app/ind/horahombrestrabajada', class: 'fa fa-building' },
                         { label: 'Consulta tableros', codigo: 'IND_GET_TAB', routerLink: '/app/ind/consultaTablero', class: 'fa fa-line-chart' },
                         { label: 'Ausentismo', codigo: 'IND_GET_AUS', routerLink: '/app/ind/ausentismo', class: 'fa fa-question-circle-o' },
                         { label: 'Talento humano', codigo: 'IND_GET_EMP', routerLink: '/app/ind/emp', class: 'fa fa-users' },
