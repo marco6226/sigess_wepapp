@@ -819,7 +819,12 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
 
 
-
+    flagBotonModificar(){
+        setTimeout(() => {
+            this.modificar = true;
+        }, 60000);
+        
+    }
     modificarAnalisis() {
         this.disabled=true
         // this.flagModificar=true;
@@ -871,6 +876,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 
                 }
                 // setTimeout(() => {
+               
                 this.analisisDesviacionService.update(ad).then((data) => {
                     // console.log(data, "data");
                     
@@ -897,6 +903,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 
                 // console.log(ad.flow_chart);
             }, 2000);
+            this.flagBotonModificar()
         }else{
             this.msgs = [];
             this.msgs.push({

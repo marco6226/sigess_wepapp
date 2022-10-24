@@ -12,7 +12,8 @@
     </div>
     <div class="p-field">
         <label>Fecha Vencimiento</label>
-        <p-calendar [defaultDate]="fechaActual" [minDate]="fechaActual" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+        <!-- <p-calendar [defaultDate]="fechaActual" [minDate]="fechaActual" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar> -->
+        <p-calendar [defaultDate]="fechaActual" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [(ngModel)]="planAcciones.especifico.fechaVencimiento" required autofocus [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
     </div>
     <div class="p-field">
         <label>Responsable Empresa</label>

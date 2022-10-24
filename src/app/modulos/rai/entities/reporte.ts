@@ -95,4 +95,5 @@ export class Reporte {
   numeroIdentificacionResponsable: string;
   cargoResponsable: string;
   fechaReporte: Date;
+  temporal:string;
 }

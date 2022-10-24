@@ -55,7 +55,9 @@ import { ConsultaObservacionesComponent } from 'app/modulos/observaciones/compon
 import { GestionObservacionesComponent } from 'app/modulos/observaciones/components/gestion-observaciones/gestion-observaciones.component';
 
 import { RegistroReportesComponent } from 'app/modulos/rai/components/registro-reportes/registro-reportes.component'
+import { RegistroReporteTemporalComponent } from 'app/modulos/rai/components/registro-reporte-temporal/registro-reporte-temporal.component'
 import { ConsultaReportesComponent } from 'app/modulos/rai/components/consulta-reportes/consulta-reportes.component'
+import { ConsultarReporteTemporalComponent } from 'app/modulos/rai/components/consultar-reporte-temporal/consultar-reporte-temporal.component'
 
 import { GestionDocumentalComponent } from 'app/modulos/ado/components/gestion-documental/gestion-documental.component';
 
@@ -202,7 +204,9 @@ const appRoutes: Routes = [
                 children: [
                     { path: 'cargaArchivo', component: CargaArchivoComponent },
                     { path: 'registroReporte', component: RegistroReportesComponent },
-                    { path: 'consultaReportes', component: ConsultaReportesComponent }
+                    { path: 'registroReporteTemporal', component: RegistroReporteTemporalComponent },
+                    { path: 'consultaReportes', component: ConsultaReportesComponent },
+                    { path: 'consultaReportestemporal', component: ConsultarReporteTemporalComponent }
                 ]
             },
             {

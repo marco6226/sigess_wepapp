@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Reporte } from 'app/modulos/rai/entities/reporte'
 import { ReporteService } from 'app/modulos/rai/services/reporte.service'
 import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { ConsuModReporteService } from 'app/modulos/sec/services/consu-mod-reporte.service'
-
-import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { Criteria } from "../../../core/entities/filter";
 
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 @Component({
-  selector: 'app-consulta-reportes',
-  templateUrl: './consulta-reportes.component.html',
-  styleUrls: ['./consulta-reportes.component.scss']
+  selector: 'app-consultar-reporte-temporal',
+  templateUrl: './consultar-reporte-temporal.component.html',
+  styleUrls: ['./consultar-reporte-temporal.component.scss']
 })
-export class ConsultaReportesComponent implements OnInit {
+export class ConsultarReporteTemporalComponent implements OnInit {
+
 
   idEmpresa: string;
   reporteSelect: Reporte;
@@ -58,9 +57,10 @@ sortedTable:string;
     filterQuery.count = true; 
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-    filterQuery.filterList.push({ criteria: Criteria.IS_NULL, field: "temporal" });
+    filterQuery.filterList.push({ criteria: Criteria.EQUALS, field: "temporal", value1: "Temporaluno" });
     this.reporteService.findByFilter(filterQuery).then(
       resp => {
+        console.log(resp)
         this.totalRecords = resp['count'];
         this.loading = false;
         this.reportesList = [];
@@ -74,7 +74,7 @@ sortedTable:string;
   consultarDetalle() {
     this.paramNav.setAccion<string>('GET');
     this.paramNav.setParametro<Reporte>(this.reporteSelect);
-    this.paramNav.redirect('app/rai/registroReporte');
+    this.paramNav.redirect('app/rai/registroReporteTemporal');
     this.RegistratR=true;
     this.ConsuModReporteService.setflagR(true);
   }
@@ -82,13 +82,12 @@ sortedTable:string;
   modificar() {
     this.paramNav.setAccion<string>('PUT');
     this.paramNav.setParametro<Reporte>(this.reporteSelect);
-    this.paramNav.redirect('app/rai/registroReporte');
+    this.paramNav.redirect('app/rai/registroReporteTemporal');
     this.ConsuModReporteService.setflagR(true);
   }
 
   navegar() {
-    this.paramNav.redirect('app/rai/registroReporte');
+    this.paramNav.redirect('app/rai/registroReporteTemporal');
   }
-
 
 }

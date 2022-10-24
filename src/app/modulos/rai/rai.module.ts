@@ -35,6 +35,10 @@ import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 
 import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { BrowserModule } from '@angular/platform-browser';
+import { RegistroReporteTemporalComponent } from './components/registro-reporte-temporal/registro-reporte-temporal.component';
+import { ConsultarReporteTemporalComponent } from './components/consultar-reporte-temporal/consultar-reporte-temporal.component';
+import { FormularioAccidenteTemporalComponent } from './components/registro-reporte-temporal/formulario-accidente-temporal/formulario-accidente-temporal.component';
+import { FormularioIncidenteTemporalComponent } from './components/registro-reporte-temporal/formulario-incidente-temporal/formulario-incidente-temporal.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -76,6 +80,10 @@ import { BrowserModule } from '@angular/platform-browser';
     FormularioIncidenteComponent,
     ConsultaReportesComponent,
     CargaArchivoComponent,
+    RegistroReporteTemporalComponent,
+    ConsultarReporteTemporalComponent,
+    FormularioAccidenteTemporalComponent,
+    FormularioIncidenteTemporalComponent,
     // FlowChartComponent
   ],
   providers: [ReporteService,DiagramContextMenuService]

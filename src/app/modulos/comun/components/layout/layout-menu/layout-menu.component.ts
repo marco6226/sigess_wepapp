@@ -158,7 +158,10 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                     [
                         { label: 'Cargar archivo', codigo: 'RAI_POST_ARCH', routerLink: '/app/rai/cargaArchivo', class: 'fa fa-upload' },
                         { label: 'Registrar reporte', codigo: 'RAI_POST_REP', routerLink: '/app/rai/registroReporte', class: 'fa fa-h-square' },
-                        { label: 'Consulta reportes', codigo: 'RAI_GET_REP', routerLink: '/app/rai/consultaReportes', class: 'fa fa-list-ul' }
+                        { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
+                        { label: 'Consulta reportes', codigo: 'RAI_GET_REP', routerLink: '/app/rai/consultaReportes', class: 'fa fa-list-ul' },
+                        { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' }
+                        
                     ]
             },
             {

@@ -1,0 +1,90 @@
+<p-panel header="Reportes A/I" >
+    <p-table #dt sortField={{sortedTable}} sortOrder="1" [value]="reportesList" autoLayout="true" selectionMode="single" [(selection)]="reporteSelect"
+      [rows]="10" [paginator]="true" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords"
+      [loading]="loading">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="fechaReporte" *ngIf="idEmpresa!='22'">Fecha registro
+            <p-sortIcon field="fechaReporte"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fechaAccidente">Fecha accidente
+            <p-sortIcon field="fechaAccidente"></p-sortIcon>
+          </th>
+          <th pSortableColumn="numerofurat" *ngIf="idEmpresa=='22'">No. FURAT
+            <p-sortIcon field="numerofurat"></p-sortIcon>
+          </th>
+          <th pSortableColumn="id">Codigo
+            <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="primerNombreEmpleado">Nombres
+            <p-sortIcon field="primerNombreEmpleado"></p-sortIcon>
+          </th>
+          <th pSortableColumn="primerApellidoEmpleado">Apellidos
+            <p-sortIcon field="primerApellidoEmpleado"></p-sortIcon>
+          </th>
+          <th pSortableColumn="numeroIdentificacionEmpleado">Identificación
+            <p-sortIcon field="numeroIdentificacionEmpleado"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tipo">Tipo reporte
+            <p-sortIcon field="tipo"></p-sortIcon>
+          </th>
+        </tr>
+        <tr>
+          <td *ngIf="idEmpresa!='22'">
+            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaReporte', 'bt')"></s-rangoFechaSelector>
+          </td>
+          <td>
+            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaAccidente', 'bt')"></s-rangoFechaSelector>
+          </td>
+          <td *ngIf="idEmpresa=='22'">
+            <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'numerofurat', 'contains')">
+          </td>
+          <td>
+            <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'id', 'equals')">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerNombreEmpleado', 'contains')">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerApellidoEmpleado', 'contains')">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'numeroIdentificacionEmpleado', 'contains')">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipo', 'contains')">
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-reporte>
+        <tr [pSelectableRow]="reporte">
+          <td *ngIf="idEmpresa!='22'">{{reporte.fechaReporte | date:'dd/MM/yyyy'}}</td>
+          <td>{{reporte.fechaAccidente | date:'dd/MM/yyyy'}}</td>
+          <td *ngIf="idEmpresa=='22'">{{reporte.numerofurat}}</td>
+          <td>RAI-{{reporte.id}}</td>
+          <td>{{reporte.primerNombreEmpleado}}</td>
+          <td>{{reporte.primerApellidoEmpleado}}</td>
+          <td>{{reporte.numeroIdentificacionEmpleado}}</td>
+          <td>{{reporte.tipo}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <button *sTienePermiso="'RAI_GET_REP'" pButton type="button" icon="pi pi-plus" label="Consultar" (click)="consultarDetalle()"
+          [disabled]="!reporteSelect"></button>
+        <button *sTienePermiso="'RAI_PUT_REP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+          (click)="modificar()" [disabled]="!reporteSelect"></button>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">
+            <s-dataNotFound *ngIf="!reportesList || reportesList.length <= 0" icon="fa-list-ul" message="No se encontraron reportes de accidentes y/o incidentes">
+              <div *sTienePermiso="'RAI_POST_REP'">
+                Reporta un nuevo evento
+                <a (click)="navegar()">aqui</a>
+              </div>
+            </s-dataNotFound>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
