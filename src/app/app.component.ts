@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { environment } from './../environments/environment'
 
 @Component({
@@ -8,7 +8,11 @@ import { environment } from './../environments/environment'
 export class AppComponent {
     title = 'app works!';
 
-    constructor() {
+    constructor(private _elementRef: ElementRef) {
         //console.log("Production: " + environment.production);
+    }
+
+    ngOnInit(): void {
+        this._elementRef.nativeElement.removeAttribute("ng-version");
     }
 }
