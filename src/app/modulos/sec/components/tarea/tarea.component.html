@@ -261,7 +261,10 @@
                         <app-file-uploader *ngFor="let item of [0,1,2]; let i = index" [index]="i"
                             (loadedImage)="addImage($event)" (removeImage)="removeImage($event)"></app-file-uploader>
                     </ng-container>
-                    <ng-container *ngIf="tareaClose && evidences?.files !== undefined">
+                    <ng-container *ngIf="!flagEvidencias">
+                        <div class="loader" style="position:absolute; top:340px; left:53%; "></div>
+                    </ng-container>
+                    <ng-container *ngIf="(tareaClose && evidences?.files !== undefined) && flagEvidencias">
                         <ng-container *ngIf="evidences?.files.length === 0">
                             <p>Esta tarea se cerró sin evidencias</p>
                         </ng-container>

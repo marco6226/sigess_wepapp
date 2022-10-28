@@ -26,6 +26,7 @@ export class VerificacionTareaComponent implements OnInit {
     fullName = '';
     fechaActual = new Date();
     localeES: any = locale_es;
+    flagEvidencias:boolean=false;
 
     @Input() tarea;
     @Input() tareaVerify;
@@ -136,7 +137,7 @@ export class VerificacionTareaComponent implements OnInit {
         try {
 
             this.evidences = await this.seguimientoService.getEvidences(id, "fkVerify") as any;
-
+            this.flagEvidencias=true
         } catch (e) {
             this.msgs.push({
                 severity: "error",

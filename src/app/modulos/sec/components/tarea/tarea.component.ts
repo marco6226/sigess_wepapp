@@ -48,6 +48,7 @@ export class TareaComponent implements OnInit {
     tareaEvidences = [];
     fechavisible = false;
     idEmpresa: string;
+    flagEvidencias: boolean=false;
 
     constructor(
         fb: FormBuilder,
@@ -337,6 +338,7 @@ export class TareaComponent implements OnInit {
                     id,
                     "fkTareaCierre"
                 )) as any) || [];
+                this.flagEvidencias=true
         } catch (e) {
             this.msgs.push({
                 severity: "error",
