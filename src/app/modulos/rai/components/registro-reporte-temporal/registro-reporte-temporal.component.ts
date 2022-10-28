@@ -58,7 +58,7 @@ async  ngOnInit() {
           this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
     
           this.tipoReporte = this.reporteSelect.tipo;
-          // console.log(this.reporteSelect);
+          console.log(this.reporteSelect);
         }
       );
     } else {

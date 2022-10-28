@@ -10,9 +10,9 @@
           <th pSortableColumn="fechaAccidente">Fecha accidente
             <p-sortIcon field="fechaAccidente"></p-sortIcon>
           </th>
-          <th pSortableColumn="numerofurat" *ngIf="idEmpresa=='22'">No. FURAT
+          <!-- <th pSortableColumn="numerofurat" *ngIf="idEmpresa=='22'">No. FURAT
             <p-sortIcon field="numerofurat"></p-sortIcon>
-          </th>
+          </th> -->
           <th pSortableColumn="id">Codigo
             <p-sortIcon field="id"></p-sortIcon>
           </th>
@@ -36,9 +36,9 @@
           <td>
             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaAccidente', 'bt')"></s-rangoFechaSelector>
           </td>
-          <td *ngIf="idEmpresa=='22'">
+          <!-- <td *ngIf="idEmpresa=='22'">
             <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'numerofurat', 'contains')">
-          </td>
+          </td> -->
           <td>
             <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'id', 'equals')">
           </td>
@@ -60,7 +60,7 @@
         <tr [pSelectableRow]="reporte">
           <td *ngIf="idEmpresa!='22'">{{reporte.fechaReporte | date:'dd/MM/yyyy'}}</td>
           <td>{{reporte.fechaAccidente | date:'dd/MM/yyyy'}}</td>
-          <td *ngIf="idEmpresa=='22'">{{reporte.numerofurat}}</td>
+          <!-- <td *ngIf="idEmpresa=='22'">{{reporte.numerofurat}}</td> -->
           <td>RAI-{{reporte.id}}</td>
           <td>{{reporte.primerNombreEmpleado}}</td>
           <td>{{reporte.primerApellidoEmpleado}}</td>
