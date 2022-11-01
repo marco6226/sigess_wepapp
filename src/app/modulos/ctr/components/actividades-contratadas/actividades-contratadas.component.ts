@@ -1,5 +1,6 @@
-import { _actividadesContratadasList } from './../../entities/aliados';
+import { ActividadesContratadas, _actividadesContratadasList } from './../../entities/aliados';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 
 @Component({
   selector: 'app-actividades-contratadas',
@@ -21,15 +22,19 @@ export class ActividadesContratadasComponent implements OnInit {
 
   visibleDlg: boolean =false;
 
-  actividadesContratadasList = _actividadesContratadasList
+  actividadesContratadasList:any[]
 
-  selectActividad: string[]=[]
+  selectActividad: any[]
 
-  actividadesList: string[]=[]
+  actividadesList: any[]
 
-  constructor() { }
+  constructor(
+    private empresaService: EmpresaService,
+
+  ) { }
 
   ngOnInit(): void {
+    this.loadActividadesContratadas()
   }
 
   agregarActividad(){
@@ -47,6 +52,22 @@ export class ActividadesContratadasComponent implements OnInit {
 
   cerrarDialogo(){
     this.visibleDlg = false;
+  }
+
+  async loadActividadesContratadas(){
+    this.actividadesContratadasList=[]
+    let x = await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
+
+      // this.actividadesContratadasList2 = this.buildTreeNode()
+      
+    element.forEach(elemen => {
+      
+        this.actividadesContratadasList.push({label:elemen.actividad, value: elemen.actividad})
+      
+    });
+   });
+    console.log(this.actividadesContratadasList);
+    
   }
 
 }
