@@ -51,7 +51,7 @@ export class MisTareasComponent implements OnInit {
         }
 
 //        let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
-let empleadoid = this.sesionService.getEmpleado().id;
+        // let empleadoid = this.sesionService.getEmpleado().id;
         let id = this.sesionService.getUsuario().id;
         this.idEmpresa=this.sesionService.getEmpresa().id;
         let fq = new FilterQuery();

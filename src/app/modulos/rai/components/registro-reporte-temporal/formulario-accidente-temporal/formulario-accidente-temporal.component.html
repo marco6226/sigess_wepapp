@@ -563,6 +563,7 @@
             </p-accordionTab>
             <p-accordionTab
                 header="V. DÍAS PERDIDOS">
+                <app-incapacidades-complementaria-temporal></app-incapacidades-complementaria-temporal>
             </p-accordionTab>
             <p-accordionTab
                 header="VI. PELIGRO DESCRIPTOR">
@@ -574,12 +575,12 @@
     </p-panel>
 
     <ng-container *ngIf="!consultar && adicionar">
-        <button *sTienePermiso="'RAI_POST_REPT'" pButton type="submit" icon="fa fa-floppy-o" title="Guardar reporte"
+        <button *sTienePermiso="'RAI_POST_REPT'" pButton  (click)="submit1()" icon="fa fa-floppy-o" title="Guardar reporte"
             class="float-btn" [disabled]="!form.valid"></button>
     </ng-container>
 
     <ng-container *ngIf="!consultar && !adicionar">
-        <button *sTienePermiso="'RAI_PUT_REPT'" pButton type="submit" icon="fa fa-pencil" title="Actualizar reporte"
+        <button *sTienePermiso="'RAI_PUT_REPT'" pButton  (click)="submit1()" icon="fa fa-pencil" title="Actualizar reporte"
             class="float-btn ui-button-success" [disabled]="!form.valid"></button>
     </ng-container>
 

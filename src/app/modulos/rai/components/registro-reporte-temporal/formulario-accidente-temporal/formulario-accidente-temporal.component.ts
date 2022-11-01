@@ -58,7 +58,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   localeES = locale_es;
   form: FormGroup;
   testigoReporteList: TestigoReporte[];
-  visibleCamposAccidente: boolean;
+  visibleCamposAccidente: boolean=true;
   idEmpresa: string;
   fechaIngreso:Date;
   fechaAccidente:Date;
@@ -91,7 +91,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.visibleCamposAccidente=true
       this.idEmpresa = this.sesionService.getEmpresa().id;
       this.infoEmpresa()
 
@@ -296,7 +295,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
             //     this.testigoReporteList = this.testigoReporteList.slice();
             // }
         }, 200);
-      this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
+    //   this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
       this.cdRef.detectChanges();
 
       
@@ -335,8 +334,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       }
   }
 
-  onSubmit() {
-
+  submit1() {
+console.log('d')
       let reporte = <Reporte>this.form.value;
       console.log(reporte)
       reporte.testigoReporteList = this.testigoReporteList;
