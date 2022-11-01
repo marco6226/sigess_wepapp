@@ -10,7 +10,7 @@ import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/primeng';
-import { _actividadesContratadasList, _divisionList } from '../../entities/aliados';
+import { _actividadesContratadasList, _divisionList, ActividadesContratadas } from '../../entities/aliados';
 
 @Component({
   selector: 'app-aliados',
@@ -60,7 +60,8 @@ export class AliadosComponent implements OnInit {
 
   divisionList= _divisionList
 
-  actividadesContratadasList = _actividadesContratadasList
+  // actividadesContratadasList = _actividadesContratadasList
+  actividadesContratadasList: ActividadesContratadas[]=[]
 
   
 
@@ -93,7 +94,7 @@ export class AliadosComponent implements OnInit {
   
 
   ngOnInit() {
-   
+    this.loadActividadesContratadas();
   }
 
   continuar(){
@@ -207,10 +208,27 @@ export class AliadosComponent implements OnInit {
     this.isCreate = false;
   }
 
-  test(){
-   console.log(this.seleccion, this.onSeleccion, this.valueEmpresa);
-   
-     
+  async loadActividadesContratadas(){
+    this.actividadesContratadasList = []
+    console.log(this.seleccion, this.onSeleccion, this.valueEmpresa);
+    let x = await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
+
+    element.forEach(elemen => {
+      if (elemen.padre_id != null) {
+        let dataSelect = this.actividadesContratadasList.find(x=>x.id == elemen.padre_id)
+        if (dataSelect) {
+          if (!dataSelect.actividadesHijo) {
+            dataSelect.actividadesHijo = []
+          }
+          dataSelect.actividadesHijo.push(elemen)
+        }
+      } else {
+        this.actividadesContratadasList.push(elemen)
+      }
+    });
+   });
+    console.log(this.actividadesContratadasList);
+    
   }
 }
 
