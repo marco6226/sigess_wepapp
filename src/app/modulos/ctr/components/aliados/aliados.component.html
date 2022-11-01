@@ -33,7 +33,7 @@
             <label for="" class="active">Telefono</label>
         </div>
         <div class="input-field">
-            <p-dropdown class="form-material" formControlName="actividadesContratadas" [disabled]="!isCreate" [(ngModel)]="valueEmpresa.actividades_contratadas" [options]="actividadesContratadasList"></p-dropdown>
+            <p-multiSelect class="form-material" optionLabel="actividad" formControlName="actividadesContratadas" [disabled]="!isCreate" [(ngModel)]="valueEmpresa.actividades_contratadas" [options]="actividadesContratadasList"></p-multiSelect>
             <label for="" class="active">Actividades contratadas</label>
         </div>
         <div class="input-field">
@@ -78,4 +78,4 @@
         (click)="saveAliado()" class="float-btn"></button>
 </ng-container>
 
-<!-- <button (click)="test()">test</button> -->
+<!-- <button (click)="loadActividadesContratadas()">test</button> -->

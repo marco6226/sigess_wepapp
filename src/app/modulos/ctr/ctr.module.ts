@@ -12,7 +12,8 @@ import { SeguimientoContratistasComponent } from 'app/modulos/ctr/components/seg
 import { EmpresaDashComponent } from 'app/modulos/comun/components/empresa-dash/empresa-dash.component';
 import { AliadosListComponent } from './components/aliados-list/aliados-list.component';
 import { AliadosComponent } from './components/aliados/aliados.component';
-import { AliadosActualizarComponent } from './components/aliados-actualizar/aliados-actualizar.component'
+import { AliadosActualizarComponent } from './components/aliados-actualizar/aliados-actualizar.component';
+import { InformacionGeneralComponent } from './components/informacion-general/informacion-general.component'
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AliadosActualizarComponent } from './components/aliados-actualizar/alia
     CargueDocumentosComponent,
     CalificacionComponent,
     AsignacionColiderComponent,
-    LocalidadesComponent
+    LocalidadesComponent,
+    InformacionGeneralComponent
   ],
   providers: []
 })

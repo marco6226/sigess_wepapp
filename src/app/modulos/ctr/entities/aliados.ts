@@ -67,3 +67,12 @@ export const _divisionList= [
     { label: 'Mesa Servida', value: 'Mesa Servida' },
     { label: 'Superficies, materiales y pinturas', value: 'Superficies, materiales y pinturas' },
 ]
+
+
+export interface ActividadesContratadas{
+    id: number;
+    empresa_id: number;
+    actividad: string;
+    actividadesHijo?: ActividadesContratadas[]
+    padre_id:number
+}

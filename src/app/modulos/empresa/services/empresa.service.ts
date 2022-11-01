@@ -135,4 +135,19 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
             )
         })
     }
+
+    getActividadesContratadas(aliadoId: number =1){
+       
+        return new Promise(resolve =>{
+            this.httpInt.get(endPoints.EmpresaService + "getActividadesContratadas/"+aliadoId)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                }
+                ,
+                err => this.manageError(err)
+            )
+        })
+    }
 }
