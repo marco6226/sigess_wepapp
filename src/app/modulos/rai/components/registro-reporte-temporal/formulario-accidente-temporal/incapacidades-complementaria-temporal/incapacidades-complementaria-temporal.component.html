@@ -1,0 +1,118 @@
+<!-- <p-dropdown  appendTo="body" [options]="tipoList" [(ngModel)]="incapacidadTipo" placeholder="Seleccione" optionLabel="label" [showClear]="true"></p-dropdown>
+    
+
+<p-dropdown [filter]="true" [options]="tipoList"
+class="select-material" [(ngModel)]="incapacidadTipo"
+styleClass="select-material">
+</p-dropdown> -->
+<!-- 
+<fieldset>
+    <h3>Tipo</h3>
+    <p-dropdown></p-dropdown>
+    <h3>CIE 10</h3>
+    <input type="text">
+    <h3>Diagnostico</h3>
+    <input type="text">
+    <h3>Fecha inicio</h3>
+    <h3>Fecha fin</h3>
+    <h3>Dias de ausencia</h3>
+    <input type="text">
+</fieldset>
+ -->
+
+
+
+ <button pButton pRipple label="Nuevo" icon="pi pi-plus" (click)="openNew()"></button>
+ <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" (click)="openNew()"></button> -->
+ <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+ 
+ <div >
+     <p-table #dt [value]="incapacidades" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
+         [(selection)]="selectedProducts" [rowHover]="true" dataKey="id">
+         <ng-template pTemplate="header">
+             <tr>
+                 <th style="width: 3rem">
+                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                 </th>
+                 <th pSortableColumn="name">Tipo <p-sortIcon field="name"></p-sortIcon></th>
+                 <th pSortableColumn="price">CIE 10 <p-sortIcon field="price"></p-sortIcon></th>
+                 <th pSortableColumn="category">Diagnostico <p-sortIcon field="category"></p-sortIcon></th>
+                 <th pSortableColumn="rating">Fecha inicio <p-sortIcon field="rating"></p-sortIcon></th>
+                 <th pSortableColumn="rating">Fecha fin <p-sortIcon field="rating"></p-sortIcon></th>
+                 <th pSortableColumn="rating">Dias de ausencia <p-sortIcon field="rating"></p-sortIcon></th>
+                 <th></th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-incapacidad >
+             <tr>
+                 <td>
+                     <p-tableCheckbox [value]="incapacidad"></p-tableCheckbox>
+                 </td>
+                 <td>{{incapacidad.tipo}}</td>
+                 <td *ngIf="incapacidad['cie10'];else other_content">{{incapacidad?.cie10?.codigo}}</td>
+                 <ng-template #other_content>&nbsp;</ng-template>
+                 <td>{{incapacidad.diagnostico}}</td>
+                 <td>{{incapacidad.fechaInicio | date: 'dd/MM/yyyy'}}</td>
+                 <td>{{incapacidad.fechaFin | date: 'dd/MM/yyyy'}}</td>
+                 <td>{{incapacidad.diasAusencia}}</td>
+                 <td>
+                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(incapacidad)"></button>
+                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(incapacidad)"></button>
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
+ 
+ <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
+         <div class="p-field">
+             <label for="tipo">El evento generó incapacidad?</label>
+             <p-radioButton [name]="" value="true" label="Si" [formControlName]="" [attr.required]=""></p-radioButton>
+             <p-radioButton [name]="" value="false" label="No" [formControlName]=""[attr.required]=""></p-radioButton>
+         
+         </div>
+         <div class="p-field">
+             <label for="tipo">Tipo</label>
+             <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->
+             <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+             <!-- <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" required></p-dropdown> -->
+             <small class="p-invalid" *ngIf="submitted && !tipo">is required.</small>
+         </div>
+         <div class="p-field">
+             <label for="cie10">CIE 10</label>
+             
+             <s-cieSelector id="ccide-input" [(ngModel)]="cie10" required>
+             </s-cieSelector>
+ 
+             
+             <small class="p-invalid" *ngIf="submitted && !cie10">is required.</small>
+         </div>
+         <div class="p-field">
+             <label for="fechaInicio">Fecha Inicio</label>
+             <!-- <input type="date" required autofocus [(ngModel)]="fechaInicio" /> -->
+             <p-calendar [(ngModel)]="fechaInicio" [touchUI]="true"
+                 dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required> 
+             </p-calendar>
+             <small class="p-invalid" *ngIf="submitted && !fechaInicio">is required.</small>            
+         </div>
+         <div class="p-field">
+             <label for="fechaFin">Fecha Fin</label>
+             <!-- <input type="date" required autofocus [(ngModel)]="fechaFin" /> -->
+             <p-calendar [(ngModel)]="fechaFin"  [touchUI]="true"
+                 dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required>
+             </p-calendar>
+             <small class="p-invalid" *ngIf="submitted && !fechaFin">is required.</small>
+ 
+             
+         </div>
+         <div class="p-field">
+             <label for="diasAusencia">Dias de Ausencias</label>
+             <input type="number"  autofocus [value]="daysCount" disabled="true"  />
+         </div>
+ 
+         <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+         <button *ngIf="GuardadoEdicion" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+         <button *ngIf="!GuardadoEdicion" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-text" (click)="saveProduct()"></button>
+         <!-- <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="test()"></button> -->
+    
+ </p-dialog>

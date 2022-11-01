@@ -19,7 +19,7 @@ export class ConsultaReportesComponent implements OnInit {
   idEmpresa: string;
   reporteSelect: Reporte;
   reportesList: Reporte[];
-  loading: boolean;
+  loading: boolean=true;
   totalRecords: number;
   fields: string[] = [
     
@@ -43,7 +43,7 @@ export class ConsultaReportesComponent implements OnInit {
 sortedTable:string;
   async ngOnInit() {
     this.idEmpresa = await this.sesionService.getEmpresa().id;
-    this.loading = true;
+    // this.loading = true;
     this.sortedTable=(this.idEmpresa=='22')?"fechaAccidente":"fechaReporte";
     
   }

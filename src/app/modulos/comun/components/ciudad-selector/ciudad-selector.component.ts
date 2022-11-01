@@ -114,7 +114,7 @@ export class CiudadSelectorComponent implements OnInit, ControlValueAccessor {
         setTimeout(() => {
             if (this.value != null) {
                 this.departamentoSelectId = this.value.departamento.id;
-                console.log(this.departamentoSelectId, this.departamentosItems, "Dept");
+                // console.log(this.departamentoSelectId, this.departamentosItems, "Dept");
                 this.loadCiudades(this.departamentoSelectId);
             } else {
                 console.log(this.value, "cut");

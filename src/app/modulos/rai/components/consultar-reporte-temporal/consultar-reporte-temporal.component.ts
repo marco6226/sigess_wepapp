@@ -18,7 +18,7 @@ export class ConsultarReporteTemporalComponent implements OnInit {
   idEmpresa: string;
   reporteSelect: Reporte;
   reportesList: Reporte[];
-  loading: boolean;
+  loading: boolean=true;
   totalRecords: number;
   fields: string[] = [
     
