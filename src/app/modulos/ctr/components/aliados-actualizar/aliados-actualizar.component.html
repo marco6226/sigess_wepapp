@@ -4,7 +4,8 @@
         <app-aliados [valueEmpresa]="aliado" ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"> <!-- Salud Seguridad Trabajo -->
-        <app-informacion-general ></app-informacion-general>
+        <app-informacion-general 
+          [repLegal]="this.aliadoInformacion.representante_legal" [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" [numTrabajadoresAsig]="this.aliadoInformacion.numero_trabajadores_asignados" (dataRepLegal)="onReciveData($event, 'repLegal')" (dataNumTrabajadores)="onReciveData($event, 'numTrabajadores')" (dataNumTrabajadoresAsig)="onReciveData($event, 'numTrabajadoresAsig')"></app-informacion-general>
       </p-tabPanel>
       <p-tabPanel header="SST"> <!-- Salud Seguridad Trabajo -->
         <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>

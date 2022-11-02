@@ -150,4 +150,18 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
             )
         })
     }
+
+    getLocalidades(){       
+        return new Promise(resolve =>{
+            this.httpInt.get(endPoints.EmpresaService + "getActividadesContratadas")
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                }
+                ,
+                err => this.manageError(err)
+            )
+        })
+    }
 }

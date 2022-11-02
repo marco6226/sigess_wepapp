@@ -1,9 +1,8 @@
-<s-dataNotFound *ngIf="!actividadesList || actividadesList!.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Divisiones o Localidades">
+<s-dataNotFound *ngIf="!actividadesList || actividadesList!.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Divisiones">
     <button pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar División"></button>
 </s-dataNotFound>
 
 <p-panel header="Lista de División" *ngIf="actividadesList!.length > 0">
-<!-- <p-panel header="Lista de División" > -->
     <p-tabView>
         <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
             <ng-template pTemplate="header" let-columns>
@@ -39,12 +38,43 @@
     </p-tabView>
 </p-panel>
 
-<p-panel header="Localidades" *ngIf="actividadesList.length > 0">
+<s-dataNotFound *ngIf="!locadidadesList || locadidadesList!.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Localidades">
+    <button pButton type="button" (click)="abrirDialogoLocalidades('crear')" icon="fa fa-plus" label="Agregar Localidad"></button>
+</s-dataNotFound>
+
+<p-panel header="Localidades" *ngIf="locadidadesList.length > 0">
     <p-tabView>
-        <div class="input-field">
-            <p-chips [(ngModel)]="locadidadList" (onAdd)="onAddLocalidad()" (onRemove)="onAddLocalidad()"></p-chips>
-            <label for="" class="active">Localidad</label>
-        </div>
+        <p-table [value]="locadidadesList" responsiveLayout="scroll">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width: 3rem">
+                        #
+                    </th>
+                    <th>
+                        Nombre Localidad
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData  let-i="rowIndex">
+                <tr>
+                    <td class="my-center-text">
+                        {{i+1}}
+                    </td>
+                    <td>
+                        {{rowData}}
+                    </td> 
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button pButton type="button" icon="fa fa-pencil" (click)="abrirDialogoLocalidades()" label="Modificar localidad"></button>    
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="9" class="p-text-center">No hay registro con los términos de filtro usados
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </p-tabView>
 </p-panel>
 
@@ -65,4 +95,21 @@
         <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
     </p-footer>
 </p-dialog>
-  
+
+<p-dialog header="Lista de Localidades" [(visible)]="visibleDlgLocalidades" [style]="{width: '30vw'}">
+    
+    <div class="input-field">
+        <label for="" class="active">Localidades</label>
+    </div>
+
+    <div class="ui-g" style="width:350px;margin-bottom:10px" *ngFor="let data of locadidadList">
+        <div class="ui-g-12">
+            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectLocalidades"></p-checkbox>
+        </div>
+    </div>
+    
+    <p-footer>
+        <button pButton type="button" (click)="agregarLocalidad()" label="Aceptar"></button>
+        <button pButton type="button" (click)="cerrarLocalidad()" class="ui-button-secondary" label="Cancelar"></button>
+    </p-footer>
+</p-dialog>

@@ -48,6 +48,9 @@ export interface AliadoInformacion{
     calificacion: string;
     colider: string;
     documentos: string;
+    representante_legal: string;
+    numero_trabajadores: number;
+    numero_trabajadores_asignados: number;
 }
 
 export const _actividadesContratadasList = [
@@ -75,4 +78,10 @@ export interface ActividadesContratadas{
     actividad: string;
     actividadesHijo?: ActividadesContratadas[]
     padre_id:number
+}
+
+export interface Localidades{
+    id: number;
+    empresa_id: number;
+    localidad: string;
 }

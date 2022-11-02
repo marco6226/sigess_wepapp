@@ -1,21 +1,15 @@
 <p-panel header="Información General">
     <div style="width:350px;margin-bottom:10px">
         <div class="input-field">
-            <input type="text" pInputText class="form-material">
-            <!-- <input type="text" pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Nombre o Razón social"
-                class="form-material"/> -->
+            <input type="text" [(ngModel)]="repLegal" class="form-material" (input)="onRepLegal()">
             <label for="" class="active">Nombre del Representante Legal</label>            
         </div>
         <div class="input-field">
-            <input type="number" pInputText class="form-material">
-            <!-- <input type="text" pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Nombre o Razón social"
-                class="form-material"/> -->
+            <input type="number" [(ngModel)]="numTrabajadores" class="form-material" (input)="onNumTrabajadores()">
             <label for="" class="active">Numero de trabajadores</label>            
         </div>
         <div class="input-field">
-            <input type="number" pInputText class="form-material">
-            <!-- <input type="text" pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Nombre o Razón social"
-                class="form-material"/> -->
+            <input type="number" [(ngModel)]="numTrabajadoresAsig" class="form-material" (input)="onNumTrabajadoresAsig()">
             <label for="" class="active">Numero de trabajadores en Corona</label>            
         </div>
     </div>

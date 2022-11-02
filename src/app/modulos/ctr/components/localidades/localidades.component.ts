@@ -1,5 +1,6 @@
-import { _actividadesContratadasList, _divisionList } from './../../entities/aliados';
+import { Localidades, _actividadesContratadasList, _divisionList } from './../../entities/aliados';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 
 @Component({
   selector: 'app-localidades',
@@ -9,6 +10,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class LocalidadesComponent implements OnInit {
 
   visibleDlg: boolean =false;
+  visibleDlgLocalidades: boolean =false;
 
   // actividadesContratadasList = _actividadesContratadasList
   
@@ -22,10 +24,12 @@ export class LocalidadesComponent implements OnInit {
   }
 
   @Input('selectLocalidad') 
-  set localidadesIn(actividades: string){
-    if(actividades != null){
-      console.log(actividades);
-      this.locadidadList = JSON.parse(actividades)
+  set localidadesIn(localidades: string){
+    this.loadLocalidades()
+    if(localidades != null){
+      console.log(localidades);
+      this.selectLocalidades = JSON.parse(localidades)
+      this.agregarLocalidad()
     }
   }
 
@@ -36,13 +40,19 @@ export class LocalidadesComponent implements OnInit {
 
   selectActividad: string[]=[]
 
+  selectLocalidades: string[]=[]
+
   actividadesList: string[]=[]
 
-  locadidadList: string[]=[]
+  locadidadList: any[]=[]
+  locadidadesList: string[]=[]
 
-  constructor() { }
+  constructor(
+    private empresaService: EmpresaService,
+  ) { }
 
   ngOnInit(): void {
+    this.loadLocalidades()
   }
   
   agregarActividad(){
@@ -64,9 +74,40 @@ export class LocalidadesComponent implements OnInit {
   }
 
   onAddLocalidad(){
-    console.log(this.locadidadList);
-    this.dataLocalidad.emit(JSON.stringify(this.locadidadList))
+    console.log(this.locadidadesList);
+    this.dataLocalidad.emit(JSON.stringify(this.locadidadesList))
     
   }
 
+  async loadLocalidades(){
+    await this.empresaService.getLocalidades().then((element: Localidades[]) =>{
+
+
+      element.forEach(elemen => {
+        this.locadidadList.push({label: elemen.localidad, value: elemen.localidad})
+    });
+   });
+
+    // if (this.valueEmpresa.localidad) {
+    //   this.valueEmpresa.localidad = JSON.parse( this.valueEmpresa.localidad)      
+    // }
+    
+  }
+
+  abrirDialogoLocalidades(param: string =null){
+    if (param) {
+      this.selectLocalidades = []
+    }
+    this.visibleDlgLocalidades = true;
+  }
+
+  agregarLocalidad(){
+    this.locadidadesList = this.selectLocalidades;
+    this.onAddLocalidad()
+    this.cerrarLocalidad()
+  }
+
+  cerrarLocalidad(){
+    this.visibleDlgLocalidades = false;
+  }
 }

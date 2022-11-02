@@ -33,16 +33,16 @@
             <label for="" class="active">Telefono</label>
         </div>
         <div class="input-field">
-            <p-multiSelect class="form-material" optionLabel="actividad" formControlName="actividadesContratadas" [disabled]="!isCreate" [(ngModel)]="valueEmpresa.actividades_contratadas" [options]="actividadesContratadasList"></p-multiSelect>
+            <p-multiSelect class="form-material"  defaultLabel="--seleccione Actividad--" [options]="actividadesContratadasList2" [disabled]="!isCreate" [(ngModel)]="valueEmpresa.actividades_contratadas" formControlName="actividadesContratadas"> </p-multiSelect>
             <label for="" class="active">Actividades contratadas</label>
         </div>
         <div class="input-field">
-            <!-- <p-dropdown class="form-material" appendTo="body" formControlName="division" [options]="divisionList"></p-dropdown> -->
             <p-multiSelect class="form-material"  defaultLabel="--seleccione division--" [options]="divisionList" [disabled]="!isCreate" [(ngModel)]="valueEmpresa.division" formControlName="division"> </p-multiSelect>
             <label for="" class="active">División</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText formControlName="localidad" [readOnly]="!isCreate" placeholder="Localidad" [(ngModel)]="valueEmpresa.localidad"  class="form-material"/>
+            <p-multiSelect class="form-material"  defaultLabel="--seleccione Localidades--" [options]="localidades" [disabled]="!isCreate" [(ngModel)]="valueEmpresa.localidad" formControlName="localidad"> </p-multiSelect>
+
             <label for="" class="active">Localidad</label>
         </div>
     </div>
@@ -72,10 +72,7 @@
         </div>        
     </div>
 </p-panel>
-<!-- <button (click)="loadDataIn()">test</button> -->
 <ng-container *ngIf="(formNatural.valid || formJuridica.valid) && isCreate">
     <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliado"
         (click)="saveAliado()" class="float-btn"></button>
 </ng-container>
-
-<!-- <button (click)="loadActividadesContratadas()">test</button> -->

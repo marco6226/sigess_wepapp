@@ -42,7 +42,10 @@ export class AliadosActualizarComponent implements OnInit {
     localidad: null,
     calificacion: null,
     colider: null,
-    documentos: null
+    documentos: null,
+    representante_legal: '',
+    numero_trabajadores: 0,
+    numero_trabajadores_asignados: 0
   }
 
   documentos: Directorio[]=[]
@@ -121,6 +124,7 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   async onReciveData(event: string, tipe: string){
+    
     switch (tipe) {
       case 'actividades':
         this.aliadoInformacion.actividad_contratada = event        
@@ -143,6 +147,18 @@ export class AliadosActualizarComponent implements OnInit {
         
       case 'colider':
         this.aliadoInformacion.colider = event        
+        break;
+
+      case 'repLegal':
+        this.aliadoInformacion.representante_legal = event        
+        break;
+
+      case 'numTrabajadores':
+        this.aliadoInformacion.numero_trabajadores = Number.parseInt(event);    
+        break;
+
+      case 'numTrabajadoresAsig':
+        this.aliadoInformacion.numero_trabajadores_asignados = Number.parseInt(event);        
         break;
     
       default:

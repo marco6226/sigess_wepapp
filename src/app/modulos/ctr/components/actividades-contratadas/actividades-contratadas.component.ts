@@ -58,9 +58,7 @@ export class ActividadesContratadasComponent implements OnInit {
     this.actividadesContratadasList=[]
     let x = await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
 
-      // this.actividadesContratadasList2 = this.buildTreeNode()
-      
-    element.forEach(elemen => {
+      element.forEach(elemen => {
       
         this.actividadesContratadasList.push({label:elemen.actividad, value: elemen.actividad})
       

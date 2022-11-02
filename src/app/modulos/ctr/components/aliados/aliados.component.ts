@@ -9,8 +9,8 @@ import { EmpresaAlidada } from './../../../empresa/entities/empresa';
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/primeng';
-import { _actividadesContratadasList, _divisionList, ActividadesContratadas } from '../../entities/aliados';
+import { MessageService, Tree, TreeNode } from 'primeng/primeng';
+import { _actividadesContratadasList, _divisionList, ActividadesContratadas, Localidades } from '../../entities/aliados';
 
 @Component({
   selector: 'app-aliados',
@@ -41,8 +41,10 @@ export class AliadosComponent implements OnInit {
   @Input('valueEmpresa') 
   set valuesIn (value: Empresa){
     this.valueEmpresa = value
+    this.loadActividadesContratadas()
+    this.loadLocalidades()
     if (this.valueEmpresa.division) {
-      this.valueEmpresa.division = JSON.parse( this.valueEmpresa.division)      
+      this.valueEmpresa.division = JSON.parse( this.valueEmpresa.division)   
     }
     this.loadDataIn();
   }
@@ -62,6 +64,9 @@ export class AliadosComponent implements OnInit {
 
   // actividadesContratadasList = _actividadesContratadasList
   actividadesContratadasList: ActividadesContratadas[]=[]
+  actividadesContratadasList2: any[]=[]
+  localidades: any[]=[]
+  // actividadesContratadasList2: TreeNode[]=[]
 
   
 
@@ -95,6 +100,7 @@ export class AliadosComponent implements OnInit {
 
   ngOnInit() {
     this.loadActividadesContratadas();
+    this.loadLocalidades();
   }
 
   continuar(){
@@ -130,8 +136,8 @@ export class AliadosComponent implements OnInit {
         logo: null,
         empresasContratistasList: [],
         tipo_persona: this.formNatural.value.tipo_persona,
-        actividades_contratadas: this.formNatural.value.actividadesContratadas,
-        localidad: this.formNatural.value.localidad,
+        actividades_contratadas: JSON.stringify(this.formNatural.value.actividadesContratadas),
+        localidad: JSON.stringify(this.formNatural.value.localidad),
         division: JSON.stringify(this.formNatural.value.division),
         estado:'Creado',
         calificacion:'Bajo',
@@ -210,24 +216,33 @@ export class AliadosComponent implements OnInit {
 
   async loadActividadesContratadas(){
     this.actividadesContratadasList = []
-    console.log(this.seleccion, this.onSeleccion, this.valueEmpresa);
-    let x = await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
+    this.actividadesContratadasList2 = []
+    await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
 
-    element.forEach(elemen => {
-      if (elemen.padre_id != null) {
-        let dataSelect = this.actividadesContratadasList.find(x=>x.id == elemen.padre_id)
-        if (dataSelect) {
-          if (!dataSelect.actividadesHijo) {
-            dataSelect.actividadesHijo = []
-          }
-          dataSelect.actividadesHijo.push(elemen)
-        }
-      } else {
+
+      element.forEach(elemen => {
         this.actividadesContratadasList.push(elemen)
-      }
+        this.actividadesContratadasList2.push({label: elemen.actividad, value: elemen.actividad})
     });
    });
-    console.log(this.actividadesContratadasList);
+
+    if (this.valueEmpresa.actividades_contratadas) {
+      this.valueEmpresa.actividades_contratadas = JSON.parse( this.valueEmpresa.actividades_contratadas)      
+    }
+    
+  }
+
+  async loadLocalidades(){
+    await this.empresaService.getLocalidades().then((element: Localidades[]) =>{
+
+      element.forEach(elemen => {
+          this.localidades.push({label: elemen.localidad, value: elemen.localidad})
+      });
+    });
+
+    if (this.valueEmpresa.localidad) {
+      this.valueEmpresa.localidad = JSON.parse( this.valueEmpresa.localidad)      
+    }
     
   }
 }
