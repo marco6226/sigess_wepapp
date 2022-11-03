@@ -840,8 +840,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.informacionComplementaria=this.analisisPeligros.value;
                 this.informeJson=this.infoIn.value;
                 // this.informeJson.Diagrama=this.imgIN;
-            setTimeout(() => {
-                this.diagram=this.FlowchartService.getDiagram();
+            setTimeout(async () => {
+                this.diagram=await this.FlowchartService.getDiagram();
                 let printOptions: IExportOptions = {};
                 printOptions.mode = 'Data';
                 printOptions.region = 'PageSettings';
