@@ -73,7 +73,7 @@ export class VerificacionTareaComponent implements OnInit {
                     );
                 }
             );
-        }
+        }else{this.flagEvidencias=true}
     }
 
     get f() {

@@ -184,7 +184,7 @@ export class TareaComponent implements OnInit {
                         descripcionCierre: this.tarea.descripcion_cierre,
                     });
                 });
-            }
+            }else{this.flagEvidencias=true}
         }
     }
 
@@ -338,6 +338,7 @@ export class TareaComponent implements OnInit {
                     id,
                     "fkTareaCierre"
                 )) as any) || [];
+                console.log(true)
                 this.flagEvidencias=true
         } catch (e) {
             this.msgs.push({
