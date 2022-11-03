@@ -86,7 +86,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     // tareasList2: Tarea[];
     flowChartSave: string;
     form2: Peligro;
-    
+    guardando: boolean= true;
     listaEvidence
     listPlanAccion: listPlanAccion[] =[]
     listPlanAccion2: listPlanAccion[] =[]
@@ -156,7 +156,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     contPoliticas:number=0;
     contProcedimientos:number=0;
     contMultimedias:number=0;
-    disabled:boolean=false;
+    disabled:boolean=true;
     tabIndex:number;
     imgCompress:string;
 
@@ -296,6 +296,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     async ngOnInit() {
         // console.log(this.sesionService.getEmpresa());
+        this.disabled=true;
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
         this.idEmpresa = this.sesionService.getEmpresa().id;
@@ -589,6 +590,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     'FechaI' :this.informeJson.FechaI == null ? null : new Date(this.informeJson.FechaI),
                     'Diagrama':this.informeJson.Diagrama,
                   });
+                  this.guardando=false;
             }
 
             // console.log(this.infoIn)
@@ -660,6 +662,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         // setTimeout(() => {
             this.tareaList3()
+            this.disabled=false;
         // }, 1000);
         
         // console.log(this.tareasList)
@@ -761,6 +764,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         })
     }
     guardarAnalisis() {
+        this.guardando=true;
         if(!this.analisisPeligros.invalid){
             this.informacionComplementaria=this.analisisPeligros.value;
             this.informeJson=this.infoIn.value;
@@ -821,15 +825,16 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     flagBotonModificar(){
         setTimeout(() => {
-            this.modificar = true;
+            this.disabled = false;
         }, 60000);
         
     }
-    modificarAnalisis() {
-        this.disabled=true
+    async modificarAnalisis() {
+        this.guardando=true;
+        this.disabled=true;
         // this.flagModificar=true;
         if(!this.analisisPeligros.invalid){
-                if(this.idEmpresa=='22'){this.tareaList2();}
+                if(this.idEmpresa=='22'){await this.tareaList2();}
                 this.buttonPrint=true;
                 this.informacionComplementaria=this.analisisPeligros.value;
                 this.informeJson=this.infoIn.value;
@@ -1178,6 +1183,7 @@ testmsng(){
                 (this.modificar ? "actualizado" : "generado") +
                 " correctamente la investigación",
         });
+        this.guardando=false;
     }
 }
 

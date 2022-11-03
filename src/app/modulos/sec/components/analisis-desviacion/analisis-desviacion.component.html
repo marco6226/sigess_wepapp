@@ -431,7 +431,10 @@
     <p-tabPanel  *ngIf="idEmpresa != '22' " header="PLAN DE TRABAJO">
         <s-gestionTareas (onEvent)="onEvent($event)" [tareasList]="tareasList" [readOnly]="consultar"></s-gestionTareas>
     </p-tabPanel>
+
 </p-tabView>
+
+<div class="loader" *ngIf="guardando" style="position:absolute; top:340px; left:53%; "></div>
 <ng-container *ngIf="adicionar && !consultar">
     <button *sTienePermiso="'SEC_POST_ANADESV'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Análisis"
         (click)="guardarAnalisis()" class="float-btn" [disabled]="disabled "></button>
@@ -439,7 +442,7 @@
 
 <ng-container *ngIf="modificar && !consultar">
     <button *sTienePermiso="'SEC_PUT_ANADESV'" pButton type="button" icon="fa fa-pencil" title="Modificar Análisis"
-        (click)="modificarAnalisis()" class="ui-button-success float-btn" [disabled]="disabled" style="z-index: 100;"></button>
+        (click)="modificarAnalisis()" class="ui-button-success float-btn" [disabled]="guardando" style="z-index: 100;"></button>
 </ng-container>
 
 <div style="height: 100px;"></div>
