@@ -27,12 +27,19 @@ import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { Criteria, Filter } from '../../../../core/entities/filter';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service'
 import { Empleado } from 'app/modulos/empresa/entities/empleado'
-
+import { TipoPeligroService } from "app/modulos/ipr/services/tipo-peligro.service";
+import { PeligroService } from "app/modulos/ipr/services/peligro.service";
+import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
+import { Peligro } from "app/modulos/ipr/entities/peligro";
 
 @Component({
   selector: 'app-formulario-accidente-temporal',
   templateUrl: './formulario-accidente-temporal.component.html',
-  styleUrls: ['./formulario-accidente-temporal.component.scss']
+  styleUrls: ['./formulario-accidente-temporal.component.scss'],
+  providers: [
+
+    TipoPeligroService, PeligroService
+],
 })
 export class FormularioAccidenteTemporalComponent implements OnInit {
 
@@ -66,7 +73,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   deltaDia:number;
   deltaMes:number;
   empleadoSelect: Empleado;
-
+  tipoPeligroItemList: SelectItem[];
+  peligroItemList: SelectItem[];
+  analisisPeligros: FormGroup;
   constructor(
       private fb: FormBuilder,
       private cdRef: ChangeDetectorRef,
@@ -74,6 +83,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       private empresaService: EmpresaService,
       private sesionService: SesionService,
       private empleadoService: EmpleadoService,
+      private tipoPeligroService: TipoPeligroService,
+      private peligroService: PeligroService
   ) {
       let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
       this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
@@ -88,9 +99,19 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       this.mecanismoList = defaultItem.concat(<SelectItem[]>mecanismo);
       this.lugarList = defaultItem.concat(<SelectItem[]>lugar);
       this.tipoAccidenteList = defaultItem.concat(<SelectItem[]>tipoAccidente);
+
+      this.analisisPeligros = fb.group({
+        Peligro: [null, /*Validators.required*/],
+        DescripcionPeligro: [null, /*Validators.required*/],
+        EnventoARL: [null, /*Validators.required*/],
+        ReporteControl: [null, /*Validators.required*/],
+        FechaControl: [null, /*Validators.required*/],
+        CopiaTrabajador: [null, /*Validators.required*/],
+        FechaCopia: [null, /*Validators.required*/],
+    });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
       this.idEmpresa = this.sesionService.getEmpresa().id;
       this.infoEmpresa()
 
@@ -297,10 +318,47 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         }, 200);
     //   this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
       this.cdRef.detectChanges();
-
-      
+    //   await this.cargarPeligro(123);
+      await this.cargarTiposPeligro();
   }
+  SelectPeligro(a: string){
+    this.cargarPeligro(a)
+}
+  async cargarTiposPeligro() {
+    await this.tipoPeligroService.findAll().then(
+      resp => {
+        // console.log(resp);
+        this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
+        (<TipoPeligro[]>resp['data']).forEach(
+          data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
+        )   
+      }
+    );
+    console.log(this.tipoPeligroItemList)
+  }
+  async cargarPeligro(idtp) {
 
+    //this.peligroService.findAll().then(
+    if(idtp != null){
+    let filter = new FilterQuery();
+    filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
+    await this.peligroService.findByFilter(filter).then(
+      resp => {
+        // console.log(resp);
+        this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
+        (<Peligro[]>resp).forEach(
+          data => 
+            {
+                this.peligroItemList.push({ label: data.nombre, value: {id:data.id,nombre: data.nombre} })
+            }
+        )
+        // console.log(this.peligroItemList);
+      }
+    );
+     }else{
+        this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
+     }
+  }
   async infoEmpresa() {
 
       let empresa = await this.empresaService.findSelected() as Empresa;

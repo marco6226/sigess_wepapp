@@ -1,4 +1,4 @@
-
+<ng-container *ngIf="idEmpresa!='22'">
 <p-card class="ui-g-12"  *ngIf="testing" >
    
     <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="padding: 2px 2px;">
@@ -142,3 +142,7 @@ flex-direction: column-reverse;">
     <div class="center"><img src="assets/images/icons-invert/tenor.gif" alt=""  style="overflow: hidden"></div>
 
 </div>
+</ng-container>
+<ng-container *ngIf="idEmpresa=='22'">
+    <app-home-corona></app-home-corona>
+</ng-container>

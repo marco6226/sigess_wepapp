@@ -572,6 +572,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     'CopiaTrabajador': this.informacionComplementaria.CopiaTrabajador,
                     'FechaCopia':this.informacionComplementaria.FechaCopia == null ? null : new Date(this.informacionComplementaria.FechaCopia)
                   });
+                  console.log(this.analisisPeligros.value['Peligro']);
                 this.cargarPeligro(this.analisisPeligros.value['Peligro'])
             }
             if(this.informeJson!=null){
@@ -821,15 +822,15 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     flagBotonModificar(){
         setTimeout(() => {
-            this.modificar = true;
+            this.disabled = false;
         }, 60000);
         
     }
-    modificarAnalisis() {
+    async modificarAnalisis() {
         this.disabled=true
         // this.flagModificar=true;
         if(!this.analisisPeligros.invalid){
-                if(this.idEmpresa=='22'){this.tareaList2();}
+                if(this.idEmpresa=='22'){await this.tareaList2();}
                 this.buttonPrint=true;
                 this.informacionComplementaria=this.analisisPeligros.value;
                 this.informeJson=this.infoIn.value;
@@ -924,8 +925,8 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.tareasList = analisis.tareaDesviacionList;
         })
 
-        console.log(this.listPlanAccion)
-        console.log(this.tareasList)
+        // console.log(this.listPlanAccion)
+        // console.log(this.tareasList)
         // adicionar
         this.listPlanAccion.forEach(element => {
             element.causaRaiz.forEach(async element2 => {
@@ -1020,7 +1021,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                         this.tareasList.push(tarea)
                     }
                 }
-                console.log(this.tareasList)
+                // console.log(this.tareasList)
                 // modificar
                 // if(this.tareasList!=[]){
                 if(this.tareasList.length>0){
@@ -1029,8 +1030,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                             if((element3.id===element2.especifico.id) && (element3.nombre!=element2.especifico.nombreAccionCorrectiva || element3.descripcion!=element2.especifico.accionCorrectiva || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.especifico.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.especifico.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.especifico.responsableEmpresa.id))){
                                 // console.log(new Date(element3.fechaProyectada).toDateString())
                                 // console.log(new Date(element2.especifico.fechaVencimiento).toDateString())
-                                console.log(element3)
-                                console.log(element2.especifico)
+                                // console.log(element3)
+                                // console.log(element2.especifico)
                                 element3.nombre=element2.especifico.nombreAccionCorrectiva
                                 element3.descripcion=element2.especifico.accionCorrectiva
                                 element3.fechaProyectada=new Date(element2.especifico.fechaVencimiento)
@@ -1040,8 +1041,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                             if((element3.id===element2.medible.id) && (element3.nombre!=element2.medible.planVerificacion || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.medible.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.medible.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.medible.responsableEmpresa.id))){
                                 // console.log(new Date(element3.fechaProyectada).toDateString())
                                 // console.log(new Date(element2.medible.fechaVencimiento).toDateString())
-                                console.log(element3)
-                                console.log(element2.medible)
+                                // console.log(element3)
+                                // console.log(element2.medible)
                                 element3.nombre=element2.medible.planVerificacion
                                 element3.fechaProyectada=new Date(element2.medible.fechaVencimiento)
                                 element3.empResponsable=element2.medible.responsableEmpresa
@@ -1050,8 +1051,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                             if((element3.id===element2.eficaz.id) && (element3.nombre!=element2.eficaz.planValidacion || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.eficaz.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.eficaz.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.eficaz.responsableEmpresa.id))){
                                 // console.log(new Date(element3.fechaProyectada).toDateString())
                                 // console.log(new Date(element2.eficaz.fechaVencimiento).toDateString())
-                                console.log(element3)
-                                console.log(element2.eficaz)
+                                // console.log(element3)
+                                // console.log(element2.eficaz)
                                 element3.nombre=element2.eficaz.planValidacion
                                 element3.fechaProyectada=new Date(element2.eficaz.fechaVencimiento)
                                 element3.empResponsable=element2.eficaz.responsableEmpresa
