@@ -13,10 +13,10 @@
       <p-tabPanel header="Cargue Documentos">
         <app-cargue-documentos [analisisId]="id" (idDoc)="reciveIdDoc($event)" [documentos]="documentos"></app-cargue-documentos>
       </p-tabPanel>
-      <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipoPersona!='Natural'">
+      <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipo_persona !== 'Natural'">
         <app-actividades-contratadas [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
       </p-tabPanel>
-      <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipoPersona!='Natural'">
+      <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipo_persona != 'Natural'">
         <app-localidades [selectDivision]="this.aliadoInformacion.division" [selectLocalidad]="this.aliadoInformacion.localidad" (data)="onReciveData($event, 'division')" (dataLocalidad)="onReciveData($event, 'localidad')"></app-localidades>
       </p-tabPanel>
       <p-tabPanel header="Clasificación">
