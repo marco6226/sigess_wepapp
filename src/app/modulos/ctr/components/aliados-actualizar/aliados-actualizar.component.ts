@@ -31,6 +31,7 @@ export class AliadosActualizarComponent implements OnInit {
     arl: null,
     ciiu: null,
     logo: '',
+    tipo_persona: null,
     empresasContratistasList: []
   };
 

@@ -86,7 +86,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     // tareasList2: Tarea[];
     flowChartSave: string;
     form2: Peligro;
-    
+    guardando: boolean= true;
     listaEvidence
     listPlanAccion: listPlanAccion[] =[]
     listPlanAccion2: listPlanAccion[] =[]
@@ -156,7 +156,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     contPoliticas:number=0;
     contProcedimientos:number=0;
     contMultimedias:number=0;
-    disabled:boolean=false;
+    disabled:boolean=true;
     tabIndex:number;
     imgCompress:string;
 
@@ -296,6 +296,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     async ngOnInit() {
         // console.log(this.sesionService.getEmpresa());
+        this.disabled=true;
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
         this.idEmpresa = this.sesionService.getEmpresa().id;
@@ -590,6 +591,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                     'FechaI' :this.informeJson.FechaI == null ? null : new Date(this.informeJson.FechaI),
                     'Diagrama':this.informeJson.Diagrama,
                   });
+                  this.guardando=false;
             }
 
             // console.log(this.infoIn)
@@ -661,6 +663,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         });
         // setTimeout(() => {
             this.tareaList3()
+            this.disabled=false;
         // }, 1000);
         
         // console.log(this.tareasList)
@@ -762,6 +765,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         })
     }
     guardarAnalisis() {
+        this.guardando=true;
         if(!this.analisisPeligros.invalid){
             this.informacionComplementaria=this.analisisPeligros.value;
             this.informeJson=this.infoIn.value;
@@ -827,7 +831,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         
     }
     async modificarAnalisis() {
-        this.disabled=true
+        this.guardando=true;
+        this.disabled=true;
         // this.flagModificar=true;
         if(!this.analisisPeligros.invalid){
                 if(this.idEmpresa=='22'){await this.tareaList2();}
@@ -835,8 +840,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.informacionComplementaria=this.analisisPeligros.value;
                 this.informeJson=this.infoIn.value;
                 // this.informeJson.Diagrama=this.imgIN;
-            setTimeout(() => {
-                this.diagram=this.FlowchartService.getDiagram();
+            setTimeout(async () => {
+                this.diagram=await this.FlowchartService.getDiagram();
                 let printOptions: IExportOptions = {};
                 printOptions.mode = 'Data';
                 printOptions.region = 'PageSettings';
@@ -1179,6 +1184,7 @@ testmsng(){
                 (this.modificar ? "actualizado" : "generado") +
                 " correctamente la investigación",
         });
+        this.guardando=false;
     }
 }
 

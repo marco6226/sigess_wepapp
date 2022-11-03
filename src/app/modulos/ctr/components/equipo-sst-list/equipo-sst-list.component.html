@@ -1,8 +1,8 @@
-<s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros del Responsable SST">
+<s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="No se encontraron registros del Responsable lider SST">
     <button pButton type="button" (click)="crearResponsableMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
 
-<p-panel header="Responsable SST" [style.display]="responsableList && responsableList.length > 0 ? 'block':'none'">
+<p-panel header="Responsable lider SST" [style.display]="responsableList && responsableList.length > 0 ? 'block':'none'">
     <p-tabView>
         <p-table [value]="responsableList" responsiveLayout="scroll" [(selection)]="selectedResponsableList">
             <ng-template pTemplate="header" let-columns>
