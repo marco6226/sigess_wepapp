@@ -27,7 +27,10 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     ) { }
 
     async ngOnInit() {
-        this.empresaId = await this.sesionService.getEmpresa().id
+        setTimeout(async () => {
+            this.empresaId = await this.sesionService.getEmpresa().id
+        }, 1000);
+        
     }
 
     irHome() {

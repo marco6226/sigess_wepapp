@@ -99,6 +99,7 @@ import { TareaComponent } from '../sec/components/tarea/tarea.component';
 import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { AliadosActualizarComponent } from '../ctr/components/aliados-actualizar/aliados-actualizar.component';
+import { HomeCoronaComponent } from './components/home-corona/home-corona.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -301,7 +302,8 @@ const appRoutes: Routes = [
         AreaSelectorIndComponent,
         HomeComponent,
         TerminosCondicionesComponent,
-        FileUploaderComponent
+        FileUploaderComponent,
+        HomeCoronaComponent
     ],
     exports: [
         FileUploaderComponent,ComunModule

@@ -11,6 +11,7 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { ParametroNavegacionService } from '../../services/parametro-navegacion.service';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 @Component({
     selector: 'app-home',
@@ -60,10 +61,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     mostrar = 2000;
     localeES = locale_es;
     value: Date;
+    idEmpresa:string;
     constructor(
         private usuarioService: UsuarioService,
         private indicadorService: ModeloGraficaService,
-        private areaService: AreaService
+        private areaService: AreaService,
+        private sesionService: SesionService,
     ) {
 
         var date = new Date();
@@ -485,8 +488,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
     async ngOnInit() {
+        
 
-        setTimeout(() => {
+        setTimeout(async () => {
+            this.idEmpresa = await this.sesionService.getEmpresa().id;
             this.testing = false;
             this.show = true
             this.showData = true;            

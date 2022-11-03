@@ -1,63 +1,22 @@
 <form [formGroup]="form">
     <p-panel header="FORMULARIO DE ACCIDENTES (FURAT)">
         <p-accordion [multiple]="true">
-            <p-accordionTab header="SEGURIDAD SOCIAL">
+            <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA">
                 <div class="ui-g">
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        <!--<span class="fa fa-check-circle" [ngClass]="form.value.nombreEps?.length > 0 ? 'diligenciado': 'no-diligenciado'"></span>-->
-                        EPS
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="nombreEps" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
-                        Código EPS
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
-                        <input pInputText formControlName="codigoEps" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        ARL
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="nombreArl" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
-                        Código ARL
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
-                        <input pInputText formControlName="codigoArl" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        AFP
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="nombreAfp" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
-                        Código AFP
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22';else blanco4">
-                        <input pInputText formControlName="codigoAfp" />
-                    </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    Nombre o razon social
+                </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <input pInputText formControlName="razonSocial" />
+                </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-2">
+                    Nit.
+                </div>
+                <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <input pInputText formControlName="identificacionEmpresa" />
+                </div>
                 </div>
             </p-accordionTab>
-                <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA">
-                 <div class="ui-g">
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Nombre o razon social
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="razonSocial" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Nit.
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="identificacionEmpresa" />
-                    </div>
-                 </div>
-                </p-accordionTab>
             <ng-template #blanco2><div class="ui-g-12 ui-sm-12 ui-md-2">
                 &nbsp;
             </div></ng-template>
@@ -120,12 +79,12 @@
                         <p-radioButton name="generoEmpleado" label="F" value="F" formControlName="generoEmpleado">
                         </p-radioButton>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
+                    <!-- <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         Dirección
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="direccionEmpleado" />
-                    </div>
+                    </div> -->
                     <!-- <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
                         Correo
                     </div>
@@ -225,10 +184,9 @@
                         Ubicación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <!-- <area-selector formControlName="areaAccidente" style="
-                        width: 350px;"
-                            [name]="this.reporte.areaAccidente ?this.reporte.areaAccidente.nombre:''" required>
-                        </area-selector> -->
+                        <area-selector style="width: 350px;"
+                             required>
+                        </area-selector>
                     </div>
                 </div>
             </p-accordionTab>
@@ -423,142 +381,6 @@
                         <textarea type="text" pInputText style="width:100%;height: 100px;"
                             formControlName="descripcion"></textarea>
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        ¿Hubo personas que presenciaron el {{visibleCamposAccidente ? 'accidente':'incidente'}}?
-                    </div>
-                    <div class="ui-g-1">
-                        <p-radioButton name="huboTestigos" label="Si" [value]="true" formControlName="huboTestigos">
-                        </p-radioButton>
-                    </div>
-                    <div class="ui-g-1">
-                        <p-radioButton name="huboTestigos" label="No" [value]="false" formControlName="huboTestigos">
-                        </p-radioButton>
-                    </div>
-                    
-                    <div class="ui-g-2">
-                        <button pButton type="button" icon="fa fa-plus" label="Adicionar"
-                            (click)="adicionarTestigo()"></button>
-                    </div>
-                    <div class="ui-g-12 ui-sm-12">
-                        <p-table [value]="testigoReporteList" autoLayout="true">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th class="width20">Nombres</th>
-                                    <th class="width20">Apellidos</th>
-                                    <th class="width20">Cargo</th>
-                                    <th class="width20">Tipo identificación</th>
-                                    <th class="width20">Número identificación</th>
-                                    <th></th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-testigo>
-                                <tr>
-                                    <td pEditableColumn>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <input pInputText [(ngModel)]="testigo.nombres"
-                                                    [ngModelOptions]="{standalone: true}" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{testigo.nombres}}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td pEditableColumn>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <input pInputText [(ngModel)]="testigo.apellidos"
-                                                    [ngModelOptions]="{standalone: true}" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{testigo.apellidos}}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td pEditableColumn>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <input pInputText [(ngModel)]="testigo.cargo"
-                                                    [ngModelOptions]="{standalone: true}" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{testigo.cargo}}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td pEditableColumn>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <p-dropdown [options]="tipoIdentificacion"
-                                                    [(ngModel)]="testigo.tipoIdentificacion"
-                                                    [ngModelOptions]="{standalone: true}" appendTo="body"
-                                                    [autoWidth]="false"></p-dropdown>
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{testigo.tipoIdentificacion}}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td pEditableColumn>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <input pInputText [(ngModel)]="testigo.numeroIdentificacion"
-                                                    [ngModelOptions]="{standalone: true}" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{testigo.numeroIdentificacion}}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td style="width: 3em;">
-                                        <button pButton type="button" class="soft-icon" icon="fa fa-close"
-                                            (click)="removerTestigo(testigo)"></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ">
-                        Responsable del informe
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Nombres
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="nombresResponsable" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Apellidos
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="apellidosResponsable" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Tipo identificacion
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown [options]="tipoIdentificacion" formControlName="tipoIdentificacionResponsable">
-                        </p-dropdown>
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Número identificación
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="numeroIdentificacionResponsable" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Cargo
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="cargoResponsable" />
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-2">
-                        Fecha reporte
-                    </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        {{form.value.fechaReporte | date:'dd/MM/yyyy HH:mm'}}
-                    </div>
-
                 </div>
             </p-accordionTab>
             <p-accordionTab
@@ -567,6 +389,21 @@
             </p-accordionTab>
             <p-accordionTab
                 header="VI. PELIGRO DESCRIPTOR">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Peligro
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" ></p-dropdown>
+                    </div>
+
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Descripción del Peligro
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <p-dropdown [options]="this.peligroItemList"></p-dropdown>
+                    </div>                    
+                </div>
             </p-accordionTab>
             <p-accordionTab
                 header="VII. INVESTIGACIÓN">

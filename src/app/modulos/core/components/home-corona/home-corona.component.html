@@ -1,0 +1,61 @@
+<p-card class="ui-g-12"  >
+   
+    <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="padding: 2px 2px;">
+
+        <p class=".col-md-4"><circle-progress
+        [percent]="NoEventos"
+        [radius]="50"
+        [outerStrokeWidth]="10"
+        [innerStrokeWidth]="8"
+        [outerStrokeColor]="'#78C000'"
+        [innerStrokeColor]="'#C7E596'"
+        [animation]="true"
+        [animationDuration]="300"
+        
+        ></circle-progress></p>
+
+        <p class=".col-md-4"><circle-progress
+        [percent]="250"
+        [radius]="50"
+        [outerStrokeWidth]="10"
+        [innerStrokeWidth]="8"
+        [outerStrokeColor]="'#5132db'"
+        [innerStrokeColor]="'#96d3e5'"
+        [animation]="true"
+        [animationDuration]="300"
+        ></circle-progress></p>
+
+        <p class=".col-md-4"><circle-progress
+        [percent]="0.047"
+        [radius]="50"
+        [outerStrokeWidth]="10"
+        [innerStrokeWidth]="8"
+        [outerStrokeColor]="'#db328f'"
+        [innerStrokeColor]="'#e596d8'"
+        [animation]="true"
+        [animationDuration]="300"
+        ></circle-progress></p>
+
+        <div class="p-col-12 p-mt-3 mid-border">
+            <div class="p-grid p-jc-evenly">
+                <div class="p-grid" ><p class=".col-md-4" [style.background-color]="'#8fb56f'" style="color:rgb(7, 7, 7);font-size:15px; border-radius: 40px; padding: 10px 10px;">Numero de eventos</p></div>     
+                <div class="p-grid" ><p class=".col-md-4" [style.background-color]="'#65afc4'" style="color:rgb(7, 7, 7);font-size:15px; border-radius: 40px; padding: 10px 10px;">Días perdidos</p></div>
+                <div class="p-grid" ><p class=".col-md-4" [style.background-color]="'#a4719b'" style="color:rgb(7, 7, 7);font-size:15px; border-radius: 40px; padding: 10px 10px;">ILI</p></div>
+            </div>
+        </div>
+
+        <div class="p-col-12 p-mt-4 mid-border">
+            <div class="p-d-flex p-jc-evenly">
+                <div class="p-d-flex"><p class="p-m-0">Area : </p> <area-selectorind></area-selectorind></div>
+                <div class="p-d-flex">  
+                    <i style="font-size:24px" class="fa">&#xf073;</i>   
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" value="this.desde"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desde"  > </p-calendar> 
+                </div>
+                <div class="p-d-flex"> 
+                    <i style="font-size:24px" class="fa">&#xf073;</i> 
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desde" value="this.hasta"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hasta"> </p-calendar>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-card>
