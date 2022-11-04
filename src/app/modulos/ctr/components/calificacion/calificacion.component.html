@@ -5,40 +5,49 @@
         <label for="" class="active">Telefono</label>
     </div> -->
     <br>
-    <div class="cols" >
-        <p-panel class="input-field" header="Pregunta 1">
-            <div class="ui-g" style="width:250px;margin-bottom:10px">
-                <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val1" inputId="opt1" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val1" inputId="opt2" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3" (click)="onSaveData()"></p-radioButton></div>
-            </div>
+    <div class="ui-g">
+        <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Tareas de Alto riesgo">
+            <span for="">La empresa realiza en su servicio Tareas de Alto Riesgo:</span><br><br>
+            <p-radioButton (click)="onSaveData()" name="riesgo" value="2" label="Si" [(ngModel)]="riesgo"></p-radioButton><br>
+            <p-radioButton (click)="onSaveData()" name="riesgo" value="0.4" label="NO" [(ngModel)]="riesgo"></p-radioButton>
         </p-panel>
-        <p-panel class="input-field" header="Pregunta 2">
-            <div class="ui-g" style="width:250px;margin-bottom:10px">
-                <div class="ui-g-12"><p-radioButton name="group2" value="Option 1" label="Option 1" [(ngModel)]="val2" inputId="opt1" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group2" value="Option 2" label="Option 2" [(ngModel)]="val2" inputId="opt2" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group2" value="Option 3" label="Option 3" [(ngModel)]="val2" inputId="opt3" (click)="onSaveData()"></p-radioButton></div>
-            </div>
+        <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Permanencia">
+            <span for="">El servicio demanda una permanencia específica en las operaciones productivas directas de la Organización:</span><br><br>
+            <p-dropdown (click)="onSaveData()" [options]="permanencia" [(ngModel)]="selectedPermanencia" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false"></p-dropdown>
         </p-panel>
-        <p-panel class="input-field" header="Pregunta 3">
-            <div class="ui-g" style="width:250px;margin-bottom:10px">
-                <div class="ui-g-12"><p-radioButton name="group3" value="Option 1" label="Option 1" [(ngModel)]="val3" inputId="opt1" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group3" value="Option 2" label="Option 2" [(ngModel)]="val3" inputId="opt2" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group3" value="Option 3" label="Option 3" [(ngModel)]="val3" inputId="opt3" (click)="onSaveData()"></p-radioButton></div>
-            </div>
+        <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Impacto personal directo">
+            <span>El servicio suministrado tiene impacto en la seguridad y salud de los colaboradores directos de la Organización:</span><br><br>
+            <p-radioButton (click)="onSaveData()" name="impacto" value="0.25" label="Si" [(ngModel)]="impacto"></p-radioButton><br>
+            <p-radioButton (click)="onSaveData()" name="impacto" value="0.05" label="NO" [(ngModel)]="impacto"></p-radioButton>
         </p-panel>
-        <p-panel class="input-field" header="Pregunta 4">
-            <div class="ui-g" style="width:250px;margin-bottom:10px">
-                <div class="ui-g-12"><p-radioButton name="group4" value="Option 1" label="Option 1" [(ngModel)]="val4" inputId="opt1" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group4" value="Option 2" label="Option 2" [(ngModel)]="val4" inputId="opt2" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group4" value="Option 3" label="Option 3" [(ngModel)]="val4" inputId="opt3" (click)="onSaveData()"></p-radioButton></div>
-            </div>
+        <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Tamaño empresa">
+            <span>El número de trabajadores vinculados directamente con la empresa está en los siguientes rangos:</span><br><br>
+            <p-dropdown (click)="onSaveData()" [options]="tamano" [(ngModel)]="selectedTamano" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false"></p-dropdown>
         </p-panel>
-        <p-panel class="input-field" header="Pregunta 5">
-            <div class="ui-g" style="width:250px;margin-bottom:10px">
-                <div class="ui-g-12"><p-radioButton name="group5" value="Option 1" label="Option 1" [(ngModel)]="val5" inputId="opt1" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group5" value="Option 2" label="Option 2" [(ngModel)]="val5" inputId="opt2" (click)="onSaveData()"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group5" value="Option 3" label="Option 3" [(ngModel)]="val5" inputId="opt3" (click)="onSaveData()"></p-radioButton></div>
+        <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Clase de riesgo">
+            <span>La empresa  está clasificada en una clase de riesgo específica, de acuerdo con su actividad económica en:</span><br><br>
+            <p-dropdown (click)="onSaveData()" [options]="claseRiesgo" [(ngModel)]="selectedClaseRiesgo" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false"></p-dropdown>
+
+        </p-panel>
+        <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Transversalidad">
+            <span>El servicio se prestará en más de una de las Unidades de Negocio de la Organización:</span><br><br>
+            <p-radioButton (click)="onSaveData()" name="transversalidad" value="0.25" label="Si" [(ngModel)]="transversalidad"></p-radioButton><br>
+            <p-radioButton (click)="onSaveData()" name="transversalidad" value="0.05" label="NO" [(ngModel)]="transversalidad"></p-radioButton>
+        </p-panel>
+
+        <p-panel class="p-col">
+            <div class="col-md-4 col-xl-3">
+                <div class="card {{ getColor() }} order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">Su valoración es: </h6>
+                        <h2 class="text-right">
+                            <i class="fa fa-rocket f-left"></i>
+                            <span style="font-size: 40px;">
+                                {{ valoracionActual || '' }}
+                            </span>
+                        </h2>
+                    </div>
+                </div>
             </div>
         </p-panel>
     </div>    

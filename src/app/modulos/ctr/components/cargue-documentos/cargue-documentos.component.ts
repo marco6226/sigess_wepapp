@@ -5,6 +5,8 @@ import { Documento } from 'app/modulos/ado/entities/documento';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { ConfirmationService, Message } from 'primeng/primeng';
+import { locale_es, tipo_identificacion, tipo_vinculacion} from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-cargue-documentos',
@@ -25,6 +27,8 @@ export class CargueDocumentosComponent implements OnInit {
   @Input('documentos') directorios: Directorio[]=[];
 
   @Output() idDoc = new EventEmitter<string>();
+  @Output() fechaVencimientoArlEvent = new EventEmitter<Date>();
+  @Output() fechaVencimientoSstEvent = new EventEmitter<Date>();
   msgs: Message[];
 
   visibleDlgCertificadoARL: boolean = false;
@@ -32,6 +36,27 @@ export class CargueDocumentosComponent implements OnInit {
   
   modulo: String = Modulo.EMP.value;
   documentosList: any[];
+  
+  fechaActual = new Date();
+  yearRange: string = "1900:" + this.fechaActual.getFullYear();
+  localeES: any = locale_es;
+  
+  @Input('fechaVencimientoArl')
+  set fechaVencimientoArlIn(fechaVencimientoArl: number){
+    if(fechaVencimientoArl){
+      this.fecha_vencimiento_arl = new Date(fechaVencimientoArl);
+    }
+  }
+ 
+  @Input('fechaVencimientoSst')
+  set fechaVencimientoSstIn(fechaVencimientoSst: number){
+    if (fechaVencimientoSst) {
+      this.fecha_vencimiento_sst = new Date(fechaVencimientoSst);
+    }
+  }
+  
+  fecha_vencimiento_arl: Date;
+  fecha_vencimiento_sst: Date;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -67,8 +92,8 @@ export class CargueDocumentosComponent implements OnInit {
     this.documentos.push(event.documento);
     // this.adicionarAGaleria(event.documento);
     this.documentos = this.documentos.slice();
-    console.log(this.documentos)
-    console.log(this.directorios);
+    //console.log(this.documentos)
+    //console.log(this.directorios);
     this.idDoc.emit(event.id)
     
   }
@@ -112,6 +137,18 @@ export class CargueDocumentosComponent implements OnInit {
   //     }
   //   );
   // }
+
+  onSelectArl(value: Date){
+    let fecha_vencimiento_arl = value;
+    // console.log(fecha_vencimiento_arl);
+    this.fechaVencimientoArlEvent.emit(fecha_vencimiento_arl);
+  }
+
+  onSelectSst(value: Date){
+    let fecha_vencimiento_sst = value;
+    // console.log(fecha_vencimiento_sst);
+    this.fechaVencimientoSstEvent.emit(fecha_vencimiento_sst);
+  }
 
  
   test(){

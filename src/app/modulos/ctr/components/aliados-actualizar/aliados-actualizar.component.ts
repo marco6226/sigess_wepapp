@@ -46,7 +46,9 @@ export class AliadosActualizarComponent implements OnInit {
     documentos: null,
     representante_legal: '',
     numero_trabajadores: 0,
-    numero_trabajadores_asignados: 0
+    numero_trabajadores_asignados: 0,
+    fecha_vencimiento_arl: null,
+    fecha_vencimiento_sst: null
   }
 
   documentos: Directorio[]=[]
@@ -182,6 +184,27 @@ export class AliadosActualizarComponent implements OnInit {
     console.log(this.aliadoInformacion.documentos);    
     this.saveInformacionAliado()
     
+  }
+
+  reciveFechaArl(event: Date){
+    // console.log(event);
+    this.aliadoInformacion.fecha_vencimiento_arl = event;
+    this.saveInformacionAliado();
+  }
+
+  reciveFechaSst(event: Date){
+    // console.log(event);
+    this.aliadoInformacion.fecha_vencimiento_sst = event;
+    this.saveInformacionAliado();
+  }
+
+  getFecha(docType: string){
+    if(docType == 'arl'){
+      // console.log('getfecha: '+ this.aliadoInformacion.fecha_vencimiento_arl);
+      return this.aliadoInformacion.fecha_vencimiento_arl;
+    }
+    // console.log('getfecha: '+ this.aliadoInformacion.fecha_vencimiento_sst);
+    return this.aliadoInformacion.fecha_vencimiento_sst;
   }
 
   async actualizarAliado(){
