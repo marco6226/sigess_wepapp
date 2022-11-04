@@ -4,8 +4,9 @@ import { ReporteService } from 'app/modulos/rai/services/reporte.service';
 import { FilterQuery } from "../../../core/entities/filter-query";
 import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
 import {DesviacionService } from "app/modulos/sec/services/desviacion.service";
-import { Criteria } from '../../../core/entities/filter';
+import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { SesionService } from '../../../core/services/sesion.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home-corona',
@@ -20,11 +21,19 @@ export class HomeCoronaComponent implements OnInit {
   diasPerdidos:number;
   incapacidades;
   areasPermiso: string;
+
+  desdes: Date;
+  hastas: Date;
+
+  pipe = new DatePipe('en-US');
+  todayWithPipe = null;
+
   fieldsR: string[] = [
     'id'
   ];
   fieldsAD: string[] = [
-    'incapacidades'
+    'incapacidades',
+    'fechaElaboracion'
   ];
   fieldsD: string[] = [
     'analisisId'
@@ -39,30 +48,50 @@ export class HomeCoronaComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.hastas= new Date(Date.now())
+    this.desdes=null
     this.areasPermiso = await this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
     await this.reporte()
     await this.desviacion()
   }
   async reporte(){
+    // await this.repService.findAll().then((resp)=>{
+    //   console.log(resp)//fechaAccidente
+    // })
+
+    let filterList: Filter[] = [];
+    filterList.push({ criteria: Criteria.BETWEEN, field: "fechaAccidente", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
+    
     let fq1 = new FilterQuery();
     fq1.fieldList = this.fieldsR;
+    fq1.filterList=filterList;
+
     await this.repService.findByFilter(fq1).then((resp)=>{
       this.NoEventos=resp['data'].length;
     })
   }
 
   async analisisDesviacion(event :any){
+    let filterList: Filter[] = [];
+    filterList.push({ criteria: Criteria.CONTAINS, field: "id", value1: event });
+    filterList.push({ criteria: Criteria.BETWEEN, field: "fechaElaboracion", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
+  
     let fq2 = new FilterQuery();
     fq2.fieldList=this.fieldsAD;  
-    fq2.filterList=[{ criteria: Criteria.CONTAINS, field: "id", value1: event }];
-    await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
-      if(resp['data'][0]['incapacidades'])
-      {
-        if(JSON.parse(resp['data'][0]['incapacidades'])!=null){
-          this.diasPerdidos=this.diasPerdidos+JSON.parse(resp['data'][0]['incapacidades']).length
+    fq2.filterList = filterList;
+    setTimeout(async () => {
+     await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
+      console.log(resp)
+      
+        if(resp['data'][0]['incapacidades'])
+        {
+          if(JSON.parse(resp['data'][0]['incapacidades'])!=null){
+            this.diasPerdidos=this.diasPerdidos+JSON.parse(resp['data'][0]['incapacidades']).length
+          }
         }
-      }
+      
     })
+  }, 100);
   }
 
   async desviacion(){
@@ -70,6 +99,7 @@ export class HomeCoronaComponent implements OnInit {
     let filterQuery = new FilterQuery();
     filterQuery.fieldList=this.fieldsD;
     filterQuery.filterList=[{ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso }];
+    
 
     await this.desviacionService.findByFilter(filterQuery).then(
       resp => {
@@ -82,5 +112,41 @@ export class HomeCoronaComponent implements OnInit {
         )       
       }
     )
+  }
+
+  async selecFromDate(date: Date) {
+    this.desdes=new Date(date)
+    // await this.desviacion()
+    await this.reporte()
+
+  //   let filterList: Filter[] = [];
+  //   // filterList.push({ criteria: Criteria.CONTAINS, field: "id", value1: event });
+  //   filterList.push({ criteria: Criteria.BETWEEN, field: "fechaElaboracion", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
+  
+  //   let fq2 = new FilterQuery();
+  //   fq2.fieldList=this.fieldsAD;  
+  //   fq2.filterList=filterList;
+  //   await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
+  //     console.log(resp)
+  // })
+    
+}
+
+  async selectToDate(date: Date) {
+    this.hastas=new Date(date)
+    // await this.desviacion()
+    await this.reporte()
+ 
+    
+  //   let filterList: Filter[] = [];
+  //   // filterList.push({ criteria: Criteria.CONTAINS, field: "id", value1: event });
+  //   filterList.push({ criteria: Criteria.BETWEEN, field: "fechaElaboracion", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
+  
+  //   let fq2 = new FilterQuery();
+  //   fq2.fieldList=this.fieldsAD;  
+  //   fq2.filterList=filterList;
+  //   await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
+  //     console.log(resp)
+  // })
   }
 }
