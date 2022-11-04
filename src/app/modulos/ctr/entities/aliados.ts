@@ -51,6 +51,8 @@ export interface AliadoInformacion{
     representante_legal: string;
     numero_trabajadores: number;
     numero_trabajadores_asignados: number;
+    fecha_vencimiento_arl: Date;
+    fecha_vencimiento_sst: Date;
 }
 
 export const _actividadesContratadasList = [

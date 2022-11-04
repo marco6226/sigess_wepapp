@@ -2,9 +2,16 @@
 
 <p>Certificación de estándares mínimos expedido por la ARL</p>
 
-<div>
-    <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
-    <s-documentoUpload [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
+<div class="grid-container">
+    <div class="grid-item-1">
+        <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+        <s-documentoUpload [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
+    </div>
+    
+    <div class="grid-item-2">
+        <label for="fechaVencimientoArl">Fecha Vencimiento: </label>
+        <p-calendar [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>    
+    </div>
 </div>
 
 <div class="ui-g" style="margin-top: 10px;">
@@ -30,9 +37,16 @@
 
 <p>Licencia SST</p>
 
-<div>
-    <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
-    <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
+<div class="grid-container">
+    <div class="grid-item-1">
+        <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
+        <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
+    </div>
+
+    <div class="grid-item-2">
+        <label for="fechaVencimientoSst">Fecha Vencimiento: </label>
+        <p-calendar [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
+    </div>
 </div>
 
 <div class="ui-g" style="margin-top: 10px;">
