@@ -3,11 +3,19 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+// //local
 let protocol = "http";
 let host = "localhost";
 let port = "8080";
 let path = protocol + "://" + host + ":" + port + "/sigess/api/"; 
 
+//Demo
+// let protocol = 'https';
+// let host = 'demo.sigess.app'
+// let port = '5858';
+// let path = protocol + "://" + host + ":" + port + "/sigess/api/";
+
+// Produccion
 // let protocol = 'https';
 // let host = 'sigess.app';
 // let port = '5858';
@@ -69,6 +77,7 @@ export const endPoints = {
     com_tipoSede: path + "enums/tipoSede/",
 
     DesviacionService: path + "desviacion/",
+    ReporteAtService: path + "reporteatview/",
     AnalisisDesviacionService: path + "analisisDesviacion/",
     SistemaCausaRaizService: path + "sistemaCausaRaiz/",
     SistemaCausaInmediataService: path + "sistemaCausaInmediata/",

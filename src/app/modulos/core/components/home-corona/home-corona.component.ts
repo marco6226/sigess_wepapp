@@ -7,6 +7,7 @@ import {DesviacionService } from "app/modulos/sec/services/desviacion.service";
 import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { SesionService } from '../../../core/services/sesion.service';
 import { DatePipe } from '@angular/common';
+import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
 
 @Component({
   selector: 'app-home-corona',
@@ -38,6 +39,9 @@ export class HomeCoronaComponent implements OnInit {
   fieldsD: string[] = [
     'analisisId'
   ];
+  fieldR: string[] = [
+    'id'
+  ];
   
 
   constructor(
@@ -45,9 +49,18 @@ export class HomeCoronaComponent implements OnInit {
     public repService: ReporteService,
     public analisisDesviacionService: AnalisisDesviacionService,
     public desviacionService: DesviacionService,
+    public reporteAtService: ReporteAtService,
   ) { }
 
   async ngOnInit() {
+    let fq1 = new FilterQuery();
+    fq1.fieldList = this.fieldR;
+    await this.reporteAtService.findAllRAT().then((resp)=>{
+      console.log(resp)
+    });
+    // await this.reporteAtService.findByFilter(fq1).then((resp)=>{
+    //   console.log(resp)
+    // });
     this.hastas= new Date(Date.now())
     this.desdes=null
     this.areasPermiso = await this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;

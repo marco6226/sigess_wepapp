@@ -9,6 +9,7 @@ import { SafeBypassPipe } from '../comun/pipes/safe-bypass.pipe';
 import { ConsultaTableroComponent } from './components/consulta-tablero/consulta-tablero.component';
 import { HorahombrestrabajadaComponent } from './components/horahombrestrabajada/horahombrestrabajada.component';
 import { CalendarModule } from 'primeng/calendar';
+import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
 
 @NgModule({
   imports: [
@@ -27,5 +28,8 @@ import { CalendarModule } from 'primeng/calendar';
     HorahombrestrabajadaComponent
   ],
   bootstrap: [HorahombrestrabajadaComponent],
+  providers: [
+    ReporteAtService
+]
 })
 export class IndModule { }
