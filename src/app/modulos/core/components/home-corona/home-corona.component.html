@@ -79,14 +79,14 @@
         </div>
         <div class="p-col-12 p-mt-4 mid-border">
             <div class="p-d-flex p-jc-evenly">
-                <div class="p-d-flex"><p class="p-m-0">Area : </p> <area-selectorind></area-selectorind></div>
+                <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
                 <div class="p-d-flex">  
                     <i style="font-size:24px" class="fa">&#xf073;</i>   
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" value="this.desde"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desde" (onSelect)="selecFromDate($event)" > </p-calendar> 
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastas" value="this.desdes"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="selecFromDate1($event)" > </p-calendar> 
                 </div>
                 <div class="p-d-flex"> 
                     <i style="font-size:24px" class="fa">&#xf073;</i> 
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desde" value="this.hasta"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hasta" (onSelect)="selectToDate($event)"> </p-calendar>
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdes" value="this.hastas"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastas" (onSelect)="selectToDate1($event)"> </p-calendar>
                 </div>
             </div>
         </div>

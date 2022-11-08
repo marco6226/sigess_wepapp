@@ -8,7 +8,10 @@ import { Filter, Criteria } from 'app/modulos/core/entities/filter'
 import { SesionService } from '../../../core/services/sesion.service';
 import { DatePipe } from '@angular/common';
 import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
-
+import { ReporteATView } from 'app/modulos/ind/entities/ReporteATView'
+import { Area } from 'app/modulos/empresa/entities/area';
+import { AreaService } from 'app/modulos/empresa/services/area.service';
+import { SortOrder } from "app/modulos/core/entities/filter";
 @Component({
   selector: 'app-home-corona',
   templateUrl: './home-corona.component.html',
@@ -22,12 +25,16 @@ export class HomeCoronaComponent implements OnInit {
   diasPerdidos:number;
   incapacidades;
   areasPermiso: string;
+  reporteat;
 
   desdes: Date;
   hastas: Date;
 
   pipe = new DatePipe('en-US');
   todayWithPipe = null;
+  areaList: Area[] = [];
+  divisiones= new Array();
+  divisionS=null;
 
   fieldsR: string[] = [
     'id'
@@ -50,116 +57,91 @@ export class HomeCoronaComponent implements OnInit {
     public analisisDesviacionService: AnalisisDesviacionService,
     public desviacionService: DesviacionService,
     public reporteAtService: ReporteAtService,
+    private areaService: AreaService,
   ) { }
 
   async ngOnInit() {
-    let fq1 = new FilterQuery();
-    fq1.fieldList = this.fieldR;
-    await this.reporteAtService.findAllRAT().then((resp)=>{
-      console.log(resp)
-    });
-    // await this.reporteAtService.findByFilter(fq1).then((resp)=>{
-    //   console.log(resp)
-    // });
+
     this.hastas= new Date(Date.now())
     this.desdes=null
-    this.areasPermiso = await this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
-    await this.reporte()
-    await this.desviacion()
-  }
-  async reporte(){
-    // await this.repService.findAll().then((resp)=>{
-    //   console.log(resp)//fechaAccidente
-    // })
+    // this.areasPermiso = await this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
+    await this.reportes()
 
-    let filterList: Filter[] = [];
-    filterList.push({ criteria: Criteria.BETWEEN, field: "fechaAccidente", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
-    
-    let fq1 = new FilterQuery();
-    fq1.fieldList = this.fieldsR;
-    fq1.filterList=filterList;
-
-    await this.repService.findByFilter(fq1).then((resp)=>{
-      this.NoEventos=resp['data'].length;
-    })
-  }
-
-  async analisisDesviacion(event :any){
-    let filterList: Filter[] = [];
-    filterList.push({ criteria: Criteria.CONTAINS, field: "id", value1: event });
-    filterList.push({ criteria: Criteria.BETWEEN, field: "fechaElaboracion", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
-  
-    let fq2 = new FilterQuery();
-    fq2.fieldList=this.fieldsAD;  
-    fq2.filterList = filterList;
-    setTimeout(async () => {
-     await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
-      console.log(resp)
-      
-        if(resp['data'][0]['incapacidades'])
-        {
-          if(JSON.parse(resp['data'][0]['incapacidades'])!=null){
-            this.diasPerdidos=this.diasPerdidos+JSON.parse(resp['data'][0]['incapacidades']).length
-          }
-        }
-      
-    })
-  }, 100);
+      let areafiltQuery = new FilterQuery();
+      areafiltQuery.sortOrder = SortOrder.ASC;
+      areafiltQuery.sortField = "nombre";
+      areafiltQuery.fieldList = ["nombre"];
+      areafiltQuery.filterList = [
+        { criteria: Criteria.EQUALS, field: "nivel", value1: "0" },
+    ];
+    this.divisiones=[]
+    this.divisiones.push({label:'Total',value:'Total'})
+      await this.areaService.findByFilter(areafiltQuery).then(
+        resp => {this.areaList=<Area[]>resp['data']
+        this.areaList.forEach(element => {
+          this.divisiones.push({label:element['nombre'],value:element['nombre']})
+        });}
+    );
+    // this.divisionS=this.divisiones[0].value;
+    // console.log(this.divisionS)
   }
 
-  async desviacion(){
+  async reportes(){
+    if(this.divisionS==null || this.divisionS=='Total'){
+      this.hastas= new Date(Date.now())
+      this.desdes=null
+      await this.reporteAtService.findAllRAT().then(async (resp)=>{
+        this.reporteat=resp
+        const result = await this.reporteat.filter(word => {
 
-    let filterQuery = new FilterQuery();
-    filterQuery.fieldList=this.fieldsD;
-    filterQuery.filterList=[{ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso }];
-    
+          return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< this.hastas
+        });
+        //No. de reportes
+        this.NoEventos= result.length;
 
-    await this.desviacionService.findByFilter(filterQuery).then(
-      resp => {
+        //No. de días perdidos
         this.diasPerdidos=0;
-        resp['data'].forEach(async element => {
-            if(element['analisisId']){
-              await this.analisisDesviacion(element['analisisId'])
-            }
+        result.forEach(element => {
+          if(element['incapacidades']!=null && element['incapacidades']!='null'){
+            this.diasPerdidos=this.diasPerdidos+JSON.parse(element['incapacidades']).length
           }
-        )       
-      }
-    )
+        });
+      });
+    }else{
+      await this.reporteAtService.findAllRAT().then(async (resp)=>{
+        this.reporteat=resp
+        const result = await this.reporteat.filter(word => {
+
+          return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< this.hastas && word['padreNombre'] == this.divisionS
+        });
+        console.log(result)
+        //No. de reportes
+        this.NoEventos= result.length;
+
+        //No. de días perdidos
+        this.diasPerdidos=0;
+        result.forEach(element => {
+          if(element['incapacidades']!=null && element['incapacidades']!='null'){
+            this.diasPerdidos=this.diasPerdidos+JSON.parse(element['incapacidades']).length
+          }
+        });
+      });
+    }
+
   }
 
-  async selecFromDate(date: Date) {
+
+  async selecFromDate1(date: Date) {
     this.desdes=new Date(date)
-    // await this.desviacion()
-    await this.reporte()
-
-  //   let filterList: Filter[] = [];
-  //   // filterList.push({ criteria: Criteria.CONTAINS, field: "id", value1: event });
-  //   filterList.push({ criteria: Criteria.BETWEEN, field: "fechaElaboracion", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
-  
-  //   let fq2 = new FilterQuery();
-  //   fq2.fieldList=this.fieldsAD;  
-  //   fq2.filterList=filterList;
-  //   await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
-  //     console.log(resp)
-  // })
-    
-}
-
-  async selectToDate(date: Date) {
+    await this.reportes()
+  }
+  async selectToDate1(date: Date) {
     this.hastas=new Date(date)
-    // await this.desviacion()
-    await this.reporte()
- 
-    
-  //   let filterList: Filter[] = [];
-  //   // filterList.push({ criteria: Criteria.CONTAINS, field: "id", value1: event });
-  //   filterList.push({ criteria: Criteria.BETWEEN, field: "fechaElaboracion", value1: this.pipe.transform(this.desdes, 'yyyy-MM-dd'),value2:this.pipe.transform(this.hastas, 'yyyy-MM-dd')});
-  
-  //   let fq2 = new FilterQuery();
-  //   fq2.fieldList=this.fieldsAD;  
-  //   fq2.filterList=filterList;
-  //   await this.analisisDesviacionService.findByFilter(fq2).then((resp)=>{
-  //     console.log(resp)
-  // })
+    await this.reportes()
+  }
+
+  async division(event){
+    this.divisionS=event.value
+    await this.reportes()
   }
 }
