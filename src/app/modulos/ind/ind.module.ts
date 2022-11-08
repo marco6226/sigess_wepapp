@@ -9,6 +9,7 @@ import { SafeBypassPipe } from '../comun/pipes/safe-bypass.pipe';
 import { ConsultaTableroComponent } from './components/consulta-tablero/consulta-tablero.component';
 import { HorahombrestrabajadaComponent } from './components/horahombrestrabajada/horahombrestrabajada.component';
 import { CalendarModule } from 'primeng/calendar';
+import { AccidentalidadComponent } from './components/accidentalidad/accidentalidad.component';
 import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
 
 @NgModule({
@@ -17,7 +18,7 @@ import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
     ComunModule,
     FormsModule,
     ReactiveFormsModule,
-    CalendarModule,
+    CalendarModule
   ],
   declarations: [
     IndicadoresEmpComponent, 
@@ -25,7 +26,8 @@ import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
     EditorHtmlComponent,
     SafeBypassPipe,
     ConsultaTableroComponent,
-    HorahombrestrabajadaComponent
+    HorahombrestrabajadaComponent,
+    AccidentalidadComponent
   ],
   bootstrap: [HorahombrestrabajadaComponent],
   providers: [

@@ -1,0 +1,60 @@
+.main{
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    
+    padding: 2em;
+    padding-top: 0.9em;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  h3{
+    margin-bottom: 1em;
+    text-align: center;
+  }
+  h4{
+    margin-bottom: 1em;
+    text-align: center;
+  }
+  
+  .tbl{
+    font-size: 12px;
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tbl thead th, th, td{
+    padding: 5px;
+    border: solid thin #ccc;
+  }
+  
+  .fila-oscura{
+    background: #efefef;
+  }
+  
+  .tbl th{
+    background: #efefef;
+  }
+  
+  .toolbar{
+    width: 100%;
+    background-color: #efefef;
+    height: 35px;
+    border-top: solid thin #ccc;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  }
+  .toolbar button{
+    background-color: transparent;
+    border: none;
+    color: #555;
+    padding: 10px;
+    margin: 0px;
+    width: 40px;
+    height: inherit;
+    box-shadow: none;
+    border-radius: 0px;
+  }
+  
+  .na-class{
+    color: #ccc;
+    font-weight: bold;
+  }

@@ -92,6 +92,7 @@ export class CalificacionComponent implements OnInit{
     try{
       this.valoracionActual = Number(this.riesgo) + Number(this.selectedPermanencia.value) + Number(this.impacto)
                           + Number(this.selectedTamano.value) + Number(this.selectedClaseRiesgo.value) + Number(this.transversalidad);
+      this.valoracionActual = Number(this.valoracionActual.toFixed(2));
     } catch (exeption){
       console.log('No se puede calcular valoración: '+ exeption);
       

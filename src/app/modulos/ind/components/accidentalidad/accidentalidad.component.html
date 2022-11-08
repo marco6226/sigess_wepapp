@@ -1,0 +1,47 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
+        <p-panel header="Tableros">
+          <div class="tab-list">
+            <a>Tablero de Accidentalidad</a>
+          </div>
+        </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-10" style="padding: 10px">
+      <div class="toolbar">
+        <div style="width: 100%;" class="ng-star-inserted">
+          <button class="fa fa-floppy-o ng-star-inserted"></button>
+          <button class="fa fa-sliders" style="float: right;"></button>
+          <button class="fa fa-refresh" style="float: right;"></button>
+        </div>
+      </div>
+      <div class="main">
+        <h3>Accidentalidad</h3>
+        <h4 class="ng-star-inserted">2022</h4>
+        <div>
+          <table style="font-size: 12px;margin-top: 10px;width: 100%;border-collapse: collapse;">
+            <thead>
+              <th>DIVISIÓN</th>
+              <th>ILI ACUMULADO</th>
+              <th>META</th>
+              <th>EVENTOS</th>
+              <th>DÍAS PERDIDOS</th>
+              <th>FRECUENCIA</th>
+              <th>SEVERIDAD</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of fakeData">
+                <td> {{ item.name }} </td>
+                <td> {{ item.acumulado }} </td>
+                <td> {{ item.meta }} </td>
+                <td> {{ item.eventos }} </td>
+                <td> {{ item.diasPerdidos }} </td>
+                <td> {{ item.frecuencia }}% </td>
+                <td> {{ item.severidad }}% </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>

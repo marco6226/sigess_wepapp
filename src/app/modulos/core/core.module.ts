@@ -100,6 +100,7 @@ import { ScmpermisosComponent } from '../scm/components/scmpermisos/scmpermisos.
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { AliadosActualizarComponent } from '../ctr/components/aliados-actualizar/aliados-actualizar.component';
 import { HomeCoronaComponent } from './components/home-corona/home-corona.component';
+import { AccidentalidadComponent } from '../ind/components/accidentalidad/accidentalidad.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -248,6 +249,7 @@ const appRoutes: Routes = [
                     { path: 'sge', component: IndicadoresSgeComponent },
                     { path: 'rai', component: IndicadoresRaiComponent },
                     { path: 'inp', component: IndicadoresInpComponent },
+                    { path: 'accidentalidad', component: AccidentalidadComponent },
                 ]
             },
             {

@@ -217,6 +217,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                         { label: 'Autoevaluacion', codigo: 'IND_GET_SGE', routerLink: '/app/ind/sge', class: 'fa fa-columns' },
                         { label: 'Reporte de accidentes', codigo: 'IND_GET_RAI', routerLink: '/app/ind/rai', class: 'fa fa-h-square' },
                         { label: 'Inspecciones', codigo: 'IND_GET_INP', routerLink: '/app/ind/inp', class: 'fa fa-list-ol' },
+                        { label: 'Accidentalidad', codigo: 'IND_GET_ACD', routerLink: '/app/ind/accidentalidad', class: 'fa fa-ambulance' },
                     ]
             },
             {
