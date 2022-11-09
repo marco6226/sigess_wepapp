@@ -75,13 +75,13 @@ export class FlowChartComponent {
         this.precarga=true;
         
         setTimeout(async () => {
-          console.log('1a')
+          // console.log('1a')
           if(this.dataFlowChart!=undefined){
             this.loading=false;
-            console.log(this.dataFlowChart)
+            // console.log(this.dataFlowChart)
             await this.diagram.loadDiagram(this.dataFlowChart.flow_chart);
-            console.log('2a')
-            console.log(JSON.parse(this.dataFlowChart.flow_chart));
+            // console.log('2a')
+            // console.log(JSON.parse(this.dataFlowChart.flow_chart));
             
             this.loadFC();
             // this.startTimer();
@@ -89,7 +89,7 @@ export class FlowChartComponent {
             
           }
           this.loading=false;
-          console.log('3a')
+          // console.log('3a')
         }, 3000);
 
         
@@ -279,7 +279,7 @@ export class FlowChartComponent {
   }
 
   public getSymbolDefaults(symbol: NodeModel): void {
-      console.log(symbol.id);
+      // console.log(symbol.id);
       
       if (symbol.id === 'factor causal') {
         symbol.width = 30;
@@ -307,7 +307,7 @@ export class FlowChartComponent {
   }
 
   public onClicked(args: ClickEventArgs) {
-    console.log(args);
+    // console.log(args);
     
     if (args.item.text === 'New') {
         this.diagram.clear();
@@ -339,15 +339,15 @@ export class FlowChartComponent {
 
   changeText(evento: any){
     try {
-        console.log(evento);
+        // console.log(evento);
         // console.log(evento.element.properties.id);
         // console.log(evento.newValue);
   
         if(evento.element.properties.id.includes('factor')){
-          console.log("ok");
+          // console.log("ok");
   
           let x = this.listFC.find((x)=>x.nombre == evento.oldValue)
-              console.log(x);
+              // console.log(x);
     
           if(x!=undefined){
             this.listFC.forEach(element => {
@@ -359,27 +359,27 @@ export class FlowChartComponent {
             this.listFC.push({id:this.listFC.length+1, nombre:evento.newValue});
           }
     
-          console.log(this.listFC);
+          // console.log(this.listFC);
           
           this.datosFC.emit(this.listFC);
         }
     } catch (error) {
-        console.log("error",error);
+        // console.log("error",error);
     }
   }
 
   loadFC(){
-    console.log(this.dataFlowChart); 
-    console.log(JSON.parse(this.dataFlowChart.flow_chart).nodes);
+    // console.log(this.dataFlowChart); 
+    // console.log(JSON.parse(this.dataFlowChart.flow_chart).nodes);
     let y = JSON.parse(this.dataFlowChart.flow_chart).nodes;
 
     y.forEach(element => {
         if (element.id.includes('factor')) {
-            console.log(element.annotations[0].content);
+            // console.log(element.annotations[0].content);
             this.listFC.push({id:this.listFC.length+1, nombre:element.annotations[0].content});
         }
-        console.log(element);
-        console.log(element.id);
+        // console.log(element);
+        // console.log(element.id);
         // if (element.id) {
             
         // }
@@ -392,7 +392,7 @@ export class FlowChartComponent {
 
   }
 test(event){
-console.log(event)
+// console.log(event)
 
 
 }
@@ -438,7 +438,7 @@ console.log(event)
         // this.diagram.print(printOptions);
         var svg=this.diagram.exportDiagram(printOptions);
         // this.svg2=svg.toString()
-        console.log(svg)
+        // console.log(svg)
         // console.log(JSON.stringify(svg))
 
     }

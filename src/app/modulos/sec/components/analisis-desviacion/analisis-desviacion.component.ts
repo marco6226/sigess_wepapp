@@ -1402,14 +1402,14 @@ testmsng(){
     habilitarInforme(){
         let validador = true
         if(this.listPlanAccion.length>0){
-        
+            console.log(this.listPlanAccion)
             this.listPlanAccion.forEach(element => {
                 // console.log(element)
 
-                        let nombre:string[]=[];
-                        let causas:string[]=[];
-                        let preguntas:string[]=[];
-                        let id:number;
+                let nombre:string[]=[];
+                let causas:string[]=[];
+                let preguntas:string[]=[];
+                let id:number;
                 // let isPlanAccionFinish = element.causaRaiz.find(ele=>{
                 //     return ele.revisado.isComplete == true
                 // })
@@ -1437,7 +1437,8 @@ testmsng(){
                                 dataFactor = this.dataListFactor.find(ele=> {
                                     return ele.nombre == nombre[index] && ele.metodologia == causas[index] && ele.pregunta == preguntas[index]
                                 })
-
+                                console.log(this.dataListFactor)
+                                console.log(causa)
                                 if (dataFactor) {
                                     // console.log(dataFactor)
                                     dataFactor.accion = 'Con Plan de Accion'                            
