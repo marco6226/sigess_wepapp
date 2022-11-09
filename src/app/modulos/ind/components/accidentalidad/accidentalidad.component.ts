@@ -8,7 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
-import { single } from './data';
+import { single2, single, single3} from './data';
 
 class division {
   name: string;
@@ -59,7 +59,9 @@ export class AccidentalidadComponent implements OnInit {
     'id'
   ];
   single: any[];
-  view: any[] = [700, 400];
+  single2: any[];
+  single3: any[];
+  view: any[] = [500, 300];
 
   // options
   gradient: boolean = true;
@@ -67,8 +69,22 @@ export class AccidentalidadComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
-  colorScheme = {
+
+    // options
+    showXAxis = true;
+    showYAxis = true;
+    showXAxisLabel = true;
+    xAxisLabel = 'Divisiones';
+    showYAxisLabel = true;
+    yAxisLabel = 'Días perdidos';
+
+
+  colorScheme1 = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  colorScheme2 = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000']
   };
 
   title: string = 'Accidentalidad';
@@ -84,27 +100,24 @@ export class AccidentalidadComponent implements OnInit {
   constructor(
     private reporteAtService: ReporteAtService, 
     private areaService: AreaService
-    ) {  Object.assign(this, { single });}
-    onSelect(data): void {
-      console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    }
-  
-    onActivate(data): void {
-      console.log('Activate', JSON.parse(JSON.stringify(data)));
-    }
-  
-    onDeactivate(data): void {
-      console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-    }
-  ngOnInit() {
-    this.getData()
+    ) {  Object.assign(this, { single3 });
+    Object.assign(this, { single2 });}
+
+  async ngOnInit() {
+
+    await this.getData()
       .then( () => {
         console.log('areaList: ' + this.areaList);
       });
-    
+      console.log(single2)
+      console.log(this.totalDiasPerdidosDv)
+        console.log(this.totalEventosDv)
+          console.log(this.reporteTabla2)
   }
   reporteTabla
   reporteTabla2
+  totalDiasPerdidosDv: any[];
+  totalEventosDv: any[];
   async getData(){
     this.hastas= new Date(Date.now())
     this.desdes=null
@@ -131,6 +144,8 @@ export class AccidentalidadComponent implements OnInit {
       
       this.reporteTabla=[]
       this.reporteTabla2=[]
+      this.totalDiasPerdidosDv=[]
+      this.totalEventosDv=[]
       await this.reporteAtService.findAllRAT()
       .then(res => {
         this.reporteTabla=res
@@ -148,6 +163,8 @@ export class AccidentalidadComponent implements OnInit {
               }
             }
           })
+          this.totalDiasPerdidosDv.push({name:element['nombre'],value:diasPerdidos})
+          this.totalEventosDv.push({name:element['nombre'],value:cont})
           this.reporteTabla2.push({nombre:element['nombre'],eventos:cont,dias_Perdidos:diasPerdidos})
         });
       });

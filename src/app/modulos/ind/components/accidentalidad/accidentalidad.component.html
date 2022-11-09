@@ -104,16 +104,34 @@
       </p-panel>
   </div>
 
-
-  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
+  <!-- <div> -->
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
     <p-panel header="Graficos">
-        <ngx-charts-advanced-pie-chart
+      <div class="ui-g">
+      <div class="ui-g-12 ui-sm-12 ui-md-12">
+      <ngx-charts-advanced-pie-chart
+      [view]="view"
+      [scheme]="colorScheme2"
+      [results]="single3"
+      [gradient]="gradient">
+    </ngx-charts-advanced-pie-chart>
+    </div>
+    <div class="ui-g-12 ui-sm-12 ui-md-12">
+      <ngx-charts-bar-vertical
         [view]="view"
-        [scheme]="colorScheme"
-        [results]="single"
+        [scheme]="colorScheme2"
+        [results]="single2"
         [gradient]="gradient"
-        >
-      </ngx-charts-advanced-pie-chart>
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel">
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
     </p-panel>
   </div>
 
