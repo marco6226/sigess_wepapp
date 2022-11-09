@@ -8,7 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
-import { single2, single, single3} from './data';
+// import { single2, single, single3} from './data';
 
 class division {
   name: string;
@@ -26,6 +26,7 @@ class division {
   styleUrls: ["./accidentalidad.component.scss"],
   providers: [],
 })
+
 export class AccidentalidadComponent implements OnInit {
   localeES = locale_es;
   desde: Date;
@@ -70,20 +71,15 @@ export class AccidentalidadComponent implements OnInit {
   isDoughnut: boolean = false;
 
 
-    // options
-    showXAxis = true;
-    showYAxis = true;
-    showXAxisLabel = true;
-    xAxisLabel = 'Divisiones';
-    showYAxisLabel = true;
-    yAxisLabel = 'Días perdidos';
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Divisiones';
+  showYAxisLabel = true;
+  yAxisLabel = 'Días perdidos';
 
-
-  colorScheme1 = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-
-  colorScheme2 = {
+  colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000']
   };
 
@@ -100,19 +96,18 @@ export class AccidentalidadComponent implements OnInit {
   constructor(
     private reporteAtService: ReporteAtService, 
     private areaService: AreaService
-    ) {  Object.assign(this, { single3 });
-    Object.assign(this, { single2 });}
-
+    ) { 
+      //  Object.assign(this, { single3 });
+      //   Object.assign(this, { single2 });
+      }
+    flag:boolean=false
   async ngOnInit() {
 
     await this.getData()
       .then( () => {
         console.log('areaList: ' + this.areaList);
+        this.flag=true
       });
-      console.log(single2)
-      console.log(this.totalDiasPerdidosDv)
-        console.log(this.totalEventosDv)
-          console.log(this.reporteTabla2)
   }
   reporteTabla
   reporteTabla2

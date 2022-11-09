@@ -111,16 +111,16 @@
       <div class="ui-g-12 ui-sm-12 ui-md-12">
       <ngx-charts-advanced-pie-chart
       [view]="view"
-      [scheme]="colorScheme2"
-      [results]="single3"
-      [gradient]="gradient">
+      [scheme]="colorScheme"
+      [results]="totalEventosDv"
+      [gradient]="gradient" *ngIf="flag">
     </ngx-charts-advanced-pie-chart>
     </div>
     <div class="ui-g-12 ui-sm-12 ui-md-12">
       <ngx-charts-bar-vertical
         [view]="view"
-        [scheme]="colorScheme2"
-        [results]="single2"
+        [scheme]="colorScheme"
+        [results]="totalDiasPerdidosDv"
         [gradient]="gradient"
         [xAxis]="showXAxis"
         [yAxis]="showYAxis"
@@ -128,7 +128,7 @@
         [showXAxisLabel]="showXAxisLabel"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel">
+        [yAxisLabel]="yAxisLabel" *ngIf="flag">
       </ngx-charts-bar-vertical>
     </div>
   </div>
