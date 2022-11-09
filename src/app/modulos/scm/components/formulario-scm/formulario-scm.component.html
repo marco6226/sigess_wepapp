@@ -1049,7 +1049,7 @@
                             <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus"
                                 label="Crear" (click)="openModalRecomendantions()">
                             </button>
-                            <button pButton type="button" icon="fa fa-pencil" label="Modificar"
+                            <button pButton type="button" icon="fa fa-pencil" label="Modificar" *sTienePermiso="'SCM_PUT_CASE_RECO'"
                                 class="ui-button-success" (click)="modalRecomendatios = true"
                                 [disabled]="!recoSelect"></button>
                             <button pButton type="button" icon="fa fa-trash" label="Eliminar" *sTienePermiso="'SCM_DEL_CASE_RECO'" class="ui-button-danger"
@@ -1188,10 +1188,10 @@
                                 <td class="p-text-center" *ngIf="!this.consultar">
                                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
-                                        title="Editar Seguimiento"
+                                        title="Editar Seguimiento" *sTienePermiso="'SCM_PUT_CASE_SEG'"
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento"
+                                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" *sTienePermiso="'SCM_PUT_CASE_SEG'"
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
                                         icon="pi pi-check" (click)="onRowEditSave(seguimiento)"
@@ -1321,9 +1321,9 @@
 
                                 <td class="p-text-center">
                                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                        icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"
+                                        icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"  title="Editar Tratamiento" *sTienePermiso="'SCM_PUT_CASE_TRAT'"
                                         class="p-button-rounded p-button-text p-mr-2"> </button>
-                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento" *sTienePermiso="'SCM_DEL_CASE_TRAT'"
                                         (click)="confirm(tratamiento,ri)"
                                         class="p-button-rounded p-button-text ui-button-danger">
                                     </button>
