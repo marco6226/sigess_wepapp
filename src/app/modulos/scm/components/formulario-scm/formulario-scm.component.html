@@ -684,7 +684,7 @@
                     <button pButton *ngIf="solicitando == false" type="button" (click)="onCancel.emit()"
                         icon="fa fa-chevron-left" class="float-btn" (click)="closeForm()"
                         title="Volver a listado de empleados"></button>
-                    <button pButton *ngIf="solicitando == false && !this.consultar2" type="submit" icon="fa fa-floppy-o"
+                    <button pButton *ngIf="solicitando == false && !this.consultar2 && !this.guardando" type="submit" icon="fa fa-floppy-o"
                         class="float-btn" [disabled]="this.consultar" style="bottom: 100px;"
                         title="Guardar datos medicos"></button>
 
@@ -1186,12 +1186,12 @@
                                     </p-cellEditor>
                                 </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
-                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                    <button *sTienePermiso="'SCM_PUT_CASE_SEG'"  pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
-                                        title="Editar Seguimiento" *sTienePermiso="'SCM_PUT_CASE_SEG'"
+                                        title="Editar Seguimiento"  
                                         class="p-button-rounded p-button-text p-mr-2"></button>
-                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" *sTienePermiso="'SCM_PUT_CASE_SEG'"
+                                    <button *sTienePermiso="'SCM_PUT_CASE_SEG'"  pButton pRipple type="button" icon="pi pi-copy"
+                                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
                                         icon="pi pi-check" (click)="onRowEditSave(seguimiento)"
@@ -1320,10 +1320,10 @@
                                 </td>
 
                                 <td class="p-text-center">
-                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                        icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"  title="Editar Tratamiento" *sTienePermiso="'SCM_PUT_CASE_TRAT'"
+                                    <button *sTienePermiso="'SCM_PUT_CASE_TRAT'" pButton pRipple type="button" pInitEditableRow
+                                        icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"  title="Editar Tratamiento" 
                                         class="p-button-rounded p-button-text p-mr-2"> </button>
-                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento" *sTienePermiso="'SCM_DEL_CASE_TRAT'"
+                                    <button *sTienePermiso="'SCM_DEL_CASE_TRAT'" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento" 
                                         (click)="confirm(tratamiento,ri)"
                                         class="p-button-rounded p-button-text ui-button-danger">
                                     </button>
