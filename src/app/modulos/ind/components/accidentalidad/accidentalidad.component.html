@@ -3,14 +3,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <div class="ui-g">
-  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
+  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-10" style="padding: 10px">
     <p-panel header="Tableros">
       <div class="tab-list">
         <a>Tablero de Accidentalidad</a>
       </div>
     </p-panel>
   </div>
-  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
+  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-10" style="padding: 10px">
       <p-panel header="Indicadores">
         <!-- <p-card class="ui-g-12"  >   -->
           <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="padding: 2px 2px;">
@@ -105,33 +105,86 @@
   </div>
 
   <!-- <div> -->
-    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-2">
+  <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-12 ui-xl-10" style="padding: 10px">
     <p-panel header="Graficos">
       <div class="ui-g">
-      <div class="ui-g-12 ui-sm-12 ui-md-12">
-      <ngx-charts-advanced-pie-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="totalEventosDv"
-      [gradient]="gradient" *ngIf="flag">
-    </ngx-charts-advanced-pie-chart>
-    </div>
-    <div class="ui-g-12 ui-sm-12 ui-md-12">
-      <ngx-charts-bar-vertical
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="totalDiasPerdidosDv"
-        [gradient]="gradient"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [legend]="showLegend"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel" *ngIf="flag">
-      </ngx-charts-bar-vertical>
-    </div>
-  </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+          <ngx-charts-advanced-pie-chart
+          class="align-items-center"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="totalEventosDv"
+          [gradient]="gradient" *ngIf="flag">
+          </ngx-charts-advanced-pie-chart>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+          <ngx-charts-bar-vertical
+          class="align-items-center"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="totalDiasPerdidosDv"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel" *ngIf="flag">
+          </ngx-charts-bar-vertical>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+          <ngx-charts-bar-horizontal-2d
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="totalDiasEventos"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel2"
+          [legendTitle]="legendTitle"
+          (select)="onSelect($event)" *ngIf="flag">
+          </ngx-charts-bar-horizontal-2d>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" *ngIf="flagdiv">
+          <a>Días perdidos</a>
+          <ngx-charts-bar-vertical
+          class="align-items-center"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="totalDiasPerdidosDv"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel" *ngIf="flag">
+          </ngx-charts-bar-vertical>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" *ngIf="flagevent">
+          <h2>Eventos AT</h2>
+          <ngx-charts-bar-vertical
+          class="align-items-center"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="totalDiasPerdidosDv"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel" *ngIf="flag">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
     </p-panel>
   </div>
 

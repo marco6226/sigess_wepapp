@@ -1186,12 +1186,14 @@
                                     </p-cellEditor>
                                 </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
+                                    <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
                                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
-                                        title="Editar Seguimiento" *sTienePermiso="'SCM_PUT_CASE_SEG'"
+                                        title="Editar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
+                                        <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
                                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
-                                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" *sTienePermiso="'SCM_PUT_CASE_SEG'"
+                                        (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
                                         icon="pi pi-check" (click)="onRowEditSave(seguimiento)"
@@ -1320,10 +1322,12 @@
                                 </td>
 
                                 <td class="p-text-center">
+                                    <!-- *sTienePermiso="'SCM_PUT_CASE_TRAT'" -->
                                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                        icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"  title="Editar Tratamiento" *sTienePermiso="'SCM_PUT_CASE_TRAT'"
+                                        icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"  title="Editar Tratamiento" 
                                         class="p-button-rounded p-button-text p-mr-2"> </button>
-                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento" *sTienePermiso="'SCM_DEL_CASE_TRAT'"
+                                        <!-- *sTienePermiso="'SCM_DEL_CASE_TRAT'" -->
+                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento"
                                         (click)="confirm(tratamiento,ri)"
                                         class="p-button-rounded p-button-text ui-button-danger">
                                     </button>

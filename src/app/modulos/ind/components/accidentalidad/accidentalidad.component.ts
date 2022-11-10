@@ -8,7 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
-// import { single2, single, single3} from './data';
+import { multi} from './data';
 
 class division {
   name: string;
@@ -28,6 +28,7 @@ class division {
 })
 
 export class AccidentalidadComponent implements OnInit {
+  multi: any[];
   localeES = locale_es;
   desde: Date;
   hasta: Date;
@@ -59,10 +60,8 @@ export class AccidentalidadComponent implements OnInit {
   fieldR: string[] = [
     'id'
   ];
-  single: any[];
-  single2: any[];
-  single3: any[];
-  view: any[] = [500, 300];
+
+  view: any[] = [800, 300];
 
   // options
   gradient: boolean = true;
@@ -76,11 +75,16 @@ export class AccidentalidadComponent implements OnInit {
   showYAxis = true;
   showXAxisLabel = true;
   xAxisLabel = 'Divisiones';
+  xAxisLabel2 = 'Eventos AT/Días perdidos';
   showYAxisLabel = true;
   yAxisLabel = 'Días perdidos';
+  yAxisLabel2 = 'Divisiones';
+
+
+  legendTitle: string = 'Years';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000']
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000','#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000']
   };
 
   title: string = 'Accidentalidad';
@@ -97,10 +101,11 @@ export class AccidentalidadComponent implements OnInit {
     private reporteAtService: ReporteAtService, 
     private areaService: AreaService
     ) { 
-      //  Object.assign(this, { single3 });
-      //   Object.assign(this, { single2 });
+      Object.assign(this, { multi })
       }
     flag:boolean=false
+    flagdiv:boolean=false
+    flagevent:boolean=false
   async ngOnInit() {
 
     await this.getData()
@@ -113,6 +118,7 @@ export class AccidentalidadComponent implements OnInit {
   reporteTabla2
   totalDiasPerdidosDv: any[];
   totalEventosDv: any[];
+  totalDiasEventos: any[];
   async getData(){
     this.hastas= new Date(Date.now())
     this.desdes=null
@@ -141,6 +147,7 @@ export class AccidentalidadComponent implements OnInit {
       this.reporteTabla2=[]
       this.totalDiasPerdidosDv=[]
       this.totalEventosDv=[]
+      this.totalDiasEventos=[]
       await this.reporteAtService.findAllRAT()
       .then(res => {
         this.reporteTabla=res
@@ -161,8 +168,11 @@ export class AccidentalidadComponent implements OnInit {
           this.totalDiasPerdidosDv.push({name:element['nombre'],value:diasPerdidos})
           this.totalEventosDv.push({name:element['nombre'],value:cont})
           this.reporteTabla2.push({nombre:element['nombre'],eventos:cont,dias_Perdidos:diasPerdidos})
+          this.totalDiasEventos.push({name:element['nombre'],series:[{name:'Eventos AT',value:cont},{name:'Días perdidos',value:diasPerdidos}]})
         });
       });
+      console.log(this.totalDiasEventos)
+      console.log(multi)
       this.data = this.reporteTabla2;
   }
 
@@ -224,5 +234,16 @@ export class AccidentalidadComponent implements OnInit {
   async division(event){
     this.divisionS=event.value
     await this.reportes()
+  }
+
+  onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    if(JSON.parse(JSON.stringify(data))=='Eventos AT'){
+      this.flagevent=true
+      this.flagdiv=false
+    }else{
+      this.flagevent=false
+      this.flagdiv=true
+    }
   }
 }
