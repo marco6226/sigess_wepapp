@@ -1,12 +1,12 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
-import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic'
-import { EmpleadoBasicService } from 'app/modulos/empresa/services/empleado-basic.service'
+import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic';
+import { EmpleadoBasicService } from 'app/modulos/empresa/services/empleado-basic.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms'
 
 @Component({
   selector: 's-empleadoBasicSelector',
-  templateUrl: './empleado-selector-basic.component.html',
-  styleUrls: ['./empleado-selector-basic.component.scss'],
+  templateUrl: './empleado-basic-selector.component.html',
+  styleUrls: ['./empleado-basic-selector.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => EmpleadoBasicSelectorComponent),

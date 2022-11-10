@@ -86,7 +86,7 @@ import { CiudadSelectorComponent } from 'app/modulos/comun/components/ciudad-sel
 import { CustomRadioButtonComponent } from './components/custom-radio-button/custom-radio-button.component';
 import { MensajeUsuarioComponent } from './components/mensaje-usuario/mensaje-usuario.component';
 import { EmpleadoSelectorComponent } from './components/empleado-selector/empleado-selector.component';
-import { EmpleadoBasicSelectorComponent} from './components/empleado-selector-basic/empleado-selector-basic.component';
+import { EmpleadoBasicSelectorComponent} from './components/empleado-basic-selector/empleado-basic-selector.component';
 import { SelectorRangoFechasComponent } from './components/selector-rango-fechas/selector-rango-fechas.component'
 
 import { DocumentoUploadComponent } from 'app/modulos/ado/components/documento-upload/documento-upload.component';
