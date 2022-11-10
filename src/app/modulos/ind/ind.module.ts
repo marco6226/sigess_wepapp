@@ -11,6 +11,7 @@ import { HorahombrestrabajadaComponent } from './components/horahombrestrabajada
 import { CalendarModule } from 'primeng/calendar';
 import { AccidentalidadComponent } from './components/accidentalidad/accidentalidad.component';
 import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
+import { NgxChartsModule } from 'ngx-charts-8';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
     ComunModule,
     FormsModule,
     ReactiveFormsModule,
-    CalendarModule
+    CalendarModule,
+    NgxChartsModule
   ],
   declarations: [
     IndicadoresEmpComponent, 
