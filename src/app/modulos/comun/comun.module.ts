@@ -107,6 +107,7 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {ButtonModule} from 'primeng/button';
 import {RatingModule} from 'primeng/rating';
 import {MenuItem} from 'primeng/api';
+import { EmpleadoBasicService } from '../empresa/services/empleado-basic.service';
 // import {InputNumberModule} from 'primeng/primeng';
 
 
@@ -321,7 +322,7 @@ const modules = [
 		CambioPasswdService,
 		ParametroNavegacionService,
 		SistemaNivelRiesgoService,
-		DiagramContextMenuService
+		EmpleadoBasicService
 	]
 })
 export class ComunModule { }
