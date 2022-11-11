@@ -1,7 +1,9 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic';
-import { EmpleadoBasicService } from 'app/modulos/empresa/services/empleado-basic.service';
+import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms'
+import { FilterQuery } from 'app/modulos/core/entities/filter-query';
+import { Criteria } from 'app/modulos/core/entities/filter';
 
 @Component({
   selector: 's-empleadoBasicSelector',
@@ -22,8 +24,14 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
   propagateChange = (_: any) => { };
   empleadosList: EmpleadoBasic[];
 
+  fields: string[] = [
+    'id',
+    'primerNombre',
+    'numeroIdentificacion', 
+  ];
+
   constructor(
-    private empleadoService: EmpleadoBasicService,
+    private empleadoService: EmpleadoService,
   ) { }
 
   ngOnInit() {
@@ -50,11 +58,50 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
   }
 
   // Component methods
-  buscarEmpleado(event) {
-    this.empleadoService.buscar(event.query).then(
+  buscarEmpleado(event:any) {
+
+  let filterQuery = new FilterQuery();
+  filterQuery.sortField = event.sortField;
+  filterQuery.sortOrder = event.sortOrder;
+  filterQuery.offset = event.first;
+  filterQuery.rows = event.rows;
+  filterQuery.count = true;
+
+  //filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+        
+
+  filterQuery.fieldList = this.fields;
+  filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+  filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "primerNombre", value1: event.query});
+  //filterQuery.filterList.push({ criteria: Criteria.CONTAINS, value1: '321'});
+    this.empleadoService.findByFilter(filterQuery).then(
       data => this.empleadosList = <EmpleadoBasic[]>data
     );
   }
+  //field: '', criteria: Criteria.EQUALS, value1: empleadoIdentificacion 
+  // let filterQuery = new FilterQuery();
+  // filterQuery.sortField = event.sortField;
+  // filterQuery.sortOrder = event.sortOrder;
+  // filterQuery.offset = event.first;
+  // filterQuery.rows = event.rows;
+  // filterQuery.count = true;
+
+  // filterQuery.fieldList = this.fields;
+  // filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+
+  // this.perfilService.findByFilter(filterQuery).then(
+  //   resp => {
+  //     this.totalRecords = resp['count'];
+  //     this.loading = false;
+  //     this.perfilList = [];
+  //     (<any[]>resp['data']).forEach(dto => this.perfilList.push(FilterQuery.dtoToObject(dto)));
+  //   }
+
+
+
+
+
+
 
   onSelection(event) {
     this.value = event;

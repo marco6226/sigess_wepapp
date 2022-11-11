@@ -6,6 +6,7 @@ import { HttpInt } from 'app/httpInt'
 import { MensajeUsuarioService } from 'app/modulos/comun/services/mensaje-usuario.service';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FilterQuery } from "app/modulos/core/entities/filter-query";
 
 @Injectable()
 export class EmpleadoBasicService extends ServiceCRUD<EmpleadoBasic> {
@@ -85,6 +86,26 @@ export class EmpleadoBasicService extends ServiceCRUD<EmpleadoBasic> {
         )
     });
   }
+
+  findByFilter(filterQuery?: FilterQuery) {
+    // console.log(filterQuery, "filtro linea 71");
+    return new Promise((resolve, reject) => {
+        this.httpInt
+            .get(this.end_point + "?" + this.buildUrlParams(filterQuery))
+            .retryWhen(this.retryFunction)
+            .map((res) => res)
+            .subscribe(
+                (res) => {
+                    
+                    resolve(res);
+                },
+                (err) => {
+                    this.manageError(err);
+                    reject(err);
+                }
+            );
+    });
+}
 
   getClassName(): string {
     return "EmpleadoBasicService";
