@@ -15,6 +15,7 @@ import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { AreaService } from '../../../empresa/services/area.service';
 import { Area, Estructura } from '../../../empresa/entities/area';
 import { Filter } from 'app/modulos/core/entities/filter';
+import { HelperService } from 'app/modulos/core/services/helper.service';
 
 @Component({
     selector: 's-permisos',
@@ -38,6 +39,7 @@ export class PermisosComponent implements OnInit {
         private recursoService: RecursoService,
         private permisoService: PermisoService,
         private perfilService: PerfilService,
+        private helperService: HelperService
     ) { }
 
     ngOnInit() {
@@ -199,4 +201,12 @@ export class PermisosComponent implements OnInit {
         });
     }
 
+    actualizarPermisosLocales(event: any){
+        // console.info(event);
+        if(event.isTrusted){
+            // console.info('Actualizar permisos presionado: ' + event.isTrusted);
+            // this.isTrustedActualizarPermisos = event.isTrusted;
+            this.helperService.changeMessage(event.isTrusted);
+        }
+    }
 }
