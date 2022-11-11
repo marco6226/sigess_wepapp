@@ -3,14 +3,17 @@
 <p-panel header="Administración de permisos">
 
     <div class="ui-g">
-        <div class="ui-g-6">
+        <div class="ui-g-8">
             <table width="100%">
                 <tr>
                     <td style="padding-right: 10px;">
                         <h3>PERFIL</h3>
                     </td>
-                    <td width="100%">
+                    <td style="width:60%;">
                         <p-dropdown [options]="perfilesList" (onChange)="actualizarListado($event)"></p-dropdown>
+                    </td>
+                    <td>
+                        <button pButton type="button" class="btn btn-primary btn-sm" icon="pi pi-refresh" iconPos="left" label="Actualizar permisos" (click)="actualizarPermisosLocales($event)" style="margin-left: 10px;"></button>
                     </td>
                 </tr>
             </table>

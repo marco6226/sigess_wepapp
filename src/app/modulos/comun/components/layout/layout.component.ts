@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, ContentChild, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ContentChild, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { LayoutMenuComponent } from './layout-menu/layout-menu.component'
 
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
@@ -22,6 +22,7 @@ import { PermisoService } from 'app/modulos/admin/services/permiso.service'
 import { AuthService } from '../../../core/auth.service';
 import { ConfiguracionGeneralService } from '../../services/configuracion-general.service';
 import { ConfiguracionGeneral } from '../../entities/configuracion-general';
+import { HelperService } from 'app/modulos/core/services/helper.service';
 
  var $: any;
 @Component({
@@ -54,6 +55,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 	position: number=window.innerWidth-400;
 	pos:number=1500;
 
+	actualizarPermisos: any;
 
 	constructor(
 		private confGenService: ConfiguracionGeneralService,
@@ -65,6 +67,7 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		private permisoService: PermisoService,
 		private authService: AuthService,
 		private mistareas: MisTareasComponent,
+		private helperService: HelperService
 	) {
 		
 
@@ -92,6 +95,8 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		});
 	}
 	async ngOnInit() {
+		this.helperService.customMessage.subscribe(msg => this.actualizarPermisos = msg);
+
 		this.usuario = this.sesionService.getUsuario();
 		this.items = [
 			{ label: 'Preferencias', icon: 'fa fa-gears', command: (event => this.irPreferencias()) },
@@ -113,6 +118,22 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 		setTimeout(() => {           
 			this.closeMenu();
         }, 10000);
+
+		setInterval(()=>{
+			if(this.actualizarPermisos==true){
+				console.log('Recargando Menú');
+				this.menuComp.recargarMenu();
+				this.helperService.changeMessage(false);
+				this.permisoService.findAll()
+				.then((data: Permiso[]) => {
+					this.mapaPermisos = {};
+					data.forEach(element => this.mapaPermisos[element.recurso.codigo] = { 'valido': element.valido, 'areas': element.areas });
+					this.sesionService.setPermisosMap(this.mapaPermisos);
+					console.log(this.mapaPermisos);
+					this.menuComp.recargarMenu();
+				});
+			}
+		}, 2000)
 	}
 
 	logout() {

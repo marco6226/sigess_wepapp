@@ -28,6 +28,7 @@ import { HttpAuthInterceptor } from './modulos/core/services/http-auth-intercept
 import { CopModule } from './modulos/cop/cop.module';
 import { AyudaModule } from './modulos/ayuda/ayuda.module';
 import { ScmModule } from './modulos/scm/scm.module';
+import { HelperService } from './modulos/core/services/helper.service';
 
 declare global {
     interface Navigator {
@@ -77,7 +78,8 @@ const appRoutes: Routes = [
             provide: HTTP_INTERCEPTORS,
             useClass: HttpAuthInterceptor,
             multi: true
-        }
+        },
+        HelperService
     ],
     bootstrap: [AppComponent]
 
