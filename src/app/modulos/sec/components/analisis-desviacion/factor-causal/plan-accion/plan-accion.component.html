@@ -17,7 +17,7 @@
     </div>
     <div class="p-field">
         <label>Responsable Empresa</label>
-        <s-empleadoSelector [(ngModel)]="planAcciones.especifico.responsableEmpresa" [readOnly]="reporteSelect " required></s-empleadoSelector>
+        <s-empleadoBasicSelector [(ngModel)]="planAcciones.especifico.responsableEmpresa" [readOnly]="reporteSelect " required></s-empleadoBasicSelector>
     </div>
     <div class="p-field">
         <label>Responsable Externo</label>
@@ -36,7 +36,7 @@
     <div class="p-field">
         <label>Responsable de Verificar que la acción ha sido compleatada</label>
         <!-- <input type="text" required autofocus/> -->
-        <s-empleadoSelector [(ngModel)]="planAcciones.medible.responsableEmpresa" [readOnly]="reporteSelect " required></s-empleadoSelector>
+        <s-empleadoBasicSelector [(ngModel)]="planAcciones.medible.responsableEmpresa" [readOnly]="reporteSelect " required></s-empleadoBasicSelector>
     </div>
     <div class="p-field">
         <label>Responsable Externo</label>
