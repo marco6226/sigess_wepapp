@@ -6,6 +6,9 @@
     background-color: #fff;
     box-sizing: border-box;
   }
+  h1{
+    color: #ffffff;
+  }
   h3{
     margin-bottom: 1em;
     text-align: center;
@@ -270,4 +273,7 @@
 ::ng-deep .col-4 {
   width: 100%!important;
   text-align:right;
+}
+::ng-deep a:hover {
+  background-color: orange !important;
 }

@@ -45,6 +45,7 @@ export class AccidentalidadComponent implements OnInit {
   todayWithPipe = null;
   areaList: Area[] = [];
   divisiones= new Array();
+  divisiones2= new Array();
   divisionS=null;
 
   fieldsR: string[] = [
@@ -61,7 +62,8 @@ export class AccidentalidadComponent implements OnInit {
     'id'
   ];
 
-  view: any[] = [800, 300];
+  view: any[] = [1000, 400];
+  view2: any[] = [700, 400];
 
   // options
   gradient: boolean = true;
@@ -76,15 +78,21 @@ export class AccidentalidadComponent implements OnInit {
   showXAxisLabel = true;
   xAxisLabel = 'Divisiones';
   xAxisLabel2 = 'Eventos AT/Días perdidos';
+  xAxisLabel3 = 'Meses';
   showYAxisLabel = true;
   yAxisLabel = 'Días perdidos';
   yAxisLabel2 = 'Divisiones';
+  yAxisLabel3 = 'Tasa frecuencia/Tasa Severidad (%)';
 
 
   legendTitle: string = 'Years';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000','#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#5AA985', '#A10342', '#C7B000']
+  };
+
+  colorScheme2 = {
+    domain: ['#0000FF', '#C7B000', '#A10A28','#5AA985']
   };
 
   title: string = 'Accidentalidad';
@@ -104,24 +112,35 @@ export class AccidentalidadComponent implements OnInit {
       Object.assign(this, { multi })
       }
     flag:boolean=false
+    flag1:boolean=false
     flagdiv:boolean=false
     flagevent:boolean=false
   async ngOnInit() {
-
+    // this.selectEv1()
     await this.getData()
-      .then( () => {
+      .then( async () => {
         console.log('areaList: ' + this.areaList);
         this.flag=true
+        this.flag1=true
+        await this.selectEv1()
+        await this.selectIn1()
+        await this.selectIn2()
+        await this.selectEv2()
       });
   }
   reporteTabla
   reporteTabla2
   totalDiasPerdidosDv: any[];
   totalEventosDv: any[];
+  totalEventosDv2: any[];
   totalDiasEventos: any[];
+  random: any[];
   async getData(){
+    this.datosRandom()
     this.hastas= new Date(Date.now())
     this.desdes=null
+    this.hasta= new Date(Date.now())
+    this.desde=null
     await this.reportes()
 
     let areafiltQuery = new FilterQuery();
@@ -132,6 +151,7 @@ export class AccidentalidadComponent implements OnInit {
         { criteria: Criteria.EQUALS, field: "nivel", value1: "0" },
     ];
     this.divisiones=[]
+    this.divisiones2=[]
     this.divisiones.push({label:'Total',value:'Total'})
     await this.areaService.findByFilter(areafiltQuery)
     .then(
@@ -139,6 +159,7 @@ export class AccidentalidadComponent implements OnInit {
         this.areaList = <Area[]>resp['data'];
         this.areaList.forEach(element => {
           this.divisiones.push({label:element['nombre'],value:element['nombre']})
+          this.divisiones2.push({label:element['nombre'],value:element['nombre']})
         });
       }
     );
@@ -147,15 +168,15 @@ export class AccidentalidadComponent implements OnInit {
       this.reporteTabla2=[]
       this.totalDiasPerdidosDv=[]
       this.totalEventosDv=[]
+      this.totalEventosDv2=[]
       this.totalDiasEventos=[]
       await this.reporteAtService.findAllRAT()
       .then(res => {
         this.reporteTabla=res
         
         this.areaList.forEach(element => {
-          
-          let cont=0
-          let diasPerdidos=0
+          let cont: number = 0;
+          let diasPerdidos: number=0
 
           this.reporteTabla.forEach(element2 =>{
             if(element['nombre']==element2['padreNombre']){
@@ -171,9 +192,46 @@ export class AccidentalidadComponent implements OnInit {
           this.totalDiasEventos.push({name:element['nombre'],series:[{name:'Eventos AT',value:cont},{name:'Días perdidos',value:diasPerdidos}]})
         });
       });
-      console.log(this.totalDiasEventos)
-      console.log(multi)
+      this.totalEventosDv2=this.totalEventosDv
       this.data = this.reporteTabla2;
+  }
+
+  async getData2(){
+    let flagSelectDiv=this.flagdiv
+    let flagSelectEvent=this.flagevent
+    this.flag=false
+    this.flagdiv=false
+    this.flagevent=false
+    this.reporteTabla=[]
+    this.totalDiasPerdidosDv=[]
+    this.totalEventosDv=[]
+    this.totalDiasEventos=[]
+    await this.reporteAtService.findAllRAT()
+    .then(res => {
+      this.reporteTabla=res
+      
+      this.areaList.forEach(element => {
+        
+        let cont=0
+        let diasPerdidos=0
+
+        this.reporteTabla.forEach(element2 =>{
+          if(element['nombre']==element2['padreNombre'] && new Date(element2['fechaReporte'])>=new Date(this.desde) && new Date(element2['fechaReporte'])<new Date(this.hasta)){
+            cont+=1;
+            if(element2['incapacidades'] != null && element2['incapacidades'] != 'null'){
+              diasPerdidos+=JSON.parse(element2['incapacidades']).length
+            }
+          }
+        })
+        this.totalDiasPerdidosDv.push({name:element['nombre'],value:diasPerdidos})
+        this.totalEventosDv.push({name:element['nombre'],value:cont})
+        this.totalDiasEventos.push({name:element['nombre'],series:[{name:'Eventos AT',value:cont},{name:'Días perdidos',value:diasPerdidos}]})
+      });
+    });
+    this.flag=true
+
+    this.flagdiv=flagSelectDiv
+    this.flagevent=flagSelectEvent
   }
 
   async reportes(){
@@ -230,20 +288,368 @@ export class AccidentalidadComponent implements OnInit {
     this.hastas=new Date(date)
     await this.reportes()
   }
-
+  async selecFromDate2(date: Date) {
+    this.desdes=new Date(date)
+    await this.reportes()
+  }
+  async selectToDate2(date: Date) {
+    this.hastas=new Date(date)
+    await this.reportes()
+  }
   async division(event){
     this.divisionS=event.value
     await this.reportes()
   }
 
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    if(JSON.parse(JSON.stringify(data))=='Eventos AT'){
-      this.flagevent=true
-      this.flagdiv=false
-    }else{
-      this.flagevent=false
-      this.flagdiv=true
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    switch (JSON.parse(JSON.stringify(data))) {
+      case 'Eventos AT':
+        this.flagevent=true
+        this.flagdiv=false
+        break;
+      case 'Días perdidos':      
+        this.flagevent=false
+        this.flagdiv=true
+      default:
+        break;
     }
+  }
+  meses: string[] = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre'
+  ];
+
+  Meses= [
+    {label:'Enero',value:'Enero'},
+    {label:'Febrero',value:'Febrero'},
+    {label:'Marzo',value:'Marzo'},
+    {label:'Abril',value:'Abril'},
+    {label:'Mayo',value:'Mayo'},
+    {label:'Junio',value:'Junio'},
+    {label:'Julio',value:'Julio'},
+    {label:'Agosto',value:'Agosto'},
+    {label:'Septiembre',value:'Septiembre'},
+    {label:'Octubre',value:'Octubre'},
+    {label:'Noviembre',value:'Noviembre'},
+    {label:'Diciembre',value:'Diciembre'}
+  ];
+
+  Meses2= [
+    {name:'Enero',code:'Enero'},
+    {name:'Febrero',code:'Febrero'},
+    {name:'Marzo',code:'Marzo'},
+    {name:'Abril',code:'Abril'},
+    {name:'Mayo',code:'Mayo'},
+    {name:'Junio',code:'Junio'},
+    {name:'Julio',code:'Julio'},
+    {name:'Agosto',code:'Agosto'},
+    {name:'Septiembre',code:'Septiembre'},
+    {name:'Octubre',code:'Octubre'},
+    {name:'Noviembre',code:'Noviembre'},
+    {name:'Diciembre',code:'Diciembre'}
+  ];
+  datosRandom(){
+    this.random=[]
+    this.meses.forEach(mes => {
+      this.random.push({name:mes,series:[{name:'Tasa de Frecuencia (%)',value:Math.random()*100},{name:'Tasa Severidad (%)',value:Math.random()*100}]})
+    });
+  }
+
+
+
+  ///////////////////////////////////////////////////////////////
+
+  selectDivisiones1: any[] = [];
+  selectIndicarores1: any[] = [];
+  selectDivisiones2: any[] = [];
+  selectIndicarores2: any[] = [];
+  selectMeses1: any[] = [];
+  selectMeses2: any[] = [];
+
+  selectEventos1: any[] = [];
+  selectEventos2: any[] = [];
+
+
+  Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Indice de Frecuencia', value: 2}, {label: 'Proporción AT mortal', value: 3}];
+  Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
+
+  randomEv1: any[];
+  randomEv2: any[];
+  randomIn1: any[];
+  randomIn2: any[];
+  flagdiv1:boolean=false;
+  flagdiv2:boolean=false;
+  flagevent1:boolean=false;
+  flagevent2:boolean=false;
+  hastaEv1: Date=new Date(Date.now());
+  hastaEv2: Date=new Date(Date.now());
+  hastaIn1: Date=new Date(Date.now());
+  hastaIn2: Date=new Date(Date.now());
+  desdeEv1: Date;
+  desdeEv2: Date;
+  desdeIn1: Date;
+  desdeIn2: Date;
+  divisiones3: any[]
+
+
+  // randomIn1
+  async selectIn1(){
+
+    let flagSelectEvent=this.flagevent1
+    this.flagevent1=false
+    this.randomIn1=[]
+
+    let TI1=0.0
+    let TI2=0.0
+    let TI3=0.0
+    let TI4=0.0
+
+    if(this.selectDivisiones1.length>0){
+      this.divisiones3=[]
+      this.selectDivisiones1.forEach(element => {
+        let x= this.divisiones2.filter(word => {
+          return word['label']==element['label']
+        });
+        // console.log(x)
+        this.divisiones3.push(x[0])
+      });
+    }else{
+      this.divisiones3=this.divisiones2
+    }
+    
+    this.divisiones3.forEach(division => {
+
+      let I1=Math.random()*14//getRandomInt(3)
+      let I2=Math.random()*14//getRandomInt(3)
+      let I3=Math.random()*14//getRandomInt(3)
+      let I4=Math.random()*14//getRandomInt(3)
+  
+      TI1+=I1;
+      TI2+=I2;
+      TI3+=I3;
+      TI4+=I4;
+      this.randomIn1.push({name:division['label'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Indice de Frecuencia',value:I3},{name:'Proporción AT mortal',value:I4}]})
+    });
+    this.randomIn1.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Indice de Frecuencia',value:TI3},{name:'Proporción AT mortal',value:TI4}]})
+    
+    let randomIn1Copy=[]
+    
+    this.randomIn1.forEach(element => {
+      let randomIn1CopySeries=[]
+
+      if(this.selectIndicarores1.length>0){
+        this.selectIndicarores1.forEach(element2 => {
+          let x = element['series'].filter(word => {
+            return word['name']==element2['label']
+          });
+          randomIn1CopySeries.push(x[0])
+        });
+      }else{
+        randomIn1CopySeries=element['series']
+      }
+      randomIn1Copy.push({name:element['name'],series:randomIn1CopySeries})
+    });
+    this.randomIn1=randomIn1Copy
+    this.flagevent1=true
+  }
+  // async selectIn2(){
+  //   console.log(this.divisiones2)
+  // }
+  async selectIn2(){
+    console.log(this.selectIndicarores2)
+    let flagSelectEvent=this.flagevent1
+    this.flagevent1=false
+    this.randomIn2=[]
+
+    let TI1=0.0
+    let TI2=0.0
+    let TI3=0.0
+    let TI4=0.0
+
+    if(this.selectMeses1.length>0){
+      this.divisiones3=[]
+      this.selectMeses1.forEach(element => {
+        let x= this.Meses2.filter(word => {
+          return word['name']==element['name']
+        });
+        // console.log(x)
+        this.divisiones3.push(x[0])
+      });
+    }else{
+      this.divisiones3=this.Meses2
+    }
+    
+    this.divisiones3.forEach(division => {
+
+      let I1=Math.random()*14//getRandomInt(3)
+      let I2=Math.random()*14//getRandomInt(3)
+      let I3=Math.random()*14//getRandomInt(3)
+      let I4=Math.random()*14//getRandomInt(3)
+  
+      TI1+=I1;
+      TI2+=I2;
+      TI3+=I3;
+      TI4+=I4;
+      this.randomIn2.push({name:division['name'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Indice de Frecuencia',value:I3},{name:'Proporción AT mortal',value:I4}]})
+    });
+    this.randomIn2.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Indice de Frecuencia',value:TI3},{name:'Proporción AT mortal',value:TI4}]})
+    
+    let randomIn2Copy=[]
+    
+    this.randomIn2.forEach(element => {
+      let randomIn2CopySeries=[]
+
+      if(this.selectIndicarores2.length>0){
+        this.selectIndicarores2.forEach(element2 => {
+          let x = element['series'].filter(word => {
+            return word['name']==element2['label']
+          });
+          randomIn2CopySeries.push(x[0])
+        });
+      }else{
+        randomIn2CopySeries=element['series']
+      }
+      randomIn2Copy.push({name:element['name'],series:randomIn2CopySeries})
+    });
+    this.randomIn2=randomIn2Copy
+    this.flagevent1=true
+  }
+
+
+
+  async selectEv1(){
+
+    let flagSelectEvent=this.flagevent1
+    this.flagevent1=false
+    this.randomEv1=[]
+
+    let TI1=0.0
+    let TI2=0.0
+    let TI3=0.0
+    let TI4=0.0
+
+    if(this.selectDivisiones2.length>0){
+      this.divisiones3=[]
+      this.selectDivisiones2.forEach(element => {
+        let x= this.divisiones2.filter(word => {
+          return word['label']==element['label']
+        });
+        console.log(x)
+        this.divisiones3.push(x[0])
+      });
+    }else{
+      this.divisiones3=this.divisiones2
+    }
+    
+    this.divisiones3.forEach(division => {
+
+      let I1=Math.round(Math.random()*14)//getRandomInt(3)
+      let I2=Math.round(Math.random()*14)//getRandomInt(3)
+      let I3=Math.round(Math.random()*14)//getRandomInt(3)
+      let I4=Math.round(Math.random()*14)//getRandomInt(3)
+  
+      TI1+=I1;
+      TI2+=I2;
+      TI3+=I3;
+      TI4+=I4;
+      this.randomEv1.push({name:division['label'],series:[{name:'Numero AT',value:I1},{name:'Numero días perdidos',value:I2},{name:'Numero AT mortales',value:I3},{name:'Numero AT con cero días',value:I4}]})
+    });
+    this.randomEv1.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
+    
+    let randomEv1Copy=[]
+    
+    this.randomEv1.forEach(element => {
+      let randomEv1CopySeries=[]
+
+      if(this.selectEventos1.length>0){
+        this.selectEventos1.forEach(element2 => {
+          let x = element['series'].filter(word => {
+            return word['name']==element2['label']
+          });
+          randomEv1CopySeries.push(x[0])
+        });
+      }else{
+        randomEv1CopySeries=element['series']
+      }
+      randomEv1Copy.push({name:element['name'],series:randomEv1CopySeries})
+    });
+    this.randomEv1=randomEv1Copy
+    this.flagevent1=true
+  }
+
+
+  async selectEv2(){
+
+    let flagSelectEvent=this.flagevent1
+    this.flagevent1=false
+    this.randomEv2=[]
+
+    let TI1=0.0
+    let TI2=0.0
+    let TI3=0.0
+    let TI4=0.0
+
+    if(this.selectMeses2.length>0){
+      this.divisiones3=[]
+      this.selectMeses2.forEach(element => {
+        let x= this.Meses.filter(word => {
+          return word['label']==element['name']
+        });
+        // console.log(x)
+        this.divisiones3.push(x[0])
+      });
+    }else{
+      this.divisiones3=this.Meses
+    }
+    
+    this.divisiones3.forEach(division => {
+
+      let I1=Math.round(Math.random()*14)//getRandomInt(3)
+      let I2=Math.round(Math.random()*14)//getRandomInt(3)
+      let I3=Math.round(Math.random()*14)//getRandomInt(3)
+      let I4=Math.round(Math.random()*14)//getRandomInt(3)
+  
+      TI1+=I1;
+      TI2+=I2;
+      TI3+=I3;
+      TI4+=I4;
+      this.randomEv2.push({name:division['label'],series:[{name:'Numero AT',value:I1},{name:'Numero días perdidos',value:I2},{name:'Numero AT mortales',value:I3},{name:'Numero AT con cero días',value:I4}]})
+    });
+    this.randomEv2.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
+    
+    let randomEv2Copy=[]
+    
+    this.randomEv2.forEach(element => {
+      let randomEv2CopySeries=[]
+
+      if(this.selectEventos2.length>0){
+        this.selectEventos2.forEach(element2 => {
+          let x = element['series'].filter(word => {
+            return word['name']==element2['label']
+          });
+          randomEv2CopySeries.push(x[0])
+        });
+      }else{
+        randomEv2CopySeries=element['series']
+      }
+      randomEv2Copy.push({name:element['name'],series:randomEv2CopySeries})
+    });
+    this.randomEv2=randomEv2Copy
+    this.flagevent1=true
+  }
+  selectedCities:any[];
+  test(){
+    console.log(this.selectedCities)
   }
 }
