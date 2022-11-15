@@ -3,7 +3,7 @@ import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic';
 import { EmpleadoService } from 'app/modulos/empresa/services/empleado.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms'
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
-import { Criteria } from 'app/modulos/core/entities/filter';
+import { Criteria, LogicOperation } from 'app/modulos/core/entities/filter';
 
 @Component({
   selector: 's-empleadoBasicSelector',
@@ -28,6 +28,7 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
     'id',
     'primerNombre',
     'numeroIdentificacion', 
+    'correoPersonal'
   ];
 
   constructor(
@@ -72,10 +73,16 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
 
   filterQuery.fieldList = this.fields;
   filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-  filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "primerNombre", value1: event.query});
-  //filterQuery.filterList.push({ criteria: Criteria.CONTAINS, value1: '321'});
+  filterQuery.filterList.push({ criteria: Criteria.LIKE, field: "primerNombre", value1: '%'+event.query+'%'});
+  // filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "primerApellido", value1: '%'+event.query+'%'});
+  // filterQuery.filterList.push({ criteria: Criteria.LIKE, field: "numeroIdentificacion", value1: '%'+event.query+'%' });
+  console.log(filterQuery);
+
     this.empleadoService.findByFilter(filterQuery).then(
-      data => this.empleadosList = <EmpleadoBasic[]>data
+      data => {
+        let datos: any = data
+        this.empleadosList = datos.data;
+      }
     );
   }
   //field: '', criteria: Criteria.EQUALS, value1: empleadoIdentificacion 
