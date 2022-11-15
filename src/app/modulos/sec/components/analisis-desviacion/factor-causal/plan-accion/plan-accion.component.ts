@@ -3,7 +3,7 @@ import { listPlanAccion, planCausaRaiz, PlanEspecifico } from './../../../../ent
 import { AfterViewInit, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { ConfirmationService, MessageService } from 'primeng/primeng';
-import { Empleado } from 'app/modulos/empresa/entities/empleado';
+import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic';
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 
 @Component({
@@ -25,7 +25,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   formMedible: FormGroup
   formEfizaz: FormGroup
   formRevisado: FormGroup
-  empleadoSelect: Empleado;
+  empleadoSelect: EmpleadoBasic;
   reporteSelect: Reporte;
 
   steps = [

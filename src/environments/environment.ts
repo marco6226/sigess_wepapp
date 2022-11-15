@@ -42,6 +42,7 @@ export const endPoints = {
     PermisoService: path + "permiso/",
     UsuarioService: path + "usuario/",
     EmpleadoService: path + "empleado/",
+    EmpleadoBasicService: path + "empleadobasic/",
     EvaluacionDesempenoService: path + "evaluacionDesempeno/",
     PerfilService: path + "perfil/",
     ConfiguracionJornadaService: path + "configuracionJornada/",

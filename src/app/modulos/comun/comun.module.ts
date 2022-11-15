@@ -86,6 +86,7 @@ import { CiudadSelectorComponent } from 'app/modulos/comun/components/ciudad-sel
 import { CustomRadioButtonComponent } from './components/custom-radio-button/custom-radio-button.component';
 import { MensajeUsuarioComponent } from './components/mensaje-usuario/mensaje-usuario.component';
 import { EmpleadoSelectorComponent } from './components/empleado-selector/empleado-selector.component';
+import { EmpleadoBasicSelectorComponent} from './components/empleado-basic-selector/empleado-basic-selector.component';
 import { SelectorRangoFechasComponent } from './components/selector-rango-fechas/selector-rango-fechas.component'
 
 import { DocumentoUploadComponent } from 'app/modulos/ado/components/documento-upload/documento-upload.component';
@@ -106,6 +107,7 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {ButtonModule} from 'primeng/button';
 import {RatingModule} from 'primeng/rating';
 import {MenuItem} from 'primeng/api';
+import { EmpleadoBasicService } from '../empresa/services/empleado-basic.service';
 // import {InputNumberModule} from 'primeng/primeng';
 
 
@@ -249,6 +251,7 @@ const modules = [
 		//PdfViewerComponent,
 		CustomRadioButtonComponent,
 		EmpleadoSelectorComponent,
+		EmpleadoBasicSelectorComponent,
 		SelectorRangoFechasComponent,
 		DocumentoUploadComponent,
 		DataNotFoundComponent,
@@ -291,6 +294,7 @@ const modules = [
 		TienePermisoDirective,
 		ConfiguracionGeneralDirective,
 		EmpleadoSelectorComponent,
+		EmpleadoBasicSelectorComponent,
 		SelectorRangoFechasComponent,
 		DocumentoUploadComponent,
 		IndicadoresAusentismoComponent,
@@ -318,7 +322,7 @@ const modules = [
 		CambioPasswdService,
 		ParametroNavegacionService,
 		SistemaNivelRiesgoService,
-		DiagramContextMenuService
+		EmpleadoBasicService
 	]
 })
 export class ComunModule { }
