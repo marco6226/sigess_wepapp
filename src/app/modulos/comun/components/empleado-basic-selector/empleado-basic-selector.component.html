@@ -6,7 +6,7 @@
       <div class="wrapper" >
         
         <div style="margin-left:20px">
-          <label>{{empleado?.primerNombre}}</label>
+          <label>{{empleado?.primerNombre}} {{empleado?.primerApellido}}</label>
           <br/> {{empleado?.numeroIdentificacion}}
           <br/> {{empleado?.usuario.email}}
         </div>
@@ -22,7 +22,7 @@
   <!-- <img *ngIf="_value.usuario.avatar" [src]="_value.usuario.avatar" style="height:100px;width:100px;border-radius: 50%;" #imgAvatar/> -->
 
   <div style="margin-left:20px">
-    <h4 style="margin:0px">{{_value?.primerNombre}}</h4>
+    <h4 style="margin:0px">{{_value?.primerNombre}} {{_value?.primerApellido}}</h4>
     <p>{{_value?.tipoIdentificacion?.nombre}} {{_value?.numeroIdentificacion}}</p>
     <p>{{_value?.cargo?.nombre}}</p>
   </div>
