@@ -22,15 +22,16 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
   @Input("readOnly") disabled: boolean;
   @Output("onSelect") onSelect = new EventEmitter<EmpleadoBasic>();
   propagateChange = (_: any) => { };
-  empleadosList: EmpleadoBasic[];
+  empleadosList: EmpleadoBasic[] = [];
 
   fields: string[] = [
     'id',
     'primerNombre',
     'primerApellido',
     'numeroIdentificacion', 
-    'correoSigess'
+    'usuarioBasic'
   ];
+  selectedField: any = 1;
 
   constructor(
     private empleadoService: EmpleadoService,
@@ -60,7 +61,7 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
   }
 
   // Component methods
-  buscarEmpleado(event:any) {
+  async buscarEmpleado(event:any) {
 
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -69,32 +70,22 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
     filterQuery.rows = event.rows;
     filterQuery.count = true;
 
-    //filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-          
-
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-    // filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "primerApellido", value1: '%'+event.query+'%'});
-    // filterQuery.filterList.push({ criteria: Criteria.LIKE, field: "numeroIdentificacion", value1: '%'+event.query+'%' });
-    // console.log(filterQuery);
 
-    for(let i = 1; i<this.fields.length; i++){
-      if(this.fields[i] != 'usuario'){
-        filterQuery.filterList.push({ criteria: Criteria.LIKE, field: this.fields[i], value1: '%'+event.query+'%'});
-      }else{
-        filterQuery.filterList.push({ criteria: Criteria.LIKE, field: 'usuario.email', value1: '%'+event.query+'%'});
-      }
-      this.empleadoService.findByFilter(filterQuery).then(
-        data => {
-          let datos: any = data;
-          if(datos.data.length != 0){
-            this.empleadosList = datos.data;
-            i = this.fields.length;
-          }
-        }
-      );
-      filterQuery.filterList.pop();
+    filterQuery.filterList.pop();
+    if(this.selectedField != 4){
+      filterQuery.filterList.push({ criteria: Criteria.LIKE, field: this.fields[this.selectedField], value1: '%'+event.query+'%'});
+    }else{
+      filterQuery.filterList.push({ criteria: Criteria.LIKE, field: 'usuarioBasic.email', value1: '%'+event.query+'%'});
     }
+    await this.empleadoService.findByFilter(filterQuery).then(
+      data => {
+        let datos: any = data;
+        this.empleadosList = datos.data;
+      }
+    );
+
   }
   //field: '', criteria: Criteria.EQUALS, value1: empleadoIdentificacion 
   // let filterQuery = new FilterQuery();

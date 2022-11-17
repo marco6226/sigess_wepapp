@@ -15,7 +15,7 @@ export class EmpleadoBasic {
     segundoNombre: string;    
     cargo: Cargo;    
     usuario: UsuarioBasic;
-   
+    usuarioBasic: UsuarioBasic;
    
    
 }

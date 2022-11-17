@@ -8,6 +8,7 @@ import { Ccf } from 'app/modulos/comun/entities/ccf'
 import { Afp } from 'app/modulos/comun/entities/afp'
 import { HorasExtra } from 'app/modulos/empresa/entities/horas-extra'
 import { Documento } from 'app/modulos/ado/entities/documento'
+import { UsuarioBasic } from './usuario-basic'
 
 export class Empleado {
 
@@ -44,6 +45,7 @@ export class Empleado {
     regional: string;
     correoPersonal: string;
     usuario: Usuario;
+    usuarioBasic: UsuarioBasic;
     configuracionJornadaList: ConfiguracionJornada[];
     horasExtraList: HorasExtra[];
     documentosList: Documento[];
