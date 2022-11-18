@@ -73,45 +73,28 @@ export class EmpleadoBasicSelectorComponent implements OnInit, ControlValueAcces
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
 
-    filterQuery.filterList.pop();
-    if(this.selectedField != 4){
-      filterQuery.filterList.push({ criteria: Criteria.LIKE, field: this.fields[this.selectedField], value1: '%'+event.query+'%'});
-    }else{
-      filterQuery.filterList.push({ criteria: Criteria.LIKE, field: 'usuarioBasic.email', value1: '%'+event.query+'%'});
-    }
-    await this.empleadoService.findByFilter(filterQuery).then(
-      data => {
-        let datos: any = data;
-        this.empleadosList = datos.data;
+    for (let i = 1; i < this.fields.length; i++) {
+      filterQuery.filterList.pop();
+      if(this.fields[i] != 'usuarioBasic'){
+        filterQuery.filterList.push({ criteria: Criteria.LIKE, field: this.fields[i], value1: '%'+event.query+'%'});
+      }else{
+        filterQuery.filterList.push({ criteria: Criteria.LIKE, field: 'usuarioBasic.email', value1: '%'+event.query+'%'});
       }
-    );
+      let terminarBusqueda = false;
+      await this.empleadoService.findByFilter(filterQuery).then(
+        (data: any) => {
+          let datos: EmpleadoBasic[] = data.data;
+          if(datos.length > 0){
+            this.empleadosList = datos;
+            terminarBusqueda = true;
+          }
+        }
+      );
+      if(terminarBusqueda) break;
+    }
 
   }
-  //field: '', criteria: Criteria.EQUALS, value1: empleadoIdentificacion 
-  // let filterQuery = new FilterQuery();
-  // filterQuery.sortField = event.sortField;
-  // filterQuery.sortOrder = event.sortOrder;
-  // filterQuery.offset = event.first;
-  // filterQuery.rows = event.rows;
-  // filterQuery.count = true;
-
-  // filterQuery.fieldList = this.fields;
-  // filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-
-  // this.perfilService.findByFilter(filterQuery).then(
-  //   resp => {
-  //     this.totalRecords = resp['count'];
-  //     this.loading = false;
-  //     this.perfilList = [];
-  //     (<any[]>resp['data']).forEach(dto => this.perfilList.push(FilterQuery.dtoToObject(dto)));
-  //   }
-
-
-
-
-
-
-
+  
   onSelection(event) {
     this.value = event;
     this.onSelect.emit(this.value);
