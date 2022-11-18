@@ -7,7 +7,7 @@
         <app-informacion-general 
           [repLegal]="this.aliadoInformacion.representante_legal" [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" [numTrabajadoresAsig]="this.aliadoInformacion.numero_trabajadores_asignados" (dataRepLegal)="onReciveData($event, 'repLegal')" (dataNumTrabajadores)="onReciveData($event, 'numTrabajadores')" (dataNumTrabajadoresAsig)="onReciveData($event, 'numTrabajadoresAsig')"></app-informacion-general>
       </p-tabPanel>
-      <p-tabPanel header="SST"> <!-- Salud Seguridad Trabajo -->
+      <p-tabPanel header="Equipo SST"> <!-- Salud Seguridad Trabajo -->
         <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>
       </p-tabPanel>
       <p-tabPanel header="Cargue Documentos">
@@ -22,7 +22,7 @@
       <p-tabPanel header="Clasificación">
         <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')"></app-calificacion>
       </p-tabPanel>
-      <p-tabPanel header="Asignacion Colider">
+      <p-tabPanel header="Gestión del contrato">
         <app-asignacion-colider [dataIn]="this.aliadoInformacion.colider" (coliderData)="onReciveData($event, 'colider')"></app-asignacion-colider>
       </p-tabPanel>
     </p-tabView>
