@@ -1,5 +1,18 @@
-<p-autoComplete placeholder="Empleado: número identificación, correo electrónico o nombres y apellidos" [style]="{'width':'100%'}"
+<!-- <div style="width:180px;">
+  <label for="dropdownField">Método de búsqueda</label>
+  <p-dropdown [options]="dropdownFields" [(ngModel)]="selectedField" name="dropdownField" [style]="{width: '90%'}"></p-dropdown>
+</div> -->
+<div class="row" style="margin-bottom:5px">
+  <div class="col-2" style="align-items: flex-end;"><label for="">Buscar por: </label></div>
+  <div class="col-2"><p-radioButton name="busqueda" value="1" label="Nombre" [(ngModel)]="selectedField" inputId="opt1"></p-radioButton></div>
+  <div class="col-2"><p-radioButton name="busqueda" value="2" label="Apellido" [(ngModel)]="selectedField" inputId="opt2"></p-radioButton></div>
+  <div class="col-3"><p-radioButton name="busqueda" value="3" label="Identificación" [(ngModel)]="selectedField" inputId="opt3"></p-radioButton></div>
+  <div class="col-2"><p-radioButton name="busqueda" value="4" label="Correo" [(ngModel)]="selectedField" inputId="opt4"></p-radioButton></div>
+</div>
+<label for="buscar"></label>
+<p-autoComplete name="buscar" placeholder="Buscar: número identificación, correo electrónico o nombres y apellidos" [style]="{'width':'100%'}"
   (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [(ngModel)]="_value"
+  [delay]="500"
   *ngIf="_value?.id == null">
   <ng-template let-empleado pTemplate="item">
     <div class="ui-helper-clearfix" >
@@ -8,7 +21,7 @@
         <div style="margin-left:20px">
           <label>{{empleado?.primerNombre}} {{empleado?.primerApellido}}</label>
           <br/> {{empleado?.numeroIdentificacion}}
-          <br/> {{empleado?.usuario.email}}
+          <br/> {{empleado?.usuarioBasic.email}}
         </div>
       </div>
     </div>
