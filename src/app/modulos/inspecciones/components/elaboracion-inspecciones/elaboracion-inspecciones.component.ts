@@ -759,7 +759,7 @@ if(dato.length > 0){
             let camposForm = template.querySelector('#L_campos_formulario');
             const tr = camposForm.cloneNode(true);
             tr.childNodes[0].textContent = "Ubicación"
-            tr.childNodes[1].textContent = this.programacion ? this.programacion.area.nombre : "";
+            tr.childNodes[1].textContent = this.programacion ? this.programacion.area.nombre : this.inspeccion.area.nombre;
             camposForm.parentElement.appendChild(tr);
             const tfecha = camposForm.cloneNode(true);
             tfecha.childNodes[0].textContent = 'Fecha y Hora de realización'

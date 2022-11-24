@@ -1,5 +1,7 @@
-<p-autoComplete placeholder="Empleado: número identificación, correo electrónico o nombres y apellidos" [style]="{'width':'100%'}"
+<label for="buscar"></label>
+<p-autoComplete name="buscar" placeholder="Buscar: número identificación, correo electrónico o nombres y apellidos" [style]="{'width':'100%'}"
   (onSelect)="onSelection($event)" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" [(ngModel)]="_value"
+  [delay]="500"
   *ngIf="_value?.id == null">
   <ng-template let-empleado pTemplate="item">
     <div class="ui-helper-clearfix" >
@@ -8,7 +10,7 @@
         <div style="margin-left:20px">
           <label>{{empleado?.primerNombre}} {{empleado?.primerApellido}}</label>
           <br/> {{empleado?.numeroIdentificacion}}
-          <br/> {{empleado?.usuario.email}}
+          <br/> {{empleado?.usuarioBasic.email}}
         </div>
       </div>
     </div>

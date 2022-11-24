@@ -1133,7 +1133,7 @@ testmsng(){
             // console.log(ad.tareaDesviacionList[i]);
             if (ad.tareaDesviacionList[i].empResponsable != null) {
                 let email =
-                    ad.tareaDesviacionList[i].empResponsable.usuario.email;
+                    ad.tareaDesviacionList[i].empResponsable.usuarioBasic.email;
                 if (email == null || email == "") {
                     this.msgs = [];
                     this.msgs.push({
