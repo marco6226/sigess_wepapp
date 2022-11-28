@@ -161,7 +161,9 @@ export class TareaComponent implements OnInit {
                 });
                 // this.tarea.responsable=this.tarea.empResponsable.primer_nombre+" "+this.tarea.empResponsable.primer_apellido
             }
-
+            setTimeout(() => {
+                
+           
             if (this.status === 3 || this.status === 4) {
                 this.tareaClose = true;
                 let fq = new FilterQuery();
@@ -177,6 +179,7 @@ export class TareaComponent implements OnInit {
                     console.log(resp);
                     let empleado = resp["data"][0];
                     this.onSelection(empleado);
+                    console.log("antes de traer evidencias.")
                     await this.getEvidences(this.tarea.id);
                     this.tareaForm.patchValue({
                         usuarioCierre: this.tarea.fk_usuario_cierre,
@@ -184,8 +187,12 @@ export class TareaComponent implements OnInit {
                         descripcionCierre: this.tarea.descripcion_cierre,
                     });
                 });
-            }else{this.flagEvidencias=true}
+            }else{
+                console.log("no entro alas evi" +this.status)
+                this.flagEvidencias=true}
+            }, 600);
         }
+    
     }
 
     async getTareaEvidences() {
@@ -278,13 +285,13 @@ export class TareaComponent implements OnInit {
     }
 
     isFollows(data) {
-        this.status = 0;
+       // this.status = 0;
         console.log("Funciona el emit");
         setTimeout(() => {
             //this.getTarea()
             this.status = this.verifyStatus(data);
             console.log('hola')
-        }, 300);
+        }, 100);
     }
 
     async onSubmit() {

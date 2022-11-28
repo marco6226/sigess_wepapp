@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <p-table *ngIf="autorizacionSubcontratacion=='Si'" [value]="subcontratacionList" responsiveLayout="scroll" [(selection)]="selectedSubcontratacion">
+    <p-table *ngIf="autorizacionSubcontratacion=='Si'" [value]="subcontratacionList" responsiveLayout="scroll" [(selection)]="selectedSubcontratacion" styleClass="material-table">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>Nit</th>
@@ -56,6 +56,11 @@
                 <td>{{ rowData.tareasAltoRiesgo }}</td>
                 <td><button pButton type="button" icon="pi pi-cloud-upload" iconPos="left" label="Subir" class="btn"></button> {{ rowData.certificado }}</td> -->
             </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <button pButton type="button" icon="fa fa-plus" label="Crear"></button>
+            <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"></button>
+            <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"></button>
         </ng-template>
     </p-table>
 </p-panel >

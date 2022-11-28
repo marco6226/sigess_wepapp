@@ -26,7 +26,7 @@
         <app-asignacion-colider [dataIn]="this.aliadoInformacion.colider" (coliderData)="onReciveData($event, 'colider')"></app-asignacion-colider>
       </p-tabPanel>
       <p-tabPanel header="Control de riesgo">
-        <app-control-riesgo></app-control-riesgo>
+        <app-control-riesgo [dataIn]="this.aliadoInformacion.control_riesgo" (data)="onReciveData($event, 'control-riesgo')"></app-control-riesgo>
       </p-tabPanel>
       <p-tabPanel header="Subcontratistas">
         <app-subcontratistas></app-subcontratistas>

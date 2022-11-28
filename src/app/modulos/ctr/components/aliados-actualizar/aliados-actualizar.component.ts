@@ -49,7 +49,8 @@ export class AliadosActualizarComponent implements OnInit {
     numero_trabajadores_asignados: 0,
     fecha_vencimiento_arl: null,
     fecha_vencimiento_sst: null,
-    fecha_vencimiento_cert_ext: null
+    fecha_vencimiento_cert_ext: null,
+    control_riesgo: null
   }
 
   documentos: Directorio[]=[]
@@ -164,7 +165,8 @@ export class AliadosActualizarComponent implements OnInit {
       case 'numTrabajadoresAsig':
         this.aliadoInformacion.numero_trabajadores_asignados = Number.parseInt(event);        
         break;
-    
+      case 'control-riesgo':
+        this.aliadoInformacion.control_riesgo = JSON.stringify(event);
       default:
         break;
     }

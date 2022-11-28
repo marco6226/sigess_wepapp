@@ -56,6 +56,7 @@ export interface AliadoInformacion{
     fecha_vencimiento_arl: Date;
     fecha_vencimiento_sst: Date;
     fecha_vencimiento_cert_ext: Date;
+    control_riesgo: string;
 }
 
 export const _actividadesContratadasList = [
