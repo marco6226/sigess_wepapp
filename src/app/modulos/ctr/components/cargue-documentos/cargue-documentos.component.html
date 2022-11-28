@@ -1,74 +1,116 @@
 <p-messages [(value)]="msgs" [closable]="true"></p-messages>
-
-<p>Certificación de estándares mínimos expedido por la ARL</p>
-
-<div class="row">
-    <div class="col-2">
-        <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
-        <s-documentoUpload [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
-    </div>
-    
-    <div class="col-3">
-        <label for="fechaVencimientoArl">Fecha Vencimiento: </label>
-        <p-calendar [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl"></p-calendar>    
-    </div>
-</div>
-
-<div class="ui-g" style="margin-top: 10px;">
-    <div class="ui-g-12 ui-sm-12 ui-md-10">
-        <div *ngFor="let doc of directorios">
-            <table class="dwrapper" *ngIf="doc!.documento.proceso=='arl'">
-                <tr>
-                    <td>
-                        <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
-                        <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
-                    </td>              
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
-                        <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
-                    </td>
-                </tr>
-            </table>
+<div class="cols">
+    <p-panel header="Certificación de estándares mínimos expedido por la ARL">
+        <div class="row">
+            <div class="col-3">
+                <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+                <s-documentoUpload [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
+            </div>
+            
+            <div class="col-3">
+                <label for="fechaVencimientoArl">Fecha Vencimiento: </label>
+                <p-calendar [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl"></p-calendar>    
+            </div>
         </div>
-    </div>
-</div>
-
-<p>Licencia SST</p>
-
-<div class="row">
-    <div class="col-2">
-        <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
-        <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
-    </div>
-
-    <div class="col-3">
-        <label for="fechaVencimientoSst">Fecha Vencimiento: </label>
-        <p-calendar [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoSst"></p-calendar>
-    </div>
-</div>
-
-<div class="ui-g" style="margin-top: 10px;">
-    <div class="ui-g-12 ui-sm-12 ui-md-10">
-        <div *ngFor="let doc of directorios">
-            <table class="dwrapper" *ngIf="doc!.documento.proceso=='licencia'">
-                <tr>
-                    <td>
-                        <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
-                        <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
-                    </td>              
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
-                        <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
-                    </td>
-                </tr>
-            </table>
+        <div class="ui-g" style="margin-top: 10px;">
+            <div class="ui-g-12 ui-sm-12 ui-md-10">
+                <div *ngFor="let doc of directorios">
+                    <table class="dwrapper" *ngIf="doc!.documento.proceso=='arl'">
+                        <tr>
+                            <td>
+                                <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                                <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
+                            </td>              
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
+                                <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
+    </p-panel>
+
+    <p-panel header="Licencia del responsable SST">
+        <div class="row">
+            <div class="col-3">
+                <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
+                <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
+            </div>
+        
+            <div class="col-3">
+                <label for="fechaVencimientoSst">Fecha Vencimiento: </label>
+                <p-calendar [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoSst"></p-calendar>
+            </div>
+        </div>
+        <div class="ui-g" style="margin-top: 10px;">
+            <div class="ui-g-12 ui-sm-12 ui-md-10">
+                <div *ngFor="let doc of directorios">
+                    <table class="dwrapper" *ngIf="doc!.documento.proceso=='licencia'">
+                        <tr>
+                            <td>
+                                <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                                <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
+                            </td>              
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
+                                <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a style="visibility: hidden" id="dwldLink"></a>
+    </p-panel>
+
+    <p-panel header="Certificaciones externas SG-SST">
+        <div class="row">
+            <div class="col-3">
+                <button pButton type="button" (click)="showDialog('certificacionExterna')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
+                <s-documentoUpload [(visible)]="visibleDlgCertiExterna" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="certificacionExterna" (onUpload)="onUpload($event)"></s-documentoUpload>
+            </div>
+        
+            <div class="col-3">
+                <label for="fechaVencimientoCertExterna">Fecha Vencimiento: </label>
+                <p-calendar [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna"></p-calendar>
+            </div>
+        </div>
+        <div class="ui-g" style="margin-top: 10px;">
+            <div class="ui-g-12 ui-sm-12 ui-md-10">
+                <div *ngFor="let doc of directorios">
+                    <table class="dwrapper" *ngIf="doc!.documento.proceso=='certificacionExterna'">
+                        <tr>
+                            <td>
+                                <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                                <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
+                            </td>              
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <textarea  pInputTextarea placeholder="Descripción" [(ngModel)]="doc.documento.descripcion" maxlength="253"></textarea>
+                                <label for="">{{doc.fechaCreacion | date:'yyyy-MM-dd'}}</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a style="visibility: hidden" id="dwldLink"></a>
+    </p-panel>
+
+    <div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-sm-12 ui-md-10">
+                <label for="puntaje"> Puntaje obtenido en las certificaciones: </label>
+                <input type="text" name="puntaje" id="" style="width: 50px;">        
+            </div>
+        </div>
+        <!-- <button (click)="test()">test</button> -->
     </div>
 </div>
-<a style="visibility: hidden" id="dwldLink"></a>
-
-<!-- <button (click)="test()">test</button> -->

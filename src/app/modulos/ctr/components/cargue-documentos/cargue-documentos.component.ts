@@ -29,10 +29,12 @@ export class CargueDocumentosComponent implements OnInit {
   @Output() idDoc = new EventEmitter<string>();
   @Output() fechaVencimientoArlEvent = new EventEmitter<Date>();
   @Output() fechaVencimientoSstEvent = new EventEmitter<Date>();
+  @Output() fechaVencimientoCertExternaEvent = new EventEmitter<Date>();
   msgs: Message[];
 
   visibleDlgCertificadoARL: boolean = false;
   visibleDlgLicenciaSST: boolean = false;
+  visibleDlgCertiExterna: boolean = false;
   
   modulo: String = Modulo.EMP.value;
   documentosList: any[];
@@ -54,9 +56,17 @@ export class CargueDocumentosComponent implements OnInit {
       this.fecha_vencimiento_sst = new Date(fechaVencimientoSst);
     }
   }
+
+  @Input('fechaVencimientoCertExterna')
+  set fechaVencimientoCertExternaIn(fechaVencimientoCertExterna: number){
+    if (fechaVencimientoCertExterna) {
+      this.fecha_vencimiento_cert_ext = new Date(fechaVencimientoCertExterna);
+    }
+  }
   
   fecha_vencimiento_arl: Date;
   fecha_vencimiento_sst: Date;
+  fecha_vencimiento_cert_ext: Date;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -75,7 +85,9 @@ export class CargueDocumentosComponent implements OnInit {
         break;
       case 'licencia':
         this.visibleDlgLicenciaSST = true
-        break;    
+        break;
+      case 'certificacionExterna':
+        this.visibleDlgCertiExterna = true;
       default:
         break;
     }
@@ -148,6 +160,12 @@ export class CargueDocumentosComponent implements OnInit {
     let fecha_vencimiento_sst = value;
     // console.log(fecha_vencimiento_sst);
     this.fechaVencimientoSstEvent.emit(fecha_vencimiento_sst);
+  }
+
+  onSelectCertExt(value: Date){
+    let fecha_vencimiento_cert_ext = value;
+    // console.log(fecha_vencimiento_cert_ext);
+    this.fechaVencimientoCertExternaEvent.emit(fecha_vencimiento_cert_ext);
   }
 
  

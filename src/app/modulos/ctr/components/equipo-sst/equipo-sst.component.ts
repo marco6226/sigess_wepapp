@@ -1,5 +1,5 @@
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
-import { _divisionList } from './../../entities/aliados';
+import { Localidades, _divisionList } from './../../entities/aliados';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { EquipoSST, ResponsableSST } from '../../entities/aliados';
@@ -26,6 +26,8 @@ export class EquipoSstComponent implements OnInit {
   equipoSST: EquipoSST={
     nombre: '',
     documento: '',
+    correo: '',
+    telefono: '',
     division: '',
     localidad: '',
     cargo: '',
@@ -33,6 +35,8 @@ export class EquipoSstComponent implements OnInit {
   }
 
   divisionList= _divisionList
+  localidadesList: any[] = [];
+  selectedLocalidad: any[] = [];
 
   formResponsable: FormGroup;
   formEquipo: FormGroup;
@@ -51,6 +55,8 @@ export class EquipoSstComponent implements OnInit {
     this.formEquipo = fb.group({
       nombre: ['', Validators.required],
       documento: ['', Validators.required],
+      correo: ['', Validators.required],
+      telefono: ['', Validators.required],
       division: ['', Validators.required],
       localidad: ['', Validators.required],
       cargo: ['', Validators.required],
@@ -59,12 +65,21 @@ export class EquipoSstComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadLocalidades().then(result => {});
   }
 
   CloseDialog(){
     this.formResponsable.reset();
     this.formEquipo.reset();
     this.closeDialog.emit();
+  }
+
+  async loadLocalidades(){
+    await this.empresaService.getLocalidades().then((items: Localidades[]) => {
+      items.forEach(item => {
+        this.localidadesList.push({label: item.localidad, value: item.localidad});
+      });
+    });
   }
 
   agregar(){
@@ -86,8 +101,10 @@ export class EquipoSstComponent implements OnInit {
       this.equipoSST = {
         nombre: this.formEquipo.value.nombre,
         documento: this.formEquipo.value.documento,
+        correo: this.formEquipo.value.correo,
+        telefono: this.formEquipo.value.telefono,
         division:this.formEquipo.value.division,
-        localidad:this.formEquipo.value.localidad,
+        localidad: JSON.stringify(this.selectedLocalidad),
         cargo:this.formEquipo.value.cargo,
         licenciaSST: this.formEquipo.value.licenciaSST
       }

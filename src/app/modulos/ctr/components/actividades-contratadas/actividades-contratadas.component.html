@@ -4,7 +4,7 @@
 
 <p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList?.length > 0">
     <p-tabView>
-        <p-table [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+        <p-table #dt [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width: 3rem">
@@ -13,6 +13,14 @@
                     <th>
                         Nombre Actividad
                     </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')">
+                    </td>
+                    <td>
+                        <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData  let-i="rowIndex">

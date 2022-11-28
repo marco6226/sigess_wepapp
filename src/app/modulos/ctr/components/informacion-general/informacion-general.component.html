@@ -1,5 +1,8 @@
 <p-panel header="Información General">
     <div style="width:350px;margin-bottom:10px">
+          
+    </div>
+    <div class="cols">
         <div class="input-field">
             <input type="text" [(ngModel)]="repLegal" class="form-material" (input)="onRepLegal()">
             <label for="" class="active">Nombre del Representante Legal</label>            
@@ -12,5 +15,47 @@
             <input type="number" [(ngModel)]="numTrabajadoresAsig" class="form-material" (input)="onNumTrabajadoresAsig()">
             <label for="" class="active">Numero de trabajadores en Corona</label>            
         </div>
+        <div class="input-field">
+            <input type="text" placeholder="Nombre comercial"
+            class="form-material"/>
+            <label for="" class="active">Email de comunicaciones</label>
+        </div>
+        <div class="input-field">
+            <input type="text" placeholder="Email"
+            class="form-material"/>
+            <label for="" class="active">Teléfono de contacto</label>
+        </div>
+        <div class="input-field">
+            <p-dropdown [options]="arlList" [(ngModel)]="selectedArl" optionLabel="name" placeholder="-- Arl --"></p-dropdown>
+            <label for="" class="active">Seleccione su ARL</label>
+        </div>
     </div>
+    <br>
+    <div class="cols">
+        <div class="input-field">
+            <div class="ui-g-12">
+                <label for="" class="active" style="margin-bottom:10px;background-color:transparent;">La empresa cuenta con autorización para subcontratación: </label>
+                <p-radioButton [style]="{'padding':'3px', 'margin-left': '10px'}" name="group1" value="Si" label="Si" [(ngModel)]="autorizacionSubcontratacion" inputId="si"></p-radioButton>
+                <p-radioButton [style]="{'padding':'3px'}" name="group1" value="No" label="No" [(ngModel)]="autorizacionSubcontratacion" inputId="no"></p-radioButton>
+            </div>
+        </div>
+    </div>
+    <p-table *ngIf="autorizacionSubcontratacion=='Si'" [value]="subcontratacionList" responsiveLayout="scroll" [(selection)]="selectedSubcontratacion">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>Nit</th>
+                <th>Razón social</th>
+                <th>Tareas de alto Riesgo</th>
+                <th>Certificado</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <!-- <td>{{ rowData.nit }}</td>
+                <td>{{ rowData.razonSocial }}</td>
+                <td>{{ rowData.tareasAltoRiesgo }}</td>
+                <td><button pButton type="button" icon="pi pi-cloud-upload" iconPos="left" label="Subir" class="btn"></button> {{ rowData.certificado }}</td> -->
+            </tr>
+        </ng-template>
+    </p-table>
 </p-panel >
