@@ -1,0 +1,7 @@
+<div class="cols">
+  <p-panel header="Actividades habilitadas">
+    <div *ngFor="let tarea of tareasList">
+      <p-checkbox name="tareas" label="{{tarea}}" value="{{tarea}}" [(ngModel)]="selectedTareas"></p-checkbox>
+    </div>
+  </p-panel>
+</div>

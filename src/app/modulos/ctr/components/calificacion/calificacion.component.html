@@ -38,12 +38,12 @@
         <p-panel class="p-col">
             <div class="col-md-4 col-xl-3">
                 <div class="card {{ getColor() }} order-card">
-                    <div class="card-block">
-                        <h6 class="m-b-20">Su valoración es: </h6>
+                    <div class="card-block" style="padding: 10px;">
+                        <h6 class="m-b-20">Su valoración es: <span>{{ valoracionActual || ' ' }}</span></h6>
                         <h2 class="text-right">
-                            <i class="fa fa-rocket f-left"></i>
-                            <span style="font-size: 40px;">
-                                {{ valoracionActual || '' }}
+                            <i class="fa fa-thumbs-o-up"></i>
+                            <span style="font-size: 20px;color: black;">
+                                {{ getValoracionToString() || '' }}
                             </span>
                         </h2>
                     </div>

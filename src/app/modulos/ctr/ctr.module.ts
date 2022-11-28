@@ -14,6 +14,8 @@ import { AliadosListComponent } from './components/aliados-list/aliados-list.com
 import { AliadosComponent } from './components/aliados/aliados.component';
 import { AliadosActualizarComponent } from './components/aliados-actualizar/aliados-actualizar.component';
 import { InformacionGeneralComponent } from './components/informacion-general/informacion-general.component'
+import { ControlRiesgoComponent } from './components/control-riesgo/control-riesgo.component';
+import { SubcontratistasComponent } from './components/subcontratistas/subcontratistas.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { InformacionGeneralComponent } from './components/informacion-general/in
     CalificacionComponent,
     AsignacionColiderComponent,
     LocalidadesComponent,
-    InformacionGeneralComponent
+    InformacionGeneralComponent,
+    ControlRiesgoComponent,
+    SubcontratistasComponent
   ],
   providers: []
 })

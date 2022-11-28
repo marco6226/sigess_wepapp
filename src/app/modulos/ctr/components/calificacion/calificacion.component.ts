@@ -50,6 +50,7 @@ export class CalificacionComponent implements OnInit{
   selectedClaseRiesgo: any;
 
   valoracionActual: number;
+  valoracionToString: string;
 
   constructor() {
     this.permanencia = [
@@ -103,7 +104,15 @@ export class CalificacionComponent implements OnInit{
   getColor(){
     return this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'bg-c-green'
     : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'bg-c-yellow'
-    : 'bg-c-pink'
+    : this.valoracionActual > 4 ? 'bg-c-pink'
+    : 'bg-c-blue'
+  }
+
+  getValoracionToString(): string{
+    return this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'Impacto Bajo'
+    : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'Impacto Medio'
+    : this.valoracionActual > 4 ? 'Impacto Alto'
+    : '0'
   }
 
 }

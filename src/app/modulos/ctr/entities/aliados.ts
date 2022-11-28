@@ -11,6 +11,8 @@ export interface Aliados {
 export interface EquipoSST{
     nombre: string;
     documento: string;
+    correo: string;
+    telefono: string;
     division: string;
     localidad: string;
     cargo: string;
@@ -53,6 +55,7 @@ export interface AliadoInformacion{
     numero_trabajadores_asignados: number;
     fecha_vencimiento_arl: Date;
     fecha_vencimiento_sst: Date;
+    fecha_vencimiento_cert_ext: Date;
 }
 
 export const _actividadesContratadasList = [

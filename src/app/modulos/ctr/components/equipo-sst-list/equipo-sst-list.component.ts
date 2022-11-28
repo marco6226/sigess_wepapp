@@ -30,6 +30,8 @@ export class EquipoSstListComponent implements OnInit {
   selectedList: EquipoSST={
     nombre: '',
     documento: '',
+    correo: '',
+    telefono: '',
     division: '',
     localidad: '',
     cargo: '',
@@ -86,8 +88,8 @@ export class EquipoSstListComponent implements OnInit {
       id_empresa: this.alidadoId,
       responsable: null,
       nombre: event.nombre,
-      correo: null,
-      telefono: null,
+      correo: event.correo,
+      telefono: event.telefono,
       licenciasst: event.licenciaSST,
       documento: event.documento,
       division: JSON.stringify(event.division),
@@ -124,6 +126,8 @@ export class EquipoSstListComponent implements OnInit {
           let data: EquipoSST={
             nombre: elem.nombre,
             documento: elem.documento,
+            correo: elem.correo,
+            telefono: elem.telefono,
             division: JSON.parse(elem.division),
             localidad: JSON.parse(elem.localidad),
             cargo: elem.cargo,
@@ -136,6 +140,11 @@ export class EquipoSstListComponent implements OnInit {
       
       
     })
+  }
+
+  formatLocalidad(localidad: string){
+    let localidadList: any[] = JSON.parse(localidad);
+    return localidadList.join(', ');
   }
 
   async onCreateEquipo(dataSST: SST){

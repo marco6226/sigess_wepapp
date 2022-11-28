@@ -15,6 +15,38 @@ export class InformacionGeneralComponent implements OnInit {
   @Input() numTrabajadores=0;
   @Input() numTrabajadoresAsig=0;
 
+  @Input() autorizacionSubcontratacion: string = 'No';
+  @Input() subcontratacionList: object[] = [
+    {
+      nit: '1123546',
+      razonSocial: 'abcdef',
+      tareasAltoRiesgo: 'Si',
+      certificado: 'www.cert.pdf'
+    },
+    {
+      nit: '4652122',
+      razonSocial: 'qweasd',
+      tareasAltoRiesgo: 'No',
+      certificado: 'www.cert.pdf'
+    }
+  ];
+  selectedSubcontratacion: object;
+  arlList: object[] = [
+    {
+      name: 'arl 1',
+      value: 'arl 1',
+    },
+    {
+      name: 'arl 2',
+      value: 'arl 2',
+    },
+    {
+      name: 'arl 3',
+      value: 'arl 3',
+    }
+  ]
+  selectedArl: string;
+
   constructor() { }
 
   ngOnInit() {
