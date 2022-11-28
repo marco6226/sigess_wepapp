@@ -177,6 +177,7 @@ export class TareaComponent implements OnInit {
                     console.log(resp);
                     let empleado = resp["data"][0];
                     this.onSelection(empleado);
+                    console.log("antes de traer evidencias")
                     await this.getEvidences(this.tarea.id);
                     this.tareaForm.patchValue({
                         usuarioCierre: this.tarea.fk_usuario_cierre,
