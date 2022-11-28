@@ -296,6 +296,7 @@ export class AnalisisDesviacionComponent implements OnInit {
 
     async ngOnInit() {
         // console.log(this.sesionService.getEmpresa());
+        this.guardando=false;
         this.disabled=true;
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
