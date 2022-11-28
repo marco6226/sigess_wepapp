@@ -13,7 +13,7 @@ export class IdleTimeoutComponent implements OnInit {
 
   timeoutID;
   intervalID;
-  timeOut = 300_000;
+  timeOut = 600_000;
 
   countDown = 0;
 
