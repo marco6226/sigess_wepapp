@@ -11,6 +11,12 @@
                 <label for="fechaVencimientoArl">Fecha Vencimiento: </label>
                 <p-calendar [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl"></p-calendar>    
             </div>
+            <div class="col-6">
+                <div class="ui-g-12 ui-sm-12 ui-md-10">
+                    <label for="puntaje"> Puntaje obtenido en la certificación: </label>
+                    <input type="number" name="puntaje" id="" style="width: 50px;">        
+                </div>
+            </div>
         </div>
         <div class="ui-g" style="margin-top: 10px;">
             <div class="ui-g-12 ui-sm-12 ui-md-10">
@@ -106,10 +112,7 @@
 
     <div>
         <div class="ui-g">
-            <div class="ui-g-12 ui-sm-12 ui-md-10">
-                <label for="puntaje"> Puntaje obtenido en las certificaciones: </label>
-                <input type="text" name="puntaje" id="" style="width: 50px;">        
-            </div>
+            
         </div>
         <!-- <button (click)="test()">test</button> -->
     </div>
