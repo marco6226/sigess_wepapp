@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-control-riesgo',
@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControlRiesgoComponent implements OnInit {
 
+  @Output() data = new EventEmitter();
+  @Input('dataIn')
+  set dataIn(data){
+    if (data) {
+      this.selectedTareas = JSON.parse(data);
+    }
+  }
   tareasList: string[] = [
     'Trabajo en alturas',
     'Trabajo en espacios confinados',
@@ -19,6 +26,10 @@ export class ControlRiesgoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  updateSelectedTareas(){
+    this.data.emit(this.selectedTareas);
   }
 
 }

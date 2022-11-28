@@ -63,7 +63,7 @@
 
 <br>
 
-<p-panel header="Lista de Aliados" [style.display]="equipoList && equipoList.length > 0 ? 'block':'none'">
+<p-panel header="Personal SST" [style.display]="equipoList && equipoList.length > 0 ? 'block':'none'">
     <p-tabView>
         <p-table [value]="equipoList" responsiveLayout="scroll" [(selection)]="selectedList" [responsive]="true">
             <ng-template pTemplate="header" let-columns>
