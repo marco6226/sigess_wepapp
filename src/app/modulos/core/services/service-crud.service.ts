@@ -9,6 +9,7 @@ import { CambioPasswdService } from "../../comun/services/cambio-passwd.service"
 import { retryWhen } from "rxjs/operators";
 import { interval, throwError, of } from "rxjs";
 import { AuthService } from "../auth.service";
+// import { retry } from 'rxjs/operators';
 
 @Injectable()
 export abstract class ServiceCRUD<T> {
@@ -83,6 +84,7 @@ export abstract class ServiceCRUD<T> {
             this.httpInt
                 .get(this.end_point + "?" + this.buildUrlParams(filterQuery))
                 .retryWhen(this.retryFunction)
+                // .pipe(retry(10))
                 .map((res) => res)
                 .subscribe(
                     (res) => {
@@ -128,7 +130,9 @@ export abstract class ServiceCRUD<T> {
     findAll<T>() {
         return new Promise((resolve) => {
             this.httpInt
+            
                 .get(this.end_point)
+                // .pipe(retry(10))
                 .retryWhen(this.retryFunction)
                 .map((res) => res)
                 .subscribe(

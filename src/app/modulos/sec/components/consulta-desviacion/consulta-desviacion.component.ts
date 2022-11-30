@@ -117,6 +117,7 @@ export class ConsultaDesviacionComponent implements OnInit {
   }
 
   analizarDesviacion() {
+    console.log(this.desviacionesListSelect)
     this.paramNav.setParametro<Desviacion[]>(this.desviacionesListSelect);
     this.paramNav.setAccion<string>('POST');
     this.router.navigate(

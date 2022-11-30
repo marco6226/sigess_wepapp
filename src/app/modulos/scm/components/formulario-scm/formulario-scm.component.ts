@@ -220,7 +220,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     jefeNames = " ";
     businessNames = "";
     nameAndLastName = "";
-    guardando: boolean = false;
     solicitando: boolean = false;
     departamento;
     entity: epsorarl = { EPS: [], ARL: [], AFP: [], Medicina_Prepagada: [], Proveedor_de_salud: [] };
@@ -292,7 +291,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { label: "En Firme", value: "2" },
         { label: "En Apelación", value: "0" }
     ]
-    
     constructor(
         private empleadoService: EmpleadoService,
         fb: FormBuilder,
@@ -472,7 +470,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 this.modifyCase();
           //  }
         } catch (e) {
-            //console.log(e);
+            console.log(e);
         }
 
 
@@ -632,8 +630,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     }
 
     async onSubmit() {
-        //console.log("hi");
-        this.guardando = true;
+        console.log("hi");
         
         this.msgs = [];
         if (!this.casoMedicoForm.valid) {
@@ -642,10 +639,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 summary: "Por favor revise todos los campos",
 
             });
-            this.guardando = false;
-            //console.log("bye",this.guardando);
             return this.markFormGroupTouched(this.casoMedicoForm);
-            
         }
 
         this.casoMedicoForm.patchValue({
@@ -680,7 +674,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         if (this.adicionar) {
             this.msgs.push({
-                life : 2000,
                 severity: "success",
                 summary: "Mensaje del sistema",
                 detail: `El caso médico fue creado exitosamente, su numero de caso es ${status}`,
@@ -690,18 +683,12 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
            
                     
             setTimeout((res) => {
-                this.guardando = false;
                 // this.closeForm();
                 // this.router.navigate(["/app/scm/list"]);
                 // this.router.navigateByUrl("/app/scm/list");
-            }, 2000);
-            
-            // console.log(status);
-            // console.log(this.caseSelect);
-            //this.caseSelect.id = status;
+            }, 3000);
+            this.caseSelect.id = status;
           this.casocreado = true;
-          
-          
         }
             
 

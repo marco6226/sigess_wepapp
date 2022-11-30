@@ -12,6 +12,7 @@ import { ReporteATView } from 'app/modulos/ind/entities/ReporteATView'
 import { Area } from 'app/modulos/empresa/entities/area';
 import { AreaService } from 'app/modulos/empresa/services/area.service';
 import { SortOrder } from "app/modulos/core/entities/filter";
+import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-navegacion.service';
 @Component({
   selector: 'app-home-corona',
   templateUrl: './home-corona.component.html',
@@ -58,6 +59,7 @@ export class HomeCoronaComponent implements OnInit {
     public desviacionService: DesviacionService,
     public reporteAtService: ReporteAtService,
     private areaService: AreaService,
+    private paramNav: ParametroNavegacionService,
   ) { }
 
   async ngOnInit() {
@@ -143,5 +145,9 @@ export class HomeCoronaComponent implements OnInit {
   async division(event){
     this.divisionS=event.value
     await this.reportes()
+  }
+  Indicadores(){
+    console.log('accidentalidad')
+    this.paramNav.redirect('app/ind/accidentalidad');
   }
 }
