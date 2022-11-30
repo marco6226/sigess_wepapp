@@ -37,6 +37,7 @@
     "@syncfusion/ej2-angular-navigations": "^20.1.51",
     "@syncfusion/ej2-angular-popups": "^20.1.47",
     "@syncfusion/ej2-angular-splitbuttons": "^20.1.47",
+    "@tusharghoshbd/ngx-charts": "^2.0.1",
     "@types/html2canvas": "0.0.35",
     "angular2-jwt": "^0.2.3",
     "bootstrap": "^5.2.2",
