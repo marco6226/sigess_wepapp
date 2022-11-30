@@ -5,8 +5,9 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Módulo</th>
-                <th>Código</th>
-                <th>Area origen</th>
+                <th>Código</th>                
+                <th *ngIf="empresaId!='22'">Area origen</th>
+                <th *ngIf="empresaId =='22'">Ubicación</th>
                 <th>Concepto</th>
                 <th>Aspecto causante</th>
                 <th style="width:3em;"></th>
