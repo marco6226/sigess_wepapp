@@ -184,9 +184,18 @@
                         Ubicación
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                        <area-selector style="width: 350px;"
-                             required>
-                        </area-selector>
+                        <!-- <ng-container *ngIf="adicionar"> -->
+                            <area-selector  formControlName="areaAccidente" style="width: 350px;"  
+                            [name]="this.reporte ? this.reporte.areaAccidente:''"
+                            required>
+                            </area-selector>
+                        <!-- </ng-container> -->
+                        <!-- <ng-container *ngIf="modificar">
+                            <area-selector formControlName="areaAccidente" style="width: 350px;"
+                            [name]="this.reporte.areaAccidente ? this.reporte.areaAccidente.nombre:''"     
+                            required>
+                            </area-selector>
+                        </ng-container> -->
                     </div>
                 </div>
             </p-accordionTab>
@@ -385,28 +394,43 @@
             </p-accordionTab>
             <p-accordionTab
                 header="V. DÍAS PERDIDOS">
-                <app-incapacidades-complementaria-temporal></app-incapacidades-complementaria-temporal>
+                <app-incapacidades-complementaria-temporal (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList"></app-incapacidades-complementaria-temporal>
             </p-accordionTab>
             <p-accordionTab
                 header="VI. PELIGRO DESCRIPTOR">
-                <div class="ui-g">
+                <div class="ui-g" [formGroup]="analisisPeligros">
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Peligro
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" ></p-dropdown>
+                        <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" formControlName="Peligro"></p-dropdown>
                     </div>
 
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Descripción del Peligro
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown [options]="this.peligroItemList"></p-dropdown>
+                        <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
                     </div>                    
                 </div>
             </p-accordionTab>
             <p-accordionTab
                 header="VII. INVESTIGACIÓN">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Seleccion uno
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <p-dropdown [options]="ejemplo1" placeholder="Seleccionar"></p-dropdown>
+                    </div>
+
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Seleccion dos
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <p-dropdown [options]="ejemplo2" placeholder="Seleccionar"></p-dropdown>
+                    </div> 
+                </div>
             </p-accordionTab>
         </p-accordion>
     </p-panel>

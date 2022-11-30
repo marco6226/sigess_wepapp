@@ -31,6 +31,14 @@ import { TipoPeligroService } from "app/modulos/ipr/services/tipo-peligro.servic
 import { PeligroService } from "app/modulos/ipr/services/peligro.service";
 import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
 import { Peligro } from "app/modulos/ipr/entities/peligro";
+import { AnalisisDesviacionService } from "app/modulos/sec/services/analisis-desviacion.service";
+import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
+import { DesviacionService } from 'app/modulos/sec/services/desviacion.service';
+import { Desviacion } from "app/modulos/sec/entities/desviacion";
+import { InformacionComplementaria} from 'app/modulos/sec/entities/informacion_complementaria';
+import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion} from 'app/modulos/sec/entities/factor-causal';
+import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
+
 
 @Component({
   selector: 'app-formulario-accidente-temporal',
@@ -76,6 +84,32 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   tipoPeligroItemList: SelectItem[];
   peligroItemList: SelectItem[];
   analisisPeligros: FormGroup;
+  informacionComplementaria: InformacionComplementaria;
+  analisisId: string;
+  incapacidadesList: Incapacidad[];
+  desviacionesList: Desviacion[];
+  fields: string[] = [
+    'modulo',
+    'hashId',
+    'area_nombre',
+    'concepto',
+    'fechaReporte',
+    'aspectoCausante',
+    'analisisId',
+    'criticidad',
+    'nombre'
+  ];
+  ejemplo1=[
+    {label:'opcion 1',value:'opcion 1'},
+    {label:'opcion 2',value:'opcion 2'},
+    {label:'opcion 3',value:'opcion 3'}
+  ]
+  ejemplo2=[
+    {label:'opcion 1',value:'opcion 1'},
+    {label:'opcion 2',value:'opcion 2'},
+    {label:'opcion 3',value:'opcion 3'}
+  ]
+
   constructor(
       private fb: FormBuilder,
       private cdRef: ChangeDetectorRef,
@@ -84,7 +118,10 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       private sesionService: SesionService,
       private empleadoService: EmpleadoService,
       private tipoPeligroService: TipoPeligroService,
-      private peligroService: PeligroService
+      private peligroService: PeligroService,
+      private analisisDesviacionService: AnalisisDesviacionService,
+      private paramNav: ParametroNavegacionService,
+      private desviacionService: DesviacionService,
   ) {
       let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
       this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
@@ -110,8 +147,12 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         FechaCopia: [null, /*Validators.required*/],
     });
   }
-
+  areasPermiso: string;
   async ngOnInit() {
+
+    this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
+    // console.log(this.areasPermiso);
+
       this.idEmpresa = this.sesionService.getEmpresa().id;
       this.infoEmpresa()
 
@@ -206,8 +247,10 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
             fechaReporte: null,
             temporal:'Temporaluno'
         });
-        setTimeout(() => {
-            console.log(this.reporte)
+        setTimeout(async () => {
+
+            // this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+
             if(this.modificar || this.consultar){
                 console.log('entre1')
                 this.form.patchValue({
@@ -303,22 +346,11 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                     fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte),
                 
                 });
-            }
-        
-
-            // if (this.reporte.testigoReporteList != null) {
-            //     this.testigoReporteList = [];
-            //     for (let i = 0; i < this.reporte.testigoReporteList.length; i++) {
-            //         let reporte = this.reporte.testigoReporteList[i];
-            //         reporte.codigo = i;
-            //         this.testigoReporteList.push(reporte);
-            //     }
-            //     this.testigoReporteList = this.testigoReporteList.slice();
-            // }
+                if(this.analisisId){
+                  this.consultarAnalisis(this.analisisId)}
+            }       
         }, 200);
-    //   this.visibleCamposAccidente = this.reporte.tipo.includes('ACCIDENTE');
       this.cdRef.detectChanges();
-    //   await this.cargarPeligro(123);
       await this.cargarTiposPeligro();
   }
   SelectPeligro(a: string){
@@ -392,24 +424,89 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       }
   }
 
-  submit1() {
-console.log('d')
-      let reporte = <Reporte>this.form.value;
-      console.log(reporte)
-      reporte.testigoReporteList = this.testigoReporteList;
+  async consultarAnalisis(analisisId: string){
+    let fq = new FilterQuery();
+    fq.filterList = [
+        { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
+    ];
+    await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
+      this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+      this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
+    })
+    if(this.informacionComplementaria!=null){
+      this.analisisPeligros.patchValue({
+          'Peligro': this.informacionComplementaria.Peligro,
+          'DescripcionPeligro': this.informacionComplementaria.DescripcionPeligro,
+          'EnventoARL': this.informacionComplementaria.EnventoARL,
+          'ReporteControl': this.informacionComplementaria.ReporteControl,
+          'FechaControl': this.informacionComplementaria.FechaControl == null ? null : new Date(this.informacionComplementaria.FechaControl),
+          'CopiaTrabajador': this.informacionComplementaria.CopiaTrabajador,
+          'FechaCopia':this.informacionComplementaria.FechaCopia == null ? null : new Date(this.informacionComplementaria.FechaCopia)
+        });
+        console.log(this.analisisPeligros.value['Peligro']);
+      this.cargarPeligro(this.analisisPeligros.value['Peligro'])
+    }
+  }
+
+  //botón guardar y modificar
+  async submit1() {
+      this.informacionComplementaria=this.analisisPeligros.value;
+      let ad = new AnalisisDesviacion();
+      
+      ad.complementaria=JSON.stringify(this.informacionComplementaria);
+      ad.incapacidades= JSON.stringify(this.incapacidadesList);
+
+
+
 
       if (this.adicionar) {
-          this.reporteService.create(reporte).then(
-              data => {
-                  console.log(data);
+
+          // this.analisisDesviacionService.create(ad)
+          // .then((data) => {
+          //   let analisisDesviacion = <AnalisisDesviacion>data;
+          //   this.analisisId = analisisDesviacion.id;
+          // })
+          let reporte = <Reporte>this.form.value;
+          reporte.testigoReporteList = this.testigoReporteList;
+          await this.reporteService.create(reporte).then(
+              async data => {
                   this.onSave.emit(<Reporte>data)
+
+                  let filterQuery = new FilterQuery();
+                  filterQuery.fieldList = this.fields;
+                  filterQuery.filterList = []
+                  
+                  filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+                  filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+data.toString() });
+                  await this.desviacionService.findByFilter(filterQuery).then(
+                    resp => {
+                      this.desviacionesList = resp['data'];
+                      ad.desviacionesList=this.desviacionesList;
+                      this.analisisDesviacionService.create(ad)
+                      .then((data) => {
+                        let analisisDesviacion = <AnalisisDesviacion>data;
+                        this.analisisId = analisisDesviacion.id;
+                      })
+                    })
+
+                  this.adicionar=false
+                  this.modificar=true
               }
 
           );
       } else if (this.modificar) {
-          this.reporteService.update(reporte).then(
-              data => this.onSave.emit(<Reporte>data)
-          );
+        // ad.desviacionesList=this.desviacionesList;
+        // ad.id = this.analisisId;
+        // this.analisisDesviacionService.update(ad)
+        let reporte = <Reporte>this.form.value;
+        reporte.testigoReporteList = this.testigoReporteList;
+        this.reporteService.update(reporte).then(
+            data => this.onSave.emit(<Reporte>data)
+        );
       }
+  }
+  getListIncapacidades(event){
+    // console.log(event);
+    this.incapacidadesList = event;
   }
 }

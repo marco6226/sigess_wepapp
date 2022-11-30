@@ -31,7 +31,8 @@ export class ConsultaReportesComponent implements OnInit {
     'numeroIdentificacionEmpleado',
     'tipo',
     'numerofurat',
-    'temporal'
+    'temporal',
+    'areaAccidente'
   ];
 
   constructor(
@@ -45,7 +46,6 @@ sortedTable:string;
     this.idEmpresa = await this.sesionService.getEmpresa().id;
     // this.loading = true;
     this.sortedTable=(this.idEmpresa=='22')?"fechaAccidente":"fechaReporte";
-    
   }
 
   lazyLoad(event: any) {

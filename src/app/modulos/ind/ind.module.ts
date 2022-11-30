@@ -12,6 +12,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { AccidentalidadComponent } from './components/accidentalidad/accidentalidad.component';
 import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
 import { NgxChartsModule } from 'ngx-charts-8';
+import { ngxChartsBarModule, ngxChartsLineModule, ngxChartsComboModule, ngxChartsPieModule, ngxChartsStackedModule } from '@tusharghoshbd/ngx-charts';
+// import { ComboChartComponent } from './components/combo-chart/combo-chart.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,12 @@ import { NgxChartsModule } from 'ngx-charts-8';
     FormsModule,
     ReactiveFormsModule,
     CalendarModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ngxChartsBarModule,
+    ngxChartsLineModule,
+    ngxChartsComboModule,
+    ngxChartsPieModule,
+    ngxChartsStackedModule
   ],
   declarations: [
     IndicadoresEmpComponent, 
@@ -29,7 +36,8 @@ import { NgxChartsModule } from 'ngx-charts-8';
     SafeBypassPipe,
     ConsultaTableroComponent,
     HorahombrestrabajadaComponent,
-    AccidentalidadComponent
+    AccidentalidadComponent,
+    // ComboChartComponent
   ],
   bootstrap: [HorahombrestrabajadaComponent],
   providers: [

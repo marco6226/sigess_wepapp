@@ -28,6 +28,16 @@ class division {
 })
 
 export class AccidentalidadComponent implements OnInit {
+  optionsCombo: any={};
+  optionsCombo_2: any={};
+  optionsCombo2: any={};
+  optionsCombo3: any={};
+  categoriesCombo: any=[];
+  categoriesCombo_2: any=[];
+  // categoriesCombo3: any=[];
+  // categoriesCombo3: any=[];
+  seriesCombo: any=[];
+
   multi: any[];
   localeES = locale_es;
   desde: Date;
@@ -46,8 +56,24 @@ export class AccidentalidadComponent implements OnInit {
   areaList: Area[] = [];
   divisiones= new Array();
   divisiones2= new Array();
+  divisiones4= new Array();
+  // divisiones5= new Array();
   divisionS=null;
-
+  divisiones5=[
+    {name:'Enero',code:0},
+    {name:'Febrero',code:1},
+    {name:'Marzo',code:2},
+    {name:'Abril',code:3},
+    {name:'Mayo',code:4},
+    {name:'Junio',code:5},
+    {name:'Julio',code:6},
+    {name:'Agosto',code:7},
+    {name:'Septiembre',code:8},
+    {name:'Octubre',code:9},
+    {name:'Noviembre',code:10},
+    {name:'Diciembre',code:11},
+    {name:'Corona total',code:12}
+  ]
   fieldsR: string[] = [
     'id'
   ];
@@ -62,8 +88,8 @@ export class AccidentalidadComponent implements OnInit {
     'id'
   ];
 
-  view: any[] = [1000, 400];
-  view2: any[] = [700, 400];
+  view: any[] = [1200, 400];
+  view2: any[] = [850, 400];
 
   // options
   gradient: boolean = true;
@@ -95,6 +121,14 @@ export class AccidentalidadComponent implements OnInit {
     domain: ['#0000FF', '#C7B000', '#A10A28','#5AA985']
   };
 
+  colorScheme3 = {
+    domain: ['#5AA454', '#A10A28']
+  };
+
+  colorScheme4 = {
+    domain: ['#5AA454', '#C7B000', '#A10A28']
+  };
+
   title: string = 'Accidentalidad';
 
   fakeData: division[] = [
@@ -115,7 +149,19 @@ export class AccidentalidadComponent implements OnInit {
     flag1:boolean=false
     flagdiv:boolean=false
     flagevent:boolean=false
+    flagtasa1:boolean=false
+    flagtasa2:boolean=false
+    flagtasaILI:boolean=false
+    yearRange = new Array();
+    añoPrimero:number=2015;
+    dateValue= new Date();
+    añoActual:number=this.dateValue.getFullYear();
+    yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
   async ngOnInit() {
+    this.yearRange=[]
+    for (let i = 0; i < this.yearRangeNumber.length; i++) {
+      this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
+    }
     // this.selectEv1()
     await this.getData()
       .then( async () => {
@@ -126,7 +172,84 @@ export class AccidentalidadComponent implements OnInit {
         await this.selectIn1()
         await this.selectIn2()
         await this.selectEv2()
+        await this.selectILI1()
+        await this.selectILI2()
+        await this.selectILI3()
+        await this.selectILI1_2()
+        await this.selectILI2_2()
+        await this.selectILI3_2()
+        this.dona1dp()
+        this.dona1()
       });
+      this.optionsCombo_2={
+        title: 'ILI', 
+        height: 600,
+        width: 850,
+        xAxis: {
+            title: 'Divisiones',
+            labelRotation: 90,
+            labelAlign: 'middle', // left, middle, right,
+            labelEllipsisSize: 80
+        },
+        yAxis: {
+            leftTitle: 'ILI',
+            rightTitle: 'Meta',
+            labelEllipsisSize: 8
+        },
+        plotOptions: {
+            groupBarPadding: 1,
+            innerBarPadding: 3
+        },
+        legend: {
+            labelEllipsisSize: 80
+        }
+    };
+      this.optionsCombo={
+        title: 'ILI', 
+        height: 600,
+        width: 850,
+        xAxis: {
+            title: 'Divisiones',
+            labelRotation: 90,
+            labelAlign: 'middle', // left, middle, right,
+            labelEllipsisSize: 80
+        },
+        yAxis: {
+            leftTitle: 'ILI',
+            rightTitle: 'Meta',
+            labelEllipsisSize: 8
+        },
+        plotOptions: {
+            groupBarPadding: 1,
+            innerBarPadding: 3
+        },
+        legend: {
+            labelEllipsisSize: 80
+        }
+    };
+    this.optionsCombo2={
+      title: 'ILI', 
+      height: 600,
+      width: 850,
+      xAxis: {
+          title: 'Divisiones',
+          labelRotation: 90,
+          labelAlign: 'middle', // left, middle, right,
+          labelEllipsisSize: 80
+      },
+      yAxis: {
+          leftTitle: 'ILI',
+          rightTitle: 'Meta',
+          labelEllipsisSize: 8
+      },
+      plotOptions: {
+          groupBarPadding: 1,
+          innerBarPadding: 3
+      },
+      legend: {
+          labelEllipsisSize: 80
+      }
+  };
   }
   reporteTabla
   reporteTabla2
@@ -152,18 +275,24 @@ export class AccidentalidadComponent implements OnInit {
     ];
     this.divisiones=[]
     this.divisiones2=[]
+    this.divisiones4=[]
     this.divisiones.push({label:'Total',value:'Total'})
     await this.areaService.findByFilter(areafiltQuery)
     .then(
       resp => {
         this.areaList = <Area[]>resp['data'];
+        let cont=0
         this.areaList.forEach(element => {
           this.divisiones.push({label:element['nombre'],value:element['nombre']})
           this.divisiones2.push({label:element['nombre'],value:element['nombre']})
+          this.divisiones4.push({name:element['nombre'],code:cont})
+          cont+=1
         });
+        this.divisiones4.push({name:'Corona total',code:cont})
+        this.divisiones2.push({label:'Corona total',value:'Corona total'})
       }
     );
-      
+      console.log(this.divisiones2)
       this.reporteTabla=[]
       this.reporteTabla2=[]
       this.totalDiasPerdidosDv=[]
@@ -342,7 +471,8 @@ export class AccidentalidadComponent implements OnInit {
     {label:'Septiembre',value:'Septiembre'},
     {label:'Octubre',value:'Octubre'},
     {label:'Noviembre',value:'Noviembre'},
-    {label:'Diciembre',value:'Diciembre'}
+    {label:'Diciembre',value:'Diciembre'},
+    {label:'Corona total',value:'Corona total'}
   ];
 
   Meses2= [
@@ -357,7 +487,8 @@ export class AccidentalidadComponent implements OnInit {
     {name:'Septiembre',code:'Septiembre'},
     {name:'Octubre',code:'Octubre'},
     {name:'Noviembre',code:'Noviembre'},
-    {name:'Diciembre',code:'Diciembre'}
+    {name:'Diciembre',code:'Diciembre'},
+    {name:'Corona total',code:'Corona total'}
   ];
   datosRandom(){
     this.random=[]
@@ -373,6 +504,12 @@ export class AccidentalidadComponent implements OnInit {
   selectDivisiones1: any[] = [];
   selectIndicarores1: any[] = [];
   selectDivisiones2: any[] = [];
+  selectDivisionesILI1: any[] = [];
+  selectDivisionesILI2: any[] = [];
+  selectDivisionesILI3: any[] = [];
+  selectDivisionesILI1_2: any[] = [];
+  selectDivisionesILI2_2: any[] = [];
+  selectDivisionesILI3_2: any[] = [];
   selectIndicarores2: any[] = [];
   selectMeses1: any[] = [];
   selectMeses2: any[] = [];
@@ -381,25 +518,55 @@ export class AccidentalidadComponent implements OnInit {
   selectEventos2: any[] = [];
 
 
-  Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Indice de Frecuencia', value: 2}, {label: 'Proporción AT mortal', value: 3}];
+  Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Proporción AT mortal', value: 2}];
   Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
 
   randomEv1: any[];
   randomEv2: any[];
   randomIn1: any[];
   randomIn2: any[];
+  randomILI: any[];
+  randomILI_2: any[];
+  randomILI2: any[];
+  randomILI2_2: any[];
+  randomILI3: any[];
+  randomILI3_2: any[];
+  randomEv1Dona: any[];
+  randomEv2Dona: any[];
+  randomEv3Dona: any[];
+  randomEv1Donadb: any[];
+  randomEv2Donadb: any[];
+  randomEv3Donadb: any[];
   flagdiv1:boolean=false;
   flagdiv2:boolean=false;
   flagevent1:boolean=false;
   flagevent2:boolean=false;
+  flagILI:boolean=false;
+  flagILI_2:boolean=false;
+  flagILI2:boolean=false;
+  flagILI2_2:boolean=false;
+  flagILI3:boolean=false;
+  flagILI3_2:boolean=false;
   hastaEv1: Date=new Date(Date.now());
   hastaEv2: Date=new Date(Date.now());
   hastaIn1: Date=new Date(Date.now());
   hastaIn2: Date=new Date(Date.now());
+  hastaILI1: Date=new Date(Date.now());
+  hastaILI2: Date=new Date(Date.now());
+  hastaILI3: Date=new Date(Date.now());
+  hastaILI1_2: Date=new Date(Date.now());
+  hastaILI2_2: Date=new Date(Date.now());
+  hastaILI3_2: Date=new Date(Date.now());
   desdeEv1: Date;
   desdeEv2: Date;
   desdeIn1: Date;
   desdeIn2: Date;
+  desdeILI1: Date;
+  desdeILI2: Date;
+  desdeILI3: Date;
+  desdeILI1_2: Date;
+  desdeILI2_2: Date;
+  desdeILI3_2: Date;
   divisiones3: any[]
 
 
@@ -415,35 +582,53 @@ export class AccidentalidadComponent implements OnInit {
     let TI3=0.0
     let TI4=0.0
 
-    if(this.selectDivisiones1.length>0){
-      this.divisiones3=[]
-      this.selectDivisiones1.forEach(element => {
-        let x= this.divisiones2.filter(word => {
-          return word['label']==element['label']
-        });
-        // console.log(x)
-        this.divisiones3.push(x[0])
-      });
-    }else{
-      this.divisiones3=this.divisiones2
-    }
+    // if(this.selectDivisiones1.length>0){
+    //   this.divisiones3=[]
+    //   this.selectDivisiones1.forEach(element => {
+    //     let x= this.divisiones2.filter(word => {
+    //       return word['label']==element['label']
+    //     });
+    //     // console.log(x)
+    //     this.divisiones3.push(x[0])
+    //   });
+    // }else{
+    //   this.divisiones3=this.divisiones2
+    // }
     
-    this.divisiones3.forEach(division => {
+    this.divisiones2.forEach(division => {
 
       let I1=Math.random()*14//getRandomInt(3)
       let I2=Math.random()*14//getRandomInt(3)
       let I3=Math.random()*14//getRandomInt(3)
-      let I4=Math.random()*14//getRandomInt(3)
   
       TI1+=I1;
       TI2+=I2;
       TI3+=I3;
-      TI4+=I4;
-      this.randomIn1.push({name:division['label'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Indice de Frecuencia',value:I3},{name:'Proporción AT mortal',value:I4}]})
+
+      this.randomIn1.push({name:division['label'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Proporción AT mortal',value:I3}]})
     });
-    this.randomIn1.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Indice de Frecuencia',value:TI3},{name:'Proporción AT mortal',value:TI4}]})
+    this.randomIn1.pop();
+    this.randomIn1.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Proporción AT mortal',value:TI3}]})
     
     let randomIn1Copy=[]
+    console.log(this.selectDivisiones1)
+    console.log(this.randomIn1)
+    if(this.selectDivisiones1.length>0){
+      // this.divisiones3=[]
+      this.selectDivisiones1.forEach(element => {
+        let x= this.randomIn1.filter(word => {
+          return word['name']==element['label']
+        });
+        // console.log(x)
+        randomIn1Copy.push(x[0])
+      });
+      this.randomIn1=randomIn1Copy
+    }
+    // else{
+    //   this.divisiones3=this.divisiones2
+    // }
+
+    randomIn1Copy=[]
     
     this.randomIn1.forEach(element => {
       let randomIn1CopySeries=[]
@@ -461,13 +646,22 @@ export class AccidentalidadComponent implements OnInit {
       randomIn1Copy.push({name:element['name'],series:randomIn1CopySeries})
     });
     this.randomIn1=randomIn1Copy
+
+    let num1=0
+    num1=this.randomIn1.length*this.randomIn1[0].series.length
+    console.log(num1)
+    if(num1>20){
+      this.flagtasa1=false
+    }else{
+      this.flagtasa1=true
+    }
+  
     this.flagevent1=true
   }
   // async selectIn2(){
   //   console.log(this.divisiones2)
   // }
   async selectIn2(){
-    console.log(this.selectIndicarores2)
     let flagSelectEvent=this.flagevent1
     this.flagevent1=false
     this.randomIn2=[]
@@ -477,35 +671,52 @@ export class AccidentalidadComponent implements OnInit {
     let TI3=0.0
     let TI4=0.0
 
-    if(this.selectMeses1.length>0){
-      this.divisiones3=[]
-      this.selectMeses1.forEach(element => {
-        let x= this.Meses2.filter(word => {
-          return word['name']==element['name']
-        });
-        // console.log(x)
-        this.divisiones3.push(x[0])
-      });
-    }else{
-      this.divisiones3=this.Meses2
-    }
-    
-    this.divisiones3.forEach(division => {
+    // if(this.selectMeses1.length>0){
+    //   this.divisiones3=[]
+    //   this.selectMeses1.forEach(element => {
+    //     let x= this.Meses2.filter(word => {
+    //       return word['name']==element['name']
+    //     });
+    //     // console.log(x)
+    //     this.divisiones3.push(x[0])
+    //   });
+    // }else{
+    //   this.divisiones3=this.Meses2
+    // }
+    console.log(this.Meses2)
+    this.Meses2.forEach(division => {
 
       let I1=Math.random()*14//getRandomInt(3)
       let I2=Math.random()*14//getRandomInt(3)
       let I3=Math.random()*14//getRandomInt(3)
-      let I4=Math.random()*14//getRandomInt(3)
   
       TI1+=I1;
       TI2+=I2;
       TI3+=I3;
-      TI4+=I4;
-      this.randomIn2.push({name:division['name'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Indice de Frecuencia',value:I3},{name:'Proporción AT mortal',value:I4}]})
+      this.randomIn2.push({name:division['name'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Proporción AT mortal',value:I3}]})
     });
-    this.randomIn2.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Indice de Frecuencia',value:TI3},{name:'Proporción AT mortal',value:TI4}]})
+    this.randomIn2.pop();
+    this.randomIn2.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Proporción AT mortal',value:TI3}]})
     
     let randomIn2Copy=[]
+    console.log(this.selectMeses1)
+    console.log(this.randomIn2)
+    if(this.selectMeses1.length>0){
+      // this.divisiones3=[]
+      this.selectMeses1.forEach(element => {
+        let x= this.randomIn2.filter(word => {
+          return word['name']==element['name']
+        });
+        // console.log(x)
+        randomIn2Copy.push(x[0])
+      });
+      this.randomIn2=randomIn2Copy
+    }
+    // else{
+    //   this.divisiones3=this.divisiones2
+    // }
+
+    randomIn2Copy=[]
     
     this.randomIn2.forEach(element => {
       let randomIn2CopySeries=[]
@@ -523,10 +734,428 @@ export class AccidentalidadComponent implements OnInit {
       randomIn2Copy.push({name:element['name'],series:randomIn2CopySeries})
     });
     this.randomIn2=randomIn2Copy
+
+    let num2=0
+    num2=this.randomIn2.length*this.randomIn2[0].series.length
+    console.log(num2)
+    if(num2>20){
+      this.flagtasa2=false
+    }else{
+      this.flagtasa2=true
+    }
     this.flagevent1=true
   }
 
+  async selectILI1(){
+    let flagSelectEvent=this.flagevent1
+    this.flagILI=false
+    let IL1=Math.random()*0.01
+    let IL2=Math.random()*0.01
+    let IL3=Math.random()*0.01
+    let IL4=Math.random()*0.01
+    let IL5=Math.random()*0.01
+    let IL6=Math.random()*0.01
+    let IL7=Math.random()*0.01
+    let IL8=IL1+IL2+IL3+IL4+IL5+IL6+IL7
+    let IL1m=0.002
+    let IL2m=0.003
+    let IL3m=0.002
+    let IL4m=0.006
+    let IL5m=0.004
+    let IL6m=0.005
+    let IL7m=0.001
+    let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
+    console.log(this.selectDivisionesILI1)
+    let dataILICopy=[]
+    let dataMetaCopy=[]
+    let categoriesComboCopy=[]
+    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8]
+    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m]
+    this.categoriesCombo=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total'];
+    
+    if(this.selectDivisionesILI1.length>0){
+      this.selectDivisionesILI1.forEach((resp)=>{
+        dataILICopy.push(dataILI[resp.code])
+        dataMetaCopy.push(dataMeta[resp.code])
+        categoriesComboCopy.push(this.categoriesCombo[resp.code])
+      })
+      setTimeout(() => {
+        dataILI=dataILICopy
+        dataMeta=dataMetaCopy
+        this.categoriesCombo=categoriesComboCopy
+      }, 100);
+    }
 
+    this.randomILI=[{
+      name: 'ILI',
+      type: 'verticalBar',
+      data: dataILI
+    },
+    {
+      name: 'Meta',
+      type: 'line',
+      data: dataMeta
+    },
+  ]
+    this.flagILI=true
+  }
+
+  async selectILI1_2(){
+    let flagSelectEvent=this.flagevent1
+    this.flagILI_2=false
+    let IL1=Math.random()*0.01
+    let IL2=Math.random()*0.01
+    let IL3=Math.random()*0.01
+    let IL4=Math.random()*0.01
+    let IL5=Math.random()*0.01
+    let IL6=Math.random()*0.01
+    let IL7=Math.random()*0.01
+    let IL8=Math.random()*0.01
+    let IL9=Math.random()*0.01
+    let IL10=Math.random()*0.01
+    let IL11=Math.random()*0.01
+    let IL12=Math.random()*0.01
+    let IL13=IL1+IL2+IL3+IL4+IL5+IL6+IL7+IL8+IL9+IL10+IL11+IL12
+    let IL1m=0.002
+    let IL2m=0.003
+    let IL3m=0.002
+    let IL4m=0.006
+    let IL5m=0.004
+    let IL6m=0.005
+    let IL7m=0.001
+    let IL8m=0.002
+    let IL9m=0.006
+    let IL10m=0.004
+    let IL11m=0.005
+    let IL12m=0.001
+    let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
+    console.log(this.selectDivisionesILI1_2)
+    let dataILICopy=[]
+    let dataMetaCopy=[]
+    let categoriesComboCopy=[]
+    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8, IL9, IL10, IL11, IL12, IL13]
+    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m, IL9m, IL10m, IL11m, IL12m, IL13m]
+    this.categoriesCombo_2=['Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre','Corona total'];
+    
+    if(this.selectDivisionesILI1_2.length>0){
+      this.selectDivisionesILI1_2.forEach((resp)=>{
+        dataILICopy.push(dataILI[resp.code])
+        dataMetaCopy.push(dataMeta[resp.code])
+        categoriesComboCopy.push(this.categoriesCombo_2[resp.code])
+      })
+      setTimeout(() => {
+        dataILI=dataILICopy
+        dataMeta=dataMetaCopy
+        this.categoriesCombo_2=categoriesComboCopy
+      }, 100);
+    }
+
+    this.randomILI_2=[{
+      name: 'ILI',
+      type: 'verticalBar',
+      data: dataILI
+    },
+    {
+      name: 'Meta',
+      type: 'line',
+      data: dataMeta
+    },
+  ]
+    this.flagILI_2=true
+  }
+
+  async selectILI2(){
+    let flagSelectEvent=this.flagevent1
+    this.flagILI2=false
+    let IL1=Math.random()*0.01
+    let IL2=Math.random()*0.01
+    let IL3=Math.random()*0.01
+    let IL4=Math.random()*0.01
+    let IL5=Math.random()*0.01
+    let IL6=Math.random()*0.01
+    let IL7=Math.random()*0.01
+    let IL8=IL1+IL2+IL3+IL4+IL5+IL6+IL7
+    let IL1m=0.002
+    let IL2m=0.003
+    let IL3m=0.002
+    let IL4m=0.006
+    let IL5m=0.004
+    let IL6m=0.005
+    let IL7m=0.001
+    let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
+  //   // console.log(this.selectDivisionesILI1)
+    let dataILICopy=[]
+
+    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7,IL8]
+    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m,IL8m]
+    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Coronta total'];
+    
+    let cont=0
+    if(this.selectDivisionesILI2.length>0){
+      this.selectDivisionesILI2.forEach((resp)=>{
+        let ILI=dataILI[resp.code]
+        let dif1=dataILI[resp.code]-dataMeta[resp.code]
+        let dif2=dif1
+        if(dif1<0){
+          dif2=0
+          dif1=-dif1
+        }else{
+          ILI=dataMeta[resp.code]
+          dif1=0
+        }
+        dataILICopy.push({name:division[resp.code],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+      })
+    }else{
+      division.forEach(resp => {
+        let ILI=dataILI[cont]
+        let dif1=dataILI[cont]-dataMeta[cont]
+        let dif2=dif1
+        if(dif1<0){
+          dif2=0
+          dif1=-dif1
+        }else{
+          ILI=dataMeta[cont]
+          dif1=0
+        }
+        dataILICopy.push({name:division[cont],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+        cont+=1
+      });
+    }
+
+    this.randomILI2=dataILICopy
+    this.flagILI2=true
+  }
+
+
+  async selectILI2_2(){
+    let flagSelectEvent=this.flagevent1
+    this.flagILI2_2=false
+    let IL1=Math.random()*0.01
+    let IL2=Math.random()*0.01
+    let IL3=Math.random()*0.01
+    let IL4=Math.random()*0.01
+    let IL5=Math.random()*0.01
+    let IL6=Math.random()*0.01
+    let IL7=Math.random()*0.01
+    let IL8=Math.random()*0.01
+    let IL9=Math.random()*0.01
+    let IL10=Math.random()*0.01
+    let IL11=Math.random()*0.01
+    let IL12=Math.random()*0.01
+    let IL13=IL1+IL2+IL3+IL4+IL5+IL6+IL7+IL8+IL9+IL10+IL11+IL12
+    let IL1m=0.002
+    let IL2m=0.003
+    let IL3m=0.002
+    let IL4m=0.006
+    let IL5m=0.004
+    let IL6m=0.005
+    let IL7m=0.001
+    let IL8m=0.002
+    let IL9m=0.006
+    let IL10m=0.004
+    let IL11m=0.005
+    let IL12m=0.001
+    let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
+  //   // console.log(this.selectDivisionesILI1)
+    let dataILICopy=[]
+
+
+    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8, IL9, IL10, IL11, IL12, IL13]
+    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m, IL9m, IL10m, IL11m, IL12m, IL13m]
+    let division=['Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre','Corona total'];
+    
+    let cont=0
+    if(this.selectDivisionesILI2_2.length>0){
+      this.selectDivisionesILI2_2.forEach((resp)=>{
+        let ILI=dataILI[resp.code]
+        let dif1=dataILI[resp.code]-dataMeta[resp.code]
+        let dif2=dif1
+        if(dif1<0){
+          dif2=0
+          dif1=-dif1
+        }else{
+          ILI=dataMeta[resp.code]
+          dif1=0
+        }
+        dataILICopy.push({name:division[resp.code],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+      })
+    }else{
+      division.forEach(resp => {
+        let ILI=dataILI[cont]
+        let dif1=dataILI[cont]-dataMeta[cont]
+        let dif2=dif1
+        if(dif1<0){
+          dif2=0
+          dif1=-dif1
+        }else{
+          ILI=dataMeta[cont]
+          dif1=0
+        }
+        dataILICopy.push({name:division[cont],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+        cont+=1
+      });
+    }
+
+    this.randomILI2_2=dataILICopy
+    this.flagILI2_2=true
+  }
+
+  async selectILI3(){
+    let flagSelectEvent=this.flagevent1
+    this.flagILI3=false
+    let IL1=Math.random()*0.01
+    let IL2=Math.random()*0.01
+    let IL3=Math.random()*0.01
+    let IL4=Math.random()*0.01
+    let IL5=Math.random()*0.01
+    let IL6=Math.random()*0.01
+    let IL7=Math.random()*0.01
+    let IL8=IL1+IL2+IL3+IL4+IL5+IL6+IL7
+    let IL1m=0.002
+    let IL2m=0.003
+    let IL3m=0.002
+    let IL4m=0.006
+    let IL5m=0.004
+    let IL6m=0.005
+    let IL7m=0.001
+    let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
+    let dataILICopy=[]
+
+    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7,IL8]
+    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m,IL8m]
+    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Coronta total'];
+    
+    let cont=0
+    if(this.selectDivisionesILI3.length>0){
+      this.selectDivisionesILI3.forEach((resp)=>{
+        let ILI=dataILI[resp.code]
+        let dif1=dataILI[resp.code]-dataMeta[resp.code]
+        let dif2=dif1
+        if(dif1>0){
+          dif2=0
+        }else{
+          dif1=0
+        }
+        dataILICopy.push({name:division[resp.code],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+      })
+    }else{
+      division.forEach(resp => {
+        let dif1=dataILI[cont]-dataMeta[cont]
+        let dif2=dif1
+        if(dif1>0){
+          dif2=0
+        }else{
+          dif1=0
+        }
+        dataILICopy.push({name:division[cont],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+        cont+=1
+      });
+    }
+
+    this.randomILI3=dataILICopy
+    this.flagILI3=true
+  }
+
+  async selectILI3_2(){
+    let flagSelectEvent=this.flagevent1
+    this.flagILI3_2=false
+    let IL1=Math.random()*0.01
+    let IL2=Math.random()*0.01
+    let IL3=Math.random()*0.01
+    let IL4=Math.random()*0.01
+    let IL5=Math.random()*0.01
+    let IL6=Math.random()*0.01
+    let IL7=Math.random()*0.01
+    let IL8=Math.random()*0.01
+    let IL9=Math.random()*0.01
+    let IL10=Math.random()*0.01
+    let IL11=Math.random()*0.01
+    let IL12=Math.random()*0.01
+    let IL13=IL1+IL2+IL3+IL4+IL5+IL6+IL7+IL8+IL9+IL10+IL11+IL12
+    let IL1m=0.002
+    let IL2m=0.003
+    let IL3m=0.002
+    let IL4m=0.006
+    let IL5m=0.004
+    let IL6m=0.005
+    let IL7m=0.001
+    let IL8m=0.002
+    let IL9m=0.006
+    let IL10m=0.004
+    let IL11m=0.005
+    let IL12m=0.001
+    let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
+  //   // console.log(this.selectDivisionesILI1)
+    let dataILICopy=[]
+
+
+    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8, IL9, IL10, IL11, IL12, IL13]
+    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m, IL9m, IL10m, IL11m, IL12m, IL13m]
+    let division=['Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre','Corona total'];
+    
+    let cont=0
+    if(this.selectDivisionesILI3_2.length>0){
+      this.selectDivisionesILI3_2.forEach((resp)=>{
+        let ILI=dataILI[resp.code]
+        let dif1=dataILI[resp.code]-dataMeta[resp.code]
+        let dif2=dif1
+        if(dif1>0){
+          dif2=0
+        }else{
+          dif1=0
+        }
+        dataILICopy.push({name:division[resp.code],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+      })
+    }else{
+      division.forEach(resp => {
+        let dif1=dataILI[cont]-dataMeta[cont]
+        let dif2=dif1
+        if(dif1>0){
+          dif2=0
+        }else{
+          dif1=0
+        }
+        dataILICopy.push({name:division[cont],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
+        cont+=1
+      });
+    }
+
+    this.randomILI3_2=dataILICopy
+    this.flagILI3_2=true
+  }
 
   async selectEv1(){
 
@@ -539,20 +1168,20 @@ export class AccidentalidadComponent implements OnInit {
     let TI3=0.0
     let TI4=0.0
 
-    if(this.selectDivisiones2.length>0){
-      this.divisiones3=[]
-      this.selectDivisiones2.forEach(element => {
-        let x= this.divisiones2.filter(word => {
-          return word['label']==element['label']
-        });
-        console.log(x)
-        this.divisiones3.push(x[0])
-      });
-    }else{
-      this.divisiones3=this.divisiones2
-    }
+    // if(this.selectDivisiones2.length>0){
+    //   this.divisiones3=[]
+    //   this.selectDivisiones2.forEach(element => {
+    //     let x= this.divisiones2.filter(word => {
+    //       return word['label']==element['label']
+    //     });
+    //     console.log(x)
+    //     this.divisiones3.push(x[0])
+    //   });
+    // }else{
+    //   this.divisiones3=this.divisiones2
+    // }
     
-    this.divisiones3.forEach(division => {
+    this.divisiones2.forEach(division => {
 
       let I1=Math.round(Math.random()*14)//getRandomInt(3)
       let I2=Math.round(Math.random()*14)//getRandomInt(3)
@@ -565,9 +1194,28 @@ export class AccidentalidadComponent implements OnInit {
       TI4+=I4;
       this.randomEv1.push({name:division['label'],series:[{name:'Numero AT',value:I1},{name:'Numero días perdidos',value:I2},{name:'Numero AT mortales',value:I3},{name:'Numero AT con cero días',value:I4}]})
     });
+    this.randomEv1.pop();
     this.randomEv1.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
     
     let randomEv1Copy=[]
+    console.log(this.selectDivisiones1)
+    console.log(this.randomEv1)
+    if(this.selectDivisiones2.length>0){
+      // this.divisiones3=[]
+      this.selectDivisiones2.forEach(element => {
+        let x= this.randomEv1.filter(word => {
+          return word['name']==element['label']
+        });
+        // console.log(x)
+        randomEv1Copy.push(x[0])
+      });
+      this.randomEv1=randomEv1Copy
+    }
+    // else{
+    //   this.divisiones3=this.divisiones2
+    // }
+
+    randomEv1Copy=[]
     
     this.randomEv1.forEach(element => {
       let randomEv1CopySeries=[]
@@ -600,20 +1248,20 @@ export class AccidentalidadComponent implements OnInit {
     let TI3=0.0
     let TI4=0.0
 
-    if(this.selectMeses2.length>0){
-      this.divisiones3=[]
-      this.selectMeses2.forEach(element => {
-        let x= this.Meses.filter(word => {
-          return word['label']==element['name']
-        });
-        // console.log(x)
-        this.divisiones3.push(x[0])
-      });
-    }else{
-      this.divisiones3=this.Meses
-    }
+    // if(this.selectMeses2.length>0){
+    //   this.divisiones3=[]
+    //   this.selectMeses2.forEach(element => {
+    //     let x= this.Meses.filter(word => {
+    //       return word['label']==element['name']
+    //     });
+    //     // console.log(x)
+    //     this.divisiones3.push(x[0])
+    //   });
+    // }else{
+    //   this.divisiones3=this.Meses
+    // }
     
-    this.divisiones3.forEach(division => {
+    this.Meses.forEach(division => {
 
       let I1=Math.round(Math.random()*14)//getRandomInt(3)
       let I2=Math.round(Math.random()*14)//getRandomInt(3)
@@ -626,9 +1274,30 @@ export class AccidentalidadComponent implements OnInit {
       TI4+=I4;
       this.randomEv2.push({name:division['label'],series:[{name:'Numero AT',value:I1},{name:'Numero días perdidos',value:I2},{name:'Numero AT mortales',value:I3},{name:'Numero AT con cero días',value:I4}]})
     });
+    this.randomEv2.pop();
     this.randomEv2.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
     
     let randomEv2Copy=[]
+    console.log(this.selectMeses2)
+    console.log(this.randomEv2)
+    if(this.selectMeses2.length>0){
+      // this.divisiones3=[]
+      this.selectMeses2.forEach(element => {
+        let x= this.randomEv2.filter(word => {
+          return word['name']==element['name']
+        });
+        // console.log(x)
+        randomEv2Copy.push(x[0])
+      });
+      this.randomEv2=randomEv2Copy
+    }
+    // else{
+    //   this.divisiones3=this.divisiones2
+    // }
+
+    randomEv2Copy=[]
+
+    // let randomEv2Copy=[]
     
     this.randomEv2.forEach(element => {
       let randomEv2CopySeries=[]
@@ -649,7 +1318,61 @@ export class AccidentalidadComponent implements OnInit {
     this.flagevent1=true
   }
   selectedCities:any[];
-  test(){
-    console.log(this.selectedCities)
+  test(e){
+    console.log(e)
   }
+
+  flagDona1:boolean=false
+  flagDona2:boolean=false
+  flagDona3:boolean=false
+
+  //Eventos
+  dona1(){
+    //total
+    this.randomEv1Dona=[]
+    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+    division.forEach(div => {
+      this.randomEv1Dona.push({name:div,value:Math.round(Math.random()*10)})
+    });
+  }
+  // dona2(){
+  //   //Temporales
+  //   this.randomEv2Dona=[]
+  //   let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+  //   division.forEach(div => {
+  //     this.randomEv2Dona.push({name:div,value:Math.round(Math.random()*10)})
+  //   });
+  // }
+  // dona3(){
+  //   //Fijos
+  //   this.randomEv3Dona=[]
+  //   let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+  //   division.forEach(div => {
+  //     this.randomEv3Dona.push({name:div,value:Math.round(Math.random()*10)})
+  //   });
+  // }
+
+  //Dias perdidos
+  dona1dp(){
+    //total
+    this.randomEv1Donadb=[]
+    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+    division.forEach(div => {
+      this.randomEv1Donadb.push({name:div,value:Math.round(Math.random()*10)})
+    });
+  }
+  // dona2dp(){
+  //   //Temporales
+  //   let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+  //   division.forEach(div => {
+  //     this.randomEv2Donadb.push({name:div,value:Math.round(Math.random()*10)})
+  //   });
+  // }
+  // dona3dp(){
+  //   //Fijos
+  //   let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+  //   division.forEach(div => {
+  //     this.randomEv3Donadb.push({name:div,value:Math.round(Math.random()*10)})
+  //   });
+  // }
 }
