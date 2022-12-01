@@ -21,7 +21,7 @@ export class FormSubcontratistaComponent implements OnInit {
   documentos: Documento[];
   directorios: Directorio[];
 
-  @Output() cancelarFormulario = new EventEmitter();
+  @Output() cancelarFormulario = new EventEmitter<boolean>();
 
   @Input() aliadoId: number = null;
   @Input('loadSubcontratista')
@@ -35,6 +35,7 @@ export class FormSubcontratistaComponent implements OnInit {
       this.formSubcontratista.controls['actividades_riesgo'].setValue(JSON.parse(subcontratista.actividades_riesgo));
       this.formSubcontratista.controls['porcentaje_certificacion'].setValue(subcontratista.porcentaje_arl);
       this.formSubcontratista.controls['estado'].setValue(JSON.parse(subcontratista.estado));
+      this.formSubcontratista.controls['carta_autorizacion'].setValue(subcontratista.carta_autorizacion)
     }
   }
 
@@ -62,7 +63,8 @@ export class FormSubcontratistaComponent implements OnInit {
       nombre:[null, Validators.required],
       actividades_riesgo:[null, Validators.required],
       porcentaje_certificacion:[null, Validators.required],
-      estado:[null, Validators.required]
+      estado:[null, Validators.required],
+      carta_autorizacion:[null]
     });
   }
 
@@ -86,7 +88,7 @@ export class FormSubcontratistaComponent implements OnInit {
         this.empresaService.saveSubcontratista(this.subcontratistaData)
           .then(
             (res: Subcontratista) => {
-              this.cancelarSubcontratista();
+              this.cancelarSubcontratista(false);
             }
           );
       }else{
@@ -98,14 +100,14 @@ export class FormSubcontratistaComponent implements OnInit {
           actividades_riesgo: JSON.stringify(this.formSubcontratista.value.actividades_riesgo),
           porcentaje_arl: this.formSubcontratista.value.porcentaje_certificacion,
           estado: JSON.stringify(this.formSubcontratista.value.estado),
-          carta_autorizacion: null,
+          carta_autorizacion: this.formSubcontratista.value.carta_autorizacion,
           id_aliado_creador: this.aliadoId
         }
         
         this.empresaService.updateSubcontratista(this.subcontratistaData)
           .then(
             (res: Subcontratista) => {  
-              this.cancelarSubcontratista();
+              this.cancelarSubcontratista(false);
             }
           );
         this.isSaveOrUpdate = 'save';
@@ -113,9 +115,13 @@ export class FormSubcontratistaComponent implements OnInit {
     }
   }
 
-  cancelarSubcontratista(){
-    this.formSubcontratista.reset();
-    this.cancelarFormulario.emit(true);
+  cancelarSubcontratista(onCancelar: boolean){
+    if(onCancelar){
+      this.formSubcontratista.reset();
+      this.cancelarFormulario.emit(onCancelar);
+    }else{
+      this.formSubcontratista.reset();
+      this.cancelarFormulario.emit(false);
+    }
   }
-
 }

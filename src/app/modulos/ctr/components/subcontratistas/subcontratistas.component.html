@@ -1,4 +1,5 @@
-<p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="selectedSubcontratista" [value]="subcontratistasList" [paginator]="true" [rows]="12" dataKey="id" [lazy]="true" sortField="fechaCreacion" sortOrder="1">
+<p-toast key="msg" position="top-right"></p-toast>
+<p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [(selection)]="selectedSubcontratista" [value]="subcontratistasList" [paginator]="true" [rows]="12" dataKey="id" [lazy]="true">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th>
@@ -45,9 +46,9 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="summary">
-    <button pButton type="button" icon="fa fa-plus" label="Crear" (click)="openFormSubcontratista()"></button>
-    <button pButton type="button" icon="fa fa-pencil" label="Modificar" [disabled]="selectedSubcontratista==null" class="ui-button-success" (click)="openFormSubcontratista()"></button>
-    <button pButton type="button" (click)="showDialogCarta()" [disabled]="selectedSubcontratista==null" icon="fa fa-plus" label="Adjuntar carta" style="margin-bottom: 10px;" class="ui-button-warning"></button>
+    <button pButton type="button" [disabled]="selectedSubcontratista!=null" icon="fa fa-plus" label="Crear" (click)="createSubcontratista()"></button>
+    <button pButton type="button" icon="fa fa-pencil" label="Modificar" [disabled]="selectedSubcontratista==null" class="ui-button-success" (click)="editSubcontratista()"></button>
+    <button pButton type="button" (click)="showDialogCarta()" [disabled]="selectedSubcontratista==null" icon="pi pi-cloud-upload" label="Adjuntar carta" style="margin-bottom: 10px;" class="ui-button-warning"></button>
     <s-documentoUpload [(visible)]="dialogCarta" [modParam]="aliadoId" [modulo]="modulo" [tipoEvidencia]="'cartaAutorizacion'" (onUpload)="onUpload($event, selectedSubcontratista.id)"></s-documentoUpload>
   </ng-template>
   <ng-template pTemplate="emptymessage">
@@ -58,5 +59,5 @@
 </p-table>
 
 <p-dialog header="Crear subcontratista" [closable]="false" [modal]="false" [style]="{'width':'60%'}" [(visible)]="displayDialog">
-  <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista(true)"></app-form-subcontratista>
+  <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista($event)"></app-form-subcontratista>
 </p-dialog>

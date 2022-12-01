@@ -66,6 +66,7 @@ export class AliadosActualizarComponent implements OnInit {
 
   documentos: Directorio[]=[]
   onEdit: string = '';
+  auxAutorizaSubcontratacion: boolean = false;
   impactoV:string='';
   
   constructor(
@@ -269,10 +270,11 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   onReciveAutorizaSubcontratacion(data: boolean){
-    this.aliadoInformacion.autoriza_subcontratacion = data;
+    this.auxAutorizaSubcontratacion = data;
   }
 
   async actualizarAliado(){
+    this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
     console.log(this.aliadoInformacion.calificacion)
     this.saveInformacionAliado();
 
