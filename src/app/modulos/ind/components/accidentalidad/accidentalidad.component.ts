@@ -8,7 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
-import { multi} from './data';
+// import { multi} from './data';
 
 class division {
   name: string;
@@ -143,7 +143,7 @@ export class AccidentalidadComponent implements OnInit {
     private reporteAtService: ReporteAtService, 
     private areaService: AreaService
     ) { 
-      Object.assign(this, { multi })
+      // Object.assign(this, { multi })
       }
     flag:boolean=false
     flag1:boolean=false

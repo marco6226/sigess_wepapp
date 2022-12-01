@@ -51,22 +51,22 @@
 <p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica">
     <div class="cols" [formGroup]="formJuridica">
         <div class="input-field">
-            <input type="text" pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Razón social"
+            <input type="text" required pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Razón social"
                 class="form-material"/>
             <label for="" class="active">Razón social</label>            
         </div>
         <div class="input-field">
-            <input type="text" pInputText formControlName="identificacion" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nit" placeholder="NIT"
+            <input type="text" required pInputText formControlName="identificacion" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nit" placeholder="NIT"
             class="form-material"/>
             <label for="" class="active">NIT</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText formControlName="nombreComercial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nombreComercial" placeholder="Nombre comercial"
+            <input type="text" required pInputText formControlName="nombreComercial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nombreComercial" placeholder="Nombre comercial"
             class="form-material"/>
             <label for="" class="active">Nombre comercial</label>
         </div>
         <div class="input-field">
-            <input type="email" pInputText formControlName="email" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.email" placeholder="Email"
+            <input type="email" required pInputText formControlName="email" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.email" placeholder="Email"
             class="form-material"/>
             <label for="" class="active">Email</label>
         </div>     
