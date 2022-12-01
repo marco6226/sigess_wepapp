@@ -74,8 +74,7 @@ export class AliadosListComponent implements OnInit {
 
   onEdit(event){
     console.log(event.id);
-    this.router.navigate([`/app/ctr/actualizarAliado/${event.id}`])
-    
+    this.router.navigate([`/app/ctr/actualizarAliado/${event.id}/${'edit'}`]);
   }
 
   async onSendMail(event){

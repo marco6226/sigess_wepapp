@@ -16,6 +16,7 @@ import { AliadosActualizarComponent } from './components/aliados-actualizar/alia
 import { InformacionGeneralComponent } from './components/informacion-general/informacion-general.component'
 import { ControlRiesgoComponent } from './components/control-riesgo/control-riesgo.component';
 import { SubcontratistasComponent } from './components/subcontratistas/subcontratistas.component';
+import { FormSubcontratistaComponent } from './components/subcontratistas/form-subcontratista/form-subcontratista.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SubcontratistasComponent } from './components/subcontratistas/subcontra
     LocalidadesComponent,
     InformacionGeneralComponent,
     ControlRiesgoComponent,
-    SubcontratistasComponent
+    SubcontratistasComponent,
+    FormSubcontratistaComponent
   ],
   providers: []
 })

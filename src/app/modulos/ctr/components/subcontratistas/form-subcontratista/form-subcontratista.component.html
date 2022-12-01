@@ -1,0 +1,26 @@
+<div class="cols" [formGroup]="formSubcontratista">
+  <div class="input-field">
+    <input type="text" name="nit" class="form-material" formControlName="nit">
+    <label for="nit" class="active">Nit</label>
+  </div>
+  <div class="input-field">
+    <input type="text" name="nombre" class="form-material" formControlName="nombre">
+    <label for="nombre" class="active">Nombre</label>
+  </div>
+  <div class="input-field">
+    <p-multiSelect class="form-material" [options]="actividadesRiesgoList" formControlName="actividades_riesgo" defaultLabel="Seleccione las actividades" optionLabel="name"></p-multiSelect>
+    <label for="actividades_riesgo" class="active">Actividades de alto riesgo</label>
+  </div>
+  <div class="input-field">
+    <input type="number" name="porcentaje_certificacion" class="form-material" formControlName="porcentaje_certificacion">
+    <label for="porcentaje_certificacion" class="active">Porcentaje de certificación de ARL</label>
+  </div>
+  <div class="input-field">
+    <p-dropdown [options]="estadosList" formControlName="estado" optionLabel="name" placeholder="Seleccione el estado"></p-dropdown>
+    <label for="estado" class="active">Estado</label>
+  </div>
+</div>
+<div class="d-flex justify-content-sm-center">
+  <button class="margin" pButton type="button" icon="fa fa-plus" label="Guardar" [disabled]="!formSubcontratista.valid" (click)="guardarSubcontratista()"></button>
+  <button class="ui-button-danger margin" pButton type="button" icon="fa fa-trash" label="Cancelar" (click)="cancelarSubcontratista()"></button>
+</div>

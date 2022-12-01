@@ -6,11 +6,12 @@ import { SesionService } from './../../../core/services/sesion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { EmpresaAlidada } from './../../../empresa/entities/empresa';
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router } from '@angular/router';
 import { MessageService, Tree, TreeNode } from 'primeng/primeng';
 import { _actividadesContratadasList, _divisionList, ActividadesContratadas, Localidades } from '../../entities/aliados';
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 
 @Component({
   selector: 'app-aliados',
@@ -48,6 +49,25 @@ export class AliadosComponent implements OnInit {
     }
     this.loadDataIn();
   }
+  
+  @Input() onEdit: string= null;
+  
+  
+  @Input('calificacion') calificacion: number = 0;
+  
+  fecha_calificacion: Date;
+  @Input('fechaCalificacion')
+  set setFechaCalificacion(fecha: Date){
+    if(fecha){
+      this.fecha_calificacion = new Date(fecha);
+    }
+  }
+  
+  @Input() quienCalifica: string= '';
+
+  @Output() dataCalificacion = new EventEmitter<number>();
+  @Output() dataFechaCalificacion = new EventEmitter<Date>();
+  @Output() dataQuienCalifica = new EventEmitter<string>();
 
   isCreate: boolean=true;
 
@@ -61,6 +81,7 @@ export class AliadosComponent implements OnInit {
   formJuridica: FormGroup
 
   divisionList= _divisionList
+  localeES: any = locale_es;
 
   // actividadesContratadasList = _actividadesContratadasList
   actividadesContratadasList: ActividadesContratadas[]=[]
@@ -92,8 +113,8 @@ export class AliadosComponent implements OnInit {
       razonSocial:[null, Validators.required],
       tipo_persona:[null],
       identificacion:[null, Validators.required],
-      email:[null, Validators.required],
-      nombreComercial:[null, Validators.required]
+      email:[null, [Validators.required, Validators.email]],
+      nombreComercial:[null, Validators.required],
     })
    }
   
@@ -244,6 +265,18 @@ export class AliadosComponent implements OnInit {
       this.valueEmpresa.localidad = JSON.parse( this.valueEmpresa.localidad)      
     }
     
+  }
+
+  onCalificacion(){
+    this.dataCalificacion.emit(this.calificacion);
+  }
+
+  onFechaCalificacion(){
+    this.dataFechaCalificacion.emit(this.fecha_calificacion);
+  }
+
+  onQuienCalifica(){
+    this.dataQuienCalifica.emit(this.quienCalifica);
   }
 }
 

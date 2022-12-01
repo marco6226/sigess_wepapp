@@ -1,4 +1,4 @@
-import { AliadoInformacion, EquipoSST, ResponsableSST, SST } from './../../ctr/entities/aliados';
+import { AliadoInformacion, EquipoSST, ResponsableSST, SST, Subcontratista } from './../../ctr/entities/aliados';
 import { Injectable } from '@angular/core';
 import { Empresa } from './../entities/empresa'
 
@@ -163,5 +163,46 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
                 err => this.manageError(err)
             )
         })
+    }
+
+    saveSubcontratista(subcontratista: Subcontratista){
+        let body = JSON.stringify(subcontratista);
+        return new Promise(resolve =>{
+            this.httpInt.post(endPoints.EmpresaService + "saveSubcontratista", body)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                },
+                err => this.manageError(err)
+            );
+        });
+    }
+
+    updateSubcontratista(subcontratista: Subcontratista){
+        let body = JSON.stringify(subcontratista);
+        return new Promise(resolve =>{
+            this.httpInt.put(endPoints.EmpresaService + "updateSubcontratista", body)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                },
+                err => this.manageError(err)
+            );
+        });
+    }
+
+    getSubcontratistas(aliadoId: number){
+        return new Promise(resolve => {
+            this.httpInt.get(endPoints.EmpresaService + `getSubcontratistas/${aliadoId}`)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                },
+                err => this.manageError(err)
+            );
+        });
     }
 }

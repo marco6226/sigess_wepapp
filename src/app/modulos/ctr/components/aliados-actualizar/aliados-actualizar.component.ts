@@ -9,6 +9,7 @@ import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AliadoInformacion } from '../../entities/aliados';
+import { ComunService } from 'app/modulos/comun/services/comun.service';
 
 @Component({
   selector: 'app-aliados-actualizar',
@@ -50,10 +51,19 @@ export class AliadosActualizarComponent implements OnInit {
     fecha_vencimiento_arl: null,
     fecha_vencimiento_sst: null,
     fecha_vencimiento_cert_ext: null,
-    control_riesgo: null
+    control_riesgo: null,
+    email_comercial: null,
+    telefono_contacto: null,
+    puntaje_arl: null,
+    calificacion_aliado: 0,
+    fecha_calificacion_aliado: null,
+    nombre_calificador: '',
+    arl: null,
+    autoriza_subcontratacion: false
   }
 
   documentos: Directorio[]=[]
+  onEdit: string = '';
   
   constructor(
     private rutaActiva: ActivatedRoute,
@@ -65,11 +75,12 @@ export class AliadosActualizarComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.rutaActiva.snapshot.params.id;
+    this.onEdit = this.rutaActiva.snapshot.params.onEdit;
     this.loadData();
   }
 
   async loadData(){
-    console.log("---------------------------------");
+    console.log("--------------load data------------");
     
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [];
@@ -82,13 +93,14 @@ export class AliadosActualizarComponent implements OnInit {
     filterQuery.filterList.push(filtro);
     await this.empresaService.findByFilter(filterQuery).then(
         resp => {
-          console.log(resp);
+          // console.log(resp);
           resp['data'].forEach(element => {
             this.aliado = element;
           });
         }
     );
-    this.loadInformacionAliado()
+
+    this.loadInformacionAliado();
   }
 
   async loadInformacionAliado(){
@@ -165,14 +177,25 @@ export class AliadosActualizarComponent implements OnInit {
       case 'numTrabajadoresAsig':
         this.aliadoInformacion.numero_trabajadores_asignados = Number.parseInt(event);        
         break;
+
       case 'control-riesgo':
         this.aliadoInformacion.control_riesgo = JSON.stringify(event);
+        break;
+
+      case 'emailComercial':
+        this.aliadoInformacion.email_comercial = event;
+        break;
+
+      case 'telefonoContacto':
+        this.aliadoInformacion.telefono_contacto = event;
+        break;
+
+      case 'arl':
+        this.aliadoInformacion.arl = event;
       default:
         break;
     }
-    console.log(this.aliadoInformacion);
-    
-    await this.saveInformacionAliado()
+    // console.log(this.aliadoInformacion);
   }
 
   reciveIdDoc(event: string){
@@ -221,7 +244,34 @@ export class AliadosActualizarComponent implements OnInit {
     }
   }
 
+  async onRecivePuntajeArl(data: number){
+    this.aliadoInformacion.puntaje_arl = data;
+    await this.saveInformacionAliado();
+  }
+
+  onReciveCalificacionAliadoData(data: any, selector: string){
+    switch (selector) {
+      case 'puntaje':
+        this.aliadoInformacion.calificacion_aliado = data;
+        break;
+      case 'fecha':
+        this.aliadoInformacion.fecha_calificacion_aliado = data;
+        break;
+      case 'nombre':
+        this.aliadoInformacion.nombre_calificador = data;
+        break;
+      default:
+        break;
+    }
+  }
+
+  onReciveAutorizaSubcontratacion(data: boolean){
+    this.aliadoInformacion.autoriza_subcontratacion = data;
+  }
+
   async actualizarAliado(){
+    this.saveInformacionAliado();
+
     this.aliado.fechaActualizacion = new Date();
     if(this.aliado.division !== null){
       this.aliado.division = JSON.stringify(this.aliado.division)

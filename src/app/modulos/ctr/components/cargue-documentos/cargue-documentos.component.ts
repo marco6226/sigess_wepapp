@@ -17,6 +17,7 @@ export class CargueDocumentosComponent implements OnInit {
 
   @Input('analisisId') analisisId: number;
   documentos: Documento[];
+  @Input() puntajeARL:number =0;
   // directorios: Directorio[];
   // @Input('documentos') 
   // set addDocumentos(data: Directorio){
@@ -30,6 +31,7 @@ export class CargueDocumentosComponent implements OnInit {
   @Output() fechaVencimientoArlEvent = new EventEmitter<Date>();
   @Output() fechaVencimientoSstEvent = new EventEmitter<Date>();
   @Output() fechaVencimientoCertExternaEvent = new EventEmitter<Date>();
+  @Output() dataPuntajeArl = new EventEmitter<number>();
   msgs: Message[];
 
   visibleDlgCertificadoARL: boolean = false;
@@ -168,6 +170,9 @@ export class CargueDocumentosComponent implements OnInit {
     this.fechaVencimientoCertExternaEvent.emit(fecha_vencimiento_cert_ext);
   }
 
+  onPuntajeARL(){
+    this.dataPuntajeArl.emit(this.puntajeARL);
+  }
  
   test(){
     // debugger

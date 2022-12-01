@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ComunService } from 'app/modulos/comun/services/comun.service';
 
 @Component({
   selector: 'app-informacion-general',
@@ -10,46 +11,42 @@ export class InformacionGeneralComponent implements OnInit {
   @Output() dataRepLegal =new EventEmitter<string>();
   @Output() dataNumTrabajadores =new EventEmitter<number>();
   @Output() dataNumTrabajadoresAsig =new EventEmitter<number>();
+  @Output() dataEmailComercial =new EventEmitter<string>();
+  @Output() dataTelefonoContacto =new EventEmitter<string>();
+  @Output() dataArl =new EventEmitter<string>();
+  @Output() dataAutorizaSubcontratacion =new EventEmitter<boolean>();
 
   @Input() repLegal:string='';
   @Input() numTrabajadores=0;
   @Input() numTrabajadoresAsig=0;
-
-  @Input() autorizacionSubcontratacion: string = 'No';
-  @Input() subcontratacionList: object[] = [
-    {
-      nit: '1123546',
-      razonSocial: 'abcdef',
-      tareasAltoRiesgo: 'Si',
-      certificado: 'www.cert.pdf'
-    },
-    {
-      nit: '4652122',
-      razonSocial: 'qweasd',
-      tareasAltoRiesgo: 'No',
-      certificado: 'www.cert.pdf'
+  @Input() emailComercial:string='';
+  @Input() telefonoContacto:string='';
+  @Input('selectedArl')
+  set setSelectedArl(data: string){
+    if(data){
+      this.selectedArl = {name: data, value: data};
     }
-  ];
-  selectedSubcontratacion: object;
-  arlList: object[] = [
-    {
-      name: 'arl 1',
-      value: 'arl 1',
-    },
-    {
-      name: 'arl 2',
-      value: 'arl 2',
-    },
-    {
-      name: 'arl 3',
-      value: 'arl 3',
+  } 
+  @Input('autorizaSubcontratacion')
+  set setAutorizaSubcontratacion(data: boolean){
+    if(data){
+      this.autorizaSubcontratacion = 'Si';
+    }else{
+      this.autorizaSubcontratacion = 'No';
     }
-  ]
-  selectedArl: string;
+  }
+  @Input() onEdit: string = '';
 
-  constructor() { }
+  arlList: Array<object>;
+  selectedArl: any;
+  autorizaSubcontratacion: string;
+
+  constructor(
+    private comunService: ComunService,
+  ) { }
 
   ngOnInit() {
+    this.loadArlList();
   }
 
   onRepLegal(){
@@ -62,5 +59,38 @@ export class InformacionGeneralComponent implements OnInit {
 
   onNumTrabajadoresAsig(){
     this.dataNumTrabajadoresAsig.emit(this.numTrabajadoresAsig);
+  }
+
+  onEmailComercial(){
+    this.dataEmailComercial.emit(this.emailComercial);
+  }
+
+  onTelefonoContacto(){
+    this.dataTelefonoContacto.emit(this.telefonoContacto);
+  }
+
+  onSelectArl(){
+    this.dataArl.emit(this.selectedArl.value);
+  }
+
+  onAutorizaSubcontratacion(){
+    if(this.autorizaSubcontratacion && this.autorizaSubcontratacion == 'Si'){
+      this.dataAutorizaSubcontratacion.emit(true);
+    }else{
+      this.dataAutorizaSubcontratacion.emit(false);
+    }
+  }
+
+  async loadArlList(){
+    await this.comunService.findAllArl().then(
+      resp => {
+        // console.table(resp);
+        let data: any = resp;
+        this.arlList = data.map(item => {
+          return {name: item.nombre, value: item.nombre}
+        });
+      }
+    );
+    console.log(this.arlList);
   }
 }

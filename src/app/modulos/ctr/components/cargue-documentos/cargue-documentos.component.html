@@ -13,8 +13,8 @@
             </div>
             <div class="col-6">
                 <div class="ui-g-12 ui-sm-12 ui-md-10">
-                    <label for="puntaje"> Puntaje obtenido en la certificación: </label>
-                    <input type="number" name="puntaje" id="" style="width: 50px;">        
+                    <label for="puntaje"> Porcentaje de la certificación de ARL: </label>
+                    <input type="number" name="puntaje" id="" style="width: 50px;" [(ngModel)]="puntajeARL" (keyup)="onPuntajeARL()">  
                 </div>
             </div>
         </div>

@@ -22,13 +22,33 @@
         <p-sortIcon field="cartaAutorizacion"></p-sortIcon></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-case>
-    
+  <ng-template pTemplate="body" let-rowData>
+    <tr [pSelectableRow]="rowData">
+      <td> {{rowData.nit}} </td>
+      <td> {{rowData.nombre}} </td>
+      <td> {{getActividadesAltoRiesgoFromObject(rowData.actividades_riesgo)}} </td>
+      <td> {{rowData.porcentaje_arl}} </td>
+      <td> {{getEstadoFromObject(rowData.estado)}} </td>
+      <td>
+        <div class="row">
+          <div class="col" *ngIf="directoriosSubcontratistas['dir_'+rowData.id]">
+            <div *ngFor="let dir of directoriosSubcontratistas['dir_'+rowData.id]">
+              <div class="dwrapper" *ngIf="dir!.documento.proceso=='cartaAutorizacion'">
+                <span [class]="dir.extension?.icono" [style.color]="dir.extension?.color"></span>
+                <a style="margin-left: 10px;color: blue;" (click)="descargarDocumento(dir.documento)">{{dir.documento.nombre}}</a><br>
+                <label for="">{{dir.fechaCreacion | date:'yyyy-MM-dd'}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
   </ng-template>
-  <ng-template pTemplate="summary" let-rowData>
-    <button pButton type="button" icon="fa fa-plus" label="Crear"></button>
-    <button pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"></button>
-    <button pButton type="button" icon="fa fa-trash" label="Eliminar" class="ui-button-danger"></button>
+  <ng-template pTemplate="summary">
+    <button pButton type="button" icon="fa fa-plus" label="Crear" (click)="openFormSubcontratista()"></button>
+    <button pButton type="button" icon="fa fa-pencil" label="Modificar" [disabled]="selectedSubcontratista==null" class="ui-button-success" (click)="openFormSubcontratista()"></button>
+    <button pButton type="button" (click)="showDialogCarta()" [disabled]="selectedSubcontratista==null" icon="fa fa-plus" label="Adjuntar carta" style="margin-bottom: 10px;" class="ui-button-warning"></button>
+    <s-documentoUpload [(visible)]="dialogCarta" [modParam]="aliadoId" [modulo]="modulo" [tipoEvidencia]="'cartaAutorizacion'" (onUpload)="onUpload($event, selectedSubcontratista.id)"></s-documentoUpload>
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
@@ -37,55 +57,6 @@
   </ng-template>
 </p-table>
 
-<!-- <div class="ui-g">
-  <div class="ui-g-12">
-    <form [formGroup]="subcontratistasForm">
-      
-      <div class="ui-g-12">
-        <h5 class="title-header p-mb-2">Subcontratistas</h5>
-      </div>
-
-      <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-          <input type="number" [(ngModel)]="nit"  pInputText />
-          <label for="" class="active">Nit</label>
-        </div>
-      </div>
-
-      <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-          <input type="text" [(ngModel)]="nombre"  pInputText />
-          <label for="" class="active">Nombre</label>
-        </div>
-      </div>
-
-      <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-          <p-multiSelect [options]="actividadesRiesgo" [(ngModel)]="selectedActividades" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
-          <label for="" class="active">Actividades de alto Riesgo</label>
-        </div>
-      </div>
-
-      <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-          <input type="number" [(ngModel)]="porcentajeCertArl" pInputText />
-          <label for="" class="active">Porcentaje de certificación de ARL</label>
-        </div>
-      </div>
-
-      <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-          <input type="text" [(ngModel)]="estado" pInputText />
-          <label for="" class="active">Estado</label>
-        </div>
-      </div>
-
-      <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-          <textarea pInputTextarea [(ngModel)]="cartaAutorizacion"></textarea>
-          <label for="" class="active">Carta de autorización</label>
-        </div>
-      </div>
-    </form>
-  </div>
-</div> -->
+<p-dialog header="Crear subcontratista" [closable]="false" [modal]="false" [style]="{'width':'60%'}" [(visible)]="displayDialog">
+  <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista(true)"></app-form-subcontratista>
+</p-dialog>

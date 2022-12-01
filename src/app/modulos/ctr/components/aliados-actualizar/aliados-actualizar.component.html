@@ -1,17 +1,55 @@
 <p-panel header="Seguimiento contratistas" >
     <p-tabView>
       <p-tabPanel header="Información">
-        <app-aliados [valueEmpresa]="aliado" ></app-aliados>
+        <app-aliados 
+          [onEdit]="this.onEdit" 
+          [valueEmpresa]="this.aliado"
+          [calificacion]="this.aliadoInformacion.calificacion_aliado"
+          [fechaCalificacion]="this.aliadoInformacion.fecha_calificacion_aliado"
+          [quienCalifica]="this.aliadoInformacion.nombre_calificador"
+          (dataCalificacion)="onReciveCalificacionAliadoData($event, 'puntaje')"
+          (dataFechaCalificacion)="onReciveCalificacionAliadoData($event, 'fecha')"
+          (dataQuienCalifica)="onReciveCalificacionAliadoData($event, 'nombre')"
+          ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"> <!-- Salud Seguridad Trabajo -->
         <app-informacion-general 
-          [repLegal]="this.aliadoInformacion.representante_legal" [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" [numTrabajadoresAsig]="this.aliadoInformacion.numero_trabajadores_asignados" (dataRepLegal)="onReciveData($event, 'repLegal')" (dataNumTrabajadores)="onReciveData($event, 'numTrabajadores')" (dataNumTrabajadoresAsig)="onReciveData($event, 'numTrabajadoresAsig')"></app-informacion-general>
+          [onEdit]="this.onEdit"
+          [repLegal]="this.aliadoInformacion.representante_legal" 
+          [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" 
+          [numTrabajadoresAsig]="this.aliadoInformacion.numero_trabajadores_asignados"
+          [emailComercial]="this.aliadoInformacion.email_comercial"
+          [telefonoContacto]="this.aliadoInformacion.telefono_contacto"
+          [selectedArl]="this.aliadoInformacion.arl"
+          [autorizaSubcontratacion]="this.aliadoInformacion.autoriza_subcontratacion"
+          (dataRepLegal)="onReciveData($event, 'repLegal')" 
+          (dataNumTrabajadores)="onReciveData($event, 'numTrabajadores')" 
+          (dataNumTrabajadoresAsig)="onReciveData($event, 'numTrabajadoresAsig')"
+          (dataEmailComercial)="onReciveData($event, 'emailComercial')"
+          (dataTelefonoContacto)="onReciveData($event, 'telefonoContacto')"
+          (dataArl)="onReciveData($event, 'arl')"
+          (dataAutorizaSubcontratacion)="onReciveAutorizaSubcontratacion($event)"
+          ></app-informacion-general>
       </p-tabPanel>
       <p-tabPanel header="Equipo SST"> <!-- Salud Seguridad Trabajo -->
         <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>
       </p-tabPanel>
       <p-tabPanel header="Cargue Documentos">
-        <app-cargue-documentos [analisisId]="id" (idDoc)="reciveIdDoc($event)" (fechaVencimientoArlEvent)="reciveFechaArl($event)" (fechaVencimientoSstEvent)="reciveFechaSst($event)" (fechaVencimientoCertExternaEvent)="reciveFechaCertExterna($event)" [documentos]="documentos" [fechaVencimientoArl]="getFecha('arl')" [fechaVencimientoSst]="getFecha('sst')" [fechaVencimientoCertExterna]="getFecha('certExt')"></app-cargue-documentos>
+        <app-cargue-documentos [analisisId]="id" 
+        (idDoc)="reciveIdDoc($event)" 
+        (fechaVencimientoArlEvent)="reciveFechaArl($event)" 
+        (fechaVencimientoSstEvent)="reciveFechaSst($event)" 
+        (fechaVencimientoCertExternaEvent)="reciveFechaCertExterna($event)"
+        (dataPuntajeArl)="onRecivePuntajeArl($event)"
+        [documentos]="documentos" 
+        [fechaVencimientoArl]="getFecha('arl')" 
+        [fechaVencimientoSst]="getFecha('sst')" 
+        [fechaVencimientoCertExterna]="getFecha('certExt')"
+        [puntajeARL]="this.aliadoInformacion.puntaje_arl"
+        ></app-cargue-documentos>
+      </p-tabPanel>
+      <p-tabPanel header="Subcontratistas" *ngIf="this.aliadoInformacion.autoriza_subcontratacion">
+        <app-subcontratistas [aliadoId]="this.aliado.id"></app-subcontratistas>
       </p-tabPanel>
       <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipo_persona!='Natural'">
         <app-actividades-contratadas [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
@@ -19,17 +57,14 @@
       <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipo_persona!='Natural'">
         <app-localidades [selectDivision]="this.aliadoInformacion.division" [selectLocalidad]="this.aliadoInformacion.localidad" (data)="onReciveData($event, 'division')" (dataLocalidad)="onReciveData($event, 'localidad')"></app-localidades>
       </p-tabPanel>
-      <p-tabPanel header="Clasificación">
-        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')"></app-calificacion>
-      </p-tabPanel>
       <p-tabPanel header="Gestión del contrato">
         <app-asignacion-colider [dataIn]="this.aliadoInformacion.colider" (coliderData)="onReciveData($event, 'colider')"></app-asignacion-colider>
       </p-tabPanel>
       <p-tabPanel header="Control de riesgo">
         <app-control-riesgo [dataIn]="this.aliadoInformacion.control_riesgo" (data)="onReciveData($event, 'control-riesgo')"></app-control-riesgo>
       </p-tabPanel>
-      <p-tabPanel header="Subcontratistas">
-        <app-subcontratistas></app-subcontratistas>
+      <p-tabPanel header="Clasificación">
+        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')"></app-calificacion>
       </p-tabPanel>
     </p-tabView>
 </p-panel>

@@ -57,6 +57,14 @@ export interface AliadoInformacion{
     fecha_vencimiento_sst: Date;
     fecha_vencimiento_cert_ext: Date;
     control_riesgo: string;
+    email_comercial: string;
+    telefono_contacto: string;
+    puntaje_arl: number;
+    calificacion_aliado: number;
+    fecha_calificacion_aliado: Date;
+    nombre_calificador: string;
+    arl: string;
+    autoriza_subcontratacion: boolean;
 }
 
 export const _actividadesContratadasList = [
@@ -90,4 +98,15 @@ export interface Localidades{
     id: number;
     empresa_id: number;
     localidad: string;
+}
+
+export interface Subcontratista{
+    id?: number;
+    nit: string
+    nombre: string;
+    actividades_riesgo: string;
+    porcentaje_arl: string;
+    estado: string;
+    carta_autorizacion: string;
+    id_aliado_creador: number;
 }

@@ -141,6 +141,7 @@ const appRoutes: Routes = [
                     { path: 'aliado', component: AliadosComponent },
                     { path: 'listadoAliados', component: AliadosListComponent },
                     { path: 'actualizarAliado/:id', component: AliadosActualizarComponent },
+                    { path: 'actualizarAliado/:id/:onEdit', component: AliadosActualizarComponent },
                     { path: 'seguimientoContratistas', component: SeguimientoContratistasComponent },
                 ]
             },

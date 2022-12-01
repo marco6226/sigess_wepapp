@@ -48,8 +48,8 @@
     </div>
 </p-panel>
 
-<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica" [formGroup]="formJuridica">
-    <div class="cols">
+<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica">
+    <div class="cols" [formGroup]="formJuridica">
         <div class="input-field">
             <input type="text" pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Razón social"
                 class="form-material"/>
@@ -66,10 +66,24 @@
             <label for="" class="active">Nombre comercial</label>
         </div>
         <div class="input-field">
-            <input type="text" pInputText formControlName="email" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.email" placeholder="Email"
+            <input type="email" pInputText formControlName="email" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.email" placeholder="Email"
             class="form-material"/>
             <label for="" class="active">Email</label>
-        </div>        
+        </div>     
+    </div>
+    <div class="cols">
+        <div class="input-field" *ngIf="!isCreate">
+            <input type="number" pInputText [(ngModel)]="calificacion" (keyup)="onCalificacion()" [readonly]="'edit'!=onEdit" placeholder="0" class="form-material">
+            <label for="" class="active">Calificación</label>
+        </div>
+        <div class="input-field" *ngIf="!isCreate">
+            <p-calendar [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="'edit'!=onEdit" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
+            <label for="" class="active">Fecha calificación</label>
+        </div>
+        <div class="input-field" *ngIf="!isCreate">
+            <input type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="'edit'!=onEdit" placeholder="Quién califica" class="form-material">
+            <label for="" class="active">Quién califica</label>
+        </div>
     </div>
 </p-panel>
 <ng-container *ngIf="(formNatural.valid || formJuridica.valid) && isCreate">
