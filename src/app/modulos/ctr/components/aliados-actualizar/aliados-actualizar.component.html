@@ -64,11 +64,11 @@
         <app-control-riesgo [dataIn]="this.aliadoInformacion.control_riesgo" (data)="onReciveData($event, 'control-riesgo')"></app-control-riesgo>
       </p-tabPanel>
       <p-tabPanel header="Clasificación">
-        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')"></app-calificacion>
+        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')" (valoracionOUT)="impactoIn($event)"></app-calificacion>
       </p-tabPanel>
     </p-tabView>
 </p-panel>
 <ng-container>
-  <button pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliado"
+  <button pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliados"
       (click)="actualizarAliado()" class="float-btn"></button>
 </ng-container>

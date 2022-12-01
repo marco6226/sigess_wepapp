@@ -33,7 +33,9 @@ export class AliadosActualizarComponent implements OnInit {
     ciiu: null,
     logo: '',
     tipo_persona: null,
-    empresasContratistasList: []
+    empresasContratistasList: [],
+    estado:'',
+    calificacion:''
   };
 
   aliadoInformacion: AliadoInformacion={
@@ -64,6 +66,7 @@ export class AliadosActualizarComponent implements OnInit {
 
   documentos: Directorio[]=[]
   onEdit: string = '';
+  impactoV:string='';
   
   constructor(
     private rutaActiva: ActivatedRoute,
@@ -270,9 +273,12 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   async actualizarAliado(){
+    console.log(this.aliadoInformacion.calificacion)
     this.saveInformacionAliado();
 
     this.aliado.fechaActualizacion = new Date();
+    this.aliado.estado='Actualizado';
+    this.aliado.calificacion=this.impactoV;
     if(this.aliado.division !== null){
       this.aliado.division = JSON.stringify(this.aliado.division)
     }
@@ -280,5 +286,7 @@ export class AliadosActualizarComponent implements OnInit {
     await this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
     this.router.navigate(['/app/ctr/listadoAliados']);
   }
-
+  impactoIn(event){
+    this.impactoV=event
+  }
 }

@@ -28,8 +28,11 @@
         <th pSortableColumn="tipo">Tipo reporte
           <p-sortIcon field="tipo"></p-sortIcon>
         </th>
-        <th pSortableColumn="areaAccidente.padreNombre" *ngIf="idEmpresa=='22'">Ubicación
+        <th pSortableColumn="areaAccidente.padreNombre" *ngIf="idEmpresa=='22'">División/Unidad
           <p-sortIcon field="areaAccidente.padreNombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="areaAccidente.padreNombre" *ngIf="idEmpresa=='22'">Ubicación
+          <p-sortIcon field="areaAccidente.nombre"></p-sortIcon>
         </th>
       </tr>
       <tr>
@@ -60,6 +63,9 @@
         <td *ngIf="idEmpresa=='22'">
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'areaAccidente.padreNombre', 'contains')">
         </td>
+        <td *ngIf="idEmpresa=='22'">
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'areaAccidente.nombre', 'contains')">
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-reporte>
@@ -73,6 +79,7 @@
         <td>{{reporte.numeroIdentificacionEmpleado}}</td>
         <td>{{reporte.tipo}}</td>
         <td *ngIf="idEmpresa=='22'">{{reporte.areaAccidente.padreNombre}}</td>
+        <td *ngIf="idEmpresa=='22'">{{reporte.areaAccidente.nombre}}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="summary" let-rowData>

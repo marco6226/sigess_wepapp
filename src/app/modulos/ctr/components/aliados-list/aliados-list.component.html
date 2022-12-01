@@ -3,8 +3,9 @@
 </s-dataNotFound>
 
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
-  <p-tabView>
-    <p-table [value]="aliadosList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedList">
+    <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <p-tabView>
+    <p-table id="excel-table" [value]="aliadosList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedList">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 3rem">
