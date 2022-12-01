@@ -104,7 +104,7 @@ export class CalificacionComponent implements OnInit{
     let valString= this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'Bajo'
     : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'Medio'
     : this.valoracionActual > 4 ? 'Alto'
-    : '0'
+    : ' '
     this.valoracionOUT.emit(valString);
 }
   getColor(){
