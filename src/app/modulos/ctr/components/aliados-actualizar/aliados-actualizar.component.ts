@@ -64,6 +64,7 @@ export class AliadosActualizarComponent implements OnInit {
 
   documentos: Directorio[]=[]
   onEdit: string = '';
+  auxAutorizaSubcontratacion: boolean = false;
   
   constructor(
     private rutaActiva: ActivatedRoute,
@@ -266,10 +267,11 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   onReciveAutorizaSubcontratacion(data: boolean){
-    this.aliadoInformacion.autoriza_subcontratacion = data;
+    this.auxAutorizaSubcontratacion = data;
   }
 
   async actualizarAliado(){
+    this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
     this.saveInformacionAliado();
 
     this.aliado.fechaActualizacion = new Date();

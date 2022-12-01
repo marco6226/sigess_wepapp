@@ -4,14 +4,15 @@
 
 <p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList?.length > 0">
     <p-tabView>
-        <p-table #dt [value]="actividadesList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" [(selection)]="selectedList">
+        <p-table #dt [value]="actividadesList" responsiveLayout="scroll">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width: 3rem">
                         #
                     </th>
-                    <th>
+                    <th [pSortableColumn]="'nombre'">
                         Nombre Actividad
+                        <p-sortIcon [field]="'nombre'"></p-sortIcon>
                     </th>
                 </tr>
                 <tr>
@@ -29,7 +30,7 @@
                         {{i+1}}
                     </td>
                     <td>
-                        {{rowData}}
+                        {{rowData.nombre}}
                     </td> 
                 </tr>
             </ng-template>
@@ -45,7 +46,7 @@
         </p-table>
     </p-tabView>
 </p-panel>
-
+<br>
 <p-dialog header="Lista de Actividades" [(visible)]="visibleDlg" [style]="{width: '40vw'}">
     
     <div class="input-field">
@@ -61,5 +62,72 @@
     <p-footer>
         <button pButton type="button" (click)="agregarActividad()" label="Aceptar"></button>
         <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
+    </p-footer>
+</p-dialog>
+
+<s-dataNotFound *ngIf="!actividadesSubList || actividadesSubList?.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades Subcontratadas">
+    <button pButton type="button" (click)="abrirDialogoSub('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
+</s-dataNotFound>
+
+<p-panel header="Lista de Actividades Subcontratadas" *ngIf="actividadesSubList?.length > 0">
+    <p-tabView>
+        <p-table #dt [value]="actividadesSubList" responsiveLayout="scroll">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width: 3rem">
+                        #
+                    </th>
+                    <th [pSortableColumn]="'nombre'">
+                        Nombre Actividad
+                        <p-sortIcon [field]="'nombre'"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'contains')"> -->
+                    </td>
+                    <td>
+                        <input placeholder="Buscar" pInputText type="text" (input)="dt.filter($event.target.value, 'nombre', 'contains')">
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData  let-i="rowIndex">
+                <tr>
+                    <td class="my-center-text">
+                        {{i+1}}
+                    </td>
+                    <td>
+                        {{rowData.nombre}}
+                    </td> 
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-rowData>
+                <button pButton type="button" icon="fa fa-pencil" (click)="abrirDialogoSub()" label="Modificar Actividades"></button>    
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="9" class="p-text-center">No hay registro con los términos de filtro usados
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabView>
+</p-panel>
+
+<p-dialog header="Lista de Actividades Subcontratadas" [(visible)]="visibleDlgSub" [style]="{width: '40vw'}">
+    
+    <div class="input-field">
+        <label for="" class="active">Actividades contratadas</label>
+    </div>
+
+    <div class="ui-g" style="width:350px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
+        <div class="ui-g-12">
+            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividadSub"></p-checkbox>
+        </div>
+    </div>
+
+    <p-footer>
+        <button pButton type="button" (click)="agregarActividadSub()" label="Aceptar"></button>
+        <button pButton type="button" (click)="cerrarDialogoSub()" class="ui-button-secondary" label="Cancelar"></button>
     </p-footer>
 </p-dialog>

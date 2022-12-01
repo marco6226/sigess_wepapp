@@ -4,12 +4,14 @@ import { Documento } from 'app/modulos/ado/entities/documento';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { Modulo } from 'app/modulos/core/enums/enumeraciones';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { MessageService } from 'primeng/primeng';
 import { Subcontratista } from '../../entities/aliados';
 
 @Component({
   selector: 'app-subcontratistas',
   templateUrl: './subcontratistas.component.html',
-  styleUrls: ['./subcontratistas.component.scss']
+  styleUrls: ['./subcontratistas.component.scss'],
+  providers: [MessageService]
 })
 export class SubcontratistasComponent implements OnInit {
 
@@ -56,7 +58,8 @@ export class SubcontratistasComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
-    private directorioService: DirectorioService
+    private directorioService: DirectorioService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -65,21 +68,37 @@ export class SubcontratistasComponent implements OnInit {
     });
   }
 
-  openFormSubcontratista(){
+  createSubcontratista(){
+    this.selectedSubcontratista = null;
     this.displayDialog = true;
   }
 
-  closeFormSubcontratista(update?: boolean){
-    this.displayDialog = false;
-    this.selectedSubcontratista = null;
-    if(update) this.fetchSubcontratistasList().then();
+  editSubcontratista(){
+    this.displayDialog = true;
+  }
+
+  closeFormSubcontratista(onCancelar: boolean){
+    console.log('onCancelar: '+ onCancelar);
+    if(onCancelar){
+      this.displayDialog = false;
+      this.selectedSubcontratista = null;
+    }else{
+      this.displayDialog = false;
+      this.selectedSubcontratista = null;
+      this.fetchSubcontratistasList().then(()=>{
+        this.messageService.add({key: 'msg', severity:'success', summary: 'Guardado', detail: 'Se guardó subcontratista'});
+      });
+      setTimeout(()=>{
+        this.messageService.clear();
+      }, 4000);
+    }
   }
 
   async fetchSubcontratistasList(){
     await this.empresaService.getSubcontratistas(this.aliadoId)
       .then(
         (res: Subcontratista[]) => {
-          this.subcontratistasList = res;
+          this.subcontratistasList = res.reverse();
           this.loadDocumentos();
         }
       );
@@ -137,24 +156,21 @@ export class SubcontratistasComponent implements OnInit {
                   }
                 })[0];
     // console.log(subc);
-    this.empresaService.updateSubcontratista(subc)
-                          .then(()=>{
-                            this.fetchSubcontratistasList().then();
-                          });
+    this.empresaService
+      .updateSubcontratista(subc)
+      .then(()=>{
+        this.fetchSubcontratistasList().then();
+        this.messageService.add({key: 'msg', severity:'success', summary: 'Guardado', detail: 'Se guardó su carta de autorización'});
+      });
+    setTimeout(()=>{
+      this.messageService.clear();
+    }, 4000);
   }
 
   loadDocumentos(){
-    // if(this.subcontratistaData.carta_autorizacion){
-    //   JSON.parse(this.subcontratistaData.carta_autorizacion).forEach(async element => {
-    //     await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{
-    //       console.log(elem);
-    //       this.directorios.push(elem[0]);
-    //     })
-    //   console.log(this.directorios);
-    //   });
-    // }
     this.subcontratistasList.forEach(subcontratista => {
       if(subcontratista.carta_autorizacion != null){
+        this.directoriosSubcontratistas['dir_'+subcontratista.id] = [];
         JSON.parse(subcontratista.carta_autorizacion)
           .forEach(async element => {
             await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{

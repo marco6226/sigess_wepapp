@@ -12,21 +12,26 @@ export class ActividadesContratadasComponent implements OnInit {
   @Input('selectActividad') 
   set actividadesIn(actividades: string){
     if (actividades != null) {
-      console.log(actividades);
-      this.selectActividad = JSON.parse(actividades)
-      this.agregarActividad()
+      // console.log(actividades);
+      this.selectActividad = JSON.parse(actividades)[0];
+      this.selectActividadSub = JSON.parse(actividades)[1];
+      this.agregarActividad();
+      this.agregarActividadSub();
     }    
   }
 
   @Output() data = new EventEmitter<String>();
 
   visibleDlg: boolean =false;
+  visibleDlgSub: boolean =false;
 
-  actividadesContratadasList:any[]
+  actividadesContratadasList:any[];
 
-  selectActividad: any[]
+  selectActividad: any[];
+  selectActividadSub: any[];
 
-  actividadesList: any[]
+  actividadesList: any[];
+  actividadesSubList: any[];
 
   constructor(
     private empresaService: EmpresaService,
@@ -38,9 +43,28 @@ export class ActividadesContratadasComponent implements OnInit {
   }
 
   agregarActividad(){
-    this.actividadesList = this.selectActividad;
-    this.cerrarDialogo();
-    this.data.emit(JSON.stringify(this.actividadesList));
+    if(this.selectActividad != null){
+      this.actividadesList = this.selectActividad.map(item => {
+        return {nombre: item}
+      });
+      this.cerrarDialogo();
+      this.saveActividad();
+    }
+  }
+
+  agregarActividadSub(){
+    if(this.selectActividadSub != null){
+      this.actividadesSubList = this.selectActividadSub.map(item => {
+        return {nombre: item}
+      });
+      this.cerrarDialogoSub();
+      this.saveActividad();
+    }
+  }
+
+  saveActividad(){
+    // console.log(JSON.stringify([this.selectActividad, this.selectActividadSub]));
+    this.data.emit(JSON.stringify([this.selectActividad, this.selectActividadSub]));
   }
 
   abrirDialogo(param: string =null){
@@ -50,8 +74,19 @@ export class ActividadesContratadasComponent implements OnInit {
     this.visibleDlg = true;
   }
 
+  abrirDialogoSub(param: string =null){
+    if (param) {
+      this.selectActividadSub = []
+    }
+    this.visibleDlgSub = true;
+  }
+
   cerrarDialogo(){
     this.visibleDlg = false;
+  }
+
+  cerrarDialogoSub(){
+    this.visibleDlgSub = false;
   }
 
   async loadActividadesContratadas(){
