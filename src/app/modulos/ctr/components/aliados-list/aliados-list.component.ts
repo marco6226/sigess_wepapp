@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Aliados } from '../../entities/aliados';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Criteria, Filter } from 'app/modulos/core/entities/filter';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-aliados-list',
@@ -22,6 +23,8 @@ export class AliadosListComponent implements OnInit {
   caseSelect: boolean=false
   loading: boolean = false;
   selectedList: any[]=[];
+  fileName= 'ListadoAliados.xlsx';
+  excel:any[];
 
 
   constructor(
@@ -56,7 +59,7 @@ export class AliadosListComponent implements OnInit {
     filterQuery.filterList.push(filterAliadoID);
     filterQuery.sortField = "idEmpresaAliada";
     filterQuery.sortOrder = 1;
-
+    
     this.empresaService.findByFilter(filterQuery).then(
         resp => {
           console.log(resp);
@@ -124,4 +127,34 @@ export class AliadosListComponent implements OnInit {
     console.log(this.selectedList);   
     
   }
+  
+  async exportexcel(event): Promise<void> 
+    {
+       /* table id is passed over here */   
+      await this.datosExcel()
+      const readyToExport = this.excel;
+
+      const workBook = XLSX.utils.book_new(); // create a new blank book
+
+      const workSheet = XLSX.utils.json_to_sheet(readyToExport);
+
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'data'); // add the worksheet to the book
+
+      XLSX.writeFile(workBook, this.fileName); // initiate a file download in browser
+
+      //  let element = document.getElementById('excel-table'); 
+      //  const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+      //  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      //  XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+      //  /* save to file */
+      //  XLSX.writeFile(wb, this.fileName);
+			
+    }
+
+    async datosExcel(): Promise<void>{
+      this.excel=[]
+      this.aliadosList.forEach((resp)=>{
+        this.excel.push({Nombre_o_razón_social:resp['nombreComercial'],Tipo_de_Persona:resp['tipoPersona'],Estado:resp['estado'],Impacto:resp['calificacion'],Fecha_Creación:new Date(resp['fechaCreacion']),Fecha_Modificación:(resp['fechaActualizacion']!=null)?new Date(resp['fechaActualizacion']):''})
+      })
+    }
 }

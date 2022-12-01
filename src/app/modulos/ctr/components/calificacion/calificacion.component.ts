@@ -6,7 +6,7 @@ import { Component, Input, OnInit, Output, EventEmitter, SimpleChanges } from '@
   styleUrls: ['./calificacion.component.scss']
 })
 export class CalificacionComponent implements OnInit{
-
+  @Output()valoracionOUT= new EventEmitter<String>();
   @Input('selectCalificacion') 
   set actividadesIn(actividades: string){
     console.log(actividades);
@@ -100,7 +100,13 @@ export class CalificacionComponent implements OnInit{
     }
     this.data.emit(JSON.stringify(this.values))
   }
-
+  salidaValoracion(){
+    let valString= this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'Bajo'
+    : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'Medio'
+    : this.valoracionActual > 4 ? 'Alto'
+    : '0'
+    this.valoracionOUT.emit(valString);
+}
   getColor(){
     return this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'bg-c-green'
     : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'bg-c-yellow'
@@ -109,6 +115,7 @@ export class CalificacionComponent implements OnInit{
   }
 
   getValoracionToString(): string{
+    this.salidaValoracion()
     return this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'Impacto Bajo'
     : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'Impacto Medio'
     : this.valoracionActual > 4 ? 'Impacto Alto'

@@ -26,7 +26,10 @@
                         <th pSortableColumn="fechaReporte" style="width: 9%;">Fecha Reporte
                             <p-sortIcon field="fechaReporte.date:'yyyy-MM-dd HH:mm'" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="area.nombre" style="width: 10%;">Área origen
+                        <th pSortableColumn="area.nombre" style="width: 10%;"*ngIf="empresaId!='22'">Área origen
+                            <p-sortIcon field="area.nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="area.nombre" style="width: 10%;"*ngIf="empresaId=='22'">Ubicación
                             <p-sortIcon field="area.nombre"></p-sortIcon>
                         </th>
                         <th pSortableColumn="concepto" style="width: 30%;">Concepto
