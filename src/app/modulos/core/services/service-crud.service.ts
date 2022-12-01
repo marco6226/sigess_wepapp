@@ -84,7 +84,7 @@ export abstract class ServiceCRUD<T> {
             this.httpInt
                 .get(this.end_point + "?" + this.buildUrlParams(filterQuery))
                 .retryWhen(this.retryFunction)
-                // .pipe(retry(10))
+                .retry(10)
                 .map((res) => res)
                 .subscribe(
                     (res) => {
@@ -132,7 +132,7 @@ export abstract class ServiceCRUD<T> {
             this.httpInt
             
                 .get(this.end_point)
-                // .pipe(retry(10))
+                .retry(10)
                 .retryWhen(this.retryFunction)
                 .map((res) => res)
                 .subscribe(
