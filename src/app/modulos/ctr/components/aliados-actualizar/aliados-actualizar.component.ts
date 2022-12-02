@@ -10,11 +10,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AliadoInformacion } from '../../entities/aliados';
 import { ComunService } from 'app/modulos/comun/services/comun.service';
+import { MessageService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-aliados-actualizar',
   templateUrl: './aliados-actualizar.component.html',
-  styleUrls: ['./aliados-actualizar.component.scss']
+  styleUrls: ['./aliados-actualizar.component.scss'],
+  providers: [MessageService]
 })
 export class AliadosActualizarComponent implements OnInit {
 
@@ -75,6 +77,7 @@ export class AliadosActualizarComponent implements OnInit {
     private directorioService: DirectorioService,
     private usuarioService: UsuarioService,
     private router: Router,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit() {
@@ -284,10 +287,16 @@ export class AliadosActualizarComponent implements OnInit {
     if(this.aliado.division !== null){
       this.aliado.division = JSON.stringify(this.aliado.division)
     }
-    await this.empresaService.update(this.aliado)
-    await this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
-    this.router.navigate(['/app/ctr/listadoAliados']);
+    await this.empresaService.update(this.aliado).then( () => {
+      this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
+      this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+    });
+    // setTimeout(() => {
+    //   this.messageService.clear();
+    // }, 20000);
+    // this.router.navigate(['/app/ctr/listadoAliados']);
   }
+
   impactoIn(event){
     this.impactoV=event
   }

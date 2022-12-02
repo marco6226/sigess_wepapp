@@ -40,6 +40,7 @@ export class FormSubcontratistaComponent implements OnInit {
   }
 
   actividadesRiesgoList: Array<object> = [
+    {name: 'No aplica', value: 'No aplica'},
     {name: 'Trabajo en alturas', value: 'Trabajo en alturas'},
     {name: 'Trabajo en espacios confinados', value: 'Trabajo en espacios confinados'},
     {name: 'Trabajo con energías peligrosas', value: 'Trabajo con energías peligrosas'},
@@ -74,7 +75,7 @@ export class FormSubcontratistaComponent implements OnInit {
   guardarSubcontratista(){
     if(this.formSubcontratista.valid){
       if(this.isSaveOrUpdate === 'save'){
-        console.log('saveSubcontratista');
+        // console.log('saveSubcontratista');
         this.subcontratistaData = {
           nit: this.formSubcontratista.value.nit,
           nombre: this.formSubcontratista.value.nombre,
@@ -92,7 +93,7 @@ export class FormSubcontratistaComponent implements OnInit {
             }
           );
       }else{
-        console.log('updateSubcontratista');
+        // console.log('updateSubcontratista');
         this.subcontratistaData = {
           id: this.subcontratistaData.id,
           nit: this.formSubcontratista.value.nit,

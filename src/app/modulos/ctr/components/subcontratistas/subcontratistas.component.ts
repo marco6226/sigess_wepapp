@@ -78,7 +78,7 @@ export class SubcontratistasComponent implements OnInit {
   }
 
   closeFormSubcontratista(onCancelar: boolean){
-    console.log('onCancelar: '+ onCancelar);
+    // console.log('onCancelar: '+ onCancelar);
     if(onCancelar){
       this.displayDialog = false;
       this.selectedSubcontratista = null;

@@ -1,4 +1,4 @@
-<s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="Registre el responsable en el SST.">
+<s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="Registre el responsable en el SG-SST.">
     <button pButton type="button" (click)="crearResponsableMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
 
@@ -57,7 +57,7 @@
 
 <br>
 
-<s-dataNotFound *ngIf="(!equipoList || equipoList.length <= 0) && responsableList.length > 0" icon="fa-handshake-o" message="Si la empresa cuenta con personal asignado a SST, cree los miembros en las diferentes localidades.">
+<s-dataNotFound *ngIf="(!equipoList || equipoList.length <= 0) && responsableList.length > 0" icon="fa-handshake-o" message="Si la empresa cuenta con personal asignado a SG-SST, cree los miembros en las diferentes localidades.">
     <button pButton type="button" (click)="crearMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
 
@@ -122,9 +122,8 @@
                         {{rowData.licenciaSST}}
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
-                        <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning p-mr-2" (click)="onEdit(rowData)" title="Enviar correo"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData)" title="Eliminar"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData, 'Editar')" title="Editar"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData, 'Eliminar')" title="Eliminar"></button>
                     </td>
                 </tr>
             </ng-template>

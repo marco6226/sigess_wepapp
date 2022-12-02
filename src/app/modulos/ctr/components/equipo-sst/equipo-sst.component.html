@@ -1,51 +1,51 @@
 <div class="cols" [formGroup]="formResponsable" *ngIf="isResponsable">
     <div class="input-field">
-        <input type="text" pInputText formControlName="nombre" placeholder="Nombre"
+        <input required type="text" pInputText formControlName="nombre" placeholder="Nombre"
             class="form-material"/>
         <label for="" class="active">Nombre</label>            
     </div>
     <div class="input-field">
-        <input type="text" pInputText formControlName="correo" placeholder="Correo"
+        <input required type="text" pInputText formControlName="correo" placeholder="Correo"
         class="form-material"/>
         <label for="" class="active">Correo</label>
     </div>   
     <div class="input-field">
-        <input type="text" pInputText formControlName="telefono" placeholder="Telefono"
+        <input required type="number" pInputText formControlName="telefono" placeholder="Telefono"
         class="form-material"/>
         <label for="" class="active">Telefono</label>
     </div> 
     <div class="input-field">
-        <input type="text" pInputText formControlName="licenciaSST" placeholder="LicenciaSST"
+        <input required type="text" pInputText formControlName="licenciaSST" placeholder="LicenciaSST"
         class="form-material"/>
-        <label for="" class="active">Licencia SST</label>
+        <label for="" class="active">Licencia SST / Resolución</label>
     </div> 
 </div>
 
 <div class="cols" [formGroup]="formEquipo" *ngIf="!isResponsable">
     <div class="input-field">
-        <input type="text" pInputText formControlName="nombre" placeholder="Nombre"
+        <input required type="text" pInputText formControlName="nombre" placeholder="Nombre"
             class="form-material"/>
         <label for="" class="active">Nombre</label>            
     </div>
     <div class="input-field">
-        <input type="text" pInputText formControlName="documento" placeholder="documento"
+        <input required type="number" pInputText formControlName="documento" placeholder="documento"
         class="form-material"/>
         <label for="" class="active">Documento</label>
     </div>   
     <div class="input-field">
-        <input type="text" pInputText formControlName="correo" placeholder="Correo"
+        <input required type="email" pInputText formControlName="correo" placeholder="Correo"
         class="form-material"/>
         <label for="" class="active">Correo</label>
     </div>   
     <div class="input-field">
-        <input type="text" pInputText formControlName="telefono" placeholder="Telefono"
+        <input required type="number" pInputText formControlName="telefono" placeholder="Telefono"
         class="form-material"/>
         <label for="" class="active">Telefono</label>
     </div>
     <div class="input-field">
         <!-- <input type="text" pInputText formControlName="division" placeholder="division"
         class="form-material"/> -->
-        <p-multiSelect appendTo="body" class="form-material"  defaultLabel="--seleccione division--" [options]="divisionList" formControlName="division"> </p-multiSelect>
+        <p-multiSelect required appendTo="body" class="form-material"  defaultLabel="--seleccione division--" [options]="divisionList" formControlName="division"> </p-multiSelect>
         <label for="" class="active">División</label>
     </div>   
     <div class="input-field">
@@ -53,18 +53,18 @@
         class="form-material"/>
         <label for="" class="active">Localidad</label> -->
         <!-- <p-chips [(ngModel)]="locadidadList" formControlName="localidad"></p-chips> -->
-        <p-multiSelect appendTo="body" [options]="localidadesList" [(ngModel)]="selectedLocalidad" defaultLabel="--seleccione localidad--" formControlName="localidad" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
+        <p-multiSelect required appendTo="body" [options]="localidadesList" [(ngModel)]="selectedLocalidad" defaultLabel="--seleccione localidad--" formControlName="localidad" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
         <label for="" class="active">Localidad</label>
     </div>   
     <div class="input-field">
-        <input type="text" pInputText formControlName="cargo" placeholder="cargo"
+        <input required type="text" pInputText formControlName="cargo" placeholder="cargo"
         class="form-material"/>
         <label for="" class="active">Rol o Cargo</label>
     </div> 
     <div class="input-field">
-        <input type="text" pInputText formControlName="licenciaSST" placeholder="LicenciaSST"
+        <input required type="text" pInputText formControlName="licenciaSST" placeholder="LicenciaSST"
         class="form-material"/>
-        <label for="" class="active">Licencia SST</label>
+        <label for="" class="active">Licencia SST / Resolución</label>
         <!-- <div class="input-field"> -->
         <!-- <p-chips [(ngModel)]="locadidadList"></p-chips>
         <label for="" class="active">Localidad</label> -->
