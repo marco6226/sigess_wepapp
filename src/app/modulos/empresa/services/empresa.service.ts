@@ -71,6 +71,25 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         return "EmpresaService";
     }
 
+    createEmpresaAliada(empresaAliada: Empresa){
+        let body = JSON.stringify(empresaAliada);
+        return new Promise((resolve, reject) => {
+            this.httpInt
+                .post(endPoints.EmpresaService+"createEmpresaAliada", body)
+                .retryWhen(this.retryFunction)
+                .map((res) => res)
+                .subscribe(
+                    (res) => {
+                        resolve(res);
+                    },
+                    (err) => {
+                        reject(err);
+                        this.manageError(err);
+                    }
+                );
+        });
+    }
+
     createEquipoSST(equipoSST: SST){
      
         let body = JSON.stringify(equipoSST);

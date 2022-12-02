@@ -45,7 +45,7 @@
     <div class="input-field">
         <!-- <input type="text" pInputText formControlName="division" placeholder="division"
         class="form-material"/> -->
-        <p-multiSelect class="form-material"  defaultLabel="--seleccione division--" [options]="divisionList" formControlName="division"> </p-multiSelect>
+        <p-multiSelect appendTo="body" class="form-material"  defaultLabel="--seleccione division--" [options]="divisionList" formControlName="division"> </p-multiSelect>
         <label for="" class="active">División</label>
     </div>   
     <div class="input-field">
@@ -53,7 +53,7 @@
         class="form-material"/>
         <label for="" class="active">Localidad</label> -->
         <!-- <p-chips [(ngModel)]="locadidadList" formControlName="localidad"></p-chips> -->
-        <p-multiSelect [options]="localidadesList" [(ngModel)]="selectedLocalidad" defaultLabel="--seleccione localidad--" formControlName="localidad" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
+        <p-multiSelect appendTo="body" [options]="localidadesList" [(ngModel)]="selectedLocalidad" defaultLabel="--seleccione localidad--" formControlName="localidad" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
         <label for="" class="active">Localidad</label>
     </div>   
     <div class="input-field">

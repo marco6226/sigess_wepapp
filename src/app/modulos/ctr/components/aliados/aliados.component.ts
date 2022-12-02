@@ -193,7 +193,7 @@ export class AliadosComponent implements OnInit {
       }
     }
 
-    this.empresaService.create(createEmpresa).then((ele:Empresa)=>{
+    this.empresaService.createEmpresaAliada(createEmpresa).then((ele:Empresa)=>{
       console.log(ele);      
       this.messageService.add({severity:'success', summary: 'Creación Alidado', detail: 'Se agrego un Aliado nuevo'});
       console.log(ele);

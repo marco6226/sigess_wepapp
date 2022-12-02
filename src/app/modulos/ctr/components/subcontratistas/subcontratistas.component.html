@@ -58,6 +58,6 @@
   </ng-template>
 </p-table>
 
-<p-dialog header="Crear subcontratista" [closable]="false" [modal]="false" [style]="{'width':'60%'}" [(visible)]="displayDialog">
+<p-dialog header="Crear subcontratista" [closable]="false" [modal]="true" [style]="{'width':'60%'}" [(visible)]="displayDialog">
   <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista($event)"></app-form-subcontratista>
 </p-dialog>
