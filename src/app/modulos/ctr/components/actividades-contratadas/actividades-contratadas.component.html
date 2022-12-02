@@ -53,9 +53,9 @@
         <label for="" class="active">Actividades contratadas</label>
     </div>
 
-    <div class="ui-g" style="width:350px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
-        <div class="ui-g-12">
-            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividad"></p-checkbox>
+    <div class="contenedor" style="width:802px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
+        <div class="contenedor">
+            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividad" ></p-checkbox>
         </div>
     </div>
 
