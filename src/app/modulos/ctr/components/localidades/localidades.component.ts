@@ -1,6 +1,7 @@
 import { Localidades, _actividadesContratadasList, _divisionList } from './../../entities/aliados';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-localidades',
@@ -47,11 +48,15 @@ export class LocalidadesComponent implements OnInit {
   locadidadList: any[]=[]
   locadidadesList: string[]=[]
 
+  edit: string = null;
+
   constructor(
+    private activatedRoute: ActivatedRoute,
     private empresaService: EmpresaService,
   ) { }
 
   ngOnInit(): void {
+    this.edit = this.activatedRoute.snapshot.params.onEdit;
     this.loadLocalidades()
   }
   
