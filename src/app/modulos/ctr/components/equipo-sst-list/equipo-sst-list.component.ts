@@ -103,8 +103,8 @@ export class EquipoSstListComponent implements OnInit {
   }
 
 
-  onEdit(event){
-
+  onEdit(event: EquipoSST, action?: string){
+    console.log(event, action);
   }
 
   onLoad(){

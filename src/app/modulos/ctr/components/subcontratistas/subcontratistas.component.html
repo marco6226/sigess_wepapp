@@ -19,7 +19,7 @@
         Estado
         <p-sortIcon field="estado"></p-sortIcon></th>
       <th>
-        Carta de autorización
+        Soportes
         <p-sortIcon field="cartaAutorizacion"></p-sortIcon></th>
     </tr>
   </ng-template>
@@ -36,7 +36,7 @@
             <div *ngFor="let dir of directoriosSubcontratistas['dir_'+rowData.id]">
               <div class="dwrapper" *ngIf="dir!.documento.proceso=='cartaAutorizacion'">
                 <span [class]="dir.extension?.icono" [style.color]="dir.extension?.color"></span>
-                <a style="margin-left: 10px;color: blue;" (click)="descargarDocumento(dir.documento)">{{dir.documento.nombre}}</a><br>
+                <a style="margin-left: 10px;color: blue;" (click)="descargarDocumento(dir.documento)">{{dir.documento.descripcion}}</a><br>
                 <label for="">{{dir.fechaCreacion | date:'yyyy-MM-dd'}}</label>
               </div>
             </div>
@@ -58,6 +58,6 @@
   </ng-template>
 </p-table>
 
-<p-dialog header="Crear subcontratista" [closable]="false" [modal]="false" [style]="{'width':'60%'}" [(visible)]="displayDialog">
+<p-dialog header="Crear subcontratista" [closable]="false" [modal]="true" [style]="{'width':'60%'}" [(visible)]="displayDialog">
   <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista($event)"></app-form-subcontratista>
 </p-dialog>

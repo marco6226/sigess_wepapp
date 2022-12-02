@@ -15,7 +15,6 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     @Input('disabled') disabled: boolean = false;
     @Input('visible') visible: boolean = true;
     items: any[];
-    empresaId: string;
 
     nombreAUC: string;
     nombreSEC: string;
@@ -27,10 +26,10 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     ) { }
 
     async ngOnInit() {
-        setTimeout(async () => {
-            this.empresaId = await this.sesionService.getEmpresa().id
-        }, 1000);
-        
+    }
+
+    getEmpresaID(){
+        return this.sesionService.getEmpresa().id
     }
 
     irHome() {
@@ -86,7 +85,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                     [
                         { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
                         { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
-                        { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/actualizarAliado/'+this.empresaId, class: 'fa fa-handshake-o' },
+                        { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' },
                         // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
                         // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
                     ]

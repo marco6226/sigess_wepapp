@@ -1,5 +1,5 @@
 <s-dataNotFound *ngIf="!actividadesList || actividadesList?.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades contratadas">
-    <button pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
+    <button pButton [disabled]="!edit" type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
 </s-dataNotFound>
 
 <p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList?.length > 0">
@@ -35,7 +35,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo()" label="Modificar Actividades"></button>    
+                <button [disabled]="!edit" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo()" label="Modificar Actividades"></button>    
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
@@ -53,9 +53,9 @@
         <label for="" class="active">Actividades contratadas</label>
     </div>
 
-    <div class="ui-g" style="width:350px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
-        <div class="ui-g-12">
-            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividad"></p-checkbox>
+    <div class="contenedor" style="width:802px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
+        <div class="contenedor">
+            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividad" ></p-checkbox>
         </div>
     </div>
 
@@ -66,7 +66,7 @@
 </p-dialog>
 
 <s-dataNotFound *ngIf="!actividadesSubList || actividadesSubList?.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades Subcontratadas">
-    <button pButton type="button" (click)="abrirDialogoSub('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
+    <button [disabled]="!edit" pButton type="button" (click)="abrirDialogoSub('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
 </s-dataNotFound>
 
 <p-panel header="Lista de Actividades Subcontratadas" *ngIf="actividadesSubList?.length > 0">
@@ -102,7 +102,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton type="button" icon="fa fa-pencil" (click)="abrirDialogoSub()" label="Modificar Actividades"></button>    
+                <button [disabled]="!edit" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogoSub()" label="Modificar Actividades"></button>    
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>

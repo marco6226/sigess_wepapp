@@ -1,6 +1,7 @@
 import { ActividadesContratadas, _actividadesContratadasList } from './../../entities/aliados';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-actividades-contratadas',
@@ -20,6 +21,8 @@ export class ActividadesContratadasComponent implements OnInit {
     }    
   }
 
+  edit: string = null;
+
   @Output() data = new EventEmitter<String>();
 
   visibleDlg: boolean =false;
@@ -35,10 +38,11 @@ export class ActividadesContratadasComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
-
+    private rutaActiva: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.edit = this.rutaActiva.snapshot.params.onEdit;
     this.loadActividadesContratadas()
   }
 
@@ -91,16 +95,20 @@ export class ActividadesContratadasComponent implements OnInit {
 
   async loadActividadesContratadas(){
     this.actividadesContratadasList=[]
-    let x = await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
-
+    await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
+      element.sort(function(a,b){
+        if(a.actividad > b.actividad){
+          return 1
+        }else if(a.actividad < b.actividad){
+          return -1;
+        }
+        return 0;
+      });
       element.forEach(elemen => {
-      
         this.actividadesContratadasList.push({label:elemen.actividad, value: elemen.actividad})
-      
     });
    });
-    console.log(this.actividadesContratadasList);
-    
+    // console.log(this.actividadesContratadasList);
   }
 
 }
