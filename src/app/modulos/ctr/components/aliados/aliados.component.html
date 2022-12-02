@@ -48,15 +48,15 @@
     </div>
 </p-panel>
 
-<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica">
-    <div class="cols" [formGroup]="formJuridica">
+<p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica"  [formGroup]="formJuridica">
+    <div class="cols">
         <div class="input-field">
             <input type="text" required pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Razón social"
                 class="form-material"/>
             <label for="" class="active">Razón social</label>            
         </div>
         <div class="input-field">
-            <input type="text" required pInputText formControlName="identificacion" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nit" placeholder="NIT"
+            <input type="number" required pInputText formControlName="identificacion" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nit" placeholder="NIT"
             class="form-material"/>
             <label for="" class="active">NIT</label>
         </div>
@@ -72,16 +72,16 @@
         </div>     
     </div>
     <div class="cols">
-        <div class="input-field" *ngIf="!isCreate">
-            <input type="number" pInputText [(ngModel)]="calificacion" (keyup)="onCalificacion()" [readonly]="'edit'!=onEdit" placeholder="0" class="form-material">
-            <label for="" class="active">Calificación</label>
+        <div class="input-field">
+            <input type="number" required pInputText formControlName="calificacion_proceso" [(ngModel)]="calificacion" (keyup)="onCalificacion()" [readonly]="!isCreate" placeholder="Calificación" class="form-material">
+            <label for="" class="active">Calificación de proceso de selección</label>
         </div>
-        <div class="input-field" *ngIf="!isCreate">
-            <p-calendar [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="'edit'!=onEdit" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
+        <div class="input-field">
+            <p-calendar required formControlName="fecha_calificacion" [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="!isCreate" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
             <label for="" class="active">Fecha calificación</label>
         </div>
-        <div class="input-field" *ngIf="!isCreate">
-            <input type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="'edit'!=onEdit" placeholder="Quién califica" class="form-material">
+        <div class="input-field">
+            <input required formControlName="quien_califica" type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="!isCreate" placeholder="Quién califica" class="form-material">
             <label for="" class="active">Quién califica</label>
         </div>
     </div>

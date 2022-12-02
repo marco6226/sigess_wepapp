@@ -1,6 +1,7 @@
 import { UsuarioEmpresa } from './../../../empresa/entities/usuario-empresa';
 import { Perfil } from './../../../empresa/entities/perfil';
 import { Usuario } from './../../../empresa/entities/usuario';
+import { AliadoInformacion } from '../../entities/aliados';
 import { UsuarioService } from './../../../admin/services/usuario.service';
 import { SesionService } from './../../../core/services/sesion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -53,7 +54,7 @@ export class AliadosComponent implements OnInit {
   @Input() onEdit: string= null;
   
   
-  @Input('calificacion') calificacion: number = 0;
+  @Input('calificacion') calificacion: number;
   
   fecha_calificacion: Date;
   @Input('fechaCalificacion')
@@ -115,6 +116,9 @@ export class AliadosComponent implements OnInit {
       identificacion:[null, Validators.required],
       email:[null, [Validators.required, Validators.email]],
       nombreComercial:[null, Validators.required],
+      calificacion_proceso:[null, Validators.required],
+      fecha_calificacion:[null, Validators.required],
+      quien_califica:[null, Validators.required]
     })
    }
   
@@ -215,8 +219,36 @@ export class AliadosComponent implements OnInit {
         user.mfa= null
   
         user.usuarioEmpresaList.push(ue)
-        this.usuarioService.createUsuarioAliado(user,ele.id);
+        this.usuarioService.createUsuarioAliado(user,ele.id).then((res: Usuario)=>{
+          let aliadoInformacion: AliadoInformacion ={
+            // id: 0,
+            id_empresa: Number(ele.id),
+            actividad_contratada: null,
+            division: null,
+            localidad: null,
+            calificacion: null,
+            colider: null,
+            documentos: null,
+            representante_legal: '',
+            numero_trabajadores: 0,
+            numero_trabajadores_asignados: 0,
+            fecha_vencimiento_arl: null,
+            fecha_vencimiento_sst: null,
+            fecha_vencimiento_cert_ext: null,
+            control_riesgo: null,
+            email_comercial: null,
+            telefono_contacto: null,
+            puntaje_arl: null,
+            calificacion_aliado: this.formJuridica.value.calificacion_proceso,
+            fecha_calificacion_aliado: this.formJuridica.value.fecha_calificacion,
+            nombre_calificador: this.formJuridica.value.quien_califica,
+            arl: null,
+            autoriza_subcontratacion: false
+          }
 
+          this.empresaService.saveAliadoInformacion(aliadoInformacion)
+            .then((e: AliadoInformacion) => console.log('aliado creado: ' + e.id));
+        });
       }
       setTimeout(() => {
         this.router.navigate(['/app/ctr/listadoAliados']);
