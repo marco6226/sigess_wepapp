@@ -820,7 +820,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.msgs = [];
             this.msgs.push({
                 severity: "error",
-                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control.",
+                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control o si selecciona el campo sí se debe diligenciar la fecha de envío a entes de control.",
             });
         }
     }
@@ -835,6 +835,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     async modificarAnalisis() {
         this.guardando=true;
         this.disabled=true;
+        console.log(this.analisisPeligros)
         // this.flagModificar=true;
         if(!this.analisisPeligros.invalid){
                 if(this.idEmpresa=='22'){await this.tareaList2();}
@@ -917,7 +918,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.msgs = [];
             this.msgs.push({
                 severity: "error",
-                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control.",
+                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control o si selecciona el campo sí se debe diligenciar la fecha de envío a entes de control.",
             });
         }
     }
