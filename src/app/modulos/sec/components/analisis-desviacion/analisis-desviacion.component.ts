@@ -816,6 +816,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.adicionar = false;
             });
         }else{
+            this.guardando=false
             this.msgs = [];
             this.msgs.push({
                 severity: "error",
@@ -912,6 +913,7 @@ export class AnalisisDesviacionComponent implements OnInit {
             }, 2000);
             this.flagBotonModificar()
         }else{
+            this.guardando=false
             this.msgs = [];
             this.msgs.push({
                 severity: "error",
