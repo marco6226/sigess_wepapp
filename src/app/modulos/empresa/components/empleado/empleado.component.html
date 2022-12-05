@@ -34,9 +34,9 @@
                     <th pSortableColumn="area.nombre">Ubicación
                         <p-sortIcon field="area.nombre"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="estado">Estado
+                    <!-- <th pSortableColumn="estado">Estado
                         <p-sortIcon field="estado"></p-sortIcon>
-                    </th>
+                    </th> -->
                 </tr>
                 <tr>
                     <td>
@@ -63,9 +63,9 @@
                     <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
                     </td>
-                    <td>
+                    <!-- <td>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
-                    </td>
+                    </td> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-empleado>
@@ -82,9 +82,9 @@
                     <td>{{empleado.cargo.nombre}}</td>
                     <td>{{empleado.usuario.email}}</td>
                     <td>{{empleado.area.nombre}}</td>
-                    <td>
+                    <!-- <td>
                         <label class="badge" [ngClass]="{'success': empleado.estado != 'ELIMINADO', 'novalid': empleado.estado == 'ELIMINADO'}">{{empleado.estado}}</label>
-                    </td>
+                    </td> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
