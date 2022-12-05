@@ -29,13 +29,16 @@
                         <th pSortableColumn="area.nombre" style="width: 10%;"*ngIf="empresaId!='22'">Área origen
                             <p-sortIcon field="area.nombre"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="area.nombre" style="width: 10%;"*ngIf="empresaId=='22'">División/Unidad
+                            <p-sortIcon field="area.padreNombre"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="area.nombre" style="width: 10%;"*ngIf="empresaId=='22'">Ubicación
                             <p-sortIcon field="area.nombre"></p-sortIcon>
                         </th>
                         <th pSortableColumn="concepto" style="width: 30%;">Concepto
                             <p-sortIcon field="concepto"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="aspectoCausante" style="width: 30%;">Aspecto causante 
+                        <th pSortableColumn="aspectoCausante" style="width: 30%;">Aspecto causante
                             <p-sortIcon field="aspectoCausante"></p-sortIcon>
                         </th>
                         <th *ngIf="empresaCriticidadPermiso==empresaId" pSortableColumn="aspectoCausante" style="width: 30%;">Criticidad
@@ -58,6 +61,9 @@
                         <td>
                             <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'fechaReporte', 'bt')"> -->
                             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaReporte', 'bt')"></s-rangoFechaSelector>     
+                        </td>
+                        <td *ngIf="empresaId=='22'">
+                            <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'area.padreNombre', 'contains')">
                         </td>
                         <td>
                             <input pInputText type="text" (input)="dt.filter($event.target.value.toUpperCase(), 'area.nombre', 'contains')">
@@ -87,6 +93,7 @@
                         <td>{{desviacion.hashId}}</td>
                         <!-- <td>{{desviacion.fechaReporte | date:'yyyy-MM-dd'}}</td> -->
                         <td>{{desviacion.fechaReporte | date:'dd/MM/yyyy'}}</td>
+                        <td *ngIf="empresaId=='22'">{{desviacion.area.padreNombre}}</td>
                         <td>{{desviacion.area.nombre}}</td>
                         <td>{{desviacion.concepto}}</td>
                         <td [pTooltip]="desviacion.aspectoCausante" tooltipPosition="top">{{desviacion.aspectoCausante | slice:0:100}}...</td>
