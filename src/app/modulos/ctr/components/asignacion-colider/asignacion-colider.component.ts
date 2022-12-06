@@ -1,6 +1,7 @@
 import { Empleado } from './../../../empresa/entities/empleado';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Reporte } from 'app/modulos/rai/entities/reporte';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-asignacion-colider',
@@ -19,10 +20,14 @@ export class AsignacionColiderComponent implements OnInit {
 
   empleadoSelect: Empleado;
   reporteSelect: Reporte;
+  onEdit: string;
 
-  constructor() { }
+  constructor(
+    private rutaActiva: ActivatedRoute 
+  ) { }
 
   ngOnInit(): void {
+    this.onEdit = this.rutaActiva.snapshot.params.onEdit;
   }
 
   onData(){

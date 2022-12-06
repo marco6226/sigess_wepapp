@@ -29,12 +29,12 @@
         </div>
     </div>
     <br>
-    <div class="cols" *ngIf="onEdit == 'edit'">
+    <div class="cols">
         <div class="input-field">
             <div class="ui-g-12">
                 <label for="" class="active" style="margin-bottom:10px;background-color:transparent;">La empresa cuenta con autorización para subcontratación: </label>
-                <p-radioButton (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px', 'margin-left': '10px'}" name="group1" value="Si" label="Si" [(ngModel)]="autorizaSubcontratacion"></p-radioButton>
-                <p-radioButton (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="group1" value="No" label="No" [(ngModel)]="autorizaSubcontratacion"></p-radioButton>
+                <p-radioButton [disabled]="onEdit != 'edit'" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px', 'margin-left': '10px'}" name="group1" value="Si" label="Si" [(ngModel)]="autorizaSubcontratacion"></p-radioButton>
+                <p-radioButton [disabled]="onEdit != 'edit'" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="group1" value="No" label="No" [(ngModel)]="autorizaSubcontratacion"></p-radioButton>
             </div>
         </div>
     </div>

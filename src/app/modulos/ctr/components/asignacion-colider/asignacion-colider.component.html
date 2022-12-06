@@ -2,7 +2,7 @@
     <strong>Seleccione el gestor o interventor del contrato</strong>
     <br/>
     <br/>
-    <s-empleadoSelector [(ngModel)]="empleadoSelect " (onSelect)="onData()"  [readOnly]="reporteSelect "></s-empleadoSelector>
+    <s-empleadoSelector [(ngModel)]="empleadoSelect " (onSelect)="onData()"  [readOnly]="onEdit!='edit'"></s-empleadoSelector>
     <br/>
     <br/>
 </div>
