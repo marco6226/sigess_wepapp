@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-calificacion',
@@ -52,7 +53,11 @@ export class CalificacionComponent implements OnInit{
   valoracionActual: number;
   valoracionToString: string;
 
-  constructor() {
+  @Input() onEdit: string;
+
+  constructor(
+    private activatedRoute: ActivatedRoute
+  ) {
     this.permanencia = [
       {name: 'Continua', value: 1.25}, 
       {name: 'Frecuente', value: 0.75}, 
@@ -76,6 +81,7 @@ export class CalificacionComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.onEdit = this.activatedRoute.snapshot.params.onEdit;
   }
 
   onSaveData(){
