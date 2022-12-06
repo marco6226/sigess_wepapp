@@ -63,12 +63,12 @@ export class AliadosActualizarComponent implements OnInit {
     fecha_calificacion_aliado: null,
     nombre_calificador: '',
     arl: null,
-    autoriza_subcontratacion: false
+    autoriza_subcontratacion: null
   }
 
   documentos: Directorio[]=[]
   onEdit: string = '';
-  auxAutorizaSubcontratacion: boolean = false;
+  auxAutorizaSubcontratacion: boolean;
   impactoV:string='';
   
   constructor(
@@ -83,7 +83,7 @@ export class AliadosActualizarComponent implements OnInit {
   ngOnInit() {
     this.id = this.rutaActiva.snapshot.params.id;
     this.onEdit = this.rutaActiva.snapshot.params.onEdit;
-    this.loadData();
+    this.loadData().then();
   }
 
   async loadData(){
@@ -118,10 +118,11 @@ export class AliadosActualizarComponent implements OnInit {
         console.log(this.aliadoInformacion);     
       }      
     });
+    this.auxAutorizaSubcontratacion = this.aliadoInformacion.autoriza_subcontratacion;
 
     await this.loadDocumentos()
 
-    await this.saveInformacionAliado();
+    // await this.saveInformacionAliado();
     if(this.aliadoInformacion.id == null){
       this.loadInformacionAliado();
     }
@@ -289,7 +290,7 @@ export class AliadosActualizarComponent implements OnInit {
     }
     await this.empresaService.update(this.aliado).then( () => {
       this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
-      this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+      // this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
     });
     // setTimeout(() => {
     //   this.messageService.clear();

@@ -53,7 +53,10 @@ export class AliadosListComponent implements OnInit {
     let filterAliadoID = new Filter();
     filterAliadoID.criteria = Criteria.EQUALS;
     filterAliadoID.field = 'idEmpresaAliada';
-    filterAliadoID.value1 = await this.sesionService.getEmpresa().id
+    let idAux = await this.sesionService.getEmpresa().idEmpresaAliada != null
+                ? await this.sesionService.getEmpresa().idEmpresaAliada
+                : await this.sesionService.getEmpresa().id;
+    filterAliadoID.value1 = String(idAux);
 
     filterQuery.filterList.push(filtPadre);
     filterQuery.filterList.push(filterAliadoID);
@@ -61,6 +64,7 @@ export class AliadosListComponent implements OnInit {
     filterQuery.sortOrder = 1;
     
     this.empresaService.findByFilter(filterQuery).then(
+      // this.empresaService.findByFilter().then(
         resp => {
           console.log(resp);
           resp['data'].forEach(element => {
