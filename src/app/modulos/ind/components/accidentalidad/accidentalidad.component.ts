@@ -187,7 +187,7 @@ export class AccidentalidadComponent implements OnInit {
         width: 850,
         xAxis: {
             title: 'Divisiones',
-            labelRotation: 90,
+            labelRotation: -60,
             labelAlign: 'middle', // left, middle, right,
             labelEllipsisSize: 80
         },
@@ -210,7 +210,7 @@ export class AccidentalidadComponent implements OnInit {
         width: 850,
         xAxis: {
             title: 'Divisiones',
-            labelRotation: 90,
+            labelRotation: -60,
             labelAlign: 'middle', // left, middle, right,
             labelEllipsisSize: 80
         },
