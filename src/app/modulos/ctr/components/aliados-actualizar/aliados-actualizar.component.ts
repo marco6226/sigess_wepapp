@@ -83,7 +83,7 @@ export class AliadosActualizarComponent implements OnInit {
   ngOnInit() {
     this.id = this.rutaActiva.snapshot.params.id;
     this.onEdit = this.rutaActiva.snapshot.params.onEdit;
-    this.loadData();
+    this.loadData().then();
   }
 
   async loadData(){

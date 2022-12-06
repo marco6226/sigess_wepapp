@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { Documento } from 'app/modulos/ado/entities/documento';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
@@ -59,7 +60,8 @@ export class SubcontratistasComponent implements OnInit {
   constructor(
     private empresaService: EmpresaService,
     private directorioService: DirectorioService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -95,7 +97,7 @@ export class SubcontratistasComponent implements OnInit {
   }
 
   async fetchSubcontratistasList(){
-    await this.empresaService.getSubcontratistas(this.aliadoId)
+    await this.empresaService.getSubcontratistas(this.activatedRoute.snapshot.params.id)
       .then(
         (res: Subcontratista[]) => {
           this.subcontratistasList = res.reverse();

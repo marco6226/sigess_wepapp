@@ -95,7 +95,7 @@ export class ActividadesContratadasComponent implements OnInit {
 
   async loadActividadesContratadas(){
     this.actividadesContratadasList=[]
-    await this.empresaService.getActividadesContratadas().then((element: ActividadesContratadas[]) =>{
+    await this.empresaService.getActividadesContratadas(this.rutaActiva.snapshot.params.id).then((element: ActividadesContratadas[]) =>{
       element.sort(function(a,b){
         if(a.actividad > b.actividad){
           return 1
