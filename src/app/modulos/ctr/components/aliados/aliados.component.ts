@@ -207,7 +207,7 @@ export class AliadosComponent implements OnInit {
         let ue = new UsuarioEmpresa();
       
         ue.perfil = new Perfil();
-        ue.perfil.id = '321';
+        ue.perfil.id = '312';
   
         let user = new Usuario()
         user.id= null,
