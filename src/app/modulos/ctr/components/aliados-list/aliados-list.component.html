@@ -5,7 +5,7 @@
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
     <button pButton type="button" (click)="exportexcel($event)" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
     <p-tabView>
-    <p-table id="excel-table" [value]="aliadosList" responsiveLayout="scroll" (onRowUnselect)="onRowSelect($event)" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedList">
+    <p-table #dt id="excel-table" [value]="aliadosList" styleClass="material-table" (onRowUnselect)="onRowSelect($event)" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedList" [paginator]="true" [rows]="20">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 3rem">
@@ -17,29 +17,84 @@
                         <p-sortIcon field="name"></p-sortIcon>
                     </div>
                 </th> -->
-                <th>
+                <th pSortableColumn="razonSocial">
                     Nombre o Razón Social
+                    <p-sortIcon field="razonSocial"></p-sortIcon>
                 </th>
-                <th>
+                <th pSortableColumn="tipo_persona">
                     Tipo de Persona
+                    <p-sortIcon field="tipo_persona"></p-sortIcon>
                 </th>
-                <th>
+                <th pSortableColumn="estado">
                     Estado
+                    <p-sortIcon field="estado"></p-sortIcon>
                 </th>
-                <th>
+                <th pSortableColumn="calificacion">
                     Impacto
+                    <p-sortIcon field="calificacion"></p-sortIcon>
                 </th>
-                <th>
+                <th pSortableColumn="fechaCreacion">
                     Fecha Creación
+                    <p-sortIcon field="fechaCreacion"></p-sortIcon>
                 </th>
-                <th>
+                <th pSortableColumn="fechaActualizacion">
                     Fecha Modificación
+                    <p-sortIcon field="fechaActualizacion"></p-sortIcon>
                 </th>
                 <th></th>
             </tr>
-            <!-- <tr class="filters">
-
-            </tr> -->
+            <tr class="filters">
+                <th>
+                </th>
+                <th>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'razonSocial', 'contains')">
+                    </div>
+                </th>
+                <th>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipo_persona', 'contains')">
+                    </div>
+                </th>
+                <th>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'estado', 'contains')">
+                    </div>
+                </th>
+                <th>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'calificacion', 'contains')">
+                    </div>
+                </th>
+                <th>
+                    <!-- <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <p-calendar appendTo="body" [dateFormat]="'dd/mm/yy'" (onSelect)="dt.filter( Date(), 'fechaCreacion', 'contains')"></p-calendar>
+                    </div> -->
+                </th>
+                <th>
+                    <!-- <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <p-calendar appendTo="body" [dateFormat]="'dd/mm/yy'" (onSelect)="dt.filter($event, 'fechaActualizacion', 'contains')"></p-calendar>
+                    </div> -->
+                </th>
+            </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
             <tr>
