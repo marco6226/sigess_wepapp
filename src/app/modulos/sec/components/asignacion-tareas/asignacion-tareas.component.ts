@@ -20,7 +20,7 @@ import {DragDropModule} from 'primeng/dragdrop';
 })
 export class AsignacionTareasComponent implements OnInit {
 
-    loading: boolean = false;
+    loading: boolean = true;
     yearRange;
     es: any;
     tareasList: any;
