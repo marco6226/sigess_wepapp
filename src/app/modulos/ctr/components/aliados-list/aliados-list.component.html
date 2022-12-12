@@ -3,9 +3,20 @@
 </s-dataNotFound>
 
 <p-panel header="Lista de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
-    <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" label="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <button type="reset" pButton (click)="dt.reset();rangeDatesCreacion=null;rangeDatesActualizacion=null" title="Reiniciar Filtros" label="Reiniciar filtros" icon="fa fa-retweet"></button>
     <p-tabView>
-    <p-table #dt id="excel-table" [value]="aliadosList" styleClass="material-table" (onRowUnselect)="onRowSelect($event)" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedList" [paginator]="true" [rows]="20">
+    <p-table #dt id="excel-table" 
+        autoLayout="true"
+        [value]="aliadosList"
+        styleClass="material-table" 
+        (onRowUnselect)="onRowSelect($event)" 
+        (onRowSelect)="onRowSelect($event)" 
+        [(selection)]="selectedList" 
+        [paginator]="true" 
+        [rows]="12"
+        [totalRecords]="aliadosList.length"
+        [pageLinks]="3">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 3rem">
@@ -79,20 +90,27 @@
                     </div>
                 </th>
                 <th>
-                    <!-- <div class="ui-inputgroup">
-                        <span class="ui-inputgroup-addon">
-                            <em class="pi pi-search"></em>
-                        </span>
-                        <p-calendar appendTo="body" [dateFormat]="'dd/mm/yy'" (onSelect)="dt.filter( Date(), 'fechaCreacion', 'contains')"></p-calendar>
-                    </div> -->
+                    <div class="ui-inputgroup">
+                        <p-calendar
+                        [(ngModel)]="rangeDatesCreacion"
+                        dateFormat="dd/MM/yyyy"
+                        selectionMode="range"
+                        (onSelect)="dt.filter(rangeDatesCreacion,'fechaCreacion', 'fechaCreacionFilter')"
+                        placeholder="buscar"
+                        appendTo="body">
+                    </p-calendar>
+                    </div>
                 </th>
                 <th>
-                    <!-- <div class="ui-inputgroup">
-                        <span class="ui-inputgroup-addon">
-                            <em class="pi pi-search"></em>
-                        </span>
-                        <p-calendar appendTo="body" [dateFormat]="'dd/mm/yy'" (onSelect)="dt.filter($event, 'fechaActualizacion', 'contains')"></p-calendar>
-                    </div> -->
+                    <div class="ui-inputgroup">
+                        <p-calendar
+                        [(ngModel)]="rangeDatesActualizacion"
+                        dateFormat="dd/MM/yyyy"
+                        selectionMode="range"
+                        (onSelect)="dt.filter(rangeDatesActualizacion,'fechaActualizacion', 'FechaActualizacionFilter')"
+                        placeholder="buscar"
+                        appendTo="body"></p-calendar>
+                    </div>
                 </th>
             </tr>
         </ng-template>

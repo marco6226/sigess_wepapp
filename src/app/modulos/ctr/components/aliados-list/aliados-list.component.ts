@@ -10,6 +10,7 @@ import { Aliados } from '../../entities/aliados';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Criteria, Filter } from 'app/modulos/core/entities/filter';
 import * as XLSX from 'xlsx';
+import { FilterUtils } from 'primeng/api'
 
 @Component({
   selector: 'app-aliados-list',
@@ -25,7 +26,8 @@ export class AliadosListComponent implements OnInit {
   selectedList: any[]=[];
   fileName= 'ListadoAliados.xlsx';
   excel:any[];
-
+  rangeDatesCreacion: any;
+  rangeDatesActualizacion: any;
 
   constructor(
     private empresaService: EmpresaService,
@@ -37,6 +39,8 @@ export class AliadosListComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+
+    this.filterUtils();
   }
 
   async loadData(){
@@ -160,5 +164,35 @@ export class AliadosListComponent implements OnInit {
       this.aliadosList.forEach((resp)=>{
         this.excel.push({Nombre_o_razón_social:resp['nombreComercial'],Tipo_de_Persona:resp['tipoPersona'],Estado:resp['estado'],Impacto:resp['calificacion'],Fecha_Creación:new Date(resp['fechaCreacion']),Fecha_Modificación:(resp['fechaActualizacion']!=null)?new Date(resp['fechaActualizacion']):''})
       })
+    }
+
+    filterUtils(){
+      FilterUtils['fechaCreacionFilter'] = (value, filter): boolean => {
+        if (filter === undefined || filter === null) {
+          return true;
+        }
+      
+        if (value === undefined || value === null) {
+          return false;
+        }
+        
+        if (this.rangeDatesCreacion[0] <= value && this.rangeDatesCreacion[1] >= value) {
+          return true;
+        }
+      }
+  
+      FilterUtils['FechaActualizacionFilter'] = (value, filter): boolean => {
+        if (filter === undefined || filter === null) {
+          return true;
+        }
+      
+        if (value === undefined || value === null) {
+          return false;
+        }
+
+        if (this.rangeDatesActualizacion[0] <= value && this.rangeDatesActualizacion[1] >= value) {
+          return true;
+        }
+      }
     }
 }
