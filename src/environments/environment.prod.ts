@@ -31,6 +31,7 @@ export const endPoints = {
   PermisoService: path + "permiso/",
   UsuarioService: path + "usuario/",
   EmpleadoService: path + "empleado/",
+  EmpleadoBasicService: path + "empleadobasic/",
   EvaluacionDesempenoService: path + "evaluacionDesempeno/",
   PerfilService: path + "perfil/",
   ConfiguracionJornadaService: path + "configuracionJornada/",
@@ -66,7 +67,7 @@ export const endPoints = {
   com_tipoSede: path + "enums/tipoSede/",
 
   DesviacionService: path + "desviacion/",
-  ReporteAtService: path + "resporteatview/",
+  ReporteAtService: path + "reporteatview/",
   AnalisisDesviacionService: path + "analisisDesviacion/",
   SistemaCausaRaizService: path + "sistemaCausaRaiz/",
   SistemaCausaInmediataService: path + "sistemaCausaInmediata/",
