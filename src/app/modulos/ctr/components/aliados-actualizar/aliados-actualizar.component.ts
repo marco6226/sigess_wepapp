@@ -124,14 +124,14 @@ export class AliadosActualizarComponent implements OnInit {
 
     // await this.saveInformacionAliado();
     if(this.aliadoInformacion.id == null){
-      this.loadInformacionAliado();
+      // this.loadInformacionAliado();
+      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'No se pudo leer información del aliado'});
     }
   }
 
   async saveInformacionAliado(){
     await this.empresaService.saveAliadoInformacion(this.aliadoInformacion).then((ele)=>{      
       console.log(ele);
-      
     });
   }
 
