@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-control-riesgo',
@@ -22,10 +23,14 @@ export class ControlRiesgoComponent implements OnInit {
     'Trabajos en caliente',
   ]
   selectedTareas: string[] = [];
+  onEdit: string = '';
 
-  constructor() { }
+  constructor(
+              private activatedRoute: ActivatedRoute 
+            ) { }
 
   ngOnInit() {
+    this.onEdit = this.activatedRoute.snapshot.params.onEdit;
   }
 
   updateSelectedTareas(){

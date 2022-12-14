@@ -3,18 +3,18 @@
     <p-panel header="Certificación de estándares mínimos expedido por la ARL">
         <div class="row">
             <div class="col-3">
-                <button pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+                <button [disabled]="onEdit == 'edit'" pButton type="button" (click)="showDialog('arl')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
                 <s-documentoUpload [(visible)]="visibleDlgCertificadoARL" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="arl" (onUpload)="onUpload($event)"></s-documentoUpload>
             </div>
             
             <div class="col-3">
                 <label for="fechaVencimientoArl">Fecha Vencimiento: </label>
-                <p-calendar [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl"></p-calendar>    
+                <p-calendar required [disabled]="onEdit == 'edit'" [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl"></p-calendar>    
             </div>
             <div class="col-6">
                 <div class="ui-g-12 ui-sm-12 ui-md-10">
                     <label for="puntaje"> Porcentaje de la certificación de ARL: </label>
-                    <input type="number" name="puntaje" id="" style="width: 50px;" [(ngModel)]="puntajeARL" (keyup)="onPuntajeARL()">  
+                    <input required [disabled]="onEdit == 'edit'" type="number" name="puntaje" id="" style="width: 50px;" [(ngModel)]="puntajeARL" (keyup)="onPuntajeARL()">  
                 </div>
             </div>
         </div>
@@ -43,13 +43,13 @@
     <p-panel header="Licencia del responsable SST">
         <div class="row">
             <div class="col-3">
-                <button pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
+                <button [disabled]="onEdit == 'edit'" pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
                 <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
             </div>
         
             <div class="col-3">
                 <label for="fechaVencimientoSst">Fecha Vencimiento: </label>
-                <p-calendar [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoSst"></p-calendar>
+                <p-calendar required [disabled]="onEdit == 'edit'" [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoSst"></p-calendar>
             </div>
         </div>
         <div class="ui-g" style="margin-top: 10px;">
@@ -78,13 +78,13 @@
     <p-panel header="Certificaciones externas SG-SST">
         <div class="row">
             <div class="col-3">
-                <button pButton type="button" (click)="showDialog('certificacionExterna')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
+                <button [disabled]="onEdit == 'edit'" pButton type="button" (click)="showDialog('certificacionExterna')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
                 <s-documentoUpload [(visible)]="visibleDlgCertiExterna" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="certificacionExterna" (onUpload)="onUpload($event)"></s-documentoUpload>
             </div>
         
             <div class="col-3">
                 <label for="fechaVencimientoCertExterna">Fecha Vencimiento: </label>
-                <p-calendar [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna"></p-calendar>
+                <p-calendar required [disabled]="onEdit == 'edit'" [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna"></p-calendar>
             </div>
         </div>
         <div class="ui-g" style="margin-top: 10px;">

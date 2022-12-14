@@ -7,6 +7,7 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { ConfirmationService, Message } from 'primeng/primeng';
 import { locale_es, tipo_identificacion, tipo_vinculacion} from "app/modulos/rai/enumeraciones/reporte-enumeraciones";
 import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cargue-documentos',
@@ -69,15 +70,17 @@ export class CargueDocumentosComponent implements OnInit {
   fecha_vencimiento_arl: Date;
   fecha_vencimiento_sst: Date;
   fecha_vencimiento_cert_ext: Date;
+  onEdit: string = '';
 
   constructor(
     private domSanitizer: DomSanitizer,
     private directorioService: DirectorioService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-
+    this.onEdit = this.activatedRoute.snapshot.params.onEdit;
   }
 
   showDialog(tipo: string) {    

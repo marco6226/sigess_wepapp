@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ComunService } from 'app/modulos/comun/services/comun.service';
 
 @Component({
@@ -39,13 +40,16 @@ export class InformacionGeneralComponent implements OnInit {
 
   arlList: Array<object>;
   selectedArl: any;
-  autorizaSubcontratacion: string;
+  autorizaSubcontratacion: string = null;
 
   constructor(
     private comunService: ComunService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    if(this.autorizaSubcontratacion == null) this.autorizaSubcontratacion = 'No';
+    this.onEdit = this.activatedRoute.snapshot.params.onEdit;
     this.loadArlList();
   }
 

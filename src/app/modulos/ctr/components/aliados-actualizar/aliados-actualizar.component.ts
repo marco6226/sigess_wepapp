@@ -278,6 +278,16 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   async actualizarAliado(){
+    
+    if(this.onEdit && !this.gestorDataIsValid()){
+      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'La información del aliado no está completa'});
+      return
+    }
+    
+    if(this.onEdit == '' && !this.aliadoDataIsValid()){
+      return
+    }
+
     this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
     console.log(this.aliadoInformacion.calificacion)
     this.saveInformacionAliado();
@@ -290,7 +300,7 @@ export class AliadosActualizarComponent implements OnInit {
     }
     await this.empresaService.update(this.aliado).then( () => {
       this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
-      // this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+      if(!this.onEdit) this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
     });
     // setTimeout(() => {
     //   this.messageService.clear();
@@ -300,5 +310,35 @@ export class AliadosActualizarComponent implements OnInit {
 
   impactoIn(event){
     this.impactoV=event
+  }
+
+  gestorDataIsValid(): boolean{
+    return (
+        (this.aliadoInformacion.actividad_contratada != null && this.aliadoInformacion.actividad_contratada != '')
+        && (this.aliadoInformacion.division != null && this.aliadoInformacion.division != '') 
+        && (this.aliadoInformacion.localidad != null && this.aliadoInformacion.localidad != '')
+        && (this.aliadoInformacion.colider != null && this.aliadoInformacion.colider != '')
+        && (this.aliadoInformacion.control_riesgo != null && this.aliadoInformacion.control_riesgo != '')
+        && (
+            this.aliadoInformacion.calificacion != null 
+            && this.aliadoInformacion.calificacion != ''
+            && JSON.parse(this.aliadoInformacion.calificacion).length >= 9
+           )
+      );
+  }
+
+  aliadoDataIsValid(): boolean{
+    return (
+      (this.aliadoInformacion.representante_legal != null)
+      && (this.aliadoInformacion.numero_trabajadores != null)
+      && (this.aliadoInformacion.numero_trabajadores_asignados != null)
+      && (this.aliadoInformacion.email_comercial != null)
+      && (this.aliadoInformacion.telefono_contacto != null)
+      && (this.aliadoInformacion.arl != null)
+      && (this.aliadoInformacion.documentos != null)
+      && (this.aliadoInformacion.fecha_vencimiento_arl != null)
+      && (this.aliadoInformacion.fecha_vencimiento_sst != null)
+      && (this.aliadoInformacion.puntaje_arl != null)
+    );
   }
 }

@@ -4,27 +4,27 @@
     </div>
     <div class="cols">
         <div class="input-field">
-            <input type="text" [(ngModel)]="repLegal" class="form-material" (input)="onRepLegal()">
+            <input required [disabled]="onEdit == 'edit'" type="text" [(ngModel)]="repLegal" class="form-material" (input)="onRepLegal()">
             <label for="" class="active">Nombre del Representante Legal</label>            
         </div>
         <div class="input-field">
-            <input type="number" [(ngModel)]="numTrabajadores" class="form-material" (input)="onNumTrabajadores()">
+            <input required [disabled]="onEdit == 'edit'" type="number" [(ngModel)]="numTrabajadores" class="form-material" (input)="onNumTrabajadores()">
             <label for="" class="active">Numero de trabajadores totales</label>            
         </div>
         <div class="input-field">
-            <input type="number" [(ngModel)]="numTrabajadoresAsig" class="form-material" (input)="onNumTrabajadoresAsig()">
+            <input required [disabled]="onEdit == 'edit'" type="number" [(ngModel)]="numTrabajadoresAsig" class="form-material" (input)="onNumTrabajadoresAsig()">
             <label for="" class="active">Numero de trabajadores en Corona</label>            
         </div>
         <div class="input-field">
-            <input type="email" [(ngModel)]="emailComercial" class="form-material" (input)="onEmailComercial()">
+            <input required [disabled]="onEdit == 'edit'" type="email" [(ngModel)]="emailComercial" class="form-material" (input)="onEmailComercial()">
             <label for="" class="active">Email de comunicaciones</label>
         </div>
         <div class="input-field">
-            <input type="text" [(ngModel)]="telefonoContacto" class="form-material" (input)="onTelefonoContacto()">
+            <input required [disabled]="onEdit == 'edit'" type="text" [(ngModel)]="telefonoContacto" class="form-material" (input)="onTelefonoContacto()">
             <label for="" class="active">Teléfono de contacto</label>
         </div>
         <div class="input-field">
-            <p-dropdown [options]="arlList" [(ngModel)]="selectedArl" (onClick)="onSelectArl()" optionLabel="name" placeholder="--seleccione arl--"></p-dropdown>
+            <p-dropdown required [disabled]="onEdit == 'edit'" [options]="arlList" [(ngModel)]="selectedArl" (onClick)="onSelectArl()" optionLabel="name" placeholder="--seleccione arl--"></p-dropdown>
             <label for="" class="active">Seleccione su ARL</label>
         </div>
     </div>

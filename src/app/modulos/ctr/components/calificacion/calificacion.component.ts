@@ -10,7 +10,7 @@ export class CalificacionComponent implements OnInit{
   @Output()valoracionOUT= new EventEmitter<String>();
   @Input('selectCalificacion') 
   set actividadesIn(actividades: string){
-    console.log(actividades);
+    // console.log(actividades);
     
     if (actividades != null) {
       let dataIn = JSON.parse(actividades)
@@ -31,7 +31,7 @@ export class CalificacionComponent implements OnInit{
         console.log('Error al calcular valoración: '+ exeption);
         
       }
-      console.log(dataIn);
+      // console.log(dataIn);
       
     }    
   }

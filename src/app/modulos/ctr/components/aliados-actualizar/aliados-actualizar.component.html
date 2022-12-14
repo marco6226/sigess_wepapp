@@ -14,8 +14,7 @@
           ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"> <!-- Salud Seguridad Trabajo -->
-        <app-informacion-general 
-          [onEdit]="this.onEdit"
+        <app-informacion-general
           [repLegal]="this.aliadoInformacion.representante_legal" 
           [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" 
           [numTrabajadoresAsig]="this.aliadoInformacion.numero_trabajadores_asignados"
@@ -70,6 +69,10 @@
     </p-tabView>
 </p-panel>
 <ng-container>
-  <button pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliados"
+  <button *ngIf="onEdit;else btnGuardarAliado" pButton type="button" [disabled]="!gestorDataIsValid()" icon="fa fa-floppy-o" title="Guardar información del aliado"
       (click)="actualizarAliado()" class="float-btn"></button>
+  <ng-template #btnGuardarAliado>
+    <button pButton type="button" [disabled]="!aliadoDataIsValid()" icon="fa fa-floppy-o" title="Guardar"
+      (click)="actualizarAliado()" class="float-btn"></button>
+  </ng-template>
 </ng-container>
