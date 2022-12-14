@@ -136,7 +136,7 @@ export class AliadosListComponent implements OnInit {
     
   }
   
-  async exportexcel(event): Promise<void> 
+  async exportexcel(): Promise<void> 
     {
        /* table id is passed over here */   
       await this.datosExcel()
