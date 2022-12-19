@@ -20,9 +20,9 @@ export class DocumentoUploadComponent implements OnInit {
     @Input('tipoEvidencia') tipoEvidencia: string;
     @Input('directorio') directorio: Directorio;
     @Input('visible') visibleDlg: boolean;
+    @Input('contratistasFlag') contratistasFlag: boolean=false;
     @Output('visibleChange') visibleChange = new EventEmitter();
     @Output('onUpload') onUpload = new EventEmitter();
-
     esPrivado: boolean;
     myGroup: any;
     // tipoEvidenciaf: string ="fotografica";
@@ -31,7 +31,12 @@ export class DocumentoUploadComponent implements OnInit {
     // tipoEvidenciapro: "procedimiento";
     // tipoEvidenciam: "multimedia";
     form
-
+    doContratista= [
+        { label: "--Seleccione--", value: null },
+        { label: "Carta", value: "Carta" },
+        { label: "Certificado", value: "Certificado" },
+        { label: "Otros", value: "Otros" }
+    ]
 
     constructor(
         private directorioService: DirectorioService,

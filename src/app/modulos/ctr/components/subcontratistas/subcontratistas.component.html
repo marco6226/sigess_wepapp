@@ -48,8 +48,8 @@
   <ng-template pTemplate="summary">
     <button pButton type="button" [disabled]="selectedSubcontratista!=null" icon="fa fa-plus" label="Crear" (click)="createSubcontratista()"></button>
     <button pButton type="button" icon="fa fa-pencil" label="Modificar" [disabled]="selectedSubcontratista==null" class="ui-button-success" (click)="editSubcontratista()"></button>
-    <button pButton type="button" (click)="showDialogCarta()" [disabled]="selectedSubcontratista==null" icon="pi pi-cloud-upload" label="Adjuntar carta" style="margin-bottom: 10px;" class="ui-button-warning"></button>
-    <s-documentoUpload [(visible)]="dialogCarta" [modParam]="aliadoId" [modulo]="modulo" [tipoEvidencia]="'cartaAutorizacion'" (onUpload)="onUpload($event, selectedSubcontratista.id)"></s-documentoUpload>
+    <button pButton type="button" (click)="showDialogCarta()" [disabled]="selectedSubcontratista==null" icon="pi pi-cloud-upload" label="Adjuntar soporte" style="margin-bottom: 10px;" class="ui-button-warning"></button>
+    <s-documentoUpload [(visible)]="dialogCarta" [modParam]="aliadoId" [modulo]="modulo" [tipoEvidencia]="'cartaAutorizacion'" (onUpload)="onUpload($event, selectedSubcontratista.id)" [contratistasFlag]="contratistasFlag"></s-documentoUpload>
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>

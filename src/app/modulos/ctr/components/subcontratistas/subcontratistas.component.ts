@@ -56,6 +56,7 @@ export class SubcontratistasComponent implements OnInit {
   modulo: String = Modulo.EMP.value;
   directoriosSubcontratistas: object = {};
   documentosSubcontratistas: object = {};
+  contratistasFlag: boolean=true;
 
   constructor(
     private empresaService: EmpresaService,
