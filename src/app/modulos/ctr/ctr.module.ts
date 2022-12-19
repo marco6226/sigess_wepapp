@@ -17,11 +17,15 @@ import { InformacionGeneralComponent } from './components/informacion-general/in
 import { ControlRiesgoComponent } from './components/control-riesgo/control-riesgo.component';
 import { SubcontratistasComponent } from './components/subcontratistas/subcontratistas.component';
 import { FormSubcontratistaComponent } from './components/subcontratistas/form-subcontratista/form-subcontratista.component';
+// import { Tree, TreeNode } from 'primeng/primeng';
+// import { TreeSelectModule } from 'primeng/tree';
+// TreeSelectModule is 
 
 
 @NgModule({
   imports: [
     ComunModule,
+    // Tree,
   ],
   declarations: [
     AdminContratistasComponent, 

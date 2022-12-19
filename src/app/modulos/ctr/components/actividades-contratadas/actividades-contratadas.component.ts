@@ -1,11 +1,13 @@
 import { ActividadesContratadas, _actividadesContratadasList } from './../../entities/aliados';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter,ViewEncapsulation} from '@angular/core';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { ActivatedRoute } from '@angular/router';
+import { SelectItem, Message, TreeNode } from 'primeng/primeng';
 
 @Component({
   selector: 'app-actividades-contratadas',
   templateUrl: './actividades-contratadas.component.html',
+   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./actividades-contratadas.component.scss']
 })
 export class ActividadesContratadasComponent implements OnInit {
@@ -29,6 +31,8 @@ export class ActividadesContratadasComponent implements OnInit {
   visibleDlgSub: boolean =false;
 
   actividadesContratadasList:any[];
+  actividadesContratadasListSub1:any[];
+  actividadesContratadasListSub2:any[];
 
   selectActividad: any[];
   selectActividadSub: any[];
@@ -40,16 +44,18 @@ export class ActividadesContratadasComponent implements OnInit {
     private empresaService: EmpresaService,
     private rutaActiva: ActivatedRoute,
   ) { }
-
+  nodes1: TreeNode[] = [];
   ngOnInit(): void {
     this.edit = this.rutaActiva.snapshot.params.onEdit;
     this.loadActividadesContratadas()
+    console.log(this.nodes1)
   }
 
   agregarActividad(){
     if(this.selectActividad != null){
       this.actividadesList = this.selectActividad.map(item => {
-        return {nombre: item}
+        console.log(item)
+        return {nombre: item.data}
       });
       this.cerrarDialogo();
       this.saveActividad();
@@ -59,7 +65,7 @@ export class ActividadesContratadasComponent implements OnInit {
   agregarActividadSub(){
     if(this.selectActividadSub != null){
       this.actividadesSubList = this.selectActividadSub.map(item => {
-        return {nombre: item}
+        return {nombre: item.data}
       });
       this.cerrarDialogoSub();
       this.saveActividad();
@@ -95,18 +101,43 @@ export class ActividadesContratadasComponent implements OnInit {
 
   async loadActividadesContratadas(){
     this.actividadesContratadasList=[]
+    this.actividadesContratadasListSub1=[]
+    this.actividadesContratadasListSub2=[]
     await this.empresaService.getActividadesContratadas(this.rutaActiva.snapshot.params.id).then((element: ActividadesContratadas[]) =>{
-      element.sort(function(a,b){
-        if(a.actividad > b.actividad){
+
+      console.log(element)
+      
+      element.forEach(elemen => {
+        
+        if(elemen.padre_id==1)
+        this.actividadesContratadasListSub1.push({"label": elemen.actividad,  "data": elemen.actividad})
+
+        if(elemen.padre_id==15)
+        this.actividadesContratadasListSub2.push({"label": elemen.actividad,  "data": elemen.actividad})
+        // this.actividadesContratadasList.push({label:elemen.actividad, value: elemen.actividad})
+    });
+
+      this.actividadesContratadasListSub1.sort(function(a,b){
+        if(a.label > b.label){
           return 1
-        }else if(a.actividad < b.actividad){
+        }else if(a.label < b.label){
           return -1;
         }
         return 0;
       });
-      element.forEach(elemen => {
-        this.actividadesContratadasList.push({label:elemen.actividad, value: elemen.actividad})
-    });
+
+      this.actividadesContratadasListSub2.sort(function(a,b){
+        if(a.label > b.label){
+          return 1
+        }else if(a.label < b.label){
+          return -1;
+        }
+        return 0;
+      });
+
+      this.actividadesContratadasList.push({"label": "SERVICIOS ADMINISTRATIVOS",  "data": "SERVICIOS ADMINISTRATIVOS", "children":this.actividadesContratadasListSub1})
+
+      this.actividadesContratadasList.push({"label": "SERVICIOS DE MANTENIMIENTO",  "data": "SERVICIOS DE MANTENIMIENTO", "children":this.actividadesContratadasListSub2})
    });
     // console.log(this.actividadesContratadasList);
   }

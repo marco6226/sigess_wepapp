@@ -12,7 +12,7 @@
 }
 
 
-::ng-deep .ui-dialog .ui-dialog-content {
+.ui-dialog .ui-dialog-content {
     background-color: #ffffff;
     color: #333333;
     border: 1px solid #c8c8c8;
@@ -21,7 +21,7 @@
     margin-left: -180px;
 }
 
-::ng-deep body .ui-dialog .ui-dialog-titlebar {
+body .ui-dialog .ui-dialog-titlebar {
     border: 1px solid #c8c8c8;
     background-color: #f4f4f4;
     color: #333333;
@@ -32,7 +32,7 @@
     margin-left: -180px;
 }
 
-::ng-deep body .ui-dialog .ui-dialog-footer {
+body .ui-dialog .ui-dialog-footer {
     border: 1px solid #c8c8c8;
     background-color: #ffffff;
     color: #333333;
@@ -41,6 +41,13 @@
     text-align: right;
     position: relative;
     top: -1px;
-    WIDTH: 130%;
+    width: 130%;
     margin-left: -180px;
+}
+// #tree-comp {
+//     width: 100% !important;
+// }
+
+.ui-tree {
+    width: 100%;
 }
