@@ -4,7 +4,7 @@
         Casos médicos
     </p-header>
 
-    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="12" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
+    <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="10" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
         [totalRecords]="totalRecords">
         <!-- [value]="(idEmpresa=='22')?casosList2:casosList" -->
         <ng-template pTemplate="header" let-columns>
