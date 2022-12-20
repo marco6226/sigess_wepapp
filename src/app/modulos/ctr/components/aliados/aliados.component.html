@@ -2,8 +2,8 @@
 
 <p-panel header="Creación de Aliado">
     <div class="ui-g" style="width:250px;margin-bottom:10px">
-        <div class="ui-g-12"><p-radioButton name="group1" value="Natural" label="Natural" [(ngModel)]="valueEmpresa.tipoPersona" [disabled]="isSelected || !isCreate" inputId="opt1"></p-radioButton></div>
-        <div class="ui-g-12"><p-radioButton name="group1" value="Jurídica" label="Jurídica" [(ngModel)]="valueEmpresa.tipoPersona" [disabled]="isSelected || !isCreate" inputId="opt2"></p-radioButton></div>
+        <div class="ui-g-12"><p-radioButton name="group1" value="Natural" label="Natural" [(ngModel)]="seleccion" [disabled]="isSelected || !isCreate" inputId="opt1"></p-radioButton></div>
+        <div class="ui-g-12"><p-radioButton name="group1" value="Jurídica" label="Jurídica" [(ngModel)]="seleccion" [disabled]="isSelected || !isCreate" inputId="opt2"></p-radioButton></div>
     </div>
     <p-button *ngIf="isCreate" label="Continuar" icon="pi pi-check" (click)="continuar()" [disabled]="isSelected || !isCreate"></p-button>
 </p-panel >
