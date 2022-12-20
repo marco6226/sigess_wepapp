@@ -216,7 +216,7 @@ export class AliadosActualizarComponent implements OnInit {
     console.log(dataList);
     this.aliadoInformacion.documentos = JSON.stringify(dataList)
     console.log(this.aliadoInformacion.documentos);    
-    this.saveInformacionAliado()
+    this.saveInformacionAliado();
     
   }
 
@@ -340,5 +340,12 @@ export class AliadosActualizarComponent implements OnInit {
       && (this.aliadoInformacion.fecha_vencimiento_sst != null)
       && (this.aliadoInformacion.puntaje_arl != null)
     );
+  }
+
+  async deleteDocumento(documentos: string){
+    this.aliadoInformacion.documentos = documentos;
+    // console.log(this.aliadoInformacion.documentos);
+    
+    await this.saveInformacionAliado();
   }
 }

@@ -9,10 +9,14 @@ import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { EmpresaAlidada } from './../../../empresa/entities/empresa';
 import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
-import { Router } from '@angular/router';
-import { MessageService, Tree, TreeNode } from 'primeng/primeng';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService, Tree, TreeNode } from 'primeng/primeng';
 import { _actividadesContratadasList, _divisionList, ActividadesContratadas, Localidades } from '../../entities/aliados';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
+import { Documento } from 'app/modulos/ado/entities/documento';
+import { Modulo } from 'app/modulos/core/enums/enumeraciones';
+import { Directorio } from 'app/modulos/ado/entities/directorio';
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 
 @Component({
   selector: 'app-aliados',
@@ -89,8 +93,17 @@ export class AliadosComponent implements OnInit {
   actividadesContratadasList2: any[]=[]
   localidades: any[]=[]
   // actividadesContratadasList2: TreeNode[]=[]
-
-  
+  documentos: Documento[];
+  modulo: string = Modulo.EMP.value;
+  @Input('documentos') directorios: Directorio[] = [];
+  @Output() idDoc: any = new EventEmitter<string>();
+  documentosList: any[];
+  visibleDlgExcel: boolean = false;
+  msgs: any[];
+  @Input('analisisId') analisisId: string = this.sesionService.getEmpleado() != null?
+                                            this.sesionService.getEmpleado().id:
+                                            this.sesionService.getEmpresa().idEmpresaAliada.toString();
+  @Output('onDelete') onDelete = new EventEmitter<any>();
 
   constructor(
     private empresaService: EmpresaService,
@@ -98,8 +111,12 @@ export class AliadosComponent implements OnInit {
     private router: Router,
     private sesionService: SesionService,
     private messageService: MessageService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private directorioService: DirectorioService,
+    private confirmationService: ConfirmationService,
+    private activatedRoute: ActivatedRoute
   ) {
+    this.onEdit = this.activatedRoute.snapshot.params.onEdit;
     this.formNatural = fb.group({
       razonSocial:[null, Validators.required],
       tipo_persona:[null],
@@ -220,6 +237,10 @@ export class AliadosComponent implements OnInit {
   
         user.usuarioEmpresaList.push(ue)
         this.usuarioService.createUsuarioAliado(user,ele.id).then((res: Usuario)=>{
+          let docs: string[] = []; 
+          this.directorios.forEach(el => {
+            docs.push(el.id);
+          });
           let aliadoInformacion: AliadoInformacion ={
             // id: 0,
             id_empresa: Number(ele.id),
@@ -228,7 +249,7 @@ export class AliadosComponent implements OnInit {
             localidad: null,
             calificacion: null,
             colider: null,
-            documentos: null,
+            documentos: JSON.stringify(docs),
             representante_legal: '',
             numero_trabajadores: 0,
             numero_trabajadores_asignados: 0,
@@ -309,6 +330,73 @@ export class AliadosComponent implements OnInit {
 
   onQuienCalifica(){
     this.dataQuienCalifica.emit(this.quienCalifica);
+  }
+
+  showDialog(){
+    this.visibleDlgExcel = true;
+  }
+
+  closeDialog(){
+    this.visibleDlgExcel = false;
+  }
+
+  onUpload(event: Directorio){
+    if (this.documentos == null)
+      this.documentos = [];
+    if(this.directorios == null){
+      this.directorios = []
+    }
+
+    this.directorios.push(event);
+    this.documentos.push(event.documento);
+    this.documentos = this.documentos.slice();
+    this.idDoc.emit(event.id)
+  }
+
+  descargarDocumento(doc: Documento) {
+    let msg = { severity: 'info', summary: 'Descargando documento...', detail: 'Archivo \"' + doc.nombre + "\" en proceso de descarga" };
+    this.messageService.add(msg);
+    this.directorioService.download(doc.id).then(
+      resp => {
+        if (resp != null) {
+          var blob = new Blob([<any>resp]);
+          let url = URL.createObjectURL(blob);
+          let dwldLink = document.getElementById("dwldLink");
+          dwldLink.setAttribute("href", url);
+          dwldLink.setAttribute("download", doc.nombre);
+          dwldLink.click();
+          this.msgs = [];
+          this.messageService.add({ severity: 'success', summary: 'Archivo descargado', detail: 'Se ha descargado correctamente el archivo ' + doc.nombre });
+        }
+      }
+    );
+  }
+
+  eliminarDocument(doc: Documento) {
+    // console.log(doc)
+    // console.log(this.directorios)
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.directorioService.eliminarDocumento(doc.id).then(
+            data => {
+              this.directorios = this.directorios.filter(val => val.id !== doc.id);
+              // console.log(this.directorios);
+              let docIds: string[] = []
+              this.directorios.forEach(el => {
+                docIds.push(el.id);
+              });
+              this.onDelete.emit(JSON.stringify(docIds));
+              // this.eliminarPorName(doc.id);
+              // this.onUpload()
+              // this.actualizarDesc(doc)
+              // this.onUpdate.emit(doc);
+            }
+          );
+      }
+  });
   }
 }
 

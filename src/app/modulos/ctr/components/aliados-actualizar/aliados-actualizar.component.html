@@ -3,14 +3,18 @@
     <p-tabView>
       <p-tabPanel header="Información">
         <app-aliados 
+          [analisisId]="id"
           [onEdit]="this.onEdit" 
           [valueEmpresa]="this.aliado"
           [calificacion]="this.aliadoInformacion.calificacion_aliado"
           [fechaCalificacion]="this.aliadoInformacion.fecha_calificacion_aliado"
           [quienCalifica]="this.aliadoInformacion.nombre_calificador"
+          [documentos]="documentos"
           (dataCalificacion)="onReciveCalificacionAliadoData($event, 'puntaje')"
           (dataFechaCalificacion)="onReciveCalificacionAliadoData($event, 'fecha')"
           (dataQuienCalifica)="onReciveCalificacionAliadoData($event, 'nombre')"
+          (idDoc)="reciveIdDoc($event)"
+          (onDelete)="deleteDocumento($event)"
           ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"> <!-- Salud Seguridad Trabajo -->
@@ -41,6 +45,7 @@
         (fechaVencimientoSstEvent)="reciveFechaSst($event)" 
         (fechaVencimientoCertExternaEvent)="reciveFechaCertExterna($event)"
         (dataPuntajeArl)="onRecivePuntajeArl($event)"
+        (onDelete)="deleteDocumento($event)"
         [documentos]="documentos" 
         [fechaVencimientoArl]="getFecha('arl')" 
         [fechaVencimientoSst]="getFecha('sst')" 

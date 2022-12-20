@@ -1,4 +1,4 @@
-<p-toast></p-toast>
+<p-toast key="aliados"></p-toast>
 
 <p-panel header="Creación de Aliado">
     <div class="ui-g" style="width:250px;margin-bottom:10px">
@@ -83,6 +83,40 @@
         <div class="input-field">
             <input required formControlName="quien_califica" type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="!isCreate" placeholder="Quién califica" class="form-material">
             <label for="" class="active">Quién califica</label>
+        </div>
+        <div class="input-field container">
+            <div class="col-3">
+                <button  pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+                <s-documentoUpload [(visible)]="visibleDlgExcel" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="soporteCalificacion" (onUpload)="onUpload($event)"></s-documentoUpload>
+            </div>
+            <div class="col6">
+                <div class="ui-g" style="margin-top: 10px;">
+                    <div class="ui-g-12 ui-sm-12 ui-md-10">
+                        <div *ngFor="let doc of directorios">
+                            <table class="dwrapper table table-bordered border-primary caption-top" *ngIf="doc!.documento.proceso=='soporteCalificacion'"> 
+                                <caption>Soportes: </caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <button [disabled]="onEdit != 'edit'" type="button" class="btn btn-outline-primery" (click)="descargarDocumento(doc.documento)">{{doc.documento.descripcion}}</button>
+                                        </td>
+                                        <td>
+                                            <a>&nbsp;</a>
+                                            <button [disabled]="onEdit != 'edit'" type="button" class="btn tbn-outline-danger" title="Eliminar documento" (click)="eliminarDocument(doc)" style="color: red;"><span class="fa fa-trash "></span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </p-panel>

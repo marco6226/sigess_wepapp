@@ -24,9 +24,12 @@
                     <table class="dwrapper" *ngIf="doc!.documento.proceso=='arl'">
                         <tr>
                             <td>
-                                <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
                                 <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
-                            </td>              
+                            </td>
+                            <td>
+                                <a>&nbsp;</a>
+                                <a *ngIf="onEdit!='edit'" class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" style="color: red;"></a>
+                            </td>           
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -58,9 +61,12 @@
                     <table class="dwrapper" *ngIf="doc!.documento.proceso=='licencia'">
                         <tr>
                             <td>
-                                <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
                                 <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
-                            </td>              
+                            </td>   
+                            <td>
+                                <a>&nbsp;</a>
+                                <a *ngIf="onEdit!='edit'" class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" style="color: red;"></a>
+                            </td>             
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -93,8 +99,11 @@
                     <table class="dwrapper" *ngIf="doc!.documento.proceso=='certificacionExterna'">
                         <tr>
                             <td>
-                                <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
                                 <a style="margin-left: 10px;" (click)="descargarDocumento(doc.documento)">{{doc.documento.nombre}}</a>
+                            </td>
+                            <td>
+                                <a>&nbsp;</a>
+                                <a *ngIf="onEdit!='edit'" class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" style="color: red;"></a>
                             </td>              
                         </tr>
                         <tr>

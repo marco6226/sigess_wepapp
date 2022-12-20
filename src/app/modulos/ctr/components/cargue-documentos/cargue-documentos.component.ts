@@ -34,6 +34,8 @@ export class CargueDocumentosComponent implements OnInit {
   @Output() fechaVencimientoCertExternaEvent = new EventEmitter<Date>();
   @Output() dataPuntajeArl = new EventEmitter<number>();
   msgs: Message[];
+  @Output('onUpdate') onUpdate = new EventEmitter<Documento>();
+  @Output('onDelete') onDelete = new EventEmitter<any>();
 
   visibleDlgCertificadoARL: boolean = false;
   visibleDlgLicenciaSST: boolean = false;
@@ -175,6 +177,34 @@ export class CargueDocumentosComponent implements OnInit {
 
   onPuntajeARL(){
     this.dataPuntajeArl.emit(this.puntajeARL);
+  }
+
+  eliminarDocument(doc: Documento) {
+    // console.log(doc)
+    // console.log(this.directorios)
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.onUpdate.emit(doc);
+          this.directorioService.eliminarDocumento(doc.id).then(
+            data => {
+              this.directorios = this.directorios.filter(val => val.id !== doc.id);
+              // console.log(this.directorios);
+              let docIds: string[] = []
+              this.directorios.forEach(el => {
+                docIds.push(el.id);
+              });
+              this.onDelete.emit(JSON.stringify(docIds));
+              // this.eliminarPorName(doc.id);
+              // this.onUpload()
+              // this.actualizarDesc(doc)
+              // this.onUpdate.emit(doc);
+            }
+          );
+      }
+  });
   }
  
   test(){
