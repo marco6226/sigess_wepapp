@@ -19,7 +19,7 @@
         [pageLinks]="3">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="width: 3rem">
+                <th style="width: 2.5rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
                 <!-- <th pSortableColumn="name">
@@ -28,27 +28,27 @@
                         <p-sortIcon field="name"></p-sortIcon>
                     </div>
                 </th> -->
-                <th pSortableColumn="razonSocial">
+                <th style="width: 20%" pSortableColumn="razonSocial">
                     Nombre o Razón Social
                     <p-sortIcon field="razonSocial"></p-sortIcon>
                 </th>
-                <th pSortableColumn="tipo_persona">
+                <th style="width: 8%" pSortableColumn="tipo_persona">
                     Tipo de Persona
                     <p-sortIcon field="tipo_persona"></p-sortIcon>
                 </th>
-                <th pSortableColumn="estado">
+                <th style="width: 2.5rem" pSortableColumn="estado">
                     Estado
                     <p-sortIcon field="estado"></p-sortIcon>
                 </th>
-                <th pSortableColumn="calificacion">
+                <th style="width: 2.5rem" pSortableColumn="calificacion">
                     Impacto
                     <p-sortIcon field="calificacion"></p-sortIcon>
                 </th>
-                <th pSortableColumn="fechaCreacion">
+                <th style="width: 10rem" pSortableColumn="fechaCreacion">
                     Fecha Creación
                     <p-sortIcon field="fechaCreacion"></p-sortIcon>
                 </th>
-                <th pSortableColumn="fechaActualizacion">
+                <th style="width: 10rem" pSortableColumn="fechaActualizacion">
                     Fecha Modificación
                     <p-sortIcon field="fechaActualizacion"></p-sortIcon>
                 </th>
@@ -91,8 +91,8 @@
                 </th>
                 <th>
                     <div class="ui-inputgroup">
-                        <span class="ui-inputgroup-addon">
-                            <em class="pi pi-calendar"></em>
+                        <span style="height: 31px" class="ui-inputgroup-addon">
+                            <em  class="pi pi-calendar"></em>
                         </span>
                         <p-calendar
                         [(ngModel)]="rangeDatesCreacion"
@@ -106,7 +106,7 @@
                 </th>
                 <th>
                     <div class="ui-inputgroup">
-                        <span class="ui-inputgroup-addon">
+                        <span style="height: 31px" class="ui-inputgroup-addon">
                             <em class="pi pi-calendar"></em>
                         </span>
                         <p-calendar
@@ -118,6 +118,17 @@
                         appendTo="body"></p-calendar>
                     </div>
                 </th>
+                <th>
+                    <span>
+                        Editar
+                    </span>
+                </th>
+                <th>
+                    <span>
+                        Desactivar/Activar
+                    </span>
+                </th>
+                
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
@@ -144,10 +155,13 @@
                     {{rowData.fechaActualizacion | date:'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
-                    <button pButton pRipple icon="pi pi-power-off" *ngIf="rowData.activo" class="p-button-rounded ui-button-success p-mr-2" (click)="onChangeStatusAliado(rowData, 'Desactivar')" title="Desactivar Alidado"></button>
-                    <button pButton pRipple icon="pi pi-power-off" *ngIf="!rowData.activo" class="p-button-rounded ui-button-danger p-mr-2" (click)="onChangeStatusAliado(rowData, 'Activar')" title="Activar Alidado"></button>
-                    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onSendMail(rowData)" title="Enviar correo"></button>
+                    <button style="margin-left: 5px;" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
+                    
+                 <!--    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onSendMail(rowData)" title="Enviar correo"></button> -->
+                </td>
+                <td>
+                    <button style="margin-left: 40px;" pButton pRipple icon="pi pi-power-off" *ngIf="rowData.activo" class="p-button-rounded ui-button-success p-mr-2" (click)="onChangeStatusAliado(rowData, 'Desactivar')" title="Desactivar Aliado"></button>
+                    <button style="margin-left: 40px;" pButton pRipple icon="pi pi-power-off" *ngIf="!rowData.activo" class="p-button-rounded ui-button-danger p-mr-2" (click)="onChangeStatusAliado(rowData, 'Activar')" title="Activar Aliado"></button>
                 </td>
             </tr>
         </ng-template>
