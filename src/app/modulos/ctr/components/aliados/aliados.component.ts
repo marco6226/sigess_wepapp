@@ -100,9 +100,8 @@ export class AliadosComponent implements OnInit {
   documentosList: any[];
   visibleDlgExcel: boolean = false;
   msgs: any[];
-  @Input('analisisId') analisisId: string = this.sesionService.getEmpleado() != null?
-                                            this.sesionService.getEmpleado().id:
-                                            this.sesionService.getEmpresa().idEmpresaAliada.toString();
+  @Input('analisisId') analisisId: string = this.sesionService.getEmpleado() != null || this.sesionService.getEmpresa().idEmpresaAliada == null ?
+                                            this.sesionService.getEmpresa().id : this.sesionService.getEmpresa().idEmpresaAliada.toString();
   @Output('onDelete') onDelete = new EventEmitter<any>();
 
   constructor(
