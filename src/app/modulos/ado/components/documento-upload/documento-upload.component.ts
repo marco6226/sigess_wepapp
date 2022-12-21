@@ -33,8 +33,8 @@ export class DocumentoUploadComponent implements OnInit {
     form
     doContratista= [
         { label: "--Seleccione--", value: null },
-        { label: "Carta", value: "Carta" },
-        { label: "Certificado", value: "Certificado" },
+        { label: "Carta autorización", value: "Carta autorización" },
+        { label: "Certificado ARL", value: "Certificado ARL" },
         { label: "Otros", value: "Otros" }
     ]
 

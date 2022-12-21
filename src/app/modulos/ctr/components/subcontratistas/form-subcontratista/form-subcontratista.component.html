@@ -1,11 +1,11 @@
 <div class="cols" [formGroup]="formSubcontratista">
   <div class="input-field">
     <input type="text" name="nit" class="form-material" formControlName="nit">
-    <label for="nit" class="active">Nit</label>
+    <label for="nit" class="active">Nit/Documento</label>
   </div>
   <div class="input-field">
     <input type="text" name="nombre" class="form-material" formControlName="nombre">
-    <label for="nombre" class="active">Nombre</label>
+    <label for="nombre" class="active">Razón social/Nombre</label>
   </div>
   <div class="input-field">
     <p-multiSelect appendTo="body" class="form-material" [options]="actividadesRiesgoList" formControlName="actividades_riesgo" defaultLabel="Seleccione las actividades" optionLabel="name"></p-multiSelect>
