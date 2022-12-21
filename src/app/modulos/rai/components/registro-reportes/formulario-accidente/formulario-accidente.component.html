@@ -7,8 +7,11 @@
                         <!--<span class="fa fa-check-circle" [ngClass]="form.value.nombreEps?.length > 0 ? 'diligenciado': 'no-diligenciado'"></span>-->
                         EPS
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="nombreEps" />
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="nombreEps" required />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
                         Código EPS
@@ -19,7 +22,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         ARL
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="nombreArl" required />
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="nombreArl" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
@@ -31,7 +37,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         AFP
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="nombreAfp" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="nombreAfp" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="idEmpresa !='22';else blanco2">
@@ -231,51 +240,80 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Primer apellido
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <input pInputText formControlName="primerApellidoEmpleado" />
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="primerApellidoEmpleado" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
+                        <input pInputText formControlName="primerApellidoEmpleado"/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Segundo apellido
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="segundoApellidoEmpleado" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="segundoApellidoEmpleado" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Primer nombre
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="primerNombreEmpleado" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="primerNombreEmpleado" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Segundo nombre
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="segundoNombreEmpleado" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="segundoNombreEmpleado" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Tipo identificación
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <p-dropdown [options]="tipoIdentificacion" formControlName="tipoIdentificacionEmpleado" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <p-dropdown [options]="tipoIdentificacion" formControlName="tipoIdentificacionEmpleado">
                         </p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Número identificación
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <input pInputText formControlName="numeroIdentificacionEmpleado" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <input pInputText formControlName="numeroIdentificacionEmpleado" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Fecha nacimiento
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [monthNavigator]="true"  [yearNavigator]="true" [yearRange]="yearRange" formControlName="fechaNacimientoEmpleado" required>
+                        </p-calendar>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [monthNavigator]="true"  [yearNavigator]="true" [yearRange]="yearRange" formControlName="fechaNacimientoEmpleado">
                         </p-calendar>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Género
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-radioButton name="generoEmpleado" label="M" value="M" formControlName="generoEmpleado" required>
+                        </p-radioButton>
+                        <p-radioButton name="generoEmpleado" label="F" value="F" formControlName="generoEmpleado">
+                        </p-radioButton>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <p-radioButton name="generoEmpleado" label="M" value="M" formControlName="generoEmpleado">
                         </p-radioButton>
                         <p-radioButton name="generoEmpleado" label="F" value="F" formControlName="generoEmpleado">
@@ -291,24 +329,30 @@
                         Correo
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
-                        <input pInputText formControlName="emailEmpleado" readonly/>
+                        <input pInputText formControlName="emailEmpleado" readonly required/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Teléfono
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <input pInputText formControlName="telefonoEmpleado" />
+                        <input pInputText formControlName="telefonoEmpleado"/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Teléfono 2
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <input pInputText formControlName="telefono2Empleado" />
+                        <input pInputText formControlName="telefono2Empleado"/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Fecha ingreso
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngresoEmpleado" (ngModelChange)="changeCalendar()" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" required>
+                            <!-- [formControl]="form.controls['fechaIngresoEmpleado']" -->
+                            <!-- formControlName="fechaIngresoEmpleado" -->
+                        </p-calendar>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaIngresoEmpleado" (ngModelChange)="changeCalendar()" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange">
                             <!-- [formControl]="form.controls['fechaIngresoEmpleado']" -->
                             <!-- formControlName="fechaIngresoEmpleado" -->
@@ -317,16 +361,21 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Ciudad
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <s-ciudadSelector formControlName="ciudadEmpleado" required></s-ciudadSelector>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <s-ciudadSelector formControlName="ciudadEmpleado"></s-ciudadSelector>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Cargo
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <input pInputText formControlName="cargoEmpleado" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="cargoEmpleado" />
                     </div>
-
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && idEmpresa !='22';else blanco2">
                         Tipo vinculación
                     </div>
@@ -371,13 +420,19 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Salario u honorarios
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <input pInputText formControlName="salario" required/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <input pInputText formControlName="salario" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Jornada trabajo habitual
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <p-dropdown [options]="jornadaTrabajoList" formControlName="jornadaHabitual" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <p-dropdown [options]="jornadaTrabajoList" formControlName="jornadaHabitual"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-md-2">
@@ -413,14 +468,24 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Hora {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa == '22'">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [timeOnly]="true"
+                            formControlName="horaAccidente" required></p-calendar>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa != '22'">
                         <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [timeOnly]="true"
                             formControlName="horaAccidente"></p-calendar>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Jornada
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa == '22'">
+                        <p-radioButton name="jornadaAcc" label="Normal" value="NORMAL"
+                            formControlName="jornadaAccidente" required></p-radioButton>
+                        <p-radioButton name="jornadaAcc" label="Extra" value="EXTRA" formControlName="jornadaAccidente">
+                        </p-radioButton>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa != '22'">
                         <p-radioButton name="jornadaAcc" label="Normal" value="NORMAL"
                             formControlName="jornadaAccidente"></p-radioButton>
                         <p-radioButton name="jornadaAcc" label="Extra" value="EXTRA" formControlName="jornadaAccidente">
@@ -430,7 +495,13 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Realizaba labor habitual
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa == '22'">
+                        <p-radioButton name="laborHabitual" label="Si" [value]="true"
+                            formControlName="realizandoLaborHabitual" required></p-radioButton>
+                        <p-radioButton name="laborHabitual" label="No" [value]="false"
+                            formControlName="realizandoLaborHabitual"></p-radioButton>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa != '22'">
                         <p-radioButton name="laborHabitual" label="Si" [value]="true"
                             formControlName="realizandoLaborHabitual"></p-radioButton>
                         <p-radioButton name="laborHabitual" label="No" [value]="false"
@@ -452,27 +523,42 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Hora de inicio de labores
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf=" idEmpresa =='22'">
                     <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [timeOnly]="true"
-                            formControlName="horaInicioLabor"></p-calendar>
-                        </div>
+                            formControlName="horaInicioLabor" required></p-calendar>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
+                        <p-calendar [locale]="localeES" dateFormat="dd/mm/yy" [timeOnly]="true"
+                                formControlName="horaInicioLabor"></p-calendar>
+                    </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Tipo {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf=" idEmpresa =='22'">
+                        <p-dropdown [options]="tipoAccidenteList" formControlName="tipoAccidente" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf=" idEmpresa !='22'">
                         <p-dropdown [options]="tipoAccidenteList" formControlName="tipoAccidente"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Ciudad
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <s-ciudadSelector formControlName="ciudadAccidente" required></s-ciudadSelector>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <s-ciudadSelector formControlName="ciudadAccidente"></s-ciudadSelector>
                     </div>
-
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Zona
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-radioButton name="zonaAcc" label="Urbana" value="U" formControlName="zonaAccidente" required>
+                        </p-radioButton>
+                        <p-radioButton name="zonaAcc" label="Rural" value="R" formControlName="zonaAccidente">
+                        </p-radioButton>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <p-radioButton name="zonaAcc" label="Urbana" value="U" formControlName="zonaAccidente">
                         </p-radioButton>
                         <p-radioButton name="zonaAcc" label="Rural" value="R" formControlName="zonaAccidente">
@@ -487,7 +573,13 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         ¿Causó muerte?
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-radioButton name="causoMuerte" label="Si" [value]="true" formControlName="causoMuerte" required>
+                        </p-radioButton>
+                        <p-radioButton name="causoMuerte" label="No" [value]="false" formControlName="causoMuerte">
+                        </p-radioButton>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <p-radioButton name="causoMuerte" label="Si" [value]="true" formControlName="causoMuerte">
                         </p-radioButton>
                         <p-radioButton name="causoMuerte" label="No" [value]="false" formControlName="causoMuerte">
@@ -497,14 +589,19 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Lugar {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <p-dropdown [options]="lugarList" formControlName="lugarAccidente" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <p-dropdown [options]="lugarList" formControlName="lugarAccidente"></p-dropdown>
                     </div>
-
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Sitio {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <p-dropdown [options]="sitioList" formControlName="sitio" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <p-dropdown [options]="sitioList" formControlName="sitio"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.sitio=='OTRO');else blanco2">
@@ -517,8 +614,11 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Tipo lesión
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-dropdown [options]="tipoLesionList" formControlName="tipoLesion"></p-dropdown>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-dropdown [options]="tipoLesionList" formControlName="tipoLesion" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
+                        <p-dropdown [options]="tipoLesionList" formControlName="tipoLesion" required></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.tipoLesion=='OTRO');else blanco2">
                         ¿Cual?
@@ -529,7 +629,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente ">
                         Agente del accidente
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
+                        <p-dropdown [options]="agenteList" formControlName="agente" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
                         <p-dropdown [options]="agenteList" formControlName="agente"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.agente=='NO_CLASIFICADOS');else blanco2">
@@ -542,7 +645,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Mecanismo
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <p-dropdown [options]="mecanismoList" formControlName="mecanismo" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <p-dropdown [options]="mecanismoList" formControlName="mecanismo"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2 " *ngIf="(form.value.mecanismo=='OTRO');else blanco2">
@@ -555,7 +661,10 @@
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Parte del cuerpo afectada
                     </div>
-                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa =='22'">
+                        <p-dropdown [options]="parteCuerpoList" formControlName="parteCuerpo" required></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="idEmpresa !='22'">
                         <p-dropdown [options]="parteCuerpoList" formControlName="parteCuerpo"></p-dropdown>
                     </div>
                 </div>
@@ -570,7 +679,11 @@
                         'accidente':'incidente'}}, que lo originó
                         o causó y los demas aspectos relacionados
                     </div>
-                    <div class="ui-g-12 ui-sm-12">
+                    <div class="ui-g-12 ui-sm-12" *ngIf="idEmpresa =='22'">
+                        <textarea type="text" pInputText style="width:100%;height: 100px;"
+                            formControlName="descripcion" required></textarea>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12" *ngIf="idEmpresa !='22'">
                         <textarea type="text" pInputText style="width:100%;height: 100px;"
                             formControlName="descripcion"></textarea>
                     </div>

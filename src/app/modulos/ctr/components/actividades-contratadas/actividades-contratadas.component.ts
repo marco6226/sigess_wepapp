@@ -3,6 +3,8 @@ import { Component, Input, OnInit, Output, EventEmitter,ViewEncapsulation} from 
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { ActivatedRoute } from '@angular/router';
 import { SelectItem, Message, TreeNode } from 'primeng/primeng';
+import { element } from 'protractor';
+import {parse, stringify} from 'flatted';
 
 @Component({
   selector: 'app-actividades-contratadas',
@@ -11,18 +13,28 @@ import { SelectItem, Message, TreeNode } from 'primeng/primeng';
   styleUrls: ['./actividades-contratadas.component.scss']
 })
 export class ActividadesContratadasComponent implements OnInit {
-
+b
   @Input('selectActividad') 
   set actividadesIn(actividades: string){
     if (actividades != null) {
       // console.log(actividades);
-      this.selectActividad = JSON.parse(actividades)[0];
-      this.selectActividadSub = JSON.parse(actividades)[1];
+      // this.selectActividad = [];
+      // this.selectActividadSub = [];
+      this.selectActividad = parse(actividades,this.dataReviver)[0];
+this.b=this.selectActividad
+console.log('A:',this.a,'B:',this.b)
+
+console.log(this.a===this.b)
+      this.selectActividadSub = parse(actividades,this.dataReviver)[1];
       this.agregarActividad();
       this.agregarActividadSub();
     }    
   }
-
+  dataReviver(key, value)
+  { 
+    return value == null ? undefined : value;
+  }
+  
   edit: string = null;
 
   @Output() data = new EventEmitter<String>();
@@ -54,7 +66,6 @@ export class ActividadesContratadasComponent implements OnInit {
   agregarActividad(){
     if(this.selectActividad != null){
       this.actividadesList = this.selectActividad.map(item => {
-        console.log(item)
         return {nombre: item.data}
       });
       this.cerrarDialogo();
@@ -71,15 +82,24 @@ export class ActividadesContratadasComponent implements OnInit {
       this.saveActividad();
     }
   }
-
+  a
   saveActividad(){
-    // console.log(JSON.stringify([this.selectActividad, this.selectActividadSub]));
-    this.data.emit(JSON.stringify([this.selectActividad, this.selectActividadSub]));
+
+this.a= this.selectActividad;
+    console.log('con:', typeof this.selectActividad,'sub:',this.selectActividadSub)
+    this.data.emit(stringify([this.selectActividad, this.selectActividadSub], this.replacer));
   }
+  replacer(key, value){
+    return value == undefined ? null : value;
+  }
+  
 
   abrirDialogo(param: string =null){
     if (param) {
       this.selectActividad = []
+    }else{
+      // this.selectActividad = []
+      console.log(typeof this.selectActividad)
     }
     this.visibleDlg = true;
   }
@@ -87,6 +107,9 @@ export class ActividadesContratadasComponent implements OnInit {
   abrirDialogoSub(param: string =null){
     if (param) {
       this.selectActividadSub = []
+    }else{
+      // this.selectActividadSub = []
+      console.log(this.selectActividadSub)
     }
     this.visibleDlgSub = true;
   }
@@ -114,7 +137,6 @@ export class ActividadesContratadasComponent implements OnInit {
 
         if(elemen.padre_id==15)
         this.actividadesContratadasListSub2.push({"label": elemen.actividad,  "data": elemen.actividad})
-        // this.actividadesContratadasList.push({label:elemen.actividad, value: elemen.actividad})
     });
 
       this.actividadesContratadasListSub1.sort(function(a,b){
@@ -135,11 +157,10 @@ export class ActividadesContratadasComponent implements OnInit {
         return 0;
       });
 
-      this.actividadesContratadasList.push({"label": "SERVICIOS ADMINISTRATIVOS",  "data": "SERVICIOS ADMINISTRATIVOS", "children":this.actividadesContratadasListSub1})
+      this.actividadesContratadasList.push({"label": "SERVICIOS ADMINISTRATIVOS",  "data": "SERVICIOS ADMINISTRATIVOS","selectable":false, "children":this.actividadesContratadasListSub1})
 
-      this.actividadesContratadasList.push({"label": "SERVICIOS DE MANTENIMIENTO",  "data": "SERVICIOS DE MANTENIMIENTO", "children":this.actividadesContratadasListSub2})
+      this.actividadesContratadasList.push({"label": "SERVICIOS DE MANTENIMIENTO",  "data": "SERVICIOS DE MANTENIMIENTO","selectable":false, "children":this.actividadesContratadasListSub2})
    });
-    // console.log(this.actividadesContratadasList);
   }
 
 }
