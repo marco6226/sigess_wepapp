@@ -30,6 +30,7 @@ export class InformacionGeneralComponent implements OnInit {
   } 
   @Input('autorizaSubcontratacion')
   set setAutorizaSubcontratacion(data: boolean){
+    if(data==null) return;
     if(data){
       this.autorizaSubcontratacion = 'Si';
     }else{
@@ -40,7 +41,7 @@ export class InformacionGeneralComponent implements OnInit {
 
   arlList: Array<object>;
   selectedArl: any;
-  autorizaSubcontratacion: string = null;
+  autorizaSubcontratacion: string;
 
   constructor(
     private comunService: ComunService,
@@ -48,7 +49,7 @@ export class InformacionGeneralComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.autorizaSubcontratacion == null) this.autorizaSubcontratacion = 'No';
+    // if(this.autorizaSubcontratacion == null) this.autorizaSubcontratacion = 'No';
     this.onEdit = this.activatedRoute.snapshot.params.onEdit;
     this.loadArlList();
   }

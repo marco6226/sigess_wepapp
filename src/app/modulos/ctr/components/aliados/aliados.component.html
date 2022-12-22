@@ -51,17 +51,17 @@
 <p-panel *ngIf="onSeleccion=='Jurídica'" header="Persona Jurídica"  [formGroup]="formJuridica">
     <div class="cols">
         <div class="input-field">
-            <input type="text" required pInputText formControlName="razonSocial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Razón social"
+            <input type="text" required pInputText formControlName="razonSocial" [readOnly]="!isCreate && onEdit==null" [(ngModel)]="valueEmpresa.razonSocial" placeholder="Razón social"
                 class="form-material"/>
             <label for="" class="active">Razón social</label>            
         </div>
         <div class="input-field">
-            <input type="number" required pInputText formControlName="identificacion" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nit" placeholder="NIT"
+            <input type="number" required pInputText formControlName="identificacion" [readOnly]="!isCreate && onEdit==null" [(ngModel)]="valueEmpresa.nit" placeholder="NIT"
             class="form-material"/>
             <label for="" class="active">NIT</label>
         </div>
         <div class="input-field">
-            <input type="text" required pInputText formControlName="nombreComercial" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.nombreComercial" placeholder="Nombre comercial"
+            <input type="text" required pInputText formControlName="nombreComercial" [readOnly]="!isCreate && onEdit==null" [(ngModel)]="valueEmpresa.nombreComercial" placeholder="Nombre comercial"
             class="form-material"/>
             <label for="" class="active">Nombre comercial</label>
         </div>
@@ -73,20 +73,20 @@
     </div>
     <div class="cols">
         <div class="input-field">
-            <input type="number" required pInputText formControlName="calificacion_proceso" [(ngModel)]="calificacion" (keyup)="onCalificacion()" [readonly]="!isCreate" placeholder="Calificación" class="form-material">
+            <input type="number" required pInputText formControlName="calificacion_proceso" [(ngModel)]="calificacion" (keyup)="onCalificacion()" [readonly]="!isCreate && onEdit==null" placeholder="Calificación" class="form-material">
             <label for="" class="active">Calificación de proceso de selección</label>
         </div>
         <div class="input-field">
-            <p-calendar required formControlName="fecha_calificacion" [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="!isCreate" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
+            <p-calendar required formControlName="fecha_calificacion" [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="!isCreate && onEdit==null" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
             <label for="" class="active">Fecha calificación</label>
         </div>
         <div class="input-field">
-            <input required formControlName="quien_califica" type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="!isCreate" placeholder="Quién califica" class="form-material">
+            <input required formControlName="quien_califica" type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="!isCreate && onEdit==null" placeholder="Quién califica" class="form-material">
             <label for="" class="active">Quién califica</label>
         </div>
         <div class="input-field container">
             <div class="col-3">
-                <button  pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+                <button  pButton type="button" [disabled]="onEdit != 'edit'" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
                 <s-documentoUpload [(visible)]="visibleDlgExcel" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="soporteCalificacion" (onUpload)="onUpload($event)"></s-documentoUpload>
             </div>
             <div class="col6">
