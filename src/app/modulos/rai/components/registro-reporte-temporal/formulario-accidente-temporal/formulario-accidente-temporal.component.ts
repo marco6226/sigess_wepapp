@@ -109,6 +109,12 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     {label:'opcion 2',value:'opcion 2'},
     {label:'opcion 3',value:'opcion 3'}
   ]
+  temporales=[
+    {label:'Temporal 1', value:'1'},
+    {label:'Temporal 2', value:'2'},
+    {label:'Temporal 3', value:'3'}
+  ];
+  selectedTemporal: any;
 
   constructor(
       private fb: FormBuilder,
@@ -267,7 +273,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                     codigoCiiu: this.reporte.codigoCiiu,
                     razonSocial: this.reporte.razonSocial,
                     tipoIdentificacionEmpresa: this.reporte.tipoIdentificacionEmpresa,
-                    identificacionEmpresa: this.reporte.identificacionEmpresa,
+                    identificacionEmpresa: this.temporales.filter(el => el.value === this.reporte.identificacionEmpresa)[0],
                     direccionEmpresa: this.reporte.direccionEmpresa,
                     telefonoEmpresa: this.reporte.telefonoEmpresa,
                     telefono2Empresa: this.reporte.telefono2Empresa,
@@ -346,6 +352,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                     fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte),
                 
                 });
+                console.log(this.form.value.identificacionEmpresa);
+                
                 if(this.analisisId){
                   this.consultarAnalisis(this.analisisId)}
             }       
@@ -468,6 +476,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
           // })
           let reporte = <Reporte>this.form.value;
           reporte.testigoReporteList = this.testigoReporteList;
+          reporte.identificacionEmpresa = this.selectedTemporal.value;
           await this.reporteService.create(reporte).then(
               async data => {
                   this.onSave.emit(<Reporte>data)

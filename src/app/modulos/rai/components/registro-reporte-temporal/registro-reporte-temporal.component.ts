@@ -89,7 +89,7 @@ async  ngOnInit() {
       resp => {
         let empleado = <Empleado>FilterQuery.dtoToObject((resp['data'])[0]);
         this.empleadoSelect = empleado;
-          console.log(this.empleadoSelect.usuario.email)
+          //console.log(this.empleadoSelect.usuario.email)
         
       }
     );
