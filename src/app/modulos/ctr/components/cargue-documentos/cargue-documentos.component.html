@@ -90,7 +90,7 @@
         
             <div class="col-3">
                 <label for="fechaVencimientoCertExterna">Fecha Vencimiento: </label>
-                <p-calendar required [disabled]="onEdit == 'edit'" [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna"></p-calendar>
+                <p-calendar [disabled]="onEdit == 'edit'" [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna"></p-calendar>
             </div>
         </div>
         <div class="ui-g" style="margin-top: 10px;">
