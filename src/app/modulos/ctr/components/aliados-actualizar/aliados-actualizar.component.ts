@@ -324,6 +324,7 @@ export class AliadosActualizarComponent implements OnInit {
             && this.aliadoInformacion.calificacion != ''
             && JSON.parse(this.aliadoInformacion.calificacion).length >= 9
            )
+        && (this.auxAutorizaSubcontratacion != null)
       );
   }
 
