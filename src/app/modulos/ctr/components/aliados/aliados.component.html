@@ -77,16 +77,21 @@
             <label for="" class="active">Calificación de proceso de selección</label>
         </div>
         <div class="input-field">
-            <p-calendar required formControlName="fecha_calificacion" [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="!isCreate && onEdit==null" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
+            <p-calendar showButtonBar="true" showClear="true" required formControlName="fecha_calificacion" [yearNavigator]="true" [(ngModel)]="fecha_calificacion" (onSelect)="onFechaCalificacion()" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [disabled]="!isCreate && onEdit==null" [readonlyInput]="true" inputId="touchui" name="fechaCalificacion"></p-calendar>
+            <button style="height: 33px;" type="button" class="btn btn-primary" (click)="resetdate()">Limpiar</button>
             <label for="" class="active">Fecha calificación</label>
         </div>
         <div class="input-field">
             <input required formControlName="quien_califica" type="text" pInputText [(ngModel)]="quienCalifica" (keyup)="onQuienCalifica()" [readonly]="!isCreate && onEdit==null" placeholder="Quién califica" class="form-material">
+            
             <label for="" class="active">Quién califica</label>
         </div>
         <div class="input-field container">
+            <label  style="
+            margin-top: -15px;" for="" class="active">Adjunte el soporte de calificación de selección</label>
+            <br>
             <div class="col-3">
-                <button  pButton type="button" [disabled]="onEdit != 'edit'" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;" ></button>
+                <button  pButton type="button" [disabled]="onEdit != 'edit'" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;height: 40px" ></button>
                 <s-documentoUpload [(visible)]="visibleDlgExcel" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="soporteCalificacion" (onUpload)="onUpload($event)"></s-documentoUpload>
             </div>
             <div class="col6">
@@ -117,7 +122,17 @@
                     </div>
                 </div>
             </div>
+            
         </div>
+        <!-- <div class="cols">
+            <div class="input-field">
+                <div class="ui-g-12">
+                    <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">La empresa cuenta con autorización para subcontratación: </label>
+                    <p-radioButton [disabled]="onEdit != 'edit'" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="Si" label="Si" [(ngModel)]="autorizaSubcontratacion" required></p-radioButton>
+                    <p-radioButton [disabled]="onEdit != 'edit'" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="No" label="No" [(ngModel)]="autorizaSubcontratacion" required></p-radioButton>
+                </div>
+            </div>
+        </div> -->
     </div>
 </p-panel>
 <ng-container *ngIf="(formNatural.valid || formJuridica.valid) && isCreate">

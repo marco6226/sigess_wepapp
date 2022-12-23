@@ -7,16 +7,18 @@ import { SesionService } from './../../../core/services/sesion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { EmpresaAlidada } from './../../../empresa/entities/empresa';
-import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter,ViewChild } from '@angular/core';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService, Tree, TreeNode } from 'primeng/primeng';
+import {CalendarModule} from 'primeng/calendar';
 import { _actividadesContratadasList, _divisionList, ActividadesContratadas, Localidades } from '../../entities/aliados';
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { Documento } from 'app/modulos/ado/entities/documento';
 import { Modulo } from 'app/modulos/core/enums/enumeraciones';
 import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
+import { Calendar } from 'primeng/primeng';
 
 @Component({
   selector: 'app-aliados',
@@ -103,7 +105,8 @@ export class AliadosComponent implements OnInit {
   @Input('analisisId') analisisId: string = this.sesionService.getEmpleado() != null || this.sesionService.getEmpresa().idEmpresaAliada == null ?
                                             this.sesionService.getEmpresa().id : this.sesionService.getEmpresa().idEmpresaAliada.toString();
   @Output('onDelete') onDelete = new EventEmitter<any>();
-
+  @ViewChild("p-calendar", { static: false }) private calendar: Calendar;
+  
   constructor(
     private empresaService: EmpresaService,
     private fb: FormBuilder,
@@ -143,7 +146,9 @@ export class AliadosComponent implements OnInit {
     this.loadActividadesContratadas();
     this.loadLocalidades();
   }
-
+  resetdate(){
+    this.fecha_calificacion = null;
+    }
   continuar(){
     if(this.seleccion){
       this.onSeleccion = this.seleccion    
@@ -158,7 +163,8 @@ export class AliadosComponent implements OnInit {
 
     console.log(this.formJuridica.value);
 
-    let createEmpresa: Empresa
+    let createEmpresa: Empresa;
+    
 
     if (this.formNatural.valid) {
 
@@ -212,6 +218,7 @@ export class AliadosComponent implements OnInit {
         correoAliadoCreador: JSON.parse(localStorage.getItem('session')).usuario.email
       }
     }
+    
 
     this.empresaService.createEmpresaAliada(createEmpresa).then((ele:Empresa)=>{
       console.log(ele);      
@@ -286,6 +293,8 @@ export class AliadosComponent implements OnInit {
     this.seleccion = this.valueEmpresa.tipo_persona
     this.isCreate = false;
   }
+
+  
 
   async loadActividadesContratadas(){
     this.actividadesContratadasList = []
