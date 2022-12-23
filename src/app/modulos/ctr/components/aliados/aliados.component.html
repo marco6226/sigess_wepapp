@@ -24,7 +24,7 @@
         </div>
         <div class="input-field">
             <input type="text" pInputText formControlName="email" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.email" placeholder="Email"
-            class="form-material"/>
+            class="form-material"  (ngModelChange)="valueEmpresa.email = $event.toLowerCase()"/>
             <label for="" class="active">Email</label>
         </div>
         <div class="input-field">
@@ -66,8 +66,8 @@
             <label for="" class="active">Nombre comercial</label>
         </div>
         <div class="input-field">
-            <input type="email" required pInputText formControlName="email" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.email" placeholder="Email"
-            class="form-material"/>
+            <input type="email" required pInputText formControlName="email" [readOnly]="!isCreate" [ngModel]="valueEmpresa.email" placeholder="Email"
+            class="form-material" (ngModelChange)="valueEmpresa.email = $event.toLowerCase()"/>
             <label for="" class="active">Email</label>
         </div>     
     </div>
