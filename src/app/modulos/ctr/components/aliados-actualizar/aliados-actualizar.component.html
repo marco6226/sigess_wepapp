@@ -1,7 +1,8 @@
 <p-toast key="msgActualizarAliado"></p-toast>
 <p-panel header="Seguimiento contratistas" >
     <p-tabView>
-      <p-tabPanel header="Información">
+      <p-tabPanel header="Información" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-aliados 
           [analisisId]="id"
           [onEdit]="this.onEdit" 
@@ -17,7 +18,7 @@
           (onDelete)="deleteDocumento($event)"
           ></app-aliados>
       </p-tabPanel>
-      <p-tabPanel header="Información General"> <!-- Salud Seguridad Trabajo -->
+      <p-tabPanel header="Información General"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
         <app-informacion-general
           [repLegal]="this.aliadoInformacion.representante_legal" 
           [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" 
@@ -35,10 +36,10 @@
           (dataAutorizaSubcontratacion)="onReciveAutorizaSubcontratacion($event)"
           ></app-informacion-general>
       </p-tabPanel>
-      <p-tabPanel header="Equipo SST"> <!-- Salud Seguridad Trabajo -->
+      <p-tabPanel header="Equipo SST"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
         <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>
       </p-tabPanel>
-      <p-tabPanel header="Cargue Documentos">
+      <p-tabPanel header="Cargue de Documentos" [selected]="true" [headerStyle]=" { 'background-color':'#fd9b14' }">  
         <app-cargue-documentos [analisisId]="id" 
         (idDoc)="reciveIdDoc($event)" 
         (fechaVencimientoArlEvent)="reciveFechaArl($event)" 
@@ -53,22 +54,28 @@
         [puntajeARL]="this.aliadoInformacion.puntaje_arl"
         ></app-cargue-documentos>
       </p-tabPanel>
-      <p-tabPanel header="Subcontratistas" *ngIf="this.aliadoInformacion.autoriza_subcontratacion">
+      <p-tabPanel header="Subcontratistas" *ngIf="this.aliadoInformacion.autoriza_subcontratacion" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-subcontratistas [aliadoId]="this.aliado.id"></app-subcontratistas>
       </p-tabPanel>
-      <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipo_persona!='Natural'">
+      <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipo_persona!='Natural'" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-actividades-contratadas [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
       </p-tabPanel>
-      <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipo_persona!='Natural'">
+      <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipo_persona!='Natural'" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-localidades [selectDivision]="this.aliadoInformacion.division" [selectLocalidad]="this.aliadoInformacion.localidad" (data)="onReciveData($event, 'division')" (dataLocalidad)="onReciveData($event, 'localidad')"></app-localidades>
       </p-tabPanel>
-      <p-tabPanel header="Gestión del contrato">
+      <p-tabPanel header="Gestión del contrato" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-asignacion-colider [dataIn]="this.aliadoInformacion.colider" (coliderData)="onReciveData($event, 'colider')"></app-asignacion-colider>
       </p-tabPanel>
-      <p-tabPanel header="Control de riesgo">
+      <p-tabPanel header="Control de riesgo" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-control-riesgo [dataIn]="this.aliadoInformacion.control_riesgo" (data)="onReciveData($event, 'control-riesgo')"></app-control-riesgo>
       </p-tabPanel>
-      <p-tabPanel header="Clasificación">
+      <p-tabPanel header="Clasificación" 
+      [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')" (valoracionOUT)="impactoIn($event)"></app-calificacion>
       </p-tabPanel>
     </p-tabView>
