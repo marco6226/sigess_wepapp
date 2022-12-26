@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component,Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { Aliados } from '../../entities/aliados';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Criteria, Filter } from 'app/modulos/core/entities/filter';
@@ -19,16 +19,17 @@ import { FilterUtils } from 'primeng/api'
 })
 export class AliadosListComponent implements OnInit {
 
-  aliadosList: Empresa[]=[]
-
-  caseSelect: boolean=false
+  aliadosList: Empresa[]=[];
+  
+  caseSelect: boolean=false;
   loading: boolean = false;
   selectedList: any[]=[];
   fileName= 'ListadoAliados.xlsx';
   excel:any[];
   rangeDatesCreacion: any;
   rangeDatesActualizacion: any;
-
+ 
+  
   constructor(
     private empresaService: EmpresaService,
     private sesionService: SesionService,
@@ -42,7 +43,8 @@ export class AliadosListComponent implements OnInit {
 
     this.filterUtils();
   }
-
+  
+ 
   async loadData(){
  
     this.aliadosList=[]

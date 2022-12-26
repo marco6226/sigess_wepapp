@@ -6,7 +6,7 @@
     </div>
     <div class="input-field">
         <input required type="text" pInputText formControlName="correo" placeholder="Correo"
-        class="form-material"/>
+        class="form-material" [ngModel]="correo" (ngModelChange)="correo = $event.toLowerCase()"/>
         <label for="" class="active">Correo</label>
     </div>   
     <div class="input-field">
