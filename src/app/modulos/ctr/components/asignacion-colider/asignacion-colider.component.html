@@ -11,7 +11,7 @@
                     <th pSortableColumn="gestor.primerNombre">Nombre</th>
                     <th pSortableColumn="cargo">Cargo</th>
                     <th pSortableColumn="gestor.numeroIdentificacion">No. documento</th>
-                    <th pSortableColumn="email">Correo</th>
+                    <th pSortableColumn="gestor.usuarioBasic.email">Correo</th>
                     <th pSortableColumn="telefono">Telefono</th>
                     <th></th>
                 </tr>
@@ -21,16 +21,16 @@
                     <td>{{rowData.gestor?.primerNombre}} {{rowData.gestor?.primerApellido}}</td>
                     <td>{{rowData.cargo}}</td>
                     <td>{{rowData.gestor?.numeroIdentificacion}}</td>
-                    <td>{{rowData.email}}</td>
+                    <td>{{rowData.gestor.usuarioBasic.email}}</td>
                     <td>{{rowData.telefono}}</td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(rowData)" title="Editar interventor o gestor"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(rowData)" title="Eliminar interventor o gestor"></button>
+                        <button pButton pRipple [disabled]="!onEdit" icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(rowData)" title="Editar interventor o gestor"></button>
+                        <button pButton pRipple [disabled]="!onEdit" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(rowData)" title="Eliminar interventor o gestor"></button>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton pRipple label="Agregar interventor o gestor" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+                <button pButton pRipple [disabled]="!onEdit" label="Agregar interventor o gestor" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
             </ng-template>
         </p-table>
     </div>
@@ -39,18 +39,17 @@
             <div class="p-field">
                 <label>Gestor o interventor</label>
                 <!-- <s-empleadoSelector [(ngModel)]="empleadoSelect " (onSelect)="onData()"  [readOnly]="onEdit!='edit'"></s-empleadoSelector> -->
-                <s-empleadoBasicSelector [(ngModel)]="gestorInter.gestor" [readOnly]="onEdit!='edit'"  (onSelect)="onData()" required autofocus></s-empleadoBasicSelector>
+                <s-empleadoBasicSelector [(ngModel)]="gestorInter.gestor" (onSelect)="onData()" required autofocus></s-empleadoBasicSelector>
                 <small class="p-invalid" *ngIf="submitted && !gestorInter.gestor">Interventor o gestor requerido.</small>
             </div>
-            <div class="p-field">
+            <!-- <div class="p-field">
                 <label>Correo</label>
                 <input type="text" pInputText [(ngModel)]="gestorInter.email" required autofocus />
                 <small class="p-invalid" *ngIf="submitted && !gestorInter.email">Correo requerido.</small>
-            </div>
+            </div> -->
             <div class="p-field">
                 <label>Telefono</label>
-                <input type="text" pInputText  [(ngModel)]="gestorInter.telefono" required autofocus />
-                <small class="p-invalid" *ngIf="submitted && !gestorInter.telefono">Telefono es requerido.</small>
+                <input type="number" pInputText  [(ngModel)]="gestorInter.telefono" autofocus />
             </div>
         
         <div>

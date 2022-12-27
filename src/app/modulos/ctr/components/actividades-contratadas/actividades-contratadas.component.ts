@@ -56,11 +56,9 @@ console.log(this.a===this.b)
     private empresaService: EmpresaService,
     private rutaActiva: ActivatedRoute,
   ) { }
-  nodes1: TreeNode[] = [];
   ngOnInit(): void {
     this.edit = this.rutaActiva.snapshot.params.onEdit;
     this.loadActividadesContratadas()
-    console.log(this.nodes1)
   }
 
   agregarActividad(){

@@ -35,13 +35,12 @@ export class AsignacionColiderComponent implements OnInit {
   gestorInter:interventorgestor={}
   gestorInters:interventorgestor[]=[]
   gestorInters2:interventorgestor[]=[]
-  email:string;
   telefono:string;
   // gestorInters
   empleadoSelect2: EmpleadoBasic;
   empleadoSelect: Empleado;
   reporteSelect: Reporte;
-  onEdit: string;
+  onEdit: string = null;
   cargo:string;
 
   productDialog: boolean;
@@ -62,12 +61,10 @@ export class AsignacionColiderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.gestorInters)
     this.onEdit = this.rutaActiva.snapshot.params.onEdit;
   }
 
   async onData(){
-
     let filter = new FilterQuery();
     filter.fieldList = this.fields;
     filter.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1: this.gestorInter.gestor.id }];
@@ -78,7 +75,6 @@ export class AsignacionColiderComponent implements OnInit {
 
 openNew() {
   this.gestorInter.cargo=null;
-  this.gestorInter.email=null;
   this.gestorInter.gestor=null;
   this.gestorInter.telefono=null;
 
@@ -114,7 +110,7 @@ hideDialog() {
 
 saveProduct() {
   this.submitted = true;
-  if(this.gestorInter.gestor && this.gestorInter.email && this.gestorInter.telefono){
+  if(this.gestorInter.gestor){
     this.gestorInter.cargo=this.cargo;
 
     if(!this.edit){
