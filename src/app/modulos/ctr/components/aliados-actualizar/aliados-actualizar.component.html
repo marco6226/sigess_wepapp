@@ -1,6 +1,6 @@
 <p-toast key="msgActualizarAliado"></p-toast>
 <p-panel header="Seguimiento contratistas" >
-    <p-tabView>
+    <p-tabView [(activeIndex)]="tabIndex">
       <p-tabPanel header="Información" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-aliados 
@@ -39,7 +39,7 @@
       <p-tabPanel header="Equipo SST"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
         <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>
       </p-tabPanel>
-      <p-tabPanel header="Cargue de Documentos" [selected]="true" [headerStyle]=" { 'background-color':'#fd9b14' }">  
+      <p-tabPanel header="Cargue de Documentos" [headerStyle]=" { 'background-color':'#fd9b14' }">  
         <app-cargue-documentos [analisisId]="id" 
         (idDoc)="reciveIdDoc($event)" 
         (fechaVencimientoArlEvent)="reciveFechaArl($event)" 

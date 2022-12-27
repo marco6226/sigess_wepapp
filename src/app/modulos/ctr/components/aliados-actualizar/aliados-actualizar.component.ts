@@ -70,6 +70,8 @@ export class AliadosActualizarComponent implements OnInit {
   onEdit: string = '';
   auxAutorizaSubcontratacion: boolean;
   impactoV:string='';
+
+  tabIndex:number=0;
   
   constructor(
     private rutaActiva: ActivatedRoute,
