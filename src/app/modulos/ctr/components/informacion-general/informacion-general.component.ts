@@ -15,7 +15,7 @@ export class InformacionGeneralComponent implements OnInit {
   @Output() dataEmailComercial =new EventEmitter<string>();
   @Output() dataTelefonoContacto =new EventEmitter<string>();
   @Output() dataArl =new EventEmitter<string>();
-  @Output() dataAutorizaSubcontratacion =new EventEmitter<boolean>();
+  // @Output() dataAutorizaSubcontratacion =new EventEmitter<boolean>();
 
   @Input() repLegal:string='';
   @Input() numTrabajadores=0;
@@ -28,15 +28,15 @@ export class InformacionGeneralComponent implements OnInit {
       this.selectedArl = {name: data, value: data};
     }
   } 
-  @Input('autorizaSubcontratacion')
-  set setAutorizaSubcontratacion(data: boolean){
-    if(data==null) return;
-    if(data){
-      this.autorizaSubcontratacion = 'Si';
-    }else{
-      this.autorizaSubcontratacion = 'No';
-    }
-  }
+  // @Input('autorizaSubcontratacion')
+  // set setAutorizaSubcontratacion(data: boolean){
+  //   if(data==null) return;
+  //   if(data){
+  //     this.autorizaSubcontratacion = 'Si';
+  //   }else{
+  //     this.autorizaSubcontratacion = 'No';
+  //   }
+  // }
   @Input() onEdit: string = '';
 
   arlList: Array<object>;
@@ -78,13 +78,13 @@ export class InformacionGeneralComponent implements OnInit {
     this.dataArl.emit(this.selectedArl.value);
   }
 
-  onAutorizaSubcontratacion(){
-    if(this.autorizaSubcontratacion && this.autorizaSubcontratacion == 'Si'){
-      this.dataAutorizaSubcontratacion.emit(true);
-    }else{
-      this.dataAutorizaSubcontratacion.emit(false);
-    }
-  }
+  // onAutorizaSubcontratacion(){
+  //   if(this.autorizaSubcontratacion && this.autorizaSubcontratacion == 'Si'){
+  //     this.dataAutorizaSubcontratacion.emit(true);
+  //   }else{
+  //     this.dataAutorizaSubcontratacion.emit(false);
+  //   }
+  // }
 
   async loadArlList(){
     await this.comunService.findAllArl().then(

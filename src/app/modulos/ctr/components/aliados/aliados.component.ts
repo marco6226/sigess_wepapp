@@ -75,7 +75,17 @@ export class AliadosComponent implements OnInit {
   @Output() dataCalificacion = new EventEmitter<number>();
   @Output() dataFechaCalificacion = new EventEmitter<Date>();
   @Output() dataQuienCalifica = new EventEmitter<string>();
-
+  @Output() dataAutorizaSubcontratacion =new EventEmitter<boolean>();
+  @Input('autorizaSubcontratacion')
+  set setAutorizaSubcontratacion(data: boolean){
+    if(data==null) return;
+    if(data){
+      this.autorizaSubcontratacion = 'Si';
+    }else{
+      this.autorizaSubcontratacion = 'No';
+    }
+  }
+  autorizaSubcontratacion: string;
   isCreate: boolean=true;
 
   nameAndLastName: string=''
@@ -137,7 +147,7 @@ export class AliadosComponent implements OnInit {
       nombreComercial:[null, Validators.required],
       calificacion_proceso:[null, Validators.required],
       fecha_calificacion:[null, Validators.required],
-      quien_califica:[null, Validators.required]
+      quien_califica:[null, Validators.required],
     })
    }
   
@@ -405,6 +415,13 @@ export class AliadosComponent implements OnInit {
           );
       }
   });
+  }
+  onAutorizaSubcontratacion(){
+    if(this.autorizaSubcontratacion && this.autorizaSubcontratacion == 'Si'){
+      this.dataAutorizaSubcontratacion.emit(true);
+    }else{
+      this.dataAutorizaSubcontratacion.emit(false);
+    }
   }
 }
 

@@ -24,13 +24,13 @@
                     <td>{{rowData.email}}</td>
                     <td>{{rowData.telefono}}</td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(rowData)"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(rowData)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(rowData)" title="Editar interventor o gestor"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(rowData)" title="Eliminar interventor o gestor"></button>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+                <button pButton pRipple label="Agregar interventor o gestor" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
             </ng-template>
         </p-table>
     </div>

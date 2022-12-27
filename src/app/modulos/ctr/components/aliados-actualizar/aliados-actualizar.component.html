@@ -11,11 +11,13 @@
           [fechaCalificacion]="this.aliadoInformacion.fecha_calificacion_aliado"
           [quienCalifica]="this.aliadoInformacion.nombre_calificador"
           [documentos]="documentos"
+          [autorizaSubcontratacion]="this.aliadoInformacion.autoriza_subcontratacion"
           (dataCalificacion)="onReciveCalificacionAliadoData($event, 'puntaje')"
           (dataFechaCalificacion)="onReciveCalificacionAliadoData($event, 'fecha')"
           (dataQuienCalifica)="onReciveCalificacionAliadoData($event, 'nombre')"
           (idDoc)="reciveIdDoc($event)"
           (onDelete)="deleteDocumento($event)"
+          (dataAutorizaSubcontratacion)="onReciveAutorizaSubcontratacion($event)"
           ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
@@ -26,14 +28,12 @@
           [emailComercial]="this.aliadoInformacion.email_comercial"
           [telefonoContacto]="this.aliadoInformacion.telefono_contacto"
           [selectedArl]="this.aliadoInformacion.arl"
-          [autorizaSubcontratacion]="this.aliadoInformacion.autoriza_subcontratacion"
           (dataRepLegal)="onReciveData($event, 'repLegal')" 
           (dataNumTrabajadores)="onReciveData($event, 'numTrabajadores')" 
           (dataNumTrabajadoresAsig)="onReciveData($event, 'numTrabajadoresAsig')"
           (dataEmailComercial)="onReciveData($event, 'emailComercial')"
           (dataTelefonoContacto)="onReciveData($event, 'telefonoContacto')"
           (dataArl)="onReciveData($event, 'arl')"
-          (dataAutorizaSubcontratacion)="onReciveAutorizaSubcontratacion($event)"
           ></app-informacion-general>
       </p-tabPanel>
       <p-tabPanel header="Equipo SST"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
