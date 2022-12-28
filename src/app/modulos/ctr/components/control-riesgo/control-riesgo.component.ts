@@ -21,6 +21,7 @@ export class ControlRiesgoComponent implements OnInit {
     'Trabajo con energías peligrosas',
     'Izaje de cargas',
     'Trabajos en caliente',
+    'No aplica'
   ]
   selectedTareas: string[] = [];
   onEdit: string = '';
