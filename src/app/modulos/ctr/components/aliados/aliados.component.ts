@@ -86,6 +86,7 @@ export class AliadosComponent implements OnInit {
     }
   }
   autorizaSubcontratacion: string;
+  autorizaSubcontratacionflag: boolean;
   isCreate: boolean=true;
 
   nameAndLastName: string=''
@@ -280,7 +281,7 @@ export class AliadosComponent implements OnInit {
             fecha_calificacion_aliado: this.formJuridica.value.fecha_calificacion,
             nombre_calificador: this.formJuridica.value.quien_califica,
             arl: null,
-            autoriza_subcontratacion: false
+            autoriza_subcontratacion: this.autorizaSubcontratacionflag
           }
 
           this.empresaService.saveAliadoInformacion(aliadoInformacion)
@@ -418,8 +419,10 @@ export class AliadosComponent implements OnInit {
   }
   onAutorizaSubcontratacion(){
     if(this.autorizaSubcontratacion && this.autorizaSubcontratacion == 'Si'){
+      this.autorizaSubcontratacionflag=true
       this.dataAutorizaSubcontratacion.emit(true);
     }else{
+      this.autorizaSubcontratacionflag=false
       this.dataAutorizaSubcontratacion.emit(false);
     }
   }
