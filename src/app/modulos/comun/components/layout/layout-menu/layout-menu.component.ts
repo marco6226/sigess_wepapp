@@ -77,7 +77,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                     ]
             },
             {
-                label: 'Contratistas',
+                label: 'Aliados',
                 class: 'icon-ctr',
                 codigo: 'CTR',
                 expanded: false,
