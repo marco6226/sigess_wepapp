@@ -124,13 +124,11 @@
             </div>
             
         </div>
-        <div class="cols">
-            <div class="input-field">
-                <div class="ui-g-12">
-                    <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">La empresa cuenta con autorización para subcontratación: </label>
-                    <p-radioButton [disabled]="!isCreate && onEdit==null" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="Si" label="Si" [(ngModel)]="autorizaSubcontratacion" [ngModelOptions]="{standalone: true}" required></p-radioButton>
-                    <p-radioButton [disabled]="!isCreate && onEdit==null" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="No" label="No" [(ngModel)]="autorizaSubcontratacion" [ngModelOptions]="{standalone: true}" required></p-radioButton>
-                </div>
+        <div class="input-field">
+            <div class="ui-g-12">
+                <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">La empresa cuenta con autorización para subcontratación: </label>
+                <p-radioButton [disabled]="!isCreate && onEdit==null" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="Si" label="Si" [(ngModel)]="autorizaSubcontratacion" [ngModelOptions]="{standalone: true}" required></p-radioButton>
+                <p-radioButton [disabled]="!isCreate && onEdit==null" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="No" label="No" [(ngModel)]="autorizaSubcontratacion" [ngModelOptions]="{standalone: true}" required></p-radioButton>
             </div>
         </div>
     </div>
