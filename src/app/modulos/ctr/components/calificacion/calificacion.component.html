@@ -1,38 +1,35 @@
 <p-panel header="Formulario Clasificación" >
-    <!-- <div class="input-field">
-        <input type="text" pInputText formControlName="telefono" [readOnly]="!isCreate" [(ngModel)]="valueEmpresa.telefono" placeholder="Telefono"
-        class="form-material"/>
-        <label for="" class="active">Telefono</label>
-    </div> -->
     <br>
     <div class="ui-g">
         <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Tareas de Alto riesgo">
+            <div>
             <span for="">La empresa realiza en su servicio Tareas de Alto Riesgo:</span><br><br>
-            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="riesgo" value="2" label="Si" [(ngModel)]="riesgo"></p-radioButton><br>
-            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="riesgo" value="0.4" label="NO" [(ngModel)]="riesgo"></p-radioButton>
+            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="riesgo" value="2" label="Si" [(ngModel)]="riesgo" required></p-radioButton>
+            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="riesgo" value="0.4" label="NO" [(ngModel)]="riesgo" required></p-radioButton>
+            </div>
         </p-panel>
         <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Permanencia">
             <span for="">El servicio demanda una permanencia específica en las operaciones productivas directas de la Organización:</span><br><br>
-            <p-dropdown [disabled]="onEdit!='edit'" (click)="onSaveData()" [options]="permanencia" [(ngModel)]="selectedPermanencia" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false"></p-dropdown>
+            <p-dropdown [disabled]="onEdit!='edit'" (click)="onSaveData()" [options]="permanencia" [(ngModel)]="selectedPermanencia" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false" required></p-dropdown>
         </p-panel>
         <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Impacto personal directo">
             <span>El servicio suministrado tiene impacto en la seguridad y salud de los colaboradores directos de la Organización:</span><br><br>
-            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="impacto" value="0.25" label="Si" [(ngModel)]="impacto"></p-radioButton><br>
-            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="impacto" value="0.05" label="NO" [(ngModel)]="impacto"></p-radioButton>
+            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="impacto" value="0.25" label="Si" [(ngModel)]="impacto" required></p-radioButton>
+            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="impacto" value="0.05" label="NO" [(ngModel)]="impacto" required></p-radioButton>
         </p-panel>
         <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Tamaño empresa">
             <span>El número de trabajadores vinculados directamente con la empresa está en los siguientes rangos:</span><br><br>
-            <p-dropdown [disabled]="onEdit!='edit'" (click)="onSaveData()" [options]="tamano" [(ngModel)]="selectedTamano" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false"></p-dropdown>
+            <p-dropdown [disabled]="onEdit!='edit'" (click)="onSaveData()" [options]="tamano" [(ngModel)]="selectedTamano" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false" required></p-dropdown>
         </p-panel>
         <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Clase de riesgo">
             <span>La empresa  está clasificada en una clase de riesgo específica, de acuerdo con su actividad económica en:</span><br><br>
-            <p-dropdown [disabled]="onEdit!='edit'" (click)="onSaveData()" [options]="claseRiesgo" [(ngModel)]="selectedClaseRiesgo" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false"></p-dropdown>
+            <p-dropdown [disabled]="onEdit!='edit'" (click)="onSaveData()" [options]="claseRiesgo" [(ngModel)]="selectedClaseRiesgo" placeholder="-- seleccionar --" optionLabel="name" [showClear]="false" required></p-dropdown>
 
         </p-panel>
         <p-panel class="ui-g-12 ui-md-6 ui-lg-4" header="Transversalidad">
             <span>El servicio se prestará en más de una de las Unidades de Negocio de la Organización:</span><br><br>
-            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="transversalidad" value="0.25" label="Si" [(ngModel)]="transversalidad"></p-radioButton><br>
-            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="transversalidad" value="0.05" label="NO" [(ngModel)]="transversalidad"></p-radioButton>
+            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="transversalidad" value="0.25" label="Si" [(ngModel)]="transversalidad" required></p-radioButton>
+            <p-radioButton [disabled]="onEdit!='edit'" (click)="onSaveData()" name="transversalidad" value="0.05" label="NO" [(ngModel)]="transversalidad" required></p-radioButton>
         </p-panel>
 
         <p-panel class="p-col">

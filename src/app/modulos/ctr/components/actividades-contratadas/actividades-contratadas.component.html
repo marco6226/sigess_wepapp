@@ -1,5 +1,7 @@
 <s-dataNotFound *ngIf="!actividadesList || actividadesList?.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades contratadas">
     <button pButton [disabled]="!edit" type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
+    <br><small class="p-invalid" style="
+    font-weight: bold;">Campo obligatorio.</small>
 </s-dataNotFound>
 
 <p-panel header="Lista de Actividades Contratadas" *ngIf="actividadesList?.length > 0">
@@ -66,7 +68,7 @@
 
 
 <s-dataNotFound *ngIf="!actividadesSubList || actividadesSubList?.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de actividades Subcontratadas">
-    <button [disabled]="!edit" pButton type="button" (click)="abrirDialogoSub('crear')" icon="fa fa-plus" label="Agregar Actividad"></button>
+    <button [disabled]="!edit" pButton type="button" (click)="abrirDialogoSub('crear')" icon="fa fa-plus" label="Agregar Actividad" requiered></button>
 </s-dataNotFound>
 
 <p-panel header="Lista de Actividades Subcontratadas" *ngIf="actividadesSubList?.length > 0">

@@ -7,7 +7,7 @@ import { Criteria, Filter } from 'app/modulos/core/entities/filter';
 import { EmpresaService } from './../../../empresa/services/empresa.service';
 import { Empresa } from 'app/modulos/empresa/entities/empresa';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output } from '@angular/core';
 import { AliadoInformacion } from '../../entities/aliados';
 import { ComunService } from 'app/modulos/comun/services/comun.service';
 import { MessageService } from 'primeng/primeng';
@@ -72,7 +72,10 @@ export class AliadosActualizarComponent implements OnInit {
   impactoV:string='';
 
   tabIndex:number=0;
+
+  flagPress: boolean=false;
   
+  flagValid:boolean=false;
   constructor(
     private rutaActiva: ActivatedRoute,
     private empresaService: EmpresaService,
@@ -304,6 +307,7 @@ export class AliadosActualizarComponent implements OnInit {
       this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
       if(!this.onEdit) this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
     });
+    this.flagPress=true
     // setTimeout(() => {
     //   this.messageService.clear();
     // }, 20000);
@@ -313,7 +317,9 @@ export class AliadosActualizarComponent implements OnInit {
   impactoIn(event){
     this.impactoV=event
   }
-
+  flagValidMetodo(e){
+    this.flagValid=e;
+  }
   gestorDataIsValid(): boolean{
     return (
         (this.aliadoInformacion.actividad_contratada != null && this.aliadoInformacion.actividad_contratada != '')
@@ -322,9 +328,10 @@ export class AliadosActualizarComponent implements OnInit {
         && (this.aliadoInformacion.colider != null && this.aliadoInformacion.colider != '')
         && (this.aliadoInformacion.control_riesgo != null && this.aliadoInformacion.control_riesgo != '')
         && (
-            this.aliadoInformacion.calificacion != null 
-            && this.aliadoInformacion.calificacion != ''
-            && JSON.parse(this.aliadoInformacion.calificacion).length >= 9
+            this.flagValid
+            // this.aliadoInformacion.calificacion != null 
+            // && this.aliadoInformacion.calificacion != ''
+            // && JSON.parse(this.aliadoInformacion.calificacion).length >= 9
            )
         && (this.auxAutorizaSubcontratacion != null)
       );

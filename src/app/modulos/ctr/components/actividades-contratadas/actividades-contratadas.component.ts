@@ -13,6 +13,7 @@ import {parse, stringify} from 'flatted';
   styleUrls: ['./actividades-contratadas.component.scss']
 })
 export class ActividadesContratadasComponent implements OnInit {
+  @Input() flagPress: boolean=false;
   @Input('selectActividad') 
   set actividadesIn(actividades: string){
     if (actividades != null) {
@@ -54,6 +55,7 @@ export class ActividadesContratadasComponent implements OnInit {
   }
 
   agregarActividad(){
+    console.log(this.actividadesList)
     if(this.selectActividad != null){
       this.actividadesList = this.selectActividad.map(item => {
         return {nombre: item.data}

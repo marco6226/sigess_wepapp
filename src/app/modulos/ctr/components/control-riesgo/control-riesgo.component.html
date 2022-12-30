@@ -3,5 +3,7 @@
     <div *ngFor="let tarea of tareasList">
       <p-checkbox [disabled]="onEdit != 'edit'" name="tareas" label="{{tarea}}" value="{{tarea}}" [(ngModel)]="selectedTareas" (onChange)="updateSelectedTareas()"></p-checkbox>
     </div>
+    <br><small *ngIf="selectedTareas.length==0" class="p-invalid" style="
+    font-weight: bold;">Campo obligatorio.</small>
   </p-panel>
 </div>

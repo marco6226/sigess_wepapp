@@ -60,7 +60,7 @@
       </p-tabPanel>
       <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipo_persona!='Natural'" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-actividades-contratadas [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
+        <app-actividades-contratadas [flagPress]="flagPress" [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
       </p-tabPanel>
       <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipo_persona!='Natural'" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
@@ -76,7 +76,7 @@
       </p-tabPanel>
       <p-tabPanel header="Clasificación" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (data)="onReciveData($event, 'calificacion')" (valoracionOUT)="impactoIn($event)"></app-calificacion>
+        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (flagValid2)="flagValidMetodo($event)"(data)="onReciveData($event, 'calificacion')" (valoracionOUT)="impactoIn($event)"></app-calificacion>
       </p-tabPanel>
     </p-tabView>
 </p-panel>

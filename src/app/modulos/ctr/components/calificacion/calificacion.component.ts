@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CalificacionComponent implements OnInit{
   @Output()valoracionOUT= new EventEmitter<String>();
+  @Output()flagValid2= new EventEmitter<boolean>();
+  
   @Input('selectCalificacion') 
   set actividadesIn(actividades: string){
     // console.log(actividades);
@@ -55,6 +57,8 @@ export class CalificacionComponent implements OnInit{
 
   @Input() onEdit: string;
 
+  flagValid:boolean=false
+
   constructor(
     private activatedRoute: ActivatedRoute
   ) {
@@ -83,8 +87,10 @@ export class CalificacionComponent implements OnInit{
   ngOnInit(): void {
     this.onEdit = this.activatedRoute.snapshot.params.onEdit;
   }
-
+  
   onSaveData(){
+    this.flagValid=(this.riesgo!=null && this.selectedPermanencia!=null && this.impacto!=null && this.selectedTamano!=null && this.selectedClaseRiesgo!=null && this.transversalidad!=null)?true:false
+    this.flagValid2.emit(this.flagValid)
     this.values = []
     this.values.push(this.riesgo);
     this.values.push(this.permanencia);
@@ -106,6 +112,11 @@ export class CalificacionComponent implements OnInit{
     }
     this.data.emit(JSON.stringify(this.values))
   }
+
+  validCalificacion(){
+
+  }
+
   salidaValoracion(){
     let valString= this.valoracionActual >= 1 && this.valoracionActual <= 2 ? 'Bajo'
     : this.valoracionActual > 2 && this.valoracionActual <= 4 ? 'Medio'
