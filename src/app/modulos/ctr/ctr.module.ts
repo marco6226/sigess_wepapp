@@ -17,11 +17,7 @@ import { InformacionGeneralComponent } from './components/informacion-general/in
 import { ControlRiesgoComponent } from './components/control-riesgo/control-riesgo.component';
 import { SubcontratistasComponent } from './components/subcontratistas/subcontratistas.component';
 import { FormSubcontratistaComponent } from './components/subcontratistas/form-subcontratista/form-subcontratista.component';
-// import { Tree, TreeNode } from 'primeng/primeng';
-// import { TreeSelectModule } from 'primeng/tree';
-// TreeSelectModule is 
-// import {InputNumberModule} from 'primeng/inpu';
-
+import {ListboxModule} from 'primeng/listbox';
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {CalendarModule} from 'primeng/calendar';
@@ -37,37 +33,34 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {ToolbarModule} from 'primeng/toolbar';
 import {RatingModule} from 'primeng/rating';
 import {RadioButtonModule} from 'primeng/radiobutton';
-// import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-// import {Interventorgestor} from '../ctr/entities/gestorinterventor';
+import {TreeModule} from 'primeng/tree';
 
 @NgModule({
   imports: [
     ComunModule,
-
-
-TableModule,
-ToastModule,
-CalendarModule,
-SliderModule,
-MultiSelectModule,
-ContextMenuModule,
-DialogModule,
-ButtonModule,
-DropdownModule,
-ProgressBarModule,
-InputTextModule,
-FileUploadModule,
-ToolbarModule,
-RatingModule,
-RadioButtonModule,
-ConfirmDialogModule,
-
-InputTextareaModule
-    // Tree,
+    TableModule,
+    ToastModule,
+    CalendarModule,
+    SliderModule,
+    MultiSelectModule,
+    ContextMenuModule,
+    DialogModule,
+    ButtonModule,
+    DropdownModule,
+    ProgressBarModule,
+    InputTextModule,
+    FileUploadModule,
+    ToolbarModule,
+    RatingModule,
+    RadioButtonModule,
+    ConfirmDialogModule,
+    InputTextareaModule,
+    ListboxModule,
+    TreeModule
   ],
   declarations: [
     AdminContratistasComponent, 

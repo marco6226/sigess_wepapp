@@ -13,18 +13,10 @@ import {parse, stringify} from 'flatted';
   styleUrls: ['./actividades-contratadas.component.scss']
 })
 export class ActividadesContratadasComponent implements OnInit {
-b
   @Input('selectActividad') 
   set actividadesIn(actividades: string){
     if (actividades != null) {
-      // console.log(actividades);
-      // this.selectActividad = [];
-      // this.selectActividadSub = [];
       this.selectActividad = parse(actividades,this.dataReviver)[0];
-this.b=this.selectActividad
-console.log('A:',this.a,'B:',this.b)
-
-console.log(this.a===this.b)
       this.selectActividadSub = parse(actividades,this.dataReviver)[1];
       this.agregarActividad();
       this.agregarActividadSub();
@@ -42,12 +34,12 @@ console.log(this.a===this.b)
   visibleDlg: boolean =false;
   visibleDlgSub: boolean =false;
 
-  actividadesContratadasList:any[];
-  actividadesContratadasListSub1:any[];
-  actividadesContratadasListSub2:any[];
+  actividadesContratadasList:TreeNode[];
+  actividadesContratadasListSub1:TreeNode[];
+  actividadesContratadasListSub2:TreeNode[];
 
-  selectActividad: any[];
-  selectActividadSub: any[];
+  selectActividad
+  selectActividadSub
 
   actividadesList: any[];
   actividadesSubList: any[];
@@ -80,11 +72,7 @@ console.log(this.a===this.b)
       this.saveActividad();
     }
   }
-  a
   saveActividad(){
-
-this.a= this.selectActividad;
-    console.log('con:', typeof this.selectActividad,'sub:',this.selectActividadSub)
     this.data.emit(stringify([this.selectActividad, this.selectActividadSub], this.replacer));
   }
   replacer(key, value){
@@ -95,9 +83,6 @@ this.a= this.selectActividad;
   abrirDialogo(param: string =null){
     if (param) {
       this.selectActividad = []
-    }else{
-      // this.selectActividad = []
-      console.log(typeof this.selectActividad)
     }
     this.visibleDlg = true;
   }
@@ -105,9 +90,6 @@ this.a= this.selectActividad;
   abrirDialogoSub(param: string =null){
     if (param) {
       this.selectActividadSub = []
-    }else{
-      // this.selectActividadSub = []
-      console.log(this.selectActividadSub)
     }
     this.visibleDlgSub = true;
   }
@@ -124,17 +106,25 @@ this.a= this.selectActividad;
     this.actividadesContratadasList=[]
     this.actividadesContratadasListSub1=[]
     this.actividadesContratadasListSub2=[]
+
+    
     await this.empresaService.getActividadesContratadas(this.rutaActiva.snapshot.params.id).then((element: ActividadesContratadas[]) =>{
 
       console.log(element)
-      
+      let id1
+      let id2
       element.forEach(elemen => {
-        
+        if(elemen.id==0)
+        id1=elemen.id
+
+        if(elemen.id==15)
+        id2=elemen.id
+
         if(elemen.padre_id==1)
-        this.actividadesContratadasListSub1.push({"label": elemen.actividad,  "data": elemen.actividad})
+        this.actividadesContratadasListSub1.push({key:elemen.id.toString() ,label: elemen.actividad,  data: elemen.actividad})
 
         if(elemen.padre_id==15)
-        this.actividadesContratadasListSub2.push({"label": elemen.actividad,  "data": elemen.actividad})
+        this.actividadesContratadasListSub2.push({key:elemen.id.toString(),label: elemen.actividad,  data: elemen.actividad})
     });
 
       this.actividadesContratadasListSub1.sort(function(a,b){
@@ -155,9 +145,8 @@ this.a= this.selectActividad;
         return 0;
       });
 
-      this.actividadesContratadasList.push({"label": "SERVICIOS ADMINISTRATIVOS",  "data": "SERVICIOS ADMINISTRATIVOS","selectable":false, "children":this.actividadesContratadasListSub1})
-
-      this.actividadesContratadasList.push({"label": "SERVICIOS DE MANTENIMIENTO",  "data": "SERVICIOS DE MANTENIMIENTO","selectable":false, "children":this.actividadesContratadasListSub2})
+      this.actividadesContratadasList.push({key:id1,label: "SERVICIOS ADMINISTRATIVOS",  data: "SERVICIOS ADMINISTRATIVOS",selectable:false, children:this.actividadesContratadasListSub1})
+      this.actividadesContratadasList.push({key:id2,label: "SERVICIOS DE MANTENIMIENTO",  data: "SERVICIOS DE MANTENIMIENTO",selectable:false, children:this.actividadesContratadasListSub2})
    });
   }
 

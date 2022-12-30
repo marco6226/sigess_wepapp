@@ -53,25 +53,14 @@
         <label for="" class="active">Actividades contratadas</label>
     </div>
 
-    <!-- <div class="contenedor" style="width:802px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
-        <div class="contenedor">
-            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividad" ></p-checkbox>
-        </div>
-        <p-tree  [value]="nodes1" selectionMode="checkbox" [(selection)]="selectActividad"></p-tree>
-    </div> -->
-
     <div>
-        <p-tree id="tree-comp" [value]="actividadesContratadasList" selectionMode="checkbox" [(selection)]="selectActividad" layout="vertical"></p-tree>
+        <p-tree [filter]="true" id="tree-comp" [value]="actividadesContratadasList" selectionMode="checkbox" [(selection)]="selectActividad" layout="vertical"></p-tree>
     </div>
+
     <p-footer>
         <button pButton type="button" (click)="agregarActividad()" label="Aceptar"></button>
         <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
     </p-footer>
-
-    <!-- <h5>Multiple</h5> -->
-    <!-- <p-treeSelect [(ngModel)]="selectActividad" [options]="nodes1" display="chip" [metaKeySelection]="false" selectionMode="checkbox"
-        placeholder="Select Item"></p-treeSelect> -->
-    <!-- <h5>Multiple</h5> -->
     
 </p-dialog>
 
@@ -131,13 +120,8 @@
         <label for="" class="active">Actividades contratadas</label>
     </div>
     <div>
-        <p-tree  [value]="actividadesContratadasList" selectionMode="checkbox" [(selection)]="selectActividadSub" layout="vertical"></p-tree>
+        <p-tree  [filter]="true" [value]="actividadesContratadasList" selectionMode="checkbox" [(selection)]="selectActividadSub" layout="vertical"></p-tree>
     </div>
-    <!-- <div class="ui-g" style="width:350px;margin-bottom:10px" *ngFor="let data of actividadesContratadasList">
-        <div class="ui-g-12">
-            <p-checkbox name="group1" [value]="data.label" [label]="data.label" [(ngModel)]="selectActividadSub"></p-checkbox>
-        </div>
-    </div> -->
 
     <p-footer>
         <button pButton type="button" (click)="agregarActividadSub()" label="Aceptar"></button>
