@@ -66,7 +66,7 @@ export class AliadosListComponent implements OnInit {
 
     filterQuery.filterList.push(filtPadre);
     filterQuery.filterList.push(filterAliadoID);
-    filterQuery.sortField = "idEmpresaAliada";
+    filterQuery.sortField = "id";
     filterQuery.sortOrder = 1;
     
     this.empresaService.findByFilter(filterQuery).then(
