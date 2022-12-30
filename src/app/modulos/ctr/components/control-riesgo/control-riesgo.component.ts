@@ -25,6 +25,7 @@ export class ControlRiesgoComponent implements OnInit {
   ]
   selectedTareas: string[] = [];
   onEdit: string = '';
+  @Input() flagConsult: boolean=false;
 
   constructor(
               private activatedRoute: ActivatedRoute 

@@ -20,6 +20,7 @@ export class FormSubcontratistaComponent implements OnInit {
   isSaveOrUpdate: string = 'save';
   documentos: Documento[];
   directorios: Directorio[];
+  @Input() flagConsult: boolean=false;
 
   @Output() cancelarFormulario = new EventEmitter<boolean>();
 

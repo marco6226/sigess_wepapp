@@ -15,7 +15,8 @@ import { Subcontratista } from '../../entities/aliados';
   providers: [MessageService]
 })
 export class SubcontratistasComponent implements OnInit {
-
+  @Input() flagConsult: boolean=false;
+  @Input() onEdit: string= null;
   nit: number;
   nombre: string;
   actividadesRiesgo: object[] = [

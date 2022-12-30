@@ -49,6 +49,7 @@ export class LocalidadesComponent implements OnInit {
   locadidadesList: string[]=[]
 
   edit: string = null;
+  @Input() flagConsult: boolean=false;
 
   constructor(
     private activatedRoute: ActivatedRoute,

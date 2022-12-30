@@ -120,6 +120,11 @@
                 </th>
                 <th>
                     <span>
+                        Consultar
+                    </span>
+                </th>
+                <th>
+                    <span>
                         Editar
                     </span>
                 </th>
@@ -153,6 +158,11 @@
                 </td>
                 <td>
                     {{rowData.fechaActualizacion | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <button style="margin-left: 5px;" pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success p-mr-2" (click)="onConsult(rowData)" title="Consultar"></button>
+                    
+                 <!--    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onSendMail(rowData)" title="Enviar correo"></button> -->
                 </td>
                 <td>
                     <button style="margin-left: 5px;" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>

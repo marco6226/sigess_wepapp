@@ -90,6 +90,9 @@ export class AliadosListComponent implements OnInit {
     this.router.navigate([`/app/ctr/actualizarAliado/${event.id}/${'edit'}`]);
   }
 
+  onConsult(event){
+    this.router.navigate([`/app/ctr/actualizarAliado/${event.id}/${'consultar'}`]);
+  }
   async onSendMail(event){
     console.log(event);
     await this.usuarioService.sendMailAliadoActualizar(event.email,event.id);
@@ -197,4 +200,5 @@ export class AliadosListComponent implements OnInit {
         }
       }
     }
+
 }

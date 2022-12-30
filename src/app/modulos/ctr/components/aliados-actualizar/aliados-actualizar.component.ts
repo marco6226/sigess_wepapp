@@ -76,6 +76,9 @@ export class AliadosActualizarComponent implements OnInit {
   flagPress: boolean=false;
   
   flagValid:boolean=false;
+
+  flagConsult:boolean=false
+
   constructor(
     private rutaActiva: ActivatedRoute,
     private empresaService: EmpresaService,
@@ -84,10 +87,11 @@ export class AliadosActualizarComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
   ) {}
-
+  
   ngOnInit() {
     this.id = this.rutaActiva.snapshot.params.id;
     this.onEdit = this.rutaActiva.snapshot.params.onEdit;
+    this.flagConsult=this.onEdit=='consultar'?true:false
     this.loadData().then();
   }
 

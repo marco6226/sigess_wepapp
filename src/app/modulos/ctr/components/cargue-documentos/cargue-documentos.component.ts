@@ -19,6 +19,7 @@ export class CargueDocumentosComponent implements OnInit {
   @Input('analisisId') analisisId: number;
   documentos: Documento[];
   @Input() puntajeARL:number =0;
+  @Input() flagConsult: boolean=false;
   // directorios: Directorio[];
   // @Input('documentos') 
   // set addDocumentos(data: Directorio){

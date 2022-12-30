@@ -13,6 +13,7 @@ import {parse, stringify} from 'flatted';
   styleUrls: ['./actividades-contratadas.component.scss']
 })
 export class ActividadesContratadasComponent implements OnInit {
+  @Input() flagConsult: boolean=false;
   @Input() flagPress: boolean=false;
   @Input('selectActividad') 
   set actividadesIn(actividades: string){

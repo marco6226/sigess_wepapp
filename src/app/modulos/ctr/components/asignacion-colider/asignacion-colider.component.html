@@ -24,14 +24,14 @@
                     <td>{{rowData.gestor.usuarioBasic.email}}</td>
                     <td>{{rowData.telefono}}</td>
                     <td>
-                        <button pButton pRipple [disabled]="!onEdit" icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(rowData)" title="Editar interventor o gestor"></button>
-                        <button pButton pRipple [disabled]="!onEdit" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(rowData)" title="Eliminar interventor o gestor"></button>
+                        <button pButton pRipple [disabled]="!onEdit || flagConsult" icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(rowData)" title="Editar interventor o gestor"></button>
+                        <button pButton pRipple [disabled]="!onEdit || flagConsult" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(rowData)" title="Eliminar interventor o gestor"></button>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton pRipple [disabled]="!onEdit" label="Agregar interventor o gestor" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-                <br><small *ngIf="gestorInters.length==0" class="p-invalid">Campo obligatorio.</small>
+                <button pButton pRipple [disabled]="!onEdit || flagConsult" label="Agregar interventor o gestor" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+                <br><small *ngIf="gestorInters.length==0 && !flagConsult" class="p-invalid">Campo obligatorio.</small>
             </ng-template>
         </p-table>
     </div>

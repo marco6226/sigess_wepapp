@@ -1,7 +1,7 @@
 <s-dataNotFound *ngIf="!actividadesList || actividadesList!.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Divisiones">
-    <button [disabled]="!edit" pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar División"></button>
+    <button [disabled]="!edit || flagConsult" pButton type="button" (click)="abrirDialogo('crear')" icon="fa fa-plus" label="Agregar División"></button>
     <br><small class="p-invalid" style="
-    font-weight: bold;">Campo obligatorio.</small>
+    font-weight: bold;" *ngIf="!flagConsult">Campo obligatorio.</small>
 </s-dataNotFound>
 
 <p-panel header="Lista de División" *ngIf="actividadesList!.length > 0">
@@ -28,7 +28,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button [disabled]="!edit" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo()" label="Modificar División"></button>    
+                <button [disabled]="!edit || flagConsult" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo()" label="Modificar División"></button>    
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
@@ -41,9 +41,9 @@
 </p-panel>
 
 <s-dataNotFound *ngIf="!locadidadesList || locadidadesList!.length <= 0" icon="fa-handshake-o" message="No se encontraron registros de Localidades">
-    <button [disabled]="!edit" pButton type="button" (click)="abrirDialogoLocalidades('crear')" icon="fa fa-plus" label="Agregar Localidad"></button>
+    <button [disabled]="!edit || flagConsult" pButton type="button" (click)="abrirDialogoLocalidades('crear')" icon="fa fa-plus" label="Agregar Localidad"></button>
     <br><small class="p-invalid" style="
-    font-weight: bold;">Campo obligatorio.</small>
+    font-weight: bold;" *ngIf="!flagConsult">Campo obligatorio.</small>
 </s-dataNotFound>
 
 <p-panel header="Localidades" *ngIf="locadidadesList.length > 0">
@@ -70,7 +70,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button [disabled]="!edit" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogoLocalidades()" label="Modificar localidad"></button>    
+                <button [disabled]="!edit || flagConsult" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogoLocalidades()" label="Modificar localidad"></button>    
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>

@@ -4,6 +4,7 @@
       <p-tabPanel header="Información" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
         <app-aliados 
+          [flagConsult]="flagConsult"
           [analisisId]="id"
           [onEdit]="this.onEdit" 
           [valueEmpresa]="this.aliado"
@@ -22,6 +23,7 @@
       </p-tabPanel>
       <p-tabPanel header="Información General"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
         <app-informacion-general
+          [flagConsult]="flagConsult"
           [repLegal]="this.aliadoInformacion.representante_legal" 
           [numTrabajadores]="this.aliadoInformacion.numero_trabajadores" 
           [numTrabajadoresAsig]="this.aliadoInformacion.numero_trabajadores_asignados"
@@ -37,10 +39,11 @@
           ></app-informacion-general>
       </p-tabPanel>
       <p-tabPanel header="Equipo SST"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
-        <app-equipo-sst-list [alidadoId]="id"></app-equipo-sst-list>
+        <app-equipo-sst-list [flagConsult]="flagConsult" [alidadoId]="id"></app-equipo-sst-list>
       </p-tabPanel>
       <p-tabPanel header="Cargue de Documentos" [headerStyle]=" { 'background-color':'#fd9b14' }">  
-        <app-cargue-documentos [analisisId]="id" 
+        <app-cargue-documentos [flagConsult]="flagConsult"
+        [analisisId]="id" 
         (idDoc)="reciveIdDoc($event)" 
         (fechaVencimientoArlEvent)="reciveFechaArl($event)" 
         (fechaVencimientoSstEvent)="reciveFechaSst($event)" 
@@ -56,35 +59,35 @@
       </p-tabPanel>
       <p-tabPanel header="Subcontratistas" *ngIf="this.aliadoInformacion.autoriza_subcontratacion" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-subcontratistas [aliadoId]="this.aliado.id"></app-subcontratistas>
+        <app-subcontratistas  [onEdit]="this.onEdit"  [flagConsult]="flagConsult" [aliadoId]="this.aliado.id"></app-subcontratistas>
       </p-tabPanel>
       <p-tabPanel header="Actividades Contratadas" *ngIf="this.aliado.tipo_persona!='Natural'" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-actividades-contratadas [flagPress]="flagPress" [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
+        <app-actividades-contratadas [flagConsult]="flagConsult" [flagPress]="flagPress" [selectActividad]="this.aliadoInformacion.actividad_contratada" (data)="onReciveData($event, 'actividades')"></app-actividades-contratadas>
       </p-tabPanel>
       <p-tabPanel header="División/Localidad" *ngIf="this.aliado.tipo_persona!='Natural'" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-localidades [selectDivision]="this.aliadoInformacion.division" [selectLocalidad]="this.aliadoInformacion.localidad" (data)="onReciveData($event, 'division')" (dataLocalidad)="onReciveData($event, 'localidad')"></app-localidades>
+        <app-localidades [flagConsult]="flagConsult" [selectDivision]="this.aliadoInformacion.division" [selectLocalidad]="this.aliadoInformacion.localidad" (data)="onReciveData($event, 'division')" (dataLocalidad)="onReciveData($event, 'localidad')"></app-localidades>
       </p-tabPanel>
       <p-tabPanel header="Gestión del contrato" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-asignacion-colider [dataIn]="this.aliadoInformacion.colider" (coliderData)="onReciveData($event, 'colider')"></app-asignacion-colider>
+        <app-asignacion-colider [flagConsult]="flagConsult" [dataIn]="this.aliadoInformacion.colider" (coliderData)="onReciveData($event, 'colider')"></app-asignacion-colider>
       </p-tabPanel>
       <p-tabPanel header="Control de riesgo" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-control-riesgo [dataIn]="this.aliadoInformacion.control_riesgo" (data)="onReciveData($event, 'control-riesgo')"></app-control-riesgo>
+        <app-control-riesgo [flagConsult]="flagConsult" [dataIn]="this.aliadoInformacion.control_riesgo" (data)="onReciveData($event, 'control-riesgo')"></app-control-riesgo>
       </p-tabPanel>
       <p-tabPanel header="Clasificación" 
       [headerStyle]=" { 'background-color':'#3ba2dc' }">
-        <app-calificacion [selectCalificacion]="this.aliadoInformacion.calificacion" (flagValid2)="flagValidMetodo($event)"(data)="onReciveData($event, 'calificacion')" (valoracionOUT)="impactoIn($event)"></app-calificacion>
+        <app-calificacion [flagConsult]="flagConsult" [selectCalificacion]="this.aliadoInformacion.calificacion" (flagValid2)="flagValidMetodo($event)"(data)="onReciveData($event, 'calificacion')" (valoracionOUT)="impactoIn($event)"></app-calificacion>
       </p-tabPanel>
     </p-tabView>
 </p-panel>
 <ng-container>
-  <button *ngIf="onEdit;else btnGuardarAliado" pButton type="button" [disabled]="!gestorDataIsValid()" icon="fa fa-floppy-o" title="Guardar información del aliado"
+  <button *ngIf="onEdit && !flagConsult;else btnGuardarAliado" pButton type="button" [disabled]="!gestorDataIsValid()" icon="fa fa-floppy-o" title="Guardar información del aliado"
       (click)="actualizarAliado()" class="float-btn"></button>
   <ng-template #btnGuardarAliado>
-    <button pButton type="button" [disabled]="!aliadoDataIsValid()" icon="fa fa-floppy-o" title="Guardar"
+    <button *ngIf="!flagConsult" pButton type="button" [disabled]="!aliadoDataIsValid()" icon="fa fa-floppy-o" title="Guardar"
       (click)="actualizarAliado()" class="float-btn"></button>
   </ng-template>
 </ng-container>

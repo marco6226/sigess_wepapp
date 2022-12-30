@@ -38,6 +38,7 @@ export class InformacionGeneralComponent implements OnInit {
   //   }
   // }
   @Input() onEdit: string = '';
+  @Input() flagConsult: boolean=false;
 
   arlList: Array<object>;
   selectedArl: any;

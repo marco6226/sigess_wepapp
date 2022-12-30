@@ -15,6 +15,7 @@ export class EquipoSstComponent implements OnInit {
   @Output() createMiembroSST = new EventEmitter<EquipoSST>();
   @Output() createResponsableSST = new EventEmitter<ResponsableSST>();
   @Input() isResponsable: boolean = false;
+  @Input() flagConsult: boolean=false;
 
   responsableSST: ResponsableSST={
     nombre: '',

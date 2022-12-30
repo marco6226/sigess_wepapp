@@ -56,6 +56,7 @@ export class CalificacionComponent implements OnInit{
   valoracionToString: string;
 
   @Input() onEdit: string;
+  @Input() flagConsult: boolean=false;
 
   flagValid:boolean=false
 

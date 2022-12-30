@@ -11,6 +11,7 @@ import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 export class EquipoSstListComponent implements OnInit {
  
   @Input() alidadoId: number= -1;
+  @Input() flagConsult: boolean=false;
 
   visibleDlgResponsable: boolean = false;
   visibleDlg: boolean = false;

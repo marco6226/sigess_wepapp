@@ -1,5 +1,5 @@
 <s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="Registre el responsable en el SG-SST.">
-    <button pButton type="button" (click)="crearResponsableMiembros()" icon="fa fa-plus" label="Crear"></button>
+    <button [disabled]="flagConsult" pButton type="button" (click)="crearResponsableMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
 
 <p-panel header="Responsable lider SST" [style.display]="responsableList && responsableList.length > 0 ? 'block':'none'">
@@ -37,8 +37,8 @@
                         {{rowData.licenciaSST}}
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData)" title="Eliminar"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar" [disabled]="flagConsult"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData)" title="Eliminar" [disabled]="flagConsult"></button>
                     </td>
                 </tr>
             </ng-template>
@@ -58,7 +58,7 @@
 <br>
 
 <s-dataNotFound *ngIf="(!equipoList || equipoList.length <= 0) && responsableList.length > 0" icon="fa-handshake-o" message="Si la empresa cuenta con personal asignado a SG-SST, cree los miembros en las diferentes localidades.">
-    <button pButton type="button" (click)="crearMiembros()" icon="fa fa-plus" label="Crear"></button>
+    <button [disabled]="flagConsult" pButton type="button" (click)="crearMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
 
 <br>
@@ -122,13 +122,13 @@
                         {{rowData.licenciaSST}}
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData, 'Editar')" title="Editar"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData, 'Eliminar')" title="Eliminar"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData, 'Editar')" title="Editar" [disabled]="flagConsult"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData, 'Eliminar')" title="Eliminar" [disabled]="flagConsult"></button>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton type="button" icon="fa fa-plus" (click)="crearMiembros()" label="Crear"></button>    
+                <button pButton type="button" icon="fa fa-plus" (click)="crearMiembros()" label="Crear" [disabled]="flagConsult"></button>    
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>

@@ -58,6 +58,7 @@ export class AliadosComponent implements OnInit {
   }
   
   @Input() onEdit: string= null;
+  @Input() flagConsult: boolean=false;
   
   
   @Input('calificacion') calificacion: number;

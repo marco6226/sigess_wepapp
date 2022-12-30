@@ -42,6 +42,7 @@ export class AsignacionColiderComponent implements OnInit {
   reporteSelect: Reporte;
   onEdit: string = null;
   cargo:string;
+  @Input() flagConsult: boolean=false;
 
   productDialog: boolean;
   selectedInterventor: interventorgestor[];

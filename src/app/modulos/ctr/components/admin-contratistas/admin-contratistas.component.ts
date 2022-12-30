@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service'
@@ -21,6 +21,7 @@ export class AdminContratistasComponent implements OnInit {
   dlgVisible: boolean;
   empresa: Empresa;
   styleMap: { [key: string]: string } = {};
+  @Input() flagConsult: boolean=false;
 
   constructor(
     private sesionService: SesionService,
