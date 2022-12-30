@@ -4,7 +4,7 @@
 
 <p-panel header="Responsable lider SST" [style.display]="responsableList && responsableList.length > 0 ? 'block':'none'">
     <p-tabView>
-        <p-table [value]="responsableList" responsiveLayout="scroll" [(selection)]="selectedResponsableList">
+        <p-table [value]="responsableList" responsiveLayout="scroll" [(selection)]="selectedResponsableList" autoLayout="true">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>
@@ -65,7 +65,7 @@
 
 <p-panel header="Personal SST" [style.display]="equipoList && equipoList.length > 0 ? 'block':'none'">
     <p-tabView>
-        <p-table [value]="equipoList" responsiveLayout="scroll" [(selection)]="selectedList" [responsive]="true">
+        <p-table [value]="equipoList" responsiveLayout="scroll" [(selection)]="selectedList" [responsive]="true" autoLayout="true">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>
