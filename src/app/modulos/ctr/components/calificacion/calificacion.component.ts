@@ -36,6 +36,8 @@ export class CalificacionComponent implements OnInit{
       // console.log(dataIn);
       
     }    
+    this.flagValid=(this.riesgo!=null && this.selectedPermanencia!=null && this.impacto!=null && this.selectedTamano!=null && this.selectedClaseRiesgo!=null && this.transversalidad!=null)?true:false
+    this.flagValid2.emit(this.flagValid)
   }
 
   @Output() data = new EventEmitter<String>();
