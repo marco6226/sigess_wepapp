@@ -105,6 +105,7 @@ export interface Subcontratista{
     nit: string
     nombre: string;
     actividades_riesgo: string;
+    tipo_persona: string;
     porcentaje_arl: string;
     estado: string;
     carta_autorizacion: string;

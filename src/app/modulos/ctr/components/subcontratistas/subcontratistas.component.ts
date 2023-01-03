@@ -153,6 +153,7 @@ export class SubcontratistasComponent implements OnInit {
                     nit: item2.nit,
                     nombre: item2.nombre,
                     actividades_riesgo: item2.actividades_riesgo,
+                    tipo_persona: item2.tipo_persona,
                     porcentaje_arl: item2.porcentaje_arl,
                     estado: item2.estado,
                     carta_autorizacion: JSON.stringify(carta),

@@ -36,6 +36,10 @@
                     Tipo de Persona
                     <p-sortIcon field="tipo_persona"></p-sortIcon>
                 </th>
+                <th style="width: 10rem;" pSortableColumn="division">
+                    División de negocio
+                    <p-sortIcon field="division"></p-sortIcon>
+                </th>
                 <th style="width: 2.5rem" pSortableColumn="estado">
                     Estado
                     <p-sortIcon field="estado"></p-sortIcon>
@@ -71,6 +75,14 @@
                             <em class="pi pi-search"></em>
                         </span>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipo_persona', 'contains')">
+                    </div>
+                </th>
+                <th>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'division', 'contains')">
                     </div>
                 </th>
                 <th>
@@ -146,6 +158,9 @@
                 </td>
                 <td>
                     {{rowData.tipo_persona}}
+                </td>
+                <td>
+                    <span class="d-inline-block text-truncate" style="max-width: 10rem;">{{getDivision(rowData.division)}}</span>
                 </td>
                 <td>
                     {{rowData.estado}}

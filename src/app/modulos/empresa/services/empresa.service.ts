@@ -22,6 +22,20 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         });
     }
 
+    obtenerDivisionesDeAliados(empresaId: number){
+        return new Promise(resolve => {
+            this.httpInt.get(this.end_point + "getAliadoDivision/" + empresaId)
+                .map(res => res)
+                .subscribe(
+                    res => {
+                        resolve(res);
+                    }
+                    ,
+                    err => this.manageError(err)
+                )
+        }); 
+    }
+
     vincularContratista(contratista: Empresa) {
         let entity = new Empresa();
         entity.id = contratista.id;

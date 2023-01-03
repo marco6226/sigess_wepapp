@@ -34,6 +34,7 @@ export class FormSubcontratistaComponent implements OnInit {
       this.formSubcontratista.controls['nit'].setValue(subcontratista.nit);
       this.formSubcontratista.controls['nombre'].setValue(subcontratista.nombre);
       this.formSubcontratista.controls['actividades_riesgo'].setValue(JSON.parse(subcontratista.actividades_riesgo));
+      this.formSubcontratista.controls['tipo_persona'].setValue(subcontratista.tipo_persona)
       this.formSubcontratista.controls['porcentaje_certificacion'].setValue(subcontratista.porcentaje_arl);
       this.formSubcontratista.controls['estado'].setValue(JSON.parse(subcontratista.estado));
       this.formSubcontratista.controls['carta_autorizacion'].setValue(subcontratista.carta_autorizacion)
@@ -61,11 +62,12 @@ export class FormSubcontratistaComponent implements OnInit {
     private directorioService: DirectorioService
   ) {
     this.formSubcontratista = this.fb.group({
-      nit:[null, Validators.required],
-      nombre:[null, Validators.required],
-      actividades_riesgo:[null, Validators.required],
-      porcentaje_certificacion:[null, Validators.required],
-      estado:[null, Validators.required],
+      nit:[null],
+      nombre:[null],
+      actividades_riesgo:[null],
+      tipo_persona:[null],
+      porcentaje_certificacion:[0],
+      estado:[null],
       carta_autorizacion:[null]
     });
   }
@@ -81,6 +83,7 @@ export class FormSubcontratistaComponent implements OnInit {
           nit: this.formSubcontratista.value.nit,
           nombre: this.formSubcontratista.value.nombre,
           actividades_riesgo: JSON.stringify(this.formSubcontratista.value.actividades_riesgo),
+          tipo_persona: this.formSubcontratista.value.tipo_persona,
           porcentaje_arl: this.formSubcontratista.value.porcentaje_certificacion,
           estado: JSON.stringify(this.formSubcontratista.value.estado),
           carta_autorizacion: null,
@@ -100,6 +103,7 @@ export class FormSubcontratistaComponent implements OnInit {
           nit: this.formSubcontratista.value.nit,
           nombre: this.formSubcontratista.value.nombre,
           actividades_riesgo: JSON.stringify(this.formSubcontratista.value.actividades_riesgo),
+          tipo_persona: this.formSubcontratista.value.tipo_persona,
           porcentaje_arl: this.formSubcontratista.value.porcentaje_certificacion,
           estado: JSON.stringify(this.formSubcontratista.value.estado),
           carta_autorizacion: this.formSubcontratista.value.carta_autorizacion,
@@ -124,6 +128,17 @@ export class FormSubcontratistaComponent implements OnInit {
     }else{
       this.formSubcontratista.reset();
       this.cancelarFormulario.emit(false);
+    }
+  }
+
+  selectTipoPersona(tipo: string){
+    if(tipo == 'Natural'){
+      this.formSubcontratista.value.porcentaje_certificacion = null;
+    }else if(tipo == 'Jurídica'){
+      this.formSubcontratista.value.porcentaje_certificacion = 0;
+      this.formSubcontratista.controls['tipo_persona'].validator = null;
+      console.log(this.formSubcontratista.controls['tipo_persona'].validator);
+      
     }
   }
 }

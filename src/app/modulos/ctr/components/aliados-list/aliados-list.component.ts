@@ -72,12 +72,14 @@ export class AliadosListComponent implements OnInit {
     this.empresaService.findByFilter(filterQuery).then(
       // this.empresaService.findByFilter().then(
         resp => {
-          console.log(resp);
-          resp['data'].forEach(element => {
-            // if (!element.fechaActualizacion) {
-            //   element.fechaActualizacion="-"
-            // }
-            this.aliadosList.push(element) 
+          // console.log(resp);
+          let aliadosDivision;
+          this.empresaService.obtenerDivisionesDeAliados(Number(idAux)).then(
+            (respDiv: any) => {
+              resp['data'].forEach(element => {
+                element.division = respDiv.filter(el => el.id == element.id)[0].division;
+                this.aliadosList.push(element) 
+              });
           });
           console.log(this.aliadosList);
         }
@@ -199,6 +201,13 @@ export class AliadosListComponent implements OnInit {
           return true;
         }
       }
+    }
+
+    getDivision(data: string){
+      if(data == null) return '';
+      let arreglo = JSON.parse(data);
+      // if(arreglo.join(", ").length <= 30) return arreglo.join(", "); 
+      return arreglo.join(", ");
     }
 
 }

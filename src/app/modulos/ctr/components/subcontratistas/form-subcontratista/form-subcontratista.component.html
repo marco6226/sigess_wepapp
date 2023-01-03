@@ -1,22 +1,27 @@
 <div class="cols" [formGroup]="formSubcontratista">
   <div class="input-field">
-    <input type="text" name="nit" class="form-material" formControlName="nit">
+    <input type="number" required name="nit" class="form-material" formControlName="nit">
     <label for="nit" class="active">Nit/Documento</label>
   </div>
   <div class="input-field">
-    <input type="text" name="nombre" class="form-material" formControlName="nombre">
+    <input type="text" required name="nombre" class="form-material" formControlName="nombre">
     <label for="nombre" class="active">Razón social/Nombre</label>
   </div>
   <div class="input-field">
-    <p-multiSelect appendTo="body" class="form-material" [options]="actividadesRiesgoList" formControlName="actividades_riesgo" defaultLabel="Seleccione las actividades" optionLabel="name"></p-multiSelect>
+    <p-multiSelect appendTo="body" required class="form-material" [options]="actividadesRiesgoList" formControlName="actividades_riesgo" defaultLabel="Seleccione las actividades" optionLabel="name"></p-multiSelect>
     <label for="actividades_riesgo" class="active">Actividades de alto riesgo</label>
   </div>
   <div class="input-field">
-    <input type="number" name="porcentaje_certificacion" class="form-material" formControlName="porcentaje_certificacion">
+    <p-radioButton name="tipo_persona" (click)="selectTipoPersona('Natural')" required value="Natural" label="Natural" formControlName="tipo_persona"></p-radioButton>
+    <p-radioButton name="tipo_persona" (click)="selectTipoPersona('Jurídica')" required value="Jurídica" label="Jurídica" formControlName="tipo_persona"></p-radioButton>
+    <label for="tipo_persona" class="active">Tipo de persona</label>
+  </div>
+  <div *ngIf="formSubcontratista.value.tipo_persona == 'Jurídica'" class="input-field">
+    <input type="number" required name="porcentaje_certificacion" class="form-material" formControlName="porcentaje_certificacion">
     <label for="porcentaje_certificacion" class="active">Porcentaje de certificación de ARL</label>
   </div>
   <div class="input-field">
-    <p-dropdown appendTo="body" [options]="estadosList" formControlName="estado" optionLabel="name" placeholder="Seleccione el estado"></p-dropdown>
+    <p-dropdown appendTo="body" required [options]="estadosList" formControlName="estado" optionLabel="name" placeholder="Seleccione el estado"></p-dropdown>
     <label for="estado" class="active">Estado</label>
   </div>
 </div>

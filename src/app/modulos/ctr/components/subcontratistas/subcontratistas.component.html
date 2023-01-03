@@ -13,6 +13,9 @@
         Actividades de alto riesgo
         <p-sortIcon field="actividadesRiesgo"></p-sortIcon></th>
       <th>
+        Tipo de persona
+        <p-sortIcon field="tipo_persona"></p-sortIcon></th>
+      <th>
         Porcentaje de certificación
         <p-sortIcon field="porcentajeCertArl"></p-sortIcon></th>
       <th>
@@ -28,7 +31,8 @@
       <td> {{rowData.nit}} </td>
       <td> {{rowData.nombre}} </td>
       <td> {{getActividadesAltoRiesgoFromObject(rowData.actividades_riesgo)}} </td>
-      <td> {{rowData.porcentaje_arl}} </td>
+      <td>{{ rowData.tipo_persona || 'No registra'}}</td>
+      <td> {{rowData.porcentaje_arl || 'N/A'}} </td>
       <td> {{getEstadoFromObject(rowData.estado)}} </td>
       <td>
         <div class="row">
