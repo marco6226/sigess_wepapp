@@ -77,7 +77,9 @@ export class AliadosListComponent implements OnInit {
           this.empresaService.obtenerDivisionesDeAliados(Number(idAux)).then(
             (respDiv: any) => {
               resp['data'].forEach(element => {
-                element.division = respDiv.filter(el => el.id == element.id)[0].division;
+                try{
+                  element.division = respDiv.filter(el => el.id == element.id)[0].division;
+                }catch(e){}
                 this.aliadosList.push(element) 
               });
           });
