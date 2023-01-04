@@ -421,10 +421,10 @@
                         Salario u honorarios
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa =='22'">
-                        <input pInputText formControlName="salario" required/>
+                        <input type="number"  pInputText formControlName="salario" required/>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente && idEmpresa !='22'">
-                        <input pInputText formControlName="salario" />
+                        <input  type="number" pInputText formControlName="salario" />
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Jornada trabajo habitual
