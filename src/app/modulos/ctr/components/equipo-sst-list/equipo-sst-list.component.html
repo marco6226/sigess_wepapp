@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <s-dataNotFound *ngIf="!responsableList || responsableList.length <= 0" icon="fa-handshake-o" message="Registre el responsable en el SG-SST.">
     <button [disabled]="flagConsult" pButton type="button" (click)="crearResponsableMiembros()" icon="fa fa-plus" label="Crear"></button>
 </s-dataNotFound>
@@ -37,8 +38,8 @@
                         {{rowData.licenciaSST}}
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar" [disabled]="flagConsult"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData)" title="Eliminar" [disabled]="flagConsult"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData, 'Editar')" title="Editar" [disabled]="flagConsult"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded ui-button-danger" (click)="onEdit(rowData, 'Eliminar')" title="Eliminar" [disabled]="flagConsult"></button>
                     </td>
                 </tr>
             </ng-template>
@@ -140,10 +141,10 @@
     </p-tabView>
 </p-panel>
 
-<p-dialog header="Responsable SST" [(visible)]="visibleDlgResponsable" [style]="{width: '50vw'}">
-  <app-equipo-sst (closeDialog)="closeDialog()" (createResponsableSST)="agregarResponsableSST($event)" [isResponsable]="true"></app-equipo-sst>
+<p-dialog header="Responsable SST" [modal]="true" [closable]="false" [(visible)]="visibleDlgResponsable" [style]="{width: '50vw'}">
+  <app-equipo-sst (closeDialog)="closeDialog()" [miembroToUpdate]="miembroToUpdate" (createResponsableSST)="agregarResponsableSST($event)" [isResponsable]="true"></app-equipo-sst>
 </p-dialog>
 
-<p-dialog header="Miembro SST" [(visible)]="visibleDlg" [style]="{width: '50vw'}">
-    <app-equipo-sst (closeDialog)="closeDialog()" (createMiembroSST)="agregarMiembroSST($event)"></app-equipo-sst>
+<p-dialog header="Miembro SST" [modal]="true" [closable]="false" [(visible)]="visibleDlg" [style]="{width: '50vw'}">
+    <app-equipo-sst (closeDialog)="closeDialog()" [miembroToUpdate]="miembroToUpdate" (createMiembroSST)="agregarMiembroSST($event)"></app-equipo-sst>
 </p-dialog>

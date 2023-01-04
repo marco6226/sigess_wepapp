@@ -89,6 +89,7 @@ export class AliadosComponent implements OnInit {
   autorizaSubcontratacion: string;
   autorizaSubcontratacionflag: boolean;
   isCreate: boolean=true;
+  guardando: boolean = false;
 
   nameAndLastName: string=''
 
@@ -231,12 +232,10 @@ export class AliadosComponent implements OnInit {
       }
     }
     
-
+    this.guardando = true;
     this.empresaService.createEmpresaAliada(createEmpresa).then((ele:Empresa)=>{
-      console.log(ele);      
-      this.messageService.add({severity:'success', summary: 'Creación Alidado', detail: 'Se agrego un Aliado nuevo'});
-      console.log(ele);
-      
+      // console.log(ele);
+      this.messageService.add({severity:'info', summary: 'Guardando aliado', detail: 'Espere un momento'});
       if (this.formJuridica.valid) {
 
         let ue = new UsuarioEmpresa();
@@ -255,6 +254,7 @@ export class AliadosComponent implements OnInit {
   
         user.usuarioEmpresaList.push(ue)
         this.usuarioService.createUsuarioAliado(user,ele.id).then((res: Usuario)=>{
+
           let docs: string[] = []; 
           this.directorios.forEach(el => {
             docs.push(el.id);
@@ -286,12 +286,14 @@ export class AliadosComponent implements OnInit {
           }
 
           this.empresaService.saveAliadoInformacion(aliadoInformacion)
-            .then((e: AliadoInformacion) => console.log('aliado creado: ' + e.id));
+            .then((e: AliadoInformacion) => {
+              console.log('aliado creado: ' + e.id);
+              this.guardando = false;
+              this.router.navigate(['/app/ctr/listadoAliados']);
+            });
+          this.messageService.add({severity:'success', summary: 'Creación Alidado', detail: 'Se agrego un Aliado nuevo', life: 5000});
         });
       }
-      setTimeout(() => {
-        this.router.navigate(['/app/ctr/listadoAliados']);
-      }, 500);
     }).catch(error=>{
       this.messageService.add({severity:'error', summary: 'Error', detail: 'No se pudo crear el Aliado, intente de nuevo'});
     })

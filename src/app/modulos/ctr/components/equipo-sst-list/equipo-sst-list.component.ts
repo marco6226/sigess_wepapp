@@ -2,6 +2,7 @@ import { SST } from './../../entities/aliados';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { EquipoSST, ResponsableSST } from '../../entities/aliados';
+import { ConfirmationService, MessageService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-equipo-sst-list',
@@ -20,6 +21,7 @@ export class EquipoSstListComponent implements OnInit {
 
   responsableList: ResponsableSST[]=[]
 
+  miembroToUpdate: any = null;
 
   selectedResponsableList: ResponsableSST={
     nombre: '',
@@ -41,7 +43,9 @@ export class EquipoSstListComponent implements OnInit {
 
 
   constructor(
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private confirmationService: ConfirmationService,
+    private messageservice: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -49,10 +53,12 @@ export class EquipoSstListComponent implements OnInit {
   }
 
   crearMiembros(){
+    this.miembroToUpdate = null;
     this.visibleDlg = true
   }
 
   crearResponsableMiembros(){
+    this.miembroToUpdate = null;
     this.visibleDlgResponsable = true
   }
 
@@ -104,8 +110,65 @@ export class EquipoSstListComponent implements OnInit {
   }
 
 
-  onEdit(event: EquipoSST, action?: string){
-    console.log(event, action);
+  onEdit(event: any, action?: string){
+    // console.log(event, action);
+    if(action && action == 'Eliminar'){
+      this.confirmationService.confirm({
+        message: 'Seguro que desea eliminar a este miembro? La acción no se puede deshacer.',
+        accept: () => {
+          this.empresaService.deleteMiembroSST(event.id)
+          .then(res => {
+            // console.log("Eliminado:", res);
+            if(res){
+              this.responsableList = this.responsableList.filter(el => el.id != event.id);
+              this.equipoList = this.equipoList.filter(el => el.id != event.id);
+              this.messageservice.add({severity:'success', summary:'Eliminado', detail:'Se eliminó el miembro exitosamente'});
+            }else{
+              this.messageservice.add({severity:'error', summary:'Error', detail:'Ocurrió un error al intentar eliminar'});
+            }
+          });            
+        },
+        reject: () => {},
+        icon: "pi pi-exclamation-triangle"
+      });
+    }else if(action && action == 'Editar'){
+      console.log(event);
+      if(event.responsable){
+        let data: SST = {
+          id: event.id,
+          id_empresa: event.id_empresa,
+          responsable: null,
+          nombre: event.nombre,
+          correo: event.correo,
+          telefono: event.telefono,
+          licenciasst: event.licenciaSST,
+          documento: null,
+          division: null,
+          localidad: null,
+          cargo: null,
+          encargado: true
+        }
+        this.miembroToUpdate = data;
+        this.visibleDlgResponsable = true;
+      }else{
+        let data: SST = {
+          id: event.id,
+          id_empresa: event.id_empresa,
+          responsable: null,
+          nombre: event.nombre,
+          correo: event.correo,
+          telefono: event.telefono,
+          licenciasst: event.licenciaSST,
+          documento: event.documento,
+          division: JSON.stringify(event.division),
+          localidad: event.localidad,
+          cargo: event.cargo,
+          encargado: false
+        }
+        this.miembroToUpdate = data;
+        this.visibleDlg = true;
+      }
+    }
   }
 
   onLoad(){
@@ -116,15 +179,18 @@ export class EquipoSstListComponent implements OnInit {
       element.forEach(elem => {
         if(elem.encargado){
           let data: ResponsableSST={
+            id: elem.id,
             nombre: elem.nombre,
             correo: elem.correo,
             telefono: elem.telefono,
-            licenciaSST: elem.licenciasst
+            licenciaSST: elem.licenciasst,
+            encargado: elem.encargado
           }
           this.responsableList.push(data);    
         }
         else{
           let data: EquipoSST={
+            id: elem.id,
             nombre: elem.nombre,
             documento: elem.documento,
             correo: elem.correo,

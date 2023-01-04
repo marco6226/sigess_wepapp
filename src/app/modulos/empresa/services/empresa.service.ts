@@ -136,6 +136,18 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         })
     }
 
+    deleteMiembroSST(miembroId: number){
+        return new Promise(resolve =>{
+            this.httpInt.delete(endPoints.EmpresaService + "deleteMiembroSst/" + miembroId)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                },
+                err => this.manageError(err)
+            );
+        });
+    }
 
     saveAliadoInformacion(aliadoInformacion: AliadoInformacion){
      

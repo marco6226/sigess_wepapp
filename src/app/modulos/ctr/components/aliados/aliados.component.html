@@ -1,4 +1,4 @@
-<p-toast key="aliados"></p-toast>
+<p-toast></p-toast>
 
 <p-panel header="Creación de Aliado">
     <div class="ui-g" style="width:250px;margin-bottom:10px">
@@ -133,7 +133,7 @@
         </div>
     </div>
 </p-panel>
-<ng-container *ngIf="(formNatural.valid || formJuridica.valid) && isCreate && autorizaSubcontratacion">
+<ng-container *ngIf="(formNatural.valid || formJuridica.valid) && isCreate && autorizaSubcontratacion && !guardando">
     <button *sTienePermiso="'EMP_POST_USU_ALIADO'" pButton type="button" icon="fa fa-floppy-o" title="Guardar Aliado"
         (click)="saveAliado()" class="float-btn"></button>
 </ng-container>

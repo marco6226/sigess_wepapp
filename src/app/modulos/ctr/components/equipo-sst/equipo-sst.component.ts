@@ -1,5 +1,5 @@
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
-import { Localidades, _divisionList } from './../../entities/aliados';
+import { Localidades, SST, _divisionList } from './../../entities/aliados';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { EquipoSST, ResponsableSST } from '../../entities/aliados';
@@ -16,6 +16,7 @@ export class EquipoSstComponent implements OnInit {
   @Output() createResponsableSST = new EventEmitter<ResponsableSST>();
   @Input() isResponsable: boolean = false;
   @Input() flagConsult: boolean=false;
+  @Input() miembroToUpdate: SST = null;
 
   responsableSST: ResponsableSST={
     nombre: '',

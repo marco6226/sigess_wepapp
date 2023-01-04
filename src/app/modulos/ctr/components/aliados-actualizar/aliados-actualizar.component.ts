@@ -224,26 +224,21 @@ export class AliadosActualizarComponent implements OnInit {
     dataList.push(Number.parseInt(event))
     console.log(dataList);
     this.aliadoInformacion.documentos = JSON.stringify(dataList)
-    console.log(this.aliadoInformacion.documentos);    
-    this.saveInformacionAliado();
-    
+    console.log(this.aliadoInformacion.documentos);
   }
 
   reciveFechaArl(event: Date){
     // console.log(event);
     this.aliadoInformacion.fecha_vencimiento_arl = event;
-    this.saveInformacionAliado();
   }
 
   reciveFechaSst(event: Date){
     // console.log(event);
     this.aliadoInformacion.fecha_vencimiento_sst = event;
-    this.saveInformacionAliado();
   }
 
   reciveFechaCertExterna(event: Date){
     this.aliadoInformacion.fecha_vencimiento_cert_ext = event;
-    this.saveInformacionAliado();
   }
 
   getFecha(docType: string){
@@ -263,7 +258,6 @@ export class AliadosActualizarComponent implements OnInit {
 
   async onRecivePuntajeArl(data: number){
     this.aliadoInformacion.puntaje_arl = data;
-    await this.saveInformacionAliado();
   }
 
   onReciveCalificacionAliadoData(data: any, selector: string){

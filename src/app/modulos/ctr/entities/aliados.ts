@@ -9,6 +9,7 @@ export interface Aliados {
 }
 
 export interface EquipoSST{
+    id?: number;
     nombre: string;
     documento: string;
     correo: string;
@@ -20,10 +21,12 @@ export interface EquipoSST{
 }
 
 export interface ResponsableSST{
+    id?: number;
     nombre: string;
     correo: string;
     telefono: string;
     licenciaSST: string;
+    encargado?: boolean;
 }
 
 export interface SST{
