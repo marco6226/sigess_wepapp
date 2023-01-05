@@ -121,6 +121,19 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
         })
     }
 
+    updateEquipoSST(sst: SST){
+        let body = JSON.stringify(sst);
+
+        return new Promise(resolve => {
+            this.httpInt.put(endPoints.EmpresaService + "updateEquipoSST", sst)
+            .map(res => res)
+            .subscribe(
+                res => resolve(res),
+                err => this.manageError(err)
+            );
+        });
+    }
+
     getEquipoSST(aliadoId: number){
        
         return new Promise(resolve =>{

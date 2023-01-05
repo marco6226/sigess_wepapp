@@ -11,12 +11,45 @@ import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 })
 export class EquipoSstComponent implements OnInit {
 
+  miembroToUpdate: SST = null;
+  isEdtMiembro: string = null;
   @Output() closeDialog = new EventEmitter();
   @Output() createMiembroSST = new EventEmitter<EquipoSST>();
   @Output() createResponsableSST = new EventEmitter<ResponsableSST>();
+  @Output() actualizarMiembro = new EventEmitter<SST>();
   @Input() isResponsable: boolean = false;
   @Input() flagConsult: boolean=false;
-  @Input() miembroToUpdate: SST = null;
+  @Input('miembroToUpdate')
+  set receiveMiembroToUpdate(sst: SST){
+    if(sst != null){
+      if(sst.encargado){
+        this.formResponsable.controls['nombre'].setValue(sst.nombre);
+        this.formResponsable.controls['correo'].setValue(sst.correo);
+        this.formResponsable.controls['telefono'].setValue(sst.telefono);
+        this.formResponsable.controls['licenciaSST'].setValue(sst.licenciasst);
+        this.isEdtMiembro = 'encargado';
+      }else{
+        // console.log(sst);
+        this.formEquipo.controls['nombre'].setValue(sst.nombre);
+        this.formEquipo.controls['documento'].setValue(sst.documento);
+        this.formEquipo.controls['correo'].setValue(sst.correo);
+        this.formEquipo.controls['telefono'].setValue(sst.telefono);
+        this.formEquipo.controls['division'].setValue(JSON.parse(sst.division));
+        this.formEquipo.controls['localidad'].setValue(JSON.parse(sst.localidad));
+        this.formEquipo.controls['cargo'].setValue(sst.cargo);
+        this.formEquipo.controls['licenciaSST'].setValue(sst.licenciasst);
+        this.isEdtMiembro = 'equipo';
+      }
+      this.miembroToUpdate = sst;
+      // console.log(this.miembroToUpdate);
+      
+    }else{
+      this.formResponsable.reset();
+      this.formEquipo.reset();
+      this.isEdtMiembro = null;
+      this.miembroToUpdate = null;
+    }
+  }
 
   responsableSST: ResponsableSST={
     nombre: '',
@@ -85,7 +118,7 @@ export class EquipoSstComponent implements OnInit {
   }
 
   agregar(){
-    console.log(this.formResponsable.value)
+    // console.log(this.formResponsable.value)
 
     if (this.isResponsable) {
       this.responsableSST = {
@@ -95,7 +128,7 @@ export class EquipoSstComponent implements OnInit {
         licenciaSST: this.formResponsable.value.licenciaSST
       }
   
-      console.log(this.responsableSST);
+      // console.log(this.responsableSST);
       
       this.createResponsableSST.emit(this.responsableSST)  
     } else {
@@ -114,6 +147,33 @@ export class EquipoSstComponent implements OnInit {
       this.createMiembroSST.emit(this.equipoSST)     
     }
     
+    this.CloseDialog();
+  }
+
+  actualizar(){
+    
+    if(this.isEdtMiembro == 'encargado'){
+      this.miembroToUpdate.nombre = this.formResponsable.value.nombre;
+      this.miembroToUpdate.correo = this.formResponsable.value.correo;
+      this.miembroToUpdate.telefono = this.formResponsable.value.telefono;
+      this.miembroToUpdate.licenciasst = this.formResponsable.value.licenciaSST;
+      // console.log(this.miembroToUpdate);
+      
+      this.actualizarMiembro.emit(this.miembroToUpdate);
+    }else if(this.isEdtMiembro == 'equipo'){
+      this.miembroToUpdate.nombre = this.formEquipo.value.nombre;
+      this.miembroToUpdate.documento = this.formEquipo.value.documento;
+      this.miembroToUpdate.correo = this.formEquipo.value.correo;
+      this.miembroToUpdate.telefono = this.formEquipo.value.telefono;
+      this.miembroToUpdate.division = JSON.stringify(this.formEquipo.value.division);
+      this.miembroToUpdate.localidad = JSON.stringify(JSON.stringify(this.selectedLocalidad));
+      this.miembroToUpdate.cargo = this.formEquipo.value.cargo;
+      this.miembroToUpdate.licenciasst = this.formEquipo.value.licenciaSST;
+      // console.log(JSON.stringify(this.selectedLocalidad));
+      
+      this.actualizarMiembro.emit(this.miembroToUpdate);
+    }
+
     this.CloseDialog();
   }
 
