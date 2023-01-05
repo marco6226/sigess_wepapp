@@ -19,13 +19,14 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     nombreAUC: string;
     nombreSEC: string;
     nombreCOP: string;
-
+    version;
     constructor(
         private sesionService: SesionService,
         private navService: ParametroNavegacionService,
     ) { }
 
     async ngOnInit() {
+        this.version = this.sesionService.getAppVersion();
     }
 
     getEmpresaID(){
