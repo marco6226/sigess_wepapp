@@ -172,12 +172,12 @@ export class AliadosComponent implements OnInit {
 
   async saveAliado(){
     this.formJuridica.value.tipo_persona = this.formNatural.value.tipo_persona = this.seleccion
-    console.log(this.formNatural.value);
+    // console.log(this.formNatural.value);
 
-    console.log(this.formJuridica.value);
+    // console.log(this.formJuridica.value);
 
     let createEmpresa: Empresa;
-    
+    this.messageService.add({severity:'info', summary: 'Guardando aliado', detail: 'Espere un momento', life:3000});
 
     if (this.formNatural.valid) {
 
@@ -235,9 +235,10 @@ export class AliadosComponent implements OnInit {
     this.guardando = true;
     this.empresaService.createEmpresaAliada(createEmpresa).then((ele:Empresa)=>{
       // console.log(ele);
-      this.messageService.add({severity:'info', summary: 'Guardando aliado', detail: 'Espere un momento'});
+      this.messageService.add({severity:'success', summary: 'Creación Aliado', detail: 'Se agrego un Aliado nuevo, será redirigido a la lista de aliados.', life:6000});
       if (this.formJuridica.valid) {
-
+        console.log('creando empresa');
+        
         let ue = new UsuarioEmpresa();
       
         ue.perfil = new Perfil();
@@ -254,7 +255,6 @@ export class AliadosComponent implements OnInit {
   
         user.usuarioEmpresaList.push(ue)
         this.usuarioService.createUsuarioAliado(user,ele.id).then((res: Usuario)=>{
-
           let docs: string[] = []; 
           this.directorios.forEach(el => {
             docs.push(el.id);
@@ -287,11 +287,10 @@ export class AliadosComponent implements OnInit {
 
           this.empresaService.saveAliadoInformacion(aliadoInformacion)
             .then((e: AliadoInformacion) => {
-              console.log('aliado creado: ' + e.id);
+              // console.log('aliado creado: ' + e.id);
               this.guardando = false;
               this.router.navigate(['/app/ctr/listadoAliados']);
             });
-          this.messageService.add({severity:'success', summary: 'Creación Alidado', detail: 'Se agrego un Aliado nuevo', life: 5000});
         });
       }
     }).catch(error=>{
