@@ -171,7 +171,15 @@ export class AliadosListComponent implements OnInit {
     async datosExcel(): Promise<void>{
       this.excel=[]
       this.aliadosList.forEach((resp)=>{
-        this.excel.push({Nombre_o_razón_social:resp['nombreComercial'],Tipo_de_Persona:resp['tipoPersona'],Estado:resp['estado'],Impacto:resp['calificacion'],Fecha_Creación:new Date(resp['fechaCreacion']),Fecha_Modificación:(resp['fechaActualizacion']!=null)?new Date(resp['fechaActualizacion']):''})
+        let fecha_creacion = new Date(resp['fechaCreacion']);
+        fecha_creacion.setMinutes(fecha_creacion.getMinutes()+fecha_creacion.getTimezoneOffset());
+        let fecha_actualizacion = (resp['fechaActualizacion']!=null)?new Date(resp['fechaActualizacion']):null;
+          try {
+            fecha_actualizacion.setMinutes(fecha_actualizacion.getMinutes()+fecha_actualizacion.getTimezoneOffset());
+          } catch (error) {
+            fecha_actualizacion = null;
+          }
+        this.excel.push({Nombre_o_razón_social:resp['nombreComercial'],Tipo_de_Persona:resp['tipoPersona'],Division:this.getDivision(resp['division']),Estado:resp['estado'],Impacto:resp['calificacion'],Fecha_Creación:fecha_creacion,Fecha_Modificación:fecha_actualizacion})
       })
     }
 
