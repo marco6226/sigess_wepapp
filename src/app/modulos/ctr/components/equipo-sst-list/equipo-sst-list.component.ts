@@ -54,18 +54,18 @@ export class EquipoSstListComponent implements OnInit {
 
   crearMiembros(){
     this.miembroToUpdate = null;
-    this.visibleDlg = true
+    this.visibleDlg = true;
   }
 
   crearResponsableMiembros(){
     this.miembroToUpdate = null;
-    this.visibleDlgResponsable = true
+    this.visibleDlgResponsable = true;
   }
 
   closeDialog(){
-    this.visibleDlg = false
-    this.visibleDlgResponsable = false
-
+    this.visibleDlg = false;
+    this.visibleDlgResponsable = false;
+    this.miembroToUpdate = null;
   }
 
   agregarResponsableSST(event: ResponsableSST){
@@ -132,8 +132,8 @@ export class EquipoSstListComponent implements OnInit {
         icon: "pi pi-exclamation-triangle"
       });
     }else if(action && action == 'Editar'){
-      console.log(event);
-      if(event.responsable){
+      // console.log(event);
+      if(event.encargado){
         let data: SST = {
           id: event.id,
           id_empresa: event.id_empresa,
@@ -148,6 +148,7 @@ export class EquipoSstListComponent implements OnInit {
           cargo: null,
           encargado: true
         }
+        // console.log(data);
         this.miembroToUpdate = data;
         this.visibleDlgResponsable = true;
       }else{
@@ -165,6 +166,7 @@ export class EquipoSstListComponent implements OnInit {
           cargo: event.cargo,
           encargado: false
         }
+        // console.log(data);
         this.miembroToUpdate = data;
         this.visibleDlg = true;
       }
@@ -175,11 +177,12 @@ export class EquipoSstListComponent implements OnInit {
     this.responsableList = [];
     this.equipoList = [];
     this.empresaService.getEquipoSST(this.alidadoId).then((element: SST[]) =>{
-      console.log(element);
+      // console.log(element);
       element.forEach(elem => {
         if(elem.encargado){
           let data: ResponsableSST={
             id: elem.id,
+            id_empresa: elem.id_empresa,
             nombre: elem.nombre,
             correo: elem.correo,
             telefono: elem.telefono,
@@ -191,6 +194,7 @@ export class EquipoSstListComponent implements OnInit {
         else{
           let data: EquipoSST={
             id: elem.id,
+            id_empresa: elem.id_empresa,
             nombre: elem.nombre,
             documento: elem.documento,
             correo: elem.correo,
@@ -217,6 +221,18 @@ export class EquipoSstListComponent implements OnInit {
   async onCreateEquipo(dataSST: SST){
     await this.empresaService.createEquipoSST(dataSST)
     this.onLoad()
+  }
+
+  actualizarMiembro(sst: SST){
+    console.log(sst);
+
+    this.empresaService.updateEquipoSST(sst)
+    .then((res: SST) => {
+      this.messageservice.add({severity:'success', summary:'Miembro actualizado', detail:'Se actualizó el miembro: ' + res.nombre});
+      this.onLoad();
+    }).catch((err)=>{
+      this.messageservice.add({severity:'error', summary:'Error', detail:'Ocurrió un error inesperado al actualizar datos'});
+    });
   }
 
 }

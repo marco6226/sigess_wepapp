@@ -142,9 +142,9 @@
 </p-panel>
 
 <p-dialog header="Responsable SST" [modal]="true" [closable]="false" [(visible)]="visibleDlgResponsable" [style]="{width: '50vw'}">
-  <app-equipo-sst (closeDialog)="closeDialog()" [miembroToUpdate]="miembroToUpdate" (createResponsableSST)="agregarResponsableSST($event)" [isResponsable]="true"></app-equipo-sst>
+  <app-equipo-sst (actualizarMiembro)="actualizarMiembro($event)" (closeDialog)="closeDialog()" [miembroToUpdate]="miembroToUpdate" (createResponsableSST)="agregarResponsableSST($event)" [isResponsable]="true"></app-equipo-sst>
 </p-dialog>
 
 <p-dialog header="Miembro SST" [modal]="true" [closable]="false" [(visible)]="visibleDlg" [style]="{width: '50vw'}">
-    <app-equipo-sst (closeDialog)="closeDialog()" [miembroToUpdate]="miembroToUpdate" (createMiembroSST)="agregarMiembroSST($event)"></app-equipo-sst>
+    <app-equipo-sst (actualizarMiembro)="actualizarMiembro($event)" (closeDialog)="closeDialog()" [miembroToUpdate]="miembroToUpdate" (createMiembroSST)="agregarMiembroSST($event)"></app-equipo-sst>
 </p-dialog>

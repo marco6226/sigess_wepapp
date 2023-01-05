@@ -76,8 +76,10 @@
     <!-- <button pButton type="button" icon="fa fa-plus" label="Cancelar"></button>     -->
     <button pButton icon="pi pi-times" class="p-button-rounded ui-button-danger p-mr-2" (click)="CloseDialog()" label="Cancelar"></button>
 
-    <button pButton icon="fa fa-plus" class="rigth-button p-button-rounded p-mr-2" [disabled]="formResponsable.invalid" (click)="agregar()" *ngIf="isResponsable" label="Agregar"></button>    
-    <button pButton icon="fa fa-plus" class="rigth-button p-button-rounded p-mr-2" [disabled]="formEquipo.invalid" (click)="agregar()" *ngIf="!isResponsable" label="Agregar"></button>    
+    <button pButton icon="fa fa-plus" class="rigth-button p-button-rounded p-mr-2" [disabled]="formResponsable.invalid" (click)="agregar()" *ngIf="isResponsable && !isEdtMiembro" label="Agregar"></button>    
+    <button pButton icon="fa fa-plus" class="rigth-button p-button-rounded p-mr-2" [disabled]="formEquipo.invalid" (click)="agregar()" *ngIf="!isResponsable && !isEdtMiembro" label="Agregar"></button> 
+    <button pButton icon="fa fa-pencil" class="rigth-button p-button-rounded p-mr-2" [disabled]="formResponsable.invalid" (click)="actualizar()" *ngIf="isEdtMiembro == 'encargado'" title="Guardar encargado" label="Guardar"></button>
+    <button pButton icon="fa fa-pencil" class="rigth-button p-button-rounded p-mr-2" [disabled]="formEquipo.invalid" (click)="actualizar()" *ngIf="isEdtMiembro == 'equipo'" title="Guardar miembro SST" label="Guardar"></button>   
 </div>
 
 <!-- <button (click)="test()">test</button> -->
