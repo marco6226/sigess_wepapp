@@ -19,9 +19,7 @@
         [pageLinks]="3">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="width: 2.5rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
+                
                 <!-- <th pSortableColumn="name">
                     <div class="flex justify-content-between align-items-center">
                         Name
@@ -59,8 +57,7 @@
                 <th></th>
             </tr>
             <tr class="filters">
-                <th>
-                </th>
+                
                 <th>
                     <div class="ui-inputgroup">
                         <span class="ui-inputgroup-addon">
@@ -150,9 +147,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
             <tr>
-                <td>
-                    <p-tableCheckbox [value]="rowData" (ngModelChange)="onRowSelect($event)"></p-tableCheckbox>
-                </td>
+                
                 <td>
                     {{rowData.razonSocial}}
                 </td>
