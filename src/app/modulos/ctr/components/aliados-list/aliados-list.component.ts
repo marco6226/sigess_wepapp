@@ -179,7 +179,7 @@ export class AliadosListComponent implements OnInit {
           } catch (error) {
             fecha_actualizacion = null;
           }
-        this.excel.push({Nombre_o_razón_social:resp['nombreComercial'],Tipo_de_Persona:resp['tipoPersona'],Division:this.getDivision(resp['division']),Estado:resp['estado'],Impacto:resp['calificacion'],Fecha_Creación:fecha_creacion,Fecha_Modificación:fecha_actualizacion})
+        this.excel.push({Nombre_o_razón_social:resp['razonSocial'],Tipo_de_Persona:resp['tipoPersona'],Division:this.getDivision(resp['division']),Estado:resp['estado'],Impacto:resp['calificacion'],Fecha_Creación:fecha_creacion,Fecha_Modificación:fecha_actualizacion})
       })
     }
 
