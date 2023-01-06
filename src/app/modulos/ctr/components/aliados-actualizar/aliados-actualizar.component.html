@@ -84,10 +84,10 @@
     </p-tabView>
 </p-panel>
 <ng-container>
-  <button *ngIf="onEdit && !flagConsult;else btnGuardarAliado" pButton type="button" [disabled]="!gestorDataIsValid()" icon="fa fa-floppy-o" title="Guardar información del aliado"
+  <button *ngIf="onEdit && !flagConsult;else btnGuardarAliado" pButton type="button" icon="fa fa-floppy-o" title="Guardar información del aliado"
       (click)="actualizarAliado()" class="float-btn"></button>
   <ng-template #btnGuardarAliado>
-    <button *ngIf="!flagConsult" pButton type="button" [disabled]="!aliadoDataIsValid()" icon="fa fa-floppy-o" title="Guardar"
+    <button *ngIf="!flagConsult" pButton type="button" icon="fa fa-floppy-o" title="Guardar"
       (click)="actualizarAliado()" class="float-btn"></button>
   </ng-template>
 </ng-container>

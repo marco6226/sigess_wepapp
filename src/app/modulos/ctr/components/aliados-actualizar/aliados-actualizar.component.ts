@@ -140,7 +140,7 @@ export class AliadosActualizarComponent implements OnInit {
 
   async saveInformacionAliado(){
     await this.empresaService.saveAliadoInformacion(this.aliadoInformacion).then((ele)=>{      
-      console.log(ele);
+      console.log('saveInformacionAliado');
     });
   }
 
@@ -281,15 +281,7 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   async actualizarAliado(){
-    
-    if(this.onEdit && !this.gestorDataIsValid()){
-      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'La información del aliado no está completa'});
-      return
-    }
-    
-    if(this.onEdit == '' && !this.aliadoDataIsValid()){
-      return
-    }
+    this.mensajesDeValidacion();
 
     this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
     console.log(this.aliadoInformacion.calificacion)
@@ -302,29 +294,33 @@ export class AliadosActualizarComponent implements OnInit {
       this.aliado.division = JSON.stringify(this.aliado.division)
     }
     await this.empresaService.update(this.aliado).then( () => {
-      this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
-      if(!this.onEdit) this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+      // this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
+      if(typeof this.onEdit == 'undefined' && this.aliadoDataIsValid()){
+        this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
+        this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
+      }
+      if(this.onEdit == 'edit' && this.gestorDataIsValid){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
+      }
     });
-    this.flagPress=true
-    // setTimeout(() => {
-    //   this.messageService.clear();
-    // }, 20000);
-    // this.router.navigate(['/app/ctr/listadoAliados']);
+    this.flagPress=true;
   }
 
   impactoIn(event){
     this.impactoV=event
   }
+
   flagValidMetodo(e){
     this.flagValid=e;
   }
+
   gestorDataIsValid(): boolean{
     return (
-        (this.aliadoInformacion.actividad_contratada != null && this.aliadoInformacion.actividad_contratada != '')
-        && (this.aliadoInformacion.division != null && this.aliadoInformacion.division != '') 
-        && (this.aliadoInformacion.localidad != null && this.aliadoInformacion.localidad != '')
+        (this.aliadoInformacion.actividad_contratada != null && this.aliadoInformacion.actividad_contratada != '' && this.actividadContratadaIsValid(this.aliadoInformacion.actividad_contratada))
+        && (this.aliadoInformacion.division != null && this.aliadoInformacion.division != '' && JSON.parse(this.aliadoInformacion.division).length > 0) 
+        && (this.aliadoInformacion.localidad != null && this.aliadoInformacion.localidad != '' && JSON.parse(this.aliadoInformacion.localidad).length > 0)
         && (this.aliadoInformacion.colider != null && this.aliadoInformacion.colider != '')
-        && (this.aliadoInformacion.control_riesgo != null && this.aliadoInformacion.control_riesgo != '')
+        && (this.aliadoInformacion.control_riesgo != null && this.aliadoInformacion.control_riesgo != '' && JSON.parse(this.aliadoInformacion.control_riesgo).length > 0)
         && (
             this.flagValid
             // this.aliadoInformacion.calificacion != null 
@@ -343,17 +339,111 @@ export class AliadosActualizarComponent implements OnInit {
       && (this.aliadoInformacion.email_comercial != null)
       && (this.aliadoInformacion.telefono_contacto != null)
       && (this.aliadoInformacion.arl != null)
-      && (this.aliadoInformacion.documentos != null)
+      && (this.aliadoInformacion.documentos != null && this.validarDocumentos() == 2)
       && (this.aliadoInformacion.fecha_vencimiento_arl != null)
       && (this.aliadoInformacion.fecha_vencimiento_sst != null)
       && (this.aliadoInformacion.puntaje_arl != null)
     );
   }
 
+  mensajesDeValidacion(){
+    if(this.onEdit == 'edit' && !this.gestorDataIsValid()){
+      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'La información del aliado no está completa'});
+      if(this.aliadoInformacion.actividad_contratada == null || this.aliadoInformacion.actividad_contratada == '' || !this.actividadContratadaIsValid(this.aliadoInformacion.actividad_contratada)){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha seleccionado las actividades contratadas.', life:6000});
+      }
+      if(this.aliadoInformacion.division == null || this.aliadoInformacion.division == '' || JSON.parse(this.aliadoInformacion.division).length == 0){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha seleccionado la división de negocio.', life:6000});
+      }
+      if(this.aliadoInformacion.localidad == null || this.aliadoInformacion.localidad == '' || JSON.parse(this.aliadoInformacion.localidad).length == 0){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha seleccionado la localidad o las localidades.', life:6000});
+      }
+      if(this.aliadoInformacion.colider == null || this.aliadoInformacion.colider == ''){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha seleccionado el gestor del contrato.', life:6000});
+      }
+      if(this.aliadoInformacion.control_riesgo == null || this.aliadoInformacion.control_riesgo == '' || JSON.parse(this.aliadoInformacion.control_riesgo).length == 0){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha seleccionado las actividades habilitadas.', life:6000});
+      }
+      if(!this.flagValid){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha completado la clasificación.', life:6000});
+      }
+      if(this.auxAutorizaSubcontratacion == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe indicar si autoriza la subcontratación en la pestaña de Información.', life:6000});
+      }
+    }
+    
+    if(typeof this.onEdit == 'undefined' && !this.aliadoDataIsValid()){
+      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'La información no está completa'});
+      if(this.aliadoInformacion.representante_legal == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar nombre del representante legal.', life:6000});
+      }
+      if(this.aliadoInformacion.numero_trabajadores == null || this.aliadoInformacion.numero_trabajadores == 0){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar el número de trabajadores totales del aliado.', life:6000});
+      }
+      if(this.aliadoInformacion.numero_trabajadores_asignados == null || this.aliadoInformacion.numero_trabajadores_asignados == 0){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar el número de trabajadores del aliado en CORONA.', life:6000});
+      }
+      if(this.aliadoInformacion.email_comercial == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar el email de comunicaciones.', life:6000});
+      }
+      if(this.aliadoInformacion.telefono_contacto == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar el teléfono de contacto.', life:6000});
+      }
+      if(this.aliadoInformacion.arl == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe Seleccionar la ARL del aliado.', life:6000});
+      }
+      let VALIDACION_DOCUMENTOS_RESULT = this.validarDocumentos();
+      if(this.aliadoInformacion.documentos == null || VALIDACION_DOCUMENTOS_RESULT != 2){
+        if(VALIDACION_DOCUMENTOS_RESULT == 0){
+          this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha guardado el soporte de la licencia SST.', life:6000});
+        }else if(VALIDACION_DOCUMENTOS_RESULT == 1){
+          this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha guardado el soporte la certificación de ARL.', life:6000});
+        }else if(VALIDACION_DOCUMENTOS_RESULT == -1){
+          this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe guardar los soportes de los documentos de ARL y SST.', life:6000});
+        }
+      }
+      if(this.aliadoInformacion.fecha_vencimiento_arl == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar la fecha de vencimiento del certificado de ARL', life:6000});
+      }
+      if(this.aliadoInformacion.fecha_vencimiento_sst == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar la fecha de vencimiento de la licencia SST.', life:6000});
+      }
+      if(this.aliadoInformacion.puntaje_arl == null){
+        this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar el puntaje de su certificado de ARL.', life:6000});
+      }
+    }
+  }
+
+  actividadContratadaIsValid(data: string): boolean{
+    let actividadList = JSON.parse(data);
+    if(actividadList.length == 2 && actividadList[1].length == 0){
+      return false;
+    }
+    return true;
+  }
+
+  validarDocumentos(): number{
+    let contArl = 0, contSst = 0;
+    this.documentos.forEach((doc: Directorio) => {
+      if(doc.documento.proceso=='arl') contArl++;
+      if(doc.documento.proceso=='licencia') contSst++;
+    });
+    /*
+    Retornará
+    -1 si no hay documentos para arl y sst
+    0 si hay documentos para arl pero no para sst
+    1 si no hay documento para arl pero si para sst
+    2 si hay documentos para arl y sst
+    */
+    if(contArl == 0 && contSst == 0) return -1;
+    if(contArl > 0 && contSst == 0) return 0;
+    if(contArl == 0 && contSst > 0) return 1;
+    return 2;
+  }
+
   async deleteDocumento(documentos: string){
     this.aliadoInformacion.documentos = documentos;
-    // console.log(this.aliadoInformacion.documentos);
-    
     await this.saveInformacionAliado();
+    this.loadDocumentos();
   }
 }
