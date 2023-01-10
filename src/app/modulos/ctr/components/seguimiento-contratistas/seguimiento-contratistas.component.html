@@ -2,7 +2,7 @@
 
 </s-dataNotFound>
 
-<p-panel header="Seguimiento contratistas" [style.display]="empresasList && empresasList.length > 0 ? 'block':'none'">
+<p-panel header="Seguimiento aliados" [style.display]="empresasList && empresasList.length > 0 ? 'block':'none'">
   <p-tabView>
     <p-tabPanel [header]="emp.razonSocial" *ngFor="let emp of empresasList">
       <s-empresaDash [empresa]="emp"></s-empresaDash>
