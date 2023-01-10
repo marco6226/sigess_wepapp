@@ -39,10 +39,10 @@
                 </ng-template>
 
                 <ng-template pTemplate="summary" let-rowData>
-                    <button *sTienePermiso="'SCM_POST_CASEPCL'" pButton type="button" icon="fa fa-plus" label="Crear" (click)="nuevoTratamiento()" [disabled]="pclSelect"></button>
-                    <button *sTienePermiso="'SCM_EDIT_CASEPCL'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="editPcl()" [disabled]="!pclSelect || action"></button>
+                    <button *sTienePermiso="'SCM_POST_CASEPCL'" pButton type="button" icon="fa fa-plus" label="Crear" (click)="nuevoTratamiento()" [disabled]="pclSelect || esConsulta"></button>
+                    <button *sTienePermiso="'SCM_EDIT_CASEPCL'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success" (click)="editPcl()" [disabled]="!pclSelect || action || esConsulta"></button>
                     <button pButton type="button" icon="fa fa-search" label="Consultar" class="ui-button-warning" (click)="showPcl()" [disabled]="!pclSelect || action"></button>
-                    <button *sTienePermiso="'SCM_DEL_CASEPCL'" pButton type="button" [icon]="(action) ? 'pi pi-spin pi-spinner' : 'fa fa-trash'" label="Eliminar" class="ui-button-danger" (click)="deletePcl()" [disabled]="!pclSelect || action"></button>
+                    <button *sTienePermiso="'SCM_DEL_CASEPCL'" pButton type="button" [icon]="(action) ? 'pi pi-spin pi-spinner' : 'fa fa-trash'" label="Eliminar" class="ui-button-danger" (click)="deletePcl()" [disabled]="!pclSelect || action || esConsulta"></button>
                 </ng-template>
 
                 <ng-template pTemplate="emptymessage">

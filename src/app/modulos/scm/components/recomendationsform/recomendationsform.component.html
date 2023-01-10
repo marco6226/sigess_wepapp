@@ -11,7 +11,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="input-field">
-                    <p-dropdown [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material"  styleClass="select-material">
+                    <p-dropdown [readonly]="esConsulta" [options]="entit" formControlName="entidadEmitRecomendaciones" class="select-material"  styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Entidad que emite las recomendaciones</label>
                 </div>
@@ -20,7 +20,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="recomendation.get('entidadEmitRecomendaciones').value == 'Proveedor_de_salud' || recomendation.get('entidadEmitRecomendaciones').value == 'EPS' || recomendation.get('entidadEmitRecomendaciones').value == 'ARL' || recomendation.get('entidadEmitRecomendaciones').value == 'Medicina_Prepagada' ">
                 <div class="input-field">
-                    <p-dropdown [filter]="true" [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material">
+                    <p-dropdown [readonly]="esConsulta" [filter]="true" [options]="entity[recomendation.get('entidadEmitRecomendaciones').value]" formControlName="entidadEmitida" class="select-material" styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Entidad</label>
                 </div>
@@ -28,7 +28,7 @@
 
             <div class="ui-g-12 ui-md-4 ui-lg-4">
                 <div class="input-field">
-                    <p-dropdown [options]="typeList" formControlName="tipo" class="select-material" styleClass="select-material">
+                    <p-dropdown [readonly]="esConsulta" [options]="typeList" formControlName="tipo" class="select-material" styleClass="select-material">
                     </p-dropdown>
                     <label for="" class="active">Tipo</label>
                 </div>
@@ -38,7 +38,7 @@
 
             <div class="ui-g-12 ui-md-4 ui-lg-4">
                 <div class="input-field">
-                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" showButtonBar="true" [touchUI]="true" yearRange="2010:2030" [locale]="localeES" formControlName="fechaInicio" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material">
+                    <p-calendar [disabled]="esConsulta" [monthNavigator]="true" [yearNavigator]="true" showButtonBar="true" [touchUI]="true" yearRange="2010:2030" [locale]="localeES" formControlName="fechaInicio" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material">
                     </p-calendar>
                     <label for="" class="active">Fecha Inicial</label>
                 </div>
@@ -47,7 +47,7 @@
 
             <div class="ui-g-12 ui-md-4 ui-lg-4">
                 <div class="input-field">
-                    <p-calendar [monthNavigator]="true" [touchUI]="true" showButtonBar="true" [yearNavigator]="true" yearRange="2010:2030" formControlName="fechaExpiracion" [locale]="localeES" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material">
+                    <p-calendar [disabled]="esConsulta" [monthNavigator]="true" [touchUI]="true" showButtonBar="true" [yearNavigator]="true" yearRange="2010:2030" formControlName="fechaExpiracion" [locale]="localeES" dateFormat="dd/mm/yy" styleClass="calendar-material" inputStyleClass="form-material">
                     </p-calendar>
                     <label for="" class="active">Fecha Final</label>
                 </div>
@@ -56,7 +56,7 @@
 
             <div class="ui-g-12">
                 <div class="input-field">
-                    <textarea formControlName="recomendaciones" class="textarea-material" pInputTextarea></textarea>
+                    <textarea [readonly]="esConsulta" formControlName="recomendaciones" class="textarea-material" pInputTextarea></textarea>
                     <label for="" class="active">Recomendaciones</label>
                 </div>
                 <small *ngIf="recomendaciones.errors?.required && recomendaciones.touched" id="username2-help" class="p-invalid">Obligatorio</small>
@@ -89,7 +89,7 @@
                     <td class="p-text-center">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.actividad">
+                                <input [readonly]="esConsulta" pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.actividad">
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{pAccion.actividad}}
@@ -99,7 +99,7 @@
                     <td class="p-text-center">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.descripcionAct">
+                                <input [readonly]="esConsulta" pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.descripcionAct">
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{pAccion.descripcionAct}}
@@ -110,7 +110,7 @@
 
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-calendar [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada"
+                                <p-calendar [disabled]="esConsulta" [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada"
                                  dateFormat="dd/mm/yy"  [locale]="localeES"
                                   [monthNavigator]="true"  [yearNavigator]="true" showButtonBar="true" yearRange="2010:2030" styleClass="calendar-material"
                                     inputStyleClass="form-material">
@@ -125,7 +125,7 @@
                     <td class="p-text-center">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="pAccion.responsableEmpresa = $event" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" field="numeroIdentificacion"
+                                <p-autoComplete [readonly]="esConsulta" styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="pAccion.responsableEmpresa = $event" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" field="numeroIdentificacion"
                                     [(ngModel)]="pAccion.responsableEmpresa" *ngIf="empleado?.id == null">
                                     <ng-template let-empleado pTemplate="item">
                                         <div class="ui-helper-clearfix">
@@ -153,7 +153,7 @@
                     <td class="p-text-center">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.responsableExterno">
+                                <input [readonly]="esConsulta" pInputText type="text" class="p-text-center" [(ngModel)]="pAccion.responsableExterno">
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{pAccion.responsableExterno}}
@@ -161,17 +161,17 @@
                         </p-cellEditor>
                     </td>
                     <td class="p-text-center">
-                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(pAccion)" class="p-button-rounded ui-table-btn p-button-text p-mr-2"> </button>
-                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-trash" (click)="onRowDelete(ri)" class="p-button-rounded ui-table-btn ui-button-danger p-button-text">
+                        <button *ngIf="!editing" [disabled]="esConsulta" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(pAccion)" class="p-button-rounded ui-table-btn p-button-text p-mr-2"> </button>
+                        <button *ngIf="!editing" [disabled]="esConsulta" pButton pRipple type="button" pInitEditableRow icon="pi pi-trash" (click)="onRowDelete(ri)" class="p-button-rounded ui-table-btn ui-button-danger p-button-text">
                         </button>
-                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(pAccion)" class="p-button-rounded ui-table-btn p-button-text p-button-success p-mr-2"></button>
-                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(pAccion, ri)" class="p-button-rounded ui-button-danger ui-table-btn p-button-text p-button-danger"></button>
+                        <button *ngIf="editing" [disabled]="esConsulta" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(pAccion)" class="p-button-rounded ui-table-btn p-button-text p-button-success p-mr-2"></button>
+                        <button *ngIf="editing" [disabled]="esConsulta" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(pAccion, ri)" class="p-button-rounded ui-button-danger ui-table-btn p-button-text p-button-danger"></button>
                     </td>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="summary" let-rowData>
-                <button pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()" label="Crear"></button>
+                <button [disabled]="esConsulta" pButton type="button" icon="fa fa-plus" (click)="nuevaActividad()" label="Crear"></button>
             </ng-template>
 
             <ng-template pTemplate="emptymessage">
@@ -253,7 +253,7 @@
         
     </div> -->
     <div class="ui-g-12 p-pt-3">
-        <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" [label]="(recoSelect) ? 'Actualizar' : 'Guardar'" icon="fa fa-plus" (click)="onSubmit()">
+        <button [disabled]="esConsulta" *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" [label]="(recoSelect) ? 'Actualizar' : 'Guardar'" icon="fa fa-plus" (click)="onSubmit()">
 
         </button>
     </div>

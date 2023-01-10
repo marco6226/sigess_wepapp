@@ -28,6 +28,7 @@ export class PclComponent implements OnInit {
     loadingForm: boolean = false;
     loading: boolean = false;
     pclSelect: any;
+    esConsulta: boolean = false;
 
     pclCalificacionList = [
         { label: "--Seleccione--", value: null },
@@ -86,6 +87,7 @@ export class PclComponent implements OnInit {
         this.loadDiagnostics();
         await this.iniciarPcl();
         this.dlistaPCL.emit(this.pclList);
+        this.esConsulta = JSON.parse(localStorage.getItem('scmShowCase')) == true ? true: false;
     }
     createOrigenList(){
         if(this.idEmpresa=='22'){

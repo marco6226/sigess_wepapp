@@ -58,6 +58,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     accions = [];
+    esConsulta: boolean = false;
 
     constructor(fb: FormBuilder,
         private scmService: CasosMedicosService,
@@ -111,7 +112,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         } else {
             this.clearInputs();
         }
-
+        this.esConsulta = JSON.parse(localStorage.getItem('scmShowCase')) == true ? true : false;
     }
 
     clearInputs() {

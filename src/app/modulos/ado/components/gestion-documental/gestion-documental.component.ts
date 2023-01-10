@@ -50,6 +50,7 @@ export class GestionDocumentalComponent implements OnInit {
     sortOrder;
     sortField;
     rows;
+    esConsulta: boolean = false;
 
     constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
@@ -59,6 +60,11 @@ export class GestionDocumentalComponent implements OnInit {
         this.loading = true;
         this.esPrivado = false;
         this.usuarioId = this.sesionService.getUsuario().id;
+        try {
+            this.esConsulta = JSON.parse(localStorage.getItem('scmShowCase')) == true ? true : false;
+        } catch (error) {
+            this.esConsulta = false;            
+        }
     }
 
     loadNodes(event: any) {

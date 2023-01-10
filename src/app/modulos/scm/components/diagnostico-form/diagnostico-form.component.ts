@@ -27,6 +27,7 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
 
     origenList
     idEmpresa: string;
+    esConsulta:boolean = false;
 
     createOrigenList(){
         if(this.idEmpresa=='22'){
@@ -83,7 +84,8 @@ export class DiagnosticoFormComponent implements OnInit, OnChanges {
         this.idEmpresa =this.sesionService.getEmpresa().id;
         this.createOrigenList()
         let resp: any = await this.scmService.getSistemasAFectados();
-
+        this.esConsulta = JSON.parse(localStorage.getItem('scmShowCase')) == true ? true : false;
+        // console.log('Es consulta: '+this.esConsulta);
 
         this.sistemaAfectado.push({ label: '--Seleccione--', value: null });
         resp.forEach((sistema, index) => {

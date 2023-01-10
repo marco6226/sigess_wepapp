@@ -9,7 +9,7 @@
         <div class="ui-g-12 ui-md-4 ui-lg-3">
             <div class="input-field">
                 <label class="active">Código CIE 10</label>
-                <s-cieSelector id="ccide-input" formControlName="codigoCie10" (dateChange)="test($event)">
+                <s-cieSelector [readOnly]="esConsulta" id="ccide-input" formControlName="codigoCie10" (dateChange)="test($event)">
                 </s-cieSelector>
             </div>
             <small *ngIf="codigo.errors?.required && codigo.touched" id="username2-help" class="p-invalid">Obligatorio</small>
@@ -17,7 +17,7 @@
 
         <div class="ui-g-12 ui-md-4 ui-lg-3">
             <div class="input-field">
-                <p-dropdown [options]="origenList" formControlName="origen" class="select-material" styleClass="select-material">
+                <p-dropdown [readonly]="esConsulta" [options]="origenList" formControlName="origen" class="select-material" styleClass="select-material">
                 </p-dropdown>
                 <label for="" class="active">Origen</label>
             </div>
@@ -26,7 +26,7 @@
 
         <div class="ui-g-12 ui-md-4 ui-lg-3">
             <div class="input-field">
-                <input pInputText type="text" [value]="cieTipo">
+                <input [readOnly]="esConsulta" pInputText type="text" [value]="cieTipo">
 
                 <label for="" class="active">Sistema Afectado</label>
             </div>
@@ -35,7 +35,7 @@
 
         <div class="ui-g-12 ui-md-4 ui-lg-3">
             <div class="input-field">
-                <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange" formControlName="fechaDiagnostico" [locale]="localeES" dateFormat="dd/mm/yy" inputStyleClass="form-material">
+                <p-calendar [disabled]="esConsulta" [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange" formControlName="fechaDiagnostico" [locale]="localeES" dateFormat="dd/mm/yy" inputStyleClass="form-material">
                 </p-calendar>
                 <label for="" class="active">Fecha Diagnóstico</label>
             </div>
@@ -44,21 +44,21 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-6">
             <div class="input-field">
-                <textarea rows="3" class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
+                <textarea [readOnly]="esConsulta" rows="3" class="textarea-material" pInputTextarea formControlName="diagnostico"></textarea>
                 <label for="" class="active">Diagnóstico</label>
             </div>
             <small *ngIf="diagnostico.errors?.required && diagnostico.touched" id="username2-help" class="p-invalid">Obligatorio</small>
         </div>
         <div class="ui-g-12 ui-lg-6">
             <div class="input-field">
-                <textarea rows="3" class="textarea-material" pInputTextarea formControlName="detalle"></textarea>
+                <textarea [readOnly]="esConsulta" rows="3" class="textarea-material" pInputTextarea formControlName="detalle"></textarea>
                 <label for="" class="active">Detalles del diagnóstico</label>
             </div>
             <small *ngIf="detalle.errors?.required && detalle.touched" id="username2-help" class="p-invalid">Obligatorio</small>
         </div>
 
         <div class="ui-g-12 p-d-flex p-jc-center p-py-2">
-            <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" pButton type="button" [label]="(diagSelect) ? 'Guardar' : 'Crear'" icon="fa fa-plus" style="margin-right: .5rem;" (click)="onSubmit()"></button>
+            <button *sTienePermiso="'SCM_CREATE_CASE_DIAG'" [disabled]="esConsulta" pButton type="button" [label]="(diagSelect) ? 'Guardar' : 'Crear'" icon="fa fa-plus" style="margin-right: .5rem;" (click)="onSubmit()"></button>
             <button pButton type="button" [label]="(diagSelect) ? 'Cancelar' : 'Cerrar'" icon="pi pi-times" class="ui-button-danger" (click)="close()"></button>
         </div>
     </div>

@@ -27,7 +27,7 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-autoComplete styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
+                            <p-autoComplete [readonly]="consultar2" styleClass="form-material-autocomplete" #autocomplete placeholder="Digite"
                                 [style]="{'width':'100%'}" (onSelect)="onSelection($event)"
                                 [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
                                 formControlName="numeroIdentificacion" *ngIf="empleado?.id == null" required>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [options]="tipoIdentificacionList" formControlName="tipoIdentificacion"
+                            <p-dropdown [readonly]="consultar2" [options]="tipoIdentificacionList" formControlName="tipoIdentificacion"
                                 [attr.disabled]="true" required class="select-material" styleClass="select-material">
                             </p-dropdown>
                             <label for="" class="active">Tipo de identificación</label>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId!='22'">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="direccionGerencia"
+                            <input type="text" [readonly]="consultar2" pInputText formControlName="direccionGerencia"
                                 placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia1" />
                             <label for="" class="active">Dirección / Gerencia</label>
                         </div>
@@ -86,7 +86,7 @@
                     
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                            <p-dropdown [readonly]="consultar2" [filter]="true" [options]="cargoList" formControlName="cargoId"
                                 class="select-material" styleClass="select-material">
                             </p-dropdown>
                             <label for="" class="active">Cargo / Categoría</label>
@@ -96,7 +96,7 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            <p-calendar [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                                 [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
                                 dateFormat="dd/mm/yy" formControlName="fechaIngreso"></p-calendar>
                             <label for="" class="active">Fecha de vinculación</label>
@@ -122,7 +122,7 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            <p-calendar [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                                 [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
                                 dateFormat="dd/mm/yy">
                             </p-calendar>
@@ -132,7 +132,7 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="corporativePhone" styleClass="form-material">
+                            <input [readonly]="consultar2" pInputText formControlName="corporativePhone" styleClass="form-material">
 
                             <label for="" class="active">Teléfono corporativo</label>
                         </div>
@@ -147,14 +147,14 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad"
+                            <input [readonly]="consultar2" type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad"
                                 class="form-material" id="ciudad" />
                             <label for="" class="active">Ciudad</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId!='22'">
                         <div class="input-field">
-                            <area-selector formControlName="area"
+                            <area-selector [disabled]="consultar2" formControlName="area"
                                 [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required>
                             </area-selector>
                             <label for="" class="active">Ubicación</label>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId=='22'">
                         <div class="input-field">
-                            <area-selector (onDivision)="areaChange($event)" formControlName="area"
+                            <area-selector [disabled]="consultar2" (onDivision)="areaChange($event)" formControlName="area"
                                 [name]="this.empleadoSelect ? this.empleadoSelect.area.nombre:''" required>
                             </area-selector>
                             <label for="" class="active">Ubicación</label>
@@ -173,16 +173,16 @@
                             <label for="" class="active">Sexo </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <p-radioButton name="genero" value="M" label=" Masculino   ." formControlName="genero">
+                            <p-radioButton [disabled]="consultar2" name="genero" value="M" label=" Masculino   ." formControlName="genero">
                             </p-radioButton>
-                            <p-radioButton name="genero" value="F" label="Femenino" formControlName="genero">
+                            <p-radioButton [disabled]="consultar2" name="genero" value="F" label="Femenino" formControlName="genero">
                             </p-radioButton>
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            <p-calendar [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                                 [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
                                 dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
                             <label for="" class="active">Fecha de nacimiento</label>
@@ -199,14 +199,14 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="empresaId!='22'">
                         <div class="input-field">
-                            <input [attr.disabled]="true" type="text" pInputText formControlName="regional"
+                            <input [readonly]="consultar2" [attr.disabled]="true" type="text" pInputText formControlName="regional"
                                 placeholder="regional" class="form-material" id="regional" />
                             <label for="" class="active">Regional</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <s-ciudadSelector formControlName="ciudad" [id]="departamento" class="select-material"
+                            <s-ciudadSelector [disabled]="consultar2" formControlName="ciudad" [id]="departamento" class="select-material"
                                 styleClass="select-material" required>
                             </s-ciudadSelector>
                             <label for="" class="active">Ciudad de residencia</label>
@@ -214,7 +214,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText class="form-material" formControlName="direccion"
+                            <input [readonly]="consultar2" pInputText class="form-material" formControlName="direccion"
                                 styleClass="form-material">
                             <label for="" class="active">Dirección de residencia</label>
                         </div>
@@ -224,17 +224,17 @@
                             <label for="" class="active">Zona de residencia</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <p-radioButton name="zonaResidencia" value="U" label=" Urbana   ."
+                            <p-radioButton [disabled]="consultar2" name="zonaResidencia" value="U" label=" Urbana   ."
                                 formControlName="zonaResidencia">
                             </p-radioButton>
-                            <p-radioButton name="zonaResidencia" value="R" label="Rural"
+                            <p-radioButton [disabled]="consultar2" name="zonaResidencia" value="R" label="Rural"
                                 formControlName="zonaResidencia">
                             </p-radioButton>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="telefono1" class="form-material"
+                            <input [readonly]="consultar2" pInputText formControlName="telefono1" class="form-material"
                                 styleClass="form-material">
 
                             <label for="" class="active">Teléfono personal</label>
@@ -242,7 +242,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="telefono2" class="form-material"
+                            <input [readonly]="consultar2" pInputText formControlName="telefono2" class="form-material"
                                 styleClass="form-material">
 
                             <label for="" class="active">Teléfono de residencia</label>
@@ -251,7 +251,7 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="email" pInputText formControlName="correoPersonal"
+                            <input [readonly]="consultar2" type="email" pInputText formControlName="correoPersonal"
                                 plaholder="Correo personal" />
                             <label for="" class="active">Correo personal</label>
                         </div>
@@ -259,35 +259,35 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [filter]="true" [options]="epsList" formControlName="eps"
+                            <p-dropdown [readonly]="consultar2" [filter]="true" [options]="epsList" formControlName="eps"
                                 class="select-material" styleClass="select-material"></p-dropdown>
                             <label for="" class="active">EPS</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [filter]="true" [options]="afpList" formControlName="afp"
+                            <p-dropdown [readonly]="consultar2" [filter]="true" [options]="afpList" formControlName="afp"
                                 class="select-material" styleClass="select-material"></p-dropdown>
                             <label for="" class="active">AFP</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
+                            <input [readonly]="consultar2" [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
                                 class="form-material" id="arl" />
                             <label for="" class="active">ARL</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="text" pInputText formControlName="emergencyContact"
+                            <input [readonly]="consultar2" type="text" pInputText formControlName="emergencyContact"
                                 placeholder="Contacto de emergencia" class="form-material" id="emergencyContact" />
                             <label for="" class="active">Contacto de emergencia</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input pInputText formControlName="phoneEmergencyContact" class="form-material"
+                            <input [readonly]="consultar2" pInputText formControlName="phoneEmergencyContact" class="form-material"
                                 styleClass="form-material">
 
                             <label for="" class="active">Telefono de contacto de emergencia</label>
@@ -295,7 +295,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input type="email" pInputText formControlName="emailEmergencyContact"
+                            <input [readonly]="consultar2" type="email" pInputText formControlName="emailEmergencyContact"
                                 placeholder="Correo corporativo" class="form-material" id="emailEmergencyContact" />
                             <label for="" class="active">Correo de contacto de emergencia</label>
                         </div>
@@ -312,7 +312,7 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                                <p-autoComplete [readonly]="consultar2" styleClass="form-material-autocomplete" placeholder="Digite"
                                     [style]="{'width':'100%'}" (onSelect)="onSelectionJefeInmediato($event)"
                                     [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
                                     formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
@@ -397,7 +397,7 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
+                                <p-autoComplete [readonly]="consultar2" styleClass="form-material-autocomplete" placeholder="Digite"
                                     [style]="{'width':'100%'}" (onSelect)="onSelectionBP($event)"
                                     [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
                                     formControlName="numeroIdentificacion" *ngIf="empleado?.id == null">
@@ -431,7 +431,7 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoId"
+                                <p-dropdown [readonly]="consultar2" [filter]="true" [options]="cargoList" formControlName="cargoId"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Cargo / Categoría</label>
@@ -439,14 +439,14 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText formControlName="direccionGerencia"
+                                <input [readonly]="consultar2" type="text" pInputText formControlName="direccionGerencia"
                                     placeholder="Dirección / Gerencia" class="form-material" id="direccionGerencia" />
                                 <label for="" class="active">Dirección / Gerencia</label>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input  type="text" pInputText formControlName="corporativePhone" class="form-material"
+                                <input [readonly]="consultar2"  type="text" pInputText formControlName="corporativePhone" class="form-material"
                                     styleClass="form-material">
 
                                 <label for="" class="active">Número móvil corporativo</label>
@@ -454,7 +454,7 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <input type="text" pInputText formControlName="email" placeholder="Correo corporativo"
+                                <input [readonly]="consultar2" type="text" pInputText formControlName="email" placeholder="Correo corporativo"
                                     class="form-material" id="emailbussines" />
                                 <label for="" class="active">Correo corporativo</label>
                             </div>
@@ -480,14 +480,14 @@
                     </div>
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
                         <div class="input-field">
-                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            <p-calendar [disabled]="consultar2" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                                 [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                             <label for="" class="active">Fecha de cierre</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-4 ui-lg-8">
                         <div class="input-field">
-                            <textarea class="textarea-material" pInputTextarea
+                            <textarea [readonly]="consultar2" class="textarea-material" pInputTextarea
                                 formControlName="observaciones"></textarea>
                             <label for="" class="active">Observaciones del cierre</label>
                         </div>
@@ -501,7 +501,7 @@
 
                         <div class="ui-g-12">
                             <div class="input-field">
-                                <textarea pInputTextarea formControlName="descripcionCompletaCaso" rows="5"
+                                <textarea [readonly]="consultar2" pInputTextarea formControlName="descripcionCompletaCaso" rows="5"
                                     required></textarea>
                                 <label for="" class="active">Descripción general del caso</label>
                             </div>
@@ -509,7 +509,7 @@
 
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <textarea pInputTextarea formControlName="descripcionCargo" rows="4"
+                                <textarea [readonly]="consultar2" pInputTextarea formControlName="descripcionCargo" rows="4"
                                     required></textarea>
                                 <label for="" class="active">Descripción del cargo / Funciones actuales</label>
                             </div>
@@ -517,7 +517,7 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown [options]="caseOptionList" formControlName="casoMedicoLaboral"
+                                <p-dropdown [readonly]="consultar2" [options]="caseOptionList" formControlName="casoMedicoLaboral"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Caso de mesa laboral</label>
@@ -528,7 +528,7 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown [options]="prioridadOptionList" formControlName="prioridadCaso"
+                                <p-dropdown [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Prioridad</label>
@@ -537,7 +537,7 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown [options]="tipoOptionList" formControlName="tipoCaso"
+                                <p-dropdown [readonly]="consultar2" [options]="tipoOptionList" formControlName="tipoCaso"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Tipo de caso</label>
@@ -551,7 +551,7 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <p-dropdown [options]="IntervencionOptionList" formControlName="requiereIntervencion"
+                                <p-dropdown [readonly]="consultar2" [options]="IntervencionOptionList" formControlName="requiereIntervencion"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Requiere intervención complementaria</label>
@@ -560,7 +560,7 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4"
                             *ngIf="casoMedicoForm.get('requiereIntervencion').value != 0">
                             <div class="input-field">
-                                <p-dropdown [options]="sveOptionList" formControlName="sve" class="select-material"
+                                <p-dropdown [readonly]="consultar2" [options]="sveOptionList" formControlName="sve" class="select-material"
                                     styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">SVE</label>
@@ -570,7 +570,7 @@
                             *ngIf="casoMedicoForm.get('requiereIntervencion').value != 0">
                             <div class="input-field">
 
-                                <p-dropdown [options]="professionalAreaList" formControlName="professionalArea"
+                                <p-dropdown [readonly]="consultar2" [options]="professionalAreaList" formControlName="professionalArea"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
 
@@ -580,7 +580,7 @@
 
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
-                                <textarea class="textarea-material" pInputTextarea  formControlName="justification"></textarea>
+                                <textarea [readonly]="consultar2" class="textarea-material" pInputTextarea  formControlName="justification"></textarea>
                                 <label for="" class="active">Justificación</label>
                             </div>
                         </div>
@@ -597,7 +597,7 @@
                         <div class="concepto">
                             <div class="input-field">
 
-                                <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                                <p-dropdown [readonly]="consultar2" [filter]="true" [options]="conceptoRehabilitacion"
                                     formControlName="conceptRehabilitacion" class="select-material"
                                     styleClass="select-material">
                                 </p-dropdown>
@@ -606,7 +606,7 @@
                         </div>
                         <div class="fecha">
                             <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                <p-calendar [disabled]="consultar2" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                                     [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                                     formControlName="fechaConceptRehabilitacion"></p-calendar>
                                 <label for="" class="active">Fecha de concepto de rehabilitación</label>
@@ -614,7 +614,7 @@
                         </div>
                         <div class="entidadp">
                             <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                                <p-dropdown [filter]="true"
+                                <p-dropdown [readonly]="consultar2" [filter]="true"
                                     [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacion').value]"
                                     formControlName="entidadEmiteConcepto" class="select-material"
                                     styleClass="select-material">
@@ -625,7 +625,7 @@
                         </div>
                         <div class="entidad">
                             <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacion').value != 3">
-                                <p-dropdown [filter]="true"
+                                <p-dropdown [readonly]="consultar2" [filter]="true"
                                     [options]="entity[casoMedicoForm.get('entidadEmiteConcepto').value]"
                                     formControlName="entidadEmitida" class="select-material"
                                     styleClass="select-material">
@@ -641,7 +641,7 @@
                         <div class="concepto">
                             <div class="input-field">
 
-                                <p-dropdown [filter]="true" [options]="conceptoRehabilitacion"
+                                <p-dropdown [readonly]="consultar2" [filter]="true" [options]="conceptoRehabilitacion"
                                     formControlName="conceptRehabilitacionTwo" class="select-material"
                                     styleClass="select-material">
                                 </p-dropdown>
@@ -650,7 +650,7 @@
                         </div>
                         <div class="fecha">
                             <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                <p-calendar [disabled]="consultar2" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                                     [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"
                                     formControlName="fechaConceptRehabilitacionTwo"></p-calendar>
                                 <label for="" class="active">Fecha de concepto de rehabilitación</label>
@@ -658,7 +658,7 @@
                         </div>
                         <div class="entidadp">
                             <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                                <p-dropdown [filter]="true"
+                                <p-dropdown [readonly]="consultar2" [filter]="true"
                                     [options]="entityConceptoRehabilitacion[casoMedicoForm.get('conceptRehabilitacionTwo').value]"
                                     formControlName="entidadEmiteConceptoTwo" class="select-material"
                                     styleClass="select-material">
@@ -669,7 +669,7 @@
                         </div>
                         <div class="entidad">
                             <div class="input-field" *ngIf="casoMedicoForm.get('conceptRehabilitacionTwo').value != 3">
-                                <p-dropdown [filter]="true"
+                                <p-dropdown [readonly]="consultar2" [filter]="true"
                                     [options]="entity[casoMedicoForm.get('entidadEmiteConceptoTwo').value]"
                                     formControlName="entidadEmitidaTwo" class="select-material"
                                     styleClass="select-material">
@@ -1046,14 +1046,17 @@
                         </ng-template>
 
                         <ng-template pTemplate="summary" let-rowData>
-                            <button *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus"
+                            <button [disabled]="consultar2" *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" icon="fa fa-plus"
                                 label="Crear" (click)="openModalRecomendantions()">
                             </button>
                             <button pButton type="button" icon="fa fa-pencil" label="Modificar" *sTienePermiso="'SCM_PUT_CASE_RECO'"
                                 class="ui-button-success" (click)="modalRecomendatios = true"
+                                [disabled]="!recoSelect || consultar2"></button>
+                            <button pButton type="button" icon="fa fa-search" label="Consultar" *ngIf="consultar2"
+                                class="ui-button-warning" (click)="modalRecomendatios = true"
                                 [disabled]="!recoSelect"></button>
                             <button pButton type="button" icon="fa fa-trash" label="Eliminar" *sTienePermiso="'SCM_DEL_CASE_RECO'" class="ui-button-danger"
-                                (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect"></button>
+                                (click)="deleteRecomendation(recoSelect.id)" [disabled]="!recoSelect || consultar2"></button>
                         </ng-template>
 
                         <ng-template pTemplate="emptymessage">
@@ -1098,7 +1101,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <p-calendar [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
+                                            <p-calendar [disabled]="consultar2" [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
                                                 dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
                                             </p-calendar>
 
@@ -1111,7 +1114,7 @@
                                 <td colspan="3">
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input pInputText type="text" [(ngModel)]="seguimiento.seguimiento">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimiento.seguimiento">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.seguimiento}}
@@ -1121,7 +1124,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input pInputText type="text" [(ngModel)]="seguimiento.tarea">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimiento.tarea">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.tarea}}
@@ -1131,7 +1134,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
+                                            <p-autoComplete [readonly]="consultar2" styleClass="form-material-autocomplete" #autocomplete
                                                 placeholder="Digite" [style]="{'width':'100%'}"
                                                 (onSelect)="seguimiento.responsable = $event"
                                                 [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
@@ -1168,7 +1171,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input pInputText type="text" [(ngModel)]="seguimiento.responsableExterno">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimiento.responsableExterno">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.responsableExterno}}
@@ -1178,7 +1181,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input pInputText type="text" [(ngModel)]="seguimiento.resultado">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimiento.resultado">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.resultado}}
@@ -1187,12 +1190,12 @@
                                 </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
                                     <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
-                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
                                         title="Editar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                         <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
-                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-copy"
+                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-copy"
                                         (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
@@ -1202,7 +1205,7 @@
                                         icon="pi pi-times" (click)="onRowEditCancel(seguimiento, ri)"
                                         class="p-button-rounded p-button-text ui-button-danger"></button>
 
-                                    <button *sTienePermiso="'SCM_DEL_CASE_SEG'" pButton pRipple type="button" pCancelEditableRow
+                                    <button *sTienePermiso="'SCM_DEL_CASE_SEG'" [disabled]="consultar2" pButton pRipple type="button" pCancelEditableRow
                                         icon="pi pi-trash" (click)="deleteSeguimiento(seguimiento.id)"
                                         title="Borrar Seguimiento" class="ui-button-danger"></button>
                                 </td>
@@ -1210,7 +1213,7 @@
                         </ng-template>
 
                         <ng-template pTemplate="summary" let-rowData>
-                            <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" icon="fa fa-plus"
+                            <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" [disabled]="consultar2" pButton type="button" icon="fa fa-plus"
                                 label="Crear"  (click)="openModalSeguimientos()">
 
                             </button>
@@ -1323,11 +1326,11 @@
 
                                 <td class="p-text-center">
                                     <!-- *sTienePermiso="'SCM_PUT_CASE_TRAT'" -->
-                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(tratamiento)"  title="Editar Tratamiento" 
                                         class="p-button-rounded p-button-text p-mr-2"> </button>
                                         <!-- *sTienePermiso="'SCM_DEL_CASE_TRAT'" -->
-                                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento"
+                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-trash"  title="Eliminar Tratamiento"
                                         (click)="confirm(tratamiento,ri)"
                                         class="p-button-rounded p-button-text ui-button-danger">
                                     </button>
@@ -1343,7 +1346,7 @@
                         </ng-template>
 
                         <ng-template pTemplate="summary" let-rowData>
-                            <button *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
+                            <button [disabled]="consultar2" *sTienePermiso="'SCM_CREATE_CASE_TRAT'" pButton type="button" icon="fa fa-plus"
                                 (click)="nuevoTratamiento()" label="Crear">
                             </button>
                         </ng-template>
