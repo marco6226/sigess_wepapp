@@ -6,7 +6,7 @@ import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 import { Cargo } from 'app/modulos/empresa/entities/cargo';
 import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
 import { Router } from '@angular/router';
 import { Ipecr } from 'app/modulos/ipr/entities/ipecr'
@@ -70,7 +70,8 @@ export class ScmComponent implements OnInit {
         private scmService: CasosMedicosService,
         private cargoService: CargoService,
         private router: Router,
-        private sesionService: SesionService
+        private sesionService: SesionService,
+        private messageService: MessageService
     ) { }
 
     async ngOnInit() {
@@ -107,12 +108,16 @@ export class ScmComponent implements OnInit {
     }
 
     openCase() {
-        localStorage.setItem('scmShowCase', 'false');
-        // this.consultar = false;
-        // this.visibleForm = true;
-        this.router.navigate(['/app/scm/case/', this.caseSelect.id])
-        // this.paramNav.redirect('/app/scm/list/');
-        // + this.caseSelect.id);
+        if(this.caseSelect.statusCaso=='1'){
+            localStorage.setItem('scmShowCase', 'false');
+            // this.consultar = false;
+            // this.visibleForm = true;
+            this.router.navigate(['/app/scm/case/', this.caseSelect.id])
+            // this.paramNav.redirect('/app/scm/list/');
+            // + this.caseSelect.id);
+        }else{
+            this.messageService.add({key: 'msg', severity: "warn", summary:"Opción no disponible.", detail:"Este caso se encuentra cerrado y no se puede editar.\nPuede intentar la opción de consulta.", life: 6000});
+        }
     }
 
     openCaseConsultar() {
