@@ -123,6 +123,8 @@ async  ngOnInit() {
    
     this.msgs = [];
     console.log(reporte);
+    console.log(this.reporteSelect)
+    this.reporteSelect=reporte
     if (this.adicionar) {
       this.msgs.push({
         severity: 'success',
@@ -137,6 +139,7 @@ async  ngOnInit() {
         
       });
       console.log(reporte);
+      console.log(this.reporteSelect)
       console.log("id del at");
     }
     this.limpiarCampos();

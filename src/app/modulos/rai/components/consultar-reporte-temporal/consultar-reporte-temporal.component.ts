@@ -57,7 +57,7 @@ sortedTable:string;
     filterQuery.count = true; 
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
-    filterQuery.filterList.push({ criteria: Criteria.EQUALS, field: "temporal", value1: "Temporaluno" });
+    filterQuery.filterList.push({ criteria: Criteria.IS_NOT_NULL, field: "temporal"});
     this.reporteService.findByFilter(filterQuery).then(
       resp => {
         console.log(resp)

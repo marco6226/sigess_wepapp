@@ -1,4 +1,4 @@
-import { IdentificacionFactorCausalComponent } from './components/analisis-desviacion/factor-causal/identificacion-factor-causal/identificacion-factor-causal.component';
+
 import { EvidenciasComponent } from './components/analisis-desviacion/evidencias/evidencias.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -39,16 +39,15 @@ import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { ListViewAllModule } from '@syncfusion/ej2-angular-lists';
 import { DropDownButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 import { ToolbarModule } from '@syncfusion/ej2-angular-navigations';
-import { FactorCausalComponent } from './components/analisis-desviacion/factor-causal/factor-causal.component';
-import { IdentificacionFactoresCausalesComponent } from './components/analisis-desviacion/factor-causal/identificacion-factores-causales/identificacion-factores-causales.component';
-import { IncapacidadesComplementariaComponent } from './components/analisis-desviacion/factor-causal/incapacidades-complementaria/incapacidades-complementaria.component';
 import { ListadoCausasComponent } from './components/analisis-desviacion/listado-causas/listado-causas.component';
-import { PlanAccionComponent } from './components/analisis-desviacion/factor-causal/plan-accion/plan-accion.component';
-import { PlanAccionListComponent } from './components/analisis-desviacion/factor-causal/plan-accion-list/plan-accion-list.component';
 import { NgxCaptureModule } from 'ngx-capture';
 import { InformeComponent } from './components/analisis-desviacion/factor-causal/informe/informe.component';
-
-
+// import { IdentificacionFactorCausalComponent } from './components/analisis-desviacion/factor-causal/identificacion-factor-causal/identificacion-factor-causal.component';
+import { PlanAccionComponent } from './components/analisis-desviacion/factor-causal/plan-accion/plan-accion.component';
+import { PlanAccionListComponent } from './components/analisis-desviacion/factor-causal/plan-accion-list/plan-accion-list.component';
+// import { FactorCausalComponent } from './components/analisis-desviacion/factor-causal/factor-causal.component';
+// import { IdentificacionFactoresCausalesComponent } from './components/analisis-desviacion/factor-causal/identificacion-factores-causales/identificacion-factores-causales.component';
+import { IncapacidadesComplementariaComponent } from './components/analisis-desviacion/factor-causal/incapacidades-complementaria/incapacidades-complementaria.component';
 @NgModule({
     imports: [
         CoreModule,
@@ -103,9 +102,9 @@ import { InformeComponent } from './components/analisis-desviacion/factor-causal
         MiembrosEquipoComponent,
         FlowChartComponent,
         EvidenciasComponent,
-        FactorCausalComponent,
-        IdentificacionFactorCausalComponent,
-        IdentificacionFactoresCausalesComponent,
+        // FactorCausalComponent,
+        // IdentificacionFactorCausalComponent,
+        // IdentificacionFactoresCausalesComponent,
         IncapacidadesComplementariaComponent,
         ListadoCausasComponent,
         PlanAccionComponent,

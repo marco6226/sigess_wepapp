@@ -110,6 +110,9 @@ import {MenuItem} from 'primeng/api';
 import { EmpleadoBasicService } from '../empresa/services/empleado-basic.service';
 // import {InputNumberModule} from 'primeng/primeng';
 
+import { FactorCausalComponent } from '../sec/components/analisis-desviacion/factor-causal/factor-causal.component';
+import { IdentificacionFactoresCausalesComponent } from '../sec/components/analisis-desviacion/factor-causal/identificacion-factores-causales/identificacion-factores-causales.component';
+import { IdentificacionFactorCausalComponent } from '../sec/components/analisis-desviacion/factor-causal/identificacion-factor-causal/identificacion-factor-causal.component';
 
 const modules = [
 	ToastModule,
@@ -276,7 +279,10 @@ const modules = [
 		OverviewAllModule, 
 		SymbolPaletteAllModule, 
 		SymbolPaletteModule,
-
+		
+		FactorCausalComponent,
+		IdentificacionFactoresCausalesComponent,
+		IdentificacionFactorCausalComponent,
 		modules
 	],
 	declarations: [
@@ -311,7 +317,11 @@ const modules = [
 		CambioPasswdComponent,
 		LoginComponent,
 		ContactoComponent,
-		IdleTimeoutComponent
+		IdleTimeoutComponent,
+		
+		FactorCausalComponent,
+		IdentificacionFactoresCausalesComponent,
+		IdentificacionFactorCausalComponent,
 	],
 	providers: [
 		ConfirmationService,

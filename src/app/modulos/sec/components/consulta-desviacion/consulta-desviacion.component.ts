@@ -87,6 +87,7 @@ export class ConsultaDesviacionComponent implements OnInit {
     //filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+    filterQuery.filterList.push({ criteria: Criteria.IS_NULL, field: "emptemporal" });
 
     await this.desviacionService.findByFilter(filterQuery).then(
       resp => {
