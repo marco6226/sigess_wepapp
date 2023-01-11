@@ -303,6 +303,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         private confirmService: ConfirmService,
         private route: ActivatedRoute,
         private router: Router,
+        private confirmationService: ConfirmationService
     ) {
 
         this.empresa = this.sesionService.getEmpresa();
@@ -1317,4 +1318,37 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         }); 
     }    
     
+    cambiarEstado(){
+        // console.log('Case id : (☞ﾟヮﾟ)☞' + this.caseSelect.id);
+        this.confirmationService.confirm({
+            header: 'Confirmar acción',
+            message: '¿Está seguro de cambiar el estado del caso? Esta acción solo permitirá consultar el caso.',
+            key: 'confirm',
+            accept: () => {
+                this.scmService.changeEstadoById(this.caseSelect.id)
+                    .then(res => {
+                        this.msgs = [];
+                        this.msgs.push({
+                            severity: "success",
+                            summary: "Guardado",
+                            detail: `El estado del caso se ha actualizado exitosamente.`,
+                            life: 3000
+                        });
+                        setTimeout(() => {
+                            this.router.navigate(["/app/scm/list"]);
+                        }, 3000);
+                    })
+                    .catch(err => {
+                        this.msgs = [];
+                        console.error(err);
+                        this.msgs.push({
+                            severity: "error",
+                            summary: "Error",
+                            detail: "Error al cambiar estado del caso.",
+                        });
+                    });
+            }
+        });
+        
+    }
 }
