@@ -642,7 +642,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         if (!this.casoMedicoForm.valid) {
             this.msgs.push({
                 severity: "error",
-                summary: "Por favor revise todos los campos",
+                summary: "Por favor revise todos los campos obligatorios",
 
             });
             return this.markFormGroupTouched(this.casoMedicoForm);
