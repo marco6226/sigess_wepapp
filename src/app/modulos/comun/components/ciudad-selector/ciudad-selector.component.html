@@ -1,13 +1,13 @@
 <div class="ui-g">
 
     <div class="ui-g-12 ui-md-6 p-mb-2 p-mb-md-0">
-        <p-dropdown [options]="departamentosItems" [filter]="true" styleClass="select-material"
+        <p-dropdown [options]="departamentosItems" [readonly]="disabled" [filter]="true" styleClass="select-material"
             (onChange)="onDepartamentoChange($event)" [(ngModel)]="departamentoSelectId"></p-dropdown>
 
     </div>
 
     <div class="ui-g-12 ui-md-6">
-        <p-dropdown [options]="ciudadesItems" [filter]="true" styleClass="select-material" [(ngModel)]="value">
+        <p-dropdown [options]="ciudadesItems" [readonly]="disabled" [filter]="true" styleClass="select-material" [(ngModel)]="value">
         </p-dropdown>
     </div>
 </div>

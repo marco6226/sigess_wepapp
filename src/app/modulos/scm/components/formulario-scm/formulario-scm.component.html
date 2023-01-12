@@ -1,5 +1,5 @@
 <p-growl [value]="msgs"></p-growl>
-<p-confirmDialog key="confirm" header="Confirmar acción" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<!-- <p-confirmDialog key="confirm" header="Confirmar acción" icon="pi pi-exclamation-triangle"></p-confirmDialog> -->
 <div class="p-d-flex p-mb-2 p-px-2 p-jc-end" *ngIf="caseSelect">
     <div class="case-data p-d-flex p-jc-between">
         <div class="case-code">
@@ -481,8 +481,10 @@
                     </div>
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
                         <div class="input-field">
-                            <p-calendar [disabled]="consultar2" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                            <p-calendar  formControlName="fechaFinal" [disabled]="consultar2" *sTienePermiso="'SCM_PUT_CAMBIAR_FECHAFIN'" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                                 [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+                                <p-calendar formControlName="fechaFinal" [disabled]="consultar2" *ngIf="!permisoFechaCierre()" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                    [maxDate]="fechaActual" [minDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                             <label for="" class="active">Fecha de cierre</label>
                         </div>
                     </div>
@@ -493,9 +495,9 @@
                             <label for="" class="active">Observaciones del cierre</label>
                         </div>
                     </div>
-                    <div *ngIf="!consultar2" class="ui-g-12 ui-md-4 ui-lg-8">
-                        <div class="input-field">
-                            <button type="button" pButton class="ui-button-warning" label="Cambiar estado del caso" icon="fa fa-exchange" (click)="cambiarEstado()"></button>
+                    <div class="ui-g-12 ui-md-4 ui-lg-8">
+                        <div *ngIf="(status=='Cerrado' && consultar2) || !consultar2" class="input-field">
+                            <button *sTienePermiso="'SCM_PUT_CAMBIAR_ESTADO'" type="button" pButton class="ui-button-warning" label="Cambiar estado del caso" icon="fa fa-exchange" (click)="cambiarEstado()"></button>
                         </div>
                     </div>
 
