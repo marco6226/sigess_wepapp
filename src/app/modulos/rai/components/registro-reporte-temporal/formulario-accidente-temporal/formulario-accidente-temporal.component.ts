@@ -349,10 +349,10 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
               filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+this.reporte.id.toString() });
 
               await this.desviacionService.findByFilter(filterQuery).then(
-                resp => {
+                async resp => {
                   this.desviacionesList = resp['data'];
                   this.analisisId = this.desviacionesList[0].analisisId;
-                  this.consultarAnalisis(this.analisisId)
+                  await this.consultarAnalisis(this.analisisId)
                 }
               )
             }
@@ -363,8 +363,10 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       
       this.cdRef.detectChanges();
       await this.cargarTiposPeligro();
-
-      // this.setFactorCausal();
+      // console.log('listfactor: '+this.factorCausal)
+      setTimeout(() => {
+        console.log(this.factorCausal)
+      }, 5000);
   }
   SelectPeligro(a: string){
     this.cargarPeligro(a)
@@ -456,9 +458,11 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         });
       this.cargarPeligro(this.analisisPeligros.value['Peligro'])
     }
+    this.setListDataFactor()
   }
 
   //botón guardar y modificar
+  listPlanAccion: listPlanAccion[] =[]
   async submit1() {
       this.informacionComplementaria=this.analisisPeligros.value;
       let ad = new AnalisisDesviacion();
@@ -519,7 +523,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         );
         this.reporte=reporte
       }
-  }
+      this.setListDataFactor()
+    }
+
   getListIncapacidades(event){
     this.incapacidadesList = event;
   }
@@ -568,7 +574,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
             this.dataListFactor = this.tempData; 
         } catch (error) {      
         }
-   
+   console.log('entre: ',this.dataListFactor)
 }
 selectCausaRaiz(nombre, pregunta ,datos){
   if (datos.data.name=='Si') {

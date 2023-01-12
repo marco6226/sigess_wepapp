@@ -1,0 +1,15 @@
+<p-toast></p-toast>
+<p-table [value]="factores" [(selection)]="causasListSelect" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Pregunta</th>
+            <th>Factor Identificado según Metodología</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-factor>
+        <tr>
+            <td>{{factor.pregunta}}</td>
+            <td>{{factor.metodologia}}</td>
+        </tr>       
+    </ng-template>
+</p-table>

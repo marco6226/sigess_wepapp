@@ -2,7 +2,7 @@
 <form >
     <div id="msform" class="ui-g">
         <h1 *ngIf="factorCausal.nombre!='contratista'">Nombre Etapa: {{factorCausal.nombre}}</h1>
-        <h1 *ngIf="factorCausal.nombre=='contratista'">Seleccione factor causal</h1>
+        <h1 *ngIf="factorCausal.nombre=='contratista'">Seleccione causa raiz</h1>
         <div class="ui-g-12 ui-sm-12 ui-md-12">
           <p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
         </div>
