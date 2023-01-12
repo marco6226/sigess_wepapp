@@ -107,7 +107,7 @@ async  ngOnInit() {
   }
   volver() {
     if (this.consultar || this.modificar) {
-      this.paramNav.redirect('app/rai/consultaReportes')
+      this.paramNav.redirect('app/rai/consultaReportestemporal')
     } else {
       this.reporteSelect = null;
     }

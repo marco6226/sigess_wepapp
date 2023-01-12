@@ -15,6 +15,7 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
 
   
   @Input() incapacidades: Incapacidad[] = [];
+  @Input() consultar: boolean=false;
   @Output() listIncapacidades = new EventEmitter<Incapacidad[]>()
   productDialog: boolean;
   submitted: boolean;

@@ -1,27 +1,25 @@
 <p-toast></p-toast>
 <form >
-    <div id="msform">
-        <h1>Nombre Etapa: {{factorCausal.nombre}}</h1>
-        <p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
-
-        <div>
+    <div id="msform" class="ui-g">
+        <h1 *ngIf="factorCausal.nombre!='contratista'">Nombre Etapa: {{factorCausal.nombre}}</h1>
+        <h1 *ngIf="factorCausal.nombre=='contratista'">Seleccione factor causal</h1>
+        <div class="ui-g-12 ui-sm-12 ui-md-12">
+          <p-steps [model]="steps" [(activeIndex)]="pasoSelect"></p-steps>
+        </div>
+        <div class="ui-g-12 ui-sm-12 ui-md-12">
           <button class="next action-button" *ngIf="pasoSelect>0" (click)="back()">Volver</button>
-          <!-- <button class="next action-button"  *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
           <button class="next action-button" *ngIf="pasoSelect < steps.length-1" (click)="next()">Siguiente</button>
-          <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
-          <!-- <button class="next action-button" [disabled]="validators" *ngIf="steps.length>=pasoSelect" (click)="next()">Siguiente</button> -->
         </div>
 
-        <div *ngFor="let items of factorCausal?.seccion">
-          <div style="width: 33%; float: left; margin-top: 22px" *ngIf="pasoSelect==0">          
+        <ng-container *ngFor="let items of factorCausal?.seccion" >
+          <div class="ui-g-4 ui-sm-4 ui-md-2" style="width: 33%; margin-top: 22px" *ngIf="pasoSelect==0">          
             <h2 class="titulos"><b>{{items.tipoDesempeno}}</b></h2>
             <fieldset  *ngFor="let item of items.desempeno" >
               <div *ngIf="item.selected">
                 <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
               </div>
               <div >
-                <label>{{item.id + 1}} </label>
-                <label>{{item.pregunta}}</label>
+                <label>{{item.id + 1}} - {{item.pregunta}} </label>
                 <br>
                 <br>
                 <br>
@@ -37,19 +35,18 @@
                 <div class="areas" *ngFor="let ide of item.areas;let impar = odd;let par = even;" [ngClass]="{azul:par,verde:impar}">
                   <label for="">{{ide.factor}}</label>
                 </div>
-
               </div>
             </fieldset>
           </div>
-        </div>
-        
-        <div  *ngIf="pasoSelect==1" style="width: 100%; float: center; margin-top: 0px;overflow: hidden;">               
+        </ng-container>
+
+        <div  *ngIf="pasoSelect==1"  class="ui-g-12 ui-sm-12 ui-md-12">               
           <p-scrollPanel [style]="{width: '90%', height: '100%'}">
-          <p-fieldset [legend]="Craiz.label" [toggleable]="true" *ngFor="let Craiz of factorCausal.causa_Raiz">
-            
-              <p-organizationChart [value]="[Craiz]" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
-                styleClass="company">
-                <ng-template let-node pTemplate="person">
+            <p-fieldset [legend]="Craiz.label" [toggleable]="true" *ngFor="let Craiz of factorCausal.causa_Raiz">
+              
+                <p-organizationChart [value]="[Craiz]" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
+                  styleClass="company">
+                  <ng-template let-node pTemplate="person">
                     <div class="node-header p-corner-top">{{node.label}}</div>
                     <div class="node-content" *ngIf="!node.data.name">
                     </div>
@@ -57,33 +54,27 @@
                         <div *ngIf="node.data.name=='Si'" style="background: #26e77786;color:white">{{node.data.name}}</div>
                         <div *ngIf="node.data.name=='No'" style="background: white;color:black">{{node.data.name}}</div>
                     </div>
-                </ng-template>
-                <ng-template let-node pTemplate="department">
-                    {{node.label}}
-                </ng-template>
-              </p-organizationChart>
-                     
-          </p-fieldset>
-        </p-scrollPanel>   
-
+                  </ng-template>
+                  <ng-template let-node pTemplate="department">
+                      {{node.label}}
+                  </ng-template>
+                </p-organizationChart>
+                      
+            </p-fieldset>
+          </p-scrollPanel>   
         </div>
         
         <p-dialog [(visible)]="display" [closable]="false"	 [style]="{width: '50vw'}">
-          
           <div>
             <app-identificacion-factores-causales [identificacionFc]="selectIdentificacionFC"></app-identificacion-factores-causales>
           </div>
 
           <div >
-            <!-- <p-button icon="pi pi-check" *ngIf="!isSelectionable" (click)="display=false" label="Confirmar" class="p-button-text"></p-button> -->
             <p-button icon="pi pi-check" *ngIf="!isSelectionable" (click)="confirmCheck()" label="Confirmar" class="p-button-text"></p-button>
             <p-button icon="pi pi-times" *ngIf="!isSelectionable" (click)="cancelCheck()" label="Cancelar" class="p-button-text rigth"></p-button>
           </div>
-
         </p-dialog>
     </div>
 </form>
 
 <div *ngIf="selectIdentificacionFC"></div>
-<!-- validators={{validators}} -->
-<!-- <button (click)="test()">tyest</button> -->
