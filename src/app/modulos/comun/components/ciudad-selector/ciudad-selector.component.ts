@@ -33,6 +33,7 @@ export class CiudadSelectorComponent implements OnInit, ControlValueAccessor {
         this._value=_value
         this.updateUI()
     }
+    @Input('disabled') disabled: boolean = false;
 
     departamentoSelectId: string;
 
