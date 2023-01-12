@@ -275,7 +275,7 @@
             </p-accordionTab>
             <p-accordionTab
                 header="V. DÍAS PERDIDOS">
-                <app-incapacidades-complementaria-temporal (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList"></app-incapacidades-complementaria-temporal>
+                <app-incapacidades-complementaria-temporal (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList" [consultar]="consultar"></app-incapacidades-complementaria-temporal>
             </p-accordionTab>
             <p-accordionTab
                 header="VI. PELIGRO DESCRIPTOR">
@@ -284,34 +284,36 @@
                         Peligro
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" formControlName="Peligro"></p-dropdown>
+                        <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" formControlName="Peligro"></p-dropdown>
                     </div>
 
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Descripción del Peligro
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
+                        <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
                     </div>                    
                 </div>
             </p-accordionTab>
-            <p-accordionTab
-                header="VII. INVESTIGACIÓN">
-                <div class="ui-g" *ngFor="let data of factorCausal">
+            <p-accordionTab header="VII. INVESTIGACIÓN" *ngFor="let data of factorCausal">
+                <div >
                     <app-factor-causal (dataFC)="setListDataFactor()" (validators2)="getValidator($event)"[factorCausal]="data"></app-factor-causal>
                 </div>
             </p-accordionTab>
+            <p-accordionTab header="VIII. LISTADO DE CAUSAS">
+                <app-listado-causas-temporal [factores]="dataListFactor"></app-listado-causas-temporal>
+        </p-accordionTab>
         </p-accordion>
     </p-panel>
 
     <ng-container *ngIf="!consultar && adicionar">
         <button *sTienePermiso="'RAI_POST_REPT'" pButton  (click)="submit1()" icon="fa fa-floppy-o" title="Guardar reporte"
-            class="float-btn" [disabled]="!form.valid"></button>
+            class="float-btn" [disabled]="!form.valid" style="z-index: 100;"></button>
     </ng-container>
 
     <ng-container *ngIf="!consultar && !adicionar">
         <button *sTienePermiso="'RAI_PUT_REPT'" pButton  (click)="submit1()" icon="fa fa-pencil" title="Actualizar reporte"
-            class="float-btn ui-button-success" [disabled]="!form.valid"></button>
+            class="float-btn ui-button-success" [disabled]="!form.valid" style="z-index: 100;"></button>
     </ng-container>
 
 </form>

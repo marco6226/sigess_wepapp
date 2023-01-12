@@ -22,9 +22,9 @@ styleClass="select-material">
 
 
 
- <button pButton pRipple label="Nuevo" icon="pi pi-plus" (click)="openNew()"></button>
+ <button *ngIf="!consultar" pButton pRipple label="Nuevo" icon="pi pi-plus" (click)="openNew()"></button>
  <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" (click)="openNew()"></button> -->
- <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+ <button *ngIf="!consultar" pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
  
  <div >
      <p-table #dt [value]="incapacidades" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
@@ -32,7 +32,7 @@ styleClass="select-material">
          <ng-template pTemplate="header">
              <tr>
                  <th style="width: 3rem">
-                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                     <p-tableHeaderCheckbox *ngIf="!consultar"></p-tableHeaderCheckbox>
                  </th>
                  <th pSortableColumn="name">Tipo <p-sortIcon field="name"></p-sortIcon></th>
                  <th pSortableColumn="price">CIE 10 <p-sortIcon field="price"></p-sortIcon></th>
@@ -46,7 +46,7 @@ styleClass="select-material">
          <ng-template pTemplate="body" let-incapacidad >
              <tr>
                  <td>
-                     <p-tableCheckbox [value]="incapacidad"></p-tableCheckbox>
+                     <p-tableCheckbox [value]="incapacidad" *ngIf="!consultar"></p-tableCheckbox>
                  </td>
                  <td>{{incapacidad.tipo}}</td>
                  <td *ngIf="incapacidad['cie10'];else other_content">{{incapacidad?.cie10?.codigo}}</td>
@@ -56,8 +56,8 @@ styleClass="select-material">
                  <td>{{incapacidad.fechaFin | date: 'dd/MM/yyyy'}}</td>
                  <td>{{incapacidad.diasAusencia}}</td>
                  <td>
-                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(incapacidad)"></button>
-                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(incapacidad)"></button>
+                     <button *ngIf="!consultar" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(incapacidad)"></button>
+                     <button *ngIf="!consultar" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(incapacidad)"></button>
                  </td>
              </tr>
          </ng-template>

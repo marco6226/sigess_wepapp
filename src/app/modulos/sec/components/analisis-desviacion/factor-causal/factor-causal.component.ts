@@ -177,27 +177,28 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   validacion(){
     let validacion1, validacion2, validacion3 : boolean = false;
 
-    for (let index = 0; index < this.factorCausal.seccion[0].desempeno.length; index++) {
-      if(this.factorCausal.seccion[0].desempeno[index].selected==null){
-        validacion1=true;
-        break;
+    if(this.factorCausal.seccion){
+      for (let index = 0; index < this.factorCausal.seccion[0].desempeno.length; index++) {
+        if(this.factorCausal.seccion[0].desempeno[index].selected==null){
+          validacion1=true;
+          break;
+        }
+      }
+
+      for (let index = 0; index < this.factorCausal.seccion[1].desempeno.length; index++) {
+        if(this.factorCausal.seccion[1].desempeno[index].selected==null){
+          validacion2=true;
+          break;
+        }
+      }
+
+      for (let index = 0; index < this.factorCausal.seccion[2].desempeno.length; index++) {
+        if(this.factorCausal.seccion[2].desempeno[index].selected==null){
+          validacion3=true;
+          break;
+        }
       }
     }
-
-    for (let index = 0; index < this.factorCausal.seccion[1].desempeno.length; index++) {
-      if(this.factorCausal.seccion[1].desempeno[index].selected==null){
-        validacion2=true;
-        break;
-      }
-    }
-
-    for (let index = 0; index < this.factorCausal.seccion[2].desempeno.length; index++) {
-      if(this.factorCausal.seccion[2].desempeno[index].selected==null){
-        validacion3=true;
-        break;
-      }
-    }
-
     if(validacion1 || validacion2 || validacion3){
       this.validators = true;
     }else{
