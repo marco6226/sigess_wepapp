@@ -42,7 +42,7 @@ export class CasosMedicosService {
 
     changeEstadoById(id: number){
         return new Promise((resolve, reject) => {
-            this.http.put(`${endPoints.scm}cambiarEstado/${id}`, new Date().toString(), this.getRequestHeaders(this.headers))
+            this.http.put(`${endPoints.scm}cambiarEstado/${id}`, null, this.getRequestHeaders(this.headers))
             .map(res => res)
             .subscribe(
                 res => {

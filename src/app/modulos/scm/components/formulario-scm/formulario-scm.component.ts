@@ -193,6 +193,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     fechaActual = new Date();
     logSelected;
     status;
+    fechaCierre: any;
     recoSelect: any;
     diagSelect: any;
     seguiSelect: any;
@@ -632,6 +633,10 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     async onSubmit() {
         console.log("hi");
+
+        // if(this.fechaCierre){
+        //     this.casoMedicoForm.controls.fechaFinal = this.fechaCierre;
+        // }
         
         this.msgs = [];
         if (!this.casoMedicoForm.valid) {
@@ -643,13 +648,14 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             return this.markFormGroupTouched(this.casoMedicoForm);
         }
 
+        // console.log(typeof this.casoMedicoForm.controls.fechaFinal.value);
         this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get("area").value.nombre || "",
             ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
             names: ``,
             cargo: this.empleadoForm.value.cargoId,
             eliminado: false,
-
+            fechaFinal: this.casoMedicoForm.controls.fechaFinal.value == null ? null : this.casoMedicoForm.controls.fechaFinal.value,
 
             pkUser: this.empleadoForm.get("id").value || null,
             codigoCie10: this.casoMedicoForm.value.id || null,
@@ -1015,15 +1021,18 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.consultar = false;
         this.actualizar = true;
         this.caseSelect = this.casoSeleccionado || this.caseSelect;
-        let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, fechaConceptRehabilitacionTwo, ...caseFiltered } = this.caseSelect
+        let { fechaCalificacion, emisionPclFecha, fechaConceptRehabilitacion, fechaConceptRehabilitacionTwo, fechaFinal, ...caseFiltered } = this.caseSelect
 
+        console.log(typeof fechaFinal);
+        
         this.casoMedicoForm.patchValue(caseFiltered);
         this.casoMedicoForm.patchValue({
             fechaConceptRehabilitacion: fechaConceptRehabilitacion == null ? null : new Date(fechaConceptRehabilitacion),
             fechaConceptRehabilitacionTwo: fechaConceptRehabilitacionTwo == null ? null : new Date(fechaConceptRehabilitacionTwo),
 
             fechaCalificacion: fechaCalificacion == null ? null : new Date(fechaCalificacion),
-            emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha)
+            emisionPclFecha: emisionPclFecha == null ? null : new Date(emisionPclFecha),
+            fechaFinal: fechaFinal == null ? null : new Date(fechaFinal)
         })
 
 
@@ -1322,8 +1331,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         // console.log('Case id : (☞ﾟヮﾟ)☞' + this.caseSelect.id);
         this.confirmationService.confirm({
             header: 'Confirmar acción',
-            message: '¿Está seguro de cambiar el estado del caso? Esta acción solo permitirá consultar el caso.',
-            key: 'confirm',
+            message: '¿Está seguro de cambiar el estado del caso?',
+            // key: 'confirm',
             accept: () => {
                 this.scmService.changeEstadoById(this.caseSelect.id)
                     .then(res => {
@@ -1350,5 +1359,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             }
         });
         
+    }
+
+    permisoFechaCierre():boolean{
+        let tienePermiso = this.sesionService.getPermisosMap()['SCM_PUT_CAMBIAR_FECHAFIN'];
+        if(tienePermiso != null && tienePermiso.valido == true){
+            return true;
+        }
+        return false;
     }
 }
