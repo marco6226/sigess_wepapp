@@ -642,13 +642,24 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         if (!this.casoMedicoForm.valid) {
             this.msgs.push({
                 severity: "error",
-                summary: "Por favor revise todos los campos",
+                summary: "Por favor revise todos los campos obligatorios",
 
             });
             return this.markFormGroupTouched(this.casoMedicoForm);
         }
 
         // console.log(typeof this.casoMedicoForm.controls.fechaFinal.value);
+        try{
+            let region = this.empleadoForm.get("area").value.nombre;
+            let ciudad = this.empleadoForm.get("ciudad").value.nombre;
+        } catch(e){
+            this.msgs.push({
+                severity: "error",
+                detail: 'Por favor revise los campos <b>ciudad de residencia</b> en la pestaña <b>información general</b>.',
+                life: 6000,
+            });
+            return this.markFormGroupTouched(this.empleadoForm);
+        }
         this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get("area").value.nombre || "",
             ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
@@ -1327,37 +1338,77 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         }); 
     }    
     
-    cambiarEstado(){
+    cambiarEstado(event?: any){
         // console.log('Case id : (☞ﾟヮﾟ)☞' + this.caseSelect.id);
-        this.confirmationService.confirm({
-            header: 'Confirmar acción',
-            message: '¿Está seguro de cambiar el estado del caso?',
-            // key: 'confirm',
-            accept: () => {
-                this.scmService.changeEstadoById(this.caseSelect.id)
-                    .then(res => {
-                        this.msgs = [];
-                        this.msgs.push({
-                            severity: "success",
-                            summary: "Guardado",
-                            detail: `El estado del caso se ha actualizado exitosamente.`,
-                            life: 3000
+        this.msgs = [];
+        if(event && event == 'cerrar'){
+            if((this.casoMedicoForm.controls.fechaFinal.value != null && this.casoMedicoForm.controls.fechaFinal.value != '')
+                && (this.casoMedicoForm.controls.observaciones.value != null && this.casoMedicoForm.controls.observaciones.value != '')){
+                this.confirmationService.confirm({
+                    header: 'Confirmar acción',
+                    message: '¿Está seguro de cambiar el estado del caso?',
+                    // key: 'confirm',
+                    accept: () => {
+                        this.scmService.edit(this.casoMedicoForm.value).then(() =>{
+                            this.scmService.changeEstadoById(this.caseSelect.id)
+                            .then(res => {
+                                this.msgs.push({
+                                    severity: "success",
+                                    summary: "Guardado",
+                                    detail: `El estado del caso se ha actualizado exitosamente.`,
+                                    life: 3000
+                                });
+                                setTimeout(() => {
+                                    this.router.navigate(["/app/scm/list"]);
+                                }, 3000);
+                            })
+                            .catch(err => {
+                                // console.error(err);
+                                this.msgs.push({
+                                    severity: "error",
+                                    summary: "Error",
+                                    detail: "Error al cambiar estado del caso.",
+                                });
+                            });
                         });
-                        setTimeout(() => {
-                            this.router.navigate(["/app/scm/list"]);
-                        }, 3000);
-                    })
-                    .catch(err => {
-                        this.msgs = [];
-                        console.error(err);
-                        this.msgs.push({
-                            severity: "error",
-                            summary: "Error",
-                            detail: "Error al cambiar estado del caso.",
-                        });
-                    });
+                    }
+                });
+            }else{
+                this.msgs.push({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "Debe completar la información: Fecha de cierre y Observaciones del cierre"
+                });
             }
-        });
+        }else{
+            this.confirmationService.confirm({
+                header: 'Confirmar acción',
+                message: '¿Está seguro de cambiar el estado del caso?',
+                // key: 'confirm',
+                accept: () => {
+                    this.scmService.changeEstadoById(this.caseSelect.id)
+                        .then(res => {
+                            this.msgs.push({
+                                severity: "success",
+                                summary: "Guardado",
+                                detail: `El estado del caso se ha actualizado exitosamente.`,
+                                life: 3000
+                            });
+                            setTimeout(() => {
+                                this.router.navigate(["/app/scm/list"]);
+                            }, 3000);
+                        })
+                        .catch(err => {
+                            // console.error(err);
+                            this.msgs.push({
+                                severity: "error",
+                                summary: "Error",
+                                detail: "Error al cambiar estado del caso.",
+                            });
+                        });
+                }
+            });
+        }
         
     }
 

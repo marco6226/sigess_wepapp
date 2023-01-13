@@ -99,10 +99,19 @@ export class GestionDocumentalComponent implements OnInit {
         filterPadre.field = 'directorioPadre';
         filterQuery.filterList = [filterPadre, filterEliminado];
 
+        
+
         let filterCase = new Filter();
         filterCase.criteria = Criteria.IS_NULL;
         filterCase.field = 'caseId';
         filterQuery.filterList = [filterPadre, filterEliminado, filterCase];
+
+        let filterAdo = new Filter();
+        filterAdo.criteria = Criteria.EQUALS;
+        filterAdo.field = 'documento.modulo';
+        filterAdo.value1 = 'ADO';
+        filterQuery.filterList = [filterPadre, filterEliminado,filterCase,filterAdo];
+
         if (this.caseid) {
             filterCase.criteria = Criteria.EQUALS;
             filterCase.value1 = this.caseid;

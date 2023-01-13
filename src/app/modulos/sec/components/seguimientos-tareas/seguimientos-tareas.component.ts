@@ -139,7 +139,7 @@ export class SeguimientosTareasComponent implements OnInit {
             this.msgs.push({
                 severity: "error",
                 summary: "Mensaje del sistema",
-                detail: "Por favor revise todos los campos",
+                detail: "Por favor revise todos los campos obligatorios",
             });
             console.log('Data: ', this.trackingForm.value);
             return;
