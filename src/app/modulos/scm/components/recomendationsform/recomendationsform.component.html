@@ -111,9 +111,9 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-calendar [disabled]="esConsulta" [touchUI]="true" [(ngModel)]="pAccion.fechaProyectada"
-                                 dateFormat="dd/mm/yy"  [locale]="localeES"
+                                 dateFormat="dd/mm/yy"  
                                   [monthNavigator]="true"  [yearNavigator]="true" showButtonBar="true" yearRange="2010:2030" styleClass="calendar-material"
-                                    inputStyleClass="form-material">
+                                    inputStyleClass="form-material" [locale]="localeES">
                                 </p-calendar>
 
                             </ng-template>
@@ -125,7 +125,7 @@
                     <td class="p-text-center">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-autoComplete [readonly]="esConsulta" styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="pAccion.responsableEmpresa = $event" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" field="numeroIdentificacion"
+                                <p-autoComplete [readonly]="esConsulta" styleClass="form-material-autocomplete" #autocomplete placeholder="Digite" [style]="{'width':'100%'}" (onSelect)="pAccion.responsableEmpresa = $event" [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)" field="primerNombre"
                                     [(ngModel)]="pAccion.responsableEmpresa" *ngIf="empleado?.id == null">
                                     <ng-template let-empleado pTemplate="item">
                                         <div class="ui-helper-clearfix">
@@ -184,77 +184,10 @@
         </p-table>
     </div>
 
-    <!-- <div class="ui-g-12">
-        <h5 class="title-header p-mb-2">Plan de Acción</h5>
-    </div>            
-    <div class="ui-g-12 ui-md-6 ui-lg-6">
-        <div class="input-field">
-
-            <textarea formControlName="actividad" class="textarea-material" pInputTextarea required></textarea>
-
-            <label for="" class="active">Actividad</label>
-        </div>
-        
-    </div>
-    <div class="ui-g-12 ui-md-6 ui-lg-6">
-        <div class="input-field">
-            <textarea formControlName="descripcion_act" class="textarea-material" pInputTextarea></textarea>
-
-            <label for="" class="active">Descripcion de la Actividad</label>
-        </div>
-        
-    </div>
-    <div class="ui-g-12 ui-md-6 ui-lg-6">
-        <div class="input-field">
-            <p-calendar [monthNavigator]="true" [touchUI]="true" [yearNavigator]="true" [yearRange]="yearRange"
-            formControlName="fecha_proyectada" [locale]="localeES" dateFormat="dd/mm/yy"
-            styleClass="calendar-material" inputStyleClass="form-material">
-        </p-calendar>
-            <label for="" class="active">Fecha proyectada</label>
-        </div>
-       
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-6">
-        <div class="input-field">
-            <p-autoComplete styleClass="form-material-autocomplete" placeholder="Digite"
-                [style]="{'width':'100%'}" (onSelect)="onSelectionResponsable($event)"
-                formControlName="responsableEmpresaNombre" [suggestions]="empleadosList"
-                (completeMethod)="buscarEmpleado($event)" *ngIf="empleado?.id == null">
-                <ng-template let-empleado pTemplate="item">
-                    <div class="ui-helper-clearfix">
-                        <div class="wrapper">
-                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
-                                style="font-size: 48px;" aria-hidden="true"></i>
-                            <img *ngIf="empleado.usuario?.icon" [src]="empleado.usuario?.icon"
-                                style="border-radius: 50%;" #imgAvatar />
-                            <div style="margin-left:20px">
-                                <br />{{empleado?.primerApellido}} {{empleado?.primerNombre}}
-                                {{empleado?.segundoNombre}}
-
-                                <br /> {{empleado?.numeroIdentificacion}}
-                                <br /> {{empleado?.usuario.email}}
-                            </div> 
-                        </div>
-                    </div>
-                </ng-template>
-            </p-autoComplete>
-            <label for="" class="active">responsable empresa</label>
-
-        </div>
-       
-    </div>
-
-    <div class="ui-g-12 ui-md-6 ui-lg-4">
-        <div class="input-field">
-            <input type="text" formControlName="responsableExterno" pInputText placeholder="Responsable"
-                class="form-material" id="" />
-            <label for="" class="active">Responsable Externo </label>
-        </div>
-        
-    </div> -->
     <div class="ui-g-12 p-pt-3">
         <button [disabled]="esConsulta" *sTienePermiso="'SCM_CREATE_CASE_RECO'" pButton type="button" [label]="(recoSelect) ? 'Actualizar' : 'Guardar'" icon="fa fa-plus" (click)="onSubmit()">
 
         </button>
+        <button (click)="test()">test</button>
     </div>
 </div>

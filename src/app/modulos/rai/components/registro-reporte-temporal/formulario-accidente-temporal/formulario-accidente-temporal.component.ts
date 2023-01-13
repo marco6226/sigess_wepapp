@@ -38,7 +38,7 @@ import { Desviacion } from "app/modulos/sec/entities/desviacion";
 import { InformacionComplementaria} from 'app/modulos/sec/entities/informacion_complementaria';
 import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion} from 'app/modulos/sec/entities/factor-causal';
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
-
+import { Modulo } from '../../../../core/enums/enumeraciones';
 
 @Component({
   selector: 'app-formulario-accidente-temporal',
@@ -605,4 +605,11 @@ setFactorCausal(){
     this.factorCausal.push({id:1, nombre:'contratista'});
     this.setListDataFactor();}
 }
+
+modulo = Modulo.RAI.value;
+visibleDlgExcel: boolean = false;
+showDialog(){
+  this.visibleDlgExcel = true;
+}
+
 }

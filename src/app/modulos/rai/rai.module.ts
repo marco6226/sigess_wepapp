@@ -42,7 +42,7 @@ import { FormularioIncidenteTemporalComponent } from './components/registro-repo
 import { IncapacidadesComplementariaComponent } from 'app/modulos/sec/components/analisis-desviacion/factor-causal/incapacidades-complementaria/incapacidades-complementaria.component';
 import { IncapacidadesComplementariaTemporalComponent } from './components/registro-reporte-temporal/formulario-accidente-temporal/incapacidades-complementaria-temporal/incapacidades-complementaria-temporal.component';
 import { ListadoCausasTemporalComponent } from './components/registro-reporte-temporal/formulario-accidente-temporal/listado-causas-temporal/listado-causas-temporal.component';
-
+// import { FileUploaderComponent } from '../core/components/file-uploader/file-uploader.component';
 @NgModule({
   imports: [
     CommonModule,

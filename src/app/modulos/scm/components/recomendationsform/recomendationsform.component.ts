@@ -85,7 +85,9 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         });
 
     }
-
+test(){
+    console.log(this.accions)
+}
     ngOnChanges(changes: SimpleChanges) {
         this.patchFormValues();
         // You can also use categoryId.previousValue and 
@@ -210,7 +212,10 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         console.log(this.recoSelect);
         if (this.recoSelect) {
             this.accions = this.recoSelect.actionPlanList;
-            this.accions.map(act => act.responsableEmpresa = this.onSelectionResponsable(act.responsableEmpresa))
+            this.accions.map(act => {
+                act.responsableEmpresa = this.onSelectionResponsable(act.responsableEmpresa)
+                act.fechaProyectada=new Date(act.fechaProyectada)
+            })
             this.recomendation.patchValue({
                 entidadEmitRecomendaciones: this.recoSelect.entidadEmitRecomendaciones,
                 tipo: this.recoSelect.tipo,
@@ -227,6 +232,7 @@ export class RecomendationsformComponent implements OnInit, OnChanges {
         } else {
             this.clearInputs();
         }
+        console.log(this.accions);
         console.log(this.entidadEmitRecomendaciones);
     }
 
