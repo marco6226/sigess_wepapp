@@ -649,6 +649,17 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         }
 
         // console.log(typeof this.casoMedicoForm.controls.fechaFinal.value);
+        try{
+            let region = this.empleadoForm.get("area").value.nombre;
+            let ciudad = this.empleadoForm.get("ciudad").value.nombre;
+        } catch(e){
+            this.msgs.push({
+                severity: "error",
+                detail: 'Por favor revise los campos <b>ciudad de residencia</b> en la pestaña <b>información general</b>.',
+                life: 6000,
+            });
+            return this.markFormGroupTouched(this.empleadoForm);
+        }
         this.casoMedicoForm.patchValue({
             region: this.empleadoForm.get("area").value.nombre || "",
             ciudad: this.empleadoForm.get("ciudad").value.nombre || "",
