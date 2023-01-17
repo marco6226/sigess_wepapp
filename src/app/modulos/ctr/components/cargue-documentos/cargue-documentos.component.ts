@@ -75,6 +75,17 @@ export class CargueDocumentosComponent implements OnInit {
   fecha_vencimiento_cert_ext: Date;
   onEdit: string = '';
 
+  es = {
+    firstDayOfWeek: 1,
+    dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+    dayNamesShort: ["Dom", "Lun", "Mar", "Miér", "Juev", "Vier", "Sáb"],
+    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+    monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    today: 'Hoy',
+    clear: 'Limpiar'
+  };
+
   constructor(
     private domSanitizer: DomSanitizer,
     private directorioService: DirectorioService,
@@ -84,6 +95,9 @@ export class CargueDocumentosComponent implements OnInit {
 
   ngOnInit(): void {
     this.onEdit = this.activatedRoute.snapshot.params.onEdit;
+    setTimeout(() => {
+      console.log(this.directorios)
+    }, 20000);
   }
 
   showDialog(tipo: string) {    
@@ -214,4 +228,5 @@ export class CargueDocumentosComponent implements OnInit {
     let dwldLink = document.getElementById("dwldLink");    
     this.idDoc.emit('777')
   }
+
 }

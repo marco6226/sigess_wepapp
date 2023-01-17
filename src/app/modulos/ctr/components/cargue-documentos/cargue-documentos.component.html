@@ -9,7 +9,7 @@
             
             <div class="col-3">
                 <label for="fechaVencimientoArl">Fecha Vencimiento: </label>
-                <p-calendar required [disabled]="flagConsult" [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl"></p-calendar>    
+                <p-calendar required [disabled]="flagConsult" [(ngModel)]="this.fecha_vencimiento_arl" (onSelect)="onSelectArl($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="es" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoArl" showButtonBar="true"></p-calendar>    
             </div>
             <div class="col-6">
                 <div class="ui-g-12 ui-sm-12 ui-md-10">
@@ -47,12 +47,12 @@
         <div class="row">
             <div class="col-3">
                 <button [disabled]="flagConsult" pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
-                <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
+                <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)" [directorio]="directorio"></s-documentoUpload>
             </div>
         
             <div class="col-3">
                 <label for="fechaVencimientoSst">Fecha Vencimiento: </label>
-                <p-calendar required [disabled]="flagConsult" [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoSst"></p-calendar>
+                <p-calendar required [disabled]="flagConsult" [(ngModel)]="fecha_vencimiento_sst" (onSelect)="onSelectSst($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="es" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoSst" showButtonBar="true"></p-calendar>
             </div>
         </div>
         <div class="ui-g" style="margin-top: 10px;">
@@ -90,7 +90,7 @@
         
             <div class="col-3">
                 <label for="fechaVencimientoCertExterna">Fecha Vencimiento: </label>
-                <p-calendar [disabled]="flagConsult" [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="localeES" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna"></p-calendar>
+                <p-calendar [disabled]="flagConsult" [(ngModel)]="fecha_vencimiento_cert_ext" (onSelect)="onSelectCertExt($event)" [yearNavigator]="true" yearRange="1900:2050" [monthNavigator]="true" [locale]="es" dateFormat="dd/mm/yy" [touchUI]="true" [readonlyInput]="true" inputId="touchui" name="fechaVencimientoCertExterna" showButtonBar="true"></p-calendar>
             </div>
         </div>
         <div class="ui-g" style="margin-top: 10px;">

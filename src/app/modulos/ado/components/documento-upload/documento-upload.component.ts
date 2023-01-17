@@ -25,11 +25,6 @@ export class DocumentoUploadComponent implements OnInit {
     @Output('onUpload') onUpload = new EventEmitter();
     esPrivado: boolean;
     myGroup: any;
-    // tipoEvidenciaf: string ="fotografica";
-    // tipoEvidenciad: "documental";
-    // tipoEvidenciap: "politica";
-    // tipoEvidenciapro: "procedimiento";
-    // tipoEvidenciam: "multimedia";
     form
     doContratista= [
         { label: "--Seleccione--", value: null },
@@ -43,8 +38,6 @@ export class DocumentoUploadComponent implements OnInit {
         private messageService: MessageService
         
         ) {}
-    // descripcion: new FormControlName()
-
 
     ngOnInit() {
         this.myGroup = new FormGroup({
@@ -54,25 +47,15 @@ export class DocumentoUploadComponent implements OnInit {
         this.form = new  FormGroup({
             descripcion: new FormControl("",Validators.required)
         })
-
-        
     }
 
     onVisibleChange(event: boolean) {
         this.visibleChange.emit(event);
     }
-    test(){
-        console.log('aqui')
-    }
+
     myfiles: any = [];
     upload(event) {
-        console.log(this.form);
-        
-
         if(!this.form.invalid){
-            console.log(event);
-
-            console.log('caso de id', this.caseId, this.directorio);
             event.files[0].descripcion=this.form.value.descripcion;
             if (this.caseId) {
                 // this.directorio.caseId = this.caseId

@@ -26,7 +26,7 @@ export class LocalidadesComponent implements OnInit {
 
   @Input('selectLocalidad') 
   set localidadesIn(localidades: string){
-    this.loadLocalidades()
+    // this.loadLocalidades()
     if(localidades != null){
       console.log(localidades);
       this.selectLocalidades = JSON.parse(localidades)
@@ -87,17 +87,25 @@ export class LocalidadesComponent implements OnInit {
 
   async loadLocalidades(){
     await this.empresaService.getLocalidades().then((element: Localidades[]) =>{
-
-
       element.forEach(elemen => {
         this.locadidadList.push({label: elemen.localidad, value: elemen.localidad})
     });
    });
 
-    // if (this.valueEmpresa.localidad) {
-    //   this.valueEmpresa.localidad = JSON.parse( this.valueEmpresa.localidad)      
-    // }
-    
+   this.locadidadList.sort(function(a,b){
+    if(a.label > b.label){
+      return 1
+    }else if(a.label < b.label){
+      return -1;
+    }
+      return 0;
+    });
+  }
+
+  SortArray(x, y){
+    if (x.LastName < y.LastName) {return -1;}
+    if (x.LastName > y.LastName) {return 1;}
+    return 0;
   }
 
   abrirDialogoLocalidades(param: string =null){
