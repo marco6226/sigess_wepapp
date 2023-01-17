@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-3">
                 <button [disabled]="flagConsult" pButton type="button" (click)="showDialog('licencia')" icon="fa fa-plus" label="Adjuntar soporte" style="margin-bottom: 10px;"></button>
-                <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)" [directorio]="directorio"></s-documentoUpload>
+                <s-documentoUpload [(visible)]="visibleDlgLicenciaSST" [modParam]="analisisId" [modulo]="modulo" tipoEvidencia="licencia" (onUpload)="onUpload($event)"></s-documentoUpload>
             </div>
         
             <div class="col-3">
