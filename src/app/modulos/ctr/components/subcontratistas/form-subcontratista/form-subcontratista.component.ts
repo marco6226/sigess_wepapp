@@ -66,7 +66,7 @@ export class FormSubcontratistaComponent implements OnInit {
       nombre:[null],
       actividades_riesgo:[null],
       tipo_persona:[null],
-      porcentaje_certificacion:[0],
+      porcentaje_certificacion:[null],
       estado:[null],
       carta_autorizacion:[null]
     });
@@ -134,11 +134,11 @@ export class FormSubcontratistaComponent implements OnInit {
   selectTipoPersona(tipo: string){
     if(tipo == 'Natural'){
       this.formSubcontratista.value.porcentaje_certificacion = null;
+      this.formSubcontratista.controls['porcentaje_certificacion'].clearValidators();
     }else if(tipo == 'Jurídica'){
-      this.formSubcontratista.value.porcentaje_certificacion = 0;
-      this.formSubcontratista.controls['tipo_persona'].validator = null;
-      console.log(this.formSubcontratista.controls['tipo_persona'].validator);
-      
+      this.formSubcontratista.value.porcentaje_certificacion = null;
+      this.formSubcontratista.controls['porcentaje_certificacion'].setValidators(Validators.required);
+      // console.log(this.formSubcontratista.controls['tipo_persona'].validator);
     }
   }
 }
