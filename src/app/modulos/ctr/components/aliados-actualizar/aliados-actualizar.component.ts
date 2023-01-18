@@ -348,7 +348,7 @@ export class AliadosActualizarComponent implements OnInit {
 
   mensajesDeValidacion(){
     if(this.onEdit == 'edit' && !this.gestorDataIsValid()){
-      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'La información del aliado no está completa'});
+      this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'La información del aliado no está completa'});
       if(this.aliadoInformacion.actividad_contratada == null || this.aliadoInformacion.actividad_contratada == '' || !this.actividadContratadaIsValid(this.aliadoInformacion.actividad_contratada)){
         this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'No ha seleccionado las actividades contratadas.', life:6000});
       }
@@ -373,7 +373,7 @@ export class AliadosActualizarComponent implements OnInit {
     }
     
     if(typeof this.onEdit == 'undefined' && !this.aliadoDataIsValid()){
-      this.messageService.add({key: 'msgActualizarAliado', severity:'error', summary: 'Error', detail: 'La información no está completa'});
+      this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'La información no está completa'});
       if(this.aliadoInformacion.representante_legal == null){
         this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar nombre del representante legal.', life:6000});
       }
