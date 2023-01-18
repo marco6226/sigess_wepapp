@@ -73,7 +73,6 @@ export class SubcontratistasComponent implements OnInit {
   }
 
   createSubcontratista(){
-    this.selectedSubcontratista = null;
     this.displayDialog = true;
   }
 
@@ -83,12 +82,11 @@ export class SubcontratistasComponent implements OnInit {
 
   closeFormSubcontratista(onCancelar: boolean){
     // console.log('onCancelar: '+ onCancelar);
+    // this.selectedSubcontratista = null;
     if(onCancelar){
       this.displayDialog = false;
-      this.selectedSubcontratista = null;
     }else{
       this.displayDialog = false;
-      this.selectedSubcontratista = null;
       this.fetchSubcontratistasList().then(()=>{
         this.messageService.add({key: 'msg', severity:'success', summary: 'Guardado', detail: 'Se guardó subcontratista'});
       });

@@ -50,7 +50,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="summary">
-    <button pButton type="button" [disabled]="(selectedSubcontratista!=null) || onEdit!='edit'" icon="fa fa-plus" label="Crear" (click)="createSubcontratista()"></button>
+    <button pButton type="button" [disabled]="(selectedSubcontratista!=null) || onEdit!='edit'" icon="fa fa-plus" label="Crear" (click)="createSubcontratista();selectedSubcontratista=null"></button>
     <button pButton type="button" icon="fa fa-pencil" label="Modificar" [disabled]="selectedSubcontratista==null || onEdit!='edit'" class="ui-button-success" (click)="editSubcontratista()"></button>
     <button pButton type="button" (click)="showDialogCarta()" [disabled]="selectedSubcontratista==null || onEdit!='edit'" icon="pi pi-cloud-upload" label="Adjuntar soporte" style="margin-bottom: 10px;" class="ui-button-warning"></button>
     <s-documentoUpload [(visible)]="dialogCarta" [modParam]="aliadoId" [modulo]="modulo" [tipoEvidencia]="'cartaAutorizacion'" (onUpload)="onUpload($event, selectedSubcontratista.id)" [contratistasFlag]="contratistasFlag"></s-documentoUpload>
@@ -63,5 +63,5 @@
 </p-table>
 
 <p-dialog header="Crear subcontratista" [closable]="false" [modal]="true" [style]="{'width':'60%'}" [(visible)]="displayDialog">
-  <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista($event)"></app-form-subcontratista>
+  <app-form-subcontratista [loadSubcontratista]="selectedSubcontratista" [aliadoId]="aliadoId" (cancelarFormulario)="closeFormSubcontratista($event);selectedSubcontratista=null"></app-form-subcontratista>
 </p-dialog>
