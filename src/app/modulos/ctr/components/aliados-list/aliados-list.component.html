@@ -109,8 +109,9 @@
                         selectionMode="range"
                         (onSelect)="dt.filter(rangeDatesCreacion,'fechaCreacion', 'fechaCreacionFilter')"
                         placeholder="buscar"
-                        appendTo="body">
-                    </p-calendar>
+                        appendTo="body"
+                        [locale]="es"
+                        showButtonBar="true"></p-calendar>
                     </div>
                 </th>
                 <th>
@@ -124,7 +125,9 @@
                         selectionMode="range"
                         (onSelect)="dt.filter(rangeDatesActualizacion,'fechaActualizacion', 'FechaActualizacionFilter')"
                         placeholder="buscar"
-                        appendTo="body"></p-calendar>
+                        appendTo="body"
+                        [locale]="es"
+                        showButtonBar="true"></p-calendar>
                     </div>
                 </th>
                 <th>
