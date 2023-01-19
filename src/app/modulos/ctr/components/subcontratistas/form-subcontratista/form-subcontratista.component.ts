@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { Documento } from 'app/modulos/ado/entities/documento';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
@@ -37,7 +37,16 @@ export class FormSubcontratistaComponent implements OnInit {
       this.formSubcontratista.controls['tipo_persona'].setValue(subcontratista.tipo_persona)
       this.formSubcontratista.controls['porcentaje_certificacion'].setValue(subcontratista.porcentaje_arl);
       this.formSubcontratista.controls['estado'].setValue(JSON.parse(subcontratista.estado));
-      this.formSubcontratista.controls['carta_autorizacion'].setValue(subcontratista.carta_autorizacion)
+      this.formSubcontratista.controls['carta_autorizacion'].setValue(subcontratista.carta_autorizacion);
+
+      if(this.formSubcontratista.controls['tipo_persona'].value=='Jurídica'){
+        this.formSubcontratista.controls['porcentaje_certificacion'].setValidators(Validators.required);
+      }else {
+        this.formSubcontratista.controls['porcentaje_certificacion'].clearValidators();
+      }
+    }else{
+      this.isSaveOrUpdate = 'save';
+      this.formSubcontratista.reset();
     }
   }
 
@@ -80,6 +89,7 @@ export class FormSubcontratistaComponent implements OnInit {
       if(this.isSaveOrUpdate === 'save'){
         // console.log('saveSubcontratista');
         this.subcontratistaData = {
+          id: null,
           nit: this.formSubcontratista.value.nit,
           nombre: this.formSubcontratista.value.nombre,
           actividades_riesgo: JSON.stringify(this.formSubcontratista.value.actividades_riesgo),
@@ -132,13 +142,19 @@ export class FormSubcontratistaComponent implements OnInit {
   }
 
   selectTipoPersona(tipo: string){
-    if(tipo == 'Natural'){
-      this.formSubcontratista.value.porcentaje_certificacion = null;
+    // console.log(tipo);
+    
+    if(tipo === 'Natural'){
+      // console.log(tipo);
+      
       this.formSubcontratista.controls['porcentaje_certificacion'].clearValidators();
-    }else if(tipo == 'Jurídica'){
-      this.formSubcontratista.value.porcentaje_certificacion = null;
+      this.formSubcontratista.controls['porcentaje_certificacion'].setValue(null);
+    }else if(tipo === 'Jurídica'){
+      // console.log(tipo);
+      
+      this.formSubcontratista.controls['porcentaje_certificacion'].clearValidators();
       this.formSubcontratista.controls['porcentaje_certificacion'].setValidators(Validators.required);
-      // console.log(this.formSubcontratista.controls['tipo_persona'].validator);
+      this.formSubcontratista.controls['porcentaje_certificacion'].setValue(null);
     }
   }
 }

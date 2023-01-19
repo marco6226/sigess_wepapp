@@ -4,7 +4,7 @@
 
 <p-panel header="Listado de Aliados" [style.display]="aliadosList && aliadosList.length > 0 ? 'block':'none'">
     <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" label="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
-    <button type="reset" pButton (click)="dt.reset();rangeDatesCreacion=null;rangeDatesActualizacion=null" title="Reiniciar Filtros" label="Reiniciar filtros" icon="fa fa-retweet"></button>
+    <button type="reset" pButton (click)="dt.reset();rangeDatesCreacion=null;rangeDatesActualizacion=null" title="Reiniciar Filtros" label="Reiniciar filtros" icon="fa fa-retweet" style="margin-left: 10px;"></button>
     <p-tabView>
     <p-table #dt id="excel-table" 
         autoLayout="true"
@@ -110,8 +110,12 @@
                         (onSelect)="dt.filter(rangeDatesCreacion,'fechaCreacion', 'fechaCreacionFilter')"
                         placeholder="buscar"
                         appendTo="body"
-                        [locale]="es"
-                        showButtonBar="true"></p-calendar>
+                        showButtonBar="true"
+                        (onTodayClick)="dt.filter(rangeDatesCreacion, 'fechaCreacion', 'fechaCreacionFilter')"
+                        (onClearClick)="onResetDate(dt, 'fechaCreacion')"
+                        [locale]="es">
+                            <p-header style="text-align: center;"><h5>Seleccione un rango</h5></p-header>
+                        </p-calendar>
                     </div>
                 </th>
                 <th>
@@ -126,8 +130,12 @@
                         (onSelect)="dt.filter(rangeDatesActualizacion,'fechaActualizacion', 'FechaActualizacionFilter')"
                         placeholder="buscar"
                         appendTo="body"
-                        [locale]="es"
-                        showButtonBar="true"></p-calendar>
+                        showButtonBar="true"
+                        (onTodayClick)="dt.filter(rangeDatesActualizacion, 'fechaActualizacion', 'FechaActualizacionFilter')"
+                        (onClearClick)="onResetDate(dt, 'fechaActualizacion')"
+                        [locale]="es">
+                            <p-header style="text-align: center;"><h5>Seleccione un rango</h5></p-header>
+                        </p-calendar>
                     </div>
                 </th>
                 <th>

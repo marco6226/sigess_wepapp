@@ -11,6 +11,7 @@ import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Criteria, Filter } from 'app/modulos/core/entities/filter';
 import * as XLSX from 'xlsx';
 import { FilterUtils } from 'primeng/api'
+import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 
 @Component({
   selector: 'app-aliados-list',
@@ -229,4 +230,22 @@ export class AliadosListComponent implements OnInit {
       return arreglo.join(", ");
     }
 
-}
+    onResetDate(dt:any, opt: string){
+      switch (opt) {
+        case 'fechaCreacion':
+          dt.reset();
+          if(this.rangeDatesActualizacion){
+            dt.filter(this.rangeDatesActualizacion, 'fechaActualizacion', 'FechaActualizacionFilter');
+          }
+          break;
+        case 'fechaActualizacion':
+          dt.reset();
+          if(this.rangeDatesCreacion){
+            dt.filter(this.rangeDatesCreacion, 'fechaCreacion', 'fechaCreacionFilter');
+          }
+          break;
+        default:
+          break;
+      }
+    }
+};
