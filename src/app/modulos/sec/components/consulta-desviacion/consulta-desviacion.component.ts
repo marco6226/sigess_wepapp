@@ -66,11 +66,18 @@ export class ConsultaDesviacionComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ok");
+
     
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
-    console.log(this.areasPermiso);
-    
+    let areasPermiso =this.areasPermiso.replace('{','');
+    areasPermiso =areasPermiso.replace('}','');
+    let areasPermiso2=areasPermiso.split(',')
+
+    const filteredArea = areasPermiso2.filter(function(ele , pos){
+      return areasPermiso2.indexOf(ele) == pos;
+    }) 
+    this.areasPermiso='{'+filteredArea.toString()+'}';
+    // console.log(this.areasPermiso);
   }
   
 

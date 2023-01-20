@@ -121,6 +121,14 @@ const userP = await this.userService.findByFilter(filterQuery);
     let userParray:any = userP;   
    
     this.areasPerm = this.sesionService.getPermisosMap()['INP_GET_PROG'].areas;
+    let areasPermiso =this.areasPerm.replace('{','');
+    areasPermiso =areasPermiso.replace('}','');
+    let areasPermiso2=areasPermiso.split(',')
+
+    const filteredArea = areasPermiso2.filter(function(ele , pos){
+      return areasPermiso2.indexOf(ele) == pos;
+    }) 
+    this.areasPerm='{'+filteredArea.toString()+'}';
 
     this.fechaMaxima = new Date();
     this.fechaMaxima.setDate(31);

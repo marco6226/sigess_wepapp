@@ -147,6 +147,15 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   async ngOnInit() {
 
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
+    let areasPermiso =this.areasPermiso.replace('{','');
+    areasPermiso =areasPermiso.replace('}','');
+    let areasPermiso2=areasPermiso.split(',')
+
+    const filteredArea = areasPermiso2.filter(function(ele , pos){
+      return areasPermiso2.indexOf(ele) == pos;
+    }) 
+    this.areasPermiso='{'+filteredArea.toString()+'}';
+    
     this.idEmpresa = this.sesionService.getEmpresa().id;
     this.infoEmpresa()
 
