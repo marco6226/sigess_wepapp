@@ -40,7 +40,10 @@
             <div *ngFor="let dir of directoriosSubcontratistas['dir_'+rowData.id]">
               <div class="dwrapper" *ngIf="dir!.documento.proceso=='cartaAutorizacion'">
                 <span [class]="dir.extension?.icono" [style.color]="dir.extension?.color"></span>
-                <a style="margin-left: 10px;color: blue;" (click)="descargarDocumento(dir.documento)">{{dir.documento.descripcion}}</a><br>
+                <a style="margin-left: 10px;color: blue;" (click)="descargarDocumento(dir.documento)">{{dir.documento.descripcion+' '}}</a>
+                <ng-container *ngIf="selectedSubcontratista">
+                  <a *ngIf="onEdit=='edit' && selectedSubcontratista.nit==rowData.nit" class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(dir, selectedSubcontratista.id)" style="color: red;"></a><br>
+                </ng-container>
                 <label for="">{{dir.fechaCreacion | date:'yyyy-MM-dd'}}</label>
               </div>
             </div>

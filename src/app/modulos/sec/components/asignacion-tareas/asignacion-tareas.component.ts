@@ -85,6 +85,15 @@ export class AsignacionTareasComponent implements OnInit {
         }
        // this.arrayIdsareas = [54, 52];
         let areas: string = this.sesionService.getPermisosMap()['SEC_GET_TAR'].areas;
+        let areasPermiso =areas.replace('{','');
+        areasPermiso =areasPermiso.replace('}','');
+        let areasPermiso2=areasPermiso.split(',')
+    
+        const filteredArea = areasPermiso2.filter(function(ele , pos){
+          return areasPermiso2.indexOf(ele) == pos;
+        }) 
+        areas='{'+filteredArea.toString()+'}';
+
         areas = areas.replace('{', '');
         areas = areas.replace('}', '');     
         this.arrayIdsareas.push (areas.valueOf());

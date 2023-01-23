@@ -40,6 +40,8 @@ export class ActividadesContratadasComponent implements OnInit {
   actividadesContratadasListSub1:TreeNode[];
   actividadesContratadasListSub2:TreeNode[];
 
+  actividadesContratadasList2:TreeNode[];
+
   selectActividad
   selectActividadSub
 
@@ -107,6 +109,7 @@ export class ActividadesContratadasComponent implements OnInit {
 
   async loadActividadesContratadas(){
     this.actividadesContratadasList=[]
+    this.actividadesContratadasList2=[]
     this.actividadesContratadasListSub1=[]
     this.actividadesContratadasListSub2=[]
 
@@ -150,6 +153,9 @@ export class ActividadesContratadasComponent implements OnInit {
 
       this.actividadesContratadasList.push({key:id1,label: "SERVICIOS ADMINISTRATIVOS",  data: "SERVICIOS ADMINISTRATIVOS",selectable:false, children:this.actividadesContratadasListSub1})
       this.actividadesContratadasList.push({key:id2,label: "SERVICIOS DE MANTENIMIENTO",  data: "SERVICIOS DE MANTENIMIENTO",selectable:false, children:this.actividadesContratadasListSub2})
+      this.actividadesContratadasList2.push({key:id1,label: "SERVICIOS ADMINISTRATIVOS",  data: "SERVICIOS ADMINISTRATIVOS",selectable:false, children:this.actividadesContratadasListSub1})
+      this.actividadesContratadasList2.push({key:id2,label: "SERVICIOS DE MANTENIMIENTO",  data: "SERVICIOS DE MANTENIMIENTO",selectable:false, children:this.actividadesContratadasListSub2})
+      
    });
   }
 

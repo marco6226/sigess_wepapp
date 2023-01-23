@@ -286,15 +286,17 @@ export class AliadosComponent implements OnInit {
           }
 
           this.empresaService.saveAliadoInformacion(aliadoInformacion)
-            .then((e: AliadoInformacion) => {
-              // console.log('aliado creado: ' + e.id);
-              this.guardando = false;
+            .then((e: AliadoInformacion) => {            
               this.router.navigate(['/app/ctr/listadoAliados']);
+              this.guardando = false;
+              console.log('h')
             });
         });
       }
     }).catch(error=>{
+      this.guardando = false;
       this.messageService.add({severity:'error', summary: 'Error', detail: 'No se pudo crear el Aliado, intente de nuevo'});
+      console.log('h')
     })
   }
 

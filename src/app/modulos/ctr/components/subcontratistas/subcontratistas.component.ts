@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { Documento } from 'app/modulos/ado/entities/documento';
@@ -7,6 +7,7 @@ import { Modulo } from 'app/modulos/core/enums/enumeraciones';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { MessageService } from 'primeng/primeng';
 import { Subcontratista } from '../../entities/aliados';
+import { ConfirmationService, Message } from 'primeng/primeng';
 
 @Component({
   selector: 'app-subcontratistas',
@@ -63,13 +64,15 @@ export class SubcontratistasComponent implements OnInit {
     private empresaService: EmpresaService,
     private directorioService: DirectorioService,
     private messageService: MessageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
     this.fetchSubcontratistasList().then(()=>{
       // console.log(this.subcontratistasList);
     });
+    console.log('h')
   }
 
   createSubcontratista(){
@@ -163,7 +166,7 @@ export class SubcontratistasComponent implements OnInit {
       .updateSubcontratista(subc)
       .then(()=>{
         this.fetchSubcontratistasList().then();
-        this.messageService.add({key: 'msg', severity:'success', summary: 'Guardado', detail: 'Se guardó su carta de autorización'});
+        this.messageService.add({key: 'msg', severity:'success', summary: 'Guardado', detail: 'Se guardó su soprte'});
       });
     setTimeout(()=>{
       this.messageService.clear();
@@ -203,5 +206,47 @@ export class SubcontratistasComponent implements OnInit {
 
   testFunction(data){
     console.log(data);
+  }
+
+  eliminarDocument(doc: Documento, id: number) {
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+          this.directorioService.eliminarDocumento(doc.id)
+          .then(
+            data => {
+              this.directoriosSubcontratistas['dir_'+id]=this.directoriosSubcontratistas['dir_'+id].filter(val => val.id !== doc.id);
+              let subc: Subcontratista = this.subcontratistasList
+              .filter((item: Subcontratista) => item.id == id)
+              .map((item2: Subcontratista) => {
+                let carta = JSON.parse(item2.carta_autorizacion);
+                if(carta == null) carta = [];
+                carta=carta.filter(val => val !== doc.id);
+                return {
+                  id: item2.id,
+                  nit: item2.nit,
+                  nombre: item2.nombre,
+                  actividades_riesgo: item2.actividades_riesgo,
+                  tipo_persona: item2.tipo_persona,
+                  porcentaje_arl: item2.porcentaje_arl,
+                  estado: item2.estado,
+                  carta_autorizacion: JSON.stringify(carta),
+                  id_aliado_creador: item2.id_aliado_creador,
+                }
+              })[0];
+              this.empresaService
+              .updateSubcontratista(subc)
+              .then(()=>{
+                this.fetchSubcontratistasList().then();
+                this.messageService.add({key: 'msg', severity:'success', summary: 'Eliminado', detail: 'Se elimino el soprte'});
+                });
+              setTimeout(()=>{
+                this.messageService.clear();
+              }, 4000);         
+            })
+      }
+  });
   }
 }
