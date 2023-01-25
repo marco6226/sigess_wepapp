@@ -651,6 +651,14 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         // console.log(typeof this.casoMedicoForm.controls.fechaFinal.value);
         try{
             let region = this.empleadoForm.get("area").value.nombre;
+            if(region === 'SELECCIONE UBICACION'){
+                this.msgs.push({
+                    severity: 'error',
+                    detail: 'Debe actualizar la <b>ubicación</b> del trabajador involucrado en la pestaña <b>Información General</b>',
+                    life: 6000,
+                });
+                return;
+            }
             let ciudad = this.empleadoForm.get("ciudad").value.nombre;
         } catch(e){
             this.msgs.push({
@@ -893,6 +901,15 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         empleado.cargo = new Cargo();
         empleado.usuario = new Usuario();
         empleado.area.id = this.empleadoForm.value.area.id;
+        this.msgs = [];
+        if(this.empleadoForm.value.area.nombre==='SELECCIONE UBICACION'){
+            this.msgs.push({
+                severity: 'error',
+                detail: 'Debe seleccionar la ubicación del trabajador involucrado.',
+                life: 6000
+            })
+            return
+        }
         empleado.cargo.id = this.empleadoForm.value.cargoId;
         empleado.usuario.email = this.empleadoForm.value.email;
         empleado.ciudadGerencia = this.empleadoForm.value.ciudadGerencia;
@@ -902,7 +919,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         empleado.businessPartner = this.empleadoForm.value.businessPartner;
         empleado.jefeInmediato = this.empleadoForm.value.jefeInmediato;
         empleado.usuario.usuarioEmpresaList = [];
-        this.msgs = [];
         this.empleadoForm.value.perfilesId.forEach(perfilId => {
             let ue = new UsuarioEmpresa();
             ue.perfil = new Perfil();
