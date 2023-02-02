@@ -7,15 +7,15 @@
                     Nombre o razon social
                 </div>
                 <div class="ui-g-12 ui-sm-12 ui-md-4">
-                    <!-- <input required pInputText formControlName="razonSocial" /> -->
-                    <p-dropdown required [options]="temporales" formControlName="razonSocial" [(ngModel)]="selectedTemporal" placeholder="--Elija una opción--"></p-dropdown>
+                    <input pInputText formControlName="razonSocial" readonly/>
+                    <!-- <p-dropdown required [options]="temporales" formControlName="razonSocial" [(ngModel)]="selectedTemporal" placeholder="--Elija una opción--"></p-dropdown> -->
                 </div>
                 <div class="ui-g-12 ui-sm-12 ui-md-2">
                     Nit.
                 </div>
                 <div class="ui-g-12 ui-sm-12 ui-md-4">
-                    <!-- <input pInputText formControlName="identificacionkEmpresa"/>   -->
-                    {{ selectedTemporal ? selectedTemporal : '0' }}
+                    <input pInputText formControlName="identificacionEmpresa" readonly/>  
+                    <!-- {{ selectedTemporal ? selectedTemporal : '0' }} -->
                 </div>
                 </div>
             </p-accordionTab>

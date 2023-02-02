@@ -415,9 +415,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   async infoEmpresa() {
 
       let empresa = await this.empresaService.findSelected() as Empresa;
-      
       this.form.patchValue({
-          //identificacionEmpresa: empresa.nit,
+          razonSocial:empresa.nombreComercial,
+          identificacionEmpresa: empresa.nit,
           tipoIdentificacionEmpresa: "NI",
           direccionEmpresa: empresa.direccion,
           telefonoEmpresa: empresa.telefono,
