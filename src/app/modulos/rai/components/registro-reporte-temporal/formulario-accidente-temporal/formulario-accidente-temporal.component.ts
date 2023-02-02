@@ -105,6 +105,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     {label:'Temporal 3', value:'345'}
   ];
   selectedTemporal: any;
+  temporalesFlag: boolean=true
 
   constructor(
       private fb: FormBuilder,

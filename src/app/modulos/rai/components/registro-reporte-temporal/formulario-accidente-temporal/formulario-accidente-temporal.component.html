@@ -348,7 +348,7 @@
                             <div>  
                                 <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar evidencia" style="margin-bottom: 10px;"></button>
                                 <!-- <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-trash" style="margin-bottom: 10px; background-color: red;" *ngIf="!readOnly"></button> -->
-                                <s-documentoUpload  fileLimit="3" [(visible)]="visibleDlgExcel" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo"></s-documentoUpload>
+                                <s-documentoUpload  fileLimit="3" [(visible)]="visibleDlgExcel" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo" [temporalesFlag]="temporalesFlag"></s-documentoUpload>
                             </div>
                         </div>
         
