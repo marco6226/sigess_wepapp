@@ -16,7 +16,8 @@
         [paginator]="true" 
         [rows]="10"
         [totalRecords]="aliadosList.length"
-        [pageLinks]="3">
+        [pageLinks]="3"
+        >
         <ng-template pTemplate="header" let-columns>
             <tr>
                 
@@ -209,8 +210,9 @@
                 </td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="paginatorright" let-state>
+            Total de aliados {{state.totalRecords}}
+        </ng-template>
     </p-table>
   </p-tabView>
 </p-panel>
-
-<!-- <button (click)="test()">test</button> -->

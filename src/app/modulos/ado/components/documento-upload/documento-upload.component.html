@@ -16,8 +16,9 @@
 
     <div [formGroup]="form">
         <label for="">Descripción</label>
-        <input formControlName="descripcion" type="text" *ngIf="!contratistasFlag">
+        <input formControlName="descripcion" type="text" *ngIf="!contratistasFlag && !temporalesFlag">
         <p-dropdown appendTo="body" [options]="doContratista" formControlName="descripcion" *ngIf="contratistasFlag"></p-dropdown>
+        <p-dropdown appendTo="body" [options]="doTemporales" formControlName="descripcion" *ngIf="temporalesFlag"></p-dropdown>
         <small *ngIf="form.invalid" id="username2-help" class="p-invalid">Obligatorio</small>
     </div>
 
