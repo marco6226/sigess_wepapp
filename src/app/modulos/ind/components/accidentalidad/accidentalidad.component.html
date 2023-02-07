@@ -69,10 +69,8 @@
                                   <div class="row align-items-center mb-2 d-flex">
                                       <div class="col-4 text-left">
                                           <span class="tamañotexto">{{metaIli}}</span>
-                                      </div>
-                                      
+                                      </div>                                     
                                   </div>
-                                  
                               </div>
                           </div>
                       </div>
@@ -230,6 +228,17 @@
           [gradient]="gradient" *ngIf="flag1">
           </ngx-charts-advanced-pie-chart>
         </div>
+        <div class="ui-g-12">
+          <div class="ui-g-6">  
+            <i style="font-size:24px" class="fa">&#xf073;</i>   
+            <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body"> </p-calendar> 
+          </div>
+          <div class="ui-g-6"> 
+            <i style="font-size:24px" class="fa">&#xf073;</i> 
+            <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body"> </p-calendar>
+          </div>
+        </div>
+
         <h2>Días perdidos</h2>
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="dona1dp()"></p-radioButton>
@@ -243,62 +252,78 @@
           [gradient]="gradient" *ngIf="flag1">
           </ngx-charts-advanced-pie-chart>
         </div>
+        <div class="ui-g-12">
+          <div class="ui-g-6">  
+            <i style="font-size:24px" class="fa">&#xf073;</i>   
+            <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body"> </p-calendar> 
+          </div>
+          <div class="ui-g-6"> 
+            <i style="font-size:24px" class="fa">&#xf073;</i> 
+            <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body"> </p-calendar>
+          </div>
+        </div>
       </div>
       </p-panel>
+
       <p-panel header="TASAS">
-        <div class="ui-g">
+        <div class="ui-g" *ngIf="flagevent1">
         <!-- Primera grafica -->
-        <div class="ui-g-12 ui-sm-12 ui-md-8 align-items-center" *ngIf="flagevent1">
           <h2>Tasas</h2>
-          <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectIn1()"></p-radioButton>
-          <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectIn1()"></p-radioButton>
-          <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectIn1()"></p-radioButton>
-          <ngx-charts-bar-vertical-2d
-          class="align-items-center"
-          [view]="view2"
-          [scheme]="colorScheme2"
-          [results]="randomIn1"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="false"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="true"
-          [xAxisLabel]="'Divisiones'"
-          [yAxisLabel]="'Indicadores'"
-          [barPadding]=0
-          [groupPadding]=4
-          [showDataLabel]="flagtasa1"
-          [tooltipDisabled]="flagtasa1">
-          </ngx-charts-bar-vertical-2d>
-        </div>
-        <div class="ui-g-12 ui-sm-12 ui-md-4 align-items-center justify-content-md-center" *ngIf="flag">
-          <h5>Division</h5>
-          <div *ngFor="let category of divisiones2" class="p-field-checkbox">
-              <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value" (click)="selectIn1()"></p-checkbox>
-              <label>{{category.label}}</label>
+          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+            <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectIn1()"></p-radioButton>
+            <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectIn1()"></p-radioButton>
+            <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectIn1()"></p-radioButton>
           </div>
 
-          <h5>Filtro indicadores</h5>
-          <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-              <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value" (click)="selectIn1()"></p-checkbox>
-              <label>{{Indicador.label}}</label>
-          </div>
-        </div>
-      </div>
-      <div class="p-col-12 p-mt-4 mid-border">
-        <div class="p-d-flex p-jc-evenly">
-            <div class="p-d-flex">  
+          <div  class="ui-g-8 ui-g-nopad">
+            <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center grafic">
+                <ngx-charts-bar-vertical-2d 
+                class="align-items-center" style="width: 95%;"
+                [scheme]="colorScheme2"
+                [results]="randomIn1"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="false"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Divisiones'"
+                [yAxisLabel]="'Indicadores'"
+                [barPadding]=0
+                [groupPadding]=4
+                [showDataLabel]="flagtasa1"
+                [tooltipDisabled]="flagtasa1">
+                </ngx-charts-bar-vertical-2d>  
+            </div>
+
+            <div class="ui-g-12">
+              <div class="ui-g-6">  
                 <i style="font-size:24px" class="fa">&#xf073;</i>   
                 <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaEv1" value="this.desdeEv1"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeEv1" (onSelect)="selectIn1()" > </p-calendar> 
-            </div>
-            <div class="p-d-flex"> 
+              </div>
+              <div class="ui-g-6"> 
                 <i style="font-size:24px" class="fa">&#xf073;</i> 
                 <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdeEv1" value="this.hastaEv1"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastaEv1" (onSelect)="selectIn1()"> </p-calendar>
+              </div>
             </div>
-        </div>
-      </div>
+          </div>
 
+          <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter" *ngIf="flag">
+            <h5>Division</h5>
+            <div *ngFor="let category of divisiones2" class="p-field-checkbox">
+              <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value" (click)="selectIn1()"></p-checkbox>
+              <label>{{category.label}}</label>
+            </div>
+            <h5>Filtro indicadores</h5>
+            <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
+              <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value" (click)="selectIn1()"></p-checkbox>
+              <label>{{Indicador.label}}</label>
+            </div>
+          </div>
+        
+
+        </div>
+      <hr/>
 
 
     <!-- Segunda grafica -->
@@ -310,7 +335,6 @@
         <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectIn2()"></p-radioButton>
         <ngx-charts-bar-vertical-2d
         class="align-items-center"
-        [view]="view2"
         [scheme]="colorScheme2"
         [results]="randomIn2"
         [gradient]="gradient"
@@ -334,11 +358,6 @@
         <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" [(ngModel)]="selectMeses1" optionLabel="name" (click)="selectIn2()"></p-multiSelect>
         <h5>Division</h5>
         <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" optionLabel="name" (click)="selectIn2()"></p-multiSelect>
-        <!-- <div *ngFor="let mes of Meses" class="p-field-checkbox">
-            <p-checkbox name="group3" value="mes" [value]="mes"  [(ngModel)]="selectMeses1" [inputId]="mes.value" (click)="selectIn2()"></p-checkbox>
-            <label>{{mes.label}}</label>
-        </div> -->
-
         <h5>Filtro indicadores</h5>
         <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
             <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value" (click)="selectIn2()"></p-checkbox>
@@ -359,6 +378,8 @@
       </div>
     </div>
   </p-panel>
+
+
   <p-panel header="EVENTOS">
     <!-- Tercera grafica -->
     <div class="ui-g">
@@ -369,7 +390,6 @@
         <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv1()"></p-radioButton>
         <ngx-charts-bar-vertical-2d
         class="align-items-center"
-        [view]="view2"
         [scheme]="colorScheme2"
         [results]="randomEv1"
         [gradient]="gradient"
@@ -413,7 +433,7 @@
       </div>
     </div>
 
-
+      <hr/>
     <!-- Cuarta grafica -->
   <div class="ui-g">
     <div class="ui-g-12 ui-sm-12 ui-md-8 align-items-center" *ngIf="flagevent1">
@@ -423,7 +443,6 @@
       <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv2()"></p-radioButton>
       <ngx-charts-bar-vertical-2d
       class="align-items-center"
-      [view]="view2"
       [scheme]="colorScheme2"
       [results]="randomEv2"
       [gradient]="gradient"
@@ -454,10 +473,10 @@
       </div>
     </div>
   </div>
-
   </p-panel>
-  <p-panel header="ILI">
 
+
+  <p-panel header="ILI">
   <!-- Quinta grafica -->
   <div class="ui-g">
     <div class="ui-g-12 ui-sm-12 ui-md-8 align-items-center" *ngIf="flagILI">
@@ -494,7 +513,7 @@
         </div>
     </div>
   </div>
-
+  <hr/>
    <!-- Quinta grafica.2 -->
    <div class="ui-g">
     <div class="ui-g-12 ui-sm-12 ui-md-8 align-items-center" *ngIf="flagILI_2">
