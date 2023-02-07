@@ -19,15 +19,13 @@ class division {
   frecuencia: number;
   severidad: number;
 }
-
 @Component({
-  selector: "s-accidentalidad",
-  templateUrl: "./accidentalidad.component.html",
-  styleUrls: ["./accidentalidad.component.scss"],
+  selector: 'app-ind-casos-medicos',
+  templateUrl: './ind-casos-medicos.component.html',
+  styleUrls: ['./ind-casos-medicos.component.scss'],
   providers: [],
 })
-
-export class AccidentalidadComponent implements OnInit {
+export class IndCasosMedicosComponent implements OnInit {
   ili:number=0.0471;
   metaIli:number=0.02953;
   colorIli?:string;
