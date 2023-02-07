@@ -13,6 +13,7 @@ import { AccidentalidadComponent } from './components/accidentalidad/accidentali
 import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
 import { NgxChartsModule } from 'ngx-charts-8';
 import { ngxChartsBarModule, ngxChartsLineModule, ngxChartsComboModule, ngxChartsPieModule, ngxChartsStackedModule } from '@tusharghoshbd/ngx-charts';
+import { IndCasosMedicosComponent } from './components/ind-casos-medicos/ind-casos-medicos.component';
 // import { ComboChartComponent } from './components/combo-chart/combo-chart.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ngxChartsBarModule, ngxChartsLineModule, ngxChartsComboModule, ngxChart
     ConsultaTableroComponent,
     HorahombrestrabajadaComponent,
     AccidentalidadComponent,
+    IndCasosMedicosComponent,
     // ComboChartComponent
   ],
   bootstrap: [HorahombrestrabajadaComponent],
