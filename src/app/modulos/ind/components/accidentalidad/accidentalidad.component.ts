@@ -1,4 +1,4 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit, AfterViewInit} from "@angular/core";
 import { ReporteAtService } from "./../../services/reporte-at.service";
 import { FilterQuery } from "../../../core/entities/filter-query";
 import { SortOrder } from "app/modulos/core/entities/filter";
@@ -27,7 +27,7 @@ class division {
   providers: [],
 })
 
-export class AccidentalidadComponent implements OnInit {
+export class AccidentalidadComponent implements OnInit, AfterViewInit {
   ili:number=0.0471;
   metaIli:number=0.02953;
   colorIli?:string;
@@ -100,7 +100,6 @@ export class AccidentalidadComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
-
   // options
   showXAxis = true;
   showYAxis = true;
@@ -112,7 +111,6 @@ export class AccidentalidadComponent implements OnInit {
   yAxisLabel = 'Días perdidos';
   yAxisLabel2 = 'Divisiones';
   yAxisLabel3 = 'Tasa frecuencia/Tasa Severidad (%)';
-
 
   legendTitle: string = 'Years';
 
@@ -160,6 +158,11 @@ export class AccidentalidadComponent implements OnInit {
     dateValue= new Date();
     añoActual:number=this.dateValue.getFullYear();
     yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
+    
+  ngAfterViewInit(){
+    this.getEventosTotalesAt();
+  }
+
   async ngOnInit() {
     if(this.ili<=this.metaIli){
     this.colorIli="card l-bg-green-dark"}
@@ -172,7 +175,7 @@ export class AccidentalidadComponent implements OnInit {
     // this.selectEv1()
     await this.getData()
       .then( async () => {
-        console.log('areaList: ' + this.areaList);
+        // console.log('areaList: ' + this.areaList);
         this.flag=true
         this.flag1=true
         await this.selectEv1()
@@ -185,8 +188,7 @@ export class AccidentalidadComponent implements OnInit {
         await this.selectILI1_2()
         await this.selectILI2_2()
         await this.selectILI3_2()
-        this.dona1dp()
-        this.dona1()
+        this.dona1dp();
       });
       this.optionsCombo_2={
         title: 'ILI', 
@@ -299,7 +301,7 @@ export class AccidentalidadComponent implements OnInit {
         this.divisiones2.push({label:'Corona total',value:'Corona total'})
       }
     );
-      console.log(this.divisiones2)
+      // console.log(this.divisiones2)
       this.reporteTabla=[]
       this.reporteTabla2=[]
       this.totalDiasPerdidosDv=[]
@@ -538,6 +540,10 @@ export class AccidentalidadComponent implements OnInit {
   randomILI3: any[];
   randomILI3_2: any[];
   randomEv1Dona: any[];
+  dataAt: any[] = [];
+  totalEventosAt: any[] = [];
+  tempEventosAt: any[];
+  dirEventosAt: any[];
   randomEv2Dona: any[];
   randomEv3Dona: any[];
   randomEv1Donadb: any[];
@@ -604,8 +610,8 @@ export class AccidentalidadComponent implements OnInit {
     this.randomIn1.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Proporción AT mortal',value:TI3}]})
     
     let randomIn1Copy=[]
-    console.log(this.selectDivisiones1)
-    console.log(this.randomIn1)
+    // console.log(this.selectDivisiones1)
+    // console.log(this.randomIn1)
     if(this.selectDivisiones1.length>0){
       this.selectDivisiones1.forEach(element => {
         let x= this.randomIn1.filter(word => {
@@ -637,7 +643,7 @@ export class AccidentalidadComponent implements OnInit {
 
     let num1=0
     num1=this.randomIn1.length*this.randomIn1[0].series.length
-    console.log(num1)
+    // console.log(num1)
     if(num1>20){
       this.flagtasa1=false
     }else{
@@ -656,7 +662,7 @@ export class AccidentalidadComponent implements OnInit {
     let TI3=0.0
     let TI4=0.0
 
-    console.log(this.Meses2)
+    // console.log(this.Meses2)
     this.Meses2.forEach(division => {
 
       let I1=Math.random()*14//getRandomInt(3)
@@ -672,15 +678,15 @@ export class AccidentalidadComponent implements OnInit {
     this.randomIn2.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Proporción AT mortal',value:TI3}]})
     
     let randomIn2Copy=[]
-    console.log(this.selectMeses1)
-    console.log(this.randomIn2)
+    // console.log(this.selectMeses1)
+    // console.log(this.randomIn2)
     if(this.selectMeses1.length>0){
       // this.divisiones3=[]
       this.selectMeses1.forEach(element => {
         let x= this.randomIn2.filter(word => {
           return word['name']==element['name']
         });
-        // console.log(x)
+        // // console.log(x)
         randomIn2Copy.push(x[0])
       });
       this.randomIn2=randomIn2Copy
@@ -707,7 +713,7 @@ export class AccidentalidadComponent implements OnInit {
 
     let num2=0
     num2=this.randomIn2.length*this.randomIn2[0].series.length
-    console.log(num2)
+    // console.log(num2)
     if(num2>20){
       this.flagtasa2=false
     }else{
@@ -735,7 +741,7 @@ export class AccidentalidadComponent implements OnInit {
     let IL6m=0.005
     let IL7m=0.001
     let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
-    console.log(this.selectDivisionesILI1)
+    // console.log(this.selectDivisionesILI1)
     let dataILICopy=[]
     let dataMetaCopy=[]
     let categoriesComboCopy=[]
@@ -799,7 +805,7 @@ export class AccidentalidadComponent implements OnInit {
     let IL11m=0.005
     let IL12m=0.001
     let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
-    console.log(this.selectDivisionesILI1_2)
+    // console.log(this.selectDivisionesILI1_2)
     let dataILICopy=[]
     let dataMetaCopy=[]
     let categoriesComboCopy=[]
@@ -1152,8 +1158,8 @@ export class AccidentalidadComponent implements OnInit {
     this.randomEv1.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
     
     let randomEv1Copy=[]
-    console.log(this.selectDivisiones1)
-    console.log(this.randomEv1)
+    // console.log(this.selectDivisiones1)
+    // console.log(this.randomEv1)
     if(this.selectDivisiones2.length>0){
       this.selectDivisiones2.forEach(element => {
         let x= this.randomEv1.filter(word => {
@@ -1214,8 +1220,8 @@ export class AccidentalidadComponent implements OnInit {
     this.randomEv2.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
     
     let randomEv2Copy=[]
-    console.log(this.selectMeses2)
-    console.log(this.randomEv2)
+    // console.log(this.selectMeses2)
+    // console.log(this.randomEv2)
     if(this.selectMeses2.length>0){
       this.selectMeses2.forEach(element => {
         let x= this.randomEv2.filter(word => {
@@ -1252,14 +1258,47 @@ export class AccidentalidadComponent implements OnInit {
   flagDona2:boolean=false
   flagDona3:boolean=false
 
-  //Eventos
-  dona1(){
-    //total
-    this.randomEv1Dona=[]
-    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
-    division.forEach(div => {
-      this.randomEv1Dona.push({name:div,value:Math.round(Math.random()*10)})
-    });
+  //Eventos At
+  getEventosTotalesAt(){
+    let divisiones: string[] = [];
+    let reporteAt = [];
+    let randomEv1Dona: any[] = [];
+    this.reporteAtService.findAllRAT().then(
+      (res: any[]) => {
+        let empresaAtList = [];
+        res.forEach((at: any) => {
+          reporteAt.push(at);
+          empresaAtList.push(at.empresa);
+        });
+        empresaAtList.forEach((item: string) => {
+          if(!divisiones.includes(item)){
+            divisiones.push(item);
+          }
+        })
+        let eventosAt = [];
+        divisiones.forEach(
+          division => {
+            let data = {name: division, value: 0};
+            data.value = reporteAt.filter(at => at.empresa === division).length;
+            eventosAt.push(data);
+          }
+        );
+        randomEv1Dona.push(...eventosAt);
+        Object.assign(this, {randomEv1Dona});
+      }
+    );
+  }
+
+  getEventosTemporalesAt(){
+    let dataChart;
+
+    return dataChart;
+  }
+
+  getEventosDirectosAt(){
+    let dataChart;
+
+    return dataChart;
   }
 
   //Dias perdidos
