@@ -5,7 +5,7 @@
 <div class="ui-g">
     <div style="width: 100%;">
       <p-panel header="RESUMEN">
-          <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="background: #f2f3f9;">
+          <div class="p-grid  p-mt-3 p-jc-evenly colorsitos colorfondo">
               <div class="col-md-10 ">
                   <div class="row ">
                       <div class="col-xl-3 col-lg-6">
@@ -198,7 +198,7 @@
 
   <!-- <div style="width: 100%;"> -->
     <p-panel header="TOTAL EVENTOS Y DÍAS" >
-      <div style="background: #f2f3f9;">
+      <div class="colorfondo">
         <div class="ui-g">
           <h2>Eventos AT</h2>
           <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
@@ -255,7 +255,7 @@
     <br/>
 
   <p-panel header="TASAS">
-    <div style="background: #f2f3f9;">
+    <div class="colorfondo">
       <div class="ui-g" *ngIf="flagevent1">
       <!-- Primera grafica -->
         <ng-container *ngIf="selectIndicarores1.length>0">
@@ -285,7 +285,7 @@
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
               <ngx-charts-bar-vertical-2d 
               [scheme]="colorScheme2"
               [results]="randomIn1"
@@ -303,6 +303,7 @@
               [tooltipDisabled]="flagtasa1">
               </ngx-charts-bar-vertical-2d>  
           </div>
+          <div class="ui-g-1">&nbsp;</div>
           <div class="ui-g-2">&nbsp;</div>
           <div class="ui-g-8">
             <div class="ui-g-6">  
@@ -360,7 +361,7 @@
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -379,6 +380,7 @@
             [tooltipDisabled]="flagtasa2">
             </ngx-charts-bar-vertical-2d>
           </div>
+          <div class="ui-g-1">&nbsp;</div>
           <div class="ui-g-2">&nbsp;</div>
           <div class="ui-g-8">
               <div class="ui-g-6">  
@@ -413,7 +415,7 @@
 
 
   <p-panel header="EVENTOS">
-    <div style="background: #f2f3f9;">
+    <div class="colorfondo">
       <!-- Tercera grafica -->
       <div class="ui-g" *ngIf="flagevent1">
 
@@ -444,7 +446,7 @@
           <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv1()"></p-radioButton>
         </div>
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -463,6 +465,7 @@
             [tooltipDisabled]="true">
             </ngx-charts-bar-vertical-2d>
           </div>
+          <div class="ui-g-1">&nbsp;</div>
           <div class="ui-g-2">&nbsp;</div>
           <div class="ui-g-8">
               <div class="ui-g-6">  
@@ -522,24 +525,29 @@
           <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv2()"></p-radioButton>
         </div>
 
-        <div class="ui-g-8 grafic">
-          <ngx-charts-bar-vertical-2d
-          class="align-items-center"
-          [scheme]="colorScheme2"
-          [results]="randomEv2"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="false"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="true"
-          [xAxisLabel]="'Meses'"
-          [yAxisLabel]="'Eventos'"
-          [showDataLabel]="true"
-          [barPadding]=0
-          [groupPadding]=4
-          [tooltipDisabled]="true">
-          </ngx-charts-bar-vertical-2d>
+        <div class="ui-g-8 ui-g-nopad">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+            <ngx-charts-bar-vertical-2d
+            class="align-items-center"
+            [scheme]="colorScheme2"
+            [results]="randomEv2"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="false"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Meses'"
+            [yAxisLabel]="'Eventos'"
+            [showDataLabel]="true"
+            [barPadding]=0
+            [groupPadding]=4
+            [tooltipDisabled]="true">
+            </ngx-charts-bar-vertical-2d>
+          </div>
+          <div class="ui-g-1">&nbsp;</div>
+
+          <div class="ui-g-12">&nbsp;</div>
         </div>
 
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter" *ngIf="flag">
@@ -562,12 +570,12 @@
 
 
   <p-panel header="ILI">
-    <div style="background: #f2f3f9;">
+    <div class="colorfondo">
   <!-- Quinta grafica -->
   <div class="ui-g" *ngIf="flagILI">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic" >
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" >
         <!-- <h2>Eventos</h2> -->
         <!-- <h2>ILI</h2> -->
         <ngx-charts-combo
@@ -577,6 +585,7 @@
         >
         </ngx-charts-combo>
       </div>
+      <div class="ui-g-1">&nbsp;</div>
       <div class="ui-g-2">&nbsp;</div>
       <div class="ui-g-8">
         <div class="ui-g-6">  
@@ -607,7 +616,7 @@
    <div class="ui-g" *ngIf="flagILI_2">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
         <!-- <h2>ILI</h2> -->
         <ngx-charts-combo
         [categories]="categoriesCombo_2"
@@ -616,6 +625,7 @@
         >
         </ngx-charts-combo>
       </div>
+      <div class="ui-g-1">&nbsp;</div>
       <div class="ui-g-2">&nbsp;</div>
       <div class="ui-g-8">
         <div class="ui-g-6">  

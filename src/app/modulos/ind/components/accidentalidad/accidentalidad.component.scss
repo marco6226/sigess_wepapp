@@ -293,7 +293,7 @@
   // border-top: 10px solid #f2f3f9;
   position: relative;
   margin-bottom: 30px;
-  height: 11cm;
+  height: 11.5cm;
   // width: 98%;
 }
 .filter {
@@ -306,7 +306,14 @@
 }
 
 :host ::ng-deep .ui-panel .ui-panel-content {
-  background-color: #f2f3f9;
+  background-color: #ebe9e5;
+}
+:host ::ng-deep .ui-panel {
+  font-size:large;
+}
+
+.colorfondo{
+  background: #ebe9e5;
 }
 
 // ::ng-deep .ngx-charts{

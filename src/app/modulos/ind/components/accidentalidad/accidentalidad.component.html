@@ -5,7 +5,7 @@
 <div class="ui-g">
     <div style="width: 100%;">
       <p-panel header="RESUMEN">
-          <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="background: #f2f3f9;">
+          <div class="p-grid  p-mt-3 p-jc-evenly colorsitos colorfondo">
               <div class="col-md-10 ">
                   <div class="row ">
                       <div class="col-xl-3 col-lg-6">
@@ -107,7 +107,7 @@
           </ngx-charts-advanced-pie-chart>
         </div>
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-          <h2>Eventos AT / Días perdidos</h2>
+          <h4>Eventos AT / Días perdidos</h4>
           <ngx-charts-bar-horizontal-2d
           [view]="view"
           [scheme]="colorScheme"
@@ -127,7 +127,7 @@
           </ngx-charts-bar-horizontal-2d>
         </div>
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" *ngIf="flagdiv">
-          <h2>Días perdidos</h2>
+          <h4>Días perdidos</h4>
           <ngx-charts-bar-vertical
           class="align-items-center"
           [view]="view"
@@ -146,7 +146,7 @@
           </ngx-charts-bar-vertical>
         </div>
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" *ngIf="flagevent">
-          <h2>Eventos AT</h2>
+          <h4>Eventos AT</h4>
           <ngx-charts-bar-vertical
           class="align-items-center"
           [view]="view"
@@ -178,7 +178,7 @@
           </div>
         </div>
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" *ngIf="flag">
-          <h2>Tasa frecuencia / Tasa Severidad</h2>
+          <h4>Tasa frecuencia / Tasa Severidad</h4>
           <ngx-charts-bar-vertical-2d
           class="align-items-center"
           [view]="view"
@@ -215,10 +215,10 @@
 
   <!-- <div style="width: 100%;"> -->
     <p-panel header="TOTAL EVENTOS Y DÍAS" >
-      <div style="background: #f2f3f9;">
+      <div class="colorfondo">
         <div class="ui-g">
-          <h2>Eventos AT</h2>
-          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+          <h4>Eventos AT</h4>
+          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
             <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="getEventosTotalesAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
             <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="getEventosTemporalesAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
             <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="getEventosDirectosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
@@ -243,7 +243,7 @@
         </div>
         <hr/>
         <div class="ui-g">
-          <h2>Días perdidos</h2>
+          <h4>Días perdidos</h4>
           <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
             <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="dona1dp()"></p-radioButton>
             <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="dona1dp()"></p-radioButton>
@@ -272,25 +272,25 @@
     <br/>
 
   <p-panel header="TASAS">
-    <div style="background: #f2f3f9;">
+    <div class="colorfondo">
       <div class="ui-g" *ngIf="flagevent1">
       <!-- Primera grafica -->
         <ng-container *ngIf="selectIndicarores1.length>0">
           <ng-container *ngFor="let indicador of selectIndicarores1;first as f;last as l">
-            <h2 *ngIf="f || (l && selectIndicarores1.length != 2);else otro1">{{indicador.label}}</h2>
+            <h4 *ngIf="f || (l && selectIndicarores1.length != 2);else otro1">{{indicador.label}}</h4>
             <ng-template #otro1>
-              <h2 *ngIf="selectIndicarores1.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <h4 *ngIf="selectIndicarores1.length != 2;else otro2">/{{indicador.label}}/</h4>
               <ng-template #otro2>
-                <h2>/{{indicador.label}}</h2>
+                <h4>/{{indicador.label}}</h4>
               </ng-template>
             </ng-template>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="selectIndicarores1.length==0">
           <ng-container *ngFor="let Indicador of Indicadores;first as f;last as l">
-            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <h4 *ngIf="f || l;else otro1">{{Indicador.label}}</h4>
             <ng-template #otro1>
-              <h2>/{{Indicador.label}}/</h2>
+              <h4>/{{Indicador.label}}/</h4>
             </ng-template>
           </ng-container>
         </ng-container>
@@ -353,20 +353,20 @@
 
         <ng-container *ngIf="selectIndicarores2.length>0">
           <ng-container *ngFor="let indicador of selectIndicarores2;first as f;last as l">
-            <h2 *ngIf="f || (l && selectIndicarores2.length != 2);else otro1">{{indicador.label}}</h2>
+            <h4 *ngIf="f || (l && selectIndicarores2.length != 2);else otro1">{{indicador.label}}</h4>
             <ng-template #otro1>
-              <h2 *ngIf="selectIndicarores2.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <h4 *ngIf="selectIndicarores2.length != 2;else otro2">/{{indicador.label}}/</h4>
               <ng-template #otro2>
-                <h2>/{{indicador.label}}</h2>
+                <h4>/{{indicador.label}}</h4>
               </ng-template>
             </ng-template>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="selectIndicarores2.length==0">
           <ng-container *ngFor="let Indicador of Indicadores;first as f;last as l">
-            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <h4 *ngIf="f || l;else otro1">{{Indicador.label}}</h4>
             <ng-template #otro1>
-              <h2>/{{Indicador.label}}/</h2>
+              <h4>/{{Indicador.label}}/</h4>
             </ng-template>
           </ng-container>
         </ng-container>
@@ -432,32 +432,32 @@
 
 
   <p-panel header="EVENTOS">
-    <div style="background: #f2f3f9;">
+    <div class="colorfondo">
       <!-- Tercera grafica -->
       <div class="ui-g" *ngIf="flagevent1">
 
         <ng-container *ngIf="selectEventos1.length>0">
           <ng-container *ngFor="let indicador of selectEventos1;first as f;last as l">
-            <h2 *ngIf="f || (l && selectEventos1.length != 2);else otro1">{{indicador.label}}</h2>
+            <h4 *ngIf="f || (l && selectEventos1.length != 2);else otro1">{{indicador.label}}</h4>
             <ng-template #otro1>
-              <h2 *ngIf="selectEventos1.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <h4 *ngIf="selectEventos1.length != 2;else otro2">/{{indicador.label}}/</h4>
               <ng-template #otro2>
-                <h2>/{{indicador.label}}</h2>
+                <h4>/{{indicador.label}}</h4>
               </ng-template>
             </ng-template>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="selectEventos1.length==0">
           <ng-container *ngFor="let Indicador of Eventos;first as f;last as l">
-            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <h4 *ngIf="f || l;else otro1">{{Indicador.label}}</h4>
             <ng-template #otro1>
-              <h2>/{{Indicador.label}}/</h2>
+              <h4>/{{Indicador.label}}/</h4>
             </ng-template>
           </ng-container>
         </ng-container>
 
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-          <!-- <h2>Eventos</h2> -->
+          <!-- <h4>Eventos</h4> -->
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectEv1()"></p-radioButton>
           <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectEv1()"></p-radioButton>
           <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv1()"></p-radioButton>
@@ -517,25 +517,25 @@
 
         <ng-container *ngIf="selectEventos2.length>0">
           <ng-container *ngFor="let indicador of selectEventos2;first as f;last as l">
-            <h2 *ngIf="f || (l && selectEventos2.length != 2);else otro1">{{indicador.label}}</h2>
+            <h4 *ngIf="f || (l && selectEventos2.length != 2);else otro1">{{indicador.label}}</h4>
             <ng-template #otro1>
-              <h2 *ngIf="selectEventos2.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <h4 *ngIf="selectEventos2.length != 2;else otro2">/{{indicador.label}}/</h4>
               <ng-template #otro2>
-                <h2>/{{indicador.label}}</h2>
+                <h4>/{{indicador.label}}</h4>
               </ng-template>
             </ng-template>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="selectEventos2.length==0">
           <ng-container *ngFor="let Indicador of Eventos;first as f;last as l">
-            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <h4 *ngIf="f || l;else otro1">{{Indicador.label}}</h4>
             <ng-template #otro1>
-              <h2>/{{Indicador.label}}/</h2>
+              <h4>/{{Indicador.label}}/</h4>
             </ng-template>
           </ng-container>
         </ng-container>
 
-          <!-- <h2>Eventos</h2> -->
+          <!-- <h4>Eventos</h4> -->
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectEv2()"></p-radioButton>
           <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectEv2()"></p-radioButton>
@@ -562,7 +562,7 @@
             [tooltipDisabled]="true">
             </ngx-charts-bar-vertical-2d>
           </div>
-          <div class="ui-g-1" style="width: 5px;">&nbsp;</div>
+          <div class="ui-g-1">&nbsp;</div>
 
           <div class="ui-g-12">&nbsp;</div>
         </div>
@@ -587,14 +587,14 @@
 
 
   <p-panel header="ILI">
-    <div style="background: #f2f3f9;">
+    <div class="colorfondo">
   <!-- Quinta grafica -->
   <div class="ui-g" *ngIf="flagILI">
 
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" >
-        <!-- <h2>Eventos</h2> -->
-        <!-- <h2>ILI</h2> -->
+        <!-- <h4>Eventos</h4> -->
+        <!-- <h4>ILI</h4> -->
         <ngx-charts-combo
         [categories]="categoriesCombo"
         [series]="randomILI"
@@ -634,7 +634,7 @@
 
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
-        <!-- <h2>ILI</h2> -->
+        <!-- <h4>ILI</h4> -->
         <ngx-charts-combo
         [categories]="categoriesCombo_2"
         [series]="randomILI_2"
@@ -888,7 +888,7 @@
         <button class="fa fa-refresh" style="float: right;"></button>
     
     
-      <h3>Accidentalidad</h3>
+      <h4>Accidentalidad</h4>
       <h4>2022</h4>
         <table>
           <thead>
