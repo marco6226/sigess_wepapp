@@ -224,7 +224,6 @@
             <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="getEventosAt('dir')" [style]="{'margin-left': '15px'}"></p-radioButton>
             <ngx-charts-advanced-pie-chart
             class="align-items-center"
-            [view]="view"
             [scheme]="colorScheme"
             [results]="randomEv1Dona"
             [gradient]="gradient" *ngIf="flag1">
@@ -251,7 +250,6 @@
             <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="dona1dp()"></p-radioButton>
             <ngx-charts-advanced-pie-chart
             class="align-items-center"
-            [view]="view"
             [scheme]="colorScheme"
             [results]="randomEv1Donadb"
             [gradient]="gradient" *ngIf="flag1">
