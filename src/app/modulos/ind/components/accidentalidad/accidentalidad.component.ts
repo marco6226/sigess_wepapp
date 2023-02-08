@@ -160,7 +160,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
     yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
     
   ngAfterViewInit(){
-    this.getEventosTotalesAt();
+    this.getEventosAt();
   }
 
   async ngOnInit() {
@@ -540,10 +540,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
   randomILI3: any[];
   randomILI3_2: any[];
   randomEv1Dona: any[];
-  dataAt: any[] = [];
-  totalEventosAt: any[] = [];
-  tempEventosAt: any[];
-  dirEventosAt: any[];
   randomEv2Dona: any[];
   randomEv3Dona: any[];
   randomEv1Donadb: any[];
@@ -1259,46 +1255,91 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
   flagDona3:boolean=false
 
   //Eventos At
-  getEventosTotalesAt(){
+  getEventosAt(filter?: string){
     let divisiones: string[] = [];
     let reporteAt = [];
     let randomEv1Dona: any[] = [];
     this.reporteAtService.findAllRAT().then(
       (res: any[]) => {
-        let empresaAtList = [];
-        res.forEach((at: any) => {
-          reporteAt.push(at);
-          empresaAtList.push(at.empresa);
-        });
-        empresaAtList.forEach((item: string) => {
-          if(!divisiones.includes(item)){
-            divisiones.push(item);
+        let padreNombreList = [];
+        try {
+          switch(filter){
+            case 'temp':
+              res.forEach((at: any) => {
+                reporteAt.push(at);
+                if(at.temporal && at.temporal){
+                  padreNombreList.push(at.padreNombre);
+                }
+              });
+              padreNombreList.forEach((item: string) => {
+                if(!divisiones.includes(item)){
+                  divisiones.push(item);
+                }
+              });
+              let eventosAttemp = [];
+              divisiones.forEach(
+                division => {
+                  let data = {name: division, value: 0};
+                  data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal).length;
+                  eventosAttemp.push(data);
+                }
+              );
+              randomEv1Dona.push(...eventosAttemp);
+              Object.assign(this, {randomEv1Dona});
+              break;
+            case 'dir':
+              res.forEach((at: any) => {
+                reporteAt.push(at);
+                if(at.temporal == null){
+                  padreNombreList.push(at.padreNombre);
+                }
+              });
+              padreNombreList.forEach((item: string) => {
+                if(!divisiones.includes(item)){
+                  divisiones.push(item);
+                }
+              });
+              let eventosAtdir = [];
+              divisiones.forEach(
+                division => {
+                  let data = {name: division, value: 0};
+                  data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal == null).length;
+                  eventosAtdir.push(data);
+                }
+              );
+              randomEv1Dona.push(...eventosAtdir);
+              Object.assign(this, {randomEv1Dona});
+              break;
+            default:
+              throw 'error';
           }
-        })
-        let eventosAt = [];
-        divisiones.forEach(
-          division => {
-            let data = {name: division, value: 0};
-            data.value = reporteAt.filter(at => at.empresa === division).length;
-            eventosAt.push(data);
-          }
-        );
-        randomEv1Dona.push(...eventosAt);
-        Object.assign(this, {randomEv1Dona});
+        }catch(err){
+          // Optimizando
+          // padreNombreList = res.map(at => at.padreNombre);
+          // reporteAt = res.map(at => at);
+          // divisiones = padreNombreList.
+          res.forEach((at: any) => {
+            reporteAt.push(at);
+            padreNombreList.push(at.padreNombre);
+          });
+          padreNombreList.forEach((item: string) => {
+            if(!divisiones.includes(item)){
+              divisiones.push(item);
+            }
+          });
+          let eventosAt = [];
+          divisiones.forEach(
+            division => {
+              let data = {name: division, value: 0};
+              data.value = reporteAt.filter(at => at.padreNombre === division).length;
+              eventosAt.push(data);
+            }
+          );
+          randomEv1Dona.push(...eventosAt);
+          Object.assign(this, {randomEv1Dona});
+        }
       }
     );
-  }
-
-  getEventosTemporalesAt(){
-    let dataChart;
-
-    return dataChart;
-  }
-
-  getEventosDirectosAt(){
-    let dataChart;
-
-    return dataChart;
   }
 
   //Dias perdidos
