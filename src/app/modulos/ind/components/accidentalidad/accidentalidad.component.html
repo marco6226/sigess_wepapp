@@ -219,9 +219,9 @@
         <div class="ui-g">
           <h2>Eventos AT</h2>
           <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-            <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="getEventosTotalesAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
-            <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="getEventosTemporalesAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
-            <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="getEventosDirectosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="getEventosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="getEventosAt('temp')" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="getEventosAt('dir')" [style]="{'margin-left': '15px'}"></p-radioButton>
             <ngx-charts-advanced-pie-chart
             class="align-items-center"
             [scheme]="colorScheme"
