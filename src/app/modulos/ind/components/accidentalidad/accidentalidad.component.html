@@ -4,7 +4,7 @@
 
 <div class="ui-g">
     <div style="width: 100%;">
-      <p-panel header="RESUMEN" class="test">
+      <p-panel header="RESUMEN">
           <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="background: #f2f3f9;">
               <div class="col-md-10 ">
                   <div class="row ">
@@ -76,7 +76,7 @@
                       </div>
                   </div>
               </div>
-              <div class="p-col-12 p-mt-4 mid-border">
+              <div class="p-col-6 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
                       <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
                       <div class="p-d-flex">  
@@ -216,9 +216,9 @@
   <!-- <div style="width: 100%;"> -->
     <p-panel header="TOTAL EVENTOS Y DÍAS" >
       <div style="background: #f2f3f9;">
-        <div class="ui-g" >
+        <div class="ui-g">
           <h2>Eventos AT</h2>
-          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
             <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="dona1()"></p-radioButton>
             <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="dona1()"></p-radioButton>
             <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="dona1()"></p-radioButton>
@@ -229,7 +229,8 @@
             [gradient]="gradient" *ngIf="flag1">
             </ngx-charts-advanced-pie-chart>
           </div>
-          <div class="ui-g-12">
+          <div class="ui-g-3">&nbsp;</div>
+          <div class="ui-g-6">
             <div class="ui-g-6">  
               <i style="font-size:24px" class="fa">&#xf073;</i>   
               <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body"> </p-calendar> 
@@ -243,7 +244,7 @@
         <hr/>
         <div class="ui-g">
           <h2>Días perdidos</h2>
-          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
+          <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
             <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="dona1dp()"></p-radioButton>
             <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="dona1dp()"></p-radioButton>
             <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="dona1dp()"></p-radioButton>
@@ -254,7 +255,8 @@
             [gradient]="gradient" *ngIf="flag1">
             </ngx-charts-advanced-pie-chart>
           </div>
-          <div class="ui-g-12">
+          <div class="ui-g-3">&nbsp;</div>
+          <div class="ui-g-6">
             <div class="ui-g-6">  
               <i style="font-size:24px" class="fa">&#xf073;</i>   
               <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body"> </p-calendar> 
@@ -273,7 +275,26 @@
     <div style="background: #f2f3f9;">
       <div class="ui-g" *ngIf="flagevent1">
       <!-- Primera grafica -->
-        <!-- <h2>Tasas</h2> -->
+        <ng-container *ngIf="selectIndicarores1.length>0">
+          <ng-container *ngFor="let indicador of selectIndicarores1;first as f;last as l">
+            <h2 *ngIf="f || (l && selectIndicarores1.length != 2);else otro1">{{indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2 *ngIf="selectIndicarores1.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <ng-template #otro2>
+                <h2>/{{indicador.label}}</h2>
+              </ng-template>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="selectIndicarores1.length==0">
+          <ng-container *ngFor="let Indicador of Indicadores;first as f;last as l">
+            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2>/{{Indicador.label}}/</h2>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectIn1()"></p-radioButton>
           <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectIn1()"></p-radioButton>
@@ -299,8 +320,8 @@
               [tooltipDisabled]="flagtasa1">
               </ngx-charts-bar-vertical-2d>  
           </div>
-
-          <div class="ui-g-12">
+          <div class="ui-g-2">&nbsp;</div>
+          <div class="ui-g-8">
             <div class="ui-g-6">  
               <i style="font-size:24px" class="fa">&#xf073;</i>   
               <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaEv1" value="this.desdeEv1"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeEv1" (onSelect)="selectIn1()" > </p-calendar> 
@@ -328,6 +349,27 @@
       <hr/>
       <!-- Segunda grafica -->
       <div class="ui-g" *ngIf="flagevent1">
+
+        <ng-container *ngIf="selectIndicarores2.length>0">
+          <ng-container *ngFor="let indicador of selectIndicarores2;first as f;last as l">
+            <h2 *ngIf="f || (l && selectIndicarores2.length != 2);else otro1">{{indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2 *ngIf="selectIndicarores2.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <ng-template #otro2>
+                <h2>/{{indicador.label}}</h2>
+              </ng-template>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="selectIndicarores2.length==0">
+          <ng-container *ngFor="let Indicador of Indicadores;first as f;last as l">
+            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2>/{{Indicador.label}}/</h2>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectIn2()"></p-radioButton>
           <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectIn2()"></p-radioButton>
@@ -354,8 +396,8 @@
             [tooltipDisabled]="flagtasa2">
             </ngx-charts-bar-vertical-2d>
           </div>
-
-          <div class="ui-g-12">
+          <div class="ui-g-2">&nbsp;</div>
+          <div class="ui-g-8">
               <div class="ui-g-6">  
                   <i style="font-size:24px" class="fa">&#xf073;</i>   
                   <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaEv1" value="this.desdeEv1"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeEv1" (onSelect)="selectIn2()" > </p-calendar> 
@@ -391,6 +433,27 @@
     <div style="background: #f2f3f9;">
       <!-- Tercera grafica -->
       <div class="ui-g" *ngIf="flagevent1">
+
+        <ng-container *ngIf="selectEventos1.length>0">
+          <ng-container *ngFor="let indicador of selectEventos1;first as f;last as l">
+            <h2 *ngIf="f || (l && selectEventos1.length != 2);else otro1">{{indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2 *ngIf="selectEventos1.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <ng-template #otro2>
+                <h2>/{{indicador.label}}</h2>
+              </ng-template>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="selectEventos1.length==0">
+          <ng-container *ngFor="let Indicador of Eventos;first as f;last as l">
+            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2>/{{Indicador.label}}/</h2>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <!-- <h2>Eventos</h2> -->
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectEv1()"></p-radioButton>
@@ -417,8 +480,8 @@
             [tooltipDisabled]="true">
             </ngx-charts-bar-vertical-2d>
           </div>
-
-          <div class="ui-g-12">
+          <div class="ui-g-2">&nbsp;</div>
+          <div class="ui-g-8">
               <div class="ui-g-6">  
                 <i style="font-size:24px" class="fa">&#xf073;</i>   
                 <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaEv1" value="this.desdeEv1"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeEv1" (onSelect)="selectEv1()" > </p-calendar> 
@@ -448,7 +511,27 @@
         <hr/>
       <!-- Cuarta grafica -->
       <div class="ui-g" *ngIf="flagevent1">
-        
+
+        <ng-container *ngIf="selectEventos2.length>0">
+          <ng-container *ngFor="let indicador of selectEventos2;first as f;last as l">
+            <h2 *ngIf="f || (l && selectEventos2.length != 2);else otro1">{{indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2 *ngIf="selectEventos2.length != 2;else otro2">/{{indicador.label}}/</h2>
+              <ng-template #otro2>
+                <h2>/{{indicador.label}}</h2>
+              </ng-template>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="selectEventos2.length==0">
+          <ng-container *ngFor="let Indicador of Eventos;first as f;last as l">
+            <h2 *ngIf="f || l;else otro1">{{Indicador.label}}</h2>
+            <ng-template #otro1>
+              <h2>/{{Indicador.label}}/</h2>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+
           <!-- <h2>Eventos</h2> -->
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectEv2()"></p-radioButton>
@@ -511,7 +594,8 @@
         >
         </ngx-charts-combo>
       </div>
-      <div class="ui-g-12">
+      <div class="ui-g-2">&nbsp;</div>
+      <div class="ui-g-8">
         <div class="ui-g-6">  
             <i style="font-size:24px" class="fa">&#xf073;</i>   
             <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaILI1" value="this.desdeILI1"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeILI1" (onSelect)="selectILI1()" > </p-calendar> 
@@ -549,8 +633,8 @@
         >
         </ngx-charts-combo>
       </div>
-
-      <div class="ui-g-12">
+      <div class="ui-g-2">&nbsp;</div>
+      <div class="ui-g-8">
         <div class="ui-g-6">  
             <i style="font-size:24px" class="fa">&#xf073;</i>   
             <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaILI1_2" value="this.desdeILI1_2"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeILI1_2" (onSelect)="selectILI1_2()" > </p-calendar> 
