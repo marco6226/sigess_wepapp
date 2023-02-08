@@ -302,7 +302,7 @@
   // border: 10px solid #f2f3f9;
   position: relative;
   margin-bottom: 30px;
-  height: 15cm;
+  height: 16cm;
 }
 
 :host ::ng-deep .ui-panel .ui-panel-content {
@@ -323,3 +323,23 @@
 // ::ng-deep .ngx-charts .bar {
 //   stroke: red;
 // }
+:host ::ng-deep .h4{
+  font-size:small;
+}
+
+// :host ::ng-deep .ngx-charts{
+//   color: red;
+// }
+
+// ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+//   .tooltip-caret.position-top {
+//     border-top-color: rgb(241, 6, 6);
+//     box-shadow: 0 6px 20px 0 rgba(81, 0, 255, 0.2);
+//   }
+
+//   background-color: rgb(19, 215, 48);
+//   box-shadow: 0 6px 20px 0 rgba(255, 4, 167, 0.2);
+// }
+
+
+
