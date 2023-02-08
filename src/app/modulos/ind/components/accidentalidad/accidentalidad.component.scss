@@ -290,19 +290,28 @@
 .grafic {
   background-color: #fff;
   border-radius: 20px;
-  border: 10px solid #fafafa;
+  border: 10px solid #f2f3f9;
   position: relative;
   margin-bottom: 30px;
-  background-color: rgb(224, 224, 224);
-  height: 10cm;
+  height: 11cm;
 }
 .filter {
-  background-color: #fff;
+  background-color: lightgrey;
   border-radius: 20px;
-  border: 10px solid #fafafa;
+  border: 10px solid #f2f3f9;
   position: relative;
   margin-bottom: 30px;
-  background-color: rgb(224, 224, 224);
   height: 15cm;
-  // margin: auto;
 }
+
+:host ::ng-deep .ui-panel .ui-panel-content {
+  background-color: #f2f3f9;
+}
+
+::ng-deep .ngx-charts{
+  width: 10px;
+}
+
+// ::ng-deep .ngx-charts .bar {
+//   stroke: red;
+// }

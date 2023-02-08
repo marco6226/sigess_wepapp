@@ -188,8 +188,8 @@ export class IndCasosMedicosComponent implements OnInit {
       });
       this.optionsCombo_2={
         title: 'ILI', 
-        height: 600,
-        width: 850,
+        height: 400,
+        width: 800,
         xAxis: {
             title: 'Divisiones',
             labelRotation: -60,
@@ -211,8 +211,8 @@ export class IndCasosMedicosComponent implements OnInit {
     };
       this.optionsCombo={
         title: 'ILI', 
-        height: 600,
-        width: 850,
+        height: 400,
+        width: 800,
         xAxis: {
             title: 'Divisiones',
             labelRotation: -60,
