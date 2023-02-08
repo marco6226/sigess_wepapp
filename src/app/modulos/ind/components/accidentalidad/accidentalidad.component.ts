@@ -1267,7 +1267,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
             case 'temp':
               res.forEach((at: any) => {
                 reporteAt.push(at);
-                if(at.temporal && at.temporal){
+                if(at.temporal){
                   padreNombreList.push(at.padreNombre);
                 }
               });
