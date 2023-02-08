@@ -302,7 +302,7 @@
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
               <ngx-charts-bar-vertical-2d 
               [scheme]="colorScheme2"
               [results]="randomIn1"
@@ -318,8 +318,9 @@
               [groupPadding]=4
               [showDataLabel]="flagtasa1"
               [tooltipDisabled]="flagtasa1">
-              </ngx-charts-bar-vertical-2d>  
+              </ngx-charts-bar-vertical-2d>
           </div>
+          <div class="ui-g-1">&nbsp;</div>
           <div class="ui-g-2">&nbsp;</div>
           <div class="ui-g-8">
             <div class="ui-g-6">  
@@ -377,7 +378,7 @@
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -396,6 +397,7 @@
             [tooltipDisabled]="flagtasa2">
             </ngx-charts-bar-vertical-2d>
           </div>
+          <div class="ui-g-1">&nbsp;</div>
           <div class="ui-g-2">&nbsp;</div>
           <div class="ui-g-8">
               <div class="ui-g-6">  
@@ -461,7 +463,7 @@
           <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv1()"></p-radioButton>
         </div>
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -480,6 +482,7 @@
             [tooltipDisabled]="true">
             </ngx-charts-bar-vertical-2d>
           </div>
+          <div class="ui-g-1">&nbsp;</div>
           <div class="ui-g-2">&nbsp;</div>
           <div class="ui-g-8">
               <div class="ui-g-6">  
@@ -539,24 +542,29 @@
           <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv2()"></p-radioButton>
         </div>
 
-        <div class="ui-g-8 grafic">
-          <ngx-charts-bar-vertical-2d
-          class="align-items-center"
-          [scheme]="colorScheme2"
-          [results]="randomEv2"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="false"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="true"
-          [xAxisLabel]="'Meses'"
-          [yAxisLabel]="'Eventos'"
-          [showDataLabel]="true"
-          [barPadding]=0
-          [groupPadding]=4
-          [tooltipDisabled]="true">
-          </ngx-charts-bar-vertical-2d>
+        <div class="ui-g-8 ui-g-nopad">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+            <ngx-charts-bar-vertical-2d
+            class="align-items-center"
+            [scheme]="colorScheme2"
+            [results]="randomEv2"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="false"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Meses'"
+            [yAxisLabel]="'Eventos'"
+            [showDataLabel]="true"
+            [barPadding]=0
+            [groupPadding]=4
+            [tooltipDisabled]="true">
+            </ngx-charts-bar-vertical-2d>
+          </div>
+          <div class="ui-g-1" style="width: 5px;">&nbsp;</div>
+
+          <div class="ui-g-12">&nbsp;</div>
         </div>
 
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter" *ngIf="flag">
@@ -584,7 +592,7 @@
   <div class="ui-g" *ngIf="flagILI">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic" >
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" >
         <!-- <h2>Eventos</h2> -->
         <!-- <h2>ILI</h2> -->
         <ngx-charts-combo
@@ -594,6 +602,7 @@
         >
         </ngx-charts-combo>
       </div>
+      <div class="ui-g-1">&nbsp;</div>
       <div class="ui-g-2">&nbsp;</div>
       <div class="ui-g-8">
         <div class="ui-g-6">  
@@ -624,7 +633,7 @@
    <div class="ui-g" *ngIf="flagILI_2">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad grafic">
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
         <!-- <h2>ILI</h2> -->
         <ngx-charts-combo
         [categories]="categoriesCombo_2"
@@ -633,6 +642,7 @@
         >
         </ngx-charts-combo>
       </div>
+      <div class="ui-g-1">&nbsp;</div>
       <div class="ui-g-2">&nbsp;</div>
       <div class="ui-g-8">
         <div class="ui-g-6">  
