@@ -161,6 +161,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
     
   ngAfterViewInit(){
     this.getEventosAt();
+    this.getDiasPerdidosAt();
   }
 
   async ngOnInit() {
@@ -188,7 +189,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
         await this.selectILI1_2()
         await this.selectILI2_2()
         await this.selectILI3_2()
-        this.dona1dp();
       });
       this.optionsCombo_2={
         title: 'ILI', 
@@ -388,10 +388,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
 
         //No. de días perdidos
         this.diasPerdidos=0;
+        // result.forEach(element => {
+        // if(element['incapacidades']!=null && element['incapacidades']!='null'){
+        //   this.diasPerdidos=this.diasPerdidos+JSON.parse(element['incapacidades']).length
+        // }
+        // });
         result.forEach(element => {
-        if(element['incapacidades']!=null && element['incapacidades']!='null'){
-          this.diasPerdidos=this.diasPerdidos+JSON.parse(element['incapacidades']).length
-        }
+          if(element['incapacidades']!=null && element['incapacidades']!='null'){
+            this.diasPerdidos = this.diasPerdidos + JSON.parse(element['incapacidades'])
+                                                        .reduce((count, incapacidad) => {
+                                                          return count + incapacidad.diasAusencia;
+                                                        }, 0);
+          }
         });
       });
     }else{
@@ -1262,20 +1270,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
     this.reporteAtService.findAllRAT().then(
       (res: any[]) => {
         let padreNombreList = [];
+        res.forEach((at: any) => {
+          reporteAt.push(at);
+          padreNombreList.push(at.padreNombre);
+        });
+        padreNombreList.forEach((item: string) => {
+          if(!divisiones.includes(item)){
+            divisiones.push(item);
+          }
+        });
         try {
           switch(filter){
             case 'temp':
-              res.forEach((at: any) => {
-                reporteAt.push(at);
-                if(at.temporal){
-                  padreNombreList.push(at.padreNombre);
-                }
-              });
-              padreNombreList.forEach((item: string) => {
-                if(!divisiones.includes(item)){
-                  divisiones.push(item);
-                }
-              });
               let eventosAttemp = [];
               divisiones.forEach(
                 division => {
@@ -1288,17 +1294,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
               Object.assign(this, {randomEv1Dona});
               break;
             case 'dir':
-              res.forEach((at: any) => {
-                reporteAt.push(at);
-                if(at.temporal == null){
-                  padreNombreList.push(at.padreNombre);
-                }
-              });
-              padreNombreList.forEach((item: string) => {
-                if(!divisiones.includes(item)){
-                  divisiones.push(item);
-                }
-              });
               let eventosAtdir = [];
               divisiones.forEach(
                 division => {
@@ -1314,19 +1309,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
               throw 'error';
           }
         }catch(err){
-          // Optimizando
-          // padreNombreList = res.map(at => at.padreNombre);
-          // reporteAt = res.map(at => at);
-          // divisiones = padreNombreList.
-          res.forEach((at: any) => {
-            reporteAt.push(at);
-            padreNombreList.push(at.padreNombre);
-          });
-          padreNombreList.forEach((item: string) => {
-            if(!divisiones.includes(item)){
-              divisiones.push(item);
-            }
-          });
           let eventosAt = [];
           divisiones.forEach(
             division => {
@@ -1343,12 +1325,67 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
   }
 
   //Dias perdidos
-  dona1dp(){
-    //total
-    this.randomEv1Donadb=[]
-    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
-    division.forEach(div => {
-      this.randomEv1Donadb.push({name:div,value:Math.round(Math.random()*10)})
+  getDiasPerdidosAt(filter?: string){
+    let divisiones: string[] = [];
+    let randomEv1Donadb = [];
+    let listaDivisionesDp;
+    this.reporteAtService.findAllRAT().then((reportesAt: any[]) => {
+      listaDivisionesDp = reportesAt.filter(at => at.incapacidades !== null && at.incapacidades !== 'null')
+                                    .map(atDp => atDp.padreNombre);
+      divisiones = listaDivisionesDp.filter((item, index) => {
+        return listaDivisionesDp.indexOf(item) === index; 
+      });
+      try {
+        switch(filter){
+          case 'temp':
+            divisiones.forEach(division => {
+              let data = {name: division, value: 0};
+              data.value = reportesAt
+                            .filter(at => at.padreNombre === division 
+                                          && at.incapacidades !== null 
+                                          && at.incapacidades !== 'null' && at.temporal)
+                            .reduce((count, itemActual) => {
+                              return count + JSON.parse(itemActual.incapacidades).reduce((count2, dataIncapacidad) => {
+                                return count2 + dataIncapacidad.diasAusencia;
+                              }, 0);
+                            }, 0);
+              randomEv1Donadb.push(data);
+            });
+            Object.assign(this, {randomEv1Donadb});
+            break;
+          case 'dir':
+            divisiones.forEach(division => {
+              let data = {name: division, value: 0};
+              data.value = reportesAt
+                            .filter(at => at.padreNombre === division 
+                                          && at.incapacidades !== null 
+                                          && at.incapacidades !== 'null' && !at.temporal)
+                            .reduce((cont, itemActual) => {
+                              return cont + JSON.parse(itemActual.incapacidades).reduce((cont2, dataIncapacidad) => {
+                                return cont2 + dataIncapacidad.diasAusencia;
+                              }, 0);
+                            }, 0);
+              randomEv1Donadb.push(data);
+            });
+            Object.assign(this, {randomEv1Donadb});
+            break;
+          default:
+            throw 'error';
+        }
+      } catch (error) {
+        divisiones.forEach(division => {
+          let data = {name: division, value: 0};
+          data.value = reportesAt
+                        .filter(at => at.padreNombre === division && at.incapacidades !== null && at.incapacidades !== 'null')
+                        .reduce((count, itemActual) => {
+                          return count + JSON.parse(itemActual.incapacidades).reduce((count2, dataIncapacidad) => {
+                            return count2 + dataIncapacidad.diasAusencia;
+                          }, 0);
+                        }, 0);
+          randomEv1Donadb.push(data);
+        });
+        Object.assign(this, {randomEv1Donadb});
+      }
     });
   }
 }
