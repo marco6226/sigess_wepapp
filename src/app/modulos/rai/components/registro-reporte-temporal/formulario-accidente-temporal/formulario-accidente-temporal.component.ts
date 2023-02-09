@@ -158,7 +158,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     this.areasPermiso='{'+filteredArea.toString()+'}';
     
     this.idEmpresa = this.sesionService.getEmpresa().id;
-    this.infoEmpresa()
+    if(!this.modificar && !this.consultar){
+    this.infoEmpresa()}
 
       this.form = this.fb.group({
           id: null,
@@ -487,7 +488,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
           let selectedTemporal=this.temporales.find((data)=>{
             return data.value==this.selectedTemporal
           })
-          reporte.temporal = selectedTemporal.label;
+          reporte.temporal = this.form.value.razonSocial;
+          reporte.identificacionEmpresa=this.form.value.identificacionEmpresa;
           await this.reporteService.create(reporte).then(
               async data => {
                   this.onSave.emit(<Reporte>data)
@@ -527,7 +529,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         let selectedTemporal=this.temporales.find((data)=>{
           return data.value==this.selectedTemporal
         })
-        reporte.temporal = selectedTemporal.label;
         this.reporteService.update(reporte).then(
             data => this.onSave.emit(<Reporte>data)
         );
