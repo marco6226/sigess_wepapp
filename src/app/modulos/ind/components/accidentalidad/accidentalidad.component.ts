@@ -206,8 +206,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         width: 800,
         xAxis: {
             title: 'Divisiones',
-            labelRotation: -60,
-            labelAlign: 'middle', // left, middle, right,
+            labelRotation: 300,
+            labelAlign: 'right', // left, middle, right,
             labelEllipsisSize: 80
         },
         yAxis: {
@@ -229,8 +229,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         width: 800,
         xAxis: {
             title: 'Divisiones',
-            labelRotation: -60,
-            labelAlign: 'middle', // left, middle, right,
+            labelRotation: 300,
+            labelAlign: 'right', // left, middle, right,
             labelEllipsisSize: 80
         },
         yAxis: {
