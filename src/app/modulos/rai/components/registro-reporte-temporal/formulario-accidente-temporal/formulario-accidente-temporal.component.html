@@ -303,62 +303,59 @@
             <p-accordionTab header="VIII. LISTADO DE CAUSAS">
                 <app-listado-causas-temporal [factores]="dataListFactor"></app-listado-causas-temporal>
             </p-accordionTab>
+<!-- </form>
+<form [formGroup]="formplanaccion"> -->
             <p-accordionTab header="IX. PLAN DE ACCION">
                 
+                <div class="ui-g">
 
-                <!-- <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()"> -->
-        
-                    <div class="ui-g">
-        
-                        <!-- Start general info -->
-        
-                        <div class="ui-g-12">
-                            <h5 class="title-header p-mb-2">Plan de acción</h5>
-                        </div>
-        
-                        <div class="ui-g-12 ui-md-6 ui-lg-4">
-                            <div class="input-field">
-                                <input type="number" pInputText placeholder="% de avance"
-                                    class="form-material"/>
-                                <label for="" class="active">% de avance</label>
-                            </div>        
-                        </div>
-        
-                        <div class="ui-g-12 ui-md-6 ui-lg-4">
-                            <div class="input-field">
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-                                <label for="" class="active">Fecha de cierre</label>
-                            </div>        
-                        </div>
-        
-                        <div class="ui-g-12 ui-md-6">
-                            <div class="input-field">
-                                <textarea pInputTextarea class="form-material" rows="5"></textarea>
-                                <label for="" class="active">Descripción de la acción realizada</label>
-                            </div>        
-                        </div>
-        
-        
-                        <div class="ui-g-12">
-                            <h5 class="title-header p-mb-2">Evidencias</h5>
-                        </div>
-        
-                        <div class="uploaders">
-                            <div>  
-                                <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar evidencia" style="margin-bottom: 10px;"></button>
-                                <!-- <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-trash" style="margin-bottom: 10px; background-color: red;" *ngIf="!readOnly"></button> -->
-                                <s-documentoUpload  fileLimit="3" [(visible)]="visibleDlgExcel" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo" [temporalesFlag]="temporalesFlag"></s-documentoUpload>
-                            </div>
-                        </div>
-        
-                        <!-- <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8"
-                            [style]="{width: '35px', height: '35px'}"></p-progressSpinner> -->
-                        <!-- End send button -->
-        
+                    <div class="ui-g-12">
+                        <h5 class="title-header p-mb-2">Plan de acción</h5>
                     </div>
-        
-                <!-- </form> -->            
+    
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <!-- <input type="number" pInputText placeholder="% de avance"
+                                class="form-material" formControlName="avance"/> -->
+                            <input type="number" pInputText placeholder="% de avance"
+                                class="form-material"/>
+                            <label for="" class="active">% de avance</label>
+                        </div>        
+                    </div>
+    
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <div class="input-field">
+                            <!-- <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaCierre"></p-calendar> -->
+                            <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+                            <label for="" class="active">Fecha de cierre</label>
+                        </div>        
+                    </div>
+    
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="input-field">
+                            <!-- <textarea pInputTextarea class="form-material" rows="5" formControlName="descripcion"></textarea> -->
+                            <textarea pInputTextarea class="form-material" rows="5"></textarea>
+                            <label for="" class="active">Descripción de la acción realizada</label>
+                        </div>        
+                    </div>
+    
+    
+                    <div class="ui-g-12">
+                        <h5 class="title-header p-mb-2">Evidencias</h5>
+                    </div>
+    
+                    <div class="uploaders">
+                        <div>  
+                            <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar evidencia" style="margin-bottom: 10px;"></button>
+                            <!-- <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-trash" style="margin-bottom: 10px; background-color: red;" *ngIf="!readOnly"></button> -->
+                            <s-documentoUpload  fileLimit="3" [(visible)]="visibleDlgExcel" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo" [temporalesFlag]="temporalesFlag"></s-documentoUpload>
+                        </div>
+                    </div>
+    
+                </div>
+          
             </p-accordionTab>
         </p-accordion>
     </p-panel>
