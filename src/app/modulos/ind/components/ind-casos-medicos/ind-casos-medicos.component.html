@@ -264,12 +264,12 @@
             <h5>Año</h5>
             <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" (onChange)="chageYear()" [(ngModel)]="selectYear1"></p-dropdown>
             <h5>Meses</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" [(ngModel)]="selectMeses1" (click)="chageYear()"></p-multiSelect>
             <h5>Division</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" optionLabel="name"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" optionLabel="name" (click)="chageYear()" [(ngModel)]="selectDiv1"></p-multiSelect>
             <h5>Filtro casos</h5>
             <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-                <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value"></p-checkbox>
+                <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value" (click)="chageYear()"></p-checkbox>
                 <label>{{Indicador.label}}</label>
             </div>
           </div>
@@ -344,10 +344,10 @@
             <h5>Año</h5>
             <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear2" (onChange)="chageYear2()"></p-dropdown>
             <h5>Meses</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" (click)="chageYear2()" [(ngModel)]="selectMeses2"></p-multiSelect>
             <h5>Filtro retornos</h5>
             <div *ngFor="let retorno of Retorno" class="p-field-checkbox">
-                <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectRetorno" [inputId]="retorno.value"></p-checkbox>
+                <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectRetorno" [inputId]="retorno.value" (click)="chageYear2()"></p-checkbox>
                 <label>{{retorno.label}}</label>
             </div>
           </div>
@@ -411,9 +411,9 @@
             <h5>Año</h5>
             <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear3" (onChange)="chageYear3()"></p-dropdown>
             <h5>Meses</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" (click)="chageYear3()" [(ngModel)]="selectMeses3"></p-multiSelect>
             <h5>Filtro diagnosticos</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Sindrome" optionLabel="name" [(ngModel)]="selectSindrome"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Sindrome" optionLabel="name" [(ngModel)]="selectSindrome" (click)="chageYear3()"></p-multiSelect>
             <!-- <div *ngFor="let retorno of Sindrome" class="p-field-checkbox">
                 <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectSindrome" [inputId]="retorno.value"></p-checkbox>
                 <label>{{retorno.label}}</label>

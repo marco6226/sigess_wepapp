@@ -66,8 +66,12 @@ export class IndCasosMedicosComponent implements OnInit {
   selectDivisiones1: any[] = [];
   selectIndicarores1: any[] = [];
   selectIndicarores2: any[] = [];
+  selectMeses1: any[] = [];
+  selectMeses2: any[] = [];
+  selectMeses3: any[] = [];
   selectRetorno: any[] = [];
   selectSindrome: any[] = [];
+  selectDiv1: any[] = [];
 
   flagevent1:boolean=false
   flag1:boolean=false;
@@ -98,8 +102,7 @@ export class IndCasosMedicosComponent implements OnInit {
     {label:'Septiembre',value:'Septiembre'},
     {label:'Octubre',value:'Octubre'},
     {label:'Noviembre',value:'Noviembre'},
-    {label:'Diciembre',value:'Diciembre'},
-    {label:'Corona total',value:'Corona total'}
+    {label:'Diciembre',value:'Diciembre'}
   ];
   Meses2= [
     {name:'Enero',code:'Enero'},
@@ -113,8 +116,7 @@ export class IndCasosMedicosComponent implements OnInit {
     {name:'Septiembre',code:'Septiembre'},
     {name:'Octubre',code:'Octubre'},
     {name:'Noviembre',code:'Noviembre'},
-    {name:'Diciembre',code:'Diciembre'},
-    {name:'Corona total',code:'Corona total'}
+    {name:'Diciembre',code:'Diciembre'}
   ];
 
   selectYear1:number=2023;
@@ -185,11 +187,7 @@ export class IndCasosMedicosComponent implements OnInit {
       this.randomIn1Div.push({name:div,series:[{name:'No.Casos',value:this.casos[cont1]},{name:'Casos abiertos',value:this.casosAbiertosGra[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra[cont1]}]})
       cont1=cont1+1;
     });
-
-    console.log(this.randomIn1Div)
-    console.log(this.selectIndicarores1)
     let randomIn1Div=[]
-    let randomIn1Divh=[]
     if(this.selectDivisiones1.length>0){
       this.selectDivisiones1.forEach(resp1=>{
         let x=this.randomIn1Div.filter((resp)=>{
@@ -220,17 +218,22 @@ export class IndCasosMedicosComponent implements OnInit {
       });
       this.randomIn1Div=randomIn1Div
     }
-
-    
     this.flag1=true
   }
   chageYear(){
-    if(this.selectYear1==2023){
+    if(this.selectYear1==2023 && (this.selectDiv1.length==0 || this.selectDiv1.length==7)){
       this.casosGra1=[962, 1069, 0,0,0,0,0,0,0,0,0,0];
       this.casosAbiertosGra1=[962, 1034,0,0,0,0,0,0,0,0,0,0];
       this.casosPrioritariosGra1=[44, 49, 0,0,0,0,0,0,0,0,0,0];
       this.casosRetornoGra1=[506, 534, 0,0,0,0,0,0,0,0,0,0];
-    }else{
+    }
+    else if(this.selectDiv1.length>0 && this.selectDiv1.length<7 && this.selectYear1==2022){
+      this.casosGra1=[ Math.round(Math.random()*1000),  Math.round(Math.random()*1000), 0,0,0,0,0,0,0,0,0,0];
+      this.casosAbiertosGra1=[Math.round(Math.random()*1000), Math.round(Math.random()*1000),0,0,0,0,0,0,0,0,0,0];
+      this.casosPrioritariosGra1=[Math.round(Math.random()*50), Math.round(Math.random()*50), 0,0,0,0,0,0,0,0,0,0];
+      this.casosRetornoGra1=[Math.round(Math.random()*500), Math.round(Math.random()*500), 0,0,0,0,0,0,0,0,0,0];
+    }
+    else{
       this.casosGra1=[ Math.round(Math.random()*1000),  Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000),Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000)];
       this.casosAbiertosGra1=[ Math.round(Math.random()*1000),  Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000),Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000)];
       this.casosPrioritariosGra1=[Math.round(Math.random()*50), Math.round(Math.random()*50), Math.round(Math.random()*50), Math.round(Math.random()*50),Math.round(Math.random()*50), Math.round(Math.random()*50),Math.round(Math.random()*50), Math.round(Math.random()*50), Math.round(Math.random()*50), Math.round(Math.random()*50), Math.round(Math.random()*50), Math.round(Math.random()*50)];
@@ -244,10 +247,43 @@ export class IndCasosMedicosComponent implements OnInit {
       this.randomIn1Mes.push({name:mes,series:[{name:'No.Casos',value:this.casosGra1[cont1]},{name:'Casos abiertos',value:this.casosAbiertosGra1[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra1[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra1[cont1]}]})
       cont1=cont1+1;
     });
+
+    let randomIn1Mes=[]
+    if(this.selectMeses1.length>0){
+      this.selectMeses1.forEach(resp1=>{
+        let x=this.randomIn1Mes.filter((resp)=>{
+          return resp.name ==resp1.name
+        })
+        randomIn1Mes.push(x[0])
+      }
+      )
+      this.randomIn1Mes=randomIn1Mes
+    }
+
+    if(this.selectIndicarores2.length>0){
+      randomIn1Mes=[]
+      this.randomIn1Mes.forEach(element => {
+        let randomEv1CopySeries=[]
+  
+        if(this.selectIndicarores2.length>0){
+          this.selectIndicarores2.forEach(element2 => {
+            let x = element['series'].filter(word => {
+              return word['name']==element2['label']
+            });
+            randomEv1CopySeries.push(x[0])
+          });
+        }else{
+          randomEv1CopySeries=element['series']
+        }
+        randomIn1Mes.push({name:element['name'],series:randomEv1CopySeries})
+      });
+      this.randomIn1Mes=randomIn1Mes
+    }
+
     this.flag2=true
   }
   chageYear2(){
-    if(this.selectYear2==2023){
+    if(this.selectYear2==2023 && (this.selectMeses2.length==0 || this.selectMeses2.length==12)){
       this.casosRetornoGra2=[4,959,77]
     }else{
       this.casosRetornoGra2=[Math.round(Math.random()*500),Math.round(Math.random()*500),Math.round(Math.random()*500)]
@@ -260,10 +296,22 @@ export class IndCasosMedicosComponent implements OnInit {
       this.randomRetorno.push({name:re.label,series:[{name:'No.Casos',value:this.casosRetornoGra2[cont1]}]})
       cont1=cont1+1;
     });
+
+    let randomRetorno=[]
+    if(this.selectRetorno.length>0){
+      this.selectRetorno.forEach(resp1=>{
+        let x=this.randomRetorno.filter((resp)=>{
+          return resp.name ==resp1.label
+        })
+        randomRetorno.push(x[0])
+      }
+      )
+      this.randomRetorno=randomRetorno
+    }    
     this.flag3=true
   }
   chageYear3(){
-    if(this.selectYear3==2023){
+    if(this.selectYear3==2023 && (this.selectMeses3.length==0 || this.selectMeses3.length==12)){
       this.cassosSindrome1=[117,122,54,97,69,56,35,31,23,21]
     }else{
       this.cassosSindrome1=[Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150),Math.round(Math.random()*150)]  
@@ -277,6 +325,19 @@ export class IndCasosMedicosComponent implements OnInit {
       this.randomSindrome.push({name:si.name,series:[{name:'No.Casos',value:this.cassosSindrome1[cont1]}]})
       cont1=cont1+1;
     });
+
+    let randomSindrome=[]
+    if(this.selectSindrome.length>0){
+      this.selectSindrome.forEach(resp1=>{
+        let x=this.randomSindrome.filter((resp)=>{
+          return resp.name ==resp1.name
+        })
+        randomSindrome.push(x[0])
+      }
+      )
+      this.randomSindrome=randomSindrome
+    }   
+
     this.flag4=true
   }
 
