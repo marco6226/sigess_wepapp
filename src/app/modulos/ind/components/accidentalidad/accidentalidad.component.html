@@ -261,11 +261,13 @@
           <div class="ui-g-6">
             <div class="ui-g-6">  
               <i style="font-size:24px" class="fa">&#xf073;</i>   
-              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body"> </p-calendar> 
+              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [(ngModel)]="filtroFechaDiasPerdidos[0]" 
+              (onSelect)="selectRangoDiasPerdidosAt($event, 'desde')" placeholder="Desde" appendTo="body"> </p-calendar> 
             </div>
             <div class="ui-g-6"> 
               <i style="font-size:24px" class="fa">&#xf073;</i> 
-              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body"> </p-calendar>
+              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [(ngModel)]="filtroFechaDiasPerdidos[1]" 
+              (onSelect)="selectRangoDiasPerdidosAt($event, 'hasta')" placeholder="Hasta" appendTo="body"> </p-calendar>
             </div>
           </div>
         </div>

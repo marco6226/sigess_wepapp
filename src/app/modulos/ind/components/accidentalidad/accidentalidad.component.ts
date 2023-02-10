@@ -51,6 +51,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   areasPermiso: string;
   reporteat;
   filtroFechaAt: Date[] = [];
+  filtroFechaDiasPerdidos: Date[] = [];
 
   desdes: Date;
   hastas: Date;
@@ -167,10 +168,12 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnDestroy(): void {
     localStorage.removeItem('reporteAtList');
+    localStorage.removeItem('diasPerdidosAtList');
   }
 
   async ngOnInit() {
     localStorage.removeItem('reporteAtList');
+    localStorage.removeItem('diasPerdidosAtList');
 
     if(this.ili<=this.metaIli){
     this.colorIli="card l-bg-green-dark"}
@@ -1274,6 +1277,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     this.filtroFechaAt = [];
     let divisiones: string[] = [];
     let randomEv1Dona: any[] = [];
+    let auxRandomEv1Dona = [];
     this.reporteAtService.findAllRAT().then(
       (reporteAt: any[]) => {
         let padreNombreList = [];
@@ -1292,6 +1296,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               divisiones.forEach(
                 division => {
                   let data = {name: division, value: 0};
+                  auxRandomEv1Dona = auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division && at.temporal));
                   data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal).length;
                   eventosAttemp.push(data);
                 }
@@ -1304,6 +1309,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               divisiones.forEach(
                 division => {
                   let data = {name: division, value: 0};
+                  auxRandomEv1Dona = auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division && at.temporal ==null));
                   data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal == null).length;
                   eventosAtdir.push(data);
                 }
@@ -1319,6 +1325,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           divisiones.forEach(
             division => {
               let data = {name: division, value: 0};
+              auxRandomEv1Dona = auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division));
               data.value = reporteAt.filter(at => at.padreNombre === division).length;
               eventosAt.push(data);
             }
@@ -1361,9 +1368,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
   //Dias perdidos
   getDiasPerdidosAt(filter?: string){
+    this.filtroFechaDiasPerdidos = [];
     this.filtroFechaAt = [];
     let divisiones: string[] = [];
     let randomEv1Donadb = [];
+    let auxRandomEv1Donadb = [];
     let listaDivisionesDp;
     this.reporteAtService.findAllRAT().then((reportesAt: any[]) => {
       listaDivisionesDp = reportesAt.filter(at => at.incapacidades !== null && at.incapacidades !== 'null')
@@ -1376,9 +1385,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           case 'temp':
             divisiones.forEach(division => {
               let data = {name: division, value: 0};
+              auxRandomEv1Donadb = auxRandomEv1Donadb.concat(reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null 
+                                                                && at.incapacidades !== 'null' && at.temporal));
               data.value = reportesAt
-                            .filter(at => at.padreNombre === division 
-                                          && at.incapacidades !== null 
+                            .filter(at => at.padreNombre === division && at.incapacidades !== null 
                                           && at.incapacidades !== 'null' && at.temporal)
                             .reduce((count, itemActual) => {
                               return count + JSON.parse(itemActual.incapacidades).reduce((count2, dataIncapacidad) => {
@@ -1392,6 +1402,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           case 'dir':
             divisiones.forEach(division => {
               let data = {name: division, value: 0};
+              auxRandomEv1Donadb = auxRandomEv1Donadb.concat(reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null 
+                                                                && at.incapacidades !== 'null' && !at.temporal));
               data.value = reportesAt
                             .filter(at => at.padreNombre === division 
                                           && at.incapacidades !== null 
@@ -1411,6 +1423,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       } catch (error) {
         divisiones.forEach(division => {
           let data = {name: division, value: 0};
+          auxRandomEv1Donadb = auxRandomEv1Donadb.concat(reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null 
+                                                            && at.incapacidades !== 'null'));
           data.value = reportesAt
                         .filter(at => at.padreNombre === division && at.incapacidades !== null && at.incapacidades !== 'null')
                         .reduce((count, itemActual) => {
@@ -1422,6 +1436,39 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         });
         Object.assign(this, {randomEv1Donadb});
       }
+      localStorage.setItem('diasPerdidosAtList', JSON.stringify(auxRandomEv1Donadb.map(at => at)));
     });
+  }
+
+  selectRangoDiasPerdidosAt(event: Date, filter: string){
+    if(typeof this.filtroFechaDiasPerdidos === "undefined") this.filtroFechaDiasPerdidos = [];
+
+    if(filter === 'desde'){
+      this.filtroFechaDiasPerdidos[0] = new Date(event);
+    }else if(filter === 'hasta'){
+      this.filtroFechaDiasPerdidos[1] = new Date(event);
+    }
+    
+    if(this.filtroFechaDiasPerdidos[0] && this.filtroFechaDiasPerdidos[1]){
+      let dataDiasPerdidosAtList: any[] = JSON.parse(localStorage.getItem('diasPerdidosAtList'));
+      let listaDivisiones: any[] = dataDiasPerdidosAtList.map(at => at.padreNombre);
+      let divisiones: any[] = listaDivisiones.filter((item, index) => {
+        return listaDivisiones.indexOf(item) === index;
+      });
+
+      dataDiasPerdidosAtList = dataDiasPerdidosAtList.filter(at => at.fechaReporte > this.filtroFechaDiasPerdidos[0] && at.fechaReporte < this.filtroFechaDiasPerdidos[1]);
+      let randomEv1Donadb: any[] = [];
+      divisiones.forEach(division => {
+        let data = {name: division, value: 0};
+        data.value = dataDiasPerdidosAtList.filter(at => at.padreNombre === division && at.incapacidades != null && at.incapacidades != 'null')
+                                            .reduce((count, item) => {
+                                              return count + JSON.parse(item.incapacidades).reduce((count2, dataIncapacidad) => {
+                                                return count2 + dataIncapacidad.diasAusencia;
+                                              }, 0)
+                                            }, 0);
+        randomEv1Donadb.push(data);
+      });
+      Object.assign(this, {randomEv1Donadb});
+    }
   }
 }
