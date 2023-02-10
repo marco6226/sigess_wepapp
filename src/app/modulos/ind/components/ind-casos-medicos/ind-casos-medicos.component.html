@@ -57,7 +57,7 @@
               </div>
               <div class="p-col-6 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
-                      <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
+                      <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones3" placeholder="Seleccionar división" (onChange)="changeCard($event)" ></p-dropdown></div>
                       <div class="p-d-flex">  
                           <i style="font-size:24px" class="fa">&#xf073;</i>   
                           <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
@@ -262,7 +262,7 @@
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022"></p-dropdown>
+            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" (onChange)="chageYear()" [(ngModel)]="selectYear1"></p-dropdown>
             <h5>Meses</h5>
             <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
             <h5>Division</h5>
@@ -342,7 +342,7 @@
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022"></p-dropdown>
+            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear2" (onChange)="chageYear2()"></p-dropdown>
             <h5>Meses</h5>
             <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
             <h5>Filtro retornos</h5>
@@ -409,7 +409,7 @@
           </div>
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022"></p-dropdown>
+            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear3" (onChange)="chageYear3()"></p-dropdown>
             <h5>Meses</h5>
             <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
             <h5>Filtro diagnosticos</h5>
