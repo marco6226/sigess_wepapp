@@ -125,160 +125,160 @@
       </p-panel>
       <br/>
       <p-panel header="Casos medicos">
-        <div class="ui-g" *ngIf="flagevent1">
-          <!-- Primera grafica -->
-            <p><b>
-              <ng-container *ngIf="selectIndicarores1.length>0">
-                <ng-container *ngFor="let ret of selectIndicarores1;first as f;last as l">
-                  <ng-container *ngIf="f ;else otro1">
-                    {{ret.label}}
-                  </ng-container>
-                  <ng-template #otro1>
-                    /{{ret.label}}
-                  </ng-template>
+        <div class="ui-g" *ngIf="flag1">
+        <!-- Primera grafica -->
+          <p><b>
+            <ng-container *ngIf="selectIndicarores1.length>0">
+              <ng-container *ngFor="let ret of selectIndicarores1;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
                 </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
               </ng-container>
-              <ng-container *ngIf="selectIndicarores1.length==0">
-                <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
-                  <ng-container *ngIf="f ;else otro1">
-                    {{ret.label}}
-                  </ng-container>
-                  <ng-template #otro1>
-                    /{{ret.label}}
-                  </ng-template>
+            </ng-container>
+            <ng-container *ngIf="selectIndicarores1.length==0">
+              <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
                 </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
               </ng-container>
-            </b></p>
+            </ng-container>
+          </b></p>
 
-            <div class="ui-g-12">&nbsp;</div>
-            <div  class="ui-g-8 ui-g-nopad">
-              <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
-                  <ngx-charts-bar-vertical-2d 
-                  [scheme]="colorScheme"
-                  [results]="randomIn1Div"
-                  [gradient]="true"
-                  [xAxis]="true"
-                  [yAxis]="true"
-                  [legend]="false"
-                  [showXAxisLabel]="true"
-                  [showYAxisLabel]="true"
-                  [xAxisLabel]="'casos'"
-                  [yAxisLabel]="'No. Casos'"
-                  [barPadding]=0
-                  [groupPadding]=4
-                  [showDataLabel]="false"
-                  [tooltipDisabled]="false">
-                  </ngx-charts-bar-vertical-2d>
-              </div>
-              <div class="ui-g-1">&nbsp;</div>
-              <div class="ui-g-2">&nbsp;</div>
-              <div class="ui-g-8">
-                <div class="ui-g-6">  
-                  <i style="font-size:24px" class="fa">&#xf073;</i>   
-                  <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
-                </div>
-                <div class="ui-g-6"> 
-                  <i style="font-size:24px" class="fa">&#xf073;</i> 
-                  <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
-                </div>
-              </div>
-            </div>
-    
-            <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
-              <h5>Division</h5>
-              <div *ngFor="let category of divisiones" class="p-field-checkbox">
-                <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value"></p-checkbox>
-                <label>{{category.label}}</label>
-              </div>
-              <h5>Filtro casos</h5>
-              <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-                <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value"></p-checkbox>
-                <label>{{Indicador.label}}</label>
-              </div>
-            </div>
-
-          </div>
-          <hr/>
-          <div class="ui-g" *ngIf="flagevent1">
-            <p><b>
-              <ng-container *ngIf="selectIndicarores2.length>0">
-                <ng-container *ngFor="let ret of selectIndicarores2;first as f;last as l">
-                  <ng-container *ngIf="f ;else otro1">
-                    {{ret.label}}
-                  </ng-container>
-                  <ng-template #otro1>
-                    /{{ret.label}}
-                  </ng-template>
-                </ng-container>
-              </ng-container>
-              <ng-container *ngIf="selectIndicarores2.length==0">
-                <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
-                  <ng-container *ngIf="f ;else otro1">
-                    {{ret.label}}
-                  </ng-container>
-                  <ng-template #otro1>
-                    /{{ret.label}}
-                  </ng-template>
-                </ng-container>
-              </ng-container>
-            </b></p>
-
-            <div class="ui-g-12">&nbsp;</div>
-    
-            <div  class="ui-g-8 ui-g-nopad">
-              <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
-                <ngx-charts-bar-vertical-2d
-                class="align-items-center"
+          <div class="ui-g-12">&nbsp;</div>
+          <div  class="ui-g-8 ui-g-nopad">
+            <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+                <ngx-charts-bar-vertical-2d 
                 [scheme]="colorScheme"
-                [results]="randomIn1Mes"
+                [results]="randomIn1Div"
                 [gradient]="true"
                 [xAxis]="true"
                 [yAxis]="true"
                 [legend]="false"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
-                [xAxisLabel]="'Meses'"
+                [xAxisLabel]="'casos'"
                 [yAxisLabel]="'No. Casos'"
-                [showDataLabel]="false"
                 [barPadding]=0
                 [groupPadding]=4
+                [showDataLabel]="false"
                 [tooltipDisabled]="false">
                 </ngx-charts-bar-vertical-2d>
-              </div>
-              <div class="ui-g-1">&nbsp;</div>
-              <div class="ui-g-2">&nbsp;</div>
-              <div class="ui-g-8">
-                  <div class="ui-g-6">  
-                      <i style="font-size:24px" class="fa">&#xf073;</i>   
-                      <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
-                  </div>
-                  <div class="ui-g-6"> 
-                      <i style="font-size:24px" class="fa">&#xf073;</i> 
-                      <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
-                  </div>
-              </div>
             </div>
-    
-    
-            <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
-              <h5>Año</h5>
-              <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año"></p-dropdown>
-              <h5>Meses</h5>
-              <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
-              <h5>Division</h5>
-              <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" optionLabel="name"></p-multiSelect>
-              <h5>Filtro indicadores</h5>
-              <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-                  <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value"></p-checkbox>
-                  <label>{{Indicador.label}}</label>
+            <div class="ui-g-1">&nbsp;</div>
+            <div class="ui-g-2">&nbsp;</div>
+            <div class="ui-g-8">
+              <div class="ui-g-6">  
+                <i style="font-size:24px" class="fa">&#xf073;</i>   
+                <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
+              </div>
+              <div class="ui-g-6"> 
+                <i style="font-size:24px" class="fa">&#xf073;</i> 
+                <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
               </div>
             </div>
           </div>
+  
+          <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
+            <h5>Division</h5>
+            <div *ngFor="let category of divisiones" class="p-field-checkbox">
+              <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value" (click)="selectCas1()"></p-checkbox>
+              <label>{{category.label}}</label>
+            </div>
+            <h5>Filtro casos</h5>
+            <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
+              <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value" (click)="selectCas1()"></p-checkbox>
+              <label>{{Indicador.label}}</label>
+            </div>
+          </div>
+
+        </div>
+        <hr/>
+        <div class="ui-g" *ngIf="flag2">
+          <p><b>
+            <ng-container *ngIf="selectIndicarores2.length>0">
+              <ng-container *ngFor="let ret of selectIndicarores2;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+                </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="selectIndicarores2.length==0">
+              <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+                </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </b></p>
+
+          <div class="ui-g-12">&nbsp;</div>
+  
+          <div  class="ui-g-8 ui-g-nopad">
+            <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+              <ngx-charts-bar-vertical-2d
+              class="align-items-center"
+              [scheme]="colorScheme"
+              [results]="randomIn1Mes"
+              [gradient]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Meses'"
+              [yAxisLabel]="'No. Casos'"
+              [showDataLabel]="false"
+              [barPadding]=0
+              [groupPadding]=4
+              [tooltipDisabled]="false">
+              </ngx-charts-bar-vertical-2d>
+            </div>
+            <div class="ui-g-1">&nbsp;</div>
+            <div class="ui-g-2">&nbsp;</div>
+            <div class="ui-g-8">
+                <div class="ui-g-6">  
+                    <i style="font-size:24px" class="fa">&#xf073;</i>   
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
+                </div>
+                <div class="ui-g-6"> 
+                    <i style="font-size:24px" class="fa">&#xf073;</i> 
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
+                </div>
+            </div>
+          </div>
+  
+  
+          <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
+            <h5>Año</h5>
+            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022"></p-dropdown>
+            <h5>Meses</h5>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
+            <h5>Division</h5>
+            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" optionLabel="name"></p-multiSelect>
+            <h5>Filtro casos</h5>
+            <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
+                <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value"></p-checkbox>
+                <label>{{Indicador.label}}</label>
+            </div>
+          </div>
+        </div>
         
       </p-panel>
       <br/>
       <p-panel header="RETORNO - DIAGNOSTICO">
-        <div class="ui-g" *ngIf="flagevent1">
+        <div class="ui-g" *ngIf="flag3">
 
           <p><b>
             <ng-container *ngIf="selectRetorno.length>0">
@@ -342,10 +342,10 @@
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año"></p-dropdown>
+            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022"></p-dropdown>
             <h5>Meses</h5>
             <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
-            <h5>Filtro indicadores</h5>
+            <h5>Filtro retornos</h5>
             <div *ngFor="let retorno of Retorno" class="p-field-checkbox">
                 <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectRetorno" [inputId]="retorno.value"></p-checkbox>
                 <label>{{retorno.label}}</label>
@@ -354,28 +354,21 @@
         </div>
         <hr>
 
-        <div class="ui-g" *ngIf="flagevent1">
+        <div class="ui-g" *ngIf="flag4">
 
           <p><b>
-            <ng-container *ngIf="selectSindrome.length>0">
+            <ng-container *ngIf="selectSindrome.length>0 && selectSindrome.length<4">
               <ng-container *ngFor="let ret of selectSindrome;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
-                  {{ret.label}}
+                  {{ret.name}}
                 </ng-container>
                 <ng-template #otro1>
-                  /{{ret.label}}
+                  /{{ret.name}}
                 </ng-template>
               </ng-container>
             </ng-container>
-            <ng-container *ngIf="selectSindrome.length==0">
-              <ng-container *ngFor="let ret of Sindrome;first as f;last as l">
-                <ng-container *ngIf="f ;else otro1">
-                  {{ret.label}}
-                </ng-container>
-                <ng-template #otro1>
-                  /{{ret.label}}
-                </ng-template>
-              </ng-container>
+            <ng-container *ngIf="selectSindrome.length==0 || selectSindrome.length>=4">
+              Diagnosticos
             </ng-container>
           </b></p>
 
@@ -416,14 +409,15 @@
           </div>
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año"></p-dropdown>
+            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022"></p-dropdown>
             <h5>Meses</h5>
             <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name"></p-multiSelect>
-            <h5>Filtro indicadores</h5>
-            <div *ngFor="let retorno of Sindrome" class="p-field-checkbox">
+            <h5>Filtro diagnosticos</h5>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Sindrome" optionLabel="name" [(ngModel)]="selectSindrome"></p-multiSelect>
+            <!-- <div *ngFor="let retorno of Sindrome" class="p-field-checkbox">
                 <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectSindrome" [inputId]="retorno.value"></p-checkbox>
                 <label>{{retorno.label}}</label>
-            </div>
+            </div> -->
           </div>
         </div>
       </p-panel>

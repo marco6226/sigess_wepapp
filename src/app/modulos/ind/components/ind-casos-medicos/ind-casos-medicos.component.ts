@@ -49,26 +49,30 @@ export class IndCasosMedicosComponent implements OnInit {
 
   randomEv1Dona: any[] = [];
 
-  Indicadores: any[] = [{label: 'No.Casos', value: 0}, {label: 'Casos abierto', value: 1}, {label: 'Casos prioritarios', value: 2},{label: 'Casos con retorno', value: 3}];
+  Indicadores: any[] = [{label: 'No.Casos', value: 0}, {label: 'Casos abiertos', value: 1}, {label: 'Casos prioritarios', value: 2},{label: 'Casos con retorno', value: 3}];
   Retorno: any[] = [{label: 'Retorno', value: 0}, {label: 'Reintegro', value: 1}, {label: 'Reubicación', value: 2}];
-  Sindrome: any[] = [{label: 'SINDROME DE MANGUITO ROTATORIO', value: 0}, 
-  {label: 'TRASTORNO DE DISCO LUMBAR Y OTROS, CON RADICULOPATIA', value: 1}, 
-  {label: 'LUMBAGO NO ESPECIFICADO', value: 2}, 
-  {label: 'SINDROME DEL TUNEL CARPIANO', value: 3}, 
-  {label: 'OTRAS DEGENERACIONES DEL DISCO CERVICAL', value: 4}, 
-  {label: 'OTROS ESTADOS POSTQUIRURGICOS ESPECIFICADOS', value: 5}, 
-  {label: 'EPICONDILITIS MEDIA', value: 6}, 
-  {label: 'HIPERTENSION ESENCIAL (PRIMARIA)', value: 7}, 
-  {label: 'SINDROME DE ABDUCCION DOLOROSA DEL HOMBRO', value: 8}, 
-  {label: 'TENDINITIS CALCIFICANTE DEL HOMBRO', value: 9}];
+  Sindrome: any[] = [{name: 'SINDROME DE MANGUITO ROTATORIO', code: 0}, 
+  {name: 'TRASTORNO DE DISCO LUMBAR Y OTROS, CON RADICULOPATIA', code: 1}, 
+  {name: 'LUMBAGO NO ESPECIFICADO', code: 2}, 
+  {name: 'SINDROME DEL TUNEL CARPIANO', code: 3}, 
+  {name: 'OTRAS DEGENERACIONES DEL DISCO CERVICAL', code: 4}, 
+  {name: 'OTROS ESTADOS POSTQUIRURGICOS ESPECIFICADOS', code: 5}, 
+  {name: 'EPICONDILITIS MEDIA', code: 6}, 
+  {name: 'HIPERTENSION ESENCIAL (PRIMARIA)', code: 7}, 
+  {name: 'SINDROME DE ABDUCCION DOLOROSA DEL HOMBRO', code: 8}, 
+  {name: 'TENDINITIS CALCIFICANTE DEL HOMBRO', code: 9}];
 
   selectDivisiones1: any[] = [];
   selectIndicarores1: any[] = [];
   selectIndicarores2: any[] = [];
   selectRetorno: any[] = [];
   selectSindrome: any[] = [];
-  
+
   flagevent1:boolean=false
+  flag1:boolean=false;
+  flag2:boolean=false;
+  flag3:boolean=false;
+  flag4:boolean=false;
 
   casosGra1=[962, 1069, Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000),Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000)];
   casosAbiertosGra1=[962, 1034, Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000),Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000), Math.round(Math.random()*1000)];
@@ -137,13 +141,13 @@ export class IndCasosMedicosComponent implements OnInit {
   casosMedicos(){
     let cont1=0
     this.division.forEach(div => {
-      this.randomIn1Div.push({name:div,series:[{name:'No.Casos',value:this.casos[cont1]},{name:'Casos abierto',value:this.casosAbiertosGra[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra[cont1]}]})
+      this.randomIn1Div.push({name:div,series:[{name:'No.Casos',value:this.casos[cont1]},{name:'Casos abiertos',value:this.casosAbiertosGra[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra[cont1]}]})
       cont1=cont1+1;
     });
 
     cont1=0
     this.meses.forEach(mes => {
-      this.randomIn1Mes.push({name:mes,series:[{name:'No.Casos',value:this.casosGra1[cont1]},{name:'Casos abierto',value:this.casosAbiertosGra1[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra1[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra1[cont1]}]})
+      this.randomIn1Mes.push({name:mes,series:[{name:'No.Casos',value:this.casosGra1[cont1]},{name:'Casos abiertos',value:this.casosAbiertosGra1[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra1[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra1[cont1]}]})
       cont1=cont1+1;
     });
 
@@ -156,10 +160,61 @@ export class IndCasosMedicosComponent implements OnInit {
 
     cont1=0
     this.Sindrome.forEach(si => {
-      this.randomSindrome.push({name:si.label,series:[{name:'No.Casos',value:this.cassosSindrome1[cont1]}]})
+      this.randomSindrome.push({name:si.name,series:[{name:'No.Casos',value:this.cassosSindrome1[cont1]}]})
       cont1=cont1+1;
     });
     this.flagevent1=true
+    this.flag1=true
+    this.flag2=true
+    this.flag3=true
+    this.flag4=true
+  }
+
+  selectCas1(){
+    this.flag1=false
+    let cont1=0
+    this.randomIn1Div=[]
+    this.division.forEach(div => {
+      this.randomIn1Div.push({name:div,series:[{name:'No.Casos',value:this.casos[cont1]},{name:'Casos abiertos',value:this.casosAbiertosGra[cont1]},{name:'Casos prioritarios',value:this.casosPrioritariosGra[cont1]},{name:'Casos con retorno',value:this.casosRetornoGra[cont1]}]})
+      cont1=cont1+1;
+    });
+
+    console.log(this.randomIn1Div)
+    console.log(this.selectIndicarores1)
+    let randomIn1Div=[]
+    let randomIn1Divh=[]
+    if(this.selectDivisiones1.length>0){
+      this.selectDivisiones1.forEach(resp1=>{
+        let x=this.randomIn1Div.filter((resp)=>{
+          return resp.name ==resp1.label
+        })
+        randomIn1Div.push(x[0])
+      }
+      )
+      this.randomIn1Div=randomIn1Div
+    }
+
+    if(this.selectIndicarores1.length>0){
+      randomIn1Div=[]
+      this.randomIn1Div.forEach(element => {
+        let randomEv1CopySeries=[]
+  
+        if(this.selectIndicarores1.length>0){
+          this.selectIndicarores1.forEach(element2 => {
+            let x = element['series'].filter(word => {
+              return word['name']==element2['label']
+            });
+            randomEv1CopySeries.push(x[0])
+          });
+        }else{
+          randomEv1CopySeries=element['series']
+        }
+        randomIn1Div.push({name:element['name'],series:randomEv1CopySeries})
+      });
+      this.randomIn1Div=randomIn1Div
+    }
+
     
+    this.flag1=true
   }
 }
