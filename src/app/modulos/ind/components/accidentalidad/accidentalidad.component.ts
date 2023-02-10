@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit} from "@angular/core";
+import { Component, OnInit, AfterViewInit, OnDestroy} from "@angular/core";
 import { ReporteAtService } from "./../../services/reporte-at.service";
 import { FilterQuery } from "../../../core/entities/filter-query";
 import { SortOrder } from "app/modulos/core/entities/filter";
@@ -27,7 +27,7 @@ class division {
   providers: [],
 })
 
-export class AccidentalidadComponent implements OnInit, AfterViewInit {
+export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
   ili:number=0.0171;
   metaIli:number=0.02953;
   colorIli?:string;
@@ -50,6 +50,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
   incapacidades;
   areasPermiso: string;
   reporteat;
+  filtroFechaAt: Date[] = [];
 
   desdes: Date;
   hastas: Date;
@@ -164,7 +165,13 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
     this.getDiasPerdidosAt();
   }
 
+  ngOnDestroy(): void {
+    localStorage.removeItem('reporteAtList');
+  }
+
   async ngOnInit() {
+    localStorage.removeItem('reporteAtList');
+
     if(this.ili<=this.metaIli){
     this.colorIli="card l-bg-green-dark"}
     else {this.colorIli="card l-bg-red-dark"}
@@ -1264,14 +1271,13 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
 
   //Eventos At
   getEventosAt(filter?: string){
+    this.filtroFechaAt = [];
     let divisiones: string[] = [];
-    let reporteAt = [];
     let randomEv1Dona: any[] = [];
     this.reporteAtService.findAllRAT().then(
-      (res: any[]) => {
+      (reporteAt: any[]) => {
         let padreNombreList = [];
-        res.forEach((at: any) => {
-          reporteAt.push(at);
+        reporteAt.forEach((at: any) => {
           padreNombreList.push(at.padreNombre);
         });
         padreNombreList.forEach((item: string) => {
@@ -1320,12 +1326,42 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit {
           randomEv1Dona.push(...eventosAt);
           Object.assign(this, {randomEv1Dona});
         }
+        localStorage.setItem('reporteAtList', JSON.stringify(reporteAt.map(at => at)));
       }
     );
   }
 
+  selectRangoEventosAt(event: Date, filter: string){
+
+    if(typeof this.filtroFechaAt === "undefined") this.filtroFechaAt = [];
+
+    if(filter === 'desde'){
+      this.filtroFechaAt[0] = new Date(event);
+    }else if(filter === 'hasta'){
+      this.filtroFechaAt[1] = new Date(event);
+    }
+    
+    if(this.filtroFechaAt[0] && this.filtroFechaAt[1]){
+      let dataEv1Dona: any[] = JSON.parse(localStorage.getItem('reporteAtList'));
+      let listaDivisiones: any[] = dataEv1Dona.map(at => at.padreNombre);
+      let divisiones: any[] = listaDivisiones.filter((item, index) => {
+        return listaDivisiones.indexOf(item) === index;
+      });
+
+      dataEv1Dona = dataEv1Dona.filter(at => at.fechaReporte >= this.filtroFechaAt[0] && at.fechaReporte <= this.filtroFechaAt[1]);
+      let randomEv1Dona: any[] = [];
+      divisiones.forEach(division => {
+        let data = {name: division, value: 0};
+        data.value = dataEv1Dona.filter(at => at.padreNombre === division).length;
+        randomEv1Dona.push(data);
+      });
+      Object.assign(this, {randomEv1Dona});
+    }
+  }
+
   //Dias perdidos
   getDiasPerdidosAt(filter?: string){
+    this.filtroFechaAt = [];
     let divisiones: string[] = [];
     let randomEv1Donadb = [];
     let listaDivisionesDp;
