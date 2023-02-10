@@ -78,7 +78,7 @@
               </div>
               <div class="p-col-6 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
-                      <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
+                      <div class="p-d-flex"><p class="p-m-0">División    </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
                       <div class="p-d-flex">  
                           <i style="font-size:24px" class="fa">&#xf073;</i>   
                           <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastas" value="this.desdes"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="selecFromDate1($event)" > </p-calendar> 
