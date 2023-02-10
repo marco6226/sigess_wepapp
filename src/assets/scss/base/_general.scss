@@ -44,11 +44,11 @@ body {
     }
 }
 
-router-outlet~* {
-    position: absolute;
-    height: 100%;
-    width: calc(100% - 15px);
-}
+// router-outlet~* {
+//     position: absolute;
+//     height: 100%;
+//     width: calc(100% - 15px);
+// }
 
 .clickeable:hover {
     cursor: pointer;

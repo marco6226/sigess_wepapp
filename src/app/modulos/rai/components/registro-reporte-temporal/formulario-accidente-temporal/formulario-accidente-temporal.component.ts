@@ -72,6 +72,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   tipoAccidenteList: SelectItem[];
   localeES = locale_es;
   form: FormGroup;
+  formplanaccion: FormGroup;
   testigoReporteList: TestigoReporte[];
   visibleCamposAccidente: boolean=true;
   idEmpresa: string;
@@ -160,8 +161,12 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     this.idEmpresa = this.sesionService.getEmpresa().id;
     if(!this.modificar && !this.consultar){
     this.infoEmpresa()}
-
-      this.form = this.fb.group({
+      this.formplanaccion=this.fb.group({
+        avance:null,
+        fechaCierre:null,
+        descripcion:null
+      })
+      this.formplanaccion = this.fb.group({
           id: null,
           tipo: 'ACCIDENTE',
           nombreEps: null,
@@ -480,8 +485,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       ad.complementaria=JSON.stringify(this.informacionComplementaria);
       ad.incapacidades= JSON.stringify(this.incapacidadesList);
       ad.factor_causal= JSON.stringify(this.factorCausal);
+      ad.plan_accion=JSON.stringify(this.formplanaccion.value);
+      
       if (this.adicionar) {
-
           let reporte = <Reporte>this.form.value;
           reporte.testigoReporteList = this.testigoReporteList;
           reporte.identificacionEmpresa = this.selectedTemporal;

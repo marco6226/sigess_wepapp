@@ -28,7 +28,7 @@ class division {
 })
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit {
-  ili:number=0.0471;
+  ili:number=0.0171;
   metaIli:number=0.02953;
   colorIli?:string;
   optionsCombo: any={};
