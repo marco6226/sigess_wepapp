@@ -48,27 +48,45 @@
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Descripción">
                         <!-- <button (click)="test2()">test2</button> -->
                         <div class="ui-g">
-                            <div *ngIf="desviacionesList" class="ui-g-12 ui-sm-12 ui-xl-4">
-                                <h4 style="margin-bottom: 20px;">Nombre de la Empresa</h4>
+                            
+                            <div style="min-height: 5vh;color:white" > <h4>. </h4> </div>   
+                            
+                            <div class="ui-g" style="text-align:center;width: 100%;">
+                                <h4 style="margin-bottom: 20px;width:100%;background:#3ba2dc;background-image: linear-gradient(to right, #3ba2dc , #77bce4);border-radius: 2px 2px;">Reporte de investigación</h4>
+                                                           
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                            <div *ngIf="desviacionesList" class="col col-2" style="
+                            font-weight: bold;margin-left: -2.5%
+                        ">
+                                    Nombre de la Empresa:                               
+                            </div>
+                            <div class="col col-4">
                                 {{desviacionesList[0]?.empresa}}
                             </div>
-                            <div *ngIf="desviacionesList" class="ui-g-12 ui-sm-12 ui-xl-4">
-                                <h4 style="margin-bottom: 20px;">NIT</h4>
-                                {{desviacionesList[0]?.nit}}
-                            </div>    
+                                </div>
+                            
+                            <div class="row">
+                            <div *ngIf="desviacionesList" class="col col-2" style="
+                            font-weight: bold;margin-left: -2.5%">
+                                NIT:                                 
+                            </div>  
+                            <div class="col col-4">{{desviacionesList[0]?.nit}}
+                                
+                            </div>  
+                            </div>
+                        </div>
                                                   
                         </div>
-                        <div class="ui-g">
-                            <h4 style="margin-bottom: 20px;">Reporte de investigación</h4>
-                                                       
-                        </div>
-                        <div class="ui-g">
-                            <h4 style="margin-bottom: 20px;">Reporte Inicial</h4>
+                        
+                        <div class="ui-g" style="text-align:center;width: 100%;">
+                            <h4 style="margin-bottom: 20px;width: 100%;background: #3ba2dc;background-image: linear-gradient(to right, #3ba2dc , #77bce4);border-radius: 2px 2px;">Reporte Inicial</h4>
                                                        
                         </div>
                                               
                           
-                        <p-table [value]="desviacionesList"  autoLayout="true" id="TablaDescripcion">
+                        <p-table [value]="desviacionesList"  autoLayout="true" id="TablaDescripcion" >
                                                         
                             <ng-template pTemplate="body">
                                 <tr>
