@@ -306,7 +306,7 @@
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
               <ngx-charts-bar-vertical-2d 
               [scheme]="colorScheme2"
               [results]="randomIn1"
@@ -388,7 +388,7 @@
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -473,7 +473,7 @@
           <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectEv1()"></p-radioButton>
         </div>
         <div  class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -553,7 +553,7 @@
         </div>
 
         <div class="ui-g-8 ui-g-nopad">
-          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+          <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 560px;">
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
@@ -602,13 +602,14 @@
   <div class="ui-g" *ngIf="flagILI">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" >
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
         <!-- <p>Eventos</p> -->
         <!-- <p>ILI</p> -->
         <ngx-charts-combo
         [categories]="categoriesCombo"
         [series]="randomILI"
         [options]="optionsCombo"
+        style="height: 470px;"
         >
         </ngx-charts-combo>
       </div>
@@ -643,7 +644,7 @@
    <div class="ui-g" *ngIf="flagILI_2">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
         <!-- <p>ILI</p> -->
         <ngx-charts-combo
         [categories]="categoriesCombo_2"
