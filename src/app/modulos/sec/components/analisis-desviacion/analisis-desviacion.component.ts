@@ -16,7 +16,6 @@ import { SistemaCausaRaizService } from "app/modulos/sec/services/sistema-causa-
 import { SistemaCausaRaiz } from "app/modulos/sec/entities/sistema-causa-raiz";
 import { CausaRaiz } from "app/modulos/sec/entities/causa-raiz";
 import { AnalisisDesviacion } from "app/modulos/sec/entities/analisis-desviacion";
-// import { Tarea } from "app/modulos/sec/entities/tarea";
 import { TipoPeligro } from "app/modulos/ipr/entities/tipo-peligro";
 import { Peligro } from "app/modulos/ipr/entities/peligro";
 import {Diagrama, InformeJson} from "../../entities/informeFinal"
@@ -85,6 +84,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     tareasList: Tarea[];
     // tareasList2: Tarea[];
     flowChartSave: string;
+    flowChart:any;
     form2: Peligro;
     guardando: boolean= true;
     listaEvidence
@@ -163,7 +163,6 @@ export class AnalisisDesviacionComponent implements OnInit {
     flagModificar:boolean =false;
 
     usuario: Usuario;
-    // tarea:Tarea;
 
     tipoPeligroItemList: SelectItem[];
     peligroItemList: SelectItem[];
@@ -196,7 +195,6 @@ export class AnalisisDesviacionComponent implements OnInit {
     async changeTab(){
         this.cont=0;
         await this.dataListFactor.forEach( factor =>{
-            console.log(factor.accion)
             this.cont=(factor.accion=='Sin Plan de Accion')?this.cont=this.cont+1:this.cont;
         })
         // this.cont=0
@@ -216,11 +214,9 @@ export class AnalisisDesviacionComponent implements OnInit {
             setTimeout(() => {
                 this.tabIndex=this.tabIndex0+1;
             }, 500);
-        // console.log(this.cont)
     }
     eliminarPlandeAccion(event){
         let eliminar=event;
-        // console.log(eliminar)
         if(this.listPlanAccion[eliminar[1]].causaRaiz.length==0){
             this.listPlanAccion=this.listPlanAccion.filter((item) => item!==eliminar[0]);}
         this.setListDataFactor();
@@ -232,19 +228,6 @@ export class AnalisisDesviacionComponent implements OnInit {
     
     SelectPeligro(a: string){
         this.cargarPeligro(a)
-    }
-    async test(){
-        //console.log(this.incapacidadesList);
-        // console.log("*****aquí***")
-        // console.log(this.dataListFactor);        
-        this.tabIndex=9;
-    }
-    test2(){
-        setTimeout(() => {
-            console.log(this.severidad)
-            console.log(this.analisisPeligros.invalid)//=false si no se selecciona
-        }, 1000);
-        
     }
 
     constructor(
@@ -286,16 +269,9 @@ export class AnalisisDesviacionComponent implements OnInit {
             FechaI: [null, /*Validators.required*/],
             Diagrama:[null, /*Validators.required*/],
         });
-        
-        // this.form = fb.group({
-        //     id: [null],
-        //     tipoPeligro: [null, Validators.required],
-        //     peligro: [null, Validators.required],
-        //   });
     }
 
     async ngOnInit() {
-        // console.log(this.sesionService.getEmpresa());
         this.guardando=false;
         this.disabled=true;
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
@@ -310,11 +286,9 @@ export class AnalisisDesviacionComponent implements OnInit {
                     );
                     break;
                 case "POST":
-                   // await this.severidadPost(this.paramNav.getParametro<Desviacion>().analisisId);
                     this.sistCausAdminService
                         .findDefault()
                         .then((resp: SistemaCausaAdministrativa) => {
-                            //console.log(resp);
                             this.causaAdminList = this.buildTreeNode(
                                 resp.causaAdminList,
                                 null,
@@ -354,19 +328,9 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.consultar = true;
             await this.consultarAnalisis(this.value.id);
         }
-        // console.log(this.analisisId)
-        // setTimeout(() => {
-        //     console.log(this.analisisId)
-        // }, 5000);
-        // console.log(this.value)
         this.cargarTiposPeligro();
         this.diagram=this.FlowchartService.getDiagram();
-        // this.evidencias();
 
-        //this.cargarPeligro(this.analisisPeligros.value['Peligro.id']);
-
-        //this.cargarPeligro();
-        //this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
         this.tarea={
             id: '',
             nombre: 'hola',
@@ -389,23 +353,15 @@ export class AnalisisDesviacionComponent implements OnInit {
             envioCorreo:false
         }        
         setTimeout(() => {
-            console.log('aquí')
             this.severidad=this.desviacionesList[0].severidad;
-            console.log(this.severidad)
             this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false; 
         }, 3000);
 		this.usuario = await this.sesionService.getUsuario();		
 		this.idUsuario=this.usuario.id
     }
-// test2(){
-//     console.log(this.tarea)
-//     this.tarea.nombre='hola2';
-//     console.log(this.tarea)
-// }
     cargarTiposPeligro() {
         this.tipoPeligroService.findAll().then(
           resp => {
-            // console.log(resp);
             this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
             (<TipoPeligro[]>resp['data']).forEach(
               data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
@@ -415,13 +371,11 @@ export class AnalisisDesviacionComponent implements OnInit {
       }
       cargarPeligro(idtp) {
 
-        //this.peligroService.findAll().then(
         if(idtp != null){
         let filter = new FilterQuery();
         filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
         this.peligroService.findByFilter(filter).then(
           resp => {
-            // console.log(resp);
             this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
             (<Peligro[]>resp).forEach(
               data => 
@@ -429,7 +383,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                     this.peligroItemList.push({ label: data.nombre, value: {id:data.id,nombre: data.nombre} })
                 }
             )
-            // console.log(this.peligroItemList);
           }
         );
          }else{
@@ -519,24 +472,8 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            // console.log("----->",resp['data'][0].documentosList);
             this.Evidencias=resp['data'][0].documentosList;});
     }
-    // async severidadPost(analisisId: string){
-    //     console.log(analisisId)
-    //     let fq = new FilterQuery();
-    //     fq.filterList = [
-    //         { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
-    //     ];
-    //     await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
-    //         let analisis = <AnalisisDesviacion>resp["data"][0];
-    //         console.log(analisis)
-    //         this.desviacionesList = analisis.desviacionesList;
-    //         this.severidad=this.desviacionesList[0].severidad;
-    //         console.log(this.severidad)
-    //         this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false;
-    //     })
-    // }
     async consultarAnalisis(analisisId: string) {
         let fq = new FilterQuery();
         fq.filterList = [
@@ -544,16 +481,14 @@ export class AnalisisDesviacionComponent implements OnInit {
         ];
         await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            // console.log("----->",resp['data'][0].documentosList);
             this.Evidencias=resp['data'][0].documentosList;
-            // console.log(this.Evidencias);
             this.dataFlow = resp["data"][0];
+            this.flowChart= resp["data"][0].flow_chart;
             this.flowChartSave = resp["data"][0].flow_chart;
             this.factorCusal = JSON.parse(resp["data"][0].factor_causal);
             this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
             if(JSON.parse(resp["data"][0].plan_accion) != null){
                 this.listPlanAccion = await JSON.parse(resp["data"][0].plan_accion);
-                // console.log(this.listPlanAccion);
                 this.habilitarInforme();
             }
 
@@ -562,7 +497,6 @@ export class AnalisisDesviacionComponent implements OnInit {
             }
             
             this.informeJson=JSON.parse(resp["data"][0].informe);
-            // console.log(this.dataFlow.documentosList)
             this.habilitarInforme()
             if(this.informacionComplementaria!=null){
                 this.analisisPeligros.patchValue({
@@ -574,7 +508,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                     'CopiaTrabajador': this.informacionComplementaria.CopiaTrabajador,
                     'FechaCopia':this.informacionComplementaria.FechaCopia == null ? null : new Date(this.informacionComplementaria.FechaCopia)
                   });
-                  console.log(this.analisisPeligros.value['Peligro']);
                 this.cargarPeligro(this.analisisPeligros.value['Peligro'])
             }
             if(this.informeJson!=null){
@@ -595,20 +528,12 @@ export class AnalisisDesviacionComponent implements OnInit {
                   this.guardando=false;
             }
 
-            // console.log(this.infoIn)
-            // console.log('este',this.analisisPeligros.value['FechaCopia'])
-
-            
-            // if(this.factorCusal){
-                this.setListDataFactor();
-            // }
-            
+            this.setListDataFactor();
+           
 
             this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
-            // console.log(this.incapacidadesList)
             this.desviacionesList = analisis.desviacionesList;
             this.severidad=this.desviacionesList[0].severidad;
-            console.log(this.severidad)
             this.severidadFlag=(this.severidad=='Grave'||this.severidad=='Mortal')?true:false;
             this.observacion = analisis.observacion;
             this.analisisId = analisis.id;
@@ -623,7 +548,6 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.causaInmediataAnalisisList = analisis.causaInmediataList;
             this.tareasList = analisis.tareaDesviacionList;
             this.jerarquia = analisis.jerarquia;
-            // console.log(jerarquia);
             this.sistCausAdminService
                 .findDefault()
                 .then(
@@ -662,12 +586,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 );
                 this.habilitarInforme()
         });
-        // setTimeout(() => {
             this.tareaList3()
             this.disabled=false;
-        // }, 1000);
-        
-        // console.log(this.tareasList)
     }
     guardadModificar(event){
         this.disabled=event;
@@ -696,7 +616,6 @@ export class AnalisisDesviacionComponent implements OnInit {
     async imprimir() {
         this.buttonPrint=true;
         setTimeout(async () => {
-        // this.consultarEvidencia()
         this.nitEmpresa=this.sesionService.getEmpresa().nit;
         this.nombreEmpresa=this.sesionService.getEmpresa().nombreComercial;
         this.idEmpresa = this.sesionService.getEmpresa().id;
@@ -707,16 +626,12 @@ export class AnalisisDesviacionComponent implements OnInit {
 
         setTimeout(async () => {
         let porcentaje=75;//%
-     //   console.log(this.img.width,this.img.height)
         let pixelX= await Math.ceil(this.img.width*Math.sqrt(porcentaje/100));
         let pixelY=await Math.ceil(this.img.height*Math.sqrt(porcentaje/100));
-      //  console.log(pixelX,pixelY)
         await this.compressImage(this.img.src, pixelX,pixelY).then(compressed => {
             this.img.src = compressed.toString();
           })
-         // console.log(Math.ceil(this.img.width*Math.sqrt(porcentaje/100)),Math.ceil(this.img.height*Math.sqrt(porcentaje/100)))
 
-          
         let print = document.getElementById('print');
         let template = document.getElementById('plantilla');
         template.querySelector('#P_empresa_logo').setAttribute('src', this.sesionService.getEmpresa().logo);
@@ -731,9 +646,6 @@ export class AnalisisDesviacionComponent implements OnInit {
             let h=(Math.ceil(this.img.height/tamy)==0) ? 1 : Math.ceil(this.img.height/tamy);
             let tamx=1000;
             let w=(Math.ceil(this.img.width/tamx)==0) ? 1 : Math.ceil(this.img.width/tamx);
-
-
-            // let img = this.infoIn.value['Diagrama']
             
             for (let i = 0; i < h; i++) {
                 for (let j = 0; j < w; j++) {
@@ -770,16 +682,14 @@ export class AnalisisDesviacionComponent implements OnInit {
         if(!this.analisisPeligros.invalid){
             this.informacionComplementaria=this.analisisPeligros.value;
             this.informeJson=this.infoIn.value;
-            // this.informeJson.Diagrama=this.imgIN;
             this.diagram=this.FlowchartService.getDiagram();
             let printOptions: IExportOptions = {};
             printOptions.mode = 'Data';
             printOptions.region = 'PageSettings'; 
-        //   console.log(this.diagram);
             if(this.diagram){       
             this.imgIN=this.diagram.exportDiagram(printOptions).toString();
             if(this.imgIN!=undefined){
-                this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+                this.informeJson.Diagrama=this.imgIN;}
             }
             let ad = new AnalisisDesviacion();
             ad.causaRaizList = this.buildList(this.causaRaizListSelect);
@@ -809,7 +719,6 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.analisisDesviacionService.create(ad).then((data) => {
                 let analisisDesviacion = <AnalisisDesviacion>data;
                 this.manageResponse(analisisDesviacion);
-                //this.idUsuario=analisisDesviacion
                 this.analisisId = analisisDesviacion.id;
                 this.documentos = [];
                 this.modificar = true;
@@ -835,14 +744,13 @@ export class AnalisisDesviacionComponent implements OnInit {
     async modificarAnalisis() {
         this.guardando=true;
         this.disabled=true;
-        console.log(this.analisisPeligros)
-        // this.flagModificar=true;
+
         if(!this.analisisPeligros.invalid){
                 if(this.idEmpresa=='22'){await this.tareaList2();}
                 this.buttonPrint=true;
                 this.informacionComplementaria=this.analisisPeligros.value;
                 this.informeJson=this.infoIn.value;
-                // this.informeJson.Diagrama=this.imgIN;
+
             setTimeout(async () => {
                 this.diagram=await this.FlowchartService.getDiagram();
                 let printOptions: IExportOptions = {};
@@ -851,7 +759,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                 if(this.diagram){     
                 this.imgIN=this.diagram.exportDiagram(printOptions).toString()
                 if(this.imgIN!=undefined){
-                    this.informeJson.Diagrama=this.imgIN;}else{console.log(3)}
+                    this.informeJson.Diagrama=this.imgIN;}
                 }
                 let ad = new AnalisisDesviacion();
                 ad.id = this.analisisId;
@@ -865,10 +773,8 @@ export class AnalisisDesviacionComponent implements OnInit {
                 ad.incapacidades= JSON.stringify(this.incapacidadesList);
                 ad.plan_accion= JSON.stringify(this.listPlanAccion);
                 this.setListDataFactor();
-                // ad.flow_chart = JSON.stringify(this.flowChartSave);
                 ad.flow_chart = this.flowChartSave;
                 ad.participantes = JSON.stringify(this.participantes);
-                console.log(this.tareasList)
                 ad.tareaDesviacionList = this.tareasList;
 
                 ad.jerarquia = this.jerarquia;
@@ -880,23 +786,17 @@ export class AnalisisDesviacionComponent implements OnInit {
                     for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
                         ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
                         ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
-                        // console.log(ad.tareaDesviacionList);
                     }
                 
                 }
-                // setTimeout(() => {
                
                 this.analisisDesviacionService.update(ad).then((data) => {
-                    // console.log(data, "data");
                     
                     this.manageResponse(<AnalisisDesviacion>data);
                     this.modificar = true;
                     this.adicionar = false;
                     this.disabled=false;
                 });
-                    // this.recargarTareasList()
-                console.log(this.tareasList)
-                // }, 1000);
                 setTimeout(async () => {
                     this.buttonPrint=false;
                     let fq = new FilterQuery();
@@ -910,7 +810,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                     this.tareaList3()
                 }, 1000);
                 
-                // console.log(ad.flow_chart);
             }, 2000);
             this.flagBotonModificar()
         }else{
@@ -934,15 +833,11 @@ export class AnalisisDesviacionComponent implements OnInit {
             this.tareasList = analisis.tareaDesviacionList;
         })
 
-        // console.log(this.listPlanAccion)
-        // console.log(this.tareasList)
-        // adicionar
         this.listPlanAccion.forEach(element => {
             element.causaRaiz.forEach(async element2 => {
                 let x;
                 let y;
                 let z;
-                // if(this.tareasList!=[]){
                 if(this.tareasList.length>0){
                     x=await this.tareasList.find(data=>{
                     return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
@@ -1030,17 +925,11 @@ export class AnalisisDesviacionComponent implements OnInit {
                         this.tareasList.push(tarea)
                     }
                 }
-                // console.log(this.tareasList)
-                // modificar
-                // if(this.tareasList!=[]){
+
                 if(this.tareasList.length>0){
                     this.tareasList.forEach(element3 => {
                         if(element3.id!=null){
                             if((element3.id===element2.especifico.id) && (element3.nombre!=element2.especifico.nombreAccionCorrectiva || element3.descripcion!=element2.especifico.accionCorrectiva || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.especifico.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.especifico.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.especifico.responsableEmpresa.id))){
-                                // console.log(new Date(element3.fechaProyectada).toDateString())
-                                // console.log(new Date(element2.especifico.fechaVencimiento).toDateString())
-                                // console.log(element3)
-                                // console.log(element2.especifico)
                                 element3.nombre=element2.especifico.nombreAccionCorrectiva
                                 element3.descripcion=element2.especifico.accionCorrectiva
                                 element3.fechaProyectada=new Date(element2.especifico.fechaVencimiento)
@@ -1048,20 +937,12 @@ export class AnalisisDesviacionComponent implements OnInit {
                                 element3.envioCorreo=false
                             }
                             if((element3.id===element2.medible.id) && (element3.nombre!=element2.medible.planVerificacion || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.medible.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.medible.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.medible.responsableEmpresa.id))){
-                                // console.log(new Date(element3.fechaProyectada).toDateString())
-                                // console.log(new Date(element2.medible.fechaVencimiento).toDateString())
-                                // console.log(element3)
-                                // console.log(element2.medible)
                                 element3.nombre=element2.medible.planVerificacion
                                 element3.fechaProyectada=new Date(element2.medible.fechaVencimiento)
                                 element3.empResponsable=element2.medible.responsableEmpresa
                                 element3.envioCorreo=false
                             }
                             if((element3.id===element2.eficaz.id) && (element3.nombre!=element2.eficaz.planValidacion || new Date(element3.fechaProyectada).toDateString()!=new Date(element2.eficaz.fechaVencimiento).toDateString() || (element3.empResponsable.primerNombre!=element2.eficaz.responsableEmpresa.primerNombre) || (element3.empResponsable.id!=element2.eficaz.responsableEmpresa.id))){
-                                // console.log(new Date(element3.fechaProyectada).toDateString())
-                                // console.log(new Date(element2.eficaz.fechaVencimiento).toDateString())
-                                // console.log(element3)
-                                // console.log(element2.eficaz)
                                 element3.nombre=element2.eficaz.planValidacion
                                 element3.fechaProyectada=new Date(element2.eficaz.fechaVencimiento)
                                 element3.empResponsable=element2.eficaz.responsableEmpresa
@@ -1072,9 +953,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                 } 
             });
         });
-
-        console.log(this.tareasList)
-        // this.tareaList3()
     }
 
     async recargarTareasList(){
@@ -1086,18 +964,15 @@ export class AnalisisDesviacionComponent implements OnInit {
             let analisis = <AnalisisDesviacion>resp["data"][0];
             this.tareasList = analisis.tareaDesviacionList;
         })
-        console.log(this.tareasList)
     }
 
     async tareaList3(){
         this.disabled=true;
-        console.log(this.listPlanAccion)
         this.listPlanAccion.forEach(element => {
             element.causaRaiz.forEach(async element2 => {
                 let x;
                 let y;
                 let z;
-                // if(this.tareasList!=[]){
                 if(this.tareasList.length>0){
                     x=await this.tareasList.find(data=>{
                         return ( (data.nombre==element2.especifico.nombreAccionCorrectiva) && new Date(data.fechaProyectada).toDateString() ==new Date(element2.especifico.fechaVencimiento).toDateString() && (data.descripcion==element2.especifico.accionCorrectiva) && (data.empResponsable.primerNombre==element2.especifico.responsableEmpresa.primerNombre) && (data.empResponsable.id==element2.especifico.responsableEmpresa.id));
@@ -1120,7 +995,6 @@ export class AnalisisDesviacionComponent implements OnInit {
                 }
             });
         });
-        console.log(this.listPlanAccion)
         this.disabled=false;
     }
 testmsng(){
@@ -1132,9 +1006,6 @@ testmsng(){
         for (let i = 0; i < ad.tareaDesviacionList.length; i++) {
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
-            // console.log(ad.tareaDesviacionList);
-
-            // console.log(ad.tareaDesviacionList[i]);
             if (ad.tareaDesviacionList[i].empResponsable != null) {
                 let email =
                     ad.tareaDesviacionList[i].empResponsable.usuarioBasic.email;
@@ -1193,8 +1064,6 @@ testmsng(){
 }
 
     confirmarActualizacion(event: Documento) {
-        
-        // this.Evidencias= this.Evidencias.filter(val => val.id !== event.id);
         this.msgs = [];
         this.msgs.push({
             severity: "success",
@@ -1214,28 +1083,20 @@ testmsng(){
 
     /************************ TAREAS ***************************** */
     onEvent(event) {
-        console.log(event.data)
         this.tareasList = event.data;
-        // console.log(this.tareasList, ": Las tareas");
     }
 
     setFactorCausal(event: FactorCausal[]){
-        // console.log(event,"sip");
-        // console.log(this.factorCusal);
         
         if (!this.factorCusal) {
         this.factorCusal=[];
             
         }
         event.forEach(element => {
-            // this.factorCusal.push(element)
             let x = this.factorCusal.find((x)=>x.id == element.id)
-            // console.log(x);
             
             if(x!=undefined){
-                // this.listFC.forEach(element => {
                     if(element.id===x.id){
-                        // element.nombre = x.nombre;
                         x.nombre = element.nombre;
                     }
                 // });
@@ -1244,23 +1105,17 @@ testmsng(){
             }
 
         });
-        // console.log(this.factorCusal);
-
-        // console.log(this.factorCusal);
         this.setListDataFactor();
         
     }
 
 
     dataDiagram(event){
-        // console.log(event);
         this.flowChartSave = event;
-        // console.log(this.flowChartSave);
         
     }
 
     getListIncapacidades(event){
-        // console.log(event);
         this.incapacidadesList = event;
         
     }
@@ -1272,7 +1127,6 @@ testmsng(){
         ];
         await this.analisisDesviacionService.findByFilter(fq).then((resp) => {
             let analisis = <AnalisisDesviacion>resp["data"][0];
-            console.log("----->",resp['data'][0].documentosList);
             this.Evidencias=resp['data'][0].documentosList;});
             setTimeout(() => {
                 this.contFotografia=0;
@@ -1311,12 +1165,9 @@ testmsng(){
     setListDataFactor(){
         this.tempData = []
         this.dataListFactor = []
-        // setTimeout(() => {
-            // console.log(this.dataListFactor); 
             try {          
                 this.tempData = []
-                this.factorCusal.forEach(data => {
-                    // console.log(data);            
+                this.factorCusal.forEach(data => {       
                     data.seccion.forEach(data1 => {
                         data1.desempeno.forEach(data2 => {   
                             if (data2.selected) {
@@ -1324,21 +1175,16 @@ testmsng(){
                                     data3.subProd.forEach(data4 => {
                                         data4.causa.forEach(element => {    
         
-                                            if (element.esCausa) {   
-                                                // console.log(this.dataListFactor)   
+                                            if (element.esCausa) {     
                                                 if (!this.dataListFactor.find(ele=> {
-                                                    // console.log(ele,data,data1,data2,element);
                                                     
                                                     return ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre
                                                 })) {
                                                     this.tempData.push({nombre:data.nombre, pregunta:data2.pregunta,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
-                                                    console.log('c');
                                                 }else{
                                                     this.dataListFactor.forEach(ele =>{
                                                         if(ele.pregunta == data2.pregunta && ele.metodologia == element.ProcedimientoFC && ele.nombre == data.nombre){
-                                                            this.tempData.push(ele) 
-                                                            console.log('d'); 
-                                                            console.log(ele)                                              
+                                                            this.tempData.push(ele)                                            
                                                         }
                                                     })
                                                 }
@@ -1354,15 +1200,11 @@ testmsng(){
                     });
                     
                 });
-                // console.log(this.tempData);
-                // this.dataListFactor = []
-                this.dataListFactor = this.tempData;
-                // console.log(this.dataListFactor);  
+                this.dataListFactor = this.tempData; 
             } catch (error) {
                     
             }
             this.habilitarInforme()
-        // }, 1);
        
     }
     validators:boolean=true;
@@ -1370,7 +1212,6 @@ testmsng(){
         this.validators=event;
     }
     selectCausaRaiz(nombre, pregunta ,datos){
-        // console.log(datos);
 
         if (datos.data.name=='Si') {
             if (!this.dataListFactor.find(ele=> {return ele.pregunta == pregunta && ele.metodologia == datos.label})) {
@@ -1388,46 +1229,20 @@ testmsng(){
                 this.selectCausaRaiz(nombre, pregunta ,element)
             });
         }
-    
-
-        // console.log(this.tempData);
-        
-
-        // datos.forEach(element => {
-        //     console.log(element);
-            
-        //    if(element.data == 'Si'){
-        //     this.tempData.push({nombre:nombre, pregunta:element.label,metodologia: element.ProcedimientoFC, accion:'Sin Plan de Accion'})
-        //    }
-        // });
         
     }
 
     habilitarInforme(){
         let validador = true
         if(this.listPlanAccion.length>0){
-            console.log(this.listPlanAccion)
             this.listPlanAccion.forEach(element => {
-                // console.log(element)
 
                 let nombre:string[]=[];
                 let causas:string[]=[];
                 let preguntas:string[]=[];
                 let id:number;
-                // let isPlanAccionFinish = element.causaRaiz.find(ele=>{
-                //     return ele.revisado.isComplete == true
-                // })
-                // //   console.log(isPlanAccionFinish);
-                //   if (isPlanAccionFinish == undefined) {
-                //     validador = false;
-                //   }
-                //   isPlanAccionFinish.forEach(element => {
-                //     this.dataListFactor
-                //   });
-                // console.log(element);
                 
                 element.causaRaiz.forEach(causa => {
-                    //  console.log(causa);
 
                     if (causa.revisado.isComplete) {
 
@@ -1441,26 +1256,15 @@ testmsng(){
                                 dataFactor = this.dataListFactor.find(ele=> {
                                     return ele.nombre == nombre[index] && ele.metodologia == causas[index] && ele.pregunta == preguntas[index]
                                 })
-                                console.log(this.dataListFactor)
-                                console.log(causa)
                                 if (dataFactor) {
-                                    // console.log(dataFactor)
                                     dataFactor.accion = 'Con Plan de Accion'                            
                                 }
                         }
                     }
                     else{
-                        //  console.log("algo no es verdad");
                         validador = false
                     }
                 });
-
-                
-                
-
-                // let dataFactor2 = this.dataListFactor.splice()
-                // console.log(dataFactor2);
-
                 
             });     
         }else{
@@ -1468,7 +1272,6 @@ testmsng(){
         }   
 
         if(this.dataListFactor){
-            // console.log("datalist", this.dataListFactor);
             this.dataListFactor.forEach(element => {
                 if(element.accion=="Sin Plan de Accion"){
                     validador=false

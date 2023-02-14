@@ -46,7 +46,6 @@
             <div class="ui-g-12 ui-sm-12">
                 <p-tabView [(activeIndex)]="tabIndex" (onChange)="indexTab($event)">
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Descripción">
-                        <!-- <button (click)="test2()">test2</button> -->
                         <div class="ui-g">
                             
                             <div style="min-height: 5vh;color:white" > <h4>. </h4> </div>   
@@ -58,8 +57,7 @@
                             <div class="container">
                                 <div class="row">
                             <div *ngIf="desviacionesList" class="col col-2" style="
-                            font-weight: bold;margin-left: -2.5%
-                        ">
+                            font-weight: bold;margin-left: -2.5%">
                                     Nombre de la Empresa:                               
                             </div>
                             <div class="col col-4">
@@ -227,7 +225,7 @@
                         <app-evidencias [analisisId]="analisisId" [documentos]="documentos"></app-evidencias>
                     </p-tabPanel>                    
                     <p-tabPanel *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Diagrama de flujo">
-                        <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="dataFlow"></app-flow-chart>
+                        <app-flow-chart (datosFC)="setFactorCausal($event)" (diagramSave)="dataDiagram($event)" [dataFlowChart]="flowChart"></app-flow-chart>
                     </p-tabPanel>
                     
                     <p-tabPanel *ngFor="let data of factorCusal; let i=index" header="Factor Causal {{i+1}}">
@@ -241,7 +239,6 @@
                     </p-tabPanel>
                     <p-tabPanel *ngIf="(idEmpresa == '22' || idEmpresa == '3') && displayInforme" header="Informe">
                         <button  pButton icon="fa fa-print" (click)="imprimir()" class="soft-icon" [disabled]="buttonPrint"></button> 
-                        <!-- <button  (click)="test2()" >test</button>  -->
                         <table width="90%" style=" margin: auto;" [formGroup]="infoIn">
                             <tr>
                                 <td  style="text-align: left">Fecha de investigación</td>
@@ -299,7 +296,6 @@
                             </tr>
                         </table>
                         <div id="plantilla" style="display: none;">
-                        <!-- <div id="plantilla" > -->
                             <div style="background-color: white">
                                 
                                 <table width="90%" style="border-collapse: collapse;margin: auto">
@@ -345,13 +341,10 @@
                                 [contProcedimientos]="contProcedimientos"
                                 [contMultimedias]="contMultimedias">
                                 </app-informe>
-                                <!-- [diagramaFlujo]="imgIN" -->
                                 
                             </div>
                             <p style="page-break-after: always"></p>
-                            <!-- <div><h1><strong><u>Anexos:</u></strong></h1></div> -->
 
-                            <!-- <br/> -->
 
                             <table width="90%" style="border-collapse: collapse; margin: auto;">
                                 <tr>
@@ -465,20 +458,4 @@
 </ng-container>
 
 <div style="height: 100px;"></div>
-<!-- <button (click)="tareaList3()" >test2</button> -->
 <button (click)="testmsng()" *ngIf="idUsuario=='214'">Envio correo periodico</button>
-<!-- <button (click)="testmsng()" >Envio correo periodico</button> -->
-<!-- <button (click)="setListDataFactor()">vli</button> -->
-<!-- 
-<p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"
-        accept="image/*" maxFileSize="1000000">
-        <ng-template pTemplate="toolbar">
-            <div>Upload 3 Files</div>
-        </ng-template>
-        <ng-template let-file pTemplate="file">
-            <div>Custom UI to display a file</div>
-        </ng-template>
-        <ng-template pTemplate="content" let-files>
-            <div>Additional content.</div>
-        </ng-template>
-</p-fileUpload> -->
