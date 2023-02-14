@@ -300,16 +300,16 @@
         </ng-container>
 
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-          <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="selectIn1()"></p-radioButton>
-          <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="selectIn1()"></p-radioButton>
-          <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="selectIn1()"></p-radioButton>
+          <p-radioButton name="group12" label="Total " [value]="0"   (onClick)="selectIn1()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group12" label=" Temporales " [value]="1"  (onClick)="selectIn1()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group12" label=" Directos " [value]="2"  (onClick)="selectIn1()" [style]="{'margin-left':'15px'}"></p-radioButton>
         </div>
 
         <div  class="ui-g-8 ui-g-nopad">
           <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
               <ngx-charts-bar-vertical-2d 
               [scheme]="colorScheme2"
-              [results]="randomIn1"
+              [results]="tasaFrecuencia1"
               [gradient]="gradient"
               [xAxis]="showXAxis"
               [yAxis]="showYAxis"
@@ -335,11 +335,11 @@
           <div class="ui-g-8">
             <div class="ui-g-6">  
               <i style="font-size:24px" class="fa">&#xf073;</i>   
-              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaEv1" value="this.desdeEv1"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeEv1" (onSelect)="selectIn1()" > </p-calendar> 
+              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaEv1" value="this.desdeEv1"   placeholder="Desde" appendTo="body" [(ngModel)]="tasaDesde" (onSelect)="getTasaFrecuencia_1()" > </p-calendar> 
             </div>
             <div class="ui-g-6"> 
               <i style="font-size:24px" class="fa">&#xf073;</i> 
-              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdeEv1" value="this.hastaEv1"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastaEv1" (onSelect)="selectIn1()"> </p-calendar>
+              <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdeEv1" value="this.hastaEv1"   placeholder="Hasta" appendTo="body"  [(ngModel)]="tasaHasta" (onSelect)="getTasaFrecuencia_1()"> </p-calendar>
             </div>
           </div>
         </div>
@@ -354,6 +354,10 @@
           <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
             <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value" (click)="selectIn1()"></p-checkbox>
             <label>{{Indicador.label}}</label>
+          </div>
+          <h5>Número de trabajadores en el mes</h5>
+          <div>
+            <input type="number" pInputText min="0" style="width: 50%;" [(ngModel)]="trabajadoresTotales">
           </div>
         </div>
       </div>
@@ -392,7 +396,7 @@
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
-            [results]="randomIn2"
+            [results]="tasaFrecuencia2"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
