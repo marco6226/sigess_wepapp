@@ -10,10 +10,8 @@ import { ClickEventArgs, ExpandMode, MenuEventArgs} from '@syncfusion/ej2-naviga
 import { AnalisisDesviacion } from 'app/modulos/sec/entities/analisis-desviacion';
 import { ItemModel } from '@syncfusion/ej2-splitbuttons';
 
-// import {Canvg} from "canvg";
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {FlowchartService} from '../../../services/flowchart.service'
-// import { showPaletteIcon } from './script/diagram-common';
 Diagram.Inject(UndoRedo, DiagramContextMenu,PrintAndExport);
 
 @Component({
@@ -25,9 +23,13 @@ export class FlowChartComponent {
 
   @Output() datosFC = new EventEmitter<FactorCausal[]>();
   listFC: FactorCausal[]=[];
-  @Input() dataFlowChart:AnalisisDesviacion;
+  @Input('dataFlowChart') 
+  set flowC(dataFlowChart:any){
+    this.dataFlowChart=dataFlowChart
+    this.LoadFlowChart()
+}
+  dataFlowChart:any;
   @Output() diagramSave = new EventEmitter<string>();
-  // @Output() imgDF = new EventEmitter<string>()
   
   precarga: boolean=false;
   public terminator: FlowShapeModel = { type: 'Flow', shape: 'Terminator' };
@@ -69,33 +71,35 @@ export class FlowChartComponent {
   }
 
   ngOnInit() {
+    // this.precarga=true;
+    // this.loading=false;
+    // setTimeout(() => {
+    //     this.precarga=true;
+    //     setTimeout(async () => {
+    //       if(this.dataFlowChart!=undefined){
+    //         this.loading=false;
+    //         await this.diagram.loadDiagram(this.dataFlowChart.flow_chart);
+    //         this.loadFC();
+    //         this.FlowchartService.setDiagram(this.diagram)
+    //       }
+    //       this.loading=false;
+    //     }, 3000);
+    // }, 3600); 
+  }
 
-
+  LoadFlowChart(){
     setTimeout(() => {
-        this.precarga=true;
-        
-        setTimeout(async () => {
-          // console.log('1a')
-          if(this.dataFlowChart!=undefined){
-            this.loading=false;
-            // console.log(this.dataFlowChart)
-            await this.diagram.loadDiagram(this.dataFlowChart.flow_chart);
-            // console.log('2a')
-            // console.log(JSON.parse(this.dataFlowChart.flow_chart));
-            
-            this.loadFC();
-            // this.startTimer();
-            this.FlowchartService.setDiagram(this.diagram)
-            
-          }
+      this.precarga=true;
+      setTimeout(async () => {
+        if(this.dataFlowChart!=undefined){
           this.loading=false;
-          // console.log('3a')
-        }, 3000);
-
-        
-    }, 3600); 
-
-    
+          await this.diagram.loadDiagram(this.dataFlowChart);
+          this.loadFC();
+          this.FlowchartService.setDiagram(this.diagram)
+        }
+        this.loading=false;
+      }, 3000);
+  }, 3600); 
   }
   ​​​​​​​  public nodeDefaults(node: NodeModel): NodeModel {
     let obj: NodeModel = {};
@@ -371,7 +375,7 @@ export class FlowChartComponent {
   loadFC(){
     // console.log(this.dataFlowChart); 
     // console.log(JSON.parse(this.dataFlowChart.flow_chart).nodes);
-    let y = JSON.parse(this.dataFlowChart.flow_chart).nodes;
+    let y = JSON.parse(this.dataFlowChart).nodes;
 
     y.forEach(element => {
         if (element.id.includes('factor')) {
