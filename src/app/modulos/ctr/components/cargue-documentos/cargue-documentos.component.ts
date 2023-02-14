@@ -42,7 +42,7 @@ export class CargueDocumentosComponent implements OnInit {
   visibleDlgLicenciaSST: boolean = false;
   visibleDlgCertiExterna: boolean = false;
   
-  modulo: String = Modulo.EMP.value;
+  modulo: String = Modulo.EMPRESA.value;
   documentosList: any[];
   
   fechaActual = new Date();

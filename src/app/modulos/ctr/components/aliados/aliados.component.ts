@@ -109,7 +109,7 @@ export class AliadosComponent implements OnInit {
   localidades: any[]=[]
   // actividadesContratadasList2: TreeNode[]=[]
   documentos: Documento[];
-  modulo: string = Modulo.EMP.value;
+  modulo: string = Modulo.EMPRESA.value;
   @Input('documentos') directorios: Directorio[] = [];
   @Output() idDoc: any = new EventEmitter<string>();
   documentosList: any[];

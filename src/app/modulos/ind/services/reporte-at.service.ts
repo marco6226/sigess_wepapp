@@ -24,7 +24,7 @@ export class ReporteAtService extends ServiceCRUD<ReporteATView>{
   //   });
   // }
   findAllRAT() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         this.httpInt.get(`${endPoints.ReporteAtService}all`)
             .map(res => res)
             .subscribe(
@@ -32,7 +32,10 @@ export class ReporteAtService extends ServiceCRUD<ReporteATView>{
                     resolve(res);
                 }
                 ,
-                err => this.manageError(err)
+                err => {
+                  this.manageError(err);
+                  reject(err);
+                }
             )
     });
   }
