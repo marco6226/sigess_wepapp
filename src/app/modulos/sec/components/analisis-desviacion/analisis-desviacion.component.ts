@@ -316,6 +316,7 @@ export class AnalisisDesviacionComponent implements OnInit {
                                 await this.paramNav.getParametro<Desviacion[]>();
                             this.adicionar = true;
                         });
+                        this.disabled=false;
                     break;
                 case "PUT":
                     this.modificar = true;
@@ -358,6 +359,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         }, 3000);
 		this.usuario = await this.sesionService.getUsuario();		
 		this.idUsuario=this.usuario.id
+
     }
     cargarTiposPeligro() {
         this.tipoPeligroService.findAll().then(
@@ -1007,8 +1009,10 @@ testmsng(){
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
             if (ad.tareaDesviacionList[i].empResponsable != null) {
-                let email =
-                    ad.tareaDesviacionList[i].empResponsable.usuarioBasic.email;
+                let email
+                if(ad.tareaDesviacionList[i].empResponsable.usuarioBasic){
+                    email = ad.tareaDesviacionList[i].empResponsable.usuarioBasic.email;
+                }else{email = ad.tareaDesviacionList[i].empResponsable.usuario.email;}
                 if (email == null || email == "") {
                     this.msgs = [];
                     this.msgs.push({
@@ -1134,7 +1138,6 @@ testmsng(){
                 this.contPoliticas=0;
                 this.contProcedimientos=0;
                 this.contMultimedias=0;
-                console.log(this.Evidencias)
                 for(let i=0; i< this.Evidencias.length; i++){
                 let value=this.Evidencias[i].proceso;
                 switch (value) {
