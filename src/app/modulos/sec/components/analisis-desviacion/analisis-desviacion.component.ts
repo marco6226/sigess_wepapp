@@ -1009,10 +1009,8 @@ testmsng(){
             ad.tareaDesviacionList[i].modulo = this.desviacionesList[0].modulo;
             ad.tareaDesviacionList[i].codigo = this.desviacionesList[0].hashId;
             if (ad.tareaDesviacionList[i].empResponsable != null) {
-                let email
-                if(ad.tareaDesviacionList[i].empResponsable.usuarioBasic){
-                    email = ad.tareaDesviacionList[i].empResponsable.usuarioBasic.email;
-                }else{email = ad.tareaDesviacionList[i].empResponsable.usuario.email;}
+                let email =
+                    ad.tareaDesviacionList[i].empResponsable.usuarioBasic.email;
                 if (email == null || email == "") {
                     this.msgs = [];
                     this.msgs.push({

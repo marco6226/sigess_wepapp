@@ -79,7 +79,7 @@ export class GestionTareasComponent implements OnInit {
             tarea.empResponsable.id = this.form.value.empResponsable.id;
             tarea.empResponsable.primerNombre = this.form.value.empResponsable.primerNombre;
             tarea.empResponsable.primerApellido = this.form.value.empResponsable.primerApellido;
-            tarea.empResponsable.usuario= this.form.value.empResponsable.usuario;
+            tarea.empResponsable.usuarioBasic= this.form.value.empResponsable.usuarioBasic;
 
         }
         console.log(tarea);
@@ -89,7 +89,6 @@ export class GestionTareasComponent implements OnInit {
         }
         this.manageResponse(tarea);
     }
-
     cargarTarea(tarea: Tarea) {
         this.form.patchValue({
             id: tarea.id,
