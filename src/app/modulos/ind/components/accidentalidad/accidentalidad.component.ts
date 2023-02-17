@@ -8,6 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
+import { HhtService } from "app/modulos/empresa/services/hht.service";
 // import { multi} from './data';
 
 class division {
@@ -24,7 +25,7 @@ class division {
   selector: "s-accidentalidad",
   templateUrl: "./accidentalidad.component.html",
   styleUrls: ["./accidentalidad.component.scss"],
-  providers: [],
+  providers: [HhtService],
 })
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -144,7 +145,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
   constructor(
     private reporteAtService: ReporteAtService, 
-    private areaService: AreaService
+    private areaService: AreaService,
+    private hhtService: HhtService
     ) { 
       // Object.assign(this, { multi })
       }
@@ -169,9 +171,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.getEventosAt();
       this.getDiasPerdidosAt();
-      this.getTasaFrecuencia_1();
-    }).catch(() => {
-      alert('Error al obtener datos de At');
+      this.getTasas_1();
+      this.getTasas_2();
+      this.getEventos_1();
+    }).catch((e) => {
+      console.error('error: ', e);
     });
   }
 
@@ -179,12 +183,16 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     localStorage.removeItem('reporteAtList');
     localStorage.removeItem('diasPerdidosAtList');
     localStorage.removeItem('reportesAt');
+    localStorage.removeItem('tasaFrecuencia1');
+    localStorage.removeItem('dataEventos1');
   }
 
   async ngOnInit() {
     localStorage.removeItem('reporteAtList');
     localStorage.removeItem('diasPerdidosAtList');
     localStorage.removeItem('reportesAt');
+    localStorage.removeItem('tasaFrecuencia1');
+    localStorage.removeItem('dataEventos1');
 
     if(this.ili<=this.metaIli){
     this.colorIli="card l-bg-green-dark"}
@@ -194,14 +202,12 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     for (let i = 0; i < this.yearRangeNumber.length; i++) {
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
-    // this.selectEv1()
+
     await this.getData()
       .then( async () => {
         // console.log('areaList: ' + this.areaList);
         this.flag=true
         this.flag1=true
-        await this.selectEv1()
-        await this.selectIn2()
         await this.selectEv2()
         await this.selectILI1()
         await this.selectILI2()
@@ -557,13 +563,22 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Proporción AT mortal', value: 2}];
   Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
 
-  randomEv1: any[];
+  dataEventos1: any[];
+  evento1Desde: Date[] | null = null;
+  evento1Hasta: Date[] | null = null;
   randomEv2: any[];
   tasaFrecuencia1: any[];
   tasaFrecuencia2: any[];
-  trabajadoresTotales: number = 5000;
+  // trabajadoresTotales: number = 300;
+  // trabajadoresTotales2: number = 3001;
   tasaDesde: Date = new Date();
   tasaHasta: Date = new Date();
+  tasasNotFound: boolean = false;
+  tasasNotFound2: boolean = false;
+  filtroAnioTasa_1: number = new Date().getFullYear();
+  divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total']
+  filtroAnioTasa_2: number = new Date().getFullYear();
+  filtroDivisionesTasa_2: string[] = [];
   randomILI: any[];
   randomILI_2: any[];
   randomILI2: any[];
@@ -605,76 +620,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   desdeILI2_2: Date;
   desdeILI3_2: Date;
   divisiones3: any[];
-
-  async selectIn2(){
-    let flagSelectEvent=this.flagevent1
-    this.flagevent1=false
-    this.tasaFrecuencia2=[]
-
-    let TI1=0.0
-    let TI2=0.0
-    let TI3=0.0
-    let TI4=0.0
-
-    // console.log(this.Meses2)
-    this.Meses2.forEach(division => {
-
-      let I1=Math.random()*14//getRandomInt(3)
-      let I2=Math.random()*14//getRandomInt(3)
-      let I3=Math.random()*14//getRandomInt(3)
-  
-      TI1+=I1;
-      TI2+=I2;
-      TI3+=I3;
-      this.tasaFrecuencia2.push({name:division['name'],series:[{name:'Tasa de Frecuencia',value:I1},{name:'Tasa de Severidad',value:I2},{name:'Proporción AT mortal',value:I3}]})
-    });
-    this.tasaFrecuencia2.pop();
-    this.tasaFrecuencia2.push({name:'Corona total',series:[{name:'Tasa de Frecuencia',value:TI1},{name:'Tasa de Severidad',value:TI2},{name:'Proporción AT mortal',value:TI3}]})
-    
-    let randomIn2Copy=[]
-    // console.log(this.selectMeses1)
-    // console.log(this.randomIn2)
-    if(this.selectMeses1.length>0){
-      // this.divisiones3=[]
-      this.selectMeses1.forEach(element => {
-        let x= this.tasaFrecuencia2.filter(word => {
-          return word['name']==element['name']
-        });
-        // // console.log(x)
-        randomIn2Copy.push(x[0])
-      });
-      this.tasaFrecuencia2=randomIn2Copy
-    }
-
-    randomIn2Copy=[]
-    
-    this.tasaFrecuencia2.forEach(element => {
-      let randomIn2CopySeries=[]
-
-      if(this.selectIndicarores2.length>0){
-        this.selectIndicarores2.forEach(element2 => {
-          let x = element['series'].filter(word => {
-            return word['name']==element2['label']
-          });
-          randomIn2CopySeries.push(x[0])
-        });
-      }else{
-        randomIn2CopySeries=element['series']
-      }
-      randomIn2Copy.push({name:element['name'],series:randomIn2CopySeries})
-    });
-    this.tasaFrecuencia2=randomIn2Copy
-
-    let num2=0
-    num2=this.tasaFrecuencia2.length*this.tasaFrecuencia2[0].series.length
-    // console.log(num2)
-    if(num2>20){
-      this.flagtasa2=false
-    }else{
-      this.flagtasa2=true
-    }
-    this.flagevent1=true
-  }
 
   async selectILI1(){
     let flagSelectEvent=this.flagevent1
@@ -1084,68 +1029,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     this.flagILI3_2=true
   }
 
-  async selectEv1(){
-
-    let flagSelectEvent=this.flagevent1
-    this.flagevent1=false
-    this.randomEv1=[]
-
-    let TI1=0.0
-    let TI2=0.0
-    let TI3=0.0
-    let TI4=0.0
-    
-    this.divisiones2.forEach(division => {
-
-      let I1=Math.round(Math.random()*14)//getRandomInt(3)
-      let I2=Math.round(Math.random()*14)//getRandomInt(3)
-      let I3=Math.round(Math.random()*14)//getRandomInt(3)
-      let I4=Math.round(Math.random()*14)//getRandomInt(3)
-  
-      TI1+=I1;
-      TI2+=I2;
-      TI3+=I3;
-      TI4+=I4;
-      this.randomEv1.push({name:division['label'],series:[{name:'Numero AT',value:I1},{name:'Numero días perdidos',value:I2},{name:'Numero AT mortales',value:I3},{name:'Numero AT con cero días',value:I4}]})
-    });
-    this.randomEv1.pop();
-    this.randomEv1.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
-    
-    let randomEv1Copy=[]
-    // console.log(this.selectDivisiones1)
-    // console.log(this.randomEv1)
-    if(this.selectDivisiones2.length>0){
-      this.selectDivisiones2.forEach(element => {
-        let x= this.randomEv1.filter(word => {
-          return word['name']==element['label']
-        });
-        randomEv1Copy.push(x[0])
-      });
-      this.randomEv1=randomEv1Copy
-    }
-
-    randomEv1Copy=[]
-    
-    this.randomEv1.forEach(element => {
-      let randomEv1CopySeries=[]
-
-      if(this.selectEventos1.length>0){
-        this.selectEventos1.forEach(element2 => {
-          let x = element['series'].filter(word => {
-            return word['name']==element2['label']
-          });
-          randomEv1CopySeries.push(x[0])
-        });
-      }else{
-        randomEv1CopySeries=element['series']
-      }
-      randomEv1Copy.push({name:element['name'],series:randomEv1CopySeries})
-    });
-    this.randomEv1=randomEv1Copy
-    this.flagevent1=true
-  }
-
-
   async selectEv2(){
 
     let flagSelectEvent=this.flagevent1
@@ -1234,6 +1117,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         divisiones.push(item);
       }
     });
+    divisiones.sort();
     try {
       switch(filter){
         case 'temp':
@@ -1286,9 +1170,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     if(typeof this.filtroFechaAt === "undefined") this.filtroFechaAt = [];
 
     if(filter === 'desde'){
-      this.filtroFechaAt[0] = new Date(event);
+      this.filtroFechaAt[0] = event;
     }else if(filter === 'hasta'){
-      this.filtroFechaAt[1] = new Date(event);
+      this.filtroFechaAt[1] = event;
     }
     
     if(this.filtroFechaAt[0] && this.filtroFechaAt[1]){
@@ -1318,11 +1202,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let auxRandomEv1Donadb = [];
     let listaDivisionesDp;
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt'));
-    listaDivisionesDp = reportesAt.filter(at => at.incapacidades !== null && at.incapacidades !== 'null')
-                                  .map(atDp => atDp.padreNombre);
+    listaDivisionesDp = reportesAt.map(atDp => atDp.padreNombre);
     divisiones = listaDivisionesDp.filter((item, index) => {
       return listaDivisionesDp.indexOf(item) === index; 
-    });
+    }).sort();
     try {
       switch(filter){
         case 'temp':
@@ -1414,62 +1297,314 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   // Tasas
-  async getTasaFrecuencia_1(filter?: string){
-
+  async getTasas_1(filter?: string){
     let tasaFrecuencia1: any[] = [];
+    let filterQuery = new FilterQuery();
 
     if(!this.tasaDesde && !this.tasaHasta) return;
     
-    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt'));
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.filtroAnioTasa_1);
     let listaDivisiones: any[] = reportesAt.map(at => at.padreNombre);
     let divisiones: any[] = listaDivisiones.filter((item, index) => {
       return listaDivisiones.indexOf(item) === index;
-    });
+    }).sort();
 
     try{
       switch (filter) {
         case 'dir':
-          
-          break;
+          reportesAt = reportesAt.filter(at => at.temporal === null);
+          throw 'dir';
         case 'temp':
-
-          break;
+          reportesAt = reportesAt.filter(at => at.temporal);
+          throw 'temp';
         default:
           throw 'err';
       }
     }catch (e){
-      reportesAt = reportesAt.filter(at => at.fechaReporte > this.tasaDesde && at.fechaReporte < this.tasaHasta);
-      divisiones.forEach(division => {
+      // if(this.tasaDesde && this.tasaHasta){
+      //   reportesAt = reportesAt.filter(at => at.fechaReporte > this.tasaDesde && at.fechaReporte < this.tasaHasta);
+      // }
+      filterQuery.sortOrder = SortOrder.ASC;
+      filterQuery.sortField = "id";
+      filterQuery.filterList = [
+        {criteria: Criteria.EQUALS, field: "anio", value1: this.filtroAnioTasa_1.toString()},
+        {criteria: Criteria.EQUALS, field: "empresaSelect", value1: 'Corona'}
+      ];
+      
+      this.hhtService.findByFilter(filterQuery).then((res: any) => {
+        
+        if(res.data.length > 0) {
+          
+          divisiones.forEach(division => {
+            
+            let trabajadoresTotales = 0;
+            let data = {
+              name: division,
+              series: []
+            };
+
+            let indexDiv = this.divisionesCorona.indexOf(division);
+            res.data.forEach(elem => {
+              trabajadoresTotales = trabajadoresTotales + JSON.parse(elem.valor)[indexDiv]['Total3NH'];
+            });
+            
+            let totalAt = reportesAt.filter(at => at.padreNombre === division).length;
+            let diasPerdidos = reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null 
+                                                        && at.incapacidades !== 'null')
+                                          .reduce((count, item) => {
+                                            return count + JSON.parse(item.incapacidades).reduce((count2, incapacidad) => {
+                                              return count2 + incapacidad.diasAusencia;
+                                            }, 0);
+                                          }, 0);
+            let AtMortales = reportesAt.filter(at => at.padreNombre === division && at.causoMuerte === true).length;
+            
+            data.series.push({
+              name: 'Tasa de Frecuencia',
+              value: isNaN(Number((totalAt * 100)/trabajadoresTotales)) ? 0.0 : Number(Number((totalAt * 100)/trabajadoresTotales).toFixed(3))
+            });
+            data.series.push({
+              name: 'Tasa de Severidad',
+              value: isNaN(Number((diasPerdidos * 100)/trabajadoresTotales)) ? 0.0 : Number(Number((diasPerdidos * 100)/trabajadoresTotales).toFixed(3))
+            });
+            data.series.push({
+              name: 'Proporción AT mortal',
+              value: isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(3))
+            });
+            
+            tasaFrecuencia1.push(data);
+          });
+          // Corona total
+          let dataTotal = {
+            name: 'Corona total',
+            series: []
+          };
+          
+          dataTotal.series.push({
+            name: 'Tasa de Frecuencia',
+            value: tasaFrecuencia1.map(tasaXDiv => {
+                      return tasaXDiv.series.find(tasa => tasa.name == 'Tasa de Frecuencia').value;
+                    }).reduce((count, item) => count + item)
+          });
+          dataTotal.series.push({
+            name: 'Tasa de Severidad',
+            value: tasaFrecuencia1.map(tasaXDiv => {
+                      return tasaXDiv.series.find(tasa => tasa.name == 'Tasa de Severidad').value;
+                    }).reduce((count, item) => count + item)
+          });
+          dataTotal.series.push({
+            name: 'Proporción AT mortal',
+            value: tasaFrecuencia1.map(tasaXDiv => {
+                      return tasaXDiv.series.find(tasa => tasa.name == 'Proporción AT mortal').value;
+                    }).reduce((count, item) => count + item)
+          });
+          
+          tasaFrecuencia1.push(dataTotal);
+          // Fin Corona total
+          
+          Object.assign(this, {tasaFrecuencia1});
+          localStorage.setItem('tasaFrecuencia1', JSON.stringify(tasaFrecuencia1.map(item => item)));
+          this.filtroTasas1_1();
+          
+          this.tasasNotFound = false;
+        }else{
+          this.tasasNotFound = true;
+        };
+      });
+    }
+  }
+
+  filtroTasas1_1() {
+    let tasaFrecuencia1: any[] = JSON.parse(localStorage.getItem('tasaFrecuencia1'));
+    if(this.selectDivisiones1.length > 0){
+      let divisiones = this.selectDivisiones1.map(div => div.value);
+      tasaFrecuencia1 = tasaFrecuencia1.filter(tasasXDivision => divisiones.includes(tasasXDivision.name));
+    }
+    if(this.selectIndicarores1.length > 0){
+      let indicadores = this.selectIndicarores1.map(indicador => indicador.label);
+      console.log(indicadores);
+      tasaFrecuencia1.forEach(tf1 => {
+        tf1.series = tf1.series.filter(dataSeries => indicadores.includes(dataSeries.name));
+      });
+    }
+    Object.assign(this, {tasaFrecuencia1});
+  }
+
+  getTasas_2(filter?: string){
+    let tasaFrecuencia2: any[] = [];
+    let filterQuery = new FilterQuery();
+
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.filtroAnioTasa_2);
+    let listaDivisiones: any[] = reportesAt.map(at => at.padreNombre);
+    let divisiones: any[] = listaDivisiones.filter((item, index) => {
+      return listaDivisiones.indexOf(item) === index;
+    }).sort();
+
+    try {
+      switch (filter) {
+        case 'dir':
+          reportesAt = reportesAt.filter(at => at.temporal === null);
+          throw 'dir';
+        case 'temp':
+          reportesAt = reportesAt.filter(at => at.temporal);
+          throw 'temp';
+        default:
+          throw 'err';
+      }
+    } catch (error) {
+      
+      if(this.filtroDivisionesTasa_2.length > 0) reportesAt = reportesAt.filter(at => this.filtroDivisionesTasa_2.includes(at.padreNombre));
+      // console.log(reportesAt);
+
+      filterQuery.sortOrder = SortOrder.ASC;
+      filterQuery.sortField = "id";
+      filterQuery.filterList = [
+        {criteria: Criteria.EQUALS, field: "anio", value1: this.filtroAnioTasa_2.toString()},
+        {criteria: Criteria.EQUALS, field: "empresaSelect", value1: 'Corona'}
+      ];
+
+      this.hhtService.findByFilter(filterQuery).then((res: any) => {
+        if(res.data.length > 0){
+          this.Meses2.forEach((mes, index) => {
+            if(mes.name === 'Corona total') return;
+
+            let trabajadoresTotales2 = 0;
+            let totalAt = 0;
+            let diasPerdidos = 0;
+            let atMortales = 0;
+            let data = {
+              name: mes.name,
+              series: []
+            };
+            
+            trabajadoresTotales2 = res.data.filter(hhtData => mes.name === hhtData.mes)
+            .reduce((count, data) => {
+              return count + JSON.parse(data.valor).reduce((count2, data2) => {
+                return count2 + data2['Total3NH']
+              }, 0);
+            }, 0);
+
+            totalAt = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth()).length;
+            
+            diasPerdidos = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth() && at.incapacidades !== null && at.incapacidades !== 'null')
+                                                  .reduce((count, item) => {
+                                                    return count + JSON.parse(item.incapacidades).reduce((count2, incapacidad) => {
+                                                      return count2 + incapacidad.diasAusencia;
+                                                    }, 0);
+                                                  }, 0);
+            atMortales = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth() && at.causoMuerte === true).length;
+            // console.log(trabajadoresTotales2, totalAt, diasPerdidos, atMortales);
+            let tasaFrecuencia = Number(Number((totalAt * 100)/trabajadoresTotales2).toFixed(3));
+            data.series.push({
+              name: 'Tasa de Frecuencia',
+              value: isNaN(tasaFrecuencia) || tasaFrecuencia === Infinity ? 0.0 : tasaFrecuencia
+            });
+            let tasaSeveridad = Number(Number((diasPerdidos * 100)/trabajadoresTotales2).toFixed(3));
+            data.series.push({
+              name: 'Tasa de Severidad',
+              value: isNaN(tasaSeveridad) || tasaSeveridad === Infinity ? 0.0 : tasaSeveridad
+            });
+            let proporcionAtMortal = Number(Number((atMortales * 100)/totalAt).toFixed(3));
+            data.series.push({
+              name: 'Proporción AT mortal',
+              value: isNaN(proporcionAtMortal) || proporcionAtMortal === Infinity ? 0.0 : proporcionAtMortal 
+            });
+            tasaFrecuencia2.push(data);
+          });
+          
+          Object.assign(this, {tasaFrecuencia2});
+          this.filtroTasas_2();
+          this.tasasNotFound2 = false;
+        }else{
+          this.tasasNotFound2 = true;
+        }
+      });
+    }
+  }
+
+  filtroTasas_2(){
+
+  }
+
+  getEventos_1(filtro?: string){
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt'));
+    let dataEventos1: any[] = [];
+    let listaDivisiones = reportesAt.map(at => at.padreNombre);
+    let divisiones = listaDivisiones.filter((div, index) => {
+      return listaDivisiones.indexOf(div) === index;
+    }).sort();
+    try{
+      switch (filtro) {
+        case 'dir':
+          reportesAt = reportesAt.filter(at => at.temporal === null);
+          throw 'dir';
+        case 'temp':
+          reportesAt = reportesAt.filter(at => at.temporal !== null);
+          throw 'temp';
+        default:
+          throw 'err';
+      }
+    }catch(err){
+      if(this.evento1Desde && this.evento1Hasta) reportesAt = reportesAt.filter(at => at.fechaReporte > this.evento1Desde && at.fechaReporte < this.evento1Hasta);
+      
+      divisiones.forEach((division: any) => {
         let data = {
           name: division,
           series: []
-        };
-        let totalAt = reportesAt.filter(at => at.padreNombre === division).length;
-        let diasPerdidos = reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null 
-                                                    && at.incapacidades !== 'null')
-                                      .reduce((count, item) => {
-                                        return count + JSON.parse(item.incapacidades).reduce((count2, incapacidad) => {
+        }
+
+        let numeroAt: number = reportesAt.filter(at => at.padreNombre === division).length;
+        let diasPerdidos: number = reportesAt.filter(at => at.padreNombre===division && at.incapacidades!==null && at.incapacidades!=='null')
+                                      .reduce((count, incapacidades) => {
+                                        return count + JSON.parse(incapacidades.incapacidades).reduce((count2, incapacidad) => {
                                           return count2 + incapacidad.diasAusencia;
                                         }, 0);
                                       }, 0);
-        // let AtMortales = reportesAt.filter(at => at.)
-        data.series.push({
-          name: 'Frecuencia',
-          value: (totalAt * 100)/this.trabajadoresTotales
-        });
-        data.series.push({
-          name: 'Severidad',
-          value: (diasPerdidos * 100)/this.trabajadoresTotales
-        });
-        data.series.push({
-          name: 'Proporcion At Mortal',
-          value: 0.5
-        });
-        console.log(data);
+        let atMortales: number = reportesAt.filter(at => at.padreNombre === division && at.causoMuerte == true).length;
+        let atCeroDias: number = reportesAt.filter(at => at.padreNombre === division && (at.incapacidades === null || at.incapacidades === 'null')).length;
+        // console.log('div:',division,'numat:', numeroAt,'dperd:', diasPerdidos,'atmort:', atMortales,'atcero:', atCeroDias);
         
-        tasaFrecuencia1.push(data);
+        data.series.push({
+          name: this.Eventos[0].label,
+          value: numeroAt
+        });
+        data.series.push({
+          name: this.Eventos[1].label,
+          value: diasPerdidos
+        });
+        data.series.push({
+          name: this.Eventos[2].label,
+          value: atMortales
+        });
+        data.series.push({
+          name: this.Eventos[3].label,
+          value: atCeroDias
+        });
+
+        dataEventos1.push(data);
       });
-      Object.assign(this, {tasaFrecuencia1});
+      Object.assign(this, {dataEventos1});
+      localStorage.setItem('dataEventos1', JSON.stringify(dataEventos1.map(data => data)));
+      this.filtroEventos_1();
     }
+  }
+
+  filtroEventos_1(){
+    let dataEventos1: any[] = JSON.parse(localStorage.getItem('dataEventos1'));
+    if(this.selectDivisiones2.length > 0){
+      let divisiones = this.selectDivisiones2.map(div => div.label)
+      dataEventos1 = dataEventos1.filter(data => divisiones.includes(data.name));
+    }
+
+    if(this.selectEventos1.length > 0){
+      let eventos = this.selectEventos1.map(ev => ev.label);
+      dataEventos1 = dataEventos1.map(data => {
+        return {
+          name: data.name,
+          series: data.series.filter(item => eventos.includes(item.name))
+        }
+      });
+    }
+
+    Object.assign(this, {dataEventos1});
   }
 }
