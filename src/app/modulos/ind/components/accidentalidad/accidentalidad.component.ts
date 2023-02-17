@@ -174,6 +174,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.getTasas_1();
       this.getTasas_2();
       this.getEventos_1();
+      this.getEventos_2();
     }).catch((e) => {
       console.error('error: ', e);
     });
@@ -208,7 +209,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         // console.log('areaList: ' + this.areaList);
         this.flag=true
         this.flag1=true
-        await this.selectEv2()
+        // await this.selectEv2()
         await this.selectILI1()
         await this.selectILI2()
         await this.selectILI3()
@@ -517,21 +518,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     {label:'Corona total',value:'Corona total'}
   ];
 
-  Meses2= [
-    {name:'Enero',code:'Enero'},
-    {name:'Febrero',code:'Febrero'},
-    {name:'Marzo',code:'Marzo'},
-    {name:'Abril',code:'Abril'},
-    {name:'Mayo',code:'Mayo'},
-    {name:'Junio',code:'Junio'},
-    {name:'Julio',code:'Julio'},
-    {name:'Agosto',code:'Agosto'},
-    {name:'Septiembre',code:'Septiembre'},
-    {name:'Octubre',code:'Octubre'},
-    {name:'Noviembre',code:'Noviembre'},
-    {name:'Diciembre',code:'Diciembre'},
-    {name:'Corona total',code:'Corona total'}
-  ];
   datosRandom(){
     this.random=[]
     this.meses.forEach(mes => {
@@ -569,8 +555,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   randomEv2: any[];
   tasaFrecuencia1: any[];
   tasaFrecuencia2: any[];
-  // trabajadoresTotales: number = 300;
-  // trabajadoresTotales2: number = 3001;
   tasaDesde: Date = new Date();
   tasaHasta: Date = new Date();
   tasasNotFound: boolean = false;
@@ -579,6 +563,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total']
   filtroAnioTasa_2: number = new Date().getFullYear();
   filtroDivisionesTasa_2: string[] = [];
+  dataEventos2: any[] = [];
+  filtroAnioEventos2: number = new Date().getFullYear();
   randomILI: any[];
   randomILI_2: any[];
   randomILI2: any[];
@@ -593,10 +579,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   randomEv3Donadb: any[];
   flagdiv1:boolean=false;
   flagdiv2:boolean=false;
-  flagevent1:boolean=false;
   flagevent2:boolean=false;
-  flagILI:boolean=false;
-  flagILI_2:boolean=false;
   flagILI2:boolean=false;
   flagILI2_2:boolean=false;
   flagILI3:boolean=false;
@@ -622,8 +605,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   divisiones3: any[];
 
   async selectILI1(){
-    let flagSelectEvent=this.flagevent1
-    this.flagILI=false
     let IL1=Math.random()*0.01
     let IL2=Math.random()*0.01
     let IL3=Math.random()*0.01
@@ -670,14 +651,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       name: 'Meta',
       type: 'line',
       data: dataMeta
-    },
-  ]
-    this.flagILI=true
+    }]
   }
 
   async selectILI1_2(){
-    let flagSelectEvent=this.flagevent1
-    this.flagILI_2=false
     let IL1=Math.random()*0.01
     let IL2=Math.random()*0.01
     let IL3=Math.random()*0.01
@@ -747,11 +724,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       data: dataMeta
     },
   ]
-    this.flagILI_2=true
   }
 
   async selectILI2(){
-    let flagSelectEvent=this.flagevent1
     this.flagILI2=false
     let IL1=Math.random()*0.01
     let IL2=Math.random()*0.01
@@ -813,7 +788,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   async selectILI2_2(){
-    let flagSelectEvent=this.flagevent1
     this.flagILI2_2=false
     let IL1=Math.random()*0.01
     let IL2=Math.random()*0.01
@@ -896,7 +870,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   async selectILI3(){
-    let flagSelectEvent=this.flagevent1
     this.flagILI3=false
     let IL1=Math.random()*0.01
     let IL2=Math.random()*0.01
@@ -952,7 +925,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   async selectILI3_2(){
-    let flagSelectEvent=this.flagevent1
     this.flagILI3_2=false
     let IL1=Math.random()*0.01
     let IL2=Math.random()*0.01
@@ -1029,66 +1001,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     this.flagILI3_2=true
   }
 
-  async selectEv2(){
-
-    let flagSelectEvent=this.flagevent1
-    this.flagevent1=false
-    this.randomEv2=[]
-
-    let TI1=0.0
-    let TI2=0.0
-    let TI3=0.0
-    let TI4=0.0
-    
-    this.Meses.forEach(division => {
-
-      let I1=Math.round(Math.random()*14)//getRandomInt(3)
-      let I2=Math.round(Math.random()*14)//getRandomInt(3)
-      let I3=Math.round(Math.random()*14)//getRandomInt(3)
-      let I4=Math.round(Math.random()*14)//getRandomInt(3)
-  
-      TI1+=I1;
-      TI2+=I2;
-      TI3+=I3;
-      TI4+=I4;
-      this.randomEv2.push({name:division['label'],series:[{name:'Numero AT',value:I1},{name:'Numero días perdidos',value:I2},{name:'Numero AT mortales',value:I3},{name:'Numero AT con cero días',value:I4}]})
-    });
-    this.randomEv2.pop();
-    this.randomEv2.push({name:'Corona total',series:[{name:'Numero AT',value:TI1},{name:'Numero días perdidos',value:TI2},{name:'Numero AT mortales',value:TI3},{name:'Numero AT con cero días',value:TI4}]})
-    
-    let randomEv2Copy=[]
-    // console.log(this.selectMeses2)
-    // console.log(this.randomEv2)
-    if(this.selectMeses2.length>0){
-      this.selectMeses2.forEach(element => {
-        let x= this.randomEv2.filter(word => {
-          return word['name']==element['name']
-        });
-        randomEv2Copy.push(x[0])
-      });
-      this.randomEv2=randomEv2Copy
-    }
-
-    randomEv2Copy=[]
-    
-    this.randomEv2.forEach(element => {
-      let randomEv2CopySeries=[]
-
-      if(this.selectEventos2.length>0){
-        this.selectEventos2.forEach(element2 => {
-          let x = element['series'].filter(word => {
-            return word['name']==element2['label']
-          });
-          randomEv2CopySeries.push(x[0])
-        });
-      }else{
-        randomEv2CopySeries=element['series']
-      }
-      randomEv2Copy.push({name:element['name'],series:randomEv2CopySeries})
-    });
-    this.randomEv2=randomEv2Copy
-    this.flagevent1=true
-  }
 
   async cargarEventosAt(): Promise<boolean>{
     return new Promise((resolve, reject) => {
@@ -1464,19 +1376,19 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.hhtService.findByFilter(filterQuery).then((res: any) => {
         if(res.data.length > 0){
-          this.Meses2.forEach((mes, index) => {
-            if(mes.name === 'Corona total') return;
+          this.Meses.forEach((mes, index) => {
+            if(mes.label === 'Corona total') return;
 
             let trabajadoresTotales2 = 0;
             let totalAt = 0;
             let diasPerdidos = 0;
             let atMortales = 0;
             let data = {
-              name: mes.name,
+              name: mes.label,
               series: []
             };
             
-            trabajadoresTotales2 = res.data.filter(hhtData => mes.name === hhtData.mes)
+            trabajadoresTotales2 = res.data.filter(hhtData => mes.label === hhtData.mes)
             .reduce((count, data) => {
               return count + JSON.parse(data.valor).reduce((count2, data2) => {
                 return count2 + data2['Total3NH']
@@ -1606,5 +1518,86 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     Object.assign(this, {dataEventos1});
+  }
+
+  getEventos_2(filtros?: string){
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.filtroAnioEventos2);
+    let dataEventos2: any[] = [];
+    
+    try{
+      switch(filtros){
+        case 'temp':
+          reportesAt = reportesAt.filter(at => at.temporal !== null);
+          throw 'temp';
+        case 'dir':
+          reportesAt = reportesAt.filter(at => at.temporal === null);
+          throw 'dir';
+        default: 
+          throw 'err';
+      }
+    }catch(e){
+      this.Meses.forEach((mes, index) => {
+        if(this.Meses.length === index + 1) return;
+        let data = {
+          name: mes.label,
+          series: []
+        };
+
+        let numeroAt = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index).length;
+        let diasPerdidos = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index
+                                                &&  at.incapacidades !== null && at.incapacidades !== 'null')
+                                      .reduce((count, at) => {
+                                        return count + JSON.parse(at.incapacidades).reduce((count2, incapacidad) => {
+                                          return count2 + incapacidad.diasAusencia;
+                                        }, 0);
+                                      }, 0);
+        let atMortales = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index && at.causoMuerte).length;
+        let atCeroDias = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index &&
+                                                (at.incapacidades === null || at.incapacidades === 'null')).length;
+        
+        data.series.push({
+          name: this.Eventos[0].label,
+          value: numeroAt
+        });
+        data.series.push({
+          name: this.Eventos[1].label,
+          value: diasPerdidos
+        });
+        data.series.push({
+          name: this.Eventos[2].label,
+          value: atMortales
+        });
+        data.series.push({
+          name: this.Eventos[3].label,
+          value: atCeroDias
+        });
+        console.info(data);
+        
+        dataEventos2.push(data);
+      });
+      Object.assign(this, {dataEventos2});
+      localStorage.setItem('dataEventos2', JSON.stringify(dataEventos2.map(data => data)));
+      this.filtroEventos_2();
+    }
+  }
+
+  filtroEventos_2(){
+    let dataEventos2: any[] = JSON.parse(localStorage.getItem('dataEventos2'));
+    
+    if(this.selectMeses2.length > 0){
+      dataEventos2 = dataEventos2.filter(data => this.selectMeses2.includes(data.name));
+    }
+
+    if(this.selectEventos2.length > 0){
+      let eventos = this.selectEventos2.map(ev => ev.label);
+      dataEventos2 = dataEventos2.map(data => {
+        return {
+          name: data.name,
+          series: data.series.filter(el => eventos.includes(el.name))
+        }
+      })
+    }
+
+    Object.assign(this, {dataEventos2});
   }
 }

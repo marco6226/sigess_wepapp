@@ -277,7 +277,7 @@
 
   <p-panel header="TASAS">
     <div class="colorfondo">
-      <div class="ui-g" *ngIf="flagevent1">
+      <div class="ui-g">
       <!-- Primera grafica -->
         <ng-container *ngIf="selectIndicarores1.length>0">
           <ng-container *ngFor="let indicador of selectIndicarores1;first as f;last as l">
@@ -351,7 +351,7 @@
       </div>
       <hr/>
       <!-- Segunda grafica -->
-      <div class="ui-g" *ngIf="flagevent1">
+      <div class="ui-g">
 
         <ng-container *ngIf="selectIndicarores2.length>0">
           <ng-container *ngFor="let indicador of selectIndicarores2;first as f;last as l">
@@ -410,7 +410,7 @@
           <h5>Año</h5>
           <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="filtroAnioTasa_2" (onChange)="getTasas_2()"></p-dropdown>
           <h5>Meses</h5>
-          <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" [(ngModel)]="selectMeses1" optionLabel="name" (onChange)="filtroTasas_2()"></p-multiSelect>
+          <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses1" (onChange)="filtroTasas_2()"></p-multiSelect>
           <h5>Division</h5>
           <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" [(ngModel)]="filtroDivisionesTasa_2" optionLabel="name" (onChange)="getTasas_2()"></p-multiSelect>
           <h5>Filtro indicadores</h5>
@@ -428,7 +428,7 @@
   <p-panel header="EVENTOS">
     <div class="colorfondo">
       <!-- Tercera grafica -->
-      <div class="ui-g" *ngIf="flagevent1">
+      <div class="ui-g">
 
         <ng-container *ngIf="selectEventos1.length>0">
           <ng-container *ngFor="let indicador of selectEventos1;first as f;last as l">
@@ -507,7 +507,7 @@
 
         <hr/>
       <!-- Cuarta grafica -->
-      <div class="ui-g" *ngIf="flagevent1">
+      <div class="ui-g">
 
         <ng-container *ngIf="selectEventos2.length>0">
           <ng-container *ngFor="let indicador of selectEventos2;first as f;last as l">
@@ -531,9 +531,9 @@
 
           <!-- <p>Eventos</p> -->
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-          <p-radioButton name="group10" label="Total " [value]="0" (onClick)="selectEv2()"></p-radioButton>
-          <p-radioButton name="group10" label=" Temporales " [value]="1" (onClick)="selectEv2()"></p-radioButton>
-          <p-radioButton name="group10" label=" Directos " [value]="2" (onClick)="selectEv2()"></p-radioButton>
+          <p-radioButton name="group10" label="Total " [value]="0" (onClick)="getEventos_2()"></p-radioButton>
+          <p-radioButton name="group10" label=" Temporales " [value]="1" (onClick)="getEventos_2()"></p-radioButton>
+          <p-radioButton name="group10" label=" Directos " [value]="2" (onClick)="getEventos_2()"></p-radioButton>
         </div>
 
         <div class="ui-g-8 ui-g-nopad">
@@ -541,7 +541,7 @@
             <ngx-charts-bar-vertical-2d
             class="align-items-center"
             [scheme]="colorScheme2"
-            [results]="randomEv2"
+            [results]="dataEventos2"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
@@ -552,8 +552,7 @@
             [yAxisLabel]="'Eventos'"
             [showDataLabel]="true"
             [barPadding]=0
-            [groupPadding]=4
-            [tooltipDisabled]="true">
+            [groupPadding]=4>
             </ngx-charts-bar-vertical-2d>
           </div>
           <div class="ui-g-1">&nbsp;</div>
@@ -563,14 +562,14 @@
 
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter" *ngIf="flag">
           <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="selectEv2()"></p-dropdown>
+            <p-dropdown appendTo="body" [options]="yearRange" [(ngModel)]="filtroAnioEventos2" placeholder="Seleccionar año" (onChange)="getEventos_2()"></p-dropdown>
           <h5>Meses</h5>
-          <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" [(ngModel)]="selectMeses2" optionLabel="name" (click)="selectEv2()"></p-multiSelect>
+          <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses2" (click)="filtroEventos_2()"></p-multiSelect>
           <h5>Division</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" optionLabel="name" (click)="selectEv2()"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" optionLabel="name" (click)="getEventos_2()"></p-multiSelect>
           <h5>Filtro indicadores</h5>
           <div *ngFor="let Indicador of Eventos" class="p-field-checkbox">
-              <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectEventos2" [inputId]="Indicador.value" (click)="selectEv2()"></p-checkbox>
+              <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectEventos2" [inputId]="Indicador.value" (click)="filtroEventos_2()"></p-checkbox>
               <label>{{Indicador.label}}</label>
           </div>
         </div>
@@ -583,17 +582,14 @@
   <p-panel header="ILI">
     <div class="colorfondo">
   <!-- Quinta grafica -->
-  <div class="ui-g" *ngIf="flagILI">
+  <div class="ui-g">
 
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
-        <!-- <p>Eventos</p> -->
-        <!-- <p>ILI</p> -->
         <ngx-charts-combo
         [categories]="categoriesCombo"
         [series]="randomILI"
         [options]="optionsCombo"
-        style="height: 470px;"
         >
         </ngx-charts-combo>
       </div>
@@ -611,11 +607,11 @@
       </div>
     </div>
 
-    <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter" *ngIf="flagILI">   
+    <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">   
       <h5>Año</h5>
         <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="selectILI1()"></p-dropdown>
       <h5>Meses</h5>
-        <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" (click)="selectILI1()"></p-multiSelect> 
+        <p-multiSelect defaultLabel="Seleccione" [options]="Meses" (click)="selectILI1()"></p-multiSelect> 
       <h5>Division</h5>
       <div *ngFor="let category of divisiones4" class="p-field-checkbox">
           <p-checkbox name="group6" value="name" [value]="category"  [(ngModel)]="selectDivisionesILI1"  (click)="selectILI1()"></p-checkbox>
@@ -625,7 +621,7 @@
   </div>
   <hr/>
    <!-- Quinta grafica.2 -->
-   <div class="ui-g" *ngIf="flagILI_2">
+   <div class="ui-g">
 
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
@@ -651,7 +647,7 @@
       </div>
     </div>
 
-    <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter" *ngIf="flagILI_2">    
+    <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">    
       <h5>Año</h5>
       <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="selectILI1_2()"></p-dropdown>
     <h5>Meses</h5>
