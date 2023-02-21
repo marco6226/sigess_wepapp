@@ -29,19 +29,62 @@ class division {
 })
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
+  
   ili:number=0.0171;
   metaIli:number=0.02953;
   colorIli?:string;
-  optionsCombo: any={};
-  optionsCombo_2: any={};
-  optionsCombo2: any={};
-  optionsCombo3: any={};
   categoriesCombo: any=[];
-  categoriesCombo_2: any=[];
-  // categoriesCombo3: any=[];
-  // categoriesCombo3: any=[];
   seriesCombo: any=[];
-
+  selectedAnioIli_1: number = new Date().getFullYear();
+  dataIli_1: any;
+  optionsIli_1: any = {
+    title: 'ILI', 
+    height: 400,
+    width: 800,
+    xAxis: {
+      title: 'Divisiones',
+      labelRotation: 300,
+      labelAlign: 'middle', // left, middle, right,
+      labelEllipsisSize: 80
+    },
+    yAxis: {
+      leftTitle: 'ILI',
+      rightTitle: 'Meta',
+      labelEllipsisSize: 8
+    },
+    plotOptions: {
+      groupBarPadding: 1,
+      innerBarPadding: 3
+    },
+    legend: {
+      labelEllipsisSize: 80
+    }
+  };
+  optionsIli_2: any = {
+    title: 'ILI', 
+    height: 400,
+    width: 800,
+    xAxis: {
+        title: 'Meses',
+        labelRotation: 300,
+        labelAlign: 'middle', // left, middle, right,
+        labelEllipsisSize: 80
+    },
+    yAxis: {
+        leftTitle: 'ILI',
+        rightTitle: 'Meta',
+        labelEllipsisSize: 8
+    },
+    plotOptions: {
+        groupBarPadding: 1,
+        innerBarPadding: 3
+    },
+    legend: {
+        labelEllipsisSize: 80
+    }
+  };
+  dataIli_2: any;
+  selectedAnioIli_2: number = new Date().getFullYear();
   multi: any[];
   localeES = locale_es;
   desde: Date;
@@ -53,17 +96,14 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   reporteat;
   filtroFechaAt: Date[] = [];
   filtroFechaDiasPerdidos: Date[] = [];
-
   desdes: Date;
   hastas: Date;
-
   pipe = new DatePipe('en-US');
   todayWithPipe = null;
   areaList: Area[] = [];
   divisiones= new Array();
   divisiones2= new Array();
   divisiones4= new Array();
-  // divisiones5= new Array();
   divisionS=null;
   divisiones5=[
     {name:'Enero',code:0},
@@ -102,7 +142,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-
   // options
   showXAxis = true;
   showYAxis = true;
@@ -114,34 +153,126 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   yAxisLabel = 'Días perdidos';
   yAxisLabel2 = 'Divisiones';
   yAxisLabel3 = 'Tasa frecuencia/Tasa Severidad (%)';
-
   legendTitle: string = 'Years';
-
   colorScheme = {
     domain: ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   };
-
   colorScheme2 = {
     domain: ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   };
-
   colorScheme3 = {
     domain: ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   };
-
   colorScheme4 = {
     domain: ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   };
-
   title: string = 'Accidentalidad';
-
-  fakeData: division[] = [
-    {name: 'BAÑOS Y COCINAS', acumulado: 0.040, meta: 0.034, eventos: 67, diasPerdidos: 646, frecuencia: 2.1, severidad: 20.4},
-    {name: 'SUPERFICIES MATERIALES Y PINTURAS', acumulado: 0.255, meta: 0.034, eventos: 36, diasPerdidos: 1035, frecuencia: 3.37, severidad: 97.0},
-    {name: 'INSUMOS Y MANEJO DE ENERGÍA', acumulado: 0.028, meta: 0.090, eventos: 12, diasPerdidos: 173, frecuencia: 1.42, severidad: 20.42},
-  ];
-
   data: [];
+  meses: string[] = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre'
+  ];
+  Meses= [
+    {label:'Enero',value:'Enero'},
+    {label:'Febrero',value:'Febrero'},
+    {label:'Marzo',value:'Marzo'},
+    {label:'Abril',value:'Abril'},
+    {label:'Mayo',value:'Mayo'},
+    {label:'Junio',value:'Junio'},
+    {label:'Julio',value:'Julio'},
+    {label:'Agosto',value:'Agosto'},
+    {label:'Septiembre',value:'Septiembre'},
+    {label:'Octubre',value:'Octubre'},
+    {label:'Noviembre',value:'Noviembre'},
+    {label:'Diciembre',value:'Diciembre'},
+    {label:'Corona total',value:'Corona total'}
+  ];
+  selectDivisiones1: any[] = [];
+  selectIndicarores1: any[] = [];
+  selectDivisiones2: any[] = [];
+  selectDivisionesILI1: any[] = [];
+  selectDivisionesILI2: any[] = [];
+  selectDivisionesILI3: any[] = [];
+  selectDivisionesILI_2: any[] = [];
+  selectDivisionesILI2_2: any[] = [];
+  selectDivisionesILI3_2: any[] = [];
+  selectIndicarores2: any[] = [];
+  selectMeses1: any[] = [];
+  selectMeses2: any[] = [];
+  selectEventos1: any[] = [];
+  selectEventos2: any[] = [];
+  Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Proporción AT mortal', value: 2}];
+  Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
+  dataEventos1: any[];
+  evento1Desde: Date[] | null = null;
+  evento1Hasta: Date[] | null = null;
+  randomEv2: any[];
+  tasaFrecuencia1: any[];
+  tasaFrecuencia2: any[];
+  tasaDesde: Date = new Date();
+  tasaHasta: Date = new Date();
+  tasasNotFound: boolean = false;
+  tasasNotFound2: boolean = false;
+  filtroAnioTasa_1: number = new Date().getFullYear();
+  divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total']
+  filtroAnioTasa_2: number = new Date().getFullYear();
+  filtroDivisionesTasa_2: string[] = [];
+  dataEventos2: any[] = [];
+  filtroAnioEventos2: number = new Date().getFullYear();
+  randomILI: any[];
+  randomILI2: any[];
+  randomILI2_2: any[];
+  randomILI3: any[];
+  randomILI3_2: any[];
+  randomEv1Dona: any[];
+  randomEv2Dona: any[];
+  randomEv3Dona: any[];
+  randomEv1Donadb: any[];
+  randomEv2Donadb: any[];
+  randomEv3Donadb: any[];
+  flagdiv1:boolean=false;
+  flagdiv2:boolean=false;
+  flagevent2:boolean=false;
+  flagILI2:boolean=false;
+  flagILI2_2:boolean=false;
+  flagILI3:boolean=false;
+  flagILI3_2:boolean=false;
+  hastaEv2: Date=new Date(Date.now());
+  hastaIn1: Date=new Date(Date.now());
+  hastaIn2: Date=new Date(Date.now());
+  hastaILI1: Date=new Date(Date.now());
+  hastaILI2: Date=new Date(Date.now());
+  hastaILI3: Date=new Date(Date.now());
+  hastaILI1_2: Date=new Date(Date.now());
+  hastaILI2_2: Date=new Date(Date.now());
+  hastaILI3_2: Date=new Date(Date.now());
+  desdeEv2: Date;
+  desdeIn1: Date;
+  desdeIn2: Date;
+  desdeILI1: Date;
+  desdeILI2: Date;
+  desdeILI3: Date;
+  desdeILI1_2: Date;
+  desdeILI2_2: Date;
+  desdeILI3_2: Date;
+  divisiones3: any[];
+  reporteTabla
+  reporteTabla2
+  totalDiasPerdidosDv: any[];
+  totalEventosDv: any[];
+  totalEventosDv2: any[];
+  totalDiasEventos: any[];
+  random: any[];
 
   constructor(
     private reporteAtService: ReporteAtService, 
@@ -175,6 +306,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.getTasas_2();
       this.getEventos_1();
       this.getEventos_2();
+      this.getIli_1();
+      this.getIli_2();
     }).catch((e) => {
       console.error('error: ', e);
     });
@@ -186,6 +319,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     localStorage.removeItem('reportesAt');
     localStorage.removeItem('tasaFrecuencia1');
     localStorage.removeItem('dataEventos1');
+    localStorage.removeItem('dataEventos2');
   }
 
   async ngOnInit() {
@@ -194,6 +328,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     localStorage.removeItem('reportesAt');
     localStorage.removeItem('tasaFrecuencia1');
     localStorage.removeItem('dataEventos1');
+    localStorage.removeItem('dataEventos2');
 
     if(this.ili<=this.metaIli){
     this.colorIli="card l-bg-green-dark"}
@@ -206,96 +341,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
     await this.getData()
       .then( async () => {
-        // console.log('areaList: ' + this.areaList);
-        this.flag=true
-        this.flag1=true
-        // await this.selectEv2()
-        await this.selectILI1()
-        await this.selectILI2()
-        await this.selectILI3()
-        await this.selectILI1_2()
-        await this.selectILI2_2()
-        await this.selectILI3_2()
       });
-      this.optionsCombo_2={
-        title: 'ILI', 
-        height: 400,
-        width: 800,
-        xAxis: {
-            title: 'Divisiones',
-            labelRotation: 300,
-            labelAlign: 'right', // left, middle, right,
-            labelEllipsisSize: 80
-        },
-        yAxis: {
-            leftTitle: 'ILI',
-            rightTitle: 'Meta',
-            labelEllipsisSize: 8
-        },
-        plotOptions: {
-            groupBarPadding: 1,
-            innerBarPadding: 3
-        },
-        legend: {
-            labelEllipsisSize: 80
-        }
-    };
-      this.optionsCombo={
-        title: 'ILI', 
-        height: 400,
-        width: 800,
-        xAxis: {
-            title: 'Divisiones',
-            labelRotation: 300,
-            labelAlign: 'right', // left, middle, right,
-            labelEllipsisSize: 80
-        },
-        yAxis: {
-            leftTitle: 'ILI',
-            rightTitle: 'Meta',
-            labelEllipsisSize: 8
-        },
-        plotOptions: {
-            groupBarPadding: 1,
-            innerBarPadding: 3
-        },
-        legend: {
-            labelEllipsisSize: 80
-        }
-    };
-    this.optionsCombo2={
-      title: 'ILI', 
-      height: 600,
-      width: 850,
-      xAxis: {
-          title: 'Divisiones',
-          labelRotation: 90,
-          labelAlign: 'middle', // left, middle, right,
-          labelEllipsisSize: 80
-      },
-      yAxis: {
-          leftTitle: 'ILI',
-          rightTitle: 'Meta',
-          labelEllipsisSize: 8
-      },
-      plotOptions: {
-          groupBarPadding: 1,
-          innerBarPadding: 3
-      },
-      legend: {
-          labelEllipsisSize: 80
-      }
-  };
   }
-  reporteTabla
-  reporteTabla2
-  totalDiasPerdidosDv: any[];
-  totalEventosDv: any[];
-  totalEventosDv2: any[];
-  totalDiasEventos: any[];
-  random: any[];
+
   async getData(){
-    this.datosRandom()
     this.hastas= new Date(Date.now())
     this.desdes=null
     this.hasta= new Date(Date.now())
@@ -361,44 +410,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.data = this.reporteTabla2;
   }
 
-  // async getData2(){
-  //   let flagSelectDiv=this.flagdiv
-  //   let flagSelectEvent=this.flagevent
-  //   this.flag=false
-  //   this.flagdiv=false
-  //   this.flagevent=false
-  //   this.reporteTabla=[]
-  //   this.totalDiasPerdidosDv=[]
-  //   this.totalEventosDv=[]
-  //   this.totalDiasEventos=[]
-  //   await this.reporteAtService.findAllRAT()
-  //   .then(res => {
-  //     this.reporteTabla=res
-      
-  //     this.areaList.forEach(element => {
-        
-  //       let cont=0
-  //       let diasPerdidos=0
-
-  //       this.reporteTabla.forEach(element2 =>{
-  //         if(element['nombre']==element2['padreNombre'] && new Date(element2['fechaReporte'])>=new Date(this.desde) && new Date(element2['fechaReporte'])<new Date(this.hasta)){
-  //           cont+=1;
-  //           if(element2['incapacidades'] != null && element2['incapacidades'] != 'null'){
-  //             diasPerdidos+=JSON.parse(element2['incapacidades']).length
-  //           }
-  //         }
-  //       })
-  //       this.totalDiasPerdidosDv.push({name:element['nombre'],value:diasPerdidos})
-  //       this.totalEventosDv.push({name:element['nombre'],value:cont})
-  //       this.totalDiasEventos.push({name:element['nombre'],series:[{name:'Eventos AT',value:cont},{name:'Días perdidos',value:diasPerdidos}]})
-  //     });
-  //   });
-  //   this.flag=true
-
-  //   this.flagdiv=flagSelectDiv
-  //   this.flagevent=flagSelectEvent
-  // }
-
   async reportes(){
     if(this.divisionS==null || this.divisionS=='Total'){
       this.hastas= new Date(Date.now())
@@ -415,11 +426,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
         //No. de días perdidos
         this.diasPerdidos=0;
-        // result.forEach(element => {
-        // if(element['incapacidades']!=null && element['incapacidades']!='null'){
-        //   this.diasPerdidos=this.diasPerdidos+JSON.parse(element['incapacidades']).length
-        // }
-        // });
         result.forEach(element => {
           if(element['incapacidades']!=null && element['incapacidades']!='null'){
             this.diasPerdidos = this.diasPerdidos + JSON.parse(element['incapacidades'])
@@ -451,556 +457,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
   }
-
-
-  async selecFromDate1(date: Date) {
-    this.desdes=new Date(date)
-    await this.reportes()
-  }
-  async selectToDate1(date: Date) {
-    this.hastas=new Date(date)
-    await this.reportes()
-  }
-  async selecFromDate2(date: Date) {
-    this.desdes=new Date(date)
-    await this.reportes()
-  }
-  async selectToDate2(date: Date) {
-    this.hastas=new Date(date)
-    await this.reportes()
-  }
-  async division(event){
-    this.divisionS=event.value
-    await this.reportes()
-  }
-
-  onSelect(data): void {
-    switch (JSON.parse(JSON.stringify(data))) {
-      case 'Eventos AT':
-        this.flagevent=true
-        this.flagdiv=false
-        break;
-      case 'Días perdidos':      
-        this.flagevent=false
-        this.flagdiv=true
-      default:
-        break;
-    }
-  }
-  meses: string[] = [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre'
-  ];
-
-  Meses= [
-    {label:'Enero',value:'Enero'},
-    {label:'Febrero',value:'Febrero'},
-    {label:'Marzo',value:'Marzo'},
-    {label:'Abril',value:'Abril'},
-    {label:'Mayo',value:'Mayo'},
-    {label:'Junio',value:'Junio'},
-    {label:'Julio',value:'Julio'},
-    {label:'Agosto',value:'Agosto'},
-    {label:'Septiembre',value:'Septiembre'},
-    {label:'Octubre',value:'Octubre'},
-    {label:'Noviembre',value:'Noviembre'},
-    {label:'Diciembre',value:'Diciembre'},
-    {label:'Corona total',value:'Corona total'}
-  ];
-
-  datosRandom(){
-    this.random=[]
-    this.meses.forEach(mes => {
-      this.random.push({name:mes,series:[{name:'Tasa de Frecuencia (%)',value:Math.random()*100},{name:'Tasa Severidad (%)',value:Math.random()*100}]})
-    });
-  }
-
-
-
-  ///////////////////////////////////////////////////////////////
-
-  selectDivisiones1: any[] = [];
-  selectIndicarores1: any[] = [];
-  selectDivisiones2: any[] = [];
-  selectDivisionesILI1: any[] = [];
-  selectDivisionesILI2: any[] = [];
-  selectDivisionesILI3: any[] = [];
-  selectDivisionesILI1_2: any[] = [];
-  selectDivisionesILI2_2: any[] = [];
-  selectDivisionesILI3_2: any[] = [];
-  selectIndicarores2: any[] = [];
-  selectMeses1: any[] = [];
-  selectMeses2: any[] = [];
-
-  selectEventos1: any[] = [];
-  selectEventos2: any[] = [];
-
-
-  Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Proporción AT mortal', value: 2}];
-  Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
-
-  dataEventos1: any[];
-  evento1Desde: Date[] | null = null;
-  evento1Hasta: Date[] | null = null;
-  randomEv2: any[];
-  tasaFrecuencia1: any[];
-  tasaFrecuencia2: any[];
-  tasaDesde: Date = new Date();
-  tasaHasta: Date = new Date();
-  tasasNotFound: boolean = false;
-  tasasNotFound2: boolean = false;
-  filtroAnioTasa_1: number = new Date().getFullYear();
-  divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total']
-  filtroAnioTasa_2: number = new Date().getFullYear();
-  filtroDivisionesTasa_2: string[] = [];
-  dataEventos2: any[] = [];
-  filtroAnioEventos2: number = new Date().getFullYear();
-  randomILI: any[];
-  randomILI_2: any[];
-  randomILI2: any[];
-  randomILI2_2: any[];
-  randomILI3: any[];
-  randomILI3_2: any[];
-  randomEv1Dona: any[];
-  randomEv2Dona: any[];
-  randomEv3Dona: any[];
-  randomEv1Donadb: any[];
-  randomEv2Donadb: any[];
-  randomEv3Donadb: any[];
-  flagdiv1:boolean=false;
-  flagdiv2:boolean=false;
-  flagevent2:boolean=false;
-  flagILI2:boolean=false;
-  flagILI2_2:boolean=false;
-  flagILI3:boolean=false;
-  flagILI3_2:boolean=false;
-  hastaEv2: Date=new Date(Date.now());
-  hastaIn1: Date=new Date(Date.now());
-  hastaIn2: Date=new Date(Date.now());
-  hastaILI1: Date=new Date(Date.now());
-  hastaILI2: Date=new Date(Date.now());
-  hastaILI3: Date=new Date(Date.now());
-  hastaILI1_2: Date=new Date(Date.now());
-  hastaILI2_2: Date=new Date(Date.now());
-  hastaILI3_2: Date=new Date(Date.now());
-  desdeEv2: Date;
-  desdeIn1: Date;
-  desdeIn2: Date;
-  desdeILI1: Date;
-  desdeILI2: Date;
-  desdeILI3: Date;
-  desdeILI1_2: Date;
-  desdeILI2_2: Date;
-  desdeILI3_2: Date;
-  divisiones3: any[];
-
-  async selectILI1(){
-    let IL1=Math.random()*0.01
-    let IL2=Math.random()*0.01
-    let IL3=Math.random()*0.01
-    let IL4=Math.random()*0.01
-    let IL5=Math.random()*0.01
-    let IL6=Math.random()*0.01
-    let IL7=Math.random()*0.01
-    let IL8=IL1+IL2+IL3+IL4+IL5+IL6+IL7
-    let IL1m=0.002
-    let IL2m=0.003
-    let IL3m=0.002
-    let IL4m=0.006
-    let IL5m=0.004
-    let IL6m=0.005
-    let IL7m=0.001
-    let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
-    // console.log(this.selectDivisionesILI1)
-    let dataILICopy=[]
-    let dataMetaCopy=[]
-    let categoriesComboCopy=[]
-    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8]
-    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m]
-    this.categoriesCombo=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total'];
-    
-    if(this.selectDivisionesILI1.length>0){
-      this.selectDivisionesILI1.forEach((resp)=>{
-        dataILICopy.push(dataILI[resp.code])
-        dataMetaCopy.push(dataMeta[resp.code])
-        categoriesComboCopy.push(this.categoriesCombo[resp.code])
-      })
-      setTimeout(() => {
-        dataILI=dataILICopy
-        dataMeta=dataMetaCopy
-        this.categoriesCombo=categoriesComboCopy
-      }, 100);
-    }
-
-    this.randomILI=[{
-      name: 'ILI',
-      type: 'verticalBar',
-      data: dataILI
-    },
-    {
-      name: 'Meta',
-      type: 'line',
-      data: dataMeta
-    }]
-  }
-
-  async selectILI1_2(){
-    let IL1=Math.random()*0.01
-    let IL2=Math.random()*0.01
-    let IL3=Math.random()*0.01
-    let IL4=Math.random()*0.01
-    let IL5=Math.random()*0.01
-    let IL6=Math.random()*0.01
-    let IL7=Math.random()*0.01
-    let IL8=Math.random()*0.01
-    let IL9=Math.random()*0.01
-    let IL10=Math.random()*0.01
-    let IL11=Math.random()*0.01
-    let IL12=Math.random()*0.01
-    let IL13=IL1+IL2+IL3+IL4+IL5+IL6+IL7+IL8+IL9+IL10+IL11+IL12
-    let IL1m=0.002
-    let IL2m=0.003
-    let IL3m=0.002
-    let IL4m=0.006
-    let IL5m=0.004
-    let IL6m=0.005
-    let IL7m=0.001
-    let IL8m=0.002
-    let IL9m=0.006
-    let IL10m=0.004
-    let IL11m=0.005
-    let IL12m=0.001
-    let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
-    // console.log(this.selectDivisionesILI1_2)
-    let dataILICopy=[]
-    let dataMetaCopy=[]
-    let categoriesComboCopy=[]
-    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8, IL9, IL10, IL11, IL12, IL13]
-    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m, IL9m, IL10m, IL11m, IL12m, IL13m]
-    this.categoriesCombo_2=['Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre','Corona total'];
-    
-    if(this.selectDivisionesILI1_2.length>0){
-      this.selectDivisionesILI1_2.forEach((resp)=>{
-        dataILICopy.push(dataILI[resp.code])
-        dataMetaCopy.push(dataMeta[resp.code])
-        categoriesComboCopy.push(this.categoriesCombo_2[resp.code])
-      })
-      setTimeout(() => {
-        dataILI=dataILICopy
-        dataMeta=dataMetaCopy
-        this.categoriesCombo_2=categoriesComboCopy
-      }, 100);
-    }
-
-    this.randomILI_2=[{
-      name: 'ILI',
-      type: 'verticalBar',
-      data: dataILI
-    },
-    {
-      name: 'Meta',
-      type: 'line',
-      data: dataMeta
-    },
-  ]
-  }
-
-  async selectILI2(){
-    this.flagILI2=false
-    let IL1=Math.random()*0.01
-    let IL2=Math.random()*0.01
-    let IL3=Math.random()*0.01
-    let IL4=Math.random()*0.01
-    let IL5=Math.random()*0.01
-    let IL6=Math.random()*0.01
-    let IL7=Math.random()*0.01
-    let IL8=IL1+IL2+IL3+IL4+IL5+IL6+IL7
-    let IL1m=0.002
-    let IL2m=0.003
-    let IL3m=0.002
-    let IL4m=0.006
-    let IL5m=0.004
-    let IL6m=0.005
-    let IL7m=0.001
-    let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
-    let dataILICopy=[]
-
-    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7,IL8]
-    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m,IL8m]
-    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Coronta total'];
-    
-    let cont=0
-    if(this.selectDivisionesILI2.length>0){
-      this.selectDivisionesILI2.forEach((resp)=>{
-        let ILI=dataILI[resp.code]
-        let dif1=dataILI[resp.code]-dataMeta[resp.code]
-        let dif2=dif1
-        if(dif1<0){
-          dif2=0
-          dif1=-dif1
-        }else{
-          ILI=dataMeta[resp.code]
-          dif1=0
-        }
-        dataILICopy.push({name:division[resp.code],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-      })
-    }else{
-      division.forEach(resp => {
-        let ILI=dataILI[cont]
-        let dif1=dataILI[cont]-dataMeta[cont]
-        let dif2=dif1
-        if(dif1<0){
-          dif2=0
-          dif1=-dif1
-        }else{
-          ILI=dataMeta[cont]
-          dif1=0
-        }
-        dataILICopy.push({name:division[cont],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-        cont+=1
-      });
-    }
-
-    this.randomILI2=dataILICopy
-    this.flagILI2=true
-  }
-
-
-  async selectILI2_2(){
-    this.flagILI2_2=false
-    let IL1=Math.random()*0.01
-    let IL2=Math.random()*0.01
-    let IL3=Math.random()*0.01
-    let IL4=Math.random()*0.01
-    let IL5=Math.random()*0.01
-    let IL6=Math.random()*0.01
-    let IL7=Math.random()*0.01
-    let IL8=Math.random()*0.01
-    let IL9=Math.random()*0.01
-    let IL10=Math.random()*0.01
-    let IL11=Math.random()*0.01
-    let IL12=Math.random()*0.01
-    let IL13=IL1+IL2+IL3+IL4+IL5+IL6+IL7+IL8+IL9+IL10+IL11+IL12
-    let IL1m=0.002
-    let IL2m=0.003
-    let IL3m=0.002
-    let IL4m=0.006
-    let IL5m=0.004
-    let IL6m=0.005
-    let IL7m=0.001
-    let IL8m=0.002
-    let IL9m=0.006
-    let IL10m=0.004
-    let IL11m=0.005
-    let IL12m=0.001
-    let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
-    let dataILICopy=[]
-
-
-    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8, IL9, IL10, IL11, IL12, IL13]
-    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m, IL9m, IL10m, IL11m, IL12m, IL13m]
-    let division=['Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre','Corona total'];
-    
-    let cont=0
-    if(this.selectDivisionesILI2_2.length>0){
-      this.selectDivisionesILI2_2.forEach((resp)=>{
-        let ILI=dataILI[resp.code]
-        let dif1=dataILI[resp.code]-dataMeta[resp.code]
-        let dif2=dif1
-        if(dif1<0){
-          dif2=0
-          dif1=-dif1
-        }else{
-          ILI=dataMeta[resp.code]
-          dif1=0
-        }
-        dataILICopy.push({name:division[resp.code],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-      })
-    }else{
-      division.forEach(resp => {
-        let ILI=dataILI[cont]
-        let dif1=dataILI[cont]-dataMeta[cont]
-        let dif2=dif1
-        if(dif1<0){
-          dif2=0
-          dif1=-dif1
-        }else{
-          ILI=dataMeta[cont]
-          dif1=0
-        }
-        dataILICopy.push({name:division[cont],series:[{name:'ILI',value:ILI},{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-        cont+=1
-      });
-    }
-
-    this.randomILI2_2=dataILICopy
-    this.flagILI2_2=true
-  }
-
-  async selectILI3(){
-    this.flagILI3=false
-    let IL1=Math.random()*0.01
-    let IL2=Math.random()*0.01
-    let IL3=Math.random()*0.01
-    let IL4=Math.random()*0.01
-    let IL5=Math.random()*0.01
-    let IL6=Math.random()*0.01
-    let IL7=Math.random()*0.01
-    let IL8=IL1+IL2+IL3+IL4+IL5+IL6+IL7
-    let IL1m=0.002
-    let IL2m=0.003
-    let IL3m=0.002
-    let IL4m=0.006
-    let IL5m=0.004
-    let IL6m=0.005
-    let IL7m=0.001
-    let IL8m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m
-    let dataILICopy=[]
-
-    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7,IL8]
-    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m,IL8m]
-    let division=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Coronta total'];
-    
-    let cont=0
-    if(this.selectDivisionesILI3.length>0){
-      this.selectDivisionesILI3.forEach((resp)=>{
-        let ILI=dataILI[resp.code]
-        let dif1=dataILI[resp.code]-dataMeta[resp.code]
-        let dif2=dif1
-        if(dif1>0){
-          dif2=0
-        }else{
-          dif1=0
-        }
-        dataILICopy.push({name:division[resp.code],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-      })
-    }else{
-      division.forEach(resp => {
-        let dif1=dataILI[cont]-dataMeta[cont]
-        let dif2=dif1
-        if(dif1>0){
-          dif2=0
-        }else{
-          dif1=0
-        }
-        dataILICopy.push({name:division[cont],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-        cont+=1
-      });
-    }
-
-    this.randomILI3=dataILICopy
-    this.flagILI3=true
-  }
-
-  async selectILI3_2(){
-    this.flagILI3_2=false
-    let IL1=Math.random()*0.01
-    let IL2=Math.random()*0.01
-    let IL3=Math.random()*0.01
-    let IL4=Math.random()*0.01
-    let IL5=Math.random()*0.01
-    let IL6=Math.random()*0.01
-    let IL7=Math.random()*0.01
-    let IL8=Math.random()*0.01
-    let IL9=Math.random()*0.01
-    let IL10=Math.random()*0.01
-    let IL11=Math.random()*0.01
-    let IL12=Math.random()*0.01
-    let IL13=IL1+IL2+IL3+IL4+IL5+IL6+IL7+IL8+IL9+IL10+IL11+IL12
-    let IL1m=0.002
-    let IL2m=0.003
-    let IL3m=0.002
-    let IL4m=0.006
-    let IL5m=0.004
-    let IL6m=0.005
-    let IL7m=0.001
-    let IL8m=0.002
-    let IL9m=0.006
-    let IL10m=0.004
-    let IL11m=0.005
-    let IL12m=0.001
-    let IL13m=IL1m+IL2m+IL3m+IL4m+IL5m+IL6m+IL7m+IL8m+IL9m+IL10m+IL11m+IL12m
-    let dataILICopy=[]
-
-
-    let dataILI=[IL1, IL2, IL3, IL4, IL5, IL6, IL7, IL8, IL9, IL10, IL11, IL12, IL13]
-    let dataMeta=[IL1m, IL2m, IL3m, IL4m, IL5m, IL6m, IL7m, IL8m, IL9m, IL10m, IL11m, IL12m, IL13m]
-    let division=['Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre','Corona total'];
-    
-    let cont=0
-    if(this.selectDivisionesILI3_2.length>0){
-      this.selectDivisionesILI3_2.forEach((resp)=>{
-        let ILI=dataILI[resp.code]
-        let dif1=dataILI[resp.code]-dataMeta[resp.code]
-        let dif2=dif1
-        if(dif1>0){
-          dif2=0
-        }else{
-          dif1=0
-        }
-        dataILICopy.push({name:division[resp.code],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-      })
-    }else{
-      division.forEach(resp => {
-        let dif1=dataILI[cont]-dataMeta[cont]
-        let dif2=dif1
-        if(dif1>0){
-          dif2=0
-        }else{
-          dif1=0
-        }
-        dataILICopy.push({name:division[cont],series:[{name:'Meta',value:dif1},{name:'Metas',value:dif2}]})
-        cont+=1
-      });
-    }
-
-    this.randomILI3_2=dataILICopy
-    this.flagILI3_2=true
-  }
-
 
   async cargarEventosAt(): Promise<boolean>{
     return new Promise((resolve, reject) => {
@@ -1333,7 +789,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }
     if(this.selectIndicarores1.length > 0){
       let indicadores = this.selectIndicarores1.map(indicador => indicador.label);
-      console.log(indicadores);
       tasaFrecuencia1.forEach(tf1 => {
         tf1.series = tf1.series.filter(dataSeries => indicadores.includes(dataSeries.name));
       });
@@ -1571,7 +1026,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           name: this.Eventos[3].label,
           value: atCeroDias
         });
-        console.info(data);
         
         dataEventos2.push(data);
       });
@@ -1599,5 +1053,102 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     Object.assign(this, {dataEventos2});
+  }
+
+  getIli_1(){
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.selectedAnioIli_1);
+    let dataIli_1: any[] = [];
+
+    let filterQuery = new FilterQuery();
+    filterQuery.sortOrder = SortOrder.ASC;
+    filterQuery.sortField = "id";
+    filterQuery.filterList = [
+      {criteria: Criteria.EQUALS, field: "anio", value1: this.selectedAnioIli_1.toString()},
+      {criteria: Criteria.EQUALS, field: "empresaSelect", value1: 'Corona'}
+    ];
+
+    this.hhtService.findByFilter(filterQuery).then((dataHHT: any) => {
+      let data = {
+        name: 'ILI',
+        type: 'verticalBar',
+        data: []
+      };
+      this.divisionesCorona.forEach((division, index) => {
+        if(index + 1 === this.divisionesCorona.length) return;
+        
+        let accidentesConDiasPerdidos = reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null
+                                                                && at.incapacidades !== 'null').length;
+        let hhtCorona = dataHHT.data.reduce(( count, data) => {
+          let hht = (JSON.parse(data.valor)[index]).Total3HHT ? (JSON.parse(data.valor)[index]).Total3HHT : 0.0;
+          return count + hht;
+        }, 0);
+        let totalDiasSeveridad = reportesAt.filter(at => at.incapacidades !== 'null' && at.incapacidades !== null)
+                                          .reduce((count, at) => {
+                                            return count + JSON.parse(at.incapacidades).reduce((count2, incapacidades) => {
+                                              return count2 + incapacidades.diasAusencia;
+                                            }, 0);
+                                          }, 0);
+
+        let IF = (accidentesConDiasPerdidos/hhtCorona) * 240000;
+        let IS = (totalDiasSeveridad/hhtCorona*240000);
+        let ILI = (IF*IS)/1000;
+        
+        data.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : ILI);
+      });
+      
+      dataIli_1.push(data);
+      Object.assign(this, {dataIli_1});
+    });
+  }
+
+  getIli_2(){
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.selectedAnioIli_2);
+    let dataIli_2: any[] = [];
+
+    let filterQuery = new FilterQuery();
+    filterQuery.sortOrder = SortOrder.ASC;
+    filterQuery.sortField = "id";
+    filterQuery.filterList = [
+      {criteria: Criteria.EQUALS, field: "anio", value1: this.selectedAnioIli_2.toString()},
+      {criteria: Criteria.EQUALS, field: "empresaSelect", value1: 'Corona'}
+    ];
+    this.hhtService.findByFilter(filterQuery).then((dataHHT: any) => {
+      // if(this.selectDivisionesILI_2.length > 0){
+      //   reportesAt = reportesAt.filter(at => this.selectDivisionesILI2_2.includes());
+      // }
+      let data = {
+        name: 'ILI',
+        type: 'verticalBar',
+        data: []
+      };
+      this.meses.forEach((mes, index) => {
+        let accidentesConDiasPerdidos = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index
+                                                  && at.incapacidades !== null && at.incapacidades !== 'null'  ).length;
+        let hhtCorona = dataHHT.data.filter(data => data.mes === this.meses[index])
+                                    .reduce((count, data) => {
+                                      return count + JSON.parse(data.valor).reduce((count2, registro) => {
+                                        let hht = registro['Total3HHT'] === null ? 0.0 : registro['Total3HHT'];
+                                        return count2 + hht;
+                                      }, 0);
+                                    }, 0);
+        let totalDiasSeveridad = reportesAt.filter(at => at.incapacidades !== null && at.incapacidades !== 'null')
+                                            .reduce((count, at) => {
+                                              return count + JSON.parse(at.incapacidades).reduce((count2, incapacidad) => {
+                                                return count2 + incapacidad.diasAusencia;
+                                              }, 0);
+                                            }, 0);
+        
+        let IF = (accidentesConDiasPerdidos/hhtCorona)*240000;
+        let IS = (totalDiasSeveridad/hhtCorona*240000);
+        let ILI = (IF*IS)/1000;
+        data.data.push(isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : ILI);
+      });
+      dataIli_2.push(data);
+      Object.assign(this, {dataIli_2})
+    });
+  }
+
+  filtrosIli_2(){
+
   }
 }
