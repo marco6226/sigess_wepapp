@@ -588,7 +588,7 @@
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
         <ngx-charts-combo
-        [categories]="divisionesCorona"
+        [categories]="divisionesCoronaIli1"
         [series]="dataIli_1"
         [options]="optionsIli_1"
         >
@@ -605,7 +605,7 @@
         <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="filtroMesesIli_1" (onChange)="getIli_1()"></p-multiSelect> 
       <h5>Division</h5>
       <div *ngFor="let category of divisiones2" class="p-field-checkbox">
-          <p-checkbox name="group6" value="label" [value]="category" [(ngModel)]="selectDivisionesILI1" (click)="filtroIli_1()"></p-checkbox>
+          <p-checkbox name="group6" value="label" [value]="category" [(ngModel)]="selectDivisionesILI1" (onChange)="filtroIli_1()"></p-checkbox>
           <label>{{category.label}}</label>
       </div>
     </div>

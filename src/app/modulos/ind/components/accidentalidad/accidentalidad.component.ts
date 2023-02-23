@@ -224,7 +224,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   tasasNotFound: boolean = false;
   tasasNotFound2: boolean = false;
   filtroAnioTasa_1: number = new Date().getFullYear();
-  divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total']
+  divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total'];
+  divisionesCoronaIli1: string[] = [];
   filtroAnioTasa_2: number = new Date().getFullYear();
   filtroDivisionesTasa_2: string[] = [];
   filtroDivisionEventos2: any[] = [];
@@ -1114,6 +1115,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getIli_1(){
+    this.divisionesCoronaIli1 = this.divisionesCorona.map(div => {
+      return  div;
+    });
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.selectedAnioIli_1);
     let dataIli_1: any[] = [];
 
@@ -1154,27 +1158,37 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                               return count2 + incapacidades.diasAusencia;
                                             }, 0);
                                           }, 0);
-        console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad);
+        // console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad);
 
         let IF = (accidentesConDiasPerdidos/hhtCorona) * 240000;
         let IS = (totalDiasSeveridad/hhtCorona*240000);
         let ILI = (IF*IS)/1000;
         
-        console.log('div',division,'if: ',IF,'is:',IS,'ILI:',ILI);
+        // console.log('div',division,'if: ',IF,'is:',IS,'ILI:',ILI);
         
         data.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(4)));
       });
       
       dataIli_1.push(data);
       localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
+      this.filtroIli_1();
       Object.assign(this, {dataIli_1});
     });
   }
 
   filtroIli_1(){
+    console.log('filtro');
+    let dataIli_1: any = JSON.parse(localStorage.getItem('dataIli_1'));
+    let divisionesCoronaIli1 = this.divisionesCorona.map(div => div);
     if(this.selectDivisionesILI1.length > 0){
       console.log(this.selectDivisionesILI1);
+      let selectedDivisiones = this.selectDivisionesILI1.map(div => div.label);
+      divisionesCoronaIli1 = divisionesCoronaIli1.filter(div => selectedDivisiones.includes(div));      
+      
+      dataIli_1[0].data = dataIli_1[0].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
     }
+    Object.assign(this, {divisionesCoronaIli1});
+    Object.assign(this, {dataIli_1});
   }
 
   getIli_2(){
