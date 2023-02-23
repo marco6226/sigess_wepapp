@@ -227,6 +227,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total']
   filtroAnioTasa_2: number = new Date().getFullYear();
   filtroDivisionesTasa_2: string[] = [];
+  filtroDivisionEventos2: any[] = [];
+  filtroMesesIli_1: any[] = []; 
   dataEventos2: any[] = [];
   filtroAnioEventos2: number = new Date().getFullYear();
   randomILI: any[];
@@ -318,8 +320,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     localStorage.removeItem('diasPerdidosAtList');
     localStorage.removeItem('reportesAt');
     localStorage.removeItem('tasaFrecuencia1');
+    localStorage.removeItem('tasaFrecuencia2');
     localStorage.removeItem('dataEventos1');
     localStorage.removeItem('dataEventos2');
+    localStorage.removeItem('dataIli_1');
   }
 
   async ngOnInit() {
@@ -327,8 +331,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     localStorage.removeItem('diasPerdidosAtList');
     localStorage.removeItem('reportesAt');
     localStorage.removeItem('tasaFrecuencia1');
+    localStorage.removeItem('tasaFrecuencia2');
     localStorage.removeItem('dataEventos1');
     localStorage.removeItem('dataEventos2');
+    localStorage.removeItem('dataIli_1');
 
     if(this.ili<=this.metaIli){
     this.colorIli="card l-bg-green-dark"}
@@ -878,6 +884,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             tasaFrecuencia2.push(data);
           });
           
+          localStorage.setItem('tasaFrecuencia2', JSON.stringify(tasaFrecuencia2));
           Object.assign(this, {tasaFrecuencia2});
           this.filtroTasas_2();
           this.tasasNotFound2 = false;
@@ -890,6 +897,22 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
   filtroTasas_2(){
 
+    let tasaFrecuencia2 = JSON.parse(localStorage.getItem('tasaFrecuencia2'));
+    if(this.selectMeses1.length > 0){
+      tasaFrecuencia2 = tasaFrecuencia2.filter(tasaXMes => this.selectMeses1.includes(tasaXMes.name));
+    }
+
+    if(this.selectIndicarores2.length > 0){
+      let indicadores = this.selectIndicarores2.map(el => el.label);
+      tasaFrecuencia2 = tasaFrecuencia2.map(tasaXMes => {
+        return {
+          name: tasaXMes.name,
+          series: tasaXMes.series.filter(el => indicadores.includes(el.name))
+        }
+      })
+    }
+
+    Object.assign(this, {tasaFrecuencia2});
   }
 
   getEventos_1(filtro?: string){
@@ -913,6 +936,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }catch(err){
       if(this.evento1Desde && this.evento1Hasta) reportesAt = reportesAt.filter(at => at.fechaReporte > this.evento1Desde && at.fechaReporte < this.evento1Hasta);
       
+      let numAtTotal = 0;
+      let diasPerdidosTotal = 0;
+      let atMortalesTotales = 0;
+      let atCeroDiasTotales = 0;
+
       divisiones.forEach((division: any) => {
         let data = {
           name: division,
@@ -929,7 +957,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let atMortales: number = reportesAt.filter(at => at.padreNombre === division && at.causoMuerte == true).length;
         let atCeroDias: number = reportesAt.filter(at => at.padreNombre === division && (at.incapacidades === null || at.incapacidades === 'null')).length;
         // console.log('div:',division,'numat:', numeroAt,'dperd:', diasPerdidos,'atmort:', atMortales,'atcero:', atCeroDias);
-        
+        numAtTotal += numeroAt;
+        diasPerdidosTotal += diasPerdidos;
+        atMortalesTotales += atMortales;
+        atCeroDiasTotales += atCeroDias;
+
         data.series.push({
           name: this.Eventos[0].label,
           value: numeroAt
@@ -949,6 +981,31 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
         dataEventos1.push(data);
       });
+      
+      let dataTotal = {
+        name: 'Corona total',
+        series: []
+      }
+
+      dataTotal.series.push({
+        name: this.Eventos[0].label,
+        value: numAtTotal
+      });
+      dataTotal.series.push({
+        name: this.Eventos[1].label,
+        value: diasPerdidosTotal
+      });
+      dataTotal.series.push({
+        name: this.Eventos[2].label,
+        value: atMortalesTotales
+      });
+      dataTotal.series.push({
+        name: this.Eventos[3].label,
+        value: atCeroDiasTotales
+      });
+
+      dataEventos1.push(dataTotal);
+
       Object.assign(this, {dataEventos1});
       localStorage.setItem('dataEventos1', JSON.stringify(dataEventos1.map(data => data)));
       this.filtroEventos_1();
@@ -991,6 +1048,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           throw 'err';
       }
     }catch(e){
+      if(this.filtroDivisionEventos2.length > 0) reportesAt = reportesAt.filter(at => this.filtroDivisionEventos2.includes(at.padreNombre));
       this.Meses.forEach((mes, index) => {
         if(this.Meses.length === index + 1) return;
         let data = {
@@ -1068,6 +1126,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     ];
 
     this.hhtService.findByFilter(filterQuery).then((dataHHT: any) => {
+      if(this.filtroMesesIli_1.length > 0) reportesAt = reportesAt.filter(at => this.filtroMesesIli_1.includes(this.meses[new Date(at.fechaReporte).getMonth()]));
       let data = {
         name: 'ILI',
         type: 'verticalBar',
@@ -1078,27 +1137,44 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         
         let accidentesConDiasPerdidos = reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null
                                                                 && at.incapacidades !== 'null').length;
-        let hhtCorona = dataHHT.data.reduce(( count, data) => {
-          let hht = (JSON.parse(data.valor)[index]).Total3HHT ? (JSON.parse(data.valor)[index]).Total3HHT : 0.0;
-          return count + hht;
-        }, 0);
-        let totalDiasSeveridad = reportesAt.filter(at => at.incapacidades !== 'null' && at.incapacidades !== null)
+        let hhtCorona = dataHHT.data.filter(item => {
+                                    if(this.filtroMesesIli_1.length > 0){
+                                      if(this.filtroMesesIli_1.includes(item.mes)) return true;
+                                      return false
+                                    }
+                                    return true;
+                                  })
+                                  .reduce(( count, data) => {
+                                    let hht = (JSON.parse(data.valor)[index]).Total3HHT ? (JSON.parse(data.valor)[index]).Total3HHT : 0.0;
+                                    return count + hht;
+                                  }, 0);
+        let totalDiasSeveridad = reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== 'null' && at.incapacidades !== null)
                                           .reduce((count, at) => {
                                             return count + JSON.parse(at.incapacidades).reduce((count2, incapacidades) => {
                                               return count2 + incapacidades.diasAusencia;
                                             }, 0);
                                           }, 0);
+        console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad);
 
         let IF = (accidentesConDiasPerdidos/hhtCorona) * 240000;
         let IS = (totalDiasSeveridad/hhtCorona*240000);
         let ILI = (IF*IS)/1000;
         
-        data.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : ILI);
+        console.log('div',division,'if: ',IF,'is:',IS,'ILI:',ILI);
+        
+        data.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(4)));
       });
       
       dataIli_1.push(data);
+      localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
       Object.assign(this, {dataIli_1});
     });
+  }
+
+  filtroIli_1(){
+    if(this.selectDivisionesILI1.length > 0){
+      console.log(this.selectDivisionesILI1);
+    }
   }
 
   getIli_2(){

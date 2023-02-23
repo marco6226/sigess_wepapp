@@ -481,11 +481,11 @@
           <div class="ui-g-8">
               <div class="ui-g-6">  
                 <i style="font-size:24px" class="fa">&#xf073;</i>   
-                <p-calendar [locale]="localeES" view="month" [showButtonBar]="true" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="evento1Desde" (onSelect)="getEventos_1()"> </p-calendar> 
+                <p-calendar [locale]="localeES" view="month" [showButtonBar]="true" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="evento1Desde" (onClearClick)="getEventos_1()" (onSelect)="getEventos_1()"> </p-calendar> 
               </div>
               <div class="ui-g-6"> 
                 <i style="font-size:24px" class="fa">&#xf073;</i> 
-                <p-calendar [locale]="localeES" view="month" [showButtonBar]="true" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="evento1Hasta" (onSelect)="getEventos_1()"> </p-calendar>
+                <p-calendar [locale]="localeES" view="month" [showButtonBar]="true" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="evento1Hasta" (onClearClick)="getEventos_1()" (onSelect)="getEventos_1()"> </p-calendar>
               </div>
           </div>
         </div>
@@ -531,9 +531,9 @@
 
           <!-- <p>Eventos</p> -->
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-          <p-radioButton name="group10" label="Total " [value]="0" (onClick)="getEventos_2()"></p-radioButton>
-          <p-radioButton name="group10" label=" Temporales " [value]="1" (onClick)="getEventos_2()"></p-radioButton>
-          <p-radioButton name="group10" label=" Directos " [value]="2" (onClick)="getEventos_2()"></p-radioButton>
+          <p-radioButton name="group10" label="Total" [value]="0" (onClick)="getEventos_2()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group10" label=" Temporales" [value]="1" (onClick)="getEventos_2('temp')" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group10" label=" Directos" [value]="2" (onClick)="getEventos_2('dir')" [style]="{'margin-left':'15px'}"></p-radioButton>
         </div>
 
         <div class="ui-g-8 ui-g-nopad">
@@ -543,6 +543,7 @@
             [scheme]="colorScheme2"
             [results]="dataEventos2"
             [gradient]="gradient"
+            [animations]="false"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
             [legend]="false"
@@ -564,9 +565,9 @@
           <h5>Año</h5>
             <p-dropdown appendTo="body" [options]="yearRange" [(ngModel)]="filtroAnioEventos2" placeholder="Seleccionar año" (onChange)="getEventos_2()"></p-dropdown>
           <h5>Meses</h5>
-          <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses2" (click)="filtroEventos_2()"></p-multiSelect>
+          <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses2" (onChange)="filtroEventos_2()"></p-multiSelect>
           <h5>Division</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" (click)="getEventos_2()"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" [(ngModel)]="filtroDivisionEventos2" (onChange)="getEventos_2()"></p-multiSelect>
           <h5>Filtro indicadores</h5>
           <div *ngFor="let Indicador of Eventos" class="p-field-checkbox">
               <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectEventos2" [inputId]="Indicador.value" (click)="filtroEventos_2()"></p-checkbox>
@@ -601,10 +602,10 @@
       <h5>Año</h5>
         <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectedAnioIli_1" (onChange)="getIli_1()"></p-dropdown>
       <h5>Meses</h5>
-        <p-multiSelect defaultLabel="Seleccione" [options]="Meses" (click)="getIli_1()"></p-multiSelect> 
+        <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="filtroMesesIli_1" (onChange)="getIli_1()"></p-multiSelect> 
       <h5>Division</h5>
       <div *ngFor="let category of divisiones2" class="p-field-checkbox">
-          <p-checkbox name="group6" value="label" [value]="category" [(ngModel)]="selectDivisionesILI1" (click)="selectILI1()"></p-checkbox>
+          <p-checkbox name="group6" value="label" [value]="category" [(ngModel)]="selectDivisionesILI1" (click)="filtroIli_1()"></p-checkbox>
           <label>{{category.label}}</label>
       </div>
     </div>
@@ -612,7 +613,6 @@
   <hr/>
    <!-- Quinta grafica.2 -->
    <div class="ui-g">
-
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
         <!-- <p>ILI</p> -->
@@ -625,18 +625,7 @@
       </div>
       <div class="ui-g-1">&nbsp;</div>
       <div class="ui-g-2">&nbsp;</div>
-      <!-- <div class="ui-g-8">
-        <div class="ui-g-6">  
-            <i style="font-size:24px" class="fa">&#xf073;</i>   
-            <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastaILI1_2" value="this.desdeILI1_2"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdeILI1_2" (onSelect)="selectILI1_2()" > </p-calendar> 
-        </div>
-        <div class="ui-g-6"> 
-            <i style="font-size:24px" class="fa">&#xf073;</i> 
-            <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdeILI1_2" value="this.hastaILI1_2"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastaILI1_2" (onSelect)="selectILI1_2()"> </p-calendar>
-        </div>
-      </div> -->
     </div>
-
     <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">    
       <h5>Año</h5>
       <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectedAnioIli_2" (onChange)="getIli_2()"></p-dropdown>
