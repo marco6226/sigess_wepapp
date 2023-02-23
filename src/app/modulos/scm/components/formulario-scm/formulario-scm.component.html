@@ -1533,7 +1533,7 @@
     </app-logmodal>
 </p-dialog>
 
-<p-dialog [header]="(!diagSelect) ? 'Crear Diagnóstico' : 'Editar Diagnóstico'" [(visible)]="modalDianostico" [style]="{width: '75vw'}" [modal]="true"
+<p-dialog [header]="(!diagSelect) ? 'Crear Diagnóstico' : 'Editar Diagnóstico'" [(visible)]="modalDianostico" [style]="{width: '95vw'}" [modal]="true"
     [closable]="false" [draggable]="false" [resizable]="false">
 
     <app-diagnostico-form *ngIf="caseSelect" [diagSelect]="diagSelect" [id]="caseSelect.pkUser.id"

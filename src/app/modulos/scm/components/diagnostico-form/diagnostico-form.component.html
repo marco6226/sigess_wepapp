@@ -15,7 +15,7 @@
             <small *ngIf="codigo.errors?.required && codigo.touched" id="username2-help" class="p-invalid">Obligatorio</small>
         </div>
 
-        <div class="ui-g-12 ui-md-4 ui-lg-3">
+        <div class="ui-g-12 ui-md-4 ui-lg-2">
             <div class="input-field">
                 <p-dropdown [readonly]="esConsulta" [options]="origenList" formControlName="origen" class="select-material" styleClass="select-material">
                 </p-dropdown>
@@ -24,7 +24,7 @@
             <small *ngIf="origen.errors?.required && origen.touched" id="username2-help" class="p-invalid">Obligatorio</small>
         </div>
 
-        <div class="ui-g-12 ui-md-4 ui-lg-3">
+        <div class="ui-g-12 ui-md-4 ui-lg-4">
             <div class="input-field">
                 <input [readOnly]="esConsulta" pInputText type="text" [value]="cieTipo">
 
