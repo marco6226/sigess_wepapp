@@ -617,7 +617,7 @@
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
         <!-- <p>ILI</p> -->
         <ngx-charts-combo
-        [categories]="meses"
+        [categories]="mesesILI2"
         [series]="dataIli_2"
         [options]="optionsIli_2"
         >
@@ -630,11 +630,11 @@
       <h5>Año</h5>
       <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectedAnioIli_2" (onChange)="getIli_2()"></p-dropdown>
     <h5>Meses</h5>
-      <p-multiSelect defaultLabel="Seleccione" [options]="divisiones5" [(ngModel)]="selectDivisionesILI_2" optionLabel="name" (onChange)="filtrosIli_2()"></p-multiSelect> 
+      <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMesesILI2" (onChange)="filtroIli_2()"></p-multiSelect> 
       <h5>Division</h5>
       <div *ngFor="let category of divisiones2" class="p-field-checkbox">
-          <p-checkbox name="group5_20" [value]="category" (click)="getIli_2()"></p-checkbox>
-          <label>{{category.label}}</label>
+          <p-checkbox name="group5_20" [value]="category.label" *ngIf="category.label!=='Corona total'" [(ngModel)]="selectDivisionesILI2" (onChange)="getIli_2()"></p-checkbox>
+          <label *ngIf="category.label!=='Corona total'">{{category.label}}</label>
       </div>
     </div>
   </div>
