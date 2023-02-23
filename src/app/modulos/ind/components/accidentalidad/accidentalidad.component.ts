@@ -197,6 +197,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     {label:'Diciembre',value:'Diciembre'},
     {label:'Corona total',value:'Corona total'}
   ];
+  selectedDivisionResumen: string = null;
   selectDivisiones1: any[] = [];
   selectIndicarores1: any[] = [];
   selectDivisiones2: any[] = [];
@@ -346,9 +347,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
 
-    await this.getData()
-      .then( async () => {
-      });
+    this.getData().then();
+    
+    this.loadResumen();
   }
 
   async getData(){
@@ -356,7 +357,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     this.desdes=null
     this.hasta= new Date(Date.now())
     this.desde=null
-    await this.reportes()
 
     let areafiltQuery = new FilterQuery();
       areafiltQuery.sortOrder = SortOrder.ASC;
@@ -417,52 +417,29 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.data = this.reporteTabla2;
   }
 
-  async reportes(){
-    if(this.divisionS==null || this.divisionS=='Total'){
-      this.hastas= new Date(Date.now())
-      this.desdes=null
-      await this.reporteAtService.findAllRAT().then(async (resp)=>{
-        this.reporteat=resp
-        const result = await this.reporteat.filter(word => {
-
-          return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< this.hastas
-        });
-
-        //No. de reportes
-        this.NoEventos= result.length;
-
-        //No. de días perdidos
-        this.diasPerdidos=0;
-        result.forEach(element => {
-          if(element['incapacidades']!=null && element['incapacidades']!='null'){
-            this.diasPerdidos = this.diasPerdidos + JSON.parse(element['incapacidades'])
-                                                        .reduce((count, incapacidad) => {
-                                                          return count + incapacidad.diasAusencia;
-                                                        }, 0);
-          }
-        });
+  loadResumen(){
+    this.reporteAtService.findAllRAT().then(async (resp)=>{
+      this.reporteat=resp
+      let result: any[] = await this.reporteat.filter(word => {
+        return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< this.hastas
       });
-    }else{
-      await this.reporteAtService.findAllRAT().then(async (resp)=>{
-        this.reporteat=resp
-        const result = await this.reporteat.filter(word => {
 
-          return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< this.hastas && word['padreNombre'] == this.divisionS
-        });
+      if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') result = result.filter(at => at.padreNombre === this.selectedDivisionResumen);
 
-        //No. de reportes
-        this.NoEventos= result.length;
+      //No. de reportes
+      this.NoEventos= result.length;
 
-        //No. de días perdidos
-        this.diasPerdidos=0;
-        result.forEach(element => {
+      //No. de días perdidos
+      this.diasPerdidos=0;
+      result.forEach(element => {
         if(element['incapacidades']!=null && element['incapacidades']!='null'){
-          this.diasPerdidos=this.diasPerdidos+JSON.parse(element['incapacidades']).length
+          this.diasPerdidos = this.diasPerdidos + JSON.parse(element['incapacidades'])
+                                                      .reduce((count, incapacidad) => {
+                                                        return count + incapacidad.diasAusencia;
+                                                      }, 0);
         }
-        });
       });
-    }
-
+    });
   }
 
   async cargarEventosAt(): Promise<boolean>{

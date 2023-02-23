@@ -78,14 +78,14 @@
               </div>
               <div class="p-col-6 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
-                      <div class="p-d-flex"><p class="p-m-0">División    </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
+                      <div class="p-d-flex"><p class="p-m-0" style="margin-right: 10px!important;">División:</p> <p-dropdown appendTo="body" [options]="divisiones" [(ngModel)]="selectedDivisionResumen" placeholder="Seleccionar división" (onChange)="loadResumen()"></p-dropdown></div>
                       <div class="p-d-flex">  
                           <i style="font-size:24px" class="fa">&#xf073;</i>   
-                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastas" value="this.desdes"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="selecFromDate1($event)" > </p-calendar> 
+                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="loadResumen()" > </p-calendar>
                       </div>
                       <div class="p-d-flex"> 
                           <i style="font-size:24px" class="fa">&#xf073;</i> 
-                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdes" value="this.hastas"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastas" (onSelect)="selectToDate1($event)"> </p-calendar>
+                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastas" (onSelect)="loadResumen()"> </p-calendar>
                       </div>
                   </div>
               </div>
@@ -630,11 +630,11 @@
       <h5>Año</h5>
       <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectedAnioIli_2" (onChange)="getIli_2()"></p-dropdown>
     <h5>Meses</h5>
-      <p-multiSelect defaultLabel="Seleccione" [options]="divisiones5" [(ngModel)]="selectDivisionesILI_2" optionLabel="name" (click)="getIli_2()"></p-multiSelect> 
+      <p-multiSelect defaultLabel="Seleccione" [options]="divisiones5" [(ngModel)]="selectDivisionesILI_2" optionLabel="name" (onChange)="filtrosIli_2()"></p-multiSelect> 
       <h5>Division</h5>
-      <div *ngFor="let category of divisiones4" class="p-field-checkbox">
-          <p-checkbox name="group5_20" value="name" [value]="category" (click)="getIli_2()"></p-checkbox>
-          <label>{{category.name}}</label>
+      <div *ngFor="let category of divisiones2" class="p-field-checkbox">
+          <p-checkbox name="group5_20" [value]="category" (click)="getIli_2()"></p-checkbox>
+          <label>{{category.label}}</label>
       </div>
     </div>
   </div>
