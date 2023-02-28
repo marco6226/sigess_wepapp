@@ -321,7 +321,6 @@ Temporales= [
       ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
       ad.empresaSelect=this.empresaSelect;
       await this.hhtService.create(ad);
-      
     });
     
   }
@@ -346,9 +345,6 @@ Temporales= [
       // ad.id=
       ad.id=x.id.toString();
       ad.mes=element.label;
-      console.log(this.mesesHHT1)
-      console.log(cont)
-      console.log(this.mesesHHT1[cont-1])
       ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
       ad.empresaSelect=this.empresaSelect;
       await this.hhtService.update(ad);

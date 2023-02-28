@@ -207,15 +207,13 @@ export class LayoutComponent implements OnInit, AfterContentInit {
 				this.mapaPermisos = {};
 				data.forEach(element => this.mapaPermisos[element.recurso.codigo] = { 'valido': element.valido, 'areas': element.areas });
 				this.sesionService.setPermisosMap(this.mapaPermisos);
-				console.log(this.mapaPermisos);
 				this.menuComp.recargarMenu();
 			});
 
 			         
 				await this.empleadoService.findempleadoByUsuario(this.usuario.id).then(
 					resp => {
-					  this.empleado = <Empleado>(resp);	
-					  console.log(this.empleado);				  
+					  this.empleado = <Empleado>(resp);					  
 					  this.sesionService.setEmpleado(this.empleado);
 					}
 				  );

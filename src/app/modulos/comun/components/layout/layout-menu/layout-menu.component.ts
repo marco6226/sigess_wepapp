@@ -219,6 +219,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                         { label: 'Inspecciones', codigo: 'IND_GET_INP', routerLink: '/app/ind/inp', class: 'fa fa-list-ol' },
                         { label: 'Accidentalidad', codigo: 'IND_GET_ACD', routerLink: '/app/ind/accidentalidad', class: 'fa fa-ambulance' },
                         { label: 'Indicadores casos medicos', codigo: 'IND_GET_SCM', routerLink: '/app/ind/indcasosmedicos', class: 'fa fa-medkit' },
+                        { label: 'Indicadores caracterización', codigo: 'IND_GET_CAR', routerLink: '/app/ind/indcaracterizacion', class: 'fa fa-user-md' }
                     ]
             },
             {

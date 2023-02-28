@@ -102,6 +102,7 @@ import { AliadosActualizarComponent } from '../ctr/components/aliados-actualizar
 import { HomeCoronaComponent } from './components/home-corona/home-corona.component';
 import { AccidentalidadComponent } from '../ind/components/accidentalidad/accidentalidad.component';
 import {IndCasosMedicosComponent} from '../ind/components/ind-casos-medicos/ind-casos-medicos.component';
+import {IndCaracterizacionComponent} from '../ind/components/ind-caracterizacion/ind-caracterizacion.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -253,6 +254,7 @@ const appRoutes: Routes = [
                     { path: 'inp', component: IndicadoresInpComponent },
                     { path: 'accidentalidad', component: AccidentalidadComponent },
                     { path: 'indcasosmedicos', component: IndCasosMedicosComponent },
+                    { path: 'indcaracterizacion', component: IndCaracterizacionComponent }
                 ]
             },
             {

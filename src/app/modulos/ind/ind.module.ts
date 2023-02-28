@@ -14,6 +14,7 @@ import {ReporteAtService } from "app/modulos/ind/services/reporte-at.service";
 import { NgxChartsModule } from 'ngx-charts-8';
 import { ngxChartsBarModule, ngxChartsLineModule, ngxChartsComboModule, ngxChartsPieModule, ngxChartsStackedModule } from '@tusharghoshbd/ngx-charts';
 import { IndCasosMedicosComponent } from './components/ind-casos-medicos/ind-casos-medicos.component';
+import { IndCaracterizacionComponent } from './components/ind-caracterizacion/ind-caracterizacion.component';
 // import { ComboChartComponent } from './components/combo-chart/combo-chart.component';
 // import { ComboSeriesVerticalComponent } from './components/combo-chart/combo-series-vertical.component';
 
@@ -41,6 +42,7 @@ import { IndCasosMedicosComponent } from './components/ind-casos-medicos/ind-cas
     HorahombrestrabajadaComponent,
     AccidentalidadComponent,
     IndCasosMedicosComponent,
+    IndCaracterizacionComponent,
     // ComboChartComponent,
     // ComboSeriesVerticalComponent
   ],
