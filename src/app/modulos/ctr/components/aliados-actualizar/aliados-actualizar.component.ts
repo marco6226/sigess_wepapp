@@ -288,6 +288,7 @@ export class AliadosActualizarComponent implements OnInit {
     this.saveInformacionAliado();
 
     this.aliado.fechaActualizacion = new Date();
+    //aca ajustar el estado
     this.aliado.estado='Actualizado';
     this.aliado.calificacion=this.impactoV;
     if(this.aliado.division !== null){
