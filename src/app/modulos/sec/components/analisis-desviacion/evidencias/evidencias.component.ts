@@ -180,6 +180,7 @@ export class EvidenciasComponent implements OnInit {
           var blob = new Blob([<any>resp]);
           let url = URL.createObjectURL(blob);
           let dwldLink = document.getElementById("dwldLink");
+          console.log(dwldLink)
           dwldLink.setAttribute("href", url);
           dwldLink.setAttribute("download", doc.nombre);
           dwldLink.click();

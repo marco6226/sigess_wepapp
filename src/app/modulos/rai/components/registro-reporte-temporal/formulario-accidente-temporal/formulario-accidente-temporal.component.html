@@ -1,6 +1,8 @@
-<form [formGroup]="form">
-    <p-panel header="FORMULARIO DE ACCIDENTES (FURAT)">
-        <p-accordion [multiple]="true">
+
+<p-panel header="FORMULARIO DE ACCIDENTES (FURAT)">
+    
+    <p-accordion [multiple]="true">
+        <form [formGroup]="form">
             <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA">
                 <div class="ui-g">
                 <div class="ui-g-12 ui-sm-12 ui-md-2">
@@ -303,8 +305,9 @@
             <p-accordionTab header="VIII. LISTADO DE CAUSAS">
                 <app-listado-causas-temporal [factores]="dataListFactor"></app-listado-causas-temporal>
             </p-accordionTab>
-<!-- </form>
-<form [formGroup]="formplanaccion"> -->
+        </form>
+
+        <form [formGroup]="formplanaccion">
             <p-accordionTab header="IX. PLAN DE ACCION">
                 
                 <div class="ui-g">
@@ -315,28 +318,28 @@
     
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <!-- <input type="number" pInputText placeholder="% de avance"
-                                class="form-material" formControlName="avance"/> -->
                             <input type="number" pInputText placeholder="% de avance"
-                                class="form-material"/>
+                                class="form-material" formControlName="avance"/>
+                            <!-- <input type="number" pInputText placeholder="% de avance"
+                                class="form-material"/> -->
                             <label for="" class="active">% de avance</label>
                         </div>        
                     </div>
     
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <!-- <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaCierre"></p-calendar> -->
                             <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+                                yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy" formControlName="fechaCierre"></p-calendar>
+                            <!-- <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                yearRange="2010:2030" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar> -->
                             <label for="" class="active">Fecha de cierre</label>
                         </div>        
                     </div>
     
                     <div class="ui-g-12 ui-md-6">
                         <div class="input-field">
-                            <!-- <textarea pInputTextarea class="form-material" rows="5" formControlName="descripcion"></textarea> -->
-                            <textarea pInputTextarea class="form-material" rows="5"></textarea>
+                            <textarea pInputTextarea class="form-material" rows="5" formControlName="descripcion"></textarea>
+                            <!-- <textarea pInputTextarea class="form-material" rows="5"></textarea> -->
                             <label for="" class="active">Descripción de la acción realizada</label>
                         </div>        
                     </div>
@@ -350,24 +353,47 @@
                         <div>  
                             <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Adjuntar evidencia" style="margin-bottom: 10px;"></button>
                             <!-- <button pButton type="button" (click)="showDialog('foto')" icon="fa fa-trash" style="margin-bottom: 10px; background-color: red;" *ngIf="!readOnly"></button> -->
-                            <s-documentoUpload  fileLimit="3" [(visible)]="visibleDlgExcel" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo" [temporalesFlag]="temporalesFlag"></s-documentoUpload>
+                            <s-documentoUpload  fileLimit="3" [(visible)]="visibleDlgExcel" [modParam]="analisisId"  tipoEvidencia="fotografica"  [modulo]="modulo" [temporalesFlag]="temporalesFlag" (onUpload)="onUpload($event)"></s-documentoUpload>
+                        </div>
+                        <div class="ui-g" style="margin-top: 10px;">
+                            <div class="ui-g-12 ui-sm-12 ui-md-10">
+                                <div *ngFor="let doc of documentos">
+                                    <table class="dwrapper" *ngIf="doc.proceso=='fotografica'">
+                                    <tr>
+                                        <td>
+                                        <span [class]="doc.extension?.icono" [style.color]="doc.extension?.color"></span>
+                                        <a style="margin-left: 10px;" (click)="descargarDocumento(doc)">{{doc.nombre}}</a>
+                                        </td>
+                                        <td style="text-align: right;">
+                                        <a class="fa fa-pencil" title="Actualizar Descripción" (click)="actualizarDesc(doc)" *ngIf="!consultar"></a>
+                                        <a>&nbsp;</a>
+                                        <a class="fa fa-trash" title="Eliminar documento" (click)="eliminarDocument(doc)" *ngIf="!consultar" style="color: red;"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                        <textarea [disabled]="consultar" pInputTextarea placeholder="Descripción" [(ngModel)]="doc.descripcion" maxlength="253" [ngModelOptions]="{standalone: true}"></textarea>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-    
                 </div>
-          
             </p-accordionTab>
-        </p-accordion>
-    </p-panel>
+        </form>
+    </p-accordion> 
+</p-panel>
+<!-- 
+<button (click)="test()">test</button> -->
+<ng-container *ngIf="!consultar && adicionar">
+    <button *sTienePermiso="'RAI_POST_REPT'" pButton  (click)="submit1()" icon="fa fa-floppy-o" title="Guardar reporte"
+        class="float-btn" [disabled]="!form.valid" style="z-index: 100;"></button>
+</ng-container>
 
-    <ng-container *ngIf="!consultar && adicionar">
-        <button *sTienePermiso="'RAI_POST_REPT'" pButton  (click)="submit1()" icon="fa fa-floppy-o" title="Guardar reporte"
-            class="float-btn" [disabled]="!form.valid" style="z-index: 100;"></button>
-    </ng-container>
+<ng-container *ngIf="!consultar && !adicionar">
+    <button *sTienePermiso="'RAI_PUT_REPT'" pButton  (click)="submit1()" icon="fa fa-pencil" title="Actualizar reporte"
+        class="float-btn ui-button-success" [disabled]="!form.valid" style="z-index: 100;"></button>
+</ng-container>
 
-    <ng-container *ngIf="!consultar && !adicionar">
-        <button *sTienePermiso="'RAI_PUT_REPT'" pButton  (click)="submit1()" icon="fa fa-pencil" title="Actualizar reporte"
-            class="float-btn ui-button-success" [disabled]="!form.valid" style="z-index: 100;"></button>
-    </ng-container>
-
-</form>

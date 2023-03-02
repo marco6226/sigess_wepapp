@@ -1649,12 +1649,12 @@ filtroGraEve5(){
   let datosGrafica1=[]
 
   if(this.selectDiv5.length==0 && this.selectEv5.length==0){
-    this.datosGrafica5=this.contTotal(this.datosGrafica5)
+    // this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.datosGrafica5Top=this.top(this.datosGrafica5,5)
   }
 
   if(this.selectDiv5.length>0 && this.selectEv5.length==0){
-    this.datosGrafica5=this.contTotal(this.datosGrafica5)
+    // this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.selectDiv5.forEach(resp1=>{
       let x=this.datosGrafica5.filter((resp)=>{
         return resp.name ==resp1.label
@@ -1667,7 +1667,7 @@ filtroGraEve5(){
 
   if(this.selectDiv5.length==0 && this.selectEv5.length>0){
     datosGrafica1=[]
-    this.datosGrafica5=this.contTotal(this.datosGrafica5)
+    // this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.datosGrafica5.forEach(element => {
       let randomEv1CopySeries=[]
 
@@ -1687,7 +1687,7 @@ filtroGraEve5(){
   }
   
   if(this.selectDiv5.length>0 && this.selectEv5.length>0){
-    this.datosGrafica5=this.contTotal(this.datosGrafica5)
+    // this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.selectDiv5.forEach(resp1=>{
       let x=this.datosGrafica5.filter((resp)=>{
         return resp.name ==resp1.label
@@ -1877,12 +1877,12 @@ filtroGraEve6(){
   let datosGrafica1=[]
 
   if(this.selectDiv6.length==0 && this.selectEv6.length==0){
-    this.datosGrafica6=this.contTotal(this.datosGrafica6)
+    // this.datosGrafica6=this.contTotal(this.datosGrafica6)
     this.datosGrafica6Top=this.top(this.datosGrafica6,5)
   }
 
   if(this.selectDiv6.length>0 && this.selectEv6.length==0){
-    this.datosGrafica6=this.contTotal(this.datosGrafica6)
+    // this.datosGrafica6=this.contTotal(this.datosGrafica6)
     this.selectDiv6.forEach(resp1=>{
       let x=this.datosGrafica6.filter((resp)=>{
         return resp.name ==resp1.name
@@ -1894,7 +1894,7 @@ filtroGraEve6(){
   }
 
   if(this.selectDiv6.length==0 && this.selectEv6.length>0){
-    this.datosGrafica6=this.contTotal(this.datosGrafica6)
+    // this.datosGrafica6=this.contTotal(this.datosGrafica6)
     datosGrafica1=[]
     this.datosGrafica6.forEach(element => {
       let randomEv1CopySeries=[]
@@ -1915,7 +1915,7 @@ filtroGraEve6(){
   }
   
   if(this.selectDiv6.length>0 && this.selectEv6.length>0){
-    this.datosGrafica6=this.contTotal(this.datosGrafica6)
+    // this.datosGrafica6=this.contTotal(this.datosGrafica6)
     this.selectDiv6.forEach(resp1=>{
       let x=this.datosGrafica6.filter((resp)=>{
         return resp.name ==resp1.name

@@ -11,6 +11,7 @@ import { Component, OnInit,Input,Output } from '@angular/core';
 import { AliadoInformacion } from '../../entities/aliados';
 import { ComunService } from 'app/modulos/comun/services/comun.service';
 import { MessageService } from 'primeng/primeng';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
 
 @Component({
   selector: 'app-aliados-actualizar',
@@ -21,6 +22,7 @@ import { MessageService } from 'primeng/primeng';
 export class AliadosActualizarComponent implements OnInit {
 
   id: number = -1;
+  idEmpresa?:string
   aliado: Empresa={
     id: '',
     nombreComercial: '',
@@ -86,6 +88,7 @@ export class AliadosActualizarComponent implements OnInit {
     private usuarioService: UsuarioService,
     private router: Router,
     private messageService: MessageService,
+    private sesionService: SesionService,
   ) {}
   
   ngOnInit() {
@@ -97,7 +100,8 @@ export class AliadosActualizarComponent implements OnInit {
 
   async loadData(){
     console.log("--------------load data------------");
-    
+    this.idEmpresa = this.sesionService.getEmpresa().id;
+    // console.log(this.idEmpresa)
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [];
 
@@ -124,7 +128,6 @@ export class AliadosActualizarComponent implements OnInit {
     await this.empresaService.getAliadoInformacion(this.id).then((ele: AliadoInformacion[])=>{
       if(ele[0] != undefined){
         this.aliadoInformacion = ele[0];
-        console.log(this.aliadoInformacion);     
       }      
     });
     this.auxAutorizaSubcontratacion = this.aliadoInformacion.autoriza_subcontratacion;
@@ -148,10 +151,10 @@ export class AliadosActualizarComponent implements OnInit {
     if(this.aliadoInformacion.documentos){
       JSON.parse(this.aliadoInformacion.documentos).forEach(async element => {
         await this.directorioService.buscarDocumentosById(element).then((elem: Directorio)=>{
-          console.log(elem);      
+          // console.log(elem);      
           this.documentos.push(elem[0])
         })
-      console.log(this.documentos);
+      // console.log(this.documentos);
       });      
     }
     
@@ -216,15 +219,15 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   reciveIdDoc(event: string){
-    console.log(event);
+    // console.log(event);
     let dataList = []
     if(this.aliadoInformacion.documentos){
       dataList = JSON.parse(this.aliadoInformacion.documentos)
     }
     dataList.push(Number.parseInt(event))
-    console.log(dataList);
+    // console.log(dataList);
     this.aliadoInformacion.documentos = JSON.stringify(dataList)
-    console.log(this.aliadoInformacion.documentos);
+    // console.log(this.aliadoInformacion.documentos);
   }
 
   reciveFechaArl(event: Date){
@@ -284,12 +287,13 @@ export class AliadosActualizarComponent implements OnInit {
     this.mensajesDeValidacion();
 
     this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
-    console.log(this.aliadoInformacion.calificacion)
+    // console.log(this.aliadoInformacion.calificacion)
     this.saveInformacionAliado();
 
     this.aliado.fechaActualizacion = new Date();
     //aca ajustar el estado
-    this.aliado.estado='Actualizado';
+    if(this.idEmpresa!='22')this.aliado.estado='Actualizado';
+
     this.aliado.calificacion=this.impactoV;
     if(this.aliado.division !== null){
       this.aliado.division = JSON.stringify(this.aliado.division)

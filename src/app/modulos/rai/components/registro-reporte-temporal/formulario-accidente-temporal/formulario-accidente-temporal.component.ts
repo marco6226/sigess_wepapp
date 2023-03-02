@@ -39,6 +39,11 @@ import { InformacionComplementaria} from 'app/modulos/sec/entities/informacion_c
 import { Causa_Raiz, FactorCausal, Incapacidad, listFactores, listPlanAccion} from 'app/modulos/sec/entities/factor-causal';
 import { ParametroNavegacionService } from "app/modulos/core/services/parametro-navegacion.service";
 import { Modulo } from '../../../../core/enums/enumeraciones';
+import { Directorio } from 'app/modulos/ado/entities/directorio';
+import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
+import { Documento } from 'app/modulos/ado/entities/documento';
+import { ConfirmationService } from 'primeng/primeng';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-formulario-accidente-temporal',
@@ -56,6 +61,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   @Input('modificar') modificar: boolean=false;
   @Input('adicionar') adicionar: boolean;
   @Output('onSave') onSave = new EventEmitter<Reporte>();
+  @Output('onUpdate') onUpdate = new EventEmitter<Documento>();
+
+  documentos: Documento[];
   fechaActual = new Date();
   yearRange: string = '1900:' + this.fechaActual.getFullYear();
   tipoVinculacionList: SelectItem[];
@@ -108,6 +116,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   selectedTemporal: any;
   temporalesFlag: boolean=true
 
+  msgs: Message[];
+
   constructor(
       private fb: FormBuilder,
       private cdRef: ChangeDetectorRef,
@@ -120,6 +130,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       private analisisDesviacionService: AnalisisDesviacionService,
       private paramNav: ParametroNavegacionService,
       private desviacionService: DesviacionService,
+      private confirmationService: ConfirmationService,
+      private directorioService: DirectorioService,
   ) {
       let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
       this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
@@ -368,9 +380,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                 async resp => {
                   this.desviacionesList = resp['data'];
                   this.analisisId = this.desviacionesList[0].analisisId;
-                  await this.consultarAnalisis(this.analisisId)
-                }
-              )
+                  await this.consultarAnalisis(this.analisisId)})
+
             }
         }else{
           this.setFactorCausal();
@@ -379,10 +390,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       
       this.cdRef.detectChanges();
       await this.cargarTiposPeligro();
-      // console.log('listfactor: '+this.factorCausal)
-      setTimeout(() => {
-        console.log(this.factorCausal)
-      }, 5000);
   }
   SelectPeligro(a: string){
     this.cargarPeligro(a)
@@ -457,9 +464,19 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
     ];
     await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
+      let analisis = <AnalisisDesviacion>resp["data"][0];
       this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
       this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
       this.factorCausal = JSON.parse(resp["data"][0].factor_causal);
+      
+      console.log(resp["data"][0])
+      this.documentos=analisis.documentosList;
+      this.planAccion = JSON.parse(resp["data"][0].plan_accion);
+      this.formplanaccion.patchValue({
+        avance: this.planAccion['avance'],
+        fechaCierre: new Date(this.planAccion['fechaCierre']),
+        descripcion: this.planAccion['descripcion']
+      })
       this.setFactorCausal();
     })
     if(this.informacionComplementaria!=null){
@@ -476,72 +493,73 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     }
     this.setListDataFactor()
   }
-
   //botón guardar y modificar
   listPlanAccion: listPlanAccion[] =[]
   async submit1() {
-      this.informacionComplementaria=this.analisisPeligros.value;
-      let ad = new AnalisisDesviacion();
-      ad.complementaria=JSON.stringify(this.informacionComplementaria);
-      ad.incapacidades= JSON.stringify(this.incapacidadesList);
-      ad.factor_causal= JSON.stringify(this.factorCausal);
-      ad.plan_accion=JSON.stringify(this.formplanaccion.value);
-      
-      if (this.adicionar) {
-          let reporte = <Reporte>this.form.value;
-          reporte.testigoReporteList = this.testigoReporteList;
-          reporte.identificacionEmpresa = this.selectedTemporal;
-          let selectedTemporal=this.temporales.find((data)=>{
-            return data.value==this.selectedTemporal
-          })
-          reporte.temporal = this.form.value.razonSocial;
-          reporte.identificacionEmpresa=this.form.value.identificacionEmpresa;
-          await this.reporteService.create(reporte).then(
-              async data => {
-                  this.onSave.emit(<Reporte>data)
-
-                  let filterQuery = new FilterQuery();
-                  filterQuery.fieldList = this.fields;
-                  filterQuery.filterList = []
-                  
-                  filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
-                  filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+data.toString() });
-                  await this.desviacionService.findByFilter(filterQuery).then(
-                    resp => {
-                      this.desviacionesList = resp['data'];
-                      ad.desviacionesList=this.desviacionesList;
-                      this.analisisDesviacionService.create(ad)
-                      .then((data) => {
-                        let analisisDesviacion = <AnalisisDesviacion>data;
-                        this.analisisId = analisisDesviacion.id;
-                      })
-                    })
-
-                  this.adicionar=false
-                  this.modificar=true
-              }
-
-          );
-          this.reporte=reporte
-      } else if (this.modificar) {
-
-        ad.id = this.analisisId;
-        ad.desviacionesList=this.desviacionesList;
-        this.analisisDesviacionService.update(ad)
-
+    this.informacionComplementaria=this.analisisPeligros.value;
+    let ad = new AnalisisDesviacion();
+    ad.complementaria=JSON.stringify(this.informacionComplementaria);
+    ad.incapacidades= JSON.stringify(this.incapacidadesList);
+    ad.factor_causal= JSON.stringify(this.factorCausal);
+    ad.plan_accion=JSON.stringify(this.formplanaccion.value);
+    console.log(this.documentos)
+    ad.documentosList=this.documentos
+    
+    if (this.adicionar) {
         let reporte = <Reporte>this.form.value;
         reporte.testigoReporteList = this.testigoReporteList;
         reporte.identificacionEmpresa = this.selectedTemporal;
         let selectedTemporal=this.temporales.find((data)=>{
           return data.value==this.selectedTemporal
         })
-        this.reporteService.update(reporte).then(
-            data => this.onSave.emit(<Reporte>data)
+        reporte.temporal = this.form.value.razonSocial;
+        reporte.identificacionEmpresa=this.form.value.identificacionEmpresa;
+        await this.reporteService.create(reporte).then(
+            async data => {
+                this.onSave.emit(<Reporte>data)
+
+                let filterQuery = new FilterQuery();
+                filterQuery.fieldList = this.fields;
+                filterQuery.filterList = []
+                
+                filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+                filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+data.toString() });
+                await this.desviacionService.findByFilter(filterQuery).then(
+                  resp => {
+                    this.desviacionesList = resp['data'];
+                    ad.desviacionesList=this.desviacionesList;
+                    this.analisisDesviacionService.create(ad)
+                    .then((data) => {
+                      let analisisDesviacion = <AnalisisDesviacion>data;
+                      this.analisisId = analisisDesviacion.id;
+                    })
+                  })
+
+                this.adicionar=false
+                this.modificar=true
+            }
+
         );
         this.reporte=reporte
-      }
-      this.setListDataFactor()
+    } else if (this.modificar) {
+
+      ad.id = this.analisisId;
+      ad.desviacionesList=this.desviacionesList;
+      this.analisisDesviacionService.update(ad)
+
+      let reporte = <Reporte>this.form.value;
+      reporte.testigoReporteList = this.testigoReporteList;
+      reporte.identificacionEmpresa = this.selectedTemporal;
+      let selectedTemporal=this.temporales.find((data)=>{
+        return data.value==this.selectedTemporal
+      })
+      this.reporteService.update(reporte).then(
+          data => this.onSave.emit(<Reporte>data)
+      );
+      this.reporte=reporte
     }
+    this.setListDataFactor()
+  }
 
   getListIncapacidades(event){
     this.incapacidadesList = event;
@@ -550,6 +568,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   tempData: listFactores[]=[];
   dataListFactor: listFactores[]=[];
   factorCausal: FactorCausal[]
+  planAccion:any;
   setListDataFactor(){
     
     this.tempData = []
@@ -591,7 +610,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
             this.dataListFactor = this.tempData; 
         } catch (error) {      
         }
-   console.log('entre: ',this.dataListFactor)
 }
 selectCausaRaiz(nombre, pregunta ,datos){
   if (datos.data.name=='Si') {
@@ -623,10 +641,62 @@ setFactorCausal(){
     this.setListDataFactor();}
 }
 
-modulo = Modulo.RAI.value;
+modulo = Modulo.SEC.value;
 visibleDlgExcel: boolean = false;
 showDialog(){
   this.visibleDlgExcel = true;
 }
 
+onUpload(event: Directorio) {
+  if (this.documentos == null)
+    this.documentos = [];
+  this.documentos.push(event.documento);
+  // this.adicionarAGaleria(event.documento);
+  this.documentos = this.documentos.slice();
+  console.log(this.documentos)
+}
+
+eliminarDocument(doc: Documento) {
+  this.confirmationService.confirm({
+    message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
+    header: 'Confirmar',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+        this.onUpdate.emit(doc);
+        this.directorioService.eliminarDocumento(doc.id).then(
+          data => {
+            this.documentos = this.documentos.filter(val => val.id !== doc.id);
+          }
+        );
+    }
+});
+}
+
+descargarDocumento(doc: Documento) {
+  let msg = { severity: 'info', summary: 'Descargando documento...', detail: 'Archivo \"' + doc.nombre + "\" en proceso de descarga" };
+  this.msgs = [];
+  this.msgs.push(msg);
+  this.directorioService.download(doc.id).then(
+    resp => {
+      if (resp != null) {
+        var blob = new Blob([<any>resp]);
+        let url = URL.createObjectURL(blob);
+        let dwldLink = document.getElementById("dwldLink");
+        console.log(dwldLink)
+        dwldLink.setAttribute("href", url);
+        dwldLink.setAttribute("download", doc.nombre);
+        dwldLink.click();
+        this.msgs = [];
+        this.msgs.push({ severity: 'success', summary: 'Archivo descargado', detail: 'Se ha descargado correctamente el archivo ' + doc.nombre });
+      }
+    }
+  );
+}
+actualizarDesc(doc: Documento) {
+  this.directorioService.actualizarDocumento(doc).then(
+    data => {
+      this.onUpdate.emit(doc);
+    }
+  );
+}
 }
