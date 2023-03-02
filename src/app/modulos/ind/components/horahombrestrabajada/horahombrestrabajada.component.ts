@@ -7,350 +7,187 @@ import { SortOrder } from "app/modulos/core/entities/filter";
 import { Criteria } from "../../../core/entities/filter";
 //import { TipoAreaService } from './services/tipo-area.service';
 import { HhtService } from 'app/modulos/empresa/services/hht.service'
-import { Hht } from "../../../empresa/entities/hht";
-import { Form, FormBuilder, FormControl, FormGroup, Validators ,FormGroupDirective} from "@angular/forms";
-import { EmpresaService } from 'app/modulos/empresa/services/empresa.service'
+import { DataArea, DataHht, DataPlanta, Hht } from "../../../empresa/entities/hht";
+import { PlantasService } from '../../services/Plantas.service';
+import { Plantas } from '../../entities/Plantas';
+
 
 @Component({
   selector: 'app-horahombrestrabajada',
   templateUrl: './horahombrestrabajada.component.html',
   styleUrls: ['./horahombrestrabajada.component.scss'],
-  providers: [HhtService]
+  providers: [HhtService, PlantasService]
 })
 export class HorahombrestrabajadaComponent implements OnInit {
   fechaActual = new Date();
-  areaList: Area[] = [];
+  areaList: Area[] = null;
+  plantasList: Plantas[] = null;
   dateValue= new Date();
   añoPrimero:number=2015;
   añoActual:number=this.dateValue.getFullYear();
   yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
   yearRange = new Array();
-  valor:Hht;
-  idHHT:number;
-  anioSelect:number;
-  empresaSelect:string;
-  TotalAnioNH;
-  TotalAnioHHT;
-  mesesHHT1;
-  idHHT1;
-  flagAnio:boolean=false;
-  flagEmpresa:boolean=false;
-  flagID:boolean=false;
+  anioSelected: number;
+  empresaSelected: string;
+  mostrarForm: boolean = false;
   guardarFlag:boolean=true;
-  // empresasHHT: FormGroup;
-  // areaHHT: FormGroup;
-  // mesesHHT: FormGroup;
-  // valorHHT: FormGroup;
-  // ubicaionHHT:FormGroup;
-Meses={
-  0:{
-    HHT:null,
-    NH:null
-  },
-  1:{
-    HHT:null,
-    NH:null
-  },
-  2:{
-    HHT:null,
-    NH:null
-  },
-  3:{
-    HHT:null,
-    NH:null
-  },
-  4:{
-    HHT:null,
-    NH:null
-  },
-  5:{
-    HHT:null,
-    NH:null
-  },
-  6:{
-    HHT:null,
-    NH:null
-  },
-  7:{
-    HHT:null,
-    NH:null
-  },
-  8:{
-    HHT:null,
-    NH:null
-  },
-  9:{
-    HHT:null,
-    NH:null
-  },
-  10:{
-    HHT:null,
-    NH:null
-  },
-  11:{
-    HHT:null,
-    NH:null
-  }
-}
-
-Ubicacion= [
-    'Girardota',
-    'Funza',
-    'Madrid',
-];
-
-meses = [
-  {label: 'Enero', value: 'Enero'},
-  {label: 'Febrero', value: 'Febrero'},
-  {label: 'Marzo', value: 'Marzo'},
-  {label: 'Abril', value: 'Abril'},
-  {label: 'Mayo', value: 'Mayo'},
-  {label: 'Junio', value: 'Junio'},
-  {label: 'Julio', value: 'Julio'},
-  {label: 'Agosto', value: 'Agosto'},
-  {label: 'Septiembre', value: 'Septiembre'},
-  {label: 'Octubre', value: 'Octubre'},
-  {label: 'Noviembre', value: 'Noviembre'},
-  {label: 'Diciembre', value: 'Diciembre'}
-];
-Temporales= [
-  {label: 'Corona', value: 'Corona'},
-  {label: 'Temporal uno', value: 'Temporal uno'},
-  {label: 'Temporal dos', value: 'Temporal dos'},
-  {label: 'Temporal tres', value: 'Temporal tres'},
-];
+  dataHHT:any[] = null;
+  metaAnualILI: number = null;
+  metaMensualILI: number = null;
+  mostrarBotones: boolean = false;
+  esNuevoRegistro: boolean = true;
+  meses: Array<any> = [
+    {label: 'Enero', value: 'Enero'},
+    {label: 'Febrero', value: 'Febrero'},
+    {label: 'Marzo', value: 'Marzo'},
+    {label: 'Abril', value: 'Abril'},
+    {label: 'Mayo', value: 'Mayo'},
+    {label: 'Junio', value: 'Junio'},
+    {label: 'Julio', value: 'Julio'},
+    {label: 'Agosto', value: 'Agosto'},
+    {label: 'Septiembre', value: 'Septiembre'},
+    {label: 'Octubre', value: 'Octubre'},
+    {label: 'Noviembre', value: 'Noviembre'},
+    {label: 'Diciembre', value: 'Diciembre'}
+  ];
+  Empresas= [
+    {label: 'Corona', value: '22'},
+    {label: 'Temporal uno', value: '12341'},
+    {label: 'Temporal dos', value: '12342'},
+    {label: 'Temporal tres', value: '12343'},
+  ];
 
   constructor(
     private areaService: AreaService,
     private hhtService: HhtService,
-    private empresaService: EmpresaService,
-    private  fb: FormBuilder,
+    private plantasService: PlantasService,
   ) { }
 
   async ngOnInit() {
-    await this.areasNivel0();
     this.yearRange=[]
     for (let i = 0; i < this.yearRangeNumber.length; i++) {
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
-    this.CreateMesesHHT1()
+  }
+
+  async getAreas(){
+    let areafiltQuery = new FilterQuery();
+    areafiltQuery.sortOrder = SortOrder.ASC;
+    areafiltQuery.sortField = "nombre";
+    areafiltQuery.fieldList = ["id", "nombre","nivel"];
+    areafiltQuery.filterList = [
+      { criteria: Criteria.EQUALS, field: "nivel", value1: "0" },
+    ];
+    await this.areaService.findByFilter(areafiltQuery).then(
+      resp => {
+        this.areaList = <Area[]>resp['data'];
+      }
+    );
+  }
+
+  async getPlantas(empresaId: number){
+    await this.plantasService.getPlantasByEmpresaId(empresaId)
+      .then((res) => {
+        this.plantasList = <Plantas[]>res;
+      }).catch(err => {
+        this.plantasList = [];
+        console.error('Sin plantas: ',err);
+      })
+  }
+
+  onSelectAnio(event: number){
+    this.anioSelected = event;
+    if(this.empresaSelected && this.anioSelected) this.loadForm();
+  }
+
+  onSelectEmpresa(event: any){
+    this.empresaSelected = event.value;
+    if(this.empresaSelected && this.anioSelected) this.loadForm();
+  }
+
+  async loadForm(){
+    this.mostrarForm = false;
+    this.mostrarBotones = false;
+    await this.getAreas().then();
+    await this.getPlantas(Number(this.empresaSelected)).then();
+    await this.initFormHHT();
+    await this.loadDataHHT();
+    this.mostrarForm = true;
+    this.mostrarBotones = true;
+  }
+
+  async loadDataHHT(){
+    let idhttquery = new FilterQuery();
+    idhttquery.sortOrder = SortOrder.DESC;
+    idhttquery.sortField = "id";
+    idhttquery.filterList = [
+      {criteria: Criteria.EQUALS, field: 'anio', value1: this.anioSelected['value']},
+      {criteria: Criteria.EQUALS, field: 'empresaSelect', value1: this.empresaSelected}
+    ];
     
+    this.hhtService.findByFilter(idhttquery)
+    .then((res) => {
+      if(res['data'].length == 0){
+        return this.esNuevoRegistro = true;
+      }
+      this.esNuevoRegistro = false;
+      console.log(res);
+    });
   }
 
-  anioSelecionado(event){
-    this.anioSelect=event.value
-    this.flagAnio=true;
-    this.getBDhht()
-  }
-
-  empresaSelecionado(event){
-    console.log('entre')
-    console.log(event.value)
-    this.empresaSelect=event.value
-    this.flagEmpresa=true;
-    this.getBDhht()
-  }
-
-  async getBDhht(){
-    if(this.flagAnio && this.flagEmpresa){
-      let hhtfiltQuery = new FilterQuery();
-        hhtfiltQuery.sortOrder = SortOrder.ASC;
-        hhtfiltQuery.sortField = "id";
-        // cargofiltQuery.filterList = [{ field: 'anio', criteria: Criteria.EQUALS, value1:  this.empresaSelect}];
-        hhtfiltQuery.filterList = [
-            { criteria: Criteria.EQUALS, field: "anio", value1: this.anioSelect.toString() },
-            { criteria: Criteria.EQUALS, field: "empresaSelect", value1: this.empresaSelect }
-        ];
-        // cargofiltQuery.fieldList = ["id", "nombre"];
-        await this.hhtService.findByFilter(hhtfiltQuery).then((resp) => {
-          
-          if(resp['data'].length>0){
-            this.guardarFlag=false;
-            this.mesesHHT1=[]
-            this.idHHT1=[]
-            resp['data'].forEach(element => {
-              this.mesesHHT1.push(JSON.parse(element.valor))
-              this.idHHT1.push({id:element.id,mes:element.mes})
-            });
-            // console.log(this.idHHT1)
-          }else{
-            this.guardarFlag=true;
-            this.CreateMesesHHT1()
+  async initFormHHT(){
+    this.dataHHT = [];
+    this.meses.forEach((mes, index) => {
+      this.dataHHT.push({
+        id: index,
+        mes: mes.value,
+        NumPersonasMes: null,
+        HhtMes: null,
+        Areas: this.areaList.map((area):DataArea => {
+          return {
+            id: Number(area.id),
+            NumPersonasArea: null,
+            HhtArea: null,
+            Plantas: this.plantasList.filter(pl => pl.id_division == area.id).map((planta):DataPlanta => {
+              return {
+                id: planta.id,
+                NumPersonasPlanta: null,
+                HhtPlanta: null,
+              }
+            })
           }
-          this.sumaTotalMesAño()
-        });
-    }
-  }
-  sumaTotalMesAño(){
-    for (let i = 0; i < 12; i++) {
-      this.Meses[i].NH=0
-      for (let k = 0; k < this.areaList.length; k++) {
-        this.Meses[i].NH=this.Meses[i].NH+this.mesesHHT1[i][k].Total3NH
-      }
-
-      this.Meses[i].HHT=0
-      for (let k = 0; k < this.areaList.length; k++) {
-        this.Meses[i].HHT=this.Meses[i].HHT+this.mesesHHT1[i][k].Total3HHT
-      }
-      
-    }
-
-    this.TotalAnioNH=0;
-    for (let k = 0; k < 12; k++) {
-      this.TotalAnioNH=this.TotalAnioNH+this.Meses[k].NH
-    }
-
-    this.TotalAnioHHT=0;
-    for (let k = 0; k < 12; k++) {
-      this.TotalAnioHHT=this.TotalAnioHHT+this.Meses[k].HHT
-    }
-  }
-  sumaTotalArea(i,j,H){
-    if(H=='NH'){
-      let NH1=(this.mesesHHT1[i][j]['Girardota'].NH==null)?0:parseFloat(this.mesesHHT1[i][j]['Girardota'].NH);
-      let NH2=(this.mesesHHT1[i][j]['Funza'].NH==null)?0:parseFloat(this.mesesHHT1[i][j]['Funza'].NH);
-      let NH3=(this.mesesHHT1[i][j]['Madrid'].NH==null)?0:parseFloat(this.mesesHHT1[i][j]['Madrid'].NH);
-
-      this.mesesHHT1[i][j].Total3NH=NH1+NH2+NH3
-
-      this.Meses[i].NH=0
-      for (let k = 0; k < this.areaList.length; k++) {
-        this.Meses[i].NH=this.Meses[i].NH+this.mesesHHT1[i][k].Total3NH
-      }
-
-      this.TotalAnioNH=0;
-      for (let k = 0; k < 12; k++) {
-        this.TotalAnioNH=this.TotalAnioNH+this.Meses[k].NH
-      }
-      
-    }else{
-      let HHT1=(this.mesesHHT1[i][j]['Girardota'].HHT==null)?0:parseFloat(this.mesesHHT1[i][j]['Girardota'].HHT);
-      let HHT2=(this.mesesHHT1[i][j]['Funza'].HHT==null)?0:parseFloat(this.mesesHHT1[i][j]['Funza'].HHT);
-      let HHT3=(this.mesesHHT1[i][j]['Madrid'].HHT==null)?0:parseFloat(this.mesesHHT1[i][j]['Madrid'].HHT);
-
-      this.mesesHHT1[i][j].Total3HHT=HHT1+HHT2+HHT3
-
-      this.Meses[i].HHT=0
-      for (let k = 0; k < this.areaList.length; k++) {
-        this.Meses[i].HHT=this.Meses[i].HHT+this.mesesHHT1[i][k].Total3HHT
-      }
-
-      this.TotalAnioHHT=0;
-      for (let k = 0; k < 12; k++) {
-        this.TotalAnioHHT=this.TotalAnioHHT+this.Meses[k].HHT
-      }
-    }
-  }
-
-
-  CreateMesesHHT1(){
-    let area2
-    this.mesesHHT1=[]
-    for (let index = 0; index < 12; index++) {
-      area2=[]
-      this.areaList.forEach((resp)=>{
-        area2.push({
-          Total3NH:null,
-          Total3HHT:null,
-          Girardota:({
-            HHT:null,
-            NH:null
-          }),
-          Funza:({
-            HHT: null,
-            NH: null
-          }),
-          Madrid:({
-            HHT:null,
-            NH: null
-          })
         })
       });
-      this.mesesHHT1.push(area2)
-    }
+    });
+    console.log(this.dataHHT);
   }
 
-  async areasNivel0(){
-      let areafiltQuery = new FilterQuery();
-      areafiltQuery.sortOrder = SortOrder.ASC;
-      areafiltQuery.sortField = "nombre";
-      areafiltQuery.fieldList = ["id", "nombre","nivel"];
-      areafiltQuery.filterList = [
-        { criteria: Criteria.EQUALS, field: "nivel", value1: "0" },
-    ];
-      await this.areaService.findByFilter(areafiltQuery).then(
-        resp => (this.areaList=<Area[]>resp['data'])
-    );
+  getPlantasByArea(id: any): Plantas[]{
+    return this.plantasList.filter(pl => pl.id_division == id).length > 0 ? this.plantasList.filter(pl => pl.id_division == id): null;
   }
 
-  async cargarHHT(){
-    let idhttquery = new FilterQuery();
-      idhttquery.sortOrder = SortOrder.DESC;
-      idhttquery.sortField = "id";
-      idhttquery.fieldList = ["id"];
-
-      await this.hhtService.findByFilter(idhttquery).then(
-        resp => {
-          if(resp['data'].length>0){
-          this.idHHT=resp['data'][0].id
-          }
-          else{
-            this.idHHT=1;
-          }
-          this.flagID=true
-        }
-    );
-
-      // await this.hhtService.findAll().then((resp)=>{
-      //   this.idHHT=resp['data'].length+1;
-      //   });
-
+  tienePlantas(areaId: any){
+    return this.plantasList.find(planta => planta.id_division == areaId) == undefined ? false : true;
   }
+
   async guardarHht(){
-    if(!this.flagID){
-      await this.cargarHHT()
-    }
-    let cont=0;
-    this.meses.forEach(async element => {
-      cont=cont+1
-      let ad = new Hht();
-      ad.anio=this.anioSelect;
-      this.idHHT=this.idHHT+1;
-      ad.id=this.idHHT.toString();
-      ad.mes=element.label;
-      ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
-      ad.empresaSelect=this.empresaSelect;
-      await this.hhtService.create(ad);
+    await this.meses.forEach((mes, index) => {
+      let hht = new Hht();
+      hht.id = null;
+      hht.anio = this.anioSelected['value'];
+      hht.empresaSelect = this.empresaSelected;
+      hht.mes = mes.value; 
+      // let data = this.dataHHT.filter(data => data.id === index);
+      hht.valor = JSON.stringify({
+        ILI_Anual: this.metaAnualILI,
+        ILI_Mensual: this.metaMensualILI,
+        Data: this.dataHHT[index]
+      });
+      // console.info(hht);
+      this.hhtService.create(hht).then(() => {
+        console.info('HHT creado para el mes de: ', `${mes.value} de ${this.anioSelected['value']}`);
+      });
     });
-    
+    this.esNuevoRegistro = false;
   }
-
-  async modificarHht(){
-
-    let x
-    let cont=0;
-    this.meses.forEach(async element => {
-
-
-      x=await this.idHHT1.find(data=>{
-        // console.log(data)
-        // console.log(element.label)
-        return ( (data.mes==element.label));
-      })
-      cont=cont+1
-      let ad = new Hht();
-      ad.anio=this.anioSelect;
-      // console.log(x.id)
-      // this.idHHT=x.id;
-      // ad.id=
-      ad.id=x.id.toString();
-      ad.mes=element.label;
-      ad.valor=JSON.stringify(this.mesesHHT1[cont-1]);
-      ad.empresaSelect=this.empresaSelect;
-      await this.hhtService.update(ad);
-      
-    });
-    
-  }
-
 }

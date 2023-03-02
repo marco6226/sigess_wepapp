@@ -5,114 +5,105 @@
                 Seleccionar año:
             </div>
             <div class="p-field p-col-12 p-md-4">
-                <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="anioSelecionado($event)"></p-dropdown>
+                <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="onSelectAnio($event)"></p-dropdown>
             </div>
             <div class="ui-g-12 ui-sm-12 ui-md-2">
                 Seleccionar empresa:
             </div>
             <div class="ui-g-12 ui-sm-12 ui-md-4">
-                <p-dropdown appendTo="body" [options]="Temporales" placeholder="Seleccionar empresa" (onChange)="empresaSelecionado($event)"></p-dropdown>
+                <p-dropdown appendTo="body" [options]="Empresas" placeholder="Seleccionar empresa" (onChange)="onSelectEmpresa($event)"></p-dropdown>
             </div>
         </div>
-        <!-- <ng-container *ngIf="true" [formGroup]="Meses"> -->
-        <ng-container *ngIf="flagAnio && flagEmpresa">
+        <ng-container *ngIf="mostrarForm">
             <div class="ui-g">
-                <div class="ui-g-12 ui-sm-12 ui-md-2">
-                    Total año No. PERSONAS:
+                <div class="ui-g-6 ui-sm-12 ui-md-2">
+                    Meta Anual ILI:
                 </div>
-                <div class="ui-g-12 ui-sm-12 ui-md-4">
-                    <input pInputText readonly [(ngModel)]="TotalAnioNH"/>
+                <div class="ui-g-6 ui-sm-12 ui-md-2">
+                    <input pInputText [(ngModel)]="metaAnualILI" type="number"/>
                 </div>
-                <div class="ui-g-12 ui-sm-12 ui-md-2" >
-                    Total año HHT:
+                <div class="ui-g-6 ui-sm-12 ui-md-2" >
+                    Meta Mensual ILI:
                 </div>
-                <div class="ui-g-12 ui-sm-12 ui-md-4">
-                    <input pInputText readonly [(ngModel)]="TotalAnioHHT"/>
+                <div class="ui-g-6 ui-sm-12 ui-md-2">
+                    <input pInputText [(ngModel)]="metaMensualILI" type="number"/>
                 </div>
             </div>
             <ng-container *ngFor="let mes of meses; let i = index" >
-                <!-- <p-accordionTab header={{mes.label}} formGroupName={{mes.label}}> -->
                 <p-accordionTab header={{mes.label}}>
-                    <!-- style="background-color: yellow;" -->
                     <div class="ui-g">
-                        <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        <div class="ui-g-6 ui-sm-6 ui-md-2">
                             Total mes No. PERSONAS:
                         </div>
-                        <div class="ui-g-12 ui-sm-12 ui-md-4">
-                            <input pInputText  readonly [(ngModel)]="Meses[i].NH" />
-                            <!-- [(ngModel)]="Meses[i].NH" -->
+                        <div class="ui-g-6 ui-sm-6 ui-md-2">
+                            <input pInputText [(ngModel)]="dataHHT[i].NumPersonasMes" type="number"/>
                         </div>
-                        <div class="ui-g-12 ui-sm-12 ui-md-2" >
+                        <div class="ui-g-6 ui-sm-6 ui-md-2" >
                             Total mes HHT:
                         </div>
-                        <div class="ui-g-12 ui-sm-12 ui-md-4">
-                            <input pInputText  readonly [(ngModel)]="Meses[i].HHT"/>
-                            <!-- [(ngModel)]="Meses[i].HHT" -->
+                        <div class="ui-g-6 ui-sm-6 ui-md-2">
+                            <input pInputText [(ngModel)]="dataHHT[i].HhtMes" type="number"/>
                         </div>
                     </div>
                     
-                    <ng-container *ngFor="let area of areaList; let j = index">
-                        <!-- <p-accordionTab header={{area.nombre}} formGroupName={{area.nombre}}> -->
+                    <div *ngIf="areaList">
+                        <ng-container *ngFor="let area of areaList; let j = index">
                             <p-accordionTab header={{area.nombre}} >
 
-                            <div class="ui-g">
-                                <div class="ui-g-12 ui-sm-12 ui-md-2">
-                                    Total area No. PERSONAS:
-                                </div>
-                                <div class="ui-g-12 ui-sm-12 ui-md-4">
-                                    <input pInputText  readonly [(ngModel)]="mesesHHT1[i][j].Total3NH"/>
-                                </div>
-                                <div class="ui-g-12 ui-sm-12 ui-md-2" >
-                                    Total area HHT:
-                                </div>
-                                <div class="ui-g-12 ui-sm-12 ui-md-4">
-                                    <input pInputText  readonly  [(ngModel)]="mesesHHT1[i][j].Total3HHT"/>
-                                </div>
-                            </div>
-
-                            <ng-container *ngFor="let u of Ubicacion">
-                                <!-- <p-accordionTab header={{u}} formGroupName={{u}}> -->
-                                <p-accordionTab header={{u}}>
-                                    <div class="ui-g">
-                                        <div class="ui-g-12 ui-sm-12 ui-md-2">
-                                            No. PERSONAS:
-                                        </div>
-                                        <div class="ui-g-12 ui-sm-12 ui-md-3">
-                                            <!-- <input pInputText formControlName="NH"/> -->
-                                            <input pInputText [(ngModel)]="mesesHHT1[i][j][u].NH" (keyup)="sumaTotalArea(i,j,'NH')" type="number"/>
-                                            <!-- <div>
-                                                {{i}}+{{j}}
-                                            </div> -->
-                                        </div>
-                                        <div class="ui-g-12 ui-sm-12 ui-md-1" >
-                                            HHT:
-                                        </div>
-                                        <div class="ui-g-12 ui-sm-12 ui-md-3">
-                                            <!-- <input pInputText formControlName="HHT"/> -->
-                                            <input pInputText [(ngModel)]="mesesHHT1[i][j][u].HHT" (keyup)="sumaTotalArea(i,j,'HHT')" type="number"/>
-                                        </div>
-                                        <!-- <div class="ui-g-12 ui-sm-12 ui-md-3">
-                                            <button pButton class="ui-button-success" icon="pi pi-pencil"></button>
-                                        </div> -->
+                                <div class="ui-g">
+                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                        Total area No. PERSONAS:
                                     </div>
-                                </p-accordionTab>
-                            </ng-container>
-                        </p-accordionTab>
-                    </ng-container>
+                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                        <input pInputText [readonly]="tienePlantas(area.id)" [(ngModel)]="dataHHT[i].Areas[j].NumPersonasArea" type="number"/>
+                                    </div>
+                                    <div class="ui-g-6 ui-sm-12 ui-md-2" >
+                                        Total area HHT:
+                                    </div>
+                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                        <input pInputText [readonly]="tienePlantas(area.id)" [(ngModel)]="dataHHT[i].Areas[j].HhtArea" type="number"/>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="plantasList && tienePlantas(area.id)">
+                                    <ng-container *ngFor="let pl of getPlantasByArea(area.id); let k = index;">
+                                        <div *ngIf="pl.id_division == area.id">
+                                            <p-accordionTab header={{pl.nombre}}>
+                                                <div class="ui-g">
+                                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                                        No. PERSONAS:
+                                                    </div>
+                                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                                        <input pInputText [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].NumPersonasPlanta" type="number"/>
+                                                    </div>
+                                                    <div class="ui-g-6 ui-sm-12 ui-md-2" >
+                                                        HHT:
+                                                    </div>
+                                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                                        <input pInputText [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].HhtPlanta" type="number"/>
+                                                    </div>
+                                                </div>
+                                            </p-accordionTab>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </p-accordionTab>
+                        </ng-container>
+                    </div>
                 </p-accordionTab>
             </ng-container>
         </ng-container>
     </p-accordion>
 </p-panel>
 
-<ng-container *ngIf="guardarFlag && flagAnio && flagEmpresa">
+<ng-container *ngIf="anioSelected && empresaSelected && esNuevoRegistro && mostrarBotones">
     <button pButton type="button" icon="fa fa-floppy-o" title="Guardar"
-        (click)="guardarHht()" class="float-btn" [disabled]="disabled "></button>
+        (click)="guardarHht()" class="float-btn"></button>
         <!-- guardarHht() -->
 </ng-container>
 
-<ng-container *ngIf="!guardarFlag && flagAnio && flagEmpresa">
+<ng-container *ngIf="anioSelected && empresaSelected && !esNuevoRegistro && mostrarBotones">
     <button  pButton type="button" icon="fa fa-pencil" title="Modificar"
-        (click)="modificarHht()" class="ui-button-success float-btn" [disabled]="disabled" style="z-index: 100;"></button>
+        (click)="modificarHht()" class="ui-button-success float-btn" style="z-index: 100;"></button>
 </ng-container>
 

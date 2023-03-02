@@ -117,5 +117,7 @@ export const endPoints = {
 
   ManualService: path + 'manual/',
   tareaService: path,
+
+  Plantas: path + "plantas/",
 };
 
