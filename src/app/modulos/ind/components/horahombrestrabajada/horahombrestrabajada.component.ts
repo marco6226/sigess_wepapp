@@ -31,7 +31,8 @@ export class HorahombrestrabajadaComponent implements OnInit {
   empresaSelected: string;
   mostrarForm: boolean = false;
   guardarFlag:boolean=true;
-  dataHHT:any[] = null;
+  dataHHT:DataHht[] = null;
+  listaHHT: Hht[] = [];
   metaAnualILI: number = null;
   metaMensualILI: number = null;
   mostrarBotones: boolean = false;
@@ -128,10 +129,42 @@ export class HorahombrestrabajadaComponent implements OnInit {
     this.hhtService.findByFilter(idhttquery)
     .then((res) => {
       if(res['data'].length == 0){
+        this.metaAnualILI = null;
+        this.metaMensualILI = null;
         return this.esNuevoRegistro = true;
       }
-      this.esNuevoRegistro = false;
       console.log(res);
+      // this.anioSelected['value'] = res[]
+      this.listaHHT = res['data'].map(hht => hht);
+      // console.log(this.listaHHT);
+      this.loadDataOnForm();
+
+      this.esNuevoRegistro = false;
+    });
+  }
+
+  loadDataOnForm(){
+    this.meses.forEach((mes, index) => {
+      let hht = this.listaHHT.filter(hht => hht.mes === mes.value)[0];
+      let data = <DataHht>JSON.parse(hht.valor).Data;
+      this.metaAnualILI = JSON.parse(hht.valor).ILI_Anual;
+      this.metaMensualILI = JSON.parse(hht.valor).ILI_Mensual;
+      // let HhtMes = 0;
+      // HhtMes = data.Areas.reduce((count, area): number => {
+      //   return count + area.Plantas.length > 0 ?
+      //                   area.Plantas.reduce((count2, planta): number => {
+      //                     return count2 + planta.HhtPlanta != null ? planta.HhtPlanta : 0;
+      //                   }, 0)
+      //                   : (area.HhtArea != null ? area.HhtArea : 0);
+      // }, 0);
+      // console.log(HhtMes);
+      this.dataHHT[index] ={
+        id: Number(hht.id),
+        mes: mes.value,
+        HhtMes: data.HhtMes,
+        NumPersonasMes: data.NumPersonasMes,
+        Areas: data.Areas
+      }
     });
   }
 
@@ -171,23 +204,34 @@ export class HorahombrestrabajadaComponent implements OnInit {
   }
 
   async guardarHht(){
+    let flagListHHT = false;
+    if(this.listaHHT.length === 0) flagListHHT = true;
     await this.meses.forEach((mes, index) => {
+      
       let hht = new Hht();
       hht.id = null;
       hht.anio = this.anioSelected['value'];
       hht.empresaSelect = this.empresaSelected;
       hht.mes = mes.value; 
-      // let data = this.dataHHT.filter(data => data.id === index);
       hht.valor = JSON.stringify({
         ILI_Anual: this.metaAnualILI,
         ILI_Mensual: this.metaMensualILI,
         Data: this.dataHHT[index]
       });
-      // console.info(hht);
+
+      if(flagListHHT){
+        this.listaHHT.push(hht);
+      }
+      
       this.hhtService.create(hht).then(() => {
         console.info('HHT creado para el mes de: ', `${mes.value} de ${this.anioSelected['value']}`);
       });
     });
     this.esNuevoRegistro = false;
   }
+
+  async actualizarHht(){
+
+  }
+
 }

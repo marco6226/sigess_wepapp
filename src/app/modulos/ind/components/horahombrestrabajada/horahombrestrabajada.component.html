@@ -36,13 +36,13 @@
                             Total mes No. PERSONAS:
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
-                            <input pInputText [(ngModel)]="dataHHT[i].NumPersonasMes" type="number"/>
+                            <input pInputText readonly [(ngModel)]="dataHHT[i].NumPersonasMes" type="number"/>
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2" >
                             Total mes HHT:
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
-                            <input pInputText [(ngModel)]="dataHHT[i].HhtMes" type="number"/>
+                            <input pInputText readonly [(ngModel)]="dataHHT[i].HhtMes" type="number"/>
                         </div>
                     </div>
                     
@@ -50,7 +50,7 @@
                         <ng-container *ngFor="let area of areaList; let j = index">
                             <p-accordionTab header={{area.nombre}} >
 
-                                <div class="ui-g">
+                                <div class="ui-g" *ngIf="!tienePlantas(area.id)">
                                     <div class="ui-g-6 ui-sm-12 ui-md-2">
                                         Total area No. PERSONAS:
                                     </div>
@@ -104,6 +104,6 @@
 
 <ng-container *ngIf="anioSelected && empresaSelected && !esNuevoRegistro && mostrarBotones">
     <button  pButton type="button" icon="fa fa-pencil" title="Modificar"
-        (click)="modificarHht()" class="ui-button-success float-btn" style="z-index: 100;"></button>
+        (click)="actualizarHht()" class="ui-button-success float-btn" style="z-index: 100;"></button>
 </ng-container>
 
