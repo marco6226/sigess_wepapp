@@ -1,6 +1,3 @@
-
-
-
 export class Hht {
   id: string;
   anio: number;
@@ -25,4 +22,25 @@ export class UbicacionHht {
 export class ValorHht {
   Hht: Number;
   Nh:Number;
+}
+
+export class DataPlanta {
+  id: number;
+  NumPersonasPlanta: number;
+  HhtPlanta: number;
+}
+
+export class DataArea {
+  id: number;
+  NumPersonasArea: number;
+  HhtArea: number;
+  Plantas: DataPlanta[];
+}
+
+export class DataHht {
+  id: number;
+  mes: string;
+  NumPersonasMes: number;
+  HhtMes: number;
+  Areas: DataArea[];
 }
