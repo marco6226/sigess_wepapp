@@ -166,7 +166,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         fechaCierre:null,
         descripcion:null
       })
-      this.formplanaccion = this.fb.group({
+      this.form = this.fb.group({
           id: null,
           tipo: 'ACCIDENTE',
           nombreEps: null,
