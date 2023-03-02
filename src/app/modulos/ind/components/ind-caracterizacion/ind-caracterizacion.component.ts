@@ -77,6 +77,9 @@ export class IndCaracterizacionComponent implements OnInit {
   ContFechaIngreso_7:number[]=[0,0,0,0,0,0,0]
   ContFechaNacimiento_7:number[]=[0,0,0,0,0,0,0]
   ContHoraAccidente_7:number[]=[0,0,0,0,0,0,0]
+  ContFechaIngreso_total:number[]=[0,0,0,0,0,0,0]
+  ContFechaNacimiento_total:number[]=[0,0,0,0,0,0,0]
+  ContHoraAccidente_total:number[]=[0,0,0,0,0,0,0]
 
   ContTipoATMes:number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
   ContSitioATMes:number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
@@ -133,6 +136,12 @@ export class IndCaracterizacionComponent implements OnInit {
   datosGrafica4:any=[];
   datosGrafica5:any=[];
   datosGrafica6:any=[];
+
+  // datosGrafica_total:any=[];
+  datosGrafica3_total:any=[];
+  datosGrafica4_total:any=[];
+  datosGrafica5_total:any=[];
+  datosGrafica6_total:any=[];
 
   datosGrafica3Top:any=[];
   datosGrafica4Top:any=[];
@@ -254,6 +263,7 @@ export class IndCaracterizacionComponent implements OnInit {
       cont=cont+1;
     });
     this.divisiones2.push({label:'Corona total',value:'Corona total'})
+    this.divisiones3.push({name:'Corona total',code:cont})
 
     this.yearRange=[]
     for (let i = 0; i < this.yearRangeNumber.length; i++) {
@@ -607,6 +617,9 @@ resetVarGraf2(){
   this.ContFechaIngreso_7=[0,0,0,0,0,0,0]
   this.ContFechaNacimiento_7=[0,0,0,0,0,0,0]
   this.ContHoraAccidente_7=[0,0,0,0,0,0,0]
+  this.ContFechaIngreso_total=[0,0,0,0,0,0,0]
+  this.ContFechaNacimiento_total=[0,0,0,0,0,0,0]
+  this.ContHoraAccidente_total=[0,0,0,0,0,0,0]
 }
   DatosGrafica2(){
 
@@ -725,8 +738,11 @@ resetVarGraf2(){
       default:
         break;
     }
-
-
+    if(element>=18 && element<=25)this.ContFechaNacimiento_total[0]=this.ContFechaNacimiento_total[0]+1;
+    if( element>=26 && element<=35)this.ContFechaNacimiento_total[1]=this.ContFechaNacimiento_total[1]+1;
+    if( element>=36 && element<=45)this.ContFechaNacimiento_total[2]=this.ContFechaNacimiento_total[2]+1;
+    if( element>=46 && element<=59)this.ContFechaNacimiento_total[3]=this.ContFechaNacimiento_total[3]+1;
+    if( element>=60)this.ContFechaNacimiento_total[4]=this.ContFechaNacimiento_total[4]+1;
   }
 
   fechaAntiguedad(element,element2){
@@ -790,6 +806,12 @@ resetVarGraf2(){
       default:
         break;
     }
+
+    if( element>=2 && element<=5)this.ContFechaIngreso_total[1]=this.ContFechaIngreso_total[1]+1;
+    if( element>=6 && element<=10)this.ContFechaIngreso_total[2]=this.ContFechaIngreso_total[2]+1;
+    if( element>=11 && element<=20)this.ContFechaIngreso_total[3]=this.ContFechaIngreso_total[3]+1;
+    if( element>=21 && element<=30)this.ContFechaIngreso_total[4]=this.ContFechaIngreso_total[4]+1;
+    if( element>=30)this.ContFechaIngreso_total[5]=this.ContFechaIngreso_total[5]+1;
 
   }
 
@@ -855,6 +877,12 @@ resetVarGraf2(){
         break;
     }
 
+    if(element>=0 && element<4)this.ContHoraAccidente_total[0]=this.ContHoraAccidente_total[0]+1;
+    if( element>=4 && element<8)this.ContHoraAccidente_total[1]=this.ContHoraAccidente_total[1]+1;
+    if( element>=8 && element<12)this.ContHoraAccidente_total[2]=this.ContHoraAccidente_total[2]+1;
+    if( element>=12 && element<16)this.ContHoraAccidente_total[3]=this.ContHoraAccidente_total[3]+1;
+    if( element>=16 && element<20)this.ContHoraAccidente_total[4]=this.ContHoraAccidente_total[4]+1;
+    if( element>=20)this.ContHoraAccidente_total[5]=this.ContHoraAccidente_total[5]+1;
   }
   funcRangoFechaEdad(ele){
     let datos=[]
@@ -896,6 +924,7 @@ resetVarGraf2(){
       this.datosGrafica2.push({name:'Insumos Industriales y Energias',series:this.funcRangoFechaEdad(this.ContFechaNacimiento_5)})
       this.datosGrafica2.push({name:'Mesa Servida',series:this.funcRangoFechaEdad(this.ContFechaNacimiento_6)})
       this.datosGrafica2.push({name:'Superficies, materiales y pinturas',series:this.funcRangoFechaEdad(this.ContFechaNacimiento_7)})
+      this.datosGrafica2.push({name:'Corona total',series:this.funcRangoFechaEdad(this.ContFechaNacimiento_total)})
 
   }
 
@@ -907,6 +936,7 @@ resetVarGraf2(){
       this.datosGrafica2.push({name:'Insumos Industriales y Energias',series:this.funcRangoFechaAntiguedad(this.ContFechaIngreso_5)})
       this.datosGrafica2.push({name:'Mesa Servida',series:this.funcRangoFechaAntiguedad(this.ContFechaIngreso_6)})
       this.datosGrafica2.push({name:'Superficies, materiales y pinturas',series:this.funcRangoFechaAntiguedad(this.ContFechaIngreso_7)})
+      this.datosGrafica2.push({name:'Corona total',series:this.funcRangoFechaAntiguedad(this.ContFechaIngreso_total)})
 
  
   }
@@ -920,8 +950,7 @@ resetVarGraf2(){
       this.datosGrafica2.push({name:'Insumos Industriales y Energias',series:this.funcRangoHoraAccidente(this.ContHoraAccidente_5)})
       this.datosGrafica2.push({name:'Mesa Servida',series:this.funcRangoHoraAccidente(this.ContHoraAccidente_6)})
       this.datosGrafica2.push({name:'Superficies, materiales y pinturas',series:this.funcRangoHoraAccidente(this.ContHoraAccidente_7)})
-
-  
+      this.datosGrafica2.push({name:'Corona total',series:this.funcRangoHoraAccidente(this.ContHoraAccidente_total)})
   }
 
     this.flagevent2=true
@@ -943,6 +972,9 @@ filtroGraEve3(){
   let datosGrafica1=[]
 
   if(this.selectEv3.length==0 && this.selectDiv3.length>0){
+    // console.log(this.datosGrafica3Top)
+    this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    // console.log(this.datosGrafica3Top)
     this.datosGrafica3Top=this.top(this.datosGrafica3,5)
 
     if(this.selectDiv3.length>0){
@@ -957,6 +989,7 @@ filtroGraEve3(){
   }
 
   if(this.selectDiv3.length>0 && this.selectEv3.length>0){
+    this.datosGrafica3=this.contTotal(this.datosGrafica3)
     this.selectDiv3.forEach(resp1=>{
       let x=this.datosGrafica3.filter((resp)=>{
         return resp.name ==resp1.name
@@ -988,6 +1021,7 @@ filtroGraEve3(){
 
   if(this.selectEv3.length>0 && this.selectDiv3.length==0){
     datosGrafica1=[]
+    this.datosGrafica3=this.contTotal(this.datosGrafica3)
     this.datosGrafica3.forEach(element => {
       let randomEv1CopySeries=[]
 
@@ -1008,6 +1042,7 @@ filtroGraEve3(){
   }
 
   if(this.selectEv3.length==0 && this.selectDiv3.length==0){
+    this.datosGrafica3=this.contTotal(this.datosGrafica3)
     this.datosGrafica3Top=this.top(this.datosGrafica3,5)
   }
 
@@ -1115,6 +1150,7 @@ DatosGrafica3(){
   });
   this.orderMap=[this.ordenarMap(this.hashmap1,this.Map1),this.ordenarMap(this.hashmap2,this.Map2),this.ordenarMap(this.hashmap3,this.Map3),this.ordenarMap(this.hashmap4,this.Map4),this.ordenarMap(this.hashmap5,this.Map5),this.ordenarMap(this.hashmap6,this.Map6),this.ordenarMap(this.hashmap7,this.Map7)]
   this.terceraGrafica()
+  this.datosGrafica3=this.contTotal(this.datosGrafica3)
   this.datosGrafica3Top=this.top(this.datosGrafica3,5)
 }
 
@@ -1126,7 +1162,7 @@ Map5:any[]=[]
 Map6:any[]=[]
 Map7:any[]=[]
 
-ContDatosGraf3(element){
+  ContDatosGraf3(element){
   switch (element.padrenombre) {
     case 'Almacenes Corona':
       if(this.hashmap1.has(element.cargoempleado)){
@@ -1220,6 +1256,7 @@ filtroGraEve4(){
   let datosGrafica1=[]
 
   if(this.selectEv4.length==0 && this.selectDiv4.length>0){
+    this.datosGrafica4=this.contTotal(this.datosGrafica4)
     this.datosGrafica4Top=this.top(this.datosGrafica4,5)
 
     if(this.selectDiv4.length>0){
@@ -1234,6 +1271,7 @@ filtroGraEve4(){
   }
 
   if(this.selectDiv4.length>0 && this.selectEv4.length>0){
+    this.datosGrafica4=this.contTotal(this.datosGrafica4)
     this.selectDiv4.forEach(resp1=>{
       let x=this.datosGrafica4.filter((resp)=>{
         return resp.name ==resp1.name
@@ -1264,6 +1302,7 @@ filtroGraEve4(){
   }
 
   if(this.selectEv4.length>0 && this.selectDiv4.length==0){
+    this.datosGrafica4=this.contTotal(this.datosGrafica4)
     datosGrafica1=[]
     this.datosGrafica4.forEach(element => {
       let randomEv1CopySeries=[]
@@ -1286,6 +1325,7 @@ filtroGraEve4(){
   }
 
   if(this.selectEv4.length==0 && this.selectDiv4.length==0){
+    this.datosGrafica4=this.contTotal(this.datosGrafica4)
     this.datosGrafica4Top=this.top(this.datosGrafica4,5)
   }
 
@@ -1330,6 +1370,7 @@ DatosGrafica4(){
   this.datos4push.push(this.datos4_6)
   this.datos4push.push(this.datos4_7)
   this.graf4top5()
+  this.datosGrafica4=this.contTotal(this.datosGrafica4)
   this.datosGrafica4Top=this.top(this.datosGrafica4,5)
 }
 
@@ -1608,10 +1649,12 @@ filtroGraEve5(){
   let datosGrafica1=[]
 
   if(this.selectDiv5.length==0 && this.selectEv5.length==0){
+    this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.datosGrafica5Top=this.top(this.datosGrafica5,5)
   }
 
   if(this.selectDiv5.length>0 && this.selectEv5.length==0){
+    this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.selectDiv5.forEach(resp1=>{
       let x=this.datosGrafica5.filter((resp)=>{
         return resp.name ==resp1.label
@@ -1620,11 +1663,11 @@ filtroGraEve5(){
     }
     )
     this.datosGrafica5Top=datosGrafica1
-    // console.log('1',datosGrafica1)
   }
 
   if(this.selectDiv5.length==0 && this.selectEv5.length>0){
     datosGrafica1=[]
+    this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.datosGrafica5.forEach(element => {
       let randomEv1CopySeries=[]
 
@@ -1644,6 +1687,7 @@ filtroGraEve5(){
   }
   
   if(this.selectDiv5.length>0 && this.selectEv5.length>0){
+    this.datosGrafica5=this.contTotal(this.datosGrafica5)
     this.selectDiv5.forEach(resp1=>{
       let x=this.datosGrafica5.filter((resp)=>{
         return resp.name ==resp1.label
@@ -1719,6 +1763,7 @@ if(this.date9 && this.date10){
   });
 
   this.quintaGrafica()
+  this.datosGrafica5=this.contTotal(this.datosGrafica5)
   this.datosGrafica5Top=this.top(this.datosGrafica5,5)
 }
 mapGraf5_1=new Map()
@@ -1832,10 +1877,12 @@ filtroGraEve6(){
   let datosGrafica1=[]
 
   if(this.selectDiv6.length==0 && this.selectEv6.length==0){
+    this.datosGrafica6=this.contTotal(this.datosGrafica6)
     this.datosGrafica6Top=this.top(this.datosGrafica6,5)
   }
 
   if(this.selectDiv6.length>0 && this.selectEv6.length==0){
+    this.datosGrafica6=this.contTotal(this.datosGrafica6)
     this.selectDiv6.forEach(resp1=>{
       let x=this.datosGrafica6.filter((resp)=>{
         return resp.name ==resp1.name
@@ -1847,6 +1894,7 @@ filtroGraEve6(){
   }
 
   if(this.selectDiv6.length==0 && this.selectEv6.length>0){
+    this.datosGrafica6=this.contTotal(this.datosGrafica6)
     datosGrafica1=[]
     this.datosGrafica6.forEach(element => {
       let randomEv1CopySeries=[]
@@ -1867,6 +1915,7 @@ filtroGraEve6(){
   }
   
   if(this.selectDiv6.length>0 && this.selectEv6.length>0){
+    this.datosGrafica6=this.contTotal(this.datosGrafica6)
     this.selectDiv6.forEach(resp1=>{
       let x=this.datosGrafica6.filter((resp)=>{
         return resp.name ==resp1.name
@@ -1953,7 +2002,7 @@ DatosGrafica6(){
   });
 
   this.sextaGrafica()
-
+  this.datosGrafica6=this.contTotal(this.datosGrafica6)
   this.datosGrafica6Top=this.top(this.datosGrafica6,5)
   this.flagevent6=true
 }
@@ -2134,6 +2183,25 @@ DatosGrafica6(){
       dato2.push({name:ele.name ,series:serie} )
     })
     return dato2
+  }
+  contTotal(datos){
+    let name=[]
+    let datosGrafica_total=[]
+    let total=new Map()
+    datos.forEach(resp=>{
+      resp.series.forEach(resp2=>{
+        if(total.has(resp2.name)){total.set(resp2.name,total.get(resp2.name)+resp2.value)}
+        else{total.set(resp2.name,resp2.value)
+          name.push(resp2.name)}
+      })
+    })
+    name.forEach(resp=>{
+      datosGrafica_total.push({name:resp,value:total.get(resp)})
+    })
+    
+    datos.push({name:'Corona total',series:datosGrafica_total})
+  
+    return datos
   }
 }
 
