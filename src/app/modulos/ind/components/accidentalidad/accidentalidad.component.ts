@@ -9,6 +9,8 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
 import { HhtService } from "app/modulos/empresa/services/hht.service";
+import { SesionService } from "app/modulos/core/services/sesion.service";
+import { DataHht } from "app/modulos/empresa/entities/hht";
 // import { multi} from './data';
 
 class division {
@@ -25,7 +27,7 @@ class division {
   selector: "s-accidentalidad",
   templateUrl: "./accidentalidad.component.html",
   styleUrls: ["./accidentalidad.component.scss"],
-  providers: [HhtService],
+  providers: [HhtService, SesionService],
 })
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -223,6 +225,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   tasasNotFound2: boolean = false;
   filtroAnioTasa_1: number = new Date().getFullYear();
   divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total'];
+  divisionesCoronaConId: any[] = [];
   divisionesCoronaIli1: string[] = [];
   filtroAnioTasa_2: number = new Date().getFullYear();
   filtroDivisionesTasa_2: string[] = [];
@@ -278,7 +281,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(
     private reporteAtService: ReporteAtService, 
     private areaService: AreaService,
-    private hhtService: HhtService
+    private hhtService: HhtService,
+    private sessionService: SesionService
     ) { 
       // Object.assign(this, { multi })
       }
@@ -360,7 +364,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let areafiltQuery = new FilterQuery();
       areafiltQuery.sortOrder = SortOrder.ASC;
       areafiltQuery.sortField = "nombre";
-      areafiltQuery.fieldList = ["nombre"];
+      areafiltQuery.fieldList = ["nombre", "id"];
       areafiltQuery.filterList = [
         { criteria: Criteria.EQUALS, field: "nivel", value1: "0" },
     ];
@@ -374,6 +378,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         this.areaList = <Area[]>resp['data'];
         let cont=0
         this.areaList.forEach(element => {
+          this.divisionesCoronaConId.push({nombre: element.nombre, id: element.id});
           this.divisiones.push({label:element['nombre'],value:element['nombre']})
           this.divisiones2.push({label:element['nombre'],value:element['nombre']})
           this.divisiones4.push({name:element['nombre'],code:cont})
@@ -679,48 +684,66 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       filterQuery.sortField = "id";
       filterQuery.filterList = [
         {criteria: Criteria.EQUALS, field: "anio", value1: this.filtroAnioTasa_1.toString()},
-        {criteria: Criteria.EQUALS, field: "empresaSelect", value1: 'Corona'}
+        {criteria: Criteria.EQUALS, field: "empresaSelect", value1: '22'}
       ];
       
       this.hhtService.findByFilter(filterQuery).then((res: any) => {
         
         if(res.data.length > 0) {
           
-          divisiones.forEach(division => {
+          this.divisionesCoronaConId.forEach(division => {
             
             let trabajadoresTotales = 0;
             let data = {
-              name: division,
+              name: division.nombre,
               series: []
             };
-
-            let indexDiv = this.divisionesCorona.indexOf(division);
-            res.data.forEach(elem => {
-              trabajadoresTotales = trabajadoresTotales + JSON.parse(elem.valor)[indexDiv]['Total3NH'];
-            });
             
-            let totalAt = reportesAt.filter(at => at.padreNombre === division).length;
-            let diasPerdidos = reportesAt.filter(at => at.padreNombre === division && at.incapacidades !== null 
+            res.data.forEach(elem => {
+              let data: DataHht = <DataHht>JSON.parse(elem.valor).Data;
+              let trabajadoresPorArea = 0;
+              data.Areas.forEach(area => {
+                if(division.id == area.id){
+                  if(area.Plantas.length > 0){
+                    trabajadoresPorArea += area.Plantas.reduce((count, planta) => {
+                      if(planta.NumPersonasPlanta != null) return count + planta.NumPersonasPlanta;
+                      return count;
+                    }, 0);
+                  }else{
+                    trabajadoresPorArea += area.NumPersonasArea;
+                  }
+                }
+              });
+              trabajadoresTotales = trabajadoresTotales + trabajadoresPorArea;
+            });
+            // console.log(trabajadoresTotales);
+            // debugger
+            let totalAt = reportesAt.filter(at => at.padreNombre === division.nombre).length;
+            let diasPerdidos = reportesAt.filter(at => at.padreNombre === division.nombre && at.incapacidades !== null 
                                                         && at.incapacidades !== 'null')
                                           .reduce((count, item) => {
                                             return count + JSON.parse(item.incapacidades).reduce((count2, incapacidad) => {
                                               return count2 + incapacidad.diasAusencia;
                                             }, 0);
                                           }, 0);
-            let AtMortales = reportesAt.filter(at => at.padreNombre === division && at.causoMuerte === true).length;
+            let AtMortales = reportesAt.filter(at => at.padreNombre === division.nombre && at.causoMuerte === true).length;
             
+            let TF = isNaN(Number((totalAt * 100)/trabajadoresTotales)) ? 0.0 : Number(Number((totalAt * 100)/trabajadoresTotales).toFixed(3));
+            let TS = isNaN(Number((diasPerdidos * 100)/trabajadoresTotales)) ? 0.0 : Number(Number((diasPerdidos * 100)/trabajadoresTotales).toFixed(3));
+            let PAT = isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(3));
             data.series.push({
               name: 'Tasa de Frecuencia',
-              value: isNaN(Number((totalAt * 100)/trabajadoresTotales)) ? 0.0 : Number(Number((totalAt * 100)/trabajadoresTotales).toFixed(3))
+              value: TF
             });
             data.series.push({
               name: 'Tasa de Severidad',
-              value: isNaN(Number((diasPerdidos * 100)/trabajadoresTotales)) ? 0.0 : Number(Number((diasPerdidos * 100)/trabajadoresTotales).toFixed(3))
+              value: TS
             });
             data.series.push({
               name: 'Proporción AT mortal',
-              value: isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(3))
+              value: PAT
             });
+            // console.log(TF, TS, PAT, ' : ', totalAt, diasPerdidos, AtMortales);
             
             tasaFrecuencia1.push(data);
           });
@@ -809,13 +832,12 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       filterQuery.sortField = "id";
       filterQuery.filterList = [
         {criteria: Criteria.EQUALS, field: "anio", value1: this.filtroAnioTasa_2.toString()},
-        {criteria: Criteria.EQUALS, field: "empresaSelect", value1: 'Corona'}
+        {criteria: Criteria.EQUALS, field: "empresaSelect", value1: '22'}
       ];
 
       this.hhtService.findByFilter(filterQuery).then((res: any) => {
         if(res.data.length > 0){
           this.Meses.forEach((mes, index) => {
-            if(mes.label === 'Corona total') return;
 
             let trabajadoresTotales2 = 0;
             let totalAt = 0;
@@ -825,14 +847,28 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               name: mes.label,
               series: []
             };
-            
-            trabajadoresTotales2 = res.data.filter(hhtData => mes.label === hhtData.mes)
-            .reduce((count, data) => {
-              return count + JSON.parse(data.valor).reduce((count2, data2) => {
-                return count2 + data2['Total3NH']
-              }, 0);
-            }, 0);
 
+            res.data.forEach(elem => {
+              let data: DataHht = <DataHht>JSON.parse(elem.valor).Data;
+              let trabajadoresPorArea = 0;
+              // console.log(data.mes, mes.label);
+              
+              if(data.mes === mes.label){
+                data.Areas.forEach(area => {
+                  if(area.Plantas.length > 0){
+                    trabajadoresPorArea += area.Plantas.reduce((count, planta) => {
+                      if(planta.NumPersonasPlanta != null) return count + planta.NumPersonasPlanta;
+                      return count;
+                    }, 0);
+                  }else{
+                    trabajadoresPorArea += area.NumPersonasArea;
+                  }
+                });
+              }
+              trabajadoresTotales2 = trabajadoresTotales2 + trabajadoresPorArea;
+            });
+            // console.log(trabajadoresTotales2);
+            // debugger
             totalAt = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth()).length;
             
             diasPerdidos = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth() && at.incapacidades !== null && at.incapacidades !== 'null')
@@ -842,7 +878,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                                     }, 0);
                                                   }, 0);
             atMortales = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth() && at.causoMuerte === true).length;
-            // console.log(trabajadoresTotales2, totalAt, diasPerdidos, atMortales);
+
             let tasaFrecuencia = Number(Number((totalAt * 100)/trabajadoresTotales2).toFixed(3));
             data.series.push({
               name: 'Tasa de Frecuencia',
@@ -858,6 +894,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               name: 'Proporción AT mortal',
               value: isNaN(proporcionAtMortal) || proporcionAtMortal === Infinity ? 0.0 : proporcionAtMortal 
             });
+            // console.log(totalAt, diasPerdidos, atMortales, ' : ', tasaFrecuencia, tasaSeveridad, proporcionAtMortal);
+            
             tasaFrecuencia2.push(data);
           });
           
