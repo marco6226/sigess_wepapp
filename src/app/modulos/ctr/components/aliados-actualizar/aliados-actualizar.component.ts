@@ -12,6 +12,10 @@ import { AliadoInformacion } from '../../entities/aliados';
 import { ComunService } from 'app/modulos/comun/services/comun.service';
 import { MessageService } from 'primeng/primeng';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { Usuario } from './../../../empresa/entities/usuario';
+import { UsuarioEmpresa } from './../../../empresa/entities/usuario-empresa';
+import { Perfil } from './../../../empresa/entities/perfil';
+import { Empleado } from 'app/modulos/empresa/entities/empleado';
 
 @Component({
   selector: 'app-aliados-actualizar',
@@ -20,7 +24,7 @@ import { SesionService } from 'app/modulos/core/services/sesion.service';
   providers: [MessageService]
 })
 export class AliadosActualizarComponent implements OnInit {
-
+  idUsuarioAliado?:any;
   id: number = -1;
   idEmpresa?:string
   aliado: Empresa={
@@ -65,12 +69,14 @@ export class AliadosActualizarComponent implements OnInit {
     fecha_calificacion_aliado: null,
     nombre_calificador: '',
     arl: null,
-    autoriza_subcontratacion: null
+    autoriza_subcontratacion: null,
+    istemporal:null
   }
 
   documentos: Directorio[]=[]
   onEdit: string = '';
   auxAutorizaSubcontratacion: boolean;
+  auxIsTemporal: boolean;
   impactoV:string='';
 
   tabIndex:number=0;
@@ -114,8 +120,12 @@ export class AliadosActualizarComponent implements OnInit {
     await this.empresaService.findByFilter(filterQuery).then(
         resp => {
           // console.log(resp);
-          resp['data'].forEach(element => {
+          resp['data'].forEach(async element => {
+
+            
             this.aliado = element;
+            console.log(this.aliado.email)
+
           });
         }
     );
@@ -124,13 +134,16 @@ export class AliadosActualizarComponent implements OnInit {
   }
 
   async loadInformacionAliado(){
+    console.log(this.id)
     this.aliadoInformacion.id_empresa = this.id;
     await this.empresaService.getAliadoInformacion(this.id).then((ele: AliadoInformacion[])=>{
       if(ele[0] != undefined){
+        console.log(ele[0])
         this.aliadoInformacion = ele[0];
       }      
     });
     this.auxAutorizaSubcontratacion = this.aliadoInformacion.autoriza_subcontratacion;
+    this.auxIsTemporal=this.aliadoInformacion.istemporal;
 
     await this.loadDocumentos()
 
@@ -283,10 +296,15 @@ export class AliadosActualizarComponent implements OnInit {
     this.auxAutorizaSubcontratacion = data;
   }
 
+  onReciveIsTemporal(data: boolean){
+    this.auxIsTemporal = data;
+  }
+
   async actualizarAliado(){
     this.mensajesDeValidacion();
 
     this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
+    this.aliadoInformacion.istemporal = this.auxIsTemporal;
     // console.log(this.aliadoInformacion.calificacion)
     this.saveInformacionAliado();
 
@@ -307,6 +325,8 @@ export class AliadosActualizarComponent implements OnInit {
       if(this.onEdit == 'edit' && this.gestorDataIsValid){
         this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
       }
+
+      
     });
     this.flagPress=true;
   }

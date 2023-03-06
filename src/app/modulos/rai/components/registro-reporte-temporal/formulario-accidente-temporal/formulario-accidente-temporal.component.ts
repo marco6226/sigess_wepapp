@@ -113,7 +113,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     {label:'Temporal 2', value:'234'},
     {label:'Temporal 3', value:'345'}
   ];
-  selectedTemporal: any;
   temporalesFlag: boolean=true
 
   msgs: Message[];
@@ -163,7 +162,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
     let areasPermiso =this.areasPermiso.replace('{','');
     areasPermiso =areasPermiso.replace('}','');
-    let areasPermiso2=areasPermiso.split(',')
+    let areasPermiso2=areasPermiso.split(',');
 
     const filteredArea = areasPermiso2.filter(function(ele , pos){
       return areasPermiso2.indexOf(ele) == pos;
@@ -274,6 +273,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
           // this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
 
         if(this.modificar || this.consultar){
+           console.log(this.reporte)
             this.form.patchValue({
                 id: this.reporte.id,
                 tipo: this.reporte.tipo,
@@ -288,7 +288,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                 codigoCiiu: this.reporte.codigoCiiu,
                 razonSocial: this.reporte.razonSocial,
                 tipoIdentificacionEmpresa: this.reporte.tipoIdentificacionEmpresa,
-                identificacionEmpresa: this.temporales.filter(el => el.value === this.reporte.identificacionEmpresa)[0],
+                identificacionEmpresa: this.reporte.identificacionEmpresa,
                 direccionEmpresa: this.reporte.direccionEmpresa,
                 telefonoEmpresa: this.reporte.telefonoEmpresa,
                 telefono2Empresa: this.reporte.telefono2Empresa,
@@ -395,8 +395,16 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     this.cargarPeligro(a)
 }
   async cargarTiposPeligro() {
+    // let filterQuery = new FilterQuery();
+    // filterQuery.fieldList = ['id','nombre'];
+    // filterQuery.filterList = []
+    // filterQuery.filterList.push({ criteria: Criteria.EQUALS, field: "id", value1: '122' });
+
+    // await this.tipoPeligroService.findByFilter(filterQuery).then(resp=>console.log(resp))
+
     await this.tipoPeligroService.findAll().then(
       resp => {
+        console.log(resp)
         this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
         (<TipoPeligro[]>resp['data']).forEach(
           data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
@@ -508,10 +516,10 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     if (this.adicionar) {
         let reporte = <Reporte>this.form.value;
         reporte.testigoReporteList = this.testigoReporteList;
-        reporte.identificacionEmpresa = this.selectedTemporal;
-        let selectedTemporal=this.temporales.find((data)=>{
-          return data.value==this.selectedTemporal
-        })
+        // reporte.identificacionEmpresa = this.selectedTemporal;
+        // let selectedTemporal=this.temporales.find((data)=>{
+        //   return data.value==this.selectedTemporal
+        // })
         reporte.temporal = this.form.value.razonSocial;
         reporte.identificacionEmpresa=this.form.value.identificacionEmpresa;
         await this.reporteService.create(reporte).then(
@@ -549,10 +557,10 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
 
       let reporte = <Reporte>this.form.value;
       reporte.testigoReporteList = this.testigoReporteList;
-      reporte.identificacionEmpresa = this.selectedTemporal;
-      let selectedTemporal=this.temporales.find((data)=>{
-        return data.value==this.selectedTemporal
-      })
+      // reporte.identificacionEmpresa = this.selectedTemporal;
+      // let selectedTemporal=this.temporales.find((data)=>{
+      //   return data.value==this.selectedTemporal
+      // })
       this.reporteService.update(reporte).then(
           data => this.onSave.emit(<Reporte>data)
       );

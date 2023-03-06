@@ -13,12 +13,14 @@
           [quienCalifica]="this.aliadoInformacion.nombre_calificador"
           [documentos]="documentos"
           [autorizaSubcontratacion]="this.aliadoInformacion.autoriza_subcontratacion"
+          [istemporal]="this.aliadoInformacion.istemporal"
           (dataCalificacion)="onReciveCalificacionAliadoData($event, 'puntaje')"
           (dataFechaCalificacion)="onReciveCalificacionAliadoData($event, 'fecha')"
           (dataQuienCalifica)="onReciveCalificacionAliadoData($event, 'nombre')"
           (idDoc)="reciveIdDoc($event)"
           (onDelete)="deleteDocumento($event)"
           (dataAutorizaSubcontratacion)="onReciveAutorizaSubcontratacion($event)"
+          (dataIsTemporal)="onReciveIsTemporal($event)"
           ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 

@@ -365,9 +365,7 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.tipoPeligroService.findAll().then(
           resp => {
             this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
-            (<TipoPeligro[]>resp['data']).forEach(
-              data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
-            )   
+            (<TipoPeligro[]>resp['data']).forEach(data => this.tipoPeligroItemList.push({ label: data.nombre, value: data }))   
           }
         );
       }

@@ -7,8 +7,11 @@ import { AreaService } from './../../../services/area.service'
 import { config } from 'app/config'
 import { Session } from 'app/modulos/core/entities/session';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
-import { Criteria } from '../../../../core/entities/filter';
+import { Criteria,Filter } from '../../../../core/entities/filter';
 import { SesionService } from "app/modulos/core/services/sesion.service";
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+
+
 @Component({
   selector: 'area-selector',
   templateUrl: './area-selector.component.html',
@@ -59,16 +62,32 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   propagateChange = (_: any) => { };
 
   constructor(private areaService: AreaService,
-    private sesionService: SesionService) { }
+    private sesionService: SesionService,
+    private empresaService: EmpresaService,) { }
 
   // Interface implements
 
   async ngOnInit() {
-    this.loadAreas();
+
+    // let filterQuery = new FilterQuery();
+    // filterQuery.fieldList = ['idEmpresaAliada'];
+    // filterQuery.filterList = [
+    //   { criteria: Criteria.EQUALS, field: "id", value1: this.empresaId},
+    // ];
+
+    // await this.empresaService.findByFilter(filterQuery).then(resp => {
+    //   if(resp['data'][0].idEmpresaAliada){this.empresaId = resp['data'][0].idEmpresaAliada}
+    // })
+
+
+    this.loadAreas()
+
     this.areaSelected = this.name;
 
 
   }
+
+  
 
 
   async padreArea(idarea){
@@ -174,6 +193,7 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
         this.loading = false
       });
 
+    
     // Consulta las areas de estructura fisica
     let filterSedesQuery = new FilterQuery();
     filterSedesQuery.filterList = [

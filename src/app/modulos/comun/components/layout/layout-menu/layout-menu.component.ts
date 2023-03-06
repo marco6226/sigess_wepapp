@@ -3,6 +3,8 @@ import { MenuItem } from 'primeng/primeng'
 import { SesionService } from 'app/modulos/core/services/sesion.service'
 import { Permiso } from 'app/modulos/empresa/entities/permiso';
 import { ParametroNavegacionService } from '../../../../core/services/parametro-navegacion.service';
+import { EmpresaService } from '../../../../empresa/services/empresa.service';
+import { AliadoInformacion } from '../../../../ctr/entities/aliados';
 
 @Component({
     selector: 'layout-menu',
@@ -14,19 +16,27 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     @Input('expanded') expanded: boolean = false;
     @Input('disabled') disabled: boolean = false;
     @Input('visible') visible: boolean = true;
+
+    isTemporal:boolean=false;
     items: any[];
 
     nombreAUC: string;
     nombreSEC: string;
     nombreCOP: string;
     version;
+    idEmpresa: any
+    
     constructor(
         private sesionService: SesionService,
         private navService: ParametroNavegacionService,
+        private empresaService: EmpresaService,
     ) { }
 
     async ngOnInit() {
-        this.version = this.sesionService.getAppVersion();
+        setTimeout(() => {
+            this.getAliadoInformacion()
+            this.version = this.sesionService.getAppVersion();
+        }, 5000);
     }
 
     getEmpresaID(){
@@ -36,13 +46,40 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     irHome() {
         this.navService.redirect('/app/home');
     }
+    
+    async getAliadoInformacion(){
+        this.idEmpresa = this.sesionService.getEmpresa().id;
+        await this.empresaService.getAliadoInformacion(this.idEmpresa).then((ele: AliadoInformacion[])=>{
+            if(ele[0] != undefined){
+              if(ele[0].istemporal){this.isTemporal = ele[0].istemporal}
+              else{this.isTemporal=false}
+            }else{this.isTemporal=false}
+            this.recargarMenu();
+          }).catch((er)=>this.recargarMenu());
+    }
 
-
-    ngAfterContentInit() {
-        this.recargarMenu();
+    async ngAfterContentInit() { 
+        
     }
 
     recargarMenu() {
+        if(this.idEmpresa=='22')this.isTemporal=true
+        let Temporal
+        if(this.isTemporal){Temporal=[
+            { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
+            { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
+            { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' },
+            { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
+            { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' }
+            // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
+            // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
+        ]}else{
+            Temporal=[
+                { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
+                { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
+                { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' }]
+        }
+
         this.nombreAUC = this.sesionService.getConfigParam('NOMB_MOD_AUC');
         this.nombreSEC = this.sesionService.getConfigParam('NOMB_MOD_SEC');
         this.nombreCOP = this.sesionService.getConfigParam('NOMB_MOD_COP');
@@ -82,16 +119,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                 class: 'icon-ctr',
                 codigo: 'CTR',
                 expanded: false,
-                items:
-                    [
-                        { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
-                        { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
-                        { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' },
-                        { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
-                        { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' }
-                        // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
-                        // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
-                    ]
+                items: Temporal
             },
             {
                 label: 'Seguimiento Casos medicos', class: 'icon-scm',

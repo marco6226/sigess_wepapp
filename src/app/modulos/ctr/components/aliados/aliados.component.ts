@@ -77,6 +77,7 @@ export class AliadosComponent implements OnInit {
   @Output() dataFechaCalificacion = new EventEmitter<Date>();
   @Output() dataQuienCalifica = new EventEmitter<string>();
   @Output() dataAutorizaSubcontratacion =new EventEmitter<boolean>();
+  @Output() dataIsTemporal =new EventEmitter<boolean>();
   @Input('autorizaSubcontratacion')
   set setAutorizaSubcontratacion(data: boolean){
     if(data==null) return;
@@ -86,6 +87,17 @@ export class AliadosComponent implements OnInit {
       this.autorizaSubcontratacion = 'No';
     }
   }
+  @Input('istemporal')
+  set setIstemporal(data: boolean){
+    if(data==null) return;
+    if(data){
+      this.istemporal = 'Si';
+    }else{
+      this.istemporal = 'No';
+    }
+  }
+  istemporal:string;
+  istemporalFlag:boolean=false;
   autorizaSubcontratacion: string;
   autorizaSubcontratacionflag: boolean;
   isCreate: boolean=true;
@@ -172,9 +184,6 @@ export class AliadosComponent implements OnInit {
 
   async saveAliado(){
     this.formJuridica.value.tipo_persona = this.formNatural.value.tipo_persona = this.seleccion
-    // console.log(this.formNatural.value);
-
-    // console.log(this.formJuridica.value);
 
     let createEmpresa: Empresa;
     this.messageService.add({severity:'info', summary: 'Guardando aliado', detail: 'Espere un momento', life:3000});
@@ -236,13 +245,14 @@ export class AliadosComponent implements OnInit {
     this.empresaService.createEmpresaAliada(createEmpresa).then((ele:Empresa)=>{
       // console.log(ele);
       this.messageService.add({severity:'success', summary: 'Creación Aliado', detail: 'Se agrego un Aliado nuevo, será redirigido a la lista de aliados.', life:6000});
+      let perfil='312'
       if (this.formJuridica.valid) {
         console.log('creando empresa');
         
         let ue = new UsuarioEmpresa();
       
         ue.perfil = new Perfil();
-        ue.perfil.id = '312';
+        ue.perfil.id = perfil;
   
         let user = new Usuario()
         user.id= null,
@@ -282,7 +292,8 @@ export class AliadosComponent implements OnInit {
             fecha_calificacion_aliado: this.formJuridica.value.fecha_calificacion,
             nombre_calificador: this.formJuridica.value.quien_califica,
             arl: null,
-            autoriza_subcontratacion: this.autorizaSubcontratacionflag
+            autoriza_subcontratacion: this.autorizaSubcontratacionflag,
+            istemporal: this.istemporalFlag
           }
 
           this.empresaService.saveAliadoInformacion(aliadoInformacion)
@@ -428,6 +439,16 @@ export class AliadosComponent implements OnInit {
     }else{
       this.autorizaSubcontratacionflag=false
       this.dataAutorizaSubcontratacion.emit(false);
+    }
+  }
+
+  onEsTemporal(){
+    if(this.istemporal == 'Si'){
+      this.istemporalFlag=true
+      this.dataIsTemporal.emit(true);
+    }else{
+      this.istemporalFlag=false
+      this.dataIsTemporal.emit(false);
     }
   }
 }
