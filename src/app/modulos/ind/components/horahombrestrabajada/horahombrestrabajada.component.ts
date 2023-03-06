@@ -8,6 +8,7 @@ import { HhtService } from 'app/modulos/empresa/services/hht.service'
 import { DataArea, DataHht, DataPlanta, Hht } from "../../../empresa/entities/hht";
 import { PlantasService } from '../../services/Plantas.service';
 import { Plantas } from '../../entities/Plantas';
+import { MessageService } from 'primeng/primeng';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     private areaService: AreaService,
     private hhtService: HhtService,
     private plantasService: PlantasService,
+    private messageService: MessageService,
   ) { }
 
   async ngOnInit() {
@@ -151,11 +153,26 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
       let data = <DataHht>JSON.parse(hht.valor).Data;
       this.metaAnualILI = JSON.parse(hht.valor).ILI_Anual;
       this.metaMensualILI = JSON.parse(hht.valor).ILI_Mensual;
+      let totalHombres = 0;
+      let totalHHT = 0;
+      data.Areas.forEach(area => {
+        if(area.Plantas.length > 0){
+          totalHombres += area.Plantas.reduce((count, planta) => {
+            return count + planta.NumPersonasPlanta;
+          }, 0);
+          totalHHT += area.Plantas.reduce((count, planta) => {
+            return count + planta.HhtPlanta;
+          }, 0);
+        }else{
+          totalHombres += area.NumPersonasArea;
+          totalHHT += area.HhtArea;
+        }
+      }); 
       this.dataHHT[index] ={
         id: Number(hht.id),
         mes: mes.value,
-        HhtMes: data.HhtMes,
-        NumPersonasMes: data.NumPersonasMes,
+        HhtMes: totalHHT > 0 ? totalHHT : data.HhtMes,
+        NumPersonasMes: totalHombres > 0 ? totalHombres : data.NumPersonasMes,
         Areas: data.Areas
       }
     });
@@ -220,7 +237,10 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
         console.info('HHT creado para el mes de: ', `${mes.value} de ${this.anioSelected['value']}`);
       });
     });
-    this.loadDataHHT();
+    setTimeout(() => {
+      this.loadDataHHT();
+    }, 2000);
+    this.messageService.add({key: 'hht', severity: 'success', detail: 'Registro HHT guardado', summary: 'Guardado', life: 6000});
     this.esNuevoRegistro = false;
   }
 
@@ -244,6 +264,10 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
         console.error(`Error al actualizar HHT del mes de ${mes.value} de ${HHT.anio}`, err);
       });
     });
+    setTimeout(() => {
+      this.loadDataHHT().then();
+    }, 2000);
+    this.messageService.add({key: 'hht', severity: 'warn', summary: 'Actualizado', detail: 'Registro HHT actualizado', life: 6000});
   }
 
 }
