@@ -1294,7 +1294,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let IF = (accidentesConDiasPerdidos/hhtCorona)*240000;
         let IS = (totalDiasSeveridad/hhtCorona*240000);
         let ILI = (IF*IS)/1000;
-        console.log(accidentesConDiasPerdidos, hhtCorona, totalDiasSeveridad, IF, IS, ILI);
+        // console.log(accidentesConDiasPerdidos, hhtCorona, totalDiasSeveridad, IF, IS, ILI);
         
         data.data.push(isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(4)));
       });

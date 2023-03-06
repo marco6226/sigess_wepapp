@@ -20,34 +20,34 @@
                     Meta Anual ILI:
                 </div>
                 <div class="ui-g-6 ui-sm-12 ui-md-2">
-                    <input pInputText [(ngModel)]="metaAnualILI" type="number"/>
+                    <input pInputText [(ngModel)]="metaAnualILI" placeholder="0" type="number"/>
                 </div>
                 <div class="ui-g-6 ui-sm-12 ui-md-2" >
                     Meta Mensual ILI:
                 </div>
                 <div class="ui-g-6 ui-sm-12 ui-md-2">
-                    <input pInputText [(ngModel)]="metaMensualILI" type="number"/>
+                    <input pInputText [(ngModel)]="metaMensualILI" placeholder="0" type="number"/>
                 </div>
             </div>
-            <ng-container *ngFor="let mes of meses; let i = index" >
+            <ng-container *ngFor="let mes of meses; let i = index;">
                 <p-accordionTab header={{mes.label}}>
                     <div class="ui-g">
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
                             Total mes No. PERSONAS:
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
-                            <input pInputText readonly [(ngModel)]="dataHHT[i].NumPersonasMes" type="number"/>
+                            <input pInputText readonly [(ngModel)]="dataHHT[i].NumPersonasMes" placeholder="0" type="number"/>
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2" >
                             Total mes HHT:
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
-                            <input pInputText readonly [(ngModel)]="dataHHT[i].HhtMes" type="number"/>
+                            <input pInputText readonly [(ngModel)]="dataHHT[i].HhtMes" placeholder="0" type="number"/>
                         </div>
                     </div>
                     
                     <div *ngIf="areaList">
-                        <ng-container *ngFor="let area of areaList; let j = index">
+                        <ng-container *ngFor="let area of areaList; let j = index;">
                             <p-accordionTab header={{area.nombre}} >
 
                                 <div class="ui-g" *ngIf="!tienePlantas(area.id)">
@@ -55,36 +55,34 @@
                                         Total area No. PERSONAS:
                                     </div>
                                     <div class="ui-g-6 ui-sm-12 ui-md-2">
-                                        <input pInputText [readonly]="tienePlantas(area.id)" [(ngModel)]="dataHHT[i].Areas[j].NumPersonasArea" type="number"/>
+                                        <input pInputText [readonly]="tienePlantas(area.id)" placeholder="0" [(ngModel)]="dataHHT[i].Areas[j].NumPersonasArea" type="number"/>
                                     </div>
                                     <div class="ui-g-6 ui-sm-12 ui-md-2" >
                                         Total area HHT:
                                     </div>
                                     <div class="ui-g-6 ui-sm-12 ui-md-2">
-                                        <input pInputText [readonly]="tienePlantas(area.id)" [(ngModel)]="dataHHT[i].Areas[j].HhtArea" type="number"/>
+                                        <input pInputText [readonly]="tienePlantas(area.id)" placeholder="0" [(ngModel)]="dataHHT[i].Areas[j].HhtArea" type="number"/>
                                     </div>
                                 </div>
 
                                 <div *ngIf="plantasList && tienePlantas(area.id)">
                                     <ng-container *ngFor="let pl of getPlantasByArea(area.id); let k = index;">
-                                        <div *ngIf="pl.id_division == area.id">
-                                            <p-accordionTab header={{pl.nombre}}>
-                                                <div class="ui-g">
-                                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
-                                                        No. PERSONAS:
-                                                    </div>
-                                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
-                                                        <input pInputText [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].NumPersonasPlanta" type="number"/>
-                                                    </div>
-                                                    <div class="ui-g-6 ui-sm-12 ui-md-2" >
-                                                        HHT:
-                                                    </div>
-                                                    <div class="ui-g-6 ui-sm-12 ui-md-2">
-                                                        <input pInputText [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].HhtPlanta" type="number"/>
-                                                    </div>
+                                        <p-accordionTab header={{pl.nombre}}>
+                                            <div class="ui-g">
+                                                <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                                    No. PERSONAS:
                                                 </div>
-                                            </p-accordionTab>
-                                        </div>
+                                                <div class="ui-g-6 ui-sm-12 ui-md-2">
+                                                    <input pInputText placeholder="0" [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].NumPersonasPlanta" type="number"/>
+                                                </div>
+                                                <div class="ui-g-6 ui-sm-12 ui-md-2" >
+                                                    HHT:
+                                                </div>
+                                                <div class="ui-g-6 ui-sm-12 ui-md-2" #acordionTab>
+                                                    <input pInputText placeholder="0" [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].HhtPlanta" type="number"/>
+                                                </div>
+                                            </div>
+                                        </p-accordionTab>
                                     </ng-container>
                                 </div>
                             </p-accordionTab>
