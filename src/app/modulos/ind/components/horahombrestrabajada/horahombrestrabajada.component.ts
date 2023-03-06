@@ -9,6 +9,7 @@ import { DataArea, DataHht, DataPlanta, Hht } from "../../../empresa/entities/hh
 import { PlantasService } from '../../services/Plantas.service';
 import { Plantas } from '../../entities/Plantas';
 import { MessageService } from 'primeng/primeng';
+import { Observable, Observer } from 'rxjs';
 
 
 @Component({
@@ -204,7 +205,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getPlantasByArea(id: any){
+  getPlantasByArea(id: any): Plantas[]{
     let plantas = this.plantasList.filter(pl => pl.id_division == id);
     return plantas.length > 0 ? plantas: null;
   }

@@ -66,8 +66,10 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="plantasList && tienePlantas(area.id)">
+                                <div *ngIf="plantasList">
+                                <!-- <div> -->
                                     <ng-container *ngFor="let pl of getPlantasByArea(area.id); let k = index;">
+                                    <!-- <ng-container *ngFor="let pl of plantasList; let k = index;"> -->
                                         <p-accordionTab header={{pl.nombre}}>
                                             <div class="ui-g">
                                                 <div class="ui-g-6 ui-sm-12 ui-md-2">
