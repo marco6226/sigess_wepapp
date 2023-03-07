@@ -400,21 +400,27 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     // filterQuery.filterList = []
     // filterQuery.filterList.push({ criteria: Criteria.EQUALS, field: "id", value1: '122' });
 
-    // await this.tipoPeligroService.findByFilter(filterQuery).then(resp=>console.log(resp))
 
-    await this.tipoPeligroService.findAll().then(
-      resp => {
-        console.log(resp)
-        this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
-        (<TipoPeligro[]>resp['data']).forEach(
-          data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
-        )   
-      }
-    );
+    await this.tipoPeligroService.getForEmpresa().then((resp:any)=>{
+      this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
+      console.log(resp)
+      resp.forEach(
+        data => this.tipoPeligroItemList.push({ label: data[2], value: data[0] })
+      )  
+    })
+
+    // await this.tipoPeligroService.findAll().then(
+    //   resp => {
+    //     console.log(resp)
+    //     this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
+    //     (<TipoPeligro[]>resp['data']).forEach(
+    //       data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
+    //     )   
+    //   }
+    // );
   }
   async cargarPeligro(idtp) {
 
-    //this.peligroService.findAll().then(
     if(idtp != null){
     let filter = new FilterQuery();
     filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
