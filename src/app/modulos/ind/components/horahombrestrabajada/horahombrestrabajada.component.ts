@@ -10,6 +10,9 @@ import { PlantasService } from '../../services/Plantas.service';
 import { Plantas } from '../../entities/Plantas';
 import { MessageService } from 'primeng/primeng';
 import { Observable, Observer } from 'rxjs';
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { Empresa } from 'app/modulos/empresa/entities/empresa';
 
 
 @Component({
@@ -51,19 +54,22 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     {label: 'Noviembre', value: 'Noviembre'},
     {label: 'Diciembre', value: 'Diciembre'}
   ];
-  Empresas= [
-    {label: 'Corona', value: '22'},
-    {label: 'Temporal uno', value: '12341'},
-    {label: 'Temporal dos', value: '12342'},
-    {label: 'Temporal tres', value: '12343'},
+  Empresas: Array<any> = [
+    // {label: 'Corona', value: '22'},
+    // {label: 'Temporal uno', value: '12341'},
+    // {label: 'Temporal dos', value: '12342'},
+    // {label: 'Temporal tres', value: '12343'},
   ];
   // @ViewChildren('acordionTab') childListaMeses: QueryList <any>;
+  cargando: boolean = false;
 
   constructor(
     private areaService: AreaService,
     private hhtService: HhtService,
     private plantasService: PlantasService,
     private messageService: MessageService,
+    private empresaService: EmpresaService,
+    private sessionService: SesionService,
   ) { }
 
   async ngOnInit() {
@@ -71,12 +77,28 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.yearRangeNumber.length; i++) {
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
+
+    let empresa: Empresa = this.sessionService.getEmpresa();
+    if(empresa.idEmpresaAliada == null){
+      this.Empresas = [];
+      this.Empresas.push({label: empresa.razonSocial, value: empresa.id})
+      this.empresaService.getTemporalesByEmpresa(empresa.idEmpresaAliada == null ? Number(empresa.id) : empresa.idEmpresaAliada)
+      .then((res: Empresa[]) => {
+        res.forEach(emp => {
+          this.Empresas.push({label: emp.razonSocial, value: emp.id});
+        });
+      })
+    }else{
+      this.Empresas = [];
+      this.Empresas.push({label: empresa.razonSocial, value: empresa.id});
+    }
+
+    
+    await this.getAreas().then();
+    await this.getPlantas(empresa.idEmpresaAliada == null ? Number(empresa.id) : empresa.idEmpresaAliada).then();
   }
 
   ngAfterViewInit(): void {
-    // this.childListaMeses.changes.subscribe((t) => {
-    //   console.log(t);
-    // });
   }
 
   async getAreas(){
@@ -117,12 +139,16 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
   async loadForm(){
     this.mostrarForm = false;
     this.mostrarBotones = false;
-    await this.getAreas().then();
-    await this.getPlantas(Number(this.empresaSelected)).then();
-    await this.initFormHHT().then();
+    this.cargando = true;
     await this.loadDataHHT().then();
+    if(this.esNuevoRegistro){
+      await this.initFormHHT().then();
+    }
     this.mostrarForm = true;
     this.mostrarBotones = true;
+    setTimeout(() => {
+      this.cargando = false
+    }, 2000);
   }
 
   async loadDataHHT(){
@@ -154,28 +180,35 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
       let data = <DataHht>JSON.parse(hht.valor).Data;
       this.metaAnualILI = JSON.parse(hht.valor).ILI_Anual;
       this.metaMensualILI = JSON.parse(hht.valor).ILI_Mensual;
-      let totalHombres = 0;
-      let totalHHT = 0;
-      data.Areas.forEach(area => {
-        if(area.Plantas.length > 0){
-          totalHombres += area.Plantas.reduce((count, planta) => {
-            return count + planta.NumPersonasPlanta;
-          }, 0);
-          totalHHT += area.Plantas.reduce((count, planta) => {
-            return count + planta.HhtPlanta;
-          }, 0);
-        }else{
-          totalHombres += area.NumPersonasArea;
-          totalHHT += area.HhtArea;
-        }
-      }); 
+      // let totalHombres = 0;
+      // let totalHHT = 0;
+      // data.Areas.forEach(area => {
+      //   if(area.Plantas.length > 0){
+      //     totalHombres += area.Plantas.reduce((count, planta) => {
+      //       return count + planta.NumPersonasPlanta;
+      //     }, 0);
+      //     totalHHT += area.Plantas.reduce((count, planta) => {
+      //       return count + planta.HhtPlanta;
+      //     }, 0);
+      //   }else{
+      //     totalHombres += area.NumPersonasArea;
+      //     totalHHT += area.HhtArea;
+      //   }
+      // });
       this.dataHHT[index] ={
         id: Number(hht.id),
         mes: mes.value,
-        HhtMes: totalHHT > 0 ? totalHHT : data.HhtMes,
-        NumPersonasMes: totalHombres > 0 ? totalHombres : data.NumPersonasMes,
+        HhtMes: data.HhtMes,
+        NumPersonasMes: data.NumPersonasMes,
         Areas: data.Areas
       }
+      data.Areas.forEach((area, indexAr) => {
+        if(area.Plantas.length > 0){
+          this.calcularTotalesPorArea(index, indexAr);
+        }
+      });
+      
+      this.calcularTotalesMes(index);
     });
   }
 
@@ -192,6 +225,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
             id: Number(area.id),
             NumPersonasArea: null,
             HhtArea: null,
+            ILIArea: null,
             Plantas: this.plantasList.filter(pl => pl.id_division == area.id).map((planta):DataPlanta => {
               return {
                 id: planta.id,
@@ -269,6 +303,36 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
       this.loadDataHHT().then();
     }, 2000);
     this.messageService.add({key: 'hht', severity: 'warn', summary: 'Actualizado', detail: 'Registro HHT actualizado', life: 6000});
+  }
+
+  calcularTotalesMes(mesIndex: number){
+    let totalPersonas = 0;
+    let totalHHT = 0;
+    
+    this.dataHHT[mesIndex].Areas
+    .forEach((area, index) => {
+      totalPersonas += area.NumPersonasArea == null ? 0 : area.NumPersonasArea;
+      totalHHT += area.HhtArea == null ? 0 : area.HhtArea;
+    });
+
+    this.dataHHT[mesIndex].NumPersonasMes = totalPersonas;
+    this.dataHHT[mesIndex].HhtMes = totalHHT;
+  }
+
+  calcularTotalesPorArea(mesIndex:number, areaIndex: number){
+    // console.log(mesIndex, areaIndex);
+    let totalPersonas = 0;
+    let totalHHT = 0;
+    this.dataHHT[mesIndex].Areas[areaIndex].Plantas
+    .forEach((planta, index) => {
+      // console.log(totalPersonas, planta.NumPersonasPlanta);
+      totalPersonas += planta.NumPersonasPlanta == null ? 0 : planta.NumPersonasPlanta;
+      totalHHT += planta.HhtPlanta == null ? 0 : planta.HhtPlanta;
+    });
+    // console.log(totalPersonas, totalHHT);
+    this.dataHHT[mesIndex].Areas[areaIndex].NumPersonasArea = totalPersonas;
+    this.dataHHT[mesIndex].Areas[areaIndex].HhtArea = totalHHT;
+    this.calcularTotalesMes(mesIndex);
   }
 
 }
