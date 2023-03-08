@@ -34,6 +34,7 @@ export class DataArea {
   id: number;
   NumPersonasArea: number;
   HhtArea: number;
+  ILIArea: number;
   Plantas: DataPlanta[];
 }
 

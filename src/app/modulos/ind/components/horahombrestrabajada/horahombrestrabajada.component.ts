@@ -61,6 +61,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     // {label: 'Temporal tres', value: '12343'},
   ];
   // @ViewChildren('acordionTab') childListaMeses: QueryList <any>;
+  cargando: boolean = false;
 
   constructor(
     private areaService: AreaService,
@@ -138,10 +139,16 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
   async loadForm(){
     this.mostrarForm = false;
     this.mostrarBotones = false;
-    await this.initFormHHT().then();
+    this.cargando = true;
     await this.loadDataHHT().then();
+    if(this.esNuevoRegistro){
+      await this.initFormHHT().then();
+    }
     this.mostrarForm = true;
     this.mostrarBotones = true;
+    setTimeout(() => {
+      this.cargando = false
+    }, 2000);
   }
 
   async loadDataHHT(){
@@ -173,28 +180,33 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
       let data = <DataHht>JSON.parse(hht.valor).Data;
       this.metaAnualILI = JSON.parse(hht.valor).ILI_Anual;
       this.metaMensualILI = JSON.parse(hht.valor).ILI_Mensual;
-      let totalHombres = 0;
-      let totalHHT = 0;
-      data.Areas.forEach(area => {
-        if(area.Plantas.length > 0){
-          totalHombres += area.Plantas.reduce((count, planta) => {
-            return count + planta.NumPersonasPlanta;
-          }, 0);
-          totalHHT += area.Plantas.reduce((count, planta) => {
-            return count + planta.HhtPlanta;
-          }, 0);
-        }else{
-          totalHombres += area.NumPersonasArea;
-          totalHHT += area.HhtArea;
-        }
-      }); 
+      // let totalHombres = 0;
+      // let totalHHT = 0;
+      // data.Areas.forEach(area => {
+      //   if(area.Plantas.length > 0){
+      //     totalHombres += area.Plantas.reduce((count, planta) => {
+      //       return count + planta.NumPersonasPlanta;
+      //     }, 0);
+      //     totalHHT += area.Plantas.reduce((count, planta) => {
+      //       return count + planta.HhtPlanta;
+      //     }, 0);
+      //   }else{
+      //     totalHombres += area.NumPersonasArea;
+      //     totalHHT += area.HhtArea;
+      //   }
+      // });
       this.dataHHT[index] ={
         id: Number(hht.id),
         mes: mes.value,
-        HhtMes: totalHHT > 0 ? totalHHT : data.HhtMes,
-        NumPersonasMes: totalHombres > 0 ? totalHombres : data.NumPersonasMes,
+        HhtMes: data.HhtMes,
+        NumPersonasMes: data.NumPersonasMes,
         Areas: data.Areas
       }
+      data.Areas.forEach((area, indexAr) => {
+        if(area.Plantas.length > 0){
+          this.calcularTotalesPorArea(index, indexAr);
+        }
+      });
     });
   }
 
@@ -211,6 +223,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
             id: Number(area.id),
             NumPersonasArea: null,
             HhtArea: null,
+            ILIArea: null,
             Plantas: this.plantasList.filter(pl => pl.id_division == area.id).map((planta):DataPlanta => {
               return {
                 id: planta.id,
@@ -288,6 +301,36 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
       this.loadDataHHT().then();
     }, 2000);
     this.messageService.add({key: 'hht', severity: 'warn', summary: 'Actualizado', detail: 'Registro HHT actualizado', life: 6000});
+  }
+
+  calcularTotalesMes(mesIndex: number){
+    let totalPersonas = 0;
+    let totalHHT = 0;
+    
+    this.dataHHT[mesIndex].Areas
+    .forEach((area, index) => {
+      totalPersonas += area.NumPersonasArea == null ? 0 : area.NumPersonasArea;
+      totalHHT += area.HhtArea == null ? 0 : area.HhtArea;
+    });
+
+    this.dataHHT[mesIndex].NumPersonasMes = totalPersonas;
+    this.dataHHT[mesIndex].HhtMes = totalHHT;
+  }
+
+  calcularTotalesPorArea(mesIndex:number, areaIndex: number){
+    // console.log(mesIndex, areaIndex);
+    let totalPersonas = 0;
+    let totalHHT = 0;
+    this.dataHHT[mesIndex].Areas[areaIndex].Plantas
+    .forEach((planta, index) => {
+      // console.log(totalPersonas, planta.NumPersonasPlanta);
+      totalPersonas += planta.NumPersonasPlanta == null ? 0 : planta.NumPersonasPlanta;
+      totalHHT += planta.HhtPlanta == null ? 0 : planta.HhtPlanta;
+    });
+    // console.log(totalPersonas, totalHHT);
+    this.dataHHT[mesIndex].Areas[areaIndex].NumPersonasArea = totalPersonas;
+    this.dataHHT[mesIndex].Areas[areaIndex].HhtArea = totalHHT;
+    this.calcularTotalesMes(mesIndex);
   }
 
 }

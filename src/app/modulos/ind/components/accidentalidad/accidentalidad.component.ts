@@ -40,7 +40,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   selectedAnioIli_1: number = new Date().getFullYear();
   dataIli_1: any;
   optionsIli_1: any = {
-    title: 'ILI', 
+    title: 'ILI por división', 
     height: 400,
     width: 800,
     xAxis: {
@@ -63,7 +63,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }
   };
   optionsIli_2: any = {
-    title: 'ILI', 
+    title: 'ILI por mes', 
     height: 400,
     width: 800,
     xAxis: {
@@ -214,8 +214,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Proporción AT mortal', value: 2}];
   Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
   dataEventos1: any[];
-  evento1Desde: Date[] | null = null;
-  evento1Hasta: Date[] | null = null;
+  evento1Desde: Date | null = null;
+  evento1Hasta: Date | null = null;
   randomEv2: any[];
   tasaFrecuencia1: any[];
   tasaFrecuencia2: any[];
@@ -423,9 +423,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
   loadResumen(){
     this.reporteAtService.findAllRAT().then(async (resp)=>{
-      this.reporteat=resp
+      this.reporteat = resp
+      let date: Date = new Date(new Date(this.hastas).setMonth(new Date(this.hastas).getMonth()+1));
       let result: any[] = await this.reporteat.filter(word => {
-        return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< this.hastas
+        return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< date
       });
 
       if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') result = result.filter(at => at.padreNombre === this.selectedDivisionResumen);
@@ -538,7 +539,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         return listaDivisiones.indexOf(item) === index;
       });
 
-      dataEv1Dona = dataEv1Dona.filter(at => at.fechaReporte >= this.filtroFechaAt[0] && at.fechaReporte <= this.filtroFechaAt[1]);
+      let dateFinal: Date = new Date(new Date(this.filtroFechaAt[1]).setMonth(new Date(this.filtroFechaAt[1]).getMonth()+1));
+      dataEv1Dona = dataEv1Dona.filter(at => at.fechaReporte >= this.filtroFechaAt[0] && at.fechaReporte <= dateFinal);
       let randomEv1Dona: any[] = [];
       divisiones.forEach(division => {
         let data = {name: division, value: 0};
@@ -636,7 +638,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         return listaDivisiones.indexOf(item) === index;
       });
 
-      dataDiasPerdidosAtList = dataDiasPerdidosAtList.filter(at => at.fechaReporte > this.filtroFechaDiasPerdidos[0] && at.fechaReporte < this.filtroFechaDiasPerdidos[1]);
+      let dateFinal: Date = new Date(new Date(this.filtroFechaDiasPerdidos[1]).setMonth(new Date(this.filtroFechaDiasPerdidos[1]).getMonth()+1));
+      dataDiasPerdidosAtList = dataDiasPerdidosAtList.filter(at => at.fechaReporte > this.filtroFechaDiasPerdidos[0] && at.fechaReporte < dateFinal);
       let randomEv1Donadb: any[] = [];
       divisiones.forEach(division => {
         let data = {name: division, value: 0};
@@ -949,7 +952,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           throw 'err';
       }
     }catch(err){
-      if(this.evento1Desde && this.evento1Hasta) reportesAt = reportesAt.filter(at => at.fechaReporte > this.evento1Desde && at.fechaReporte < this.evento1Hasta);
+      if(this.evento1Desde && this.evento1Hasta) {
+        let dateFinal: Date = new Date(new Date(this.evento1Hasta).setMonth(new Date(this.evento1Hasta).getMonth()+1));
+        reportesAt = reportesAt.filter(at => at.fechaReporte > this.evento1Desde && at.fechaReporte < dateFinal);
+      };
       
       let numAtTotal = 0;
       let diasPerdidosTotal = 0;
