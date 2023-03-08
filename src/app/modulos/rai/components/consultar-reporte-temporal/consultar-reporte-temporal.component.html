@@ -71,7 +71,7 @@
       <ng-template pTemplate="summary" let-rowData>
         <button *sTienePermiso="'RAI_GET_REP'" pButton type="button" icon="pi pi-plus" label="Consultar" (click)="consultarDetalle()"
           [disabled]="!reporteSelect"></button>
-        <button *sTienePermiso="'RAI_PUT_REP'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
+        <button *sTienePermiso="'RAI_PUT_REPT'" pButton type="button" icon="fa fa-pencil" label="Modificar" class="ui-button-success"
           (click)="modificar()" [disabled]="!reporteSelect"></button>
       </ng-template>
       <ng-template pTemplate="emptymessage">

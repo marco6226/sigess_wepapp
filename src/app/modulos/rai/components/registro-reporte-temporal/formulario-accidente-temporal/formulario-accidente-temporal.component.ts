@@ -375,7 +375,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
               filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
               filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+this.reporte.id.toString() });
               await this.desviacionService.getDesviacionTemporal(this.reporte.id).then(async (resp:any) => {
-                console.log(resp)
                 this.desviacionesList = resp;
                 this.analisisId = this.desviacionesList[0].analisisId;
                 await this.consultarAnalisis(this.analisisId)})
@@ -464,7 +463,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
     ];
     await this.analisisDesviacionService.getAnalisisTemporal(parseInt(analisisId)).then(async (resp) => {
-      console.log(resp)
       let analisis = <AnalisisDesviacion>resp[0];
       this.informacionComplementaria = JSON.parse(resp[0].complementaria);
       this.incapacidadesList = JSON.parse(resp[0].incapacidades)
