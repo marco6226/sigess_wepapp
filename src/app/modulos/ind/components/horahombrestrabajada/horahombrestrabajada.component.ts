@@ -207,6 +207,8 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
           this.calcularTotalesPorArea(index, indexAr);
         }
       });
+      
+      this.calcularTotalesMes(index);
     });
   }
 
