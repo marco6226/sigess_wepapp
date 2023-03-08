@@ -263,4 +263,20 @@ export class EmpresaService extends ServiceCRUD<Empresa>{
             );
         });
     }
+
+    getTemporalesByEmpresa(empresaId: number){
+        return new Promise((resolve, reject) => {
+            this.httpInt.get(endPoints.EmpresaService + `temporales/${empresaId}`)
+            .map(res => res)
+            .subscribe(
+                res => {
+                    resolve(res);
+                },
+                err => {
+                    this.manageError(err);
+                    reject(err);
+                }
+            )
+        });
+    }
 }

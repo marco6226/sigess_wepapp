@@ -10,6 +10,9 @@ import { PlantasService } from '../../services/Plantas.service';
 import { Plantas } from '../../entities/Plantas';
 import { MessageService } from 'primeng/primeng';
 import { Observable, Observer } from 'rxjs';
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
+import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { Empresa } from 'app/modulos/empresa/entities/empresa';
 
 
 @Component({
@@ -51,11 +54,11 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     {label: 'Noviembre', value: 'Noviembre'},
     {label: 'Diciembre', value: 'Diciembre'}
   ];
-  Empresas= [
-    {label: 'Corona', value: '22'},
-    {label: 'Temporal uno', value: '12341'},
-    {label: 'Temporal dos', value: '12342'},
-    {label: 'Temporal tres', value: '12343'},
+  Empresas: Array<any> = [
+    // {label: 'Corona', value: '22'},
+    // {label: 'Temporal uno', value: '12341'},
+    // {label: 'Temporal dos', value: '12342'},
+    // {label: 'Temporal tres', value: '12343'},
   ];
   // @ViewChildren('acordionTab') childListaMeses: QueryList <any>;
 
@@ -64,6 +67,8 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     private hhtService: HhtService,
     private plantasService: PlantasService,
     private messageService: MessageService,
+    private empresaService: EmpresaService,
+    private sessionService: SesionService,
   ) { }
 
   async ngOnInit() {
@@ -71,12 +76,28 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.yearRangeNumber.length; i++) {
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
+
+    let empresa: Empresa = this.sessionService.getEmpresa();
+    if(empresa.idEmpresaAliada == null){
+      this.Empresas = [];
+      this.Empresas.push({label: empresa.razonSocial, value: empresa.id})
+      this.empresaService.getTemporalesByEmpresa(empresa.idEmpresaAliada == null ? Number(empresa.id) : empresa.idEmpresaAliada)
+      .then((res: Empresa[]) => {
+        res.forEach(emp => {
+          this.Empresas.push({label: emp.razonSocial, value: emp.id});
+        });
+      })
+    }else{
+      this.Empresas = [];
+      this.Empresas.push({label: empresa.razonSocial, value: empresa.id});
+    }
+
+    
+    await this.getAreas().then();
+    await this.getPlantas(empresa.idEmpresaAliada == null ? Number(empresa.id) : empresa.idEmpresaAliada).then();
   }
 
   ngAfterViewInit(): void {
-    // this.childListaMeses.changes.subscribe((t) => {
-    //   console.log(t);
-    // });
   }
 
   async getAreas(){
@@ -117,8 +138,6 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
   async loadForm(){
     this.mostrarForm = false;
     this.mostrarBotones = false;
-    await this.getAreas().then();
-    await this.getPlantas(Number(this.empresaSelected)).then();
     await this.initFormHHT().then();
     await this.loadDataHHT().then();
     this.mostrarForm = true;
