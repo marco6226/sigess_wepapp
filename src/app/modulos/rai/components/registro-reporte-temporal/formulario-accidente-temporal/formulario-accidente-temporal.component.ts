@@ -273,7 +273,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
           // this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
 
         if(this.modificar || this.consultar){
-           console.log(this.reporte)
             this.form.patchValue({
                 id: this.reporte.id,
                 tipo: this.reporte.tipo,
@@ -375,13 +374,17 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
               
               filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
               filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+this.reporte.id.toString() });
-
-              await this.desviacionService.findByFilter(filterQuery).then(
-                async resp => {
-                  this.desviacionesList = resp['data'];
-                  this.analisisId = this.desviacionesList[0].analisisId;
-                  await this.consultarAnalisis(this.analisisId)})
-
+              await this.desviacionService.getDesviacionTemporal(this.reporte.id).then(async (resp:any) => {
+                console.log(resp)
+                this.desviacionesList = resp;
+                this.analisisId = this.desviacionesList[0].analisisId;
+                await this.consultarAnalisis(this.analisisId)})
+              // await this.desviacionService.findByFilter(filterQuery).then(
+              //   async resp => {
+              //     console.log(resp)
+              //     this.desviacionesList = resp['data'];
+              //     this.analisisId = this.desviacionesList[0].analisisId;
+              //     await this.consultarAnalisis(this.analisisId)})
             }
         }else{
           this.setFactorCausal();
@@ -395,29 +398,12 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     this.cargarPeligro(a)
 }
   async cargarTiposPeligro() {
-    // let filterQuery = new FilterQuery();
-    // filterQuery.fieldList = ['id','nombre'];
-    // filterQuery.filterList = []
-    // filterQuery.filterList.push({ criteria: Criteria.EQUALS, field: "id", value1: '122' });
-
-
     await this.tipoPeligroService.getForEmpresa().then((resp:any)=>{
       this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
-      console.log(resp)
       resp.forEach(
         data => this.tipoPeligroItemList.push({ label: data[2], value: data[0] })
       )  
     })
-
-    // await this.tipoPeligroService.findAll().then(
-    //   resp => {
-    //     console.log(resp)
-    //     this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
-    //     (<TipoPeligro[]>resp['data']).forEach(
-    //       data => this.tipoPeligroItemList.push({ label: data.nombre, value: data })
-    //     )   
-    //   }
-    // );
   }
   async cargarPeligro(idtp) {
 
@@ -477,15 +463,15 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     fq.filterList = [
         { criteria: Criteria.EQUALS, field: "id", value1: analisisId },
     ];
-    await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
-      let analisis = <AnalisisDesviacion>resp["data"][0];
-      this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
-      this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
-      this.factorCausal = JSON.parse(resp["data"][0].factor_causal);
+    await this.analisisDesviacionService.getAnalisisTemporal(parseInt(analisisId)).then(async (resp) => {
+      console.log(resp)
+      let analisis = <AnalisisDesviacion>resp[0];
+      this.informacionComplementaria = JSON.parse(resp[0].complementaria);
+      this.incapacidadesList = JSON.parse(resp[0].incapacidades)
+      this.factorCausal = JSON.parse(resp[0].factor_causal);
       
-      console.log(resp["data"][0])
       this.documentos=analisis.documentosList;
-      this.planAccion = JSON.parse(resp["data"][0].plan_accion);
+      this.planAccion = JSON.parse(resp[0].plan_accion);
       this.formplanaccion.patchValue({
         avance: this.planAccion['avance'],
         fechaCierre: new Date(this.planAccion['fechaCierre']),
@@ -493,6 +479,22 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       })
       this.setFactorCausal();
     })
+    // await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
+    //   console.log(resp)
+    //   let analisis = <AnalisisDesviacion>resp["data"][0];
+    //   this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
+    //   this.incapacidadesList = JSON.parse(resp["data"][0].incapacidades)
+    //   this.factorCausal = JSON.parse(resp["data"][0].factor_causal);
+      
+    //   this.documentos=analisis.documentosList;
+    //   this.planAccion = JSON.parse(resp["data"][0].plan_accion);
+    //   this.formplanaccion.patchValue({
+    //     avance: this.planAccion['avance'],
+    //     fechaCierre: new Date(this.planAccion['fechaCierre']),
+    //     descripcion: this.planAccion['descripcion']
+    //   })
+    //   this.setFactorCausal();
+    // })
     if(this.informacionComplementaria!=null){
       this.analisisPeligros.patchValue({
           'Peligro': this.informacionComplementaria.Peligro,
@@ -516,7 +518,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     ad.incapacidades= JSON.stringify(this.incapacidadesList);
     ad.factor_causal= JSON.stringify(this.factorCausal);
     ad.plan_accion=JSON.stringify(this.formplanaccion.value);
-    console.log(this.documentos)
     ad.documentosList=this.documentos
     
     if (this.adicionar) {
@@ -667,7 +668,6 @@ onUpload(event: Directorio) {
   this.documentos.push(event.documento);
   // this.adicionarAGaleria(event.documento);
   this.documentos = this.documentos.slice();
-  console.log(this.documentos)
 }
 
 eliminarDocument(doc: Documento) {
@@ -696,7 +696,6 @@ descargarDocumento(doc: Documento) {
         var blob = new Blob([<any>resp]);
         let url = URL.createObjectURL(blob);
         let dwldLink = document.getElementById("dwldLink");
-        console.log(dwldLink)
         dwldLink.setAttribute("href", url);
         dwldLink.setAttribute("download", doc.nombre);
         dwldLink.click();

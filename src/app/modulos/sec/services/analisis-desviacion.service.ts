@@ -22,6 +22,23 @@ export class AnalisisDesviacionService extends ServiceCRUD<AnalisisDesviacion>{
     });
   }
 
+  getAnalisisTemporal(idAnalisis:number){
+    return new Promise((resolve, reject) => {
+      this.httpInt.get(`${this.end_point}idanalisis/${idAnalisis}`)
+        
+        .subscribe(
+        (res) => {
+          resolve(res);
+        }
+        ,
+        err => {
+          this.manageError(err);
+          reject(err);
+          console.log(err)}
+        )
+    });
+  }
+
   getClassName(): string {
     return "AnalisisDesviacionService";
   }

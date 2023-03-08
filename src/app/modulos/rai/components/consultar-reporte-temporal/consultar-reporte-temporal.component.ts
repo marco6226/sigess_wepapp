@@ -15,7 +15,7 @@ import { SesionService } from 'app/modulos/core/services/sesion.service';
 export class ConsultarReporteTemporalComponent implements OnInit {
 
 
-  idEmpresa: string;
+  idEmpresa: string=this.sesionService.getEmpresa().id;
   reporteSelect: Reporte;
   reportesList: Reporte[];
   loading: boolean=true;
@@ -30,24 +30,48 @@ export class ConsultarReporteTemporalComponent implements OnInit {
     'numeroIdentificacionEmpleado',
     'tipo',
     'numerofurat',
-    'temporal'
+    'temporal',
+    'empresa'
   ];
-
+  sortedTable:string="fechaAccidente";
   constructor(
     private reporteService: ReporteService,
     private paramNav: ParametroNavegacionService,
     private ConsuModReporteService: ConsuModReporteService,
     private sesionService: SesionService,
   ) { }
-sortedTable:string;
+
   async ngOnInit() {
-    this.idEmpresa = await this.sesionService.getEmpresa().id;
-    this.loading = true;
-    this.sortedTable=(this.idEmpresa=='22')?"fechaAccidente":"fechaReporte";
-    
+    // this.idEmpresa = await this.sesionService.getEmpresa().id;
   }
 
   lazyLoad(event: any) {
+
+    if(this.idEmpresa=='22')
+    this.reporteService.getForEmpresa().then(resp => {
+        console.log(resp)
+        this.totalRecords = resp['count'];
+        this.loading = false;
+        this.reportesList = [];
+        
+        (<any[]>resp).forEach(dto => {
+          let resp1={empresa:dto[0]
+            ,fechaAccidente:dto[1]
+            ,fechaReporte:dto[2]
+            ,id:dto[3]
+            ,numeroIdentificacionEmpleado:dto[4]
+            ,numerofurat:dto[5]
+            ,primerApellidoEmpleado:dto[6]
+            ,primerNombreEmpleado:dto[7]
+            ,temporal:dto[8]
+            ,tipo:dto[9]
+          }
+          console.log(resp1)
+          this.reportesList.push(FilterQuery.dtoToObject(resp1));
+        });
+      }
+    );
+
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -58,13 +82,14 @@ sortedTable:string;
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({ criteria: Criteria.IS_NOT_NULL, field: "temporal"});
+    if(this.idEmpresa!='22')
     this.reporteService.findByFilter(filterQuery).then(
       resp => {
-        console.log(resp)
         this.totalRecords = resp['count'];
         this.loading = false;
         this.reportesList = [];
         (<any[]>resp['data']).forEach(dto => {
+          console.log(dto)
           this.reportesList.push(FilterQuery.dtoToObject(dto));
         });
       }

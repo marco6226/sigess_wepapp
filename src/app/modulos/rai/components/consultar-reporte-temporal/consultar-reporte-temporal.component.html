@@ -4,9 +4,9 @@
       [loading]="loading">
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="fechaReporte" *ngIf="idEmpresa!='22'">Fecha registro
+          <!-- <th pSortableColumn="fechaReporte" *ngIf="idEmpresa!='22'">Fecha registro
             <p-sortIcon field="fechaReporte"></p-sortIcon>
-          </th>
+          </th> -->
           <th pSortableColumn="fechaAccidente">Fecha accidente
             <p-sortIcon field="fechaAccidente"></p-sortIcon>
           </th>
@@ -30,9 +30,9 @@
           </th>
         </tr>
         <tr>
-          <td *ngIf="idEmpresa!='22'">
+          <!-- <td *ngIf="idEmpresa!='22'">
             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaReporte', 'bt')"></s-rangoFechaSelector>
-          </td>
+          </td> -->
           <td>
             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaAccidente', 'bt')"></s-rangoFechaSelector>
           </td>
@@ -58,7 +58,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-reporte>
         <tr [pSelectableRow]="reporte">
-          <td *ngIf="idEmpresa!='22'">{{reporte.fechaReporte | date:'dd/MM/yyyy'}}</td>
+          <!-- <td *ngIf="idEmpresa!='22'">{{reporte.fechaReporte | date:'dd/MM/yyyy'}}</td> -->
           <td>{{reporte.fechaAccidente | date:'dd/MM/yyyy'}}</td>
           <!-- <td *ngIf="idEmpresa=='22'">{{reporte.numerofurat}}</td> -->
           <td>RAI-{{reporte.id}}</td>

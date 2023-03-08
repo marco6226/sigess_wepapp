@@ -34,33 +34,36 @@ export class RegistroReporteTemporalComponent implements OnInit {
   ) { }
 
 async  ngOnInit() {
-  // this.reporteSelect = null;
-  console.log(this.reporteSelect)
     this.flagR=this.ConsuModReporteService.getflagR();
-    console.log( this.Zeller(24,9,1983));
-    console.log( this.consultar, this.modificar);
     
     let repParam;
     repParam = (this.flagR)?this.paramNav.getParametro<Reporte>():null;
-    
-    console.log('repParam',repParam);
+
     if (repParam != null) {
       this.consultar = this.paramNav.getAccion<string>() == 'GET';
       this.modificar = this.paramNav.getAccion<string>() == 'PUT';
 
-      let filterQuery = new FilterQuery();
-      if (repParam.id != null) {
-      filterQuery.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1:  repParam.id.toString(), value2: null }];
-      }
-    await  this.reporteService.findByFilter(filterQuery).then(
-        resp => {
-          this.reporteSelect = <Reporte>(resp['data'][0]);
-          this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
-    
-          this.tipoReporte = this.reporteSelect.tipo;
-          console.log(this.reporteSelect);
-        }
-      );
+
+      await  this.reporteService.getReporteAlido(repParam.id).then(resp => {
+        this.reporteSelect = <Reporte>(resp[0]);
+        this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
+        this.tipoReporte = this.reporteSelect.tipo;
+      })
+      // await  this.reporteService.findAll().then(resp=>console.log(resp))
+      // let filterQuery = new FilterQuery();
+      // if (repParam.id != null) {
+      // filterQuery.filterList = [{ field: 'id', criteria: Criteria.EQUALS, value1:  repParam.id.toString(), value2: null }];
+      // }
+      // await  this.reporteService.findByFilter(filterQuery).then(
+      //     resp => {
+      //       console.log(resp)
+      //       this.reporteSelect = <Reporte>(resp['data'][0]);
+      //       this.buscarEmpleado(this.reporteSelect.numeroIdentificacionEmpleado)
+      
+      //       this.tipoReporte = this.reporteSelect.tipo;
+      //       console.log(this.reporteSelect);
+      //     }
+      //   );
     } else {
       this.adicionar = true;
     }
@@ -88,23 +91,11 @@ async  ngOnInit() {
     this.empleadoService.findByFilter(fq).then(
       resp => {
         let empleado = <Empleado>FilterQuery.dtoToObject((resp['data'])[0]);
-        this.empleadoSelect = empleado;
-          //console.log(this.empleadoSelect.usuario.email)
-        
+        this.empleadoSelect = empleado;       
       }
     );
   }
-
-  inicializarReporte() {
-    // console.log(this.empleadoSelect.usuario.email);
-    // this.reporteService.inicializarReporte(this.empleadoSelect.id).then(
-    //   data => {
-    //     this.reporteSelect = <Reporte>data;
-    //     this.reporteSelect.tipo = this.tipoReporte;
-    //     this.reporteSelect.emailEmpleado=this.empleadoSelect.usuario.email;
-    //   }
-    // );
-  }
+  
   volver() {
     if (this.consultar || this.modificar) {
       this.paramNav.redirect('app/rai/consultaReportestemporal')

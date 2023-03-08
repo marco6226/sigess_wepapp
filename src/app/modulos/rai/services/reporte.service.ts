@@ -38,6 +38,40 @@ export class ReporteService extends ServiceCRUD<Reporte>{
     });
   }
 
+  getForEmpresa(){
+    return new Promise((resolve, reject) => {
+      this.httpInt.get(`${this.end_point}empresaId`)
+        
+        .subscribe(
+        (res: Reporte[]) => {
+          resolve(res);
+        }
+        ,
+        err => {
+          this.manageError(err);
+          reject(err);
+          console.log(err)}
+        )
+    });
+  }
+
+  getReporteAlido(idReporte:number){
+    return new Promise((resolve, reject) => {
+      this.httpInt.get(`${this.end_point}${idReporte}`)
+        
+        .subscribe(
+        (res: Reporte[]) => {
+          resolve(res);
+        }
+        ,
+        err => {
+          this.manageError(err);
+          reject(err);
+          console.log(err)}
+        )
+    });
+  }
+
   getClassName(): string {
     return "ReporteService";
   }
