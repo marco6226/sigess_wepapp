@@ -388,7 +388,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         }else{
           this.setFactorCausal();
         }
-      }, 200);
+      }, 2000);
       
       this.cdRef.detectChanges();
       await this.cargarTiposPeligro();
