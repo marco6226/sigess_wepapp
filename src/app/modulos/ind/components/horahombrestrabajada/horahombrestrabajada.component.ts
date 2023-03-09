@@ -140,10 +140,8 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     this.mostrarForm = false;
     this.mostrarBotones = false;
     this.cargando = true;
+    await this.initFormHHT().then();
     await this.loadDataHHT().then();
-    if(this.esNuevoRegistro){
-      await this.initFormHHT().then();
-    }
     this.mostrarForm = true;
     this.mostrarBotones = true;
     setTimeout(() => {
