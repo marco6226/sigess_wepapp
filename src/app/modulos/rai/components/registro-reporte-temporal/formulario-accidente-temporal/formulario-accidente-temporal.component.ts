@@ -44,6 +44,9 @@ import { DirectorioService } from 'app/modulos/ado/services/directorio.service'
 import { Documento } from 'app/modulos/ado/entities/documento';
 import { ConfirmationService } from 'primeng/primeng';
 import { Message } from 'primeng/api';
+import { CargoService } from 'app/modulos/empresa/services/cargo.service';
+import { Cargo } from 'app/modulos/empresa/entities/cargo';
+import { SortOrder } from "app/modulos/core/entities/filter";
 
 @Component({
   selector: 'app-formulario-accidente-temporal',
@@ -56,7 +59,12 @@ import { Message } from 'primeng/api';
 })
 export class FormularioAccidenteTemporalComponent implements OnInit {
 
-  @Input('reporte') reporte: Reporte;
+  reporte: Reporte;
+  @Input('reporte') 
+  set reporteget(reporte: Reporte){
+    this.reporte=reporte
+    this.cargarReporte()
+  }
   @Input('consultar') consultar: boolean=false;
   @Input('modificar') modificar: boolean=false;
   @Input('adicionar') adicionar: boolean;
@@ -116,7 +124,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   temporalesFlag: boolean=true
 
   msgs: Message[];
-
+  cargoList: SelectItem[];
   constructor(
       private fb: FormBuilder,
       private cdRef: ChangeDetectorRef,
@@ -131,6 +139,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       private desviacionService: DesviacionService,
       private confirmationService: ConfirmationService,
       private directorioService: DirectorioService,
+      private cargoService: CargoService,
   ) {
       let defaultItem = <SelectItem[]>[{ label: '--seleccione--', value: null }];
       this.tipoVinculacionList = defaultItem.concat(<SelectItem[]>tipo_vinculacion);
@@ -158,6 +167,13 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   }
   areasPermiso: string;
   async ngOnInit() {
+    console.log(this.consultar)
+    this.cargoService.findByEmpresa().then((resp) => {
+      this.cargoList = [];
+      this.cargoList.push({ label: '--Seleccione--', value: null });
+      (<Cargo[]>resp).forEach((cargo) => {
+          this.cargoList.push({ label: cargo.nombre, value: cargo.nombre });
+      });})
 
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
     let areasPermiso =this.areasPermiso.replace('{','');
@@ -269,123 +285,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
           temporal:null,
       });
       setTimeout(async () => {
-
-          // this.informacionComplementaria = JSON.parse(resp["data"][0].complementaria);
-
-        if(this.modificar || this.consultar){
-            this.form.patchValue({
-                id: this.reporte.id,
-                tipo: this.reporte.tipo,
-                nombreEps: this.reporte.nombreEps,
-                codigoEps: this.reporte.codigoEps,
-                nombreAfp: this.reporte.nombreAfp,
-                codigoAfp: this.reporte.codigoAfp,
-                nombreArl: this.reporte.nombreArl,
-                codigoArl: this.reporte.codigoArl,
-                tipoVinculador: this.reporte.tipoVinculador,
-                nombreCiiu: this.reporte.nombreCiiu,
-                codigoCiiu: this.reporte.codigoCiiu,
-                razonSocial: this.reporte.razonSocial,
-                tipoIdentificacionEmpresa: this.reporte.tipoIdentificacionEmpresa,
-                identificacionEmpresa: this.reporte.identificacionEmpresa,
-                direccionEmpresa: this.reporte.direccionEmpresa,
-                telefonoEmpresa: this.reporte.telefonoEmpresa,
-                telefono2Empresa: this.reporte.telefono2Empresa,
-                emailEmpresa: this.reporte.emailEmpresa,
-                zonaEmpresa: this.reporte.zonaEmpresa,
-                centrTrabIgualSedePrinc: this.reporte.centrTrabIgualSedePrinc,
-                nombreCentroTrabajo: this.reporte.nombreCentroTrabajo,
-                codigoCentroTrabajo: this.reporte.codigoCentroTrabajo,
-                nombreCiiuCentroTrabajo: this.reporte.nombreCiiuCentroTrabajo,
-                ciiuCentroTrabajo: this.reporte.ciiuCentroTrabajo,
-                codCiiuCentroTrabajo: this.reporte.codCiiuCentroTrabajo,
-                direccionCentroTrabajo: this.reporte.direccionCentroTrabajo,
-                telefonoCentroTrabajo: this.reporte.telefonoCentroTrabajo,
-                zonaCentroTrabajo: this.reporte.zonaCentroTrabajo,
-                tipoVinculacion: this.reporte.tipoVinculacion,
-                codigoTipoVinculacion: this.reporte.codigoTipoVinculacion,
-                primerApellidoEmpleado: this.reporte.primerApellidoEmpleado,
-                segundoApellidoEmpleado: this.reporte.segundoApellidoEmpleado,
-                primerNombreEmpleado: this.reporte.primerNombreEmpleado,
-                segundoNombreEmpleado: this.reporte.segundoNombreEmpleado,
-                tipoIdentificacionEmpleado: this.reporte.tipoIdentificacionEmpleado,
-                numeroIdentificacionEmpleado: this.reporte.numeroIdentificacionEmpleado,
-                fechaNacimientoEmpleado: this.reporte.fechaNacimientoEmpleado == null ? null : new Date(this.reporte.fechaNacimientoEmpleado),
-                generoEmpleado: this.reporte.generoEmpleado,
-                direccionEmpleado: this.reporte.direccionEmpleado,
-                emailEmpleado: this.reporte.emailEmpleado,//usuario.email
-                telefonoEmpleado: this.reporte.telefonoEmpleado,
-                telefono2Empleado: this.reporte.telefono2Empleado,
-                fechaIngresoEmpleado: this.reporte.fechaIngresoEmpleado == null ? null : new Date(this.reporte.fechaIngresoEmpleado),
-                zonaEmpleado: this.reporte.zonaEmpleado,
-                cargoEmpleado: this.reporte.cargoEmpleado,
-                ocupacionHabitual: this.reporte.ocupacionHabitual,
-                codigoOcupacionHabitual: this.reporte.codigoOcupacionHabitual,
-                // diasLaborHabitual: this.deltaDia,
-                // mesesLaborHabitual: this.deltaMes,
-                diasLaborHabitual:this.reporte.diasLaborHabitual,
-                mesesLaborHabitual:this.reporte.mesesLaborHabitual,
-                salario: this.reporte.salario,
-                jornadaHabitual: this.reporte.jornadaHabitual,
-                fechaAccidente: this.reporte.fechaAccidente == null ? null : new Date(this.reporte.fechaAccidente),
-                horaAccidente: this.reporte.horaAccidente == null ? null : new Date(this.reporte.horaAccidente),
-                numerofurat: this.reporte.numerofurat,
-                jornadaAccidente: this.reporte.jornadaAccidente,
-                realizandoLaborHabitual: this.reporte.realizandoLaborHabitual,
-                nombreLaborHabitual: this.reporte.nombreLaborHabitual,
-                codigoLaborHabitual: this.reporte.codigoLaborHabitual,
-                horaInicioLabor:  this.reporte.horaInicioLabor == null ? null : new Date(this.reporte.horaInicioLabor),
-                tipoAccidente: this.reporte.tipoAccidente,
-                causoMuerte: this.reporte.causoMuerte,
-                zonaAccidente: this.reporte.zonaAccidente,
-                lugarAccidente: this.reporte.lugarAccidente,
-                huboTestigos: this.reporte.huboTestigos,
-                descripcion: this.reporte.descripcion,
-                sitio: this.reporte.sitio,
-                cualSitio: this.reporte.cualSitio,
-                tipoLesion: this.reporte.tipoLesion,
-                cualTipoLesion: this.reporte.cualTipoLesion,
-                parteCuerpo: this.reporte.parteCuerpo,
-                agente: this.reporte.agente,
-                cualAgente: this.reporte.cualAgente,
-                mecanismo: this.reporte.mecanismo,
-                cualMecanismo: this.reporte.cualMecanismo,
-                ciudadEmpresa: this.reporte.ciudadEmpresa,
-                ciudadCentroTrabajo: this.reporte.ciudadCentroTrabajo,
-                ciudadEmpleado: this.reporte.ciudadEmpleado,
-                ciudadAccidente: this.reporte.ciudadAccidente,
-                severidad:this.reporte.severidad,
-                areaAccidente: this.reporte.areaAccidente,
-                usuarioReporta: this.reporte.usuarioReporta,
-                empresa: this.reporte.empresa,
-                nombresResponsable: this.reporte.nombresResponsable,
-                apellidosResponsable: this.reporte.apellidosResponsable,
-                tipoIdentificacionResponsable: this.reporte.tipoIdentificacionResponsable,
-                numeroIdentificacionResponsable: this.reporte.numeroIdentificacionResponsable,
-                cargoResponsable: this.reporte.cargoResponsable,
-                fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte),
-                temporal:this.reporte.temporal
-            });
-            if(this.modificar || this. consultar){
-
-              let filterQuery = new FilterQuery();
-              filterQuery.fieldList = this.fields;
-              filterQuery.filterList = []
-              
-              filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
-              filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+this.reporte.id.toString() });
-              await this.desviacionService.getDesviacionTemporal(this.reporte.id).then(async (resp:any) => {
-                this.desviacionesList = resp;
-                this.analisisId = this.desviacionesList[0].analisisId;
-                await this.consultarAnalisis(this.analisisId)})
-              // await this.desviacionService.findByFilter(filterQuery).then(
-              //   async resp => {
-              //     console.log(resp)
-              //     this.desviacionesList = resp['data'];
-              //     this.analisisId = this.desviacionesList[0].analisisId;
-              //     await this.consultarAnalisis(this.analisisId)})
-            }
-        }else{
+        if(!this.modificar && !this.consultar){
           this.setFactorCausal();
         }
       }, 2000);
@@ -393,18 +293,135 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       this.cdRef.detectChanges();
       await this.cargarTiposPeligro();
   }
+
+  async cargarReporte(){
+    if(this.modificar || this.consultar){
+      console.log(this.reporte)
+        this.form.patchValue({
+            id: this.reporte.id,
+            tipo: this.reporte.tipo,
+            nombreEps: this.reporte.nombreEps,
+            codigoEps: this.reporte.codigoEps,
+            nombreAfp: this.reporte.nombreAfp,
+            codigoAfp: this.reporte.codigoAfp,
+            nombreArl: this.reporte.nombreArl,
+            codigoArl: this.reporte.codigoArl,
+            tipoVinculador: this.reporte.tipoVinculador,
+            nombreCiiu: this.reporte.nombreCiiu,
+            codigoCiiu: this.reporte.codigoCiiu,
+            razonSocial: this.reporte.razonSocial,
+            tipoIdentificacionEmpresa: this.reporte.tipoIdentificacionEmpresa,
+            identificacionEmpresa: this.reporte.identificacionEmpresa,
+            direccionEmpresa: this.reporte.direccionEmpresa,
+            telefonoEmpresa: this.reporte.telefonoEmpresa,
+            telefono2Empresa: this.reporte.telefono2Empresa,
+            emailEmpresa: this.reporte.emailEmpresa,
+            zonaEmpresa: this.reporte.zonaEmpresa,
+            centrTrabIgualSedePrinc: this.reporte.centrTrabIgualSedePrinc,
+            nombreCentroTrabajo: this.reporte.nombreCentroTrabajo,
+            codigoCentroTrabajo: this.reporte.codigoCentroTrabajo,
+            nombreCiiuCentroTrabajo: this.reporte.nombreCiiuCentroTrabajo,
+            ciiuCentroTrabajo: this.reporte.ciiuCentroTrabajo,
+            codCiiuCentroTrabajo: this.reporte.codCiiuCentroTrabajo,
+            direccionCentroTrabajo: this.reporte.direccionCentroTrabajo,
+            telefonoCentroTrabajo: this.reporte.telefonoCentroTrabajo,
+            zonaCentroTrabajo: this.reporte.zonaCentroTrabajo,
+            tipoVinculacion: this.reporte.tipoVinculacion,
+            codigoTipoVinculacion: this.reporte.codigoTipoVinculacion,
+            primerApellidoEmpleado: this.reporte.primerApellidoEmpleado,
+            segundoApellidoEmpleado: this.reporte.segundoApellidoEmpleado,
+            primerNombreEmpleado: this.reporte.primerNombreEmpleado,
+            segundoNombreEmpleado: this.reporte.segundoNombreEmpleado,
+            tipoIdentificacionEmpleado: this.reporte.tipoIdentificacionEmpleado,
+            numeroIdentificacionEmpleado: this.reporte.numeroIdentificacionEmpleado,
+            fechaNacimientoEmpleado: this.reporte.fechaNacimientoEmpleado == null ? null : new Date(this.reporte.fechaNacimientoEmpleado),
+            generoEmpleado: this.reporte.generoEmpleado,
+            direccionEmpleado: this.reporte.direccionEmpleado,
+            emailEmpleado: this.reporte.emailEmpleado,//usuario.email
+            telefonoEmpleado: this.reporte.telefonoEmpleado,
+            telefono2Empleado: this.reporte.telefono2Empleado,
+            fechaIngresoEmpleado: this.reporte.fechaIngresoEmpleado == null ? null : new Date(this.reporte.fechaIngresoEmpleado),
+            zonaEmpleado: this.reporte.zonaEmpleado,
+            cargoEmpleado: this.reporte.cargoEmpleado,
+            ocupacionHabitual: this.reporte.ocupacionHabitual,
+            codigoOcupacionHabitual: this.reporte.codigoOcupacionHabitual,
+            // diasLaborHabitual: this.deltaDia,
+            // mesesLaborHabitual: this.deltaMes,
+            diasLaborHabitual:this.reporte.diasLaborHabitual,
+            mesesLaborHabitual:this.reporte.mesesLaborHabitual,
+            salario: this.reporte.salario,
+            jornadaHabitual: this.reporte.jornadaHabitual,
+            fechaAccidente: this.reporte.fechaAccidente == null ? null : new Date(this.reporte.fechaAccidente),
+            horaAccidente: this.reporte.horaAccidente == null ? null : new Date(this.reporte.horaAccidente),
+            numerofurat: this.reporte.numerofurat,
+            jornadaAccidente: this.reporte.jornadaAccidente,
+            realizandoLaborHabitual: this.reporte.realizandoLaborHabitual,
+            nombreLaborHabitual: this.reporte.nombreLaborHabitual,
+            codigoLaborHabitual: this.reporte.codigoLaborHabitual,
+            horaInicioLabor:  this.reporte.horaInicioLabor == null ? null : new Date(this.reporte.horaInicioLabor),
+            tipoAccidente: this.reporte.tipoAccidente,
+            causoMuerte: this.reporte.causoMuerte,
+            zonaAccidente: this.reporte.zonaAccidente,
+            lugarAccidente: this.reporte.lugarAccidente,
+            huboTestigos: this.reporte.huboTestigos,
+            descripcion: this.reporte.descripcion,
+            sitio: this.reporte.sitio,
+            cualSitio: this.reporte.cualSitio,
+            tipoLesion: this.reporte.tipoLesion,
+            cualTipoLesion: this.reporte.cualTipoLesion,
+            parteCuerpo: this.reporte.parteCuerpo,
+            agente: this.reporte.agente,
+            cualAgente: this.reporte.cualAgente,
+            mecanismo: this.reporte.mecanismo,
+            cualMecanismo: this.reporte.cualMecanismo,
+            ciudadEmpresa: this.reporte.ciudadEmpresa,
+            ciudadCentroTrabajo: this.reporte.ciudadCentroTrabajo,
+            ciudadEmpleado: this.reporte.ciudadEmpleado,
+            ciudadAccidente: this.reporte.ciudadAccidente,
+            severidad:this.reporte.severidad,
+            areaAccidente: this.reporte.areaAccidente,
+            usuarioReporta: this.reporte.usuarioReporta,
+            empresa: this.reporte.empresa,
+            nombresResponsable: this.reporte.nombresResponsable,
+            apellidosResponsable: this.reporte.apellidosResponsable,
+            tipoIdentificacionResponsable: this.reporte.tipoIdentificacionResponsable,
+            numeroIdentificacionResponsable: this.reporte.numeroIdentificacionResponsable,
+            cargoResponsable: this.reporte.cargoResponsable,
+            fechaReporte: this.reporte.fechaReporte == null ? null : new Date(this.reporte.fechaReporte),
+            temporal:this.reporte.temporal
+        });
+
+        let filterQuery = new FilterQuery();
+        filterQuery.fieldList = this.fields;
+        filterQuery.filterList = []
+        
+        filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "area.id", value1: this.areasPermiso });
+        filterQuery.filterList.push({ criteria: Criteria.CONTAINS, field: "hashId", value1: 'RAI-'+this.reporte.id.toString() });
+        await this.desviacionService.getDesviacionTemporal(this.reporte.id).then(async (resp:any) => {
+          this.desviacionesList = resp;
+          this.analisisId = this.desviacionesList[0].analisisId;
+          await this.consultarAnalisis(this.analisisId)})
+    }
+
+  }
   SelectPeligro(a: string){
     this.cargarPeligro(a)
 }
   async cargarTiposPeligro() {
     await this.tipoPeligroService.getForEmpresa().then((resp:any)=>{
+      let tipoPeligroItemList=[]
       this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
       resp.forEach(
-        data => this.tipoPeligroItemList.push({ label: data[2], value: data[0] })
-      )  
+        data => tipoPeligroItemList.push({ label: data[2], value: data[0] })
+      )
+      tipoPeligroItemList=this.order(tipoPeligroItemList)
+      tipoPeligroItemList.forEach(resp=>{
+        this.tipoPeligroItemList.push(resp)
+      })
     })
   }
   async cargarPeligro(idtp) {
+    let peligroItemList=[]
 
     if(idtp != null){
     let filter = new FilterQuery();
@@ -415,9 +432,13 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         (<Peligro[]>resp).forEach(
           data => 
             {
-                this.peligroItemList.push({ label: data.nombre, value: {id:data.id,nombre: data.nombre} })
+                peligroItemList.push({ label: data.nombre, value: {id:data.id,nombre: data.nombre} })
             }
         )
+        peligroItemList=this.order(peligroItemList)
+        peligroItemList.forEach(resp=>{
+          this.peligroItemList.push(resp)
+        })
       }
     );
      }else{
@@ -709,5 +730,18 @@ actualizarDesc(doc: Documento) {
       this.onUpdate.emit(doc);
     }
   );
+}
+
+order(ele){
+  ele.sort(function (a, b) {
+    if (a.label > b.label) {
+      return 1;
+    }
+    if (a.label < b.label) {
+      return -1;
+    }
+    return 0;
+  });
+  return ele
 }
 }

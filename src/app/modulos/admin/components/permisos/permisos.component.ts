@@ -54,7 +54,7 @@ export class PermisosComponent implements OnInit {
         //     //     }
         //     // })
         // );
-        console.log(this.areaList);
+        // console.log(this.areaList);
         this.selectArea_areaPadre();
 
         this.perfilesList.push({ label: '--Seleccione--', value: null });
@@ -179,7 +179,7 @@ export class PermisosComponent implements OnInit {
     }
 
     createArbol(data){        
-        console.log(data)
+        // console.log(data)
         data.data.forEach(element => {
             // console.log(element)
             this.areaList.push({label: element.nombre, value : element.id})
@@ -187,11 +187,11 @@ export class PermisosComponent implements OnInit {
                 this.createArbolHijo(element.nombre,element.areaList)
             }
         });
-        console.log('lista',this.areaList)
+        // console.log('lista',this.areaList)
     }
 
     createArbolHijo(nombrePadre, dataHijo){
-        console.log(dataHijo)
+        // console.log(dataHijo)
         dataHijo.forEach(element => {
             // console.log(element)
             this.areaList.push({label: element.nombre + " - " +  nombrePadre, value : element.id})

@@ -4,17 +4,14 @@
       [loading]="loading">
       <ng-template pTemplate="header">
         <tr>
-          <!-- <th pSortableColumn="fechaReporte" *ngIf="idEmpresa!='22'">Fecha registro
-            <p-sortIcon field="fechaReporte"></p-sortIcon>
-          </th> -->
           <th pSortableColumn="fechaAccidente">Fecha accidente
             <p-sortIcon field="fechaAccidente"></p-sortIcon>
           </th>
-          <!-- <th pSortableColumn="numerofurat" *ngIf="idEmpresa=='22'">No. FURAT
-            <p-sortIcon field="numerofurat"></p-sortIcon>
-          </th> -->
           <th pSortableColumn="id">Codigo
             <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="empresa.razonSocial">Razón social
+            <p-sortIcon field="empresa.razonSocial"></p-sortIcon>
           </th>
           <th pSortableColumn="primerNombreEmpleado">Nombres
             <p-sortIcon field="primerNombreEmpleado"></p-sortIcon>
@@ -28,19 +25,22 @@
           <th pSortableColumn="tipo">Tipo reporte
             <p-sortIcon field="tipo"></p-sortIcon>
           </th>
+          <th pSortableColumn="areaAccidente.padreNombre">División/Unidad
+            <p-sortIcon field="areaAccidente.padreNombre"></p-sortIcon>
+          </th>
+          <th pSortableColumn="areaAccidente.nombre">Ubicación
+            <p-sortIcon field="areaAccidente.nombre"></p-sortIcon>
+          </th>
         </tr>
         <tr>
-          <!-- <td *ngIf="idEmpresa!='22'">
-            <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaReporte', 'bt')"></s-rangoFechaSelector>
-          </td> -->
           <td>
             <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaAccidente', 'bt')"></s-rangoFechaSelector>
           </td>
-          <!-- <td *ngIf="idEmpresa=='22'">
-            <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'numerofurat', 'contains')">
-          </td> -->
           <td>
             <input pInputText type="number" min="0" (input)="dt.filter($event.target.value, 'id', 'equals')">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'empresa.razonSocial', 'contains')">
           </td>
           <td>
             <input pInputText type="text" (input)="dt.filter($event.target.value, 'primerNombreEmpleado', 'contains')">
@@ -54,18 +54,25 @@
           <td>
             <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipo', 'contains')">
           </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'areaAccidente.padreNombre', 'contains')">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'areaAccidente.nombre', 'contains')">
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-reporte>
         <tr [pSelectableRow]="reporte">
-          <!-- <td *ngIf="idEmpresa!='22'">{{reporte.fechaReporte | date:'dd/MM/yyyy'}}</td> -->
           <td>{{reporte.fechaAccidente | date:'dd/MM/yyyy'}}</td>
-          <!-- <td *ngIf="idEmpresa=='22'">{{reporte.numerofurat}}</td> -->
           <td>RAI-{{reporte.id}}</td>
+          <td>{{reporte.empresa.razonSocial}}</td>
           <td>{{reporte.primerNombreEmpleado}}</td>
           <td>{{reporte.primerApellidoEmpleado}}</td>
           <td>{{reporte.numeroIdentificacionEmpleado}}</td>
           <td>{{reporte.tipo}}</td>
+          <td>{{reporte.areaAccidente.padreNombre}}</td>
+          <td>{{reporte.areaAccidente.nombre}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary" let-rowData>

@@ -133,7 +133,7 @@
         </div>
         <div class="input-field">
             <div class="ui-g-6">
-                <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">La empresa es temporal: </label>
+                <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">Empresa de servicios temporales: </label>
                 <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onEsTemporal()" [style]="{'padding':'3px'}" name="temporal" value="Si" label="Sí" [(ngModel)]="istemporal" [ngModelOptions]="{standalone: true}" required></p-radioButton>
                 <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onEsTemporal()" [style]="{'padding':'3px'}" name="temporal" value="No" label="No" [(ngModel)]="istemporal" [ngModelOptions]="{standalone: true}" required></p-radioButton>
             </div>

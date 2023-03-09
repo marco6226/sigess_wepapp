@@ -38,6 +38,7 @@ export class DocumentoUploadComponent implements OnInit {
         { label: "FURAT", value: "FURAT" },
         { label: "Investigación de AT", value: "Investigación de AT" },
         { label: "Reportes a EPS y/o entes territoriales", value: "Reportes a EPS y/o entes territoriales" },
+        { label: "Evidencias plan de acción", value: "Evidencias plan de acción" },
         { label: "Otros", value: "Otros" }
     ]
 

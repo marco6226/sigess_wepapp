@@ -31,7 +31,8 @@ export class ConsultarReporteTemporalComponent implements OnInit {
     'tipo',
     'numerofurat',
     'temporal',
-    'empresa'
+    'empresa',
+    'areaAccidente'
   ];
   sortedTable:string="fechaAccidente";
   constructor(
@@ -65,6 +66,7 @@ export class ConsultarReporteTemporalComponent implements OnInit {
             ,primerNombreEmpleado:dto[7]
             ,temporal:dto[8]
             ,tipo:dto[9]
+            ,areaAccidente:dto[10]
           }
           console.log(resp1)
           this.reportesList.push(FilterQuery.dtoToObject(resp1));
