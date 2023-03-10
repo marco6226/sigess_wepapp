@@ -2,26 +2,23 @@
 <p-panel [header]="'HORA HOMBRES TRABAJADAS'">
     <p-accordion [multiple]="true">
         <div class="p-fluid p-grid p-formgrid">
-            <div class="ui-g-12 ui-sm-12 ui-md-2">
-                Seleccionar año:
-            </div>
-            <div class="p-field p-col-12 p-md-4">
+            <div class="ui-g-3 ui-md-3 ui-sm-12">
+                <label for="">Seleccionar año:</label>
                 <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" (onChange)="onSelectAnio($event)"></p-dropdown>
             </div>
-            <div class="ui-g-12 ui-sm-12 ui-md-2">
-                Seleccionar empresa:
-            </div>
-            <div class="ui-g-12 ui-sm-12 ui-md-4">
+            <div class="ui-g-3 ui-sm-12 ui-md-3">
+                <label for="">Seleccionar empresa:</label>
                 <p-dropdown appendTo="body" [options]="Empresas" placeholder="Seleccionar empresa" (onChange)="onSelectEmpresa($event)"></p-dropdown>
             </div>
-        </div>
-        <ng-container *ngIf="mostrarForm">
+        </div><br><hr><br>
+        <ng-container> <!--  *ngIf="mostrarForm" -->
             <div class="ui-g">
-                <div class="ui-g-6 ui-sm-12 ui-md-2">
-                    Meta total:
-                </div>
-                <div class="ui-g-6 ui-sm-12 ui-md-2">
-                    <input pInputText [(ngModel)]="metaAnualILI" placeholder="0" type="number"/>
+                <div class="ui-g-3 ui-sm-12 iu-md-3">
+                    <label for="" style="margin-right: 10px;">Mes a editar:</label>
+                    <p-dropdown [options]="meses"
+                    [(ngModel)]="selectedMes"
+                    placeholder="--Seleccione--"
+                    [showClear]="true"></p-dropdown>
                 </div>
                 <!-- <div class="ui-g-6 ui-sm-12 ui-md-2" >
                     Meta Mensual ILI:
@@ -30,20 +27,32 @@
                     <input pInputText [(ngModel)]="metaMensualILI" placeholder="0" type="number"/>
                 </div> -->
             </div>
+            <div class="ui-g" style="margin-top: 20px;">
+                <div class="ui-g-3 ui-sm-12 ui-md-3" *ngIf="anioSelected && empresaSelected">
+                    <label for="" style="margin-right: 10px;">Meta total para {{findEmpresaById(empresaSelected)}}:</label>
+                    <input pInputText [(ngModel)]="metaAnualILI" placeholder="0" type="number"/>
+                </div>
+            </div>
             <ng-container *ngFor="let mes of meses; let i = index;">
-                <p-accordionTab header={{mes.label}}>
+                <p-accordionTab *ngIf="mes.value === selectedMes" header={{mes.label}} [selected]="true" [disabled]="true">
                     <div class="ui-g">
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
                             Total mes No. PERSONAS:
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
-                            <input pInputText readonly [(ngModel)]="dataHHT[i].NumPersonasMes" placeholder="0" type="number"/>
+                            <input pInputText readonly 
+                            *ngIf="dataHHT.length > 0"
+                            [(ngModel)]="dataHHT[i].NumPersonasMes" 
+                            placeholder="0" type="number"/>
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2" >
                             Total mes HHT:
                         </div>
                         <div class="ui-g-6 ui-sm-6 ui-md-2">
-                            <input pInputText readonly [(ngModel)]="dataHHT[i].HhtMes" placeholder="0" type="number"/>
+                            <input pInputText readonly
+                            *ngIf="dataHHT.length > 0" 
+                            [(ngModel)]="dataHHT[i].HhtMes" 
+                            placeholder="0" type="number"/>
                         </div>
                     </div>
                     
@@ -59,6 +68,7 @@
                                         <input pInputText [readonly]="tienePlantas(area.id)" 
                                         placeholder="0"
                                         (keyup)="calcularTotalesMes(i)"
+                                        *ngIf="dataHHT[i]"
                                         [(ngModel)]="dataHHT[i].Areas[j].NumPersonasArea" 
                                         type="number"/>
                                     </div>
@@ -68,7 +78,8 @@
                                     <div class="ui-g-2 ui-sm-12 ui-md-2">
                                         <input pInputText [readonly]="tienePlantas(area.id)" 
                                         placeholder="0"
-                                        (keyup)="calcularTotalesMes(i)" 
+                                        (keyup)="calcularTotalesMes(i)"
+                                        *ngIf="dataHHT[i]"
                                         [(ngModel)]="dataHHT[i].Areas[j].HhtArea" 
                                         type="number"/>
                                     </div>
@@ -76,7 +87,9 @@
                                         Meta {{area.nombre}}:
                                     </div>
                                     <div class="ui-g-2 ui-sm-12 ui-md-2">
-                                        <input pInputText placeholder="0" 
+                                        <input pInputText placeholder="0"
+                                        *ngIf="dataHHT[i]"
+                                        (keyup)="setMetaPorArea(j, dataHHT[i].Areas[j].ILIArea)"
                                         [(ngModel)]="dataHHT[i].Areas[j].ILIArea" 
                                         type="number"/>
                                     </div>
@@ -84,7 +97,7 @@
 
                                 <div *ngIf="plantasList">
                                 <!-- <div> -->
-                                    <ng-container *ngFor="let pl of getPlantasByArea(area.id); let k = index;">
+                                    <ng-container *ngFor="let pl of getPlantasByArea(area.id); let k = index;"><!-- {{test([i,j,k])}} -->
                                     <!-- <ng-container *ngFor="let pl of plantasList; let k = index;"> -->
                                         <p-accordionTab header={{pl.nombre}}>
                                             <div class="ui-g">
@@ -92,7 +105,8 @@
                                                     No. PERSONAS:
                                                 </div>
                                                 <div class="ui-g-6 ui-sm-12 ui-md-2">
-                                                    <input pInputText placeholder="0" 
+                                                    <input pInputText placeholder="0"
+                                                    *ngIf="dataHHT[i]"
                                                     [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].NumPersonasPlanta" 
                                                     (keyup)="calcularTotalesPorArea(i, j)" 
                                                     type="number"/>
@@ -101,7 +115,8 @@
                                                     HHT:
                                                 </div>
                                                 <div class="ui-g-6 ui-sm-12 ui-md-2" #acordionTab>
-                                                    <input pInputText placeholder="0" 
+                                                    <input pInputText placeholder="0"
+                                                    *ngIf="dataHHT[i]"
                                                     [(ngModel)]="dataHHT[i].Areas[j].Plantas[k].HhtPlanta" 
                                                     (keyup)="calcularTotalesPorArea(i, j)" 
                                                     type="number"/>

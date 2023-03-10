@@ -10,7 +10,7 @@ import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
 import { HhtService } from "app/modulos/empresa/services/hht.service";
 import { SesionService } from "app/modulos/core/services/sesion.service";
-import { DataHht } from "app/modulos/empresa/entities/hht";
+import { DataHht, Hht } from "app/modulos/empresa/entities/hht";
 // import { multi} from './data';
 
 class division {
@@ -33,7 +33,7 @@ class division {
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
   
   ili:number=0.0171;
-  metaIli:number=0.02953;
+  metaIli:number=0;
   colorIli?:string;
   categoriesCombo: any=[];
   seriesCombo: any=[];
@@ -422,9 +422,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   loadResumen(){
+    
+    let date: Date = new Date(new Date(this.hastas).setMonth(new Date(this.hastas).getMonth()+1));
     this.reporteAtService.findAllRAT().then(async (resp)=>{
       this.reporteat = resp
-      let date: Date = new Date(new Date(this.hastas).setMonth(new Date(this.hastas).getMonth()+1));
       let result: any[] = await this.reporteat.filter(word => {
         return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< date
       });
@@ -444,6 +445,25 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                                       }, 0);
         }
       });
+    });
+
+    let filterQuery = new FilterQuery();
+    let empresaId = this.sessionService.getEmpresa().id; 
+    filterQuery.sortOrder = SortOrder.ASC;
+    filterQuery.sortField = "id";
+    filterQuery.filterList = [
+      {criteria: Criteria.EQUALS, field: "anio", value1: date.getFullYear().toString()},
+      {criteria: Criteria.EQUALS, field: "empresaSelect", value1: empresaId}
+    ];
+    this.hhtService.findByFilter(filterQuery)
+    .then((res: any) => {
+      if(res.data.length > 0){
+        // console.log('res:',res);
+        // console.log('data',res.data);
+        // console.log('ILI_Anual:', JSON.parse(res.data[0].valor).ILI_Anual);
+        this.metaIli = JSON.parse(res.data[0].valor).ILI_Anual;
+        // console.log('meta', this.metaIli);
+      }
     });
   }
 
@@ -1201,7 +1221,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                               return count2 + incapacidades.diasAusencia;
                                             }, 0);
                                           }, 0);
-        console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad);
+        // console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad);
 
         let IF = (accidentesConDiasPerdidos/hhtCorona) * 240000;
         let IS = (totalDiasSeveridad/hhtCorona*240000);
@@ -1300,7 +1320,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let IF = (accidentesConDiasPerdidos/hhtCorona)*240000;
         let IS = (totalDiasSeveridad/hhtCorona*240000);
         let ILI = (IF*IS)/1000;
-        console.log(accidentesConDiasPerdidos, hhtCorona, totalDiasSeveridad, IF, IS, ILI);
+        // console.log(accidentesConDiasPerdidos, hhtCorona, totalDiasSeveridad, IF, IS, ILI);
         
         data.data.push(isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(4)));
       });
