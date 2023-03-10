@@ -100,7 +100,6 @@ export class ConsultaDesviacionComponent implements OnInit {
       resp => {
         this.totalRecords = resp['count'];
         this.loading = false;
-        console.log(resp);
         this.desviacionesList = resp['data'];
         this.empresaId = this.desviacionesList[0].empresaId
       }
@@ -222,7 +221,6 @@ export class ConsultaDesviacionComponent implements OnInit {
   
       this.desviacionService.findByFilter().then(
         resp => {
-          console.log(resp);
           getDatosDesv = resp['data'];
         }
       )

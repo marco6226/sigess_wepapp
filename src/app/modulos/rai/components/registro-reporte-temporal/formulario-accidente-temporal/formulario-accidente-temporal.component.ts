@@ -493,7 +493,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       this.planAccion = JSON.parse(resp[0].plan_accion);
       this.formplanaccion.patchValue({
         avance: this.planAccion['avance'],
-        fechaCierre: new Date(this.planAccion['fechaCierre']),
+        fechaCierre: this.planAccion['fechaCierre']?new Date(this.planAccion['fechaCierre']):null,
         descripcion: this.planAccion['descripcion']
       })
       this.setFactorCausal();

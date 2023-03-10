@@ -18,6 +18,7 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
   @Input() causasRaiz: Causa_Raiz;
   @Output() dataFC = new EventEmitter<FactorCausal>();
   @Output() validators2 =new EventEmitter<boolean>();
+  @Input() consultar: boolean=false;
   // @Output() dataCR = new EventEmitter<Causa_Raiz[]>();
 
   pasoSelect=0;
@@ -241,20 +242,14 @@ export class FactorCausalComponent implements OnInit, AfterViewInit {
 
    
     onNodeSelect(event) {
-      console.log(event);
-
-      if(event.node.data.name=='No'){
-        event.node.data.name='Si'
-      }else if(event.node.data.name=='Si'){
-        event.node.data.name='No'
+      if(!this.consultar){
+        if(event.node.data.name=='No'){
+          event.node.data.name='Si'
+        }else if(event.node.data.name=='Si'){
+          event.node.data.name='No'
+        }
+        this.dataFC.emit(this.factorCausal);
       }
-      console.log(this.datos);
-
-      // this.dataCR.emit(this.datos);
-      console.log(this.factorCausal);
-      this.dataFC.emit(this.factorCausal);
-
-      // this.messageService.add({severity: 'success', summary: 'Node Selected', detail: event.node.label
     }
 
 

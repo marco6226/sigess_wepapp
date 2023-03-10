@@ -303,7 +303,7 @@
             </p-accordionTab>
             <p-accordionTab header="VII. INVESTIGACIÓN" *ngFor="let data of factorCausal">
                 <div >
-                    <app-factor-causal (dataFC)="setListDataFactor()" (validators2)="getValidator($event)"[factorCausal]="data"></app-factor-causal>
+                    <app-factor-causal (dataFC)="setListDataFactor()" (validators2)="getValidator($event)"[factorCausal]="data" [consultar]="consultar"></app-factor-causal>
                 </div>
             </p-accordionTab>
             <p-accordionTab header="VIII. LISTADO DE CAUSAS">

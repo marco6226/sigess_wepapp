@@ -2,6 +2,12 @@
     <div style="width: 100%;">
       <p-panel header="Clasificación eventos">
         <div class="p-grid  p-mt-3 p-jc-evenly colorsitos colorfondo">
+            <div class="col-md-10">
+                <p-radioButton name="group1" label="Total " [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra0" (onClick)="CardsClasificacion()"></p-radioButton>
+                <p-radioButton name="group1" label=" Temporales " [value]="1" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra0" (onClick)="CardsClasificacion()"></p-radioButton>
+                <p-radioButton name="group1" label=" Directos " [value]="2" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra0" (onClick)="CardsClasificacion()"></p-radioButton>
+            </div>
+            <div class="col-md-10">&nbsp;</div>
             <div class="col-md-10 ">
                 <div class="row ">
                     <div class="col-xl-3 col-lg-6">
@@ -71,11 +77,11 @@
                     <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones2" placeholder="Seleccionar división" (onChange)="CardsClasificacion()" [(ngModel)]="selectArea"></p-dropdown></div>
                     <div class="p-d-flex">  
                         <i style="font-size:24px" class="fa">&#xf073;</i>   
-                        <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="date1" (ngModelChange)="CardsClasificacion()"> </p-calendar> 
+                        <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="date1" (ngModelChange)="CardsClasificacion()" [showButtonBar]="true"> </p-calendar> 
                     </div>
                     <div class="p-d-flex"> 
                         <i style="font-size:24px" class="fa">&#xf073;</i> 
-                        <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="date2" (ngModelChange)="CardsClasificacion()"> </p-calendar>
+                        <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="date2" (ngModelChange)="CardsClasificacion()" [showButtonBar]="true"> </p-calendar>
                     </div>
                 </div>
             </div>
@@ -84,8 +90,7 @@
       <br>
       <p-panel header="{{NombreGra1[radioGra1_1]}}">
         <div class="colorfondo">
-            <div class="ui-g" *ngIf="flagevent1">    
-
+            <div class="ui-g" *ngIf="flagevent1">
                 <p><b>
                     <ng-container *ngIf="selectEv1.length>0">
                         <ng-container *ngFor="let ret of selectEv1;first as f;last as l">
@@ -139,11 +144,11 @@
                 <div class="ui-g-8">
                     <div class="ui-g-6">  
                     <i style="font-size:24px" class="fa">&#xf073;</i>   
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body" [(ngModel)]="date3" (ngModelChange)="DatosGrafica1()"> </p-calendar> 
+                    <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body" [(ngModel)]="date3" (ngModelChange)="DatosGrafica1()"> </p-calendar> 
                     </div>
                     <div class="ui-g-6"> 
                     <i style="font-size:24px" class="fa">&#xf073;</i> 
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body" [(ngModel)]="date4" (ngModelChange)="DatosGrafica1()"> </p-calendar>
+                    <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body" [(ngModel)]="date4" (ngModelChange)="DatosGrafica1()"> </p-calendar>
                     </div>
                 </div>
                 </div>
@@ -402,11 +407,11 @@
                 <div class="ui-g-8">
                     <div class="ui-g-6">  
                     <i style="font-size:24px" class="fa">&#xf073;</i>   
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body" [(ngModel)]="date9" (ngModelChange)="DatosGrafica5()"> </p-calendar> 
+                    <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body" [(ngModel)]="date9" (ngModelChange)="DatosGrafica5()"> </p-calendar> 
                     </div>
                     <div class="ui-g-6"> 
                     <i style="font-size:24px" class="fa">&#xf073;</i> 
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body" [(ngModel)]="date10" (ngModelChange)="DatosGrafica5()"> </p-calendar>
+                    <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body" [(ngModel)]="date10" (ngModelChange)="DatosGrafica5()"> </p-calendar>
                     </div>
                 </div>
                 </div>

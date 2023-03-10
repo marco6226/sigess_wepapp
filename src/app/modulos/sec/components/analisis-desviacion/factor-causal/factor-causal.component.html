@@ -16,7 +16,7 @@
             <h2 class="titulos"><b>{{items.tipoDesempeno}}</b></h2>
             <fieldset  *ngFor="let item of items.desempeno" >
               <div *ngIf="item.selected">
-                <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)"></button>
+                <button pButton class="showModal" icon="pi pi-search" (click)="showDialog(item)" *ngIf="!consultar"></button>
               </div>
               <div >
                 <label>{{item.id + 1}} - {{item.pregunta}} </label>
@@ -26,8 +26,8 @@
                 <br>
                 <div>
                   <div class="buttons">
-                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)"></p-radioButton>
-                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="Si  " [value]="true"  [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, true)" [disabled]="consultar"></p-radioButton>
+                    <p-radioButton [name]="item.dq" label="No  " [value]="false" [(ngModel)]="item.selected" (onClick)="changeSelection(item.id, false)" [disabled]="consultar"></p-radioButton>
                   </div>                  
                 </div>
                 <br>
@@ -43,7 +43,6 @@
         <div  *ngIf="pasoSelect==1"  class="ui-g-12 ui-sm-12 ui-md-12">               
           <p-scrollPanel [style]="{width: '90%', height: '100%'}">
             <p-fieldset [legend]="Craiz.label" [toggleable]="true" *ngFor="let Craiz of factorCausal.causa_Raiz">
-              
                 <p-organizationChart [value]="[Craiz]" selectionMode="single" [(selection)]="selectedNode" (onNodeUnselect)="onNodeSelect($event)" (onNodeSelect)="onNodeSelect($event)"
                   styleClass="company">
                   <ng-template let-node pTemplate="person">

@@ -148,6 +148,9 @@ export class IndCaracterizacionComponent implements OnInit {
   datosGrafica5Top:any=[];
   datosGrafica6Top:any=[];
 
+  radioGra0:number=0
+  radioGra0_1:number=0
+
   radioGra1:number=0
   radioGra1_1:number=0
 
@@ -244,7 +247,6 @@ export class IndCaracterizacionComponent implements OnInit {
 
   async ngOnInit() {
     this.cargarTiposPeligro();
-
     let cargofiltQuery = new FilterQuery();
     cargofiltQuery.sortOrder = SortOrder.ASC;
     cargofiltQuery.sortField = "nombre";
@@ -338,8 +340,21 @@ export class IndCaracterizacionComponent implements OnInit {
     this.ContMortal=0;
 
     this.CaracterizacionView1.forEach(element => {
-      if(this.selectArea.length==0 || this.selectArea.toString()=='Corona total')this.ContCardsClasificacion(element);
-      if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
+      if(this.radioGra0==0){
+        if(this.selectArea.length==0 || this.selectArea.toString()=='Corona total')this.ContCardsClasificacion(element);
+        if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
+      }
+      if(this.radioGra0==1 && element.emptemporal!=null){
+        if(this.selectArea.length==0 || this.selectArea.toString()=='Corona total')this.ContCardsClasificacion(element);
+        if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
+      }
+      if(this.radioGra0==2 && element.emptemporal==null){
+        if(this.selectArea.length==0 || this.selectArea.toString()=='Corona total')this.ContCardsClasificacion(element);
+        if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
+      }
+
+
+
     });
   }
 
@@ -2076,15 +2091,12 @@ DatosGrafica6(){
     this.datosGrafica6.push({name:'Superficies, materiales y pinturas',series:this.order(this.graf6_7)})    
   }
  
-
-
   /////Comun/////
   difAnios(date, otherDate):Number{
     var tiempo=otherDate.getTime() - date.getTime()
     var anios = (Math.floor(tiempo / (1000 * 60 * 60 * 24)))/365;
     return Math.floor(anios)
   }
-
 
   ordenarMap(map,ordermap){
     let maporder=[]
@@ -2102,6 +2114,7 @@ DatosGrafica6(){
     });
     return maporder
   }
+  
   order(ele){
     ele.sort(function (a, b) {
       if (a.value < b.value) {
@@ -2158,9 +2171,7 @@ DatosGrafica6(){
         this.peligroItemList = [{ label: '--Seleccione Peligro--', value: [null, null]}];
      }
   }
-  cargaDatos(){
 
-  }
   SelectPeligro(a: string){
     this.cargarPeligro(a)
   }
@@ -2184,6 +2195,7 @@ DatosGrafica6(){
     })
     return dato2
   }
+
   contTotal(datos){
     let name=[]
     let datosGrafica_total=[]

@@ -28,9 +28,7 @@ export class RangoFechaSelectorComponent implements OnInit {
   }
 
   onSelect(event: any) {
-    // if (this.desde != null || this.hasta != null) {
     this.onSelection.emit([this.desde, this.hasta]);
-    // }
   }
 
 }
