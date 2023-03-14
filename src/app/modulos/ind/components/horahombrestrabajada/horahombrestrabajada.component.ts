@@ -23,8 +23,8 @@ import { Empresa } from 'app/modulos/empresa/entities/empresa';
 })
 export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
   fechaActual = new Date();
-  areaList: Area[] = null;
-  plantasList: Plantas[] = null;
+  areaList: Area[] = [];
+  plantasList: Plantas[] = [];
   dateValue= new Date();
   añoPrimero:number=2015;
   añoActual:number=this.dateValue.getFullYear();
@@ -34,7 +34,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
   empresaSelected: string;
   mostrarForm: boolean = false;
   guardarFlag:boolean=true;
-  dataHHT:DataHht[] = null;
+  dataHHT:DataHht[] = [];
   listaHHT: Hht[] = [];
   metaAnualILI: number = null;
   metaMensualILI: number = null;
@@ -54,6 +54,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     {label: 'Noviembre', value: 'Noviembre'},
     {label: 'Diciembre', value: 'Diciembre'}
   ];
+  selectedMes: string;
   Empresas: Array<any> = [
     // {label: 'Corona', value: '22'},
     // {label: 'Temporal uno', value: '12341'},
@@ -109,21 +110,23 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     areafiltQuery.filterList = [
       { criteria: Criteria.EQUALS, field: "nivel", value1: "0" },
     ];
-    await this.areaService.findByFilter(areafiltQuery).then(
+    this.areaService.findByFilter(areafiltQuery).then(
       resp => {
-        this.areaList = <Area[]>resp['data'];
+        this.areaList = (<Area[]>resp['data']).map(area => area);
       }
     );
+    console.info('Areas cargadas');
   }
 
   async getPlantas(empresaId: number){
-    await this.plantasService.getPlantasByEmpresaId(empresaId)
+    this.plantasService.getPlantasByEmpresaId(empresaId)
       .then((res) => {
-        this.plantasList = <Plantas[]>res;
+        this.plantasList = (<Plantas[]>res).map(planta => planta);
       }).catch(err => {
         this.plantasList = [];
         console.error('Sin plantas: ',err);
-      })
+      });
+      console.info('Plantas cargadas');
   }
 
   onSelectAnio(event: number){
@@ -174,25 +177,10 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
 
   async loadDataOnForm(){
     this.meses.forEach((mes, index) => {
-      let hht = this.listaHHT.filter(hht => hht.mes === mes.value)[0];
+      let hht = this.listaHHT.find(hht => hht.mes === mes.value);
       let data = <DataHht>JSON.parse(hht.valor).Data;
       this.metaAnualILI = JSON.parse(hht.valor).ILI_Anual;
       this.metaMensualILI = JSON.parse(hht.valor).ILI_Mensual;
-      // let totalHombres = 0;
-      // let totalHHT = 0;
-      // data.Areas.forEach(area => {
-      //   if(area.Plantas.length > 0){
-      //     totalHombres += area.Plantas.reduce((count, planta) => {
-      //       return count + planta.NumPersonasPlanta;
-      //     }, 0);
-      //     totalHHT += area.Plantas.reduce((count, planta) => {
-      //       return count + planta.HhtPlanta;
-      //     }, 0);
-      //   }else{
-      //     totalHombres += area.NumPersonasArea;
-      //     totalHHT += area.HhtArea;
-      //   }
-      // });
       this.dataHHT[index] ={
         id: Number(hht.id),
         mes: mes.value,
@@ -205,15 +193,15 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
           this.calcularTotalesPorArea(index, indexAr);
         }
       });
-      
       this.calcularTotalesMes(index);
     });
   }
 
   async initFormHHT(){
     this.dataHHT = [];
+    let tempDataHHT: DataHht[] = []; 
     this.meses.forEach((mes, index) => {
-      this.dataHHT.push({
+      tempDataHHT.push({
         id: index,
         mes: mes.value,
         NumPersonasMes: null,
@@ -234,10 +222,16 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
           }
         })
       });
+      // console.timeLog('areas');
     });
+    
+    this.dataHHT = Array.from(tempDataHHT);
   }
 
   getPlantasByArea(id: any): Plantas[]{
+    if(!this.plantasList){
+      return null;
+    }
     let plantas = this.plantasList.filter(pl => pl.id_division == id);
     return plantas.length > 0 ? plantas: null;
   }
@@ -331,6 +325,17 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
     this.dataHHT[mesIndex].Areas[areaIndex].NumPersonasArea = totalPersonas;
     this.dataHHT[mesIndex].Areas[areaIndex].HhtArea = totalHHT;
     this.calcularTotalesMes(mesIndex);
+  }
+
+  findEmpresaById(id: string){
+    return this.Empresas.find(emp => emp.value == id).label;
+  }
+
+  setMetaPorArea(indiceArea: number, meta: number){
+    // console.log(indiceArea, meta);
+    this.meses.forEach((mes, index) => {
+      this.dataHHT[index].Areas[indiceArea].ILIArea = meta;
+    });
   }
 
 }
