@@ -68,10 +68,12 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     loadNodes(event: any) {
+        console.log(this.directorioList)
         this.cargarRaiz(event);
     }
 
     cargarRaiz(event) {
+        console.log(event)
         this.nodoPadre = null;
         // Busca los directorios del directorio seleccionado
 
@@ -106,20 +108,23 @@ export class GestionDocumentalComponent implements OnInit {
         filterCase.field = 'caseId';
         filterQuery.filterList = [filterPadre, filterEliminado, filterCase];
 
-        let filterAdo = new Filter();
-        filterAdo.criteria = Criteria.EQUALS;
-        filterAdo.field = 'documento.modulo';
-        filterAdo.value1 = 'ADO';
-        filterQuery.filterList = [filterPadre, filterEliminado,filterCase,filterAdo];
+        // let filterAdo = new Filter();
+        // filterAdo.criteria = Criteria.EQUALS;
+        // filterAdo.field = 'documento.modulo';
+        // filterAdo.value1 = 'ADO';
+        // filterQuery.filterList = [filterPadre, filterEliminado,filterCase,filterAdo];
 
         if (this.caseid) {
             filterCase.criteria = Criteria.EQUALS;
             filterCase.value1 = this.caseid;
         }
 
+        this.directorioService.findAll().then(resp=>console.log(resp))
+        console.log(filterQuery)
         return this.directorioService.findByFilter(filterQuery).then((data) => {
             this.totalRecords = data['count'];
             let dirList = this.inicializarFechas(<Directorio[]>data['data']);
+            console.log(dirList)
             // console.log(1);
             // console.log(2);
 
@@ -490,6 +495,7 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     onNodeExpand(event: any) {
+        console.log(this.directorioList)
         let nodo = event.node;
         this.loading = true;
         this.consultarNodos(nodo).then((data) => {
@@ -565,6 +571,7 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     buscar(event: any) {
+        console.log(event.rows)
         // if (event.keyCode == 13) {
             this.loading = true;
             let filterQuery = new FilterQuery();
@@ -601,11 +608,11 @@ export class GestionDocumentalComponent implements OnInit {
                 filterCase.value1 = this.caseid;
             }
             filterQuery.filterList.push(filterCase);
-
+            console.log(filterQuery)
             return this.directorioService.findByFilter(filterQuery).then((data) => {
                 this.totalRecords = data['count'];
                 let dirList = this.inicializarFechas(<Directorio[]>data['data']);
-
+                console.log(dirList)
                 this.directorioList = this.generarModelo(dirList, null);
                 this.loading = false;
             });
