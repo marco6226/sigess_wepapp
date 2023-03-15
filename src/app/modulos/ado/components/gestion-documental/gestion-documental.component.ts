@@ -19,6 +19,7 @@ import { Console } from 'console';
     styleUrls: ['./gestion-documental.component.scss'],
 })
 export class GestionDocumentalComponent implements OnInit {
+    @Input('flagSCM') flagSCM: boolean = false;
     growlMsgs: Message[];
     msgs: Message[];
     @Input() caseid: any;
@@ -51,6 +52,7 @@ export class GestionDocumentalComponent implements OnInit {
     sortField;
     rows;
     esConsulta: boolean = false;
+    
 
     constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
@@ -78,6 +80,7 @@ export class GestionDocumentalComponent implements OnInit {
         // Busca los directorios del directorio seleccionado
 
         let filterQuery = new FilterQuery();
+        let filterQuery2 = new FilterQuery();
         filterQuery.sortField = event.sortField;
        // filterQuery.sortOrder = event.sortOrder;
        filterQuery.sortOrder = event.sortOrder;
@@ -106,29 +109,28 @@ export class GestionDocumentalComponent implements OnInit {
         let filterCase = new Filter();
         filterCase.criteria = Criteria.IS_NULL;
         filterCase.field = 'caseId';
-        filterQuery.filterList = [filterPadre, filterEliminado, filterCase];
-
-        // let filterAdo = new Filter();
-        // filterAdo.criteria = Criteria.EQUALS;
-        // filterAdo.field = 'documento.modulo';
-        // filterAdo.value1 = 'ADO';
-        // filterQuery.filterList = [filterPadre, filterEliminado,filterCase,filterAdo];
 
         if (this.caseid) {
             filterCase.criteria = Criteria.EQUALS;
             filterCase.value1 = this.caseid;
         }
 
-        this.directorioService.findAll().then(resp=>console.log(resp))
-        console.log(filterQuery)
+        filterQuery.filterList = [filterPadre, filterEliminado, filterCase];
+
+        if(!this.flagSCM){
+            let filterAdo = new Filter();
+            filterAdo.criteria = Criteria.EQUALS;
+            filterAdo.field = 'modulo';
+            //filterAdo.field = 'documento.modulo';
+            filterAdo.value1 = 'ADO';
+            filterQuery.filterList = [filterPadre, filterEliminado,filterCase,filterAdo];
+        }
+
         return this.directorioService.findByFilter(filterQuery).then((data) => {
+            console.log(data)
             this.totalRecords = data['count'];
             let dirList = this.inicializarFechas(<Directorio[]>data['data']);
-            console.log(dirList)
-            // console.log(1);
-            // console.log(2);
 
-            // console.log(dirList);
             this.directorioList = this.generarModelo(dirList, null);
 
             this.loading = false;
@@ -251,6 +253,7 @@ export class GestionDocumentalComponent implements OnInit {
         dir.nombre = this.nombreCarpeta;
         dir.caseId = this.caseid;
         dir.nivelAcceso="PUBLICO"
+        if(!this.flagSCM)dir.modulo='ADO'
         this.directorioService.create(dir).then((data) => this.gestionarRespuesta(<Directorio>data));
     }
     gestionarRespuesta(dir: Directorio) {
@@ -571,6 +574,8 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     buscar(event: any) {
+        setTimeout(() => {
+        console.log(event)
         console.log(event.rows)
         // if (event.keyCode == 13) {
             this.loading = true;
@@ -603,21 +608,32 @@ export class GestionDocumentalComponent implements OnInit {
             filterCase.criteria = Criteria.IS_NULL;
             filterCase.field = 'caseId';
 
+
             if (this.caseid) {
                 filterCase.criteria = Criteria.EQUALS;
                 filterCase.value1 = this.caseid;
             }
             filterQuery.filterList.push(filterCase);
+            console.log(this.flagSCM)
+
+            if(!this.flagSCM){
+                let filterAdo = new Filter();
+                filterAdo.criteria = Criteria.EQUALS;
+                //filterAdo.field = 'documento.modulo';
+                filterAdo.field = 'modulo';
+                filterAdo.value1 = 'ADO';
+                filterQuery.filterList.push(filterAdo);}
+
             console.log(filterQuery)
             return this.directorioService.findByFilter(filterQuery).then((data) => {
+                console.log(data)
                 this.totalRecords = data['count'];
                 let dirList = this.inicializarFechas(<Directorio[]>data['data']);
-                console.log(dirList)
                 this.directorioList = this.generarModelo(dirList, null);
                 this.loading = false;
             });
         // }
-        console.log(event)
+    }, 500);
     }
     getNivelAcceso(event, dataNode?: Directorio) {
         if (dataNode != null) {

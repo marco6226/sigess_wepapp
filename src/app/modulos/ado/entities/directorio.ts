@@ -13,4 +13,5 @@ export class Directorio {
     tamanio: number;
     fechaCreacion: Date;
     nivelAcceso: string;
+    modulo: string
 }

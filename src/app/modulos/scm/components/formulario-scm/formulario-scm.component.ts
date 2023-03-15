@@ -222,6 +222,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     businessNames = "";
     nameAndLastName = "";
     solicitando: boolean = false;
+    flagSCM:boolean=true;
     departamento;
     entity: epsorarl = { EPS: [], ARL: [], AFP: [], Medicina_Prepagada: [], Proveedor_de_salud: [] };
     tipoOptionList = [
@@ -244,7 +245,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { label: "No", value: "0" },
         { label: "En Seguimiento", value: "2" },
         { label: "No Aplica", value: "3" },
-
     ]
     IntervencionOptionList = [
         { label: "--Seleccione--", value: null },

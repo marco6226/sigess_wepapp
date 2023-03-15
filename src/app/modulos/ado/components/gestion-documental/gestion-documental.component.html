@@ -16,7 +16,7 @@
                 <i class="fa fa-search"   ></i>
             </span>
            
-            <input type="text" pInputText placeholder="Buscar documento" [(ngModel)]="criterioBusqueda" (keypress)="buscar($event)" />
+            <input type="text" pInputText placeholder="Buscar documento" [(ngModel)]="criterioBusqueda" (keydown)="buscar($event)" />
         </div>
     </p-header>
     <div class="ui-g">
