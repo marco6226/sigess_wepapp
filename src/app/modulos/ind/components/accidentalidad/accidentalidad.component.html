@@ -18,7 +18,7 @@
                                   <div class="row align-items-center mb-2 d-flex">
                                       
                                       <div class="col-4 text-right">
-                                          <span class="tamañotexto">{{this.NoEventos}}</span>
+                                          <span class="tamañotexto">{{this.NoEventos || 0}}</span>
                                       </div>
                                   </div>
                                   
@@ -35,7 +35,7 @@
                                   <div class="row align-items-center mb-2 d-flex">
                                       
                                       <div class="col-4 text-right">
-                                          <span class="tamañotexto">{{this.diasPerdidos}}</span>
+                                          <span class="tamañotexto">{{this.diasPerdidos || 0}}</span>
                                       </div>
                                   </div>
                                   
@@ -52,7 +52,7 @@
                                   <div class="row align-items-center mb-2 d-flex">
                                       
                                       <div class="col-4 text-left">
-                                          <span class="tamañotexto">{{ili}}</span>
+                                          <span class="tamañotexto">{{ili || 0}}</span>
                                       </div>
                                   </div>
                                   
@@ -68,7 +68,7 @@
                                   </div>
                                   <div class="row align-items-center mb-2 d-flex">
                                       <div class="col-4 text-left">
-                                          <span class="tamañotexto">{{metaIli}}</span>
+                                          <span class="tamañotexto">{{metaIli || 0}}</span>
                                       </div>                                     
                                   </div>
                               </div>
@@ -78,7 +78,7 @@
               </div>
               <div class="p-col-6 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
-                      <div class="p-d-flex"><p class="p-m-0" style="margin-right: 10px!important;">División:</p> <p-dropdown appendTo="body" [options]="divisiones" [(ngModel)]="selectedDivisionResumen" placeholder="Seleccionar división" (onChange)="loadResumen()"></p-dropdown></div>
+                      <div class="p-d-flex"><p class="p-m-0" style="margin-right: 10px!important;">División:</p> <p-dropdown appendTo="body" [options]="divisiones" [(ngModel)]="selectedDivisionResumen" placeholder="Seleccionar división" [showClear]="true" (onChange)="loadResumen()"></p-dropdown></div>
                       <div class="p-d-flex">  
                           <i style="font-size:24px" class="fa">&#xf073;</i>   
                           <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="loadResumen()" > </p-calendar>
@@ -336,15 +336,22 @@
 
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
           <h5>Año</h5>
-          <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="filtroAnioTasa_1" (onChange)="getTasas_1()"></p-dropdown>
+          <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año"
+          [(ngModel)]="filtroAnioTasa_1" (onChange)="getTasas_1()"
+          [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
+          <h5>Meses</h5>
+          <p-multiSelect defaultLabel="Seleccione" [options]="Meses"
+          [(ngModel)]="selectedMesesTasa1" (onChange)="getTasas_1()"
+          [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-multiSelect>
           <h5>Division</h5>
-          <div *ngFor="let category of divisiones2" class="p-field-checkbox">
-            <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value" (click)="filtroTasas1_1()"></p-checkbox>
-            <label>{{category.label}}</label>
-          </div>
+          <p-multiSelect [options]="divisiones" defaultLabel="Seleccione"
+          [(ngModel)]="selectDivisiones1" (onChange)="filtroTasas1_1()"
+          [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-multiSelect>
           <h5>Filtro indicadores</h5>
           <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-            <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value" (click)="filtroTasas1_1()"></p-checkbox>
+            <p-checkbox name="group2" value="Indicador" [value]="Indicador"
+            [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value"
+            (click)="filtroTasas1_1()"></p-checkbox>
             <label>{{Indicador.label}}</label>
           </div>
         </div>
@@ -408,14 +415,22 @@
         </div>
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
           <h5>Año</h5>
-          <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="filtroAnioTasa_2" (onChange)="getTasas_2()"></p-dropdown>
+          <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" 
+          [(ngModel)]="filtroAnioTasa_2" (onChange)="getTasas_2()"
+          [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
           <h5>Meses</h5>
-          <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses1" (onChange)="filtroTasas_2()"></p-multiSelect>
+          <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses1" 
+          (onChange)="filtroTasas_2()"
+          [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-multiSelect>
           <h5>Division</h5>
-          <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" [(ngModel)]="filtroDivisionesTasa_2" (onChange)="getTasas_2()"></p-multiSelect>
+          <p-dropdown placeholder="Seleccione" [options]="divisiones2" [showClear]="true"
+          [(ngModel)]="filtroDivisionesTasa_2" (onChange)="getTasas_2()"
+          [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
           <h5>Filtro indicadores</h5>
           <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-              <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value" (onChange)="filtroTasas_2()"></p-checkbox>
+              <p-checkbox name="group4" value="Indicador" [value]="Indicador" 
+              [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value" (onChange)="filtroTasas_2()"
+              [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-checkbox>
               <label>{{Indicador.label}}</label>
           </div>
         </div>
@@ -615,7 +630,6 @@
    <div class="ui-g">
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
-        <!-- <p>ILI</p> -->
         <ngx-charts-combo
         [categories]="mesesILI2"
         [series]="dataIli_2"
@@ -628,14 +642,16 @@
     </div>
     <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">    
       <h5>Año</h5>
-      <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectedAnioIli_2" (onChange)="getIli_2()"></p-dropdown>
-    <h5>Meses</h5>
-      <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMesesILI2" (onChange)="filtroIli_2()"></p-multiSelect> 
+      <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" 
+      [(ngModel)]="selectedAnioIli_2" (onChange)="getIli_2()"
+      [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
+      <h5>Meses</h5>
+      <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMesesILI2" 
+      (onChange)="filtroIli_2()" [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-multiSelect> 
       <h5>Division</h5>
-      <div *ngFor="let category of divisiones2" class="p-field-checkbox">
-          <p-checkbox name="group5_20" [value]="category.label" *ngIf="category.label!=='Corona total'" [(ngModel)]="selectDivisionesILI2" (onChange)="getIli_2()"></p-checkbox>
-          <label *ngIf="category.label!=='Corona total'">{{category.label}}</label>
-      </div>
+      <p-dropdown placeholder="Seleccione" [options]="divisiones2" 
+      [showClear]="true" [(ngModel)]="selectDivisionesILI2"
+      (onChange)="getIli_2($event.value)" [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
     </div>
   </div>
 
