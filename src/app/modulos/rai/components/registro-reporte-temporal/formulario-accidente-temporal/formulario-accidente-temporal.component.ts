@@ -171,8 +171,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     this.cargoService.findByEmpresa().then((resp) => {
       this.cargoList = [];
       this.cargoList.push({ label: '--Seleccione--', value: null });
-      (<Cargo[]>resp).forEach((cargo) => {
-          this.cargoList.push({ label: cargo.nombre, value: cargo.nombre });
+      (<Cargo[]>resp).forEach((cargo:any) => {
+          this.cargoList.push({ label: cargo, value: cargo });
       });})
 
     this.areasPermiso = this.sesionService.getPermisosMap()['SEC_GET_DESV'].areas;
