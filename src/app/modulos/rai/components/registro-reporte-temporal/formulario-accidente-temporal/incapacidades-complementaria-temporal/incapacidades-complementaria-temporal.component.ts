@@ -32,6 +32,7 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
   diasAusencia: number;
   localeES: any = locale_es;
   id: number=0;
+  flagIncapacidad : string='true';
 
   tipoList = [
     // { label: 'Seleccione', value: null },
@@ -56,15 +57,15 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
 
   
   get daysCount() {
-
-   
-    let fecha1 = moment(this.fechaInicio);
-
-    let fecha2 = moment(this.fechaFin);
-
-    this.diasAusencia =  Math.abs(fecha1.diff(fecha2, "days"))+1;
-
-    return this.diasAusencia;
+    if(this.flagIncapacidad=='true'){
+      let fecha1 = moment(this.fechaInicio);
+  
+      let fecha2 = moment(this.fechaFin);
+  
+      this.diasAusencia =  Math.abs(fecha1.diff(fecha2, "days"))+1;}
+      else{this.diasAusencia=0}
+  
+      return this.diasAusencia;
 }
 
   openNew(){
@@ -98,7 +99,12 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
     console.log("save");
     console.log(this.incapacidad);
     
-
+    if(this.flagIncapacidad=='false'){
+      this.tipo=null
+      this.cie10=null;
+      this.fechaInicio=null
+      this.fechaFin=null
+    }
     
     // this.tipo == null ? this.incapacidad.tipo:this.tipo
     // this.cie10.codigo == null ?  this.incapacidad.cie10: this.cie10.codigo
@@ -107,22 +113,24 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
     // this.fechaFin == null ?  this.incapacidad.fechaFin:this.fechaFin
     // this.diasAusencia == null ?  this.incapacidad.diasAusencia:this.diasAusencia
 
+    this.incapacidad.generoIncapacidad=this.flagIncapacidad
     this.incapacidad.tipo = this.tipo
     this.incapacidad.cie10 = (this.cie10)?this.cie10:null;
-    this.incapacidad.diagnostico = this.cie10.nombre
-    this.incapacidad.fechaInicio = this.fechaInicio
-    this.incapacidad.fechaFin = this.fechaFin
+    this.incapacidad.diagnostico = this.cie10?this.cie10.nombre:null
+    this.incapacidad.fechaInicio = this.fechaInicio?this.fechaInicio:null
+    this.incapacidad.fechaFin = this.fechaFin?this.fechaFin:null
     this.incapacidad.diasAusencia = this.diasAusencia;
 
     if(this.id){
       let x = this.incapacidades.find(ele=>{
           return ele.id == this.id
       })
+      x.generoIncapacidad=this.flagIncapacidad;
       x.tipo = this.tipo;
       x.cie10=this.cie10;
-      x.diagnostico=this.cie10.nombre;
-      x.fechaInicio=this.fechaInicio;
-      x.fechaFin=this.fechaFin;
+      x.diagnostico=this.cie10?this.cie10.nombre:null;
+      x.fechaInicio=this.fechaInicio?this.fechaInicio:null;
+      x.fechaFin=this.fechaFin?this.fechaFin:null;
       x.diasAusencia=this.diasAusencia;
 
       }else{
@@ -157,6 +165,7 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
 }
 
   private borrarIncapcidad(){
+    this.flagIncapacidad=='true'
     this.tipo = null;
     this.cie10 = '';
     this.diagnostico = '';
@@ -169,13 +178,14 @@ export class IncapacidadesComplementariaTemporalComponent implements OnInit {
     this.GuardadoEdicion=false;
     console.log(product);
     
+    this.flagIncapacidad = (product.generoIncapacidad)?product.generoIncapacidad:'true'
     this.tipo = product.tipo;
     this.cie10 = product.cie10;
     this.diagnostico = product.diagnostico;
-    this.fechaInicio = new Date(product.fechaInicio);
-    this.fechaFin = new Date(product.fechaFin);
+    this.fechaInicio = product.fechaInicio?new Date(product.fechaInicio):null;
+    this.fechaFin = product.fechaFin?new Date(product.fechaFin):null;
     this.diasAusencia = product.diasAusencia;
-    this.id = product.id  
+    this.id = product.id 
 
     this.incapacidad = {...product};
     this.productDialog = true;
@@ -188,6 +198,7 @@ editarProduct(){
   
 
   
+  this.flagIncapacidad == null?this.incapacidad.generoIncapacidad:this.flagIncapacidad
   this.tipo == null ? this.incapacidad.tipo:this.tipo
   this.cie10.codigo == null ?  this.incapacidad.cie10: this.cie10.codigo
   this.cie10.nombre == null ?  this.incapacidad.diagnostico:this.cie10.nombre
@@ -195,11 +206,12 @@ editarProduct(){
   this.fechaFin == null ?  this.incapacidad.fechaFin:this.fechaFin
   this.diasAusencia == null ?  this.incapacidad.diasAusencia:this.diasAusencia
 
+  this.incapacidad.generoIncapacidad=this.flagIncapacidad
   this.incapacidad.tipo = this.tipo
   this.incapacidad.cie10 = (this.cie10.codigo)?this.cie10.codigo:null;
   this.incapacidad.diagnostico = this.cie10.nombre
-  this.incapacidad.fechaInicio = this.fechaInicio
-  this.incapacidad.fechaFin = this.fechaFin
+  this.incapacidad.fechaInicio = this.fechaInicio?this.fechaInicio:null
+  this.incapacidad.fechaFin = this.fechaFin?this.fechaFin:null
   this.incapacidad.diasAusencia = this.diasAusencia;
 
   this.incapacidades.push(this.incapacidad);

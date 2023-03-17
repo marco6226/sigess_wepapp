@@ -67,44 +67,48 @@ styleClass="select-material">
 <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
         <div class="p-field">
             <label for="tipo">El evento generó incapacidad?</label>
-            <p-radioButton name="grupo1" value="true" label="Si" [formControlName]="" [attr.required]=""></p-radioButton>
-            <p-radioButton name="grupo1" value="false" label="No" [formControlName]=""[attr.required]=""></p-radioButton>
+            <p-radioButton name="grupo1" value="true" label="Si" [(ngModel)]="flagIncapacidad"></p-radioButton>
+            <p-radioButton name="grupo1" value="false" label="No" [(ngModel)]="flagIncapacidad"></p-radioButton>
+            <!-- [formControlName]=""[attr.required]=""  -->
+            <!-- [(ngModel)]="flagIncapacidad" -->
         
         </div>
-        <div class="p-field">
-            <label for="tipo">Tipo</label>
-            <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->
-            <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
-            <!-- <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" required></p-dropdown> -->
-            <small class="p-invalid" *ngIf="submitted && !tipo">is required.</small>
-        </div>
-        <div class="p-field">
-            <label for="cie10">CIE 10</label>
-            
-            <s-cieSelector id="ccide-input" [(ngModel)]="cie10" required>
-            </s-cieSelector>
+        <ng-container *ngIf="flagIncapacidad=='true'">
+            <div class="p-field">
+                <label for="tipo">Tipo</label>
+                <!-- <input type="text" required autofocus [(ngModel)]="tipo" /> -->
+                <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+                <!-- <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" required></p-dropdown> -->
+                <small class="p-invalid" *ngIf="submitted && !tipo">is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="cie10">CIE 10</label>
+                
+                <s-cieSelector id="ccide-input" [(ngModel)]="cie10" required>
+                </s-cieSelector>
 
-            
-            <small class="p-invalid" *ngIf="submitted && !cie10">is required.</small>
-        </div>
-        <div class="p-field">
-            <label for="fechaInicio">Fecha Inicio</label>
-            <!-- <input type="date" required autofocus [(ngModel)]="fechaInicio" /> -->
-            <p-calendar [(ngModel)]="fechaInicio" [touchUI]="true"
-                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required> 
-            </p-calendar>
-            <small class="p-invalid" *ngIf="submitted && !fechaInicio">is required.</small>            
-        </div>
-        <div class="p-field">
-            <label for="fechaFin">Fecha Fin</label>
-            <!-- <input type="date" required autofocus [(ngModel)]="fechaFin" /> -->
-            <p-calendar [(ngModel)]="fechaFin"  [touchUI]="true"
-                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required>
-            </p-calendar>
-            <small class="p-invalid" *ngIf="submitted && !fechaFin">is required.</small>
+                
+                <small class="p-invalid" *ngIf="submitted && !cie10">is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="fechaInicio">Fecha Inicio</label>
+                <!-- <input type="date" required autofocus [(ngModel)]="fechaInicio" /> -->
+                <p-calendar [(ngModel)]="fechaInicio" [touchUI]="true"
+                    dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required> 
+                </p-calendar>
+                <small class="p-invalid" *ngIf="submitted && !fechaInicio">is required.</small>            
+            </div>
+            <div class="p-field">
+                <label for="fechaFin">Fecha Fin</label>
+                <!-- <input type="date" required autofocus [(ngModel)]="fechaFin" /> -->
+                <p-calendar [(ngModel)]="fechaFin"  [touchUI]="true"
+                    dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required>
+                </p-calendar>
+                <small class="p-invalid" *ngIf="submitted && !fechaFin">is required.</small>
 
-            
-        </div>
+                
+            </div>
+        </ng-container>
         <div class="p-field">
             <label for="diasAusencia">Dias de Ausencias</label>
             <input type="number"  autofocus [value]="daysCount" disabled="true"  />
