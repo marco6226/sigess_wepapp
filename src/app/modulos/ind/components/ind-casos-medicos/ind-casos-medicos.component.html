@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="row align-items-center mb-2 d-flex">
                                   <div class="col-4 text-right">
-                                      <span class="tamañotexto">{{this.NoCasosMedicos}}</span>
+                                      <span class="tamañotexto">{{this.numCasos}}</span>
                                   </div>
                                 </div>
                               </div>
@@ -47,7 +47,7 @@
                                   </div>
                                   <div class="row align-items-center mb-2 d-flex">
                                       <div class="col-4 text-left">
-                                          <span class="tamañotexto">{{this.casosPrioritarios}}</span>
+                                          <span class="tamañotexto">{{this.casosCerrados}}</span>
                                       </div>                                     
                                   </div>
                               </div>
@@ -57,14 +57,14 @@
               </div>
               <div class="p-col-6 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
-                      <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones3" placeholder="Seleccionar división" (onChange)="changeCard($event)" ></p-dropdown></div>
+                      <div class="p-d-flex"><p class="p-m-0">Area: </p> <p-dropdown appendTo="body" [options]="divisiones0" placeholder="Seleccionar división" (onChange)="numeroCasos()" [(ngModel)]="selecDiv0"></p-dropdown></div>
                       <div class="p-d-flex">  
                           <i style="font-size:24px" class="fa">&#xf073;</i>   
-                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
+                          <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde0" (ngModelChange)="numeroCasos()"> </p-calendar> 
                       </div>
                       <div class="p-d-flex"> 
                           <i style="font-size:24px" class="fa">&#xf073;</i> 
-                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
+                          <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta0" (ngModelChange)="numeroCasos()"> </p-calendar>
                       </div>
                   </div>
               </div>
@@ -80,7 +80,7 @@
               <ngx-charts-advanced-pie-chart
               class="align-items-center"
               [scheme]="colorScheme"
-              [results]="randomEv1Dona"
+              [results]="datosGraf0Print"
               [gradient]="true">
               </ngx-charts-advanced-pie-chart>
             </div>
@@ -88,11 +88,11 @@
             <div class="ui-g-6">
               <div class="ui-g-6">  
                 <i style="font-size:24px" class="fa">&#xf073;</i>   
-                <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body"> </p-calendar> 
+                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde1" (ngModelChange)="DatosGrafica1()"> </p-calendar> 
               </div>
               <div class="ui-g-6"> 
                 <i style="font-size:24px" class="fa">&#xf073;</i> 
-                <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body"> </p-calendar>
+                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy"  placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta1" (ngModelChange)="DatosGrafica1()"> </p-calendar>
               </div>
             </div>
           </div>
@@ -103,8 +103,8 @@
         <div class="ui-g" *ngIf="flag1">
         <!-- Primera grafica -->
           <p><b>
-            <ng-container *ngIf="selectIndicarores1.length>0">
-              <ng-container *ngFor="let ret of selectIndicarores1;first as f;last as l">
+            <ng-container *ngIf="selectEvento1.length>0">
+              <ng-container *ngFor="let ret of selectEvento1;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
                   {{ret.label}}
                 </ng-container>
@@ -113,8 +113,8 @@
                 </ng-template>
               </ng-container>
             </ng-container>
-            <ng-container *ngIf="selectIndicarores1.length==0">
-              <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
+            <ng-container *ngIf="selectEvento1.length==0">
+              <ng-container *ngFor="let ret of opcion1;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
                   {{ret.label}}
                 </ng-container>
@@ -130,7 +130,7 @@
             <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
                 <ngx-charts-bar-vertical-2d 
                 [scheme]="colorScheme"
-                [results]="randomIn1Div"
+                [results]="datosGraf1Print"
                 [gradient]="true"
                 [xAxis]="true"
                 [yAxis]="true"
@@ -150,32 +150,37 @@
             <div class="ui-g-8">
               <div class="ui-g-6">  
                 <i style="font-size:24px" class="fa">&#xf073;</i>   
-                <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
+                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde2" (ngModelChange)="DatosGrafica2()"> </p-calendar> 
               </div>
               <div class="ui-g-6"> 
                 <i style="font-size:24px" class="fa">&#xf073;</i> 
-                <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
+                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta2" (ngModelChange)="DatosGrafica2()"> </p-calendar>
               </div>
             </div>
           </div>
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Division</h5>
-            <div *ngFor="let category of divisiones" class="p-field-checkbox">
-              <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value" (click)="selectCas1()"></p-checkbox>
+            <!-- <p-multiSelect defaultLabel="Seleccione" [options]="divisiones0" optionLabel="label" [(ngModel)]="selectDivisiones1" (onChange)="DatosGrafica2()"></p-multiSelect> -->
+            <div *ngFor="let category of divisiones0" class="p-field-checkbox">
+              <p-checkbox name="group1" value="category" [value]="category"  [(ngModel)]="selectDivisiones1" [inputId]="category.value" (click)="DatosGrafica2()"></p-checkbox>
               <label>{{category.label}}</label>
             </div>
             <h5>Filtro casos</h5>
-            <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-              <p-checkbox name="group2" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores1" [inputId]="Indicador.value" (click)="selectCas1()"></p-checkbox>
-              <label>{{Indicador.label}}</label>
+            <div class="col-md-10">
+              <p-radioButton name="group1" label="Estado" [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon1" (onClick)="returnDatos1()"></p-radioButton><br>
+              <p-radioButton name="group1" label="Mesa laboral" [value]="1" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon1" (onClick)="returnDatos1()"></p-radioButton><br>
+              <p-radioButton name="group1" label="Prioridad" [value]="2" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon1" (onClick)="returnDatos1()"></p-radioButton><br>
+              <p-radioButton name="group1" label="Tipo de caso" [value]="3" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon1" (onClick)="returnDatos1()"></p-radioButton>
             </div>
+            <br>
+            <p-multiSelect defaultLabel="Seleccione" [options]="opcion1" optionLabel="label" [(ngModel)]="selectEvento1" (onChange)="DatosGrafica2()"></p-multiSelect>
           </div>
 
         </div>
         <hr/>
         <div class="ui-g" *ngIf="flag2">
-          <p><b>
+          <!-- <p><b>
             <ng-container *ngIf="selectIndicarores2.length>0">
               <ng-container *ngFor="let ret of selectIndicarores2;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
@@ -196,7 +201,7 @@
                 </ng-template>
               </ng-container>
             </ng-container>
-          </b></p>
+          </b></p> -->
 
           <div class="ui-g-12">&nbsp;</div>
   
@@ -205,14 +210,14 @@
               <ngx-charts-bar-vertical-2d
               class="align-items-center"
               [scheme]="colorScheme"
-              [results]="randomIn1Mes"
+              [results]="datosGraf2Print"
               [gradient]="true"
               [xAxis]="true"
               [yAxis]="true"
               [legend]="false"
               [showXAxisLabel]="true"
               [showYAxisLabel]="true"
-              [xAxisLabel]="'Meses'"
+              [xAxisLabel]="'Casos'"
               [yAxisLabel]="'No. Casos'"
               [showDataLabel]="false"
               [barPadding]=0
@@ -225,39 +230,44 @@
             <div class="ui-g-8">
                 <div class="ui-g-6">  
                     <i style="font-size:24px" class="fa">&#xf073;</i>   
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde3" (ngModelChange)="DatosGrafica3()"> </p-calendar> 
                 </div>
                 <div class="ui-g-6"> 
                     <i style="font-size:24px" class="fa">&#xf073;</i> 
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta3" (ngModelChange)="DatosGrafica3()"> </p-calendar>
                 </div>
             </div>
           </div>
   
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
-            <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" (onChange)="chageYear()" [(ngModel)]="selectYear1"></p-dropdown>
-            <h5>Meses</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" [(ngModel)]="selectMeses1" (click)="chageYear()"></p-multiSelect>
             <h5>Division</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="divisiones2" optionLabel="name" (click)="chageYear()" [(ngModel)]="selectDiv1"></p-multiSelect>
+            <!-- <p-multiSelect defaultLabel="Seleccione" [options]="divisiones0" optionLabel="label" [(ngModel)]="selectDivisiones1" (onChange)="DatosGrafica2()"></p-multiSelect> -->
+            
+            <!-- <div *ngFor="let category of divisiones0" class="p-field-checkbox">
+              <p-checkbox name="group2" value="category" [value]="category"  [(ngModel)]="selectDivisiones2" [inputId]="category.value" (click)="DatosGrafica3()"></p-checkbox>
+              <label>{{category.label}}</label>
+            </div> -->
             <h5>Filtro casos</h5>
-            <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">
-                <p-checkbox name="group4" value="Indicador" [value]="Indicador"  [(ngModel)]="selectIndicarores2" [inputId]="Indicador.value" (click)="chageYear()"></p-checkbox>
-                <label>{{Indicador.label}}</label>
+            <div class="col-md-10">
+              <p-radioButton name="group2" label="Estado" [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon2" (onClick)="returnDatos2()"></p-radioButton><br>
+              <p-radioButton name="group2" label="Mesa laboral" [value]="1" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon2" (onClick)="returnDatos2()"></p-radioButton><br>
+              <p-radioButton name="group2" label="Prioridad" [value]="2" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon2" (onClick)="returnDatos2()"></p-radioButton><br>
+              <p-radioButton name="group2" label="Tipo de caso" [value]="3" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon2" (onClick)="returnDatos2()"></p-radioButton>
             </div>
+            <br>
+            <p-multiSelect defaultLabel="Seleccione" [options]="opcion1" optionLabel="label" [(ngModel)]="selectEvento2" (onChange)="DatosGrafica3()"></p-multiSelect>
           </div>
         </div>
         
       </p-panel>
       <br/>
-      <p-panel header="RETORNO - DIAGNOSTICO">
+      <p-panel header="RETORNO">
         <div class="ui-g" *ngIf="flag3">
 
           <p><b>
-            <ng-container *ngIf="selectRetorno.length>0">
-              <ng-container *ngFor="let ret of selectRetorno;first as f;last as l">
+            <ng-container *ngIf="selectEvento3.length>0">
+              <ng-container *ngFor="let ret of selectEvento3;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
                   {{ret.label}}
                 </ng-container>
@@ -266,8 +276,8 @@
                 </ng-template>
               </ng-container>
             </ng-container>
-            <ng-container *ngIf="selectRetorno.length==0">
-              <ng-container *ngFor="let ret of Retorno;first as f;last as l">
+            <ng-container *ngIf="selectEvento3.length==0">
+              <ng-container *ngFor="let ret of opcion3;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
                   {{ret.label}}
                 </ng-container>
@@ -285,7 +295,7 @@
               <ngx-charts-bar-vertical-2d
               class="align-items-center"
               [scheme]="colorScheme"
-              [results]="randomRetorno"
+              [results]="datosGraf3Print"
               [gradient]="true"
               [xAxis]="true"
               [yAxis]="true"
@@ -305,33 +315,32 @@
             <div class="ui-g-8">
                 <div class="ui-g-6">  
                     <i style="font-size:24px" class="fa">&#xf073;</i>   
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body"> </p-calendar> 
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde4" (ngModelChange)="DatosGrafica4()"> </p-calendar> 
                 </div>
                 <div class="ui-g-6"> 
                     <i style="font-size:24px" class="fa">&#xf073;</i> 
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> </p-calendar>
+                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"> [(ngModel)]="fechaDesde4" (ngModelChange)="DatosGrafica4()"</p-calendar>
                 </div>
             </div>
           </div>
   
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
-            <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear2" (onChange)="chageYear2()"></p-dropdown>
-            <h5>Meses</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" (click)="chageYear2()" [(ngModel)]="selectMeses2"></p-multiSelect>
-            <h5>Filtro retornos</h5>
-            <div *ngFor="let retorno of Retorno" class="p-field-checkbox">
-                <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectRetorno" [inputId]="retorno.value" (click)="chageYear2()"></p-checkbox>
-                <label>{{retorno.label}}</label>
+            <h5>Division</h5>
+            <!-- <p-multiSelect defaultLabel="Seleccione" [options]="divisiones0" optionLabel="label" [(ngModel)]="selectDivisiones1" (onChange)="DatosGrafica2()"></p-multiSelect> -->
+            <div *ngFor="let category of divisiones0" class="p-field-checkbox">
+              <p-checkbox name="group3" value="category" [value]="category"  [(ngModel)]="selectDivisiones3" [inputId]="category.value" (click)="DatosGrafica4()"></p-checkbox>
+              <label>{{category.label}}</label>
             </div>
+            <h5>Filtro casos</h5>
+            <p-multiSelect defaultLabel="Seleccione" [options]="opcion3" optionLabel="label" [(ngModel)]="selectEvento3" (onChange)="DatosGrafica4()"></p-multiSelect>
           </div>
         </div>
         <hr>
 
-        <div class="ui-g" *ngIf="flag4">
+        <div class="ui-g" *ngIf="false">
 
-          <p><b>
+          <!-- <p><b>
             <ng-container *ngIf="selectSindrome.length>0 && selectSindrome.length<4">
               <ng-container *ngFor="let ret of selectSindrome;first as f;last as l">
                 <ng-container *ngIf="f ;else otro1">
@@ -345,13 +354,13 @@
             <ng-container *ngIf="selectSindrome.length==0 || selectSindrome.length>=4">
               Diagnosticos
             </ng-container>
-          </b></p>
+          </b></p> -->
 
           <div class="ui-g-12">&nbsp;</div>
   
           <div  class="ui-g-8 ui-g-nopad">
             <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
-              <ngx-charts-bar-vertical-2d
+              <!-- <ngx-charts-bar-vertical-2d
               class="align-items-center"
               [scheme]="colorScheme"
               [results]="randomSindrome"
@@ -367,7 +376,7 @@
               [barPadding]=0
               [groupPadding]=4
               [tooltipDisabled]="false">
-              </ngx-charts-bar-vertical-2d>
+              </ngx-charts-bar-vertical-2d> -->
             </div>
             <div class="ui-g-1">&nbsp;</div>
             <div class="ui-g-2">&nbsp;</div>
@@ -384,12 +393,12 @@
           </div>
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Año</h5>
-            <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear3" (onChange)="chageYear3()"></p-dropdown>
+            <!-- <p-dropdown appendTo="body" [options]="yearRange" placeholder="2022" [(ngModel)]="selectYear3" (onChange)="test()"></p-dropdown>
             <h5>Meses</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" (click)="chageYear3()" [(ngModel)]="selectMeses3"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="Meses2" optionLabel="name" (click)="test()" [(ngModel)]="selectMeses3"></p-multiSelect>
             <h5>Filtro diagnosticos</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="Sindrome" optionLabel="name" [(ngModel)]="selectSindrome" (click)="chageYear3()"></p-multiSelect>
-            <!-- <div *ngFor="let retorno of Sindrome" class="p-field-checkbox">
+            <p-multiSelect defaultLabel="Seleccione" [options]="Sindrome" optionLabel="name" [(ngModel)]="selectSindrome" (click)="test()"></p-multiSelect>
+            <div *ngFor="let retorno of Sindrome" class="p-field-checkbox">
                 <p-checkbox name="group4" value="retorno" [value]="retorno"  [(ngModel)]="selectSindrome" [inputId]="retorno.value"></p-checkbox>
                 <label>{{retorno.label}}</label>
             </div> -->

@@ -137,7 +137,7 @@
                                             <!-- <td>{{desviacionesList[0].concepto}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                             <!-- <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" [(ngModel)]="informacionComplementaria.Peligro" optionValue="label"> -->
-                                            <p-dropdown [options]="this.tipoPeligroItemList" formControlName="Peligro" (onChange)="SelectPeligro($event.value)" >
+                                            <p-dropdown required appendTo="body" [options]="this.tipoPeligroItemList" formControlName="Peligro" (onChange)="SelectPeligro($event.value)" >
                                             </p-dropdown></th>
                                         </tr>
                                         <tr>
@@ -146,20 +146,20 @@
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
                                             <!-- <p-dropdown [options]="this.peligroItemList" formControlName="tipoCaso"></p-dropdown> -->
                                             
-                                            <p-dropdown [options]="this.peligroItemList" formControlName="DescripcionPeligro"></p-dropdown>
+                                            <p-dropdown required appendTo="body" [options]="this.peligroItemList" formControlName="DescripcionPeligro" (onChange)="SelectDescripcionPeligro($event.value)"></p-dropdown>
                                             </th>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Estado del evento ante ARL</th>
                                             <!-- <td>{{desviacionesList[0]?.fechaReporte | date:'dd/MM/yyyy'}}</td>  -->
                                             <th style="border: 1px solid #c8c8c8;" class="ui-g-12 ui-md-6 ui-lg-12">
-                                            <p-dropdown [options]="ARLfirme" formControlName="EnventoARL"></p-dropdown>
+                                            <p-dropdown appendTo="body" [options]="ARLfirme" formControlName="EnventoARL" required></p-dropdown>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Reporte a entes de control
                                             </th>
                                             <td *ngIf="!severidadFlag">
-                                                <p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" ></p-radioButton>
+                                                <p-radioButton name="group1" label="Si  " [value]="true"  formControlName="ReporteControl" required></p-radioButton>
                                                 <p-radioButton name="group1" label="No  " [value]="false" formControlName="ReporteControl" ></p-radioButton>
                                             </td> 
                                             <td *ngIf="severidadFlag">
@@ -182,7 +182,7 @@
                                         <tr>
                                             <th style="border: 1px solid #c8c8c8;">Entrega copia de FURAT  al trabajador</th>
                                            
-                                            <td><p-radioButton name="group2" label="Si  " [value]="true"  formControlName="CopiaTrabajador" ></p-radioButton>
+                                            <td><p-radioButton name="group2" label="Si  " [value]="true"  formControlName="CopiaTrabajador" required></p-radioButton>
                                                 <p-radioButton name="group2" label="No  " [value]="false" formControlName="CopiaTrabajador" ></p-radioButton>
                                             </td>                                
                                         </tr>

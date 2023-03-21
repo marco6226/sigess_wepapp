@@ -167,7 +167,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   }
   areasPermiso: string;
   async ngOnInit() {
-    console.log(this.consultar)
     this.cargoService.findByEmpresa().then((resp) => {
       this.cargoList = [];
       this.cargoList.push({ label: '--Seleccione--', value: null });
@@ -296,7 +295,6 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
 
   async cargarReporte(){
     if(this.modificar || this.consultar){
-      console.log(this.reporte)
         this.form.patchValue({
             id: this.reporte.id,
             tipo: this.reporte.tipo,
@@ -422,13 +420,14 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   }
   async cargarPeligro(idtp) {
     let peligroItemList=[]
-
     if(idtp != null){
     let filter = new FilterQuery();
-    filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
+    filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp }];
     await this.peligroService.findByFilter(filter).then(
       resp => {
-        this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
+        console.log(resp)
+        //this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
+        this.peligroItemList = [];
         (<Peligro[]>resp).forEach(
           data => 
             {
@@ -744,4 +743,8 @@ order(ele){
   });
   return ele
 }
+  test(){
+    console.log(this.analisisPeligros.valid)
+    console.log(this.form.valid)
+  }
 }

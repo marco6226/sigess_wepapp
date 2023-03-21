@@ -23,7 +23,7 @@
     </div>
 
 
-    <div [formGroup]="myGroup">
+    <div [formGroup]="myGroup" *ngIf="!temporalesFlag">
         <p-checkbox #nivelAccesoH name="cbxAccessLevelH" id="nivelAccesoH" class="form-check-input" (click)="this.setNivelAcceso(nivelAccesoH.checked)" binary="true" label="Privado"></p-checkbox>
     </div>
     <br />

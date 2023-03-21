@@ -189,6 +189,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     tabIndex0:number;
     cont:number=0;
 
+    faltaPeligro:boolean=false;
     indexTab(event){
         this.tabIndex0=event.index;
     }
@@ -228,6 +229,13 @@ export class AnalisisDesviacionComponent implements OnInit {
     
     SelectPeligro(a: string){
         this.cargarPeligro(a)
+    }
+
+    SelectDescripcionPeligro(a: string){
+        console.log(a)
+        if(a[0]!=null){
+            this.faltaPeligro=false
+        }else{this.faltaPeligro=true }
     }
 
     constructor(
@@ -585,6 +593,12 @@ export class AnalisisDesviacionComponent implements OnInit {
                         ))
                 );
                 this.habilitarInforme()
+                console.log(this.informacionComplementaria.DescripcionPeligro)
+                if(this.informacionComplementaria.DescripcionPeligro){
+                    if(this.informacionComplementaria.DescripcionPeligro[0]!=null){
+                        this.faltaPeligro=true
+                    }
+                }
         });
             this.tareaList3()
             this.disabled=false;
@@ -679,7 +693,7 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
     guardarAnalisis() {
         this.guardando=true;
-        if(!this.analisisPeligros.invalid){
+        if(!this.analisisPeligros.invalid || this.idEmpresa!='22'){
             this.informacionComplementaria=this.analisisPeligros.value;
             this.informeJson=this.infoIn.value;
             this.diagram=this.FlowchartService.getDiagram();
@@ -727,9 +741,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         }else{
             this.guardando=false
             this.msgs = [];
+            // this.msgs.push({
+            //     severity: "error",
+            //     detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control o si selecciona el campo sí se debe diligenciar la fecha de envío a entes de control.",
+            // });
             this.msgs.push({
                 severity: "error",
-                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control o si selecciona el campo sí se debe diligenciar la fecha de envío a entes de control.",
+                detail: "Debe diligenciar información complementaria para guardar.",
             });
         }
     }
@@ -745,21 +763,22 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.guardando=true;
         this.disabled=true;
 
-        if(!this.analisisPeligros.invalid){
-                if(this.idEmpresa=='22'){await this.tareaList2();}
-                this.buttonPrint=true;
-                this.informacionComplementaria=this.analisisPeligros.value;
-                this.informeJson=this.infoIn.value;
+        if(!this.analisisPeligros.invalid|| this.idEmpresa!='22'){
+            if(this.idEmpresa=='22'){await this.tareaList2();}
+            this.buttonPrint=true;
+            this.informacionComplementaria=this.analisisPeligros.value;
+            this.informeJson=this.infoIn.value;
 
             setTimeout(async () => {
                 this.diagram=await this.FlowchartService.getDiagram();
+                console.log(this.diagram)
                 let printOptions: IExportOptions = {};
                 printOptions.mode = 'Data';
                 printOptions.region = 'PageSettings';
-                if(this.diagram){     
-                this.imgIN=this.diagram.exportDiagram(printOptions).toString()
-                if(this.imgIN!=undefined){
-                    this.informeJson.Diagrama=this.imgIN;}
+                if(this.diagram){
+                    this.imgIN=this.diagram.exportDiagram(printOptions).toString()
+                    if(this.imgIN!=undefined){
+                        this.informeJson.Diagrama=this.imgIN;}
                 }
                 let ad = new AnalisisDesviacion();
                 ad.id = this.analisisId;
@@ -815,9 +834,13 @@ export class AnalisisDesviacionComponent implements OnInit {
         }else{
             this.guardando=false
             this.msgs = [];
+            // this.msgs.push({
+            //     severity: "error",
+            //     detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control o si selecciona el campo sí se debe diligenciar la fecha de envío a entes de control.",
+            // });
             this.msgs.push({
                 severity: "error",
-                detail: "Si el accidente es grave o mortal, se debe enviar reporte a  entes de control o si selecciona el campo sí se debe diligenciar la fecha de envío a entes de control.",
+                detail: "Debe diligenciar información complementaria para guardar.",
             });
         }
     }

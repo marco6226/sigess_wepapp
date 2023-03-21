@@ -58,7 +58,7 @@
                         Tipo identificación
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="tipoIdentificacion" formControlName="tipoIdentificacionEmpleado" [readonly]="consultar">
+                        <p-dropdown appendTo="body" required [options]="tipoIdentificacion" formControlName="tipoIdentificacionEmpleado" [readonly]="consultar">
                         </p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
@@ -100,7 +100,7 @@
                         Cargo
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown [filter]="true" [options]="cargoList" formControlName="cargoEmpleado" required [readonly]="consultar">
+                        <p-dropdown appendTo="body" [filter]="true" [options]="cargoList" formControlName="cargoEmpleado" required [readonly]="consultar">
                         </p-dropdown>
                     </div>
                     <!-- <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
@@ -110,7 +110,7 @@
                         Jornada trabajo habitual
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="jornadaTrabajoList" formControlName="jornadaHabitual" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="jornadaTrabajoList" formControlName="jornadaHabitual" [readonly]="consultar"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-md-2">
                         Ubicación
@@ -180,7 +180,7 @@
                         Tipo {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="tipoAccidenteList" formControlName="tipoAccidente" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="tipoAccidenteList" formControlName="tipoAccidente" [readonly]="consultar"></p-dropdown>
                     </div>
                     <!-- <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente">
                         Ciudad
@@ -202,20 +202,20 @@
                         Clasificación del evento
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="severidadList" formControlName="severidad" required [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="severidadList" formControlName="severidad" required [readonly]="consultar"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Lugar {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="lugarList" formControlName="lugarAccidente" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="lugarList" formControlName="lugarAccidente" [readonly]="consultar"></p-dropdown>
                     </div>
 
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Sitio {{visibleCamposAccidente ? 'accidente':'incidente'}}
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="sitioList" formControlName="sitio" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="sitioList" formControlName="sitio" [readonly]="consultar"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.sitio=='OTRO');else blanco2">
                         ¿Cual?
@@ -228,7 +228,7 @@
                         Tipo lesión
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-dropdown required [options]="tipoLesionList" formControlName="tipoLesion" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="tipoLesionList" formControlName="tipoLesion" [readonly]="consultar"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.tipoLesion=='OTRO');else blanco2">
                         ¿Cual?
@@ -240,7 +240,7 @@
                         Agente del accidente
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="visibleCamposAccidente">
-                        <p-dropdown required [options]="agenteList" formControlName="agente" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body"  required [options]="agenteList" formControlName="agente" [readonly]="consultar"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2" *ngIf="visibleCamposAccidente && (form.value.agente=='NO_CLASIFICADOS');else blanco2">
                         ¿Cual?
@@ -253,13 +253,19 @@
                         Mecanismo
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown required [options]="mecanismoList" formControlName="mecanismo" [readonly]="consultar"></p-dropdown>
+                        <p-dropdown appendTo="body" required [options]="mecanismoList" formControlName="mecanismo" [readonly]="consultar"></p-dropdown>
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-2 " *ngIf="(form.value.mecanismo=='OTRO');else blanco2">
                         ¿Cual?
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4" *ngIf="form.value.mecanismo=='OTRO';else blanco4">
                         <input required pInputText formControlName="cualMecanismo" placeholder="Mecanismo" [readonly]="consultar"/>
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Parte del cuerpo afectada
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <p-dropdown appendTo="body" [options]="parteCuerpoList" formControlName="parteCuerpo" required></p-dropdown>
                     </div>
                 </div>
             </p-accordionTab>
@@ -290,14 +296,14 @@
                         Peligro
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown appendTo="body" [filter]="true" [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" formControlName="Peligro"[readonly]="consultar"></p-dropdown>
+                        <p-dropdown required appendTo="body" [filter]="true" [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" formControlName="Peligro"[readonly]="consultar"></p-dropdown>
                     </div>
 
                     <div class="ui-g-12 ui-sm-12 ui-md-2">
                         Descripción del Peligro
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
-                        <p-dropdown appendTo="body" [filter]="true" [options]="this.peligroItemList" formControlName="DescripcionPeligro"[readonly]="consultar"></p-dropdown>
+                        <p-dropdown placeholder="Seleccionar Peligro" required appendTo="body" [filter]="true" [options]="this.peligroItemList" formControlName="DescripcionPeligro"[readonly]="consultar"></p-dropdown>
                     </div>                    
                 </div>
             </p-accordionTab>
@@ -389,16 +395,15 @@
         </form>
     </p-accordion> 
 </p-panel>
-<!-- 
-<button (click)="test()">test</button> -->
 <ng-container *ngIf="!consultar && adicionar">
     <button *sTienePermiso="'RAI_POST_REPT'" pButton  (click)="submit1()" icon="fa fa-floppy-o" title="Guardar reporte"
-        class="float-btn" [disabled]="!form.valid" style="z-index: 100;"></button>
+        class="float-btn" [disabled]="!(form.valid && analisisPeligros.valid)" style="z-index: 100;"></button>
 </ng-container>
 
 <ng-container *ngIf="!consultar && !adicionar">
     <button *sTienePermiso="'RAI_PUT_REPT'" pButton  (click)="submit1()" icon="fa fa-pencil" title="Actualizar reporte"
-        class="float-btn ui-button-success" [disabled]="!form.valid" style="z-index: 100;"></button>
+        class="float-btn ui-button-success" [disabled]="!(form.valid  && analisisPeligros.valid)" style="z-index: 100;"></button>
 </ng-container>
+<!-- <button (click)="test()">test</button> -->
 <a style="visibility: hidden" id="dwldLink"></a>
 

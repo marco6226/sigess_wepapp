@@ -822,6 +822,7 @@ resetVarGraf2(){
         break;
     }
 
+    if( element>=0 && element<=1)this.ContFechaIngreso_total[0]=this.ContFechaIngreso_total[0]+1;
     if( element>=2 && element<=5)this.ContFechaIngreso_total[1]=this.ContFechaIngreso_total[1]+1;
     if( element>=6 && element<=10)this.ContFechaIngreso_total[2]=this.ContFechaIngreso_total[2]+1;
     if( element>=11 && element<=20)this.ContFechaIngreso_total[3]=this.ContFechaIngreso_total[3]+1;
