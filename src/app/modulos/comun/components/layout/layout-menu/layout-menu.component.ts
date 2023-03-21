@@ -70,7 +70,8 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
             { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
             { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' },
             { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
-            { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' }
+            { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' },
+            { label: 'HHT', codigo: 'IND_GET_HHTALIADO', routerLink: '/app/ind/horahombrestrabajada', class: 'fa fa-building' },
             // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
             // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
         ]}else{
@@ -246,7 +247,8 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                         { label: 'Reporte de accidentes', codigo: 'IND_GET_RAI', routerLink: '/app/ind/rai', class: 'fa fa-h-square' },
                         { label: 'Inspecciones', codigo: 'IND_GET_INP', routerLink: '/app/ind/inp', class: 'fa fa-list-ol' },
                         { label: 'Accidentalidad', codigo: 'IND_GET_ACD', routerLink: '/app/ind/accidentalidad', class: 'fa fa-ambulance' },
-                        { label: 'Indicadores casos medicos', codigo: 'IND_GET_SCM', routerLink: '/app/ind/indcasosmedicos', class: 'fa fa-medkit' },
+                        { label: 'Ind. casos medicos corporativo', codigo: 'IND_GET_SCM', routerLink: '/app/ind/indcasosmedicos', class: 'fa fa-medkit' },
+                        { label: 'Ind. casos medicos gestión', codigo: 'IND_GET_SCM', routerLink: '/app/ind/indcasosmedicos', class: 'fa fa-medkit' },
                         { label: 'Indicadores caracterización', codigo: 'IND_GET_CAR', routerLink: '/app/ind/indcaracterizacion', class: 'fa fa-user-md' }
                     ]
             },
