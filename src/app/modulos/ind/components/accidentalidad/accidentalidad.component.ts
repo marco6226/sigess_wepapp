@@ -32,7 +32,7 @@ class division {
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
   
-  ili:number=0.0171;
+  ili:number=0;
   metaIli:number=0;
   colorIli?:string;
   categoriesCombo: any=[];
