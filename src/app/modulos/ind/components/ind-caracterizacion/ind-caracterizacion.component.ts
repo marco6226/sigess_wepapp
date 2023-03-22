@@ -116,6 +116,8 @@ export class IndCaracterizacionComponent implements OnInit {
   rangoHoraAccidente=['00:00 a 03:59','04:00 a 07:59','08:00 a 11:59','12:00 a 15:59','16:00 a 19:59','20:00 a 23:59']
   divisiones2= new Array();
   divisiones3= new Array();
+  divisiones4= new Array();
+  divisiones5= new Array();
   rangoFechaEdad2= new Array();
   rangoFechaAntiguedad2= new Array();
   rangoHoraAccidente2= new Array();
@@ -262,6 +264,8 @@ export class IndCaracterizacionComponent implements OnInit {
     this.divisiones1.forEach(div => {
       this.divisiones2.push({label:div,value:div})
       this.divisiones3.push({name:div,code:cont})
+      this.divisiones4.push({name:div,code:cont})
+      this.divisiones5.push({label:div,value:div})
       cont=cont+1;
     });
     this.divisiones2.push({label:'Corona total',value:'Corona total'})
@@ -404,7 +408,6 @@ export class IndCaracterizacionComponent implements OnInit {
         this.CaracterizacionView2=this.CaracterizacionView.filter(resp=>{
           return resp.fechaaccidente<=date4 && resp.fechaaccidente>=new Date(this.date3)
           })}
-      console.log( this.CaracterizacionView2)
       this.ContHombres=[0,0,0,0,0,0,0]
       this.ContMujeres=[0,0,0,0,0,0,0]
       this.ContLugarFuera=[0,0,0,0,0,0,0]
@@ -989,7 +992,7 @@ filtroGraEve3(){
 
   if(this.selectEv3.length==0 && this.selectDiv3.length>0){
     // console.log(this.datosGrafica3Top)
-    this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    // this.datosGrafica3=this.contTotal(this.datosGrafica3)
     // console.log(this.datosGrafica3Top)
     this.datosGrafica3Top=this.top(this.datosGrafica3,5)
 
@@ -1058,7 +1061,7 @@ filtroGraEve3(){
   }
 
   if(this.selectEv3.length==0 && this.selectDiv3.length==0){
-    this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    // this.datosGrafica3=this.contTotal(this.datosGrafica3)
     this.datosGrafica3Top=this.top(this.datosGrafica3,5)
   }
 
@@ -1166,7 +1169,7 @@ DatosGrafica3(){
   });
   this.orderMap=[this.ordenarMap(this.hashmap1,this.Map1),this.ordenarMap(this.hashmap2,this.Map2),this.ordenarMap(this.hashmap3,this.Map3),this.ordenarMap(this.hashmap4,this.Map4),this.ordenarMap(this.hashmap5,this.Map5),this.ordenarMap(this.hashmap6,this.Map6),this.ordenarMap(this.hashmap7,this.Map7)]
   this.terceraGrafica()
-  this.datosGrafica3=this.contTotal(this.datosGrafica3)
+  // this.datosGrafica3=this.contTotal(this.datosGrafica3)
   this.datosGrafica3Top=this.top(this.datosGrafica3,5)
 }
 
@@ -1272,7 +1275,7 @@ filtroGraEve4(){
   let datosGrafica1=[]
 
   if(this.selectEv4.length==0 && this.selectDiv4.length>0){
-    this.datosGrafica4=this.contTotal(this.datosGrafica4)
+    // this.datosGrafica4=this.contTotal(this.datosGrafica4)
     this.datosGrafica4Top=this.top(this.datosGrafica4,5)
 
     if(this.selectDiv4.length>0){
@@ -1341,7 +1344,7 @@ filtroGraEve4(){
   }
 
   if(this.selectEv4.length==0 && this.selectDiv4.length==0){
-    this.datosGrafica4=this.contTotal(this.datosGrafica4)
+    // this.datosGrafica4=this.contTotal(this.datosGrafica4)
     this.datosGrafica4Top=this.top(this.datosGrafica4,5)
   }
 
@@ -1372,7 +1375,7 @@ DatosGrafica4(){
     })
     this.CaracterizacionView5=CaracterizacionView5_1
   }
-  
+
   this.CaracterizacionView5.forEach(element => {
     if(this.radioGra4==0)this.ContDatosGraf4(element)
     if(this.radioGra4==1 && element.emptemporal!=null)this.ContDatosGraf4(element)
@@ -1386,8 +1389,11 @@ DatosGrafica4(){
   this.datos4push.push(this.datos4_6)
   this.datos4push.push(this.datos4_7)
   this.graf4top5()
-  this.datosGrafica4=this.contTotal(this.datosGrafica4)
   this.datosGrafica4Top=this.top(this.datosGrafica4,5)
+  // this.datosGrafica4Top=this.contTotal(this.datosGrafica4)
+  // console.log(this.datosGrafica4)
+  
+  // console.log(this.datosGrafica4Top)
 }
 
 tipoAccidente=[]
@@ -1778,7 +1784,7 @@ if(this.date9 && this.date10){
   });
 
   this.quintaGrafica()
-  this.datosGrafica5=this.contTotal(this.datosGrafica5)
+  // this.datosGrafica5=this.contTotal(this.datosGrafica5)
   this.datosGrafica5Top=this.top(this.datosGrafica5,5)
 }
 mapGraf5_1=new Map()
@@ -2017,7 +2023,7 @@ DatosGrafica6(){
   });
 
   this.sextaGrafica()
-  this.datosGrafica6=this.contTotal(this.datosGrafica6)
+  // this.datosGrafica6=this.contTotal(this.datosGrafica6)
   this.datosGrafica6Top=this.top(this.datosGrafica6,5)
   this.flagevent6=true
 }

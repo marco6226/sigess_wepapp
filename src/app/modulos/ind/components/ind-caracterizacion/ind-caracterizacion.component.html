@@ -223,7 +223,7 @@
         
                 <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
                     <h5>Año</h5>
-                    <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear2" (onChange)="DatosGrafica2()"></p-dropdown>
+                    <p-dropdown appendTo="body" [filter]="true" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear2" (onChange)="DatosGrafica2()"></p-dropdown>
                     <h5>Meses</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="Meses" optionLabel="name" [(ngModel)]="selectMonth2" (onChange)="DatosGrafica2()"></p-multiSelect>
                     <h5>Division</h5>
@@ -290,11 +290,11 @@
         
                 <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
                     <h5>Año</h5>
-                    <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear3" (onChange)="DatosGrafica3()"></p-dropdown>
+                    <p-dropdown appendTo="body" [filter]="true" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear3" (onChange)="DatosGrafica3()"></p-dropdown>
                     <h5>Meses</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="Meses" optionLabel="name" [(ngModel)]="selectMonth3" (onChange)="DatosGrafica3()"></p-multiSelect>
                     <h5>Division</h5>
-                    <p-multiSelect defaultLabel="Seleccione" [options]="divisiones3" optionLabel="name" [(ngModel)]="selectDiv3" (onChange)="filtroGraEve3()"></p-multiSelect>
+                    <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" optionLabel="name" [(ngModel)]="selectDiv3" (onChange)="filtroGraEve3()"></p-multiSelect>
                     <h5>Filtro cargos</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="cargoList" optionLabel="label" [(ngModel)]="selectEv3" (onChange)="filtroGraEve3()"></p-multiSelect>
                     <br>
@@ -351,11 +351,11 @@
         
                 <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
                     <h5>Año</h5>
-                    <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear4"  (onChange)="DatosGrafica4()"></p-dropdown>
+                    <p-dropdown appendTo="body" [filter]="true" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear4"  (onChange)="DatosGrafica4()"></p-dropdown>
                     <h5>Meses</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="Meses" optionLabel="name" [(ngModel)]="selectMonth4"  (onChange)="DatosGrafica4()"></p-multiSelect>
                     <h5>Division</h5>
-                    <p-multiSelect defaultLabel="Seleccione" [options]="divisiones3" optionLabel="name" [(ngModel)]="selectDiv4" (onChange)="filtroGraEve4()" ></p-multiSelect>
+                    <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" optionLabel="name" [(ngModel)]="selectDiv4" (onChange)="filtroGraEve4()" ></p-multiSelect>
                     <h5>Filtro eventos</h5>
                     <div>
                         <p-radioButton name="group8" label="Tipo accidente" [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra4_1" (onClick)="DatosGrafica4();reinciarVariable4_1()"></p-radioButton><br>
@@ -418,7 +418,7 @@
         
                 <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
                     <h5>Division</h5>
-                    <div *ngFor="let category of divisiones2" class="p-field-checkbox">
+                    <div *ngFor="let category of divisiones5" class="p-field-checkbox">
                         <p-checkbox name="group1" value="category" [value]="category" [inputId]="category.value" [(ngModel)]="selectDiv5" (click)="filtroGraEve5()"></p-checkbox>
                         <label>{{category.label}}</label>
                     </div>
@@ -478,13 +478,13 @@
         
                 <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
                     <h5>Año</h5>
-                    <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear6" (onChange)="DatosGrafica6()"></p-dropdown>
+                    <p-dropdown [filter]="true" appendTo="body" [options]="yearRange" placeholder="Seleccionar año" [(ngModel)]="selectYear6" (onChange)="DatosGrafica6()"></p-dropdown>
                     <h5>Meses</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="Meses" optionLabel="name" [(ngModel)]="selectMonth6" (onChange)="DatosGrafica6()"></p-multiSelect>
                     <h5>Division</h5>
-                    <p-multiSelect defaultLabel="Seleccione" [options]="divisiones3" optionLabel="name" [(ngModel)]="selectDiv6" (onChange)="filtroGraEve6()"></p-multiSelect>
+                    <p-multiSelect defaultLabel="Seleccione" [options]="divisiones4" optionLabel="name" [(ngModel)]="selectDiv6" (onChange)="filtroGraEve6()"></p-multiSelect>
                     <h5>Filtro peligros</h5>
-                    <p-dropdown [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value);resetVar6()" >
+                    <p-dropdown [filter]="true"appendTo="body"  [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value);resetVar6()" >
                     </p-dropdown><br>
                     <h5>Filtro descripción peligro</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="this.peligroItemList" optionLabel="label" [(ngModel)]="selectEv6" (onChange)="filtroGraEve6()"></p-multiSelect>
