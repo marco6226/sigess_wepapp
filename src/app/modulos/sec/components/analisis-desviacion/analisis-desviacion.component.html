@@ -211,7 +211,8 @@
                             <p-tabPanel  *ngIf="idEmpresa == '22' || idEmpresa == '3'" header="Dias perdidos">
 
                                 <app-incapacidades-complementaria (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList"></app-incapacidades-complementaria>
-
+                                <ng-container *ngIf="incapacidadesList==null"><small class="p-invalid">Obligatorio</small></ng-container>
+                                <ng-container *ngIf="incapacidadesList!=null"><small *ngIf="incapacidadesList.length==0" class="p-invalid">Obligatorio</small></ng-container>
                                 
                             </p-tabPanel>
                         </p-tabView>
@@ -331,7 +332,6 @@
                                 [observacion]="observacion"
                                 [miembros]="miembros"
                                 [selectedProducts]="selectedProducts"
-                                
                                 [factores]="dataListFactor"
                                 [infoIn]="infoIn"
                                 [planAccionList]="listPlanAccion"

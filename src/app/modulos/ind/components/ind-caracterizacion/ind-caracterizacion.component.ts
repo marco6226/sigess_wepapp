@@ -109,11 +109,11 @@ export class IndCaracterizacionComponent implements OnInit {
   filtroEventos: any[] = [[{label: 'Sexo masculino', value: 'Sexo masculino'}, {label: 'Sexo femenino', value: 'Sexo femenino'}],[{label: 'Lugar fuera', value: 'Lugar fuera'},{label: 'Lugar adentro', value: 'Lugar adentro'}],[{label: 'Jornada normal', value: 'Jornada normal'},{label: 'Jornada extra', value: 'Jornada extra'}]];
   filtroEventos2: any[] = [[{name: '18 a 25 años', code: '18 a 25 años'}, {name: '26 a 35 años', code: '26 a 35 años'}, {name: '36 a 45 años', code: '36 a 45 años'}, {name: '46 a 59 años', code: '46 a 59 años'}, {name: '60 años en adelante', code: '60 años en adelante'}],
     [{name: '0 a 1 años', code: '0 a 1 años'},{name: '2 a 5 años', code: '2 a 5 años'}, {name: '6 a 10 años', code: '6 a 10 años'}, {name: '11 a 20 años', code: '11 a 20 años'}, {name: '21 a 30 años', code: '21 a 30 años'}, {name: '31 años en adelante', code: '31 años en adelante'}],
-    [{name: '00:00 a 03:59', code: '00:00 a 03:59'},{name: '04:00 a 07:59', code: '04:00 a 07:59'}, {name: '08:00 a 11:59', code: '08:00 a 11:59'}, {name: '12:00 a 15:59', code: '12:00 a 15:59'}, {name: '16:00 a 23:59', code: '16:00 a 23:59'}]];
+    [{name: '00:00 a 03:59', code: '00:00 a 03:59'},{name: '04:00 a 07:59', code: '04:00 a 07:59'}, {name: '08:00 a 11:59', code: '08:00 a 11:59'}, {name: '12:00 a 15:59', code: '12:00 a 15:59'}, {name: '16:00 a 19:59', code: '16:00 a 19:59'},{name: '20:00 a 23:59', code: '20:00 a 23:59'}]];
   filtroEventos4:any[]
   rangoFechaEdad=['18 a 25 años','26 a 35 años','36 a 45 años','46 a 59 años','60 años en adelante']
   rangoFechaAntiguedad=['0 a 1 años','2 a 5 años','6 a 10 años','11 a 20 años','21 a 30 años','31 años en adelante']
-  rangoHoraAccidente=['00:00 a 03:59','04:00 a 07:59','08:00 a 11:59','12:00 a 15:59','16:00 a 23:59']
+  rangoHoraAccidente=['00:00 a 03:59','04:00 a 07:59','08:00 a 11:59','12:00 a 15:59','16:00 a 19:59','20:00 a 23:59']
   divisiones2= new Array();
   divisiones3= new Array();
   rangoFechaEdad2= new Array();
@@ -404,7 +404,7 @@ export class IndCaracterizacionComponent implements OnInit {
         this.CaracterizacionView2=this.CaracterizacionView.filter(resp=>{
           return resp.fechaaccidente<=date4 && resp.fechaaccidente>=new Date(this.date3)
           })}
-
+      console.log( this.CaracterizacionView2)
       this.ContHombres=[0,0,0,0,0,0,0]
       this.ContMujeres=[0,0,0,0,0,0,0]
       this.ContLugarFuera=[0,0,0,0,0,0,0]
@@ -459,7 +459,7 @@ export class IndCaracterizacionComponent implements OnInit {
         if(element.generoempleado=='F'){this.ContMujeres[4]=this.ContMujeres[4]+1;}
         if(element.lugaraccidente=='FUERA_EMPRESA'){this.ContLugarFuera[4]=this.ContLugarFuera[4]+1;}
         if(element.lugaraccidente=='DENTRO_EMPRESA'){this.ContLugarDentro[4]=this.ContLugarDentro[4]+1;}
-        if(element.jornadaaccidente=='NORMAL'){this.ContJornadaNormal[4]=this.ContJornadaNormal[0]+1;}
+        if(element.jornadaaccidente=='NORMAL'){this.ContJornadaNormal[4]=this.ContJornadaNormal[4]+1;}
         if(element.jornadaaccidente=='EXTRA'){this.ContJornadaExtra[4]=this.ContJornadaExtra[4]+1;}
         break;
       case 'Mesa Servida':
@@ -702,8 +702,8 @@ resetVarGraf2(){
   fechaNacimiento(element,element2){
     switch (element2.padrenombre) {
       case 'Almacenes Corona':
-        if(element>=18 && element<=25)this.ContFechaNacimiento_1[0]=this.ContFechaNacimiento_1[0]+1;
-        if( element>=26 && element<=35)this.ContFechaNacimiento_1[1]=this.ContFechaNacimiento_1[1]+1;
+        if(element>=18 && element<=25){this.ContFechaNacimiento_1[0]=this.ContFechaNacimiento_1[0]+1;}
+        if( element>=26 && element<=35){this.ContFechaNacimiento_1[1]=this.ContFechaNacimiento_1[1]+1;}
         if( element>=36 && element<=45)this.ContFechaNacimiento_1[2]=this.ContFechaNacimiento_1[2]+1;
         if( element>=46 && element<=59)this.ContFechaNacimiento_1[3]=this.ContFechaNacimiento_1[3]+1;
         if( element>=60)this.ContFechaNacimiento_1[4]=this.ContFechaNacimiento_1[4]+1;
@@ -834,71 +834,71 @@ resetVarGraf2(){
   horaAccidente(element,element2){
     switch (element2.padrenombre) {
       case 'Almacenes Corona':
-        if(element>=0 && element<4)this.ContHoraAccidente_1[0]=this.ContHoraAccidente_1[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_1[1]=this.ContHoraAccidente_1[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_1[2]=this.ContHoraAccidente_1[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_1[3]=this.ContHoraAccidente_1[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_1[4]=this.ContHoraAccidente_1[4]+1;
-        if( element>=20)this.ContHoraAccidente_1[5]=this.ContHoraAccidente_1[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_1[0]=this.ContHoraAccidente_1[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_1[1]=this.ContHoraAccidente_1[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_1[2]=this.ContHoraAccidente_1[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_1[3]=this.ContHoraAccidente_1[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_1[4]=this.ContHoraAccidente_1[4]+1;}
+        if( element>=20){this.ContHoraAccidente_1[5]=this.ContHoraAccidente_1[5]+1;}
         break;
       case 'Bathrooms and Kitchen':
-        if(element>=0 && element<4)this.ContHoraAccidente_2[0]=this.ContHoraAccidente_2[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_2[1]=this.ContHoraAccidente_2[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_2[2]=this.ContHoraAccidente_2[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_2[3]=this.ContHoraAccidente_2[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_2[4]=this.ContHoraAccidente_2[4]+1;
-        if( element>=20)this.ContHoraAccidente_2[5]=this.ContHoraAccidente_2[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_2[0]=this.ContHoraAccidente_2[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_2[1]=this.ContHoraAccidente_2[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_2[2]=this.ContHoraAccidente_2[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_2[3]=this.ContHoraAccidente_2[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_2[4]=this.ContHoraAccidente_2[4]+1;}
+        if( element>=20){this.ContHoraAccidente_2[5]=this.ContHoraAccidente_2[5]+1;}
         break;
       case 'Comercial Corona Colombia':
-        if(element>=0 && element<4)this.ContHoraAccidente_3[0]=this.ContHoraAccidente_3[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_3[1]=this.ContHoraAccidente_3[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_3[2]=this.ContHoraAccidente_3[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_3[3]=this.ContHoraAccidente_3[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_3[4]=this.ContHoraAccidente_3[4]+1;
-        if( element>=20)this.ContHoraAccidente_3[5]=this.ContHoraAccidente_3[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_3[0]=this.ContHoraAccidente_3[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_3[1]=this.ContHoraAccidente_3[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_3[2]=this.ContHoraAccidente_3[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_3[3]=this.ContHoraAccidente_3[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_3[4]=this.ContHoraAccidente_3[4]+1;}
+        if( element>=20){this.ContHoraAccidente_3[5]=this.ContHoraAccidente_3[5]+1;}
         break;
       case 'Funciones Transversales':
-        if(element>=0 && element<4)this.ContHoraAccidente_4[0]=this.ContHoraAccidente_4[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_4[1]=this.ContHoraAccidente_4[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_4[2]=this.ContHoraAccidente_4[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_4[3]=this.ContHoraAccidente_4[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_4[4]=this.ContHoraAccidente_4[4]+1;
-        if( element>=20)this.ContHoraAccidente_4[5]=this.ContHoraAccidente_4[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_4[0]=this.ContHoraAccidente_4[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_4[1]=this.ContHoraAccidente_4[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_4[2]=this.ContHoraAccidente_4[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_4[3]=this.ContHoraAccidente_4[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_4[4]=this.ContHoraAccidente_4[4]+1;}
+        if( element>=20){this.ContHoraAccidente_4[5]=this.ContHoraAccidente_4[5]+1;}
         break;
       case 'Insumos Industriales y Energias':
-        if(element>=0 && element<4)this.ContHoraAccidente_5[0]=this.ContHoraAccidente_5[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_5[1]=this.ContHoraAccidente_5[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_5[2]=this.ContHoraAccidente_5[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_5[3]=this.ContHoraAccidente_5[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_5[4]=this.ContHoraAccidente_5[4]+1;
-        if( element>=20)this.ContHoraAccidente_5[5]=this.ContHoraAccidente_5[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_5[0]=this.ContHoraAccidente_5[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_5[1]=this.ContHoraAccidente_5[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_5[2]=this.ContHoraAccidente_5[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_5[3]=this.ContHoraAccidente_5[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_5[4]=this.ContHoraAccidente_5[4]+1;}
+        if( element>=20){this.ContHoraAccidente_5[5]=this.ContHoraAccidente_5[5]+1;}
         break;
       case 'Mesa Servida':
-        if(element>=0 && element<4)this.ContHoraAccidente_6[0]=this.ContHoraAccidente_6[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_6[1]=this.ContHoraAccidente_6[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_6[2]=this.ContHoraAccidente_6[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_6[3]=this.ContHoraAccidente_6[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_6[4]=this.ContHoraAccidente_6[4]+1;
-        if( element>=20)this.ContHoraAccidente_6[5]=this.ContHoraAccidente_6[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_6[0]=this.ContHoraAccidente_6[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_6[1]=this.ContHoraAccidente_6[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_6[2]=this.ContHoraAccidente_6[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_6[3]=this.ContHoraAccidente_6[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_6[4]=this.ContHoraAccidente_6[4]+1;}
+        if( element>=20){this.ContHoraAccidente_6[5]=this.ContHoraAccidente_6[5]+1;}
         break;
       case 'Superficies, materiales y pinturas':
-        if(element>=0 && element<4)this.ContHoraAccidente_7[0]=this.ContHoraAccidente_7[0]+1;
-        if( element>=4 && element<8)this.ContHoraAccidente_7[1]=this.ContHoraAccidente_7[1]+1;
-        if( element>=8 && element<12)this.ContHoraAccidente_7[2]=this.ContHoraAccidente_7[2]+1;
-        if( element>=12 && element<16)this.ContHoraAccidente_7[3]=this.ContHoraAccidente_7[3]+1;
-        if( element>=16 && element<20)this.ContHoraAccidente_7[4]=this.ContHoraAccidente_7[4]+1;
-        if( element>=20)this.ContHoraAccidente_7[5]=this.ContHoraAccidente_7[5]+1;
+        if(element>=0 && element<4){this.ContHoraAccidente_7[0]=this.ContHoraAccidente_7[0]+1;}
+        if( element>=4 && element<8){this.ContHoraAccidente_7[1]=this.ContHoraAccidente_7[1]+1;}
+        if( element>=8 && element<12){this.ContHoraAccidente_7[2]=this.ContHoraAccidente_7[2]+1;}
+        if( element>=12 && element<16){this.ContHoraAccidente_7[3]=this.ContHoraAccidente_7[3]+1;}
+        if( element>=16 && element<20){this.ContHoraAccidente_7[4]=this.ContHoraAccidente_7[4]+1;}
+        if( element>=20){this.ContHoraAccidente_7[5]=this.ContHoraAccidente_7[5]+1;}
         break;
       default:
         break;
     }
 
-    if(element>=0 && element<4)this.ContHoraAccidente_total[0]=this.ContHoraAccidente_total[0]+1;
-    if( element>=4 && element<8)this.ContHoraAccidente_total[1]=this.ContHoraAccidente_total[1]+1;
-    if( element>=8 && element<12)this.ContHoraAccidente_total[2]=this.ContHoraAccidente_total[2]+1;
-    if( element>=12 && element<16)this.ContHoraAccidente_total[3]=this.ContHoraAccidente_total[3]+1;
-    if( element>=16 && element<20)this.ContHoraAccidente_total[4]=this.ContHoraAccidente_total[4]+1;
-    if( element>=20)this.ContHoraAccidente_total[5]=this.ContHoraAccidente_total[5]+1;
+    if(element>=0 && element<4){this.ContHoraAccidente_total[0]=this.ContHoraAccidente_total[0]+1;}
+    if( element>=4 && element<8){this.ContHoraAccidente_total[1]=this.ContHoraAccidente_total[1]+1;}
+    if( element>=8 && element<12){this.ContHoraAccidente_total[2]=this.ContHoraAccidente_total[2]+1;}
+    if( element>=12 && element<16){this.ContHoraAccidente_total[3]=this.ContHoraAccidente_total[3]+1;}
+    if( element>=16 && element<20){this.ContHoraAccidente_total[4]=this.ContHoraAccidente_total[4]+1;}
+    if( element>=20){this.ContHoraAccidente_total[5]=this.ContHoraAccidente_total[5]+1;}
   }
   funcRangoFechaEdad(ele){
     let datos=[]
@@ -1372,7 +1372,7 @@ DatosGrafica4(){
     })
     this.CaracterizacionView5=CaracterizacionView5_1
   }
-
+  
   this.CaracterizacionView5.forEach(element => {
     if(this.radioGra4==0)this.ContDatosGraf4(element)
     if(this.radioGra4==1 && element.emptemporal!=null)this.ContDatosGraf4(element)
@@ -1514,7 +1514,6 @@ datos4_6:division=new division();
 datos4_7:division=new division();
 
 ContDatosGraf4(element){
-
   switch (element.padrenombre) {
     case 'Almacenes Corona':
       this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
@@ -1525,52 +1524,52 @@ ContDatosGraf4(element){
       this.datos4_1.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
       break;
     case 'Bathrooms and Kitchen':
-      this.datos4_2.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
-      this.datos4_2.datos.tipo_lesionCont[element.tipolesion]=this.datos4_1.datos.tipo_lesionCont[element.tipolesion]+1;
-      this.datos4_2.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_1.datos.parte_cuerpoCont[element.partecuerpo]+1;
-      this.datos4_2.datos.agenteCont[element.agente]=this.datos4_1.datos.agenteCont[element.agente]+1;
-      this.datos4_2.datos.mecanismoCont[element.mecanismo]=this.datos4_1.datos.mecanismoCont[element.mecanismo]+1;
-      this.datos4_2.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
+      this.datos4_2.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_2.datos.tipoAccidenteCont[element.tipoaccidente]+1;
+      this.datos4_2.datos.tipo_lesionCont[element.tipolesion]=this.datos4_2.datos.tipo_lesionCont[element.tipolesion]+1;
+      this.datos4_2.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_2.datos.parte_cuerpoCont[element.partecuerpo]+1;
+      this.datos4_2.datos.agenteCont[element.agente]=this.datos4_2.datos.agenteCont[element.agente]+1;
+      this.datos4_2.datos.mecanismoCont[element.mecanismo]=this.datos4_2.datos.mecanismoCont[element.mecanismo]+1;
+      this.datos4_2.datos.sitioCont[element.sitio]=this.datos4_2.datos.sitioCont[element.sitio]+1;
       break;
     case 'Comercial Corona Colombia':
-      this.datos4_3.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
-      this.datos4_3.datos.tipo_lesionCont[element.tipolesion]=this.datos4_1.datos.tipo_lesionCont[element.tipolesion]+1;
-      this.datos4_3.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_1.datos.parte_cuerpoCont[element.partecuerpo]+1;
-      this.datos4_3.datos.agenteCont[element.agente]=this.datos4_1.datos.agenteCont[element.agente]+1;
-      this.datos4_3.datos.mecanismoCont[element.mecanismo]=this.datos4_1.datos.mecanismoCont[element.mecanismo]+1;
-      this.datos4_3.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
+      this.datos4_3.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_3.datos.tipoAccidenteCont[element.tipoaccidente]+1;
+      this.datos4_3.datos.tipo_lesionCont[element.tipolesion]=this.datos4_3.datos.tipo_lesionCont[element.tipolesion]+1;
+      this.datos4_3.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_3.datos.parte_cuerpoCont[element.partecuerpo]+1;
+      this.datos4_3.datos.agenteCont[element.agente]=this.datos4_3.datos.agenteCont[element.agente]+1;
+      this.datos4_3.datos.mecanismoCont[element.mecanismo]=this.datos4_3.datos.mecanismoCont[element.mecanismo]+1;
+      this.datos4_3.datos.sitioCont[element.sitio]=this.datos4_3.datos.sitioCont[element.sitio]+1;
       break;
     case 'Funciones Transversales':
-      this.datos4_4.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
-      this.datos4_4.datos.tipo_lesionCont[element.tipolesion]=this.datos4_1.datos.tipo_lesionCont[element.tipolesion]+1;
-      this.datos4_4.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_1.datos.parte_cuerpoCont[element.partecuerpo]+1;
-      this.datos4_4.datos.agenteCont[element.agente]=this.datos4_1.datos.agenteCont[element.agente]+1;
-      this.datos4_4.datos.mecanismoCont[element.mecanismo]=this.datos4_1.datos.mecanismoCont[element.mecanismo]+1;
-      this.datos4_4.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
+      this.datos4_4.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_4.datos.tipoAccidenteCont[element.tipoaccidente]+1;
+      this.datos4_4.datos.tipo_lesionCont[element.tipolesion]=this.datos4_4.datos.tipo_lesionCont[element.tipolesion]+1;
+      this.datos4_4.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_4.datos.parte_cuerpoCont[element.partecuerpo]+1;
+      this.datos4_4.datos.agenteCont[element.agente]=this.datos4_4.datos.agenteCont[element.agente]+1;
+      this.datos4_4.datos.mecanismoCont[element.mecanismo]=this.datos4_4.datos.mecanismoCont[element.mecanismo]+1;
+      this.datos4_4.datos.sitioCont[element.sitio]=this.datos4_4.datos.sitioCont[element.sitio]+1;
       break;
     case 'Insumos Industriales y Energias':
-      this.datos4_5.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
-      this.datos4_5.datos.tipo_lesionCont[element.tipolesion]=this.datos4_1.datos.tipo_lesionCont[element.tipolesion]+1;
-      this.datos4_5.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_1.datos.parte_cuerpoCont[element.partecuerpo]+1;
-      this.datos4_5.datos.agenteCont[element.agente]=this.datos4_1.datos.agenteCont[element.agente]+1;
-      this.datos4_5.datos.mecanismoCont[element.mecanismo]=this.datos4_1.datos.mecanismoCont[element.mecanismo]+1;
-      this.datos4_5.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
+      this.datos4_5.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_5.datos.tipoAccidenteCont[element.tipoaccidente]+1;
+      this.datos4_5.datos.tipo_lesionCont[element.tipolesion]=this.datos4_5.datos.tipo_lesionCont[element.tipolesion]+1;
+      this.datos4_5.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_5.datos.parte_cuerpoCont[element.partecuerpo]+1;
+      this.datos4_5.datos.agenteCont[element.agente]=this.datos4_5.datos.agenteCont[element.agente]+1;
+      this.datos4_5.datos.mecanismoCont[element.mecanismo]=this.datos4_5.datos.mecanismoCont[element.mecanismo]+1;
+      this.datos4_5.datos.sitioCont[element.sitio]=this.datos4_5.datos.sitioCont[element.sitio]+1;
       break;
     case 'Mesa Servida':
-      this.datos4_6.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
-      this.datos4_6.datos.tipo_lesionCont[element.tipolesion]=this.datos4_1.datos.tipo_lesionCont[element.tipolesion]+1;
-      this.datos4_6.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_1.datos.parte_cuerpoCont[element.partecuerpo]+1;
-      this.datos4_6.datos.agenteCont[element.agente]=this.datos4_1.datos.agenteCont[element.agente]+1;
-      this.datos4_6.datos.mecanismoCont[element.mecanismo]=this.datos4_1.datos.mecanismoCont[element.mecanismo]+1;
-      this.datos4_6.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
+      this.datos4_6.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_6.datos.tipoAccidenteCont[element.tipoaccidente]+1;
+      this.datos4_6.datos.tipo_lesionCont[element.tipolesion]=this.datos4_6.datos.tipo_lesionCont[element.tipolesion]+1;
+      this.datos4_6.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_6.datos.parte_cuerpoCont[element.partecuerpo]+1;
+      this.datos4_6.datos.agenteCont[element.agente]=this.datos4_6.datos.agenteCont[element.agente]+1;
+      this.datos4_6.datos.mecanismoCont[element.mecanismo]=this.datos4_6.datos.mecanismoCont[element.mecanismo]+1;
+      this.datos4_6.datos.sitioCont[element.sitio]=this.datos4_6.datos.sitioCont[element.sitio]+1;
       break;
     case 'Superficies, materiales y pinturas':
-      this.datos4_7.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_1.datos.tipoAccidenteCont[element.tipoaccidente]+1;
-      this.datos4_7.datos.tipo_lesionCont[element.tipolesion]=this.datos4_1.datos.tipo_lesionCont[element.tipolesion]+1;
-      this.datos4_7.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_1.datos.parte_cuerpoCont[element.partecuerpo]+1;
-      this.datos4_7.datos.agenteCont[element.agente]=this.datos4_1.datos.agenteCont[element.agente]+1;
-      this.datos4_7.datos.mecanismoCont[element.mecanismo]=this.datos4_1.datos.mecanismoCont[element.mecanismo]+1;
-      this.datos4_7.datos.sitioCont[element.sitio]=this.datos4_1.datos.sitioCont[element.sitio]+1;
+      this.datos4_7.datos.tipoAccidenteCont[element.tipoaccidente]=this.datos4_7.datos.tipoAccidenteCont[element.tipoaccidente]+1;
+      this.datos4_7.datos.tipo_lesionCont[element.tipolesion]=this.datos4_7.datos.tipo_lesionCont[element.tipolesion]+1;
+      this.datos4_7.datos.parte_cuerpoCont[element.partecuerpo]=this.datos4_7.datos.parte_cuerpoCont[element.partecuerpo]+1;
+      this.datos4_7.datos.agenteCont[element.agente]=this.datos4_7.datos.agenteCont[element.agente]+1;
+      this.datos4_7.datos.mecanismoCont[element.mecanismo]=this.datos4_7.datos.mecanismoCont[element.mecanismo]+1;
+      this.datos4_7.datos.sitioCont[element.sitio]=this.datos4_7.datos.sitioCont[element.sitio]+1;
       break;
     default:
       break;

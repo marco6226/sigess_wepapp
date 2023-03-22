@@ -288,6 +288,9 @@
             <p-accordionTab
                 header="V. DÍAS PERDIDOS">
                 <app-incapacidades-complementaria-temporal (listIncapacidades)="getListIncapacidades($event)" [incapacidades]="incapacidadesList" [consultar]="consultar"></app-incapacidades-complementaria-temporal>
+                <ng-container *ngIf="incapacidadesList==null"><small class="p-invalid">Obligatorio</small></ng-container>
+                <ng-container *ngIf="incapacidadesList!=null"><small *ngIf="incapacidadesList.length==0" class="p-invalid">Obligatorio</small></ng-container>
+                
             </p-accordionTab>
             <p-accordionTab
                 header="VI. PELIGRO DESCRIPTOR">
@@ -397,12 +400,12 @@
 </p-panel>
 <ng-container *ngIf="!consultar && adicionar">
     <button *sTienePermiso="'RAI_POST_REPT'" pButton  (click)="submit1()" icon="fa fa-floppy-o" title="Guardar reporte"
-        class="float-btn" [disabled]="!(form.valid && analisisPeligros.valid)" style="z-index: 100;"></button>
+        class="float-btn" [disabled]="!(form.valid && analisisPeligros.valid && flagIncapacidades)" style="z-index: 100;"></button>
 </ng-container>
 
 <ng-container *ngIf="!consultar && !adicionar">
     <button *sTienePermiso="'RAI_PUT_REPT'" pButton  (click)="submit1()" icon="fa fa-pencil" title="Actualizar reporte"
-        class="float-btn ui-button-success" [disabled]="!(form.valid  && analisisPeligros.valid)" style="z-index: 100;"></button>
+        class="float-btn ui-button-success" [disabled]="!(form.valid  && analisisPeligros.valid && flagIncapacidades)" style="z-index: 100;"></button>
 </ng-container>
 <!-- <button (click)="test()">test</button> -->
 <a style="visibility: hidden" id="dwldLink"></a>

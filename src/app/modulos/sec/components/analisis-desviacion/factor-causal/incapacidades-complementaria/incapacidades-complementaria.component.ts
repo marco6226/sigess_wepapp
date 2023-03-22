@@ -243,6 +243,7 @@ deleteProduct(product: Incapacidad) {
                 element.id = tempid;
             });
             console.log(this.incapacidades);
+            this.listIncapacidades.emit(this.incapacidades);
             this.incapacidad = {};
             // this.messageService.add({severity:'success', summary: 'Successful', detail: 'miembro Deleted', life: 3000});
         }

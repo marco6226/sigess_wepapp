@@ -693,7 +693,15 @@ export class AnalisisDesviacionComponent implements OnInit {
     }
     guardarAnalisis() {
         this.guardando=true;
-        if(!this.analisisPeligros.invalid || this.idEmpresa!='22'){
+
+        let flagIncapacidades:boolean=false
+        if(this.incapacidadesList){
+            if(this.incapacidadesList.length>0){
+                flagIncapacidades=true
+            }
+        }
+
+        if((!this.analisisPeligros.invalid && flagIncapacidades) || this.idEmpresa!='22'){
             this.informacionComplementaria=this.analisisPeligros.value;
             this.informeJson=this.infoIn.value;
             this.diagram=this.FlowchartService.getDiagram();
@@ -763,7 +771,14 @@ export class AnalisisDesviacionComponent implements OnInit {
         this.guardando=true;
         this.disabled=true;
 
-        if(!this.analisisPeligros.invalid|| this.idEmpresa!='22'){
+        let flagIncapacidades:boolean=false
+        if(this.incapacidadesList){
+            if(this.incapacidadesList.length>0){
+                flagIncapacidades=true
+            }
+        }
+        
+        if((!this.analisisPeligros.invalid && flagIncapacidades) || this.idEmpresa!='22'){
             if(this.idEmpresa=='22'){await this.tareaList2();}
             this.buttonPrint=true;
             this.informacionComplementaria=this.analisisPeligros.value;
@@ -1303,5 +1318,5 @@ testmsng(){
 
         this.displayInforme = validador;
     }
-
+    test(){console.log(this.incapacidadesList)}
 }

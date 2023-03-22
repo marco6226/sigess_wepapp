@@ -125,6 +125,8 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
 
   msgs: Message[];
   cargoList: SelectItem[];
+  flagIncapacidades:boolean=false
+
   constructor(
       private fb: FormBuilder,
       private cdRef: ChangeDetectorRef,
@@ -496,6 +498,11 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         descripcion: this.planAccion['descripcion']
       })
       this.setFactorCausal();
+      if(this.incapacidadesList){
+        if(this.incapacidadesList.length>0){
+            this.flagIncapacidades=true
+        }
+      }
     })
     // await this.analisisDesviacionService.findByFilter(fq).then(async (resp) => {
     //   console.log(resp)
@@ -596,6 +603,11 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
 
   getListIncapacidades(event){
     this.incapacidadesList = event;
+    if(this.incapacidadesList){
+      if(this.incapacidadesList.length>0){
+          this.flagIncapacidades=true
+      }else{this.flagIncapacidades=false}
+    }
   }
 
   tempData: listFactores[]=[];
