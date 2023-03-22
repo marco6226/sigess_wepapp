@@ -28,7 +28,7 @@
                 </div> -->
             </div>
             <div class="ui-g" style="margin-top: 20px;">
-                <div class="ui-g-3 ui-sm-12 ui-md-3" *ngIf="anioSelected && empresaSelected">
+                <div class="ui-g-3 ui-sm-12 ui-md-3" *ngIf="anioSelected && empresaSelected && empresaSelected==22">
                     <label for="" style="margin-right: 10px;">Meta total para {{findEmpresaById(empresaSelected)}}:</label>
                     <input pInputText [(ngModel)]="metaAnualILI" placeholder="0" type="number"/>
                 </div>
@@ -83,16 +83,18 @@
                                         [(ngModel)]="dataHHT[i].Areas[j].HhtArea" 
                                         type="number"/>
                                     </div>
-                                    <div class="ui-g-2 ui-sm-12 ui-md-2" >
-                                        Meta {{area.nombre}}:
-                                    </div>
-                                    <div class="ui-g-2 ui-sm-12 ui-md-2">
-                                        <input pInputText placeholder="0"
-                                        *ngIf="dataHHT[i]"
-                                        (keyup)="setMetaPorArea(j, dataHHT[i].Areas[j].ILIArea)"
-                                        [(ngModel)]="dataHHT[i].Areas[j].ILIArea" 
-                                        type="number"/>
-                                    </div>
+                                    <ng-container *ngIf="empresaSelected==22">
+                                        <div class="ui-g-2 ui-sm-12 ui-md-2" >
+                                            Meta {{area.nombre}}:
+                                        </div>
+                                        <div class="ui-g-2 ui-sm-12 ui-md-2">
+                                            <input pInputText placeholder="0"
+                                            *ngIf="dataHHT[i]"
+                                            (keyup)="setMetaPorArea(j, dataHHT[i].Areas[j].ILIArea)"
+                                            [(ngModel)]="dataHHT[i].Areas[j].ILIArea" 
+                                            type="number"/>
+                                        </div>
+                                    </ng-container>
                                 </div>
 
                                 <div *ngIf="plantasList">
