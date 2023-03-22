@@ -231,6 +231,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   filtroMesesIli_1: any[] = []; 
   dataEventos2: any[] = [];
   filtroAnioEventos2: number = new Date().getFullYear();
+  filtroEventos1: string;
+  filtroEventos2: string;
   randomILI: any[];
   randomILI2: any[];
   randomILI2_2: any[];
@@ -1115,7 +1117,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     Object.assign(this, {tasaFrecuencia2});
   }
 
-  getEventos_1(filtro?: string){
+  getEventos_1(){
+    
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt'));
     let dataEventos1: any[] = [];
     let listaDivisiones = reportesAt.map(at => at.padreNombre);
@@ -1123,7 +1126,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       return listaDivisiones.indexOf(div) === index;
     }).sort();
     try{
-      switch (filtro) {
+      switch (this.filtroEventos1) {
         case 'dir':
           reportesAt = reportesAt.filter(at => at.temporal === null);
           throw 'dir';
@@ -1235,12 +1238,12 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     Object.assign(this, {dataEventos1});
   }
 
-  getEventos_2(filtros?: string){
+  getEventos_2(){
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.filtroAnioEventos2);
     let dataEventos2: any[] = [];
     
     try{
-      switch(filtros){
+      switch(this.filtroEventos2){
         case 'temp':
           reportesAt = reportesAt.filter(at => at.temporal !== null);
           throw 'temp';
