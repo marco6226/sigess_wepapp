@@ -76,16 +76,35 @@
                       </div>
                   </div>
               </div>
-              <div class="p-col-6 p-mt-6 mid-border">
+              <div class="p-col-10 p-mt-6 mid-border">
                   <div class="p-d-flex p-jc-evenly">
                       <div class="p-d-flex"><p class="p-m-0" style="margin-right: 10px!important;">División:</p> <p-dropdown appendTo="body" [options]="divisiones" [(ngModel)]="selectedDivisionResumen" placeholder="Seleccionar división" [showClear]="true" (onChange)="loadResumen()"></p-dropdown></div>
-                      <div class="p-d-flex">  
-                          <i style="font-size:24px" class="fa">&#xf073;</i>   
-                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="loadResumen()" > </p-calendar>
+                      <div class="p-d-flex">
+                        <p class="p-m-0" style="margin-right: 10px!important;">Año</p>
+                        <p-dropdown [options]="yearRange"
+                        placeholder="Seleccione un año"
+                        [(ngModel)]="anioActualResumen"
+                        (onChange)="loadResumen()">
+                        </p-dropdown>
                       </div>
-                      <div class="p-d-flex"> 
+                      <div class="p-d-flex">
+                        <p class="p-m-1" style="margin-right: 10px!important;">Desde:</p>
+                          <i style="font-size:24px" class="fa">&#xf073;</i>   
+                        <p-calendar [locale]="localeES" view="month"
+                        dateFormat="MM" placeholder="Seleccione" appendTo="body" 
+                        [(ngModel)]="fechaInicioResumen" showButtonBar="true" 
+                        (onSelect)="loadResumen()" (onClearClick)="loadResumen()"
+                        (onTodayClick)="loadResumen()">
+                        </p-calendar>
+                      </div>
+                      <div class="p-d-flex">
+                        <p class="p-m-1" style="margin-right: 10px!important;">Hasta:</p>
                           <i style="font-size:24px" class="fa">&#xf073;</i> 
-                          <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastas" (onSelect)="loadResumen()"> </p-calendar>
+                          <p-calendar [locale]="localeES" view="month" dateFormat="MM" 
+                          placeholder="Seleccione" appendTo="body" showButtonBar="true" 
+                          [(ngModel)]="fechaFinalResumen" (onSelect)="loadResumen()"
+                          (onClearClick)="loadResumen()" (onTodayClick)="loadResumen()">
+                          </p-calendar>
                       </div>
                   </div>
               </div>

@@ -181,13 +181,22 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
       let data = <DataHht>JSON.parse(hht.valor).Data;
       this.metaAnualILI = JSON.parse(hht.valor).ILI_Anual;
       this.metaMensualILI = JSON.parse(hht.valor).ILI_Mensual;
-      this.dataHHT[index] ={
-        id: Number(hht.id),
-        mes: mes.value,
-        HhtMes: data.HhtMes,
-        NumPersonasMes: data.NumPersonasMes,
-        Areas: data.Areas
-      }
+      
+      this.dataHHT[index].id = data.id;
+      this.dataHHT[index].HhtMes = data.HhtMes;
+      this.dataHHT[index].NumPersonasMes = data.NumPersonasMes;
+      this.dataHHT[index].Areas.forEach(area => {
+        let dataArea = data.Areas.find(ar => ar.id === area.id);
+        area.NumPersonasArea = dataArea.NumPersonasArea;
+        area.ILIArea = dataArea.ILIArea ? dataArea.ILIArea : 0;
+        area.HhtArea = dataArea.HhtArea ? dataArea.HhtArea : 0;
+        area.Plantas.forEach(pl => {
+          let dataPlanta = dataArea.Plantas.find(pl2 => pl2.id === pl.id);
+          pl.HhtPlanta = dataPlanta ? dataPlanta.HhtPlanta : 0;
+          pl.NumPersonasPlanta = dataPlanta ? dataPlanta.NumPersonasPlanta : 0;
+        });
+      });
+      
       data.Areas.forEach((area, indexAr) => {
         if(area.Plantas.length > 0){
           this.calcularTotalesPorArea(index, indexAr);
