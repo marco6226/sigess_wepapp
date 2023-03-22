@@ -85,7 +85,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         labelEllipsisSize: 80
     }
   };
-  dataIli_2: any;
+  dataIli_2: any[];
   selectedAnioIli_2: number = new Date().getFullYear();
   multi: any[];
   localeES = locale_es;
@@ -95,11 +95,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   diasPerdidos:number;
   incapacidades;
   areasPermiso: string;
-  reporteat;
   filtroFechaAt: Date[] = [];
   filtroFechaDiasPerdidos: Date[] = [];
-  desdes: Date;
-  hastas: Date;
   pipe = new DatePipe('en-US');
   todayWithPipe = null;
   areaList: Area[] = [];
@@ -278,6 +275,21 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   totalEventosDv2: any[];
   totalDiasEventos: any[];
   random: any[];
+  flag:boolean=false
+  flag1:boolean=false
+  flagdiv:boolean=false
+  flagevent:boolean=false
+  flagtasa1:boolean=false
+  flagtasa2:boolean=false
+  flagtasaILI:boolean=false
+  yearRange = new Array();
+  añoPrimero:number=2015;
+  dateValue= new Date();
+  añoActual:number=this.dateValue.getFullYear();
+  anioActualResumen: number = new Date().getFullYear();
+  fechaInicioResumen: Date;
+  fechaFinalResumen: Date;
+  yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
 
   constructor(
     private reporteAtService: ReporteAtService, 
@@ -287,18 +299,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     ) { 
       // Object.assign(this, { multi })
       }
-    flag:boolean=false
-    flag1:boolean=false
-    flagdiv:boolean=false
-    flagevent:boolean=false
-    flagtasa1:boolean=false
-    flagtasa2:boolean=false
-    flagtasaILI:boolean=false
-    yearRange = new Array();
-    añoPrimero:number=2015;
-    dateValue= new Date();
-    añoActual:number=this.dateValue.getFullYear();
-    yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
+    
     
   ngAfterViewInit(){
     this.cargarEventosAt().then(() => {
@@ -306,6 +307,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.tasaDesde.setDate(1);
       this.tasaHasta.setDate(1);
 
+      this.loadResumen();
       this.getEventosAt();
       this.getDiasPerdidosAt();
       this.getTasas_1();
@@ -351,16 +353,15 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.yearRange.push({label:this.yearRangeNumber[i],value:this.yearRangeNumber[i]});
     }
 
+    this.hasta = new Date(Date.now());
+    this.desde = null;
+    this.fechaInicioResumen = null;
+    this.fechaFinalResumen = new Date();
+
     this.getData().then();
-    
-    this.loadResumen();
   }
 
   async getData(){
-    this.hastas= new Date(Date.now())
-    this.desdes=null
-    this.hasta= new Date(Date.now())
-    this.desde=null
 
     let areafiltQuery = new FilterQuery();
       areafiltQuery.sortOrder = SortOrder.ASC;
@@ -423,59 +424,105 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   loadResumen(){
+    let filterQueryCorona = new FilterQuery();
+    let filterQueryTemp = new FilterQuery();
+    let empresaId = this.sessionService.getEmpresa().id;
+    let hhtEmpresa: Hht[] = [];
+    let hhtTemp: Hht[] = [];
     
-    let date: Date = new Date(new Date(this.hastas).setMonth(new Date(this.hastas).getMonth()+1));
-    this.reporteAtService.findAllRAT().then(async (resp)=>{
-      this.reporteat = resp
-      let result: any[] = await this.reporteat.filter(word => {
-        return new Date(word['fechaReporte'])> this.desdes && new Date(word['fechaReporte'])< date
-      });
-
-      if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') result = result.filter(at => at.padreNombre === this.selectedDivisionResumen);
-
-      //No. de reportes
-      this.NoEventos= result.length;
-
-      //No. de días perdidos
-      this.diasPerdidos=0;
-      result.forEach(element => {
-        if(element['incapacidades']!=null && element['incapacidades']!='null'){
-          this.diasPerdidos = this.diasPerdidos + JSON.parse(element['incapacidades'])
-                                                      .reduce((count, incapacidad) => {
-                                                        return count + incapacidad.diasAusencia;
-                                                      }, 0);
-        }
-      });
-    });
-
-    let filterQuery = new FilterQuery();
-    let empresaId = this.sessionService.getEmpresa().id; 
-    filterQuery.sortOrder = SortOrder.ASC;
-    filterQuery.sortField = "id";
-    filterQuery.filterList = [
-      {criteria: Criteria.EQUALS, field: "anio", value1: date.getFullYear().toString()},
+    filterQueryCorona.sortOrder = SortOrder.ASC;
+    filterQueryCorona.sortField = "id";
+    filterQueryCorona.filterList = [
+      {criteria: Criteria.EQUALS, field: "anio", value1: this.anioActualResumen.toString()},
       {criteria: Criteria.EQUALS, field: "empresaSelect", value1: empresaId}
     ];
-    this.hhtService.findByFilter(filterQuery)
-    .then((res: any) => {
-      if(res.data.length > 0){
-        // console.log('res:',res);
-        // console.log('data',res.data);
-        // console.log('ILI_Anual:', JSON.parse(res.data[0].valor).ILI_Anual);
-        this.metaIli = JSON.parse(res.data[0].valor).ILI_Anual;
-        // console.log('meta', this.metaIli);
+
+    filterQueryTemp.sortOrder = SortOrder.ASC;
+    filterQueryTemp.sortField = "id";
+    filterQueryTemp.filterList = [
+      {criteria: Criteria.EQUALS, field: "anio", value1: this.anioActualResumen.toString()},
+      {criteria: Criteria.EQUALS, field: "empresa.id", value1: empresaId},
+      {criteria: Criteria.NOT_EQUALS, field: "empresaSelect", value1: empresaId}
+    ];
+
+    let reportesAt = JSON.parse(localStorage.getItem('reportesAt')).map(at => at);
+    
+    if(this.fechaInicioResumen){
+      this.fechaInicioResumen.setFullYear(this.anioActualResumen);
+    }
+
+    if(this.fechaFinalResumen){
+      this.fechaFinalResumen.setFullYear(this.anioActualResumen);
+      this.fechaFinalResumen = new Date(this.fechaFinalResumen.getFullYear(), this.fechaFinalResumen.getMonth()+1, 0);
+    }
+
+    reportesAt = reportesAt.filter(at => new Date(at.fechaReporte).getFullYear() == this.anioActualResumen);
+
+    reportesAt = reportesAt.filter(at => {
+        return new Date(at['fechaReporte']) > this.fechaInicioResumen && new Date(at['fechaReporte']) < this.fechaFinalResumen;
+    });
+
+    if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') reportesAt = reportesAt.filter(at => at.padreNombre === this.selectedDivisionResumen);
+
+    this.NoEventos = reportesAt.length;
+
+    this.diasPerdidos = 0;
+    reportesAt.forEach(at => {
+      if(at['incapacidades']!=null && at['incapacidades']!='null'){
+        this.diasPerdidos = this.diasPerdidos + JSON.parse(at['incapacidades'])
+        .reduce((count, incapacidad) => {
+          return count + incapacidad.diasAusencia;
+        }, 0);
       }
     });
+
+    this.hhtService.findByFilter(filterQueryCorona)
+    .then((res: any) => {
+      if(res.data.length > 0){
+        hhtEmpresa = Array.from(res.data);
+        if(!this.selectedDivisionResumen || this.selectedDivisionResumen === 'Total'){
+          this.metaIli = JSON.parse(res.data[0].valor).ILI_Anual;
+        }else{
+          let data: DataHht = JSON.parse(res.data[0].valor).Data;
+          data.Areas.forEach((area , index) => {
+            this.areaList.forEach(ar => {
+              if(ar.nombre === this.selectedDivisionResumen && ar.id == area.id.toString()){
+                this.metaIli = area.ILIArea;
+              }
+            });
+          });
+        }
+        // console.log('meta', this.metaIli);
+      }else{
+        console.error('No se obtuvieron registros hht de la empresa.');
+      }
+    }).catch(err => {
+      console.error('Error al obtener hht de la empresa');
+    });
+
+    this.hhtService.findByFilter(filterQueryTemp)
+    .then((res: any) => {
+      if(res.data.length > 0){
+        hhtTemp = Array.from(res.data);
+      }else{
+        console.error('No se obtuvieron registros hht de las temporales');
+      }
+    }).catch(err => {
+      console.error('Error al obtener hht de las temporales');
+    });
+
+
   }
 
   async cargarEventosAt(): Promise<boolean>{
     return new Promise((resolve, reject) => {
-      this.reporteAtService.findAllRAT().then((reportesAt: any[]) => {
-        localStorage.setItem('reportesAt', JSON.stringify(reportesAt.map(rep => rep)));
+      this.reporteAtService.getAllAt().then((reportesAt: any[]) => {
+        localStorage.setItem('reportesAt', JSON.stringify(reportesAt.map(at => at)));
         resolve(true);
       }).catch((err) => {
+        console.error(err);
         reject(false);
-      })
+      });
     });
   }
 
@@ -1284,15 +1331,38 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       {criteria: Criteria.EQUALS, field: "empresaSelect", value1: '22'}
     ];
 
-    this.hhtService.findByFilter(filterQuery).then((res: any) => {
+    this.hhtService.findByFilter(filterQuery).then(async (res: any) => {
       if(this.filtroMesesIli_1.length > 0) reportesAt = reportesAt.filter(at => this.filtroMesesIli_1.includes(this.meses[new Date(at.fechaReporte).getMonth()]));
-      let data = {
+      let dataILI = {
         name: 'ILI',
         type: 'verticalBar',
         data: []
       };
+      let dataMeta = {
+        name: 'Meta',
+        type: 'line',
+        data: []
+      }
+
+      let listaHhtTemp: Hht[];
+      let filterQuery2 = new FilterQuery();
+      filterQuery2.sortOrder = SortOrder.ASC;
+      filterQuery2.sortField = "id";
+      filterQuery2.filterList = [
+        {criteria: Criteria.EQUALS, field: "anio", value1: this.selectedAnioIli_1.toString()},
+        {criteria: Criteria.EQUALS, field: "empresa.id", value1: this.sessionService.getParamEmp()},
+        {criteria: Criteria.NOT_EQUALS, field: "empresaSelect", value1: this.sessionService.getParamEmp()}
+      ];
+      await this.hhtService.findByFilter(filterQuery2)
+      .then((resTemp: any) => {
+        listaHhtTemp = Array.from(resTemp.data);
+      }).catch(err => {
+        console.error('Error al obtener hht temporales', err);
+      });
 
       this.divisionesCoronaConId.forEach((division, index) => {
+
+        let metaCorona = 0;
         
         let accidentesConDiasPerdidos = reportesAt.filter(at => at.padreNombre === division.nombre && at.incapacidades !== null
                                                                 && at.incapacidades !== 'null').length;
@@ -1304,6 +1374,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             if(this.filtroMesesIli_1.includes(dataHHT.mes)){
               dataHHT.Areas.forEach((area) => {
                 if(area.id == division.id){
+                  metaCorona = Number(area.ILIArea ? area.ILIArea : 0);
                   hhtCorona += area.HhtArea != null ? area.HhtArea : 0;
                 }
               });
@@ -1311,9 +1382,32 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           }else {
             dataHHT.Areas.forEach(area => {
               if(division.id == area.id){
+                metaCorona = Number(area.ILIArea ? area.ILIArea : 0);
                 hhtCorona += area.HhtArea !== null ? area.HhtArea : 0;
               }
             });
+          }
+        });
+
+        let hhtTemp = 0;
+        // console.log(listaHhtTemp);
+        listaHhtTemp.forEach((hht, index) => {
+          let data: DataHht = <DataHht>JSON.parse(hht.valor).Data;
+          if(this.filtroMesesIli_1.length > 0){
+            if(this.filtroMesesIli_1.includes(data.mes)){
+              data.Areas.forEach((area, index) => {
+                if(area.id == division.id){
+                  hhtTemp += area.HhtArea ? area.HhtArea : 0;
+                }
+              });
+            }
+          }else{
+            let data: DataHht = <DataHht>JSON.parse(hht.valor).Data;
+            data.Areas.forEach((area, index) => {
+              if(division.id == area.id){
+                hhtTemp += area.HhtArea ? area.HhtArea : 0;
+              }
+            })
           }
         });
         // console.log(division.nombre, hhtCorona);
@@ -1323,18 +1417,23 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                               return count2 + incapacidades.diasAusencia;
                                             }, 0);
                                           }, 0);
-        // console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad);
+        // console.log('adp:',accidentesConDiasPerdidos,'hht:',hhtCorona,'tds:',totalDiasSeveridad, 'hhtTemp:', hhtTemp);
 
-        let IF = (accidentesConDiasPerdidos/hhtCorona) * 240000;
-        let IS = (totalDiasSeveridad/hhtCorona*240000);
+        let IF = (accidentesConDiasPerdidos/(hhtCorona + hhtTemp)) * 240000;
+        let IS = (totalDiasSeveridad/(hhtCorona + hhtTemp)) * 240000;
         let ILI = (IF*IS)/1000;
         
         // console.log('if: ',IF,'is:',IS,'ILI:',ILI);
         
-        data.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(4)));
+        dataILI.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(4)));
+        dataMeta.data.push(metaCorona);
       });
-      // console.log(data);
-      dataIli_1.push(data);
+      dataILI.data.push(0);
+      let metaTotal = JSON.parse(res.data[0].valor).ILI_Anual ? JSON.parse(res.data[0].valor).ILI_Anual : 0;
+      dataMeta.data.push(metaTotal);
+
+      dataIli_1.push(dataILI);
+      dataIli_1.push(dataMeta);
       localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
       this.filtroIli_1();
       Object.assign(this, {dataIli_1});
@@ -1365,20 +1464,44 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     filterQuery.sortField = "id";
     filterQuery.filterList = [
       {criteria: Criteria.EQUALS, field: "anio", value1: this.selectedAnioIli_2.toString()},
-      {criteria: Criteria.EQUALS, field: "empresaSelect", value1: '22'}
+      {criteria: Criteria.EQUALS, field: "empresaSelect", value1: this.sessionService.getParamEmp()}
     ];
     this.hhtService.findByFilter(filterQuery).then(async (res: any) => {
-      console.log(this.selectDivisionesILI2);
+      // console.log(this.selectDivisionesILI2);
       if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== 'Corona total'){
-        console.log('filtrando ats');
+        // console.log('filtrando ats');
         reportesAt = reportesAt.filter(at => this.selectDivisionesILI2 === at.padreNombre);
       }
-      let data = {
+      let dataILI = {
         name: 'ILI',
         type: 'verticalBar',
-        data: []
+        data: [0,0,0,0,0,0,0,0,0,0,0,0]
       };
+      let dataMeta = {
+        name: 'Meta',
+        type: 'line',
+        data: [0,0,0,0,0,0,0,0,0,0,0,0]
+      }
+
+      let listaHhtTemp: Hht[];
+      let filterQuery2 = new FilterQuery();
+      filterQuery2.sortOrder = SortOrder.ASC;
+      filterQuery2.sortField = "id";
+      filterQuery2.filterList = [
+        {criteria: Criteria.EQUALS, field: "anio", value1: this.selectedAnioIli_1.toString()},
+        {criteria: Criteria.EQUALS, field: "empresa.id", value1: this.sessionService.getParamEmp()},
+        {criteria: Criteria.NOT_EQUALS, field: "empresaSelect", value1: this.sessionService.getParamEmp()}
+      ];
+      await this.hhtService.findByFilter(filterQuery2)
+      .then((resTemp: any) => {
+        listaHhtTemp = Array.from(resTemp.data);
+      }).catch(err => {
+        console.error('Error al obtener hht temporales', err);
+      });
+
       this.meses.forEach((mes, index) => {
+        let metaCorona = 0;
+
         let accidentesConDiasPerdidos = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index
                                                   && at.incapacidades !== null && at.incapacidades !== 'null'  ).length;
         let hhtCorona = 0;
@@ -1389,14 +1512,39 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               dataHHT.Areas.forEach(area => {
                 let areaActual = this.divisionesCoronaConId.find(ar => ar.id == area.id).nombre;
                 if(this.selectDivisionesILI2 === areaActual){
+                  metaCorona = Number(area.ILIArea ? area.ILIArea : 0);
                   hhtCorona += area.HhtArea ? area.HhtArea : 0;
                 }
               });
             }
           }else {
+            metaCorona = JSON.parse(elem.valor).ILI_Anual ? JSON.parse(elem.valor).ILI_Anual : 0;
             if(mes == dataHHT.mes){
               dataHHT.Areas.forEach(area => {
                 hhtCorona += area.HhtArea !== null ? area.HhtArea : 0;
+              });
+            }
+          }
+        });
+
+        let hhtTemp = 0;
+        listaHhtTemp.forEach((hht, index) => {
+          let data: DataHht = <DataHht>JSON.parse(hht.valor).Data;
+          if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== 'Corona total'){
+            if(mes == data.mes){
+              data.Areas.forEach(area => {
+                let areaActual = this.divisionesCoronaConId.find(ar => ar.id == area.id).nombre;
+                if(this.selectDivisionesILI2 === areaActual){
+                  hhtTemp += area.HhtArea ? area.HhtArea : 0;
+                }
+              });
+            }
+          }else {
+            // console.log('Corona total...');
+            if(mes == data.mes){
+              data.Areas.forEach(area => {
+                hhtTemp += area.HhtArea ? area.HhtArea : 0;
+                // console.log(mes, area.id, hhtTemp);
               });
             }
           }
@@ -1413,11 +1561,14 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let IF = (accidentesConDiasPerdidos/hhtCorona)*240000;
         let IS = (totalDiasSeveridad/hhtCorona)*240000;
         let ILI = (IF*IS)/1000;
-        console.log(accidentesConDiasPerdidos, hhtCorona, totalDiasSeveridad, IF, IS, ILI);
+        // console.log(accidentesConDiasPerdidos, hhtCorona, hhtTemp, totalDiasSeveridad, IF, IS, ILI);
         
-        data.data.push(isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(4)));
+        dataILI.data[index] = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(4)));
+
+        dataMeta.data[index] = metaCorona;
       });
-      dataIli_2.push(data);
+      dataIli_2.push(dataILI);
+      dataIli_2.push(dataMeta);
       localStorage.setItem('dataIli_2', JSON.stringify(dataIli_2));
       this.filtroIli_2();
       Object.assign(this, {dataIli_2})

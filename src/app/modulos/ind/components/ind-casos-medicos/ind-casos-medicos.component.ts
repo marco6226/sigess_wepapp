@@ -8,7 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
-import {ViewscmcoService} from "../../services/indicador-scmco.service"
+// import {ViewscmcoService} from "../../services/indicador-scmco.service"
 // import { multi} from './data';
 
 class division {
@@ -135,7 +135,7 @@ export class IndCasosMedicosComponent implements OnInit {
   }
 
   constructor(
-    private viewscmcoService: ViewscmcoService,
+    // private viewscmcoService: ViewscmcoService,
   ){}
   
   async cargarDatos(){
@@ -146,16 +146,16 @@ export class IndCasosMedicosComponent implements OnInit {
     })
     this.divisiones0.push({label:'Corona total',value:'Corona total'})
     this.divisiones2.push('Corona total')
-    await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
-      this.datos=resp
-      let map=new Map()
-      this.datos.forEach(resp=>{
-        if(!map.has(resp['ubicacion'])){
-          map.set(resp['ubicacion'],0)
-          this.plantas.push(resp['ubicacion'])}
-      })
-      this.plantas.push(resp['Coronta total'])
-    })
+    // await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
+    //   this.datos=resp
+    //   let map=new Map()
+    //   this.datos.forEach(resp=>{
+    //     if(!map.has(resp['ubicacion'])){
+    //       map.set(resp['ubicacion'],0)
+    //       this.plantas.push(resp['ubicacion'])}
+    //   })
+    //   this.plantas.push(resp['Coronta total'])
+    // })
   }
 
   //Grafica cards
