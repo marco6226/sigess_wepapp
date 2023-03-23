@@ -328,14 +328,14 @@ export class IndCaracterizacionComponent implements OnInit {
       let date2:Date=new Date(new Date(this.date2).setMonth(new Date(this.date2).getMonth()+1))
       // date2=new Date(new Date(date2).setDate(new Date(date2).getDate()-1))
       this.CaracterizacionView1=this.CaracterizacionView.filter(resp=>{
-        return resp.fechaaccidente<= date2;
+        return resp.fechaaccidente< date2;
         })
       }
 
     if(this.date1 && this.date2){
       let date2:Date=new Date(new Date(this.date2).setMonth(new Date(this.date2).getMonth()+1))
       this.CaracterizacionView1=this.CaracterizacionView.filter(resp=>{
-        return resp.fechaaccidente<=date2 && resp.fechaaccidente>=new Date(this.date1)
+        return resp.fechaaccidente<date2 && resp.fechaaccidente>=new Date(this.date1)
         })}
 
     this.ContLeve=0
@@ -399,14 +399,14 @@ export class IndCaracterizacionComponent implements OnInit {
         let date4:Date=new Date(new Date(this.date4).setMonth(new Date(this.date4).getMonth()+1))
         // date4=new Date(new Date(date4).setDate(new Date(date4).getDate()-1))
         this.CaracterizacionView2=this.CaracterizacionView.filter(resp=>{
-          return resp.fechaaccidente<= date4;
+          return resp.fechaaccidente< date4;
           })
         }
   
       if(this.date3 && this.date4){
         let date4:Date=new Date(new Date(this.date4).setMonth(new Date(this.date4).getMonth()+1))
         this.CaracterizacionView2=this.CaracterizacionView.filter(resp=>{
-          return resp.fechaaccidente<=date4 && resp.fechaaccidente>=new Date(this.date3)
+          return resp.fechaaccidente<date4 && resp.fechaaccidente>=new Date(this.date3)
           })}
       this.ContHombres=[0,0,0,0,0,0,0]
       this.ContMujeres=[0,0,0,0,0,0,0]
@@ -652,14 +652,14 @@ resetVarGraf2(){
       let date6:Date=new Date(new Date(this.date6).setMonth(new Date(this.date6).getMonth()+1))
       // date6=new Date(new Date(date6).setDate(new Date(date6).getDate()-1))
       this.CaracterizacionView3=this.CaracterizacionView3.filter(resp=>{
-        return resp.fechaaccidente<= date6;
+        return resp.fechaaccidente< date6;
         })
       }
 
     if(this.date5 && this.date6){
       let date6:Date=new Date(new Date(this.date6).setMonth(new Date(this.date6).getMonth()+1))
       this.CaracterizacionView3=this.CaracterizacionView3.filter(resp=>{
-        return resp.fechaaccidente<=date6 && resp.fechaaccidente>=new Date(this.date5)
+        return resp.fechaaccidente<date6 && resp.fechaaccidente>=new Date(this.date5)
         })}
 
     if(this.selectYear2){
@@ -1130,14 +1130,14 @@ DatosGrafica3(){
       let date8:Date=new Date(new Date(this.date8).setMonth(new Date(this.date8).getMonth()+1))
       // date8=new Date(new Date(date8).setDate(new Date(date8).getDate()-1))
       this.CaracterizacionView4=this.CaracterizacionView.filter(resp=>{
-        return resp.fechaaccidente<= date8;
+        return resp.fechaaccidente< date8;
         })
       }
 
     if(this.date7 && this.date8){
       let date8:Date=new Date(new Date(this.date8).setMonth(new Date(this.date8).getMonth()+1))
       this.CaracterizacionView4=this.CaracterizacionView.filter(resp=>{
-        return resp.fechaaccidente<=date8 && resp.fechaaccidente>=new Date(this.date7)
+        return resp.fechaaccidente<date8 && resp.fechaaccidente>=new Date(this.date7)
         })}
 
     if(this.selectYear3){
@@ -1767,14 +1767,14 @@ if(!this.date9 && this.date10){
   let date10:Date=new Date(new Date(this.date10).setMonth(new Date(this.date10).getMonth()+1))
   // date10=new Date(new Date(date10).setDate(new Date(date10).getDate()-1))
   this.CaracterizacionView6=this.CaracterizacionView.filter(resp=>{
-    return resp.fechaaccidente<= date10;
+    return resp.fechaaccidente< date10;
     })
   }
 
 if(this.date9 && this.date10){
   let date10:Date=new Date(new Date(this.date10).setMonth(new Date(this.date10).getMonth()+1))
   this.CaracterizacionView6=this.CaracterizacionView.filter(resp=>{
-    return resp.fechaaccidente<=date10 && resp.fechaaccidente>=new Date(this.date10)
+    return resp.fechaaccidente<date10 && resp.fechaaccidente>=new Date(this.date10)
     })}
 
   this.CaracterizacionView6.forEach(element => {

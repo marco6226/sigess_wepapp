@@ -459,7 +459,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     reportesAt = reportesAt.filter(at => new Date(at.fechaReporte).getFullYear() == this.anioActualResumen);
 
     reportesAt = reportesAt.filter(at => {
-        return new Date(at['fechaReporte']) > this.fechaInicioResumen && new Date(at['fechaReporte']) < this.fechaFinalResumen;
+        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) < this.fechaFinalResumen;
     });
 
     if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') reportesAt = reportesAt.filter(at => at.padreNombre === this.selectedDivisionResumen);
@@ -608,7 +608,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       });
 
       let dateFinal: Date = new Date(new Date(this.filtroFechaAt[1]).setMonth(new Date(this.filtroFechaAt[1]).getMonth()+1));
-      dataEv1Dona = dataEv1Dona.filter(at => at.fechaReporte >= this.filtroFechaAt[0] && at.fechaReporte <= dateFinal);
+      dataEv1Dona = dataEv1Dona.filter(at => at.fechaReporte >= this.filtroFechaAt[0] && at.fechaReporte < dateFinal);
       let randomEv1Dona: any[] = [];
       divisiones.forEach(division => {
         let data = {name: division, value: 0};
@@ -707,7 +707,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       });
 
       let dateFinal: Date = new Date(new Date(this.filtroFechaDiasPerdidos[1]).setMonth(new Date(this.filtroFechaDiasPerdidos[1]).getMonth()+1));
-      dataDiasPerdidosAtList = dataDiasPerdidosAtList.filter(at => at.fechaReporte > this.filtroFechaDiasPerdidos[0] && at.fechaReporte < dateFinal);
+      dataDiasPerdidosAtList = dataDiasPerdidosAtList.filter(at => at.fechaReporte >= this.filtroFechaDiasPerdidos[0] && at.fechaReporte < dateFinal);
       let randomEv1Donadb: any[] = [];
       divisiones.forEach(division => {
         let data = {name: division, value: 0};
@@ -1136,7 +1136,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }catch(err){
       if(this.evento1Desde && this.evento1Hasta) {
         let dateFinal: Date = new Date(new Date(this.evento1Hasta).setMonth(new Date(this.evento1Hasta).getMonth()+1));
-        reportesAt = reportesAt.filter(at => at.fechaReporte > this.evento1Desde && at.fechaReporte < dateFinal);
+        reportesAt = reportesAt.filter(at => at.fechaReporte >= this.evento1Desde && at.fechaReporte < dateFinal);
       };
       
       let numAtTotal = 0;

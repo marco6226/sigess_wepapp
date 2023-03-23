@@ -96,7 +96,7 @@ export class HorahombrestrabajadaComponent implements OnInit, AfterViewInit {
 
     
     await this.getAreas().then();
-    await this.getPlantas(empresa.idEmpresaAliada == null ? Number(empresa.id) : empresa.idEmpresaAliada).then();
+    await this.getPlantas(empresa.idEmpresaAliada == null ? Number(empresa.id) : Number(empresa.idEmpresaAliada)).then();
   }
 
   ngAfterViewInit(): void {
