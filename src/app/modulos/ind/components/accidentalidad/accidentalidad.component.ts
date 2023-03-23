@@ -507,8 +507,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     .then(async (res: any) => {
       if(res.data.length > 0){
         hhtTemp = Array.from(res.data);
-        console.log(hhtTemp);
-        
+        // console.log(hhtTemp);
       }else{
         console.error('No se obtuvieron registros hht de las temporales');
       }
@@ -553,10 +552,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let totalHHtTemporales = 0;
     totalHHtTemporales = this.calcularTotalHht(hhtTemp, mesInicio, mesFinal, this.selectedDivisionResumen, true);
 
-    console.log(accidentesConDiasPerdidos, totalDiasSeveridad, totalHhtEmpresa, totalHHtTemporales);
     let IF = (accidentesConDiasPerdidos / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let IS = (totalDiasSeveridad / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let ILI = (IF * IS) / 1000;
+    // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(4));
 
   }
@@ -1651,8 +1650,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                               }, 0);
                                             }, 0);
         
-        let IF = (accidentesConDiasPerdidos/hhtCorona)*240000;
-        let IS = (totalDiasSeveridad/hhtCorona)*240000;
+        let IF = (accidentesConDiasPerdidos / (hhtCorona + hhtTemp)) * 240000;
+        let IS = (totalDiasSeveridad / (hhtCorona + hhtTemp)) * 240000;
         let ILI = (IF*IS)/1000;
         // console.log(accidentesConDiasPerdidos, hhtCorona, hhtTemp, totalDiasSeveridad, IF, IS, ILI);
         
