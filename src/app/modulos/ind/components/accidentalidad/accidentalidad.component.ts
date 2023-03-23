@@ -357,7 +357,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.hasta = new Date(Date.now());
     this.desde = null;
-    this.fechaInicioResumen = null;
+    this.fechaInicioResumen = new Date(new Date().getFullYear(), 0, 1);
     this.fechaFinalResumen = new Date();
 
     this.getData().then();
@@ -425,12 +425,15 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.data = this.reporteTabla2;
   }
 
-  loadResumen(){
+  async loadResumen(){
     let filterQueryCorona = new FilterQuery();
     let filterQueryTemp = new FilterQuery();
     let empresaId = this.sessionService.getEmpresa().id;
     let hhtEmpresa: Hht[] = [];
     let hhtTemp: Hht[] = [];
+    let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).map(at => at);
+
+    // console.log(this.fechaInicioResumen, this.fechaFinalResumen);
     
     filterQueryCorona.sortOrder = SortOrder.ASC;
     filterQueryCorona.sortField = "id";
@@ -446,8 +449,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       {criteria: Criteria.EQUALS, field: "empresa.id", value1: empresaId},
       {criteria: Criteria.NOT_EQUALS, field: "empresaSelect", value1: empresaId}
     ];
-
-    let reportesAt = JSON.parse(localStorage.getItem('reportesAt')).map(at => at);
     
     if(this.fechaInicioResumen){
       this.fechaInicioResumen.setFullYear(this.anioActualResumen);
@@ -478,8 +479,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       }
     });
 
-    this.hhtService.findByFilter(filterQueryCorona)
-    .then((res: any) => {
+    await this.hhtService.findByFilter(filterQueryCorona)
+    .then(async (res: any) => {
       if(res.data.length > 0){
         hhtEmpresa = Array.from(res.data);
         if(!this.selectedDivisionResumen || this.selectedDivisionResumen === 'Total'){
@@ -494,7 +495,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             });
           });
         }
-        // console.log('meta', this.metaIli);
+        // console.log('hhtEmpresa: ', hhtEmpresa);
       }else{
         console.error('No se obtuvieron registros hht de la empresa.');
       }
@@ -502,10 +503,12 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       console.error('Error al obtener hht de la empresa');
     });
 
-    this.hhtService.findByFilter(filterQueryTemp)
-    .then((res: any) => {
+    await this.hhtService.findByFilter(filterQueryTemp)
+    .then(async (res: any) => {
       if(res.data.length > 0){
         hhtTemp = Array.from(res.data);
+        console.log(hhtTemp);
+        
       }else{
         console.error('No se obtuvieron registros hht de las temporales');
       }
@@ -513,7 +516,78 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       console.error('Error al obtener hht de las temporales');
     });
 
+    let accidentesConDiasPerdidos = 0;
+    if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total'){
+      accidentesConDiasPerdidos = reportesAt
+      .filter(at => at.padreNombre === this.selectedDivisionResumen &&
+        at.incapacidades !== null && at.incapacidades!== 'null').length;
+    }else{
+      accidentesConDiasPerdidos = reportesAt
+      .filter(at => at.incapacidades !== null && at.incapacidades !== 'null').length;
+    }
 
+    let totalDiasSeveridad = 0;
+    if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total'){
+      totalDiasSeveridad = reportesAt
+      .filter(at => at.padreNombre === this.selectedDivisionResumen && at.incapacidades !== null
+        && at.incapacidades !== 'null')
+        .reduce((count, at) => {
+          return count + JSON.parse(at.incapacidades).reduce((count2, incapacidad) => {
+            return count2 + incapacidad.diasAusencia;
+          }, 0);
+        }, 0);
+    }else{
+      totalDiasSeveridad = reportesAt
+      .filter(at => at.incapacidades !== null && at.incapacidades !== 'null')
+      .reduce((count, at) => {
+        return count + JSON.parse(at.incapacidades).reduce((count2, incapacidad) => {
+          return count2 + incapacidad.diasAusencia;
+        }, 0);
+      }, 0);
+    }
+
+    let totalHhtEmpresa = 0;
+    let mesInicio = this.fechaInicioResumen.getMonth();
+    let mesFinal = this.fechaFinalResumen.getMonth();
+    totalHhtEmpresa = this.calcularTotalHht(hhtEmpresa, mesInicio, mesFinal, this.selectedDivisionResumen, false);
+    let totalHHtTemporales = 0;
+    totalHHtTemporales = this.calcularTotalHht(hhtTemp, mesInicio, mesFinal, this.selectedDivisionResumen, true);
+
+    console.log(accidentesConDiasPerdidos, totalDiasSeveridad, totalHhtEmpresa, totalHHtTemporales);
+    let IF = (accidentesConDiasPerdidos / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
+    let IS = (totalDiasSeveridad / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
+    let ILI = (IF * IS) / 1000;
+    this.ili = Number(ILI.toFixed(4));
+
+  }
+
+  calcularTotalHht(hht: Hht[], mesInicio: number, mesFinal: number, selectedDivisionResumen: string, flagTemporales: boolean): number{
+    let totalHht = 0;
+    if(mesInicio == mesFinal){
+      hht.forEach(hht => {
+        if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total'){
+          if(hht.mes === this.meses[mesInicio]){
+            let dataHht: DataHht = <DataHht>JSON.parse(hht.valor).Data;
+            totalHht += dataHht.Areas
+            .filter(ar => ar.id === this.divisionesCoronaConId.find(div => div.nombre === this.selectedDivisionResumen).id)[0].HhtArea;
+          }
+        }else{
+          if(hht.mes === this.meses[mesInicio]){
+            let dataHht: DataHht = <DataHht>JSON.parse(hht.valor).Data;
+            totalHht += dataHht.HhtMes;
+          }
+        }
+      })
+    }else{
+      hht.forEach(hht => {
+        let mesIndex = this.meses.findIndex(mes => hht.mes === mes);
+        if(mesIndex >= mesInicio && mesIndex <= mesFinal){
+          let dataHht: DataHht = <DataHht>JSON.parse(hht.valor).Data;
+          totalHht += dataHht.HhtMes;
+        }
+      });
+    }
+    return Number(totalHht);
   }
 
   async cargarEventosAt(): Promise<boolean>{
@@ -552,7 +626,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           divisiones.forEach(
             division => {
               let data = {name: division, value: 0};
-              auxRandomEv1Dona = auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division && at.temporal));
               data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal).length;
               eventosAttemp.push(data);
             }
@@ -565,7 +638,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           divisiones.forEach(
             division => {
               let data = {name: division, value: 0};
-              auxRandomEv1Dona = auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division && at.temporal ==null));
               data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal == null).length;
               eventosAtdir.push(data);
             }
@@ -581,7 +653,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       divisiones.forEach(
         division => {
           let data = {name: division, value: 0};
-          auxRandomEv1Dona = auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division));
           data.value = reporteAt.filter(at => at.padreNombre === division).length;
           eventosAt.push(data);
         }
@@ -601,6 +672,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }else if(filter === 'hasta'){
       this.filtroFechaAt[1] = event;
     }
+    console.log();
     
     if(this.filtroFechaAt[0] && this.filtroFechaAt[1]){
       let dataEv1Dona: any[] = JSON.parse(localStorage.getItem('reporteAtList'));
