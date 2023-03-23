@@ -774,7 +774,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       ];
       
       this.hhtService.findByFilter(filterQuery).then(async (res: any) => {
-        
+        console.log(res)
         let hhtTemp: Array<Hht>;
         let filterQuery2 = new FilterQuery();
         filterQuery2.sortField = "id";
@@ -786,13 +786,17 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         await this.hhtService.findByFilter(filterQuery2)
         .then((res: any) => {
           hhtTemp = Array.from(res.data);
+          console.log(hhtTemp)
         }).catch((err: any) => {
           console.error('Error al leer hht de temporales', err);
         });
         // console.log(hhtTemp);
 
         if(res.data.length > 0 && hhtTemp) {
-          
+          let trabajadoresTotalesMes=0
+          let totalTrabajadoresTempMes=0
+          let totalDiasPerdidos=0
+          let AtMortalesTotal=0
           this.divisionesCoronaConId.forEach(division => {
             
             let trabajadoresTotales = 0;
@@ -824,6 +828,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                 trabajadoresTotales += trabajadoresPorArea;
               }
             });
+            trabajadoresTotalesMes +=trabajadoresTotales
+
             if(mesesFiltrados > 0) trabajadoresTotales = trabajadoresTotales / mesesFiltrados;
 
             let totalTrabajadoresTemp = 0;
@@ -854,14 +860,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               trabajadoresPorMes.push(totalTrabajadoresMes);
             });
             if(this.selectedMesesTasa1.length > 0){
-              totalTrabajadoresTemp = trabajadoresPorMes.reduce((count, trabajadores) => {
+              let totalTrabajadoresTemp = trabajadoresPorMes.reduce((count, trabajadores) => {
                 return count + trabajadores;
-              }, 0) / this.selectedMesesTasa1.length;
+              }, 0);
+              totalTrabajadoresTempMes+=totalTrabajadoresTemp;
+              totalTrabajadoresTemp=totalTrabajadoresTemp / this.selectedMesesTasa1.length
             }else{
-              totalTrabajadoresTemp = trabajadoresPorMes.reduce((count, trabajadores) => {
+              let totalTrabajadoresTemp = trabajadoresPorMes.reduce((count, trabajadores) => {
                 return count + trabajadores;
-              }, 0) / 12;
-            }
+              }, 0);
+              totalTrabajadoresTempMes+=totalTrabajadoresTemp;
+              totalTrabajadoresTemp=totalTrabajadoresTemp /((this.filtroAnioTasa_1==new Date().getFullYear())?new Date().getMonth()+1:12)
+            }          
 
             let totalAt = reportesAt.filter(at => at.padreNombre === division.nombre).length;
 
@@ -872,9 +882,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                               return count2 + incapacidad.diasAusencia;
                                             }, 0);
                                           }, 0);
-
+            totalDiasPerdidos +=diasPerdidos;
             let AtMortales = reportesAt.filter(at => at.padreNombre === division.nombre && at.causoMuerte === true).length;
-            
+            AtMortalesTotal+=AtMortales
             let TF = isNaN(Number((totalAt * 100)/((trabajadoresTotales+totalTrabajadoresTemp)))) ? 0.0 : Number(Number((totalAt * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(3));
             let TS = isNaN(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp))) ? 0.0 : Number(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(3));
             let PAT = isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(3));
@@ -895,6 +905,21 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             tasaFrecuencia1.push(data);
           });
           // Corona total
+          let mesesYear=(this.filtroAnioTasa_1==new Date().getFullYear())?new Date().getMonth()+1:12;
+          let numMesesSelect=(this.selectedMesesTasa1.length>0?this.selectedMesesTasa1.length:mesesYear)
+          let totalesTrabajadores=trabajadoresTotalesMes+totalTrabajadoresTempMes
+
+          switch (e) {
+            case 'dir':
+              totalesTrabajadores=trabajadoresTotalesMes
+              break;
+            case 'temp':
+              totalesTrabajadores=totalTrabajadoresTempMes
+              break;
+            default:
+              break;
+          }
+
           let dataTotal = {
             name: 'Corona total',
             series: []
@@ -902,26 +927,19 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           
           dataTotal.series.push({
             name: 'Tasa de Frecuencia',
-            value: tasaFrecuencia1.map(tasaXDiv => {
-                      return tasaXDiv.series.find(tasa => tasa.name == 'Tasa de Frecuencia').value;
-                    }).reduce((count, item) => count + item)
+            value: totalesTrabajadores>0?Number((reportesAt.length*100*numMesesSelect)/totalesTrabajadores):0
           });
           dataTotal.series.push({
             name: 'Tasa de Severidad',
-            value: tasaFrecuencia1.map(tasaXDiv => {
-                      return tasaXDiv.series.find(tasa => tasa.name == 'Tasa de Severidad').value;
-                    }).reduce((count, item) => count + item)
+            value: totalesTrabajadores>0?Number((totalDiasPerdidos*100*numMesesSelect)/totalesTrabajadores):0
           });
           dataTotal.series.push({
             name: 'Proporción AT mortal',
-            value: tasaFrecuencia1.map(tasaXDiv => {
-                      return tasaXDiv.series.find(tasa => tasa.name == 'Proporción AT mortal').value;
-                    }).reduce((count, item) => count + item)
+            value: reportesAt.length>0?((AtMortalesTotal*100)/reportesAt.length):0
           });
           
           tasaFrecuencia1.push(dataTotal);
           // Fin Corona total
-          
           Object.assign(this, {tasaFrecuencia1});
           localStorage.setItem('tasaFrecuencia1', JSON.stringify(tasaFrecuencia1.map(item => item)));
           this.filtroTasas1_1();
@@ -1588,5 +1606,25 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
     Object.assign(this, {mesesILI2});
     Object.assign(this, {dataIli_2});
+  }
+
+  contTotal(datos){
+    let name=[]
+    let datosGrafica_total=[]
+    let total=new Map()
+    datos.forEach(resp=>{
+      resp.series.forEach(resp2=>{
+        if(total.has(resp2.name)){total.set(resp2.name,total.get(resp2.name)+resp2.value)}
+        else{total.set(resp2.name,resp2.value)
+          name.push(resp2.name)}
+      })
+    })
+    name.forEach(resp=>{
+      datosGrafica_total.push({name:resp,value:total.get(resp)})
+    })
+    
+    datos.push({name:'Corona total',series:datosGrafica_total})
+  
+    return datos
   }
 }
