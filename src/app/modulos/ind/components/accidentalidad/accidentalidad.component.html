@@ -486,9 +486,9 @@
 
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <!-- <p>Eventos</p> -->
-          <p-radioButton name="group14" label="Total " [value]="0" (onClick)="getEventos_1()" [style]="{'margin-left':'15px'}"></p-radioButton>
-          <p-radioButton name="group14" label=" Temporales " [value]="1" (onClick)="getEventos_1('temp')" [style]="{'margin-left':'15px'}"></p-radioButton>
-          <p-radioButton name="group14" label=" Directos " [value]="2" (onClick)="getEventos_1('dir')" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group14" [(ngModel)]="filtroEventos1" label="Total " [value]="'total'" (onClick)="getEventos_1()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group14" [(ngModel)]="filtroEventos1" label=" Temporales " [value]="'temp'" (onClick)="getEventos_1()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group14" [(ngModel)]="filtroEventos1" label=" Directos " [value]="'dir'" (onClick)="getEventos_1()" [style]="{'margin-left':'15px'}"></p-radioButton>
         </div>
         <div  class="ui-g-8 ui-g-nopad">
           <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
@@ -565,9 +565,9 @@
 
           <!-- <p>Eventos</p> -->
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-          <p-radioButton name="group10" label="Total" [value]="0" (onClick)="getEventos_2()" [style]="{'margin-left':'15px'}"></p-radioButton>
-          <p-radioButton name="group10" label=" Temporales" [value]="1" (onClick)="getEventos_2('temp')" [style]="{'margin-left':'15px'}"></p-radioButton>
-          <p-radioButton name="group10" label=" Directos" [value]="2" (onClick)="getEventos_2('dir')" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group15" [(ngModel)]="filtroEventos2" label="Total" [value]="'total'" (onClick)="getEventos_2()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group15" [(ngModel)]="filtroEventos2" label=" Temporales" [value]="'temp'" (onClick)="getEventos_2()" [style]="{'margin-left':'15px'}"></p-radioButton>
+          <p-radioButton name="group15" [(ngModel)]="filtroEventos2" label=" Directos" [value]="'dir'" (onClick)="getEventos_2()" [style]="{'margin-left':'15px'}"></p-radioButton>
         </div>
 
         <div class="ui-g-8 ui-g-nopad">
