@@ -519,10 +519,22 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total'){
       accidentesConDiasPerdidos = reportesAt
       .filter(at => at.padreNombre === this.selectedDivisionResumen &&
-        at.incapacidades !== null && at.incapacidades!== 'null').length;
+        at.incapacidades !== null && at.incapacidades!== 'null').filter(at => {
+          let diasTotales = (<Array<any>>JSON.parse(at.incapacidades))
+          .reduce((count, incapacidad) => {
+            return count + incapacidad.diasAusencia;
+          }, 0);
+          return diasTotales > 0 ? true : false;
+        }).length;
     }else{
       accidentesConDiasPerdidos = reportesAt
-      .filter(at => at.incapacidades !== null && at.incapacidades !== 'null').length;
+      .filter(at => at.incapacidades !== null && at.incapacidades !== 'null').filter(at => {
+        let diasTotales = (<Array<any>>JSON.parse(at.incapacidades))
+        .reduce((count, incapacidad) => {
+          return count + incapacidad.diasAusencia;
+        }, 0);
+        return diasTotales > 0 ? true : false;
+      }).length;
     }
 
     let totalDiasSeveridad = 0;
@@ -1466,8 +1478,15 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
         let metaCorona = 0;
         
-        let accidentesConDiasPerdidos = reportesAt.filter(at => at.padreNombre === division.nombre && at.incapacidades !== null
-                                                                && at.incapacidades !== 'null').length;
+        let accidentesConDiasPerdidos = reportesAt
+        .filter(at => at.padreNombre === division.nombre && at.incapacidades !== null 
+          && at.incapacidades !== 'null').filter(at => {
+            let diasTotales = (<Array<any>>JSON.parse(at.incapacidades))
+            .reduce((count, incapacidad) => {
+              return count + incapacidad.diasAusencia;
+            }, 0);
+            return diasTotales > 0 ? true : false;
+          }).length;
         let hhtCorona = 0;
         // let mesesFiltrados: number = 0;
         res.data.forEach(elem => {
@@ -1613,8 +1632,16 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       this.meses.forEach((mes, index) => {
         let metaCorona = 0;
 
-        let accidentesConDiasPerdidos = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index
-                                                  && at.incapacidades !== null && at.incapacidades !== 'null'  ).length;
+        let accidentesConDiasPerdidos = reportesAt
+        .filter(at => new Date(at.fechaReporte).getMonth() === index && at.incapacidades !== null 
+        && at.incapacidades !== 'null'  ).filter(at => {
+          let diasTotales = (<Array<any>>JSON.parse(at.incapacidades))
+          .reduce((count, incapacidad) => {
+            return count + incapacidad.diasAusencia;
+          }, 0);
+          return diasTotales > 0 ? true : false;
+        }).length;
+        
         let hhtCorona = 0;
         res.data.forEach(elem => {
           let dataHHT: DataHht = <DataHht>JSON.parse(elem.valor).Data;
