@@ -711,7 +711,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   //Dias perdidos
   getDiasPerdidosAt(filter?: string){
     this.filtroFechaDiasPerdidos = [];
-    this.filtroFechaAt = [];
+    // this.filtroFechaAt = [];
     let divisiones: string[] = [];
     let randomEv1Donadb = [];
     let auxRandomEv1Donadb = [];
