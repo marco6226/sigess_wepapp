@@ -686,11 +686,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     }else if(filter === 'hasta'){
       this.filtroFechaAt[1] = event;
     }
-    console.log();
+    // console.log();
     
     if(this.filtroFechaAt[0] && this.filtroFechaAt[1]){
       let dataEv1Dona: any[] = JSON.parse(localStorage.getItem('reporteAtList'));
-      console.log(dataEv1Dona)
+      // console.log(dataEv1Dona)
       let listaDivisiones: any[] = dataEv1Dona.map(at => at.padreNombre);
       let divisiones: any[] = listaDivisiones.filter((item, index) => {
         return listaDivisiones.indexOf(item) === index;
@@ -790,7 +790,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     
     if(this.filtroFechaDiasPerdidos[0] && this.filtroFechaDiasPerdidos[1]){
       let dataDiasPerdidosAtList: any[] = JSON.parse(localStorage.getItem('diasPerdidosAtList'));
-      console.log(dataDiasPerdidosAtList)
+      // console.log(dataDiasPerdidosAtList)
       let listaDivisiones: any[] = dataDiasPerdidosAtList.map(at => at.padreNombre);
       let divisiones: any[] = listaDivisiones.filter((item, index) => {
         return listaDivisiones.indexOf(item) === index;
@@ -862,7 +862,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       ];
       
       this.hhtService.findByFilter(filterQuery).then(async (res: any) => {
-        console.log(res)
+        // console.log(res)
         let hhtTemp: Array<Hht>;
         let filterQuery2 = new FilterQuery();
         filterQuery2.sortField = "id";
@@ -874,7 +874,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         await this.hhtService.findByFilter(filterQuery2)
         .then((res: any) => {
           hhtTemp = Array.from(res.data);
-          console.log(hhtTemp)
+          // console.log(hhtTemp)
         }).catch((err: any) => {
           console.error('Error al leer hht de temporales', err);
         });
