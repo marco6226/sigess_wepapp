@@ -626,6 +626,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           divisiones.forEach(
             division => {
               let data = {name: division, value: 0};
+              auxRandomEv1Dona= auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division && at.temporal));
               data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal).length;
               eventosAttemp.push(data);
             }
@@ -638,6 +639,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           divisiones.forEach(
             division => {
               let data = {name: division, value: 0};
+              auxRandomEv1Dona= auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division && !at.temporal));
               data.value = reporteAt.filter(at => at.padreNombre === division && at.temporal == null).length;
               eventosAtdir.push(data);
             }
@@ -653,6 +655,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       divisiones.forEach(
         division => {
           let data = {name: division, value: 0};
+          auxRandomEv1Dona= auxRandomEv1Dona.concat(reporteAt.filter(at => at.padreNombre === division));
           data.value = reporteAt.filter(at => at.padreNombre === division).length;
           eventosAt.push(data);
         }
@@ -660,7 +663,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       randomEv1Dona.push(...eventosAt);
       Object.assign(this, {randomEv1Dona});
     }
-    localStorage.setItem('reporteAtList', JSON.stringify(reporteAt.map(at => at)));
+    localStorage.setItem('reporteAtList', JSON.stringify(auxRandomEv1Dona.map(at => at)));
   }
 
   selectRangoEventosAt(event: Date, filter: string){
@@ -676,6 +679,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     
     if(this.filtroFechaAt[0] && this.filtroFechaAt[1]){
       let dataEv1Dona: any[] = JSON.parse(localStorage.getItem('reporteAtList'));
+      console.log(dataEv1Dona)
       let listaDivisiones: any[] = dataEv1Dona.map(at => at.padreNombre);
       let divisiones: any[] = listaDivisiones.filter((item, index) => {
         return listaDivisiones.indexOf(item) === index;
@@ -775,6 +779,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     
     if(this.filtroFechaDiasPerdidos[0] && this.filtroFechaDiasPerdidos[1]){
       let dataDiasPerdidosAtList: any[] = JSON.parse(localStorage.getItem('diasPerdidosAtList'));
+      console.log(dataDiasPerdidosAtList)
       let listaDivisiones: any[] = dataDiasPerdidosAtList.map(at => at.padreNombre);
       let divisiones: any[] = listaDivisiones.filter((item, index) => {
         return listaDivisiones.indexOf(item) === index;
