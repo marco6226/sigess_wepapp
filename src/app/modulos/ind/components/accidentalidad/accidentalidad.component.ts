@@ -1267,7 +1267,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                         }, 0);
                                       }, 0);
         let atMortales: number = reportesAt.filter(at => at.padreNombre === division && at.causoMuerte == true).length;
-        let atCeroDias: number = reportesAt.filter(at => at.padreNombre === division && (at.incapacidades === null || at.incapacidades === 'null')).length;
+        let atCeroDias: number = reportesAt.filter(at => {
+          if(at.padreNombre === division && (at.incapacidades === null || at.incapacidades === 'null')){
+            return true;
+          }else if(at.padreNombre === division){
+            let contDiasPerdidos = (<Array<any>>JSON.parse(at.incapacidades))
+            .reduce((count, incapacidad) => {
+              return count + incapacidad.diasAusencia;
+            }, 0);
+            return contDiasPerdidos > 0 ? false : true;
+          }
+          return false;
+        }).length;
         // console.log('div:',division,'numat:', numeroAt,'dperd:', diasPerdidos,'atmort:', atMortales,'atcero:', atCeroDias);
         numAtTotal += numeroAt;
         diasPerdidosTotal += diasPerdidos;
@@ -1377,8 +1388,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                         }, 0);
                                       }, 0);
         let atMortales = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index && at.causoMuerte).length;
-        let atCeroDias = reportesAt.filter(at => new Date(at.fechaReporte).getMonth() === index &&
-                                                (at.incapacidades === null || at.incapacidades === 'null')).length;
+        let atCeroDias = reportesAt.filter(at => {
+          if(new Date(at.fechaReporte).getMonth() === index && (at.incapacidades === null || at.incapacidades === 'null')){
+            return true;
+          }else if(new Date(at.fechaReporte).getMonth() === index){
+            let contDiasPerdidos = (<Array<any>>JSON.parse(at.incapacidades))
+            .reduce((count, incapacidad) => {
+              return count + incapacidad.diasAusencia;
+            }, 0);
+            return contDiasPerdidos > 0 ? false : true;
+          }
+          return false;
+        }).length;
         
         data.series.push({
           name: this.Eventos[0].label,
