@@ -8,7 +8,7 @@ import { AreaService } from "app/modulos/empresa/services/area.service";
 import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
-// import {ViewscmcoService} from "../../services/indicador-scmco.service"
+import {ViewscmcoService} from "../../services/indicador-scmco.service"
 // import { multi} from './data';
 
 class division {
@@ -135,7 +135,7 @@ export class IndCasosMedicosComponent implements OnInit {
   }
 
   constructor(
-    // private viewscmcoService: ViewscmcoService,
+    private viewscmcoService: ViewscmcoService,
   ){}
   
   async cargarDatos(){
@@ -146,16 +146,16 @@ export class IndCasosMedicosComponent implements OnInit {
     })
     this.divisiones0.push({label:'Corona total',value:'Corona total'})
     this.divisiones2.push('Corona total')
-    // await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
-    //   this.datos=resp
-    //   let map=new Map()
-    //   this.datos.forEach(resp=>{
-    //     if(!map.has(resp['ubicacion'])){
-    //       map.set(resp['ubicacion'],0)
-    //       this.plantas.push(resp['ubicacion'])}
-    //   })
-    //   this.plantas.push(resp['Coronta total'])
-    // })
+    await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
+      this.datos=resp
+      let map=new Map()
+      this.datos.forEach(resp=>{
+        if(!map.has(resp['ubicacion'])){
+          map.set(resp['ubicacion'],0)
+          this.plantas.push(resp['ubicacion'])}
+      })
+      this.plantas.push(resp['Coronta total'])
+    })
   }
 
   //Grafica cards
@@ -228,7 +228,6 @@ export class IndCasosMedicosComponent implements OnInit {
   
       this.datosGraf2Print=this.datosGraf2DDivisiones(plantas,this.datosGraf2,opcion2,nombre,'ubicacion')
 
-      console.log(this.datosGraf2Print)
       this.datosGraf2Print=this.top2(this.datosGraf2Print,10)
 
       this.flag2=true
@@ -268,13 +267,13 @@ export class IndCasosMedicosComponent implements OnInit {
     if(fechaHasta)fechaHasta=new Date(new Date(fechaHasta).setMonth(new Date(fechaHasta).getMonth()+1))
 
     if(fechaDesde && fechaHasta){
-      datos0=datos.filter(resp=>{return new Date(resp.fechaCreacion)>=fechaDesde && new Date(resp.fechaCreacion)<=fechaHasta})
+      datos0=datos.filter(resp=>{return new Date(resp.fechaCreacion)>=fechaDesde && new Date(resp.fechaCreacion)<fechaHasta})
     }
     else if(fechaDesde){
       datos0=datos.filter(resp=>{return new Date(resp.fechaCreacion)>=fechaDesde})
     }
     else if(fechaHasta){
-      datos0=datos.filter(resp=>{return new Date(resp.fechaCreacion)<=fechaHasta})
+      datos0=datos.filter(resp=>{return new Date(resp.fechaCreacion)<fechaHasta})
     }
     else{
       datos0=datos

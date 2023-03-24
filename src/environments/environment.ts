@@ -110,6 +110,7 @@ export const endPoints = {
     TableroService: path + "tablero/",
     ModeloGrafica: path,
     CaracterizacionViewService: path + "indcar/",
+    ViewscmcoService: path + "indscmco/",
 
     TipoPeligroService: path + "tipoPeligro/",
     PeligroService: path + "peligro/",
