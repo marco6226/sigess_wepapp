@@ -311,7 +311,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.loadResumen();
       this.getEventosAt();
+      this.selectRangoEventosAt(this.filtroFechaAt[0],'desde' )
       this.getDiasPerdidosAt();
+      this.selectRangoDiasPerdidosAt(this.filtroFechaDiasPerdidos[0],'desde' )
       this.getTasas_1();
       this.getTasas_2();
       this.getEventos_1();
@@ -364,7 +366,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   async getData(){
-
+    this.filtroFechaAt[0]=this.fechaInicioResumen
+    this.filtroFechaAt[1]=(this.fechaFinalResumen)
+    this.filtroFechaDiasPerdidos[0]=this.fechaInicioResumen
+    this.filtroFechaDiasPerdidos[1]=(this.fechaFinalResumen)
     let areafiltQuery = new FilterQuery();
       areafiltQuery.sortOrder = SortOrder.ASC;
       areafiltQuery.sortField = "nombre";
@@ -614,8 +619,13 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   //Eventos At
+  reiniciarVariableFechaEventosAt(){
+    this.filtroFechaAt[0]=new Date(new Date().getFullYear(), 0, 1)
+    this.filtroFechaAt[1]=new Date()
+  }
+
   getEventosAt(filter?: string){
-    this.filtroFechaAt = [];
+    // this.filtroFechaAt = [];
     let divisiones: string[] = [];
     let randomEv1Dona: any[] = [];
     let auxRandomEv1Dona = [];
@@ -709,9 +719,14 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   //Dias perdidos
+  reiniciarVariableFechaDiasPerdidos(){
+    this.filtroFechaDiasPerdidos[0]=new Date(new Date().getFullYear(), 0, 1)
+    this.filtroFechaDiasPerdidos[1]=new Date()
+  }
+
   getDiasPerdidosAt(filter?: string){
-    this.filtroFechaDiasPerdidos = [];
-    this.filtroFechaAt = [];
+    //this.filtroFechaDiasPerdidos = [];
+    // this.filtroFechaAt = [];
     let divisiones: string[] = [];
     let randomEv1Donadb = [];
     let auxRandomEv1Donadb = [];
