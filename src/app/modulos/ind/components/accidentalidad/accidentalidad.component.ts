@@ -507,8 +507,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     .then(async (res: any) => {
       if(res.data.length > 0){
         hhtTemp = Array.from(res.data);
-        console.log(hhtTemp);
-        
+        // console.log(hhtTemp);
       }else{
         console.error('No se obtuvieron registros hht de las temporales');
       }
@@ -553,11 +552,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let totalHHtTemporales = 0;
     totalHHtTemporales = this.calcularTotalHht(hhtTemp, mesInicio, mesFinal, this.selectedDivisionResumen, true);
 
-    console.log(accidentesConDiasPerdidos, totalDiasSeveridad, totalHhtEmpresa, totalHHtTemporales);
     let IF = (accidentesConDiasPerdidos / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let IS = (totalDiasSeveridad / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let ILI = (IF * IS) / 1000;
-    this.ili = Number(ILI.toFixed(4));
+    // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
+    this.ili = Number(ILI.toFixed(6));
 
   }
 
@@ -962,9 +961,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             totalDiasPerdidos +=diasPerdidos;
             let AtMortales = reportesAt.filter(at => at.padreNombre === division.nombre && at.causoMuerte === true).length;
             AtMortalesTotal+=AtMortales
-            let TF = isNaN(Number((totalAt * 100)/((trabajadoresTotales+totalTrabajadoresTemp)))) ? 0.0 : Number(Number((totalAt * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(3));
-            let TS = isNaN(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp))) ? 0.0 : Number(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(3));
-            let PAT = isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(3));
+            let TF = isNaN(Number((totalAt * 100)/((trabajadoresTotales+totalTrabajadoresTemp)))) ? 0.0 : Number(Number((totalAt * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(6));
+            let TS = isNaN(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp))) ? 0.0 : Number(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(6));
+            let PAT = isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(6));
             data.series.push({
               name: 'Tasa de Frecuencia',
               value: TF === Infinity ? 0 : TF
@@ -1161,17 +1160,17 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             
                                                   atMortales = reportesAt.filter(at => index === new Date(at.fechaReporte).getMonth() && at.causoMuerte === true).length;
 
-            let tasaFrecuencia = Number(Number((totalAt * 100)/(trabajadoresTotales2+totalTrabajadoresTemp)).toFixed(3));
+            let tasaFrecuencia = Number(Number((totalAt * 100)/(trabajadoresTotales2+totalTrabajadoresTemp)).toFixed(6));
             data.series.push({
               name: 'Tasa de Frecuencia',
               value: isNaN(tasaFrecuencia) || tasaFrecuencia === Infinity ? 0.0 : tasaFrecuencia
             });
-            let tasaSeveridad = Number(Number((diasPerdidos * 100)/(trabajadoresTotales2+totalTrabajadoresTemp)).toFixed(3));
+            let tasaSeveridad = Number(Number((diasPerdidos * 100)/(trabajadoresTotales2+totalTrabajadoresTemp)).toFixed(6));
             data.series.push({
               name: 'Tasa de Severidad',
               value: isNaN(tasaSeveridad) || tasaSeveridad === Infinity ? 0.0 : tasaSeveridad
             });
-            let proporcionAtMortal = Number(Number((atMortales * 100)/totalAt).toFixed(3));
+            let proporcionAtMortal = Number(Number((atMortales * 100)/totalAt).toFixed(6));
             data.series.push({
               name: 'Proporción AT mortal',
               value: isNaN(proporcionAtMortal) || proporcionAtMortal === Infinity ? 0.0 : proporcionAtMortal 
@@ -1442,6 +1441,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         data: []
       }
 
+      let accidentesConDiasPerdidosTotal = 0;
+      let hhtTotalEmpresa = 0;
+      let hhtTotalTemp = 0;
+      let diasSeveridadTotalEmp = 0;
+
       let listaHhtTemp: Hht[];
       let filterQuery2 = new FilterQuery();
       filterQuery2.sortOrder = SortOrder.ASC;
@@ -1521,12 +1525,21 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let IS = (totalDiasSeveridad/(hhtCorona + hhtTemp)) * 240000;
         let ILI = (IF*IS)/1000;
         
+        accidentesConDiasPerdidosTotal += accidentesConDiasPerdidos;
+        hhtTotalEmpresa += hhtCorona;
+        hhtTotalTemp += hhtTemp;
+        diasSeveridadTotalEmp += totalDiasSeveridad;
         // console.log('if: ',IF,'is:',IS,'ILI:',ILI);
         
-        dataILI.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(4)));
+        dataILI.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
         dataMeta.data.push(metaCorona);
       });
-      dataILI.data.push(0);
+
+      let IF = (accidentesConDiasPerdidosTotal / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
+      let IS = (diasSeveridadTotalEmp / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
+      let ILI = (IF * IS)/1000;
+
+      dataILI.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
       let metaTotal = JSON.parse(res.data[0].valor).ILI_Anual ? JSON.parse(res.data[0].valor).ILI_Anual : 0;
       dataMeta.data.push(metaTotal);
 
@@ -1656,12 +1669,12 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
                                               }, 0);
                                             }, 0);
         
-        let IF = (accidentesConDiasPerdidos/hhtCorona)*240000;
-        let IS = (totalDiasSeveridad/hhtCorona)*240000;
+        let IF = (accidentesConDiasPerdidos / (hhtCorona + hhtTemp)) * 240000;
+        let IS = (totalDiasSeveridad / (hhtCorona + hhtTemp)) * 240000;
         let ILI = (IF*IS)/1000;
         // console.log(accidentesConDiasPerdidos, hhtCorona, hhtTemp, totalDiasSeveridad, IF, IS, ILI);
         
-        dataILI.data[index] = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(4)));
+        dataILI.data[index] = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(6)));
 
         dataMeta.data[index] = metaCorona;
       });
