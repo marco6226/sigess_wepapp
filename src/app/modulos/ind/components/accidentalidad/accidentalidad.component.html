@@ -356,11 +356,11 @@
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
           <h5>Año</h5>
           <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año"
-          [(ngModel)]="filtroAnioTasa_1" (onChange)="getTasas_1()"
+          [(ngModel)]="filtroAnioTasa_1" (onChange)="getTasas_1('filtro')"
           [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
           <h5>Meses</h5>
           <p-multiSelect defaultLabel="Seleccione" [options]="Meses"
-          [(ngModel)]="selectedMesesTasa1" (onChange)="getTasas_1()"
+          [(ngModel)]="selectedMesesTasa1" (onChange)="getTasas_1('filtro')"
           [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-multiSelect>
           <h5>Division</h5>
           <p-multiSelect [options]="divisiones" defaultLabel="Seleccione"
@@ -435,7 +435,7 @@
         <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
           <h5>Año</h5>
           <p-dropdown appendTo="body" [options]="yearRange" placeholder="Seleccionar año" 
-          [(ngModel)]="filtroAnioTasa_2" (onChange)="getTasas_2()"
+          [(ngModel)]="filtroAnioTasa_2" (onChange)="getTasas_2('filtro')"
           [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
           <h5>Meses</h5>
           <p-multiSelect defaultLabel="Seleccione" [options]="Meses" [(ngModel)]="selectMeses1" 
@@ -443,7 +443,7 @@
           [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-multiSelect>
           <h5>Division</h5>
           <p-dropdown placeholder="Seleccione" [options]="divisiones2" [showClear]="true"
-          [(ngModel)]="filtroDivisionesTasa_2" (onChange)="getTasas_2()"
+          [(ngModel)]="filtroDivisionesTasa_2" (onChange)="getTasas_2('filtro')"
           [style]="{'margin-bottom':'10px', 'margin-top':'-5px'}"></p-dropdown>
           <h5>Filtro indicadores</h5>
           <div *ngFor="let Indicador of Indicadores" class="p-field-checkbox">

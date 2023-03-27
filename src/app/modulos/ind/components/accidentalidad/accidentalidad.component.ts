@@ -293,6 +293,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   fechaFinalResumen: Date;
   yearRangeNumber= Array.from({length: this.añoActual - this.añoPrimero+1}, (f, g) => g + this.añoPrimero);
 
+  filterMemoryTasas_1:string;
+  filterMemoryTasas_2:String;
+  
+
   constructor(
     private reporteAtService: ReporteAtService, 
     private areaService: AreaService,
@@ -853,6 +857,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     // let divisiones: any[] = listaDivisiones.filter((item, index) => {
     //   return listaDivisiones.indexOf(item) === index;
     // }).sort();
+    if(filter!='filtro')this.filterMemoryTasas_1=filter
 
     try{
       switch (filter) {
@@ -988,6 +993,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
             totalDiasPerdidos +=diasPerdidos;
             let AtMortales = reportesAt.filter(at => at.padreNombre === division.nombre && at.causoMuerte === true).length;
             AtMortalesTotal+=AtMortales
+    
             let TF = isNaN(Number((totalAt * 100)/((trabajadoresTotales+totalTrabajadoresTemp)))) ? 0.0 : Number(Number((totalAt * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(6));
             let TS = isNaN(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp))) ? 0.0 : Number(Number((diasPerdidos * 100)/(trabajadoresTotales+totalTrabajadoresTemp)).toFixed(6));
             let PAT = isNaN(Number((AtMortales * 100)/totalAt)) ? 0.0 : Number(Number((AtMortales * 100)/totalAt).toFixed(6));
@@ -1077,8 +1083,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.filtroAnioTasa_2);
 
+    if(filter!='filtro')this.filterMemoryTasas_2=filter
+
     try {
-      switch (filter) {
+      switch (this.filterMemoryTasas_2) {
         case 'dir':
           reportesAt = reportesAt.filter(at => at.temporal === null);
           throw 'dir';
