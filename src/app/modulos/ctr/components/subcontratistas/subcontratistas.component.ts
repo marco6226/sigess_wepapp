@@ -240,11 +240,8 @@ export class SubcontratistasComponent implements OnInit {
               .updateSubcontratista(subc)
               .then(()=>{
                 this.fetchSubcontratistasList().then();
-                this.messageService.add({key: 'msg', severity:'success', summary: 'Eliminado', detail: 'Se elimino el soprte'});
-                });
-              setTimeout(()=>{
-                this.messageService.clear();
-              }, 4000);         
+                this.messageService.add({key: 'msg', severity:'success', summary: 'Eliminado', detail: 'Se elimino el soporte', life: 6000});
+              });         
             })
       }
   });
