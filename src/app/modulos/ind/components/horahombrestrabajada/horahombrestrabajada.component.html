@@ -138,12 +138,12 @@
 
 <ng-container *ngIf="anioSelected && empresaSelected && esNuevoRegistro && mostrarBotones">
     <button pButton type="button" icon="fa fa-floppy-o" title="Guardar"
-        (click)="guardarHht()" class="float-btn"></button>
+        (click)="guardarHht()" class="float-btn" *sTienePermiso="'EMP_POST_HHT'"></button>
         <!-- guardarHht() -->
 </ng-container>
 
 <ng-container *ngIf="anioSelected && empresaSelected && !esNuevoRegistro && mostrarBotones">
     <button  pButton type="button" icon="fa fa-pencil" title="Modificar"
-        (click)="actualizarHht()" class="ui-button-success float-btn" style="z-index: 100;"></button>
+        (click)="actualizarHht()" class="ui-button-success float-btn" style="z-index: 100;" *sTienePermiso="'EMP_PUT_HHT'"></button>
 </ng-container>
 
