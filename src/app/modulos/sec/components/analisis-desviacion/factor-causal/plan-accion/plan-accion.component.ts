@@ -5,6 +5,8 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { ConfirmationService, MessageService } from 'primeng/primeng';
 import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic';
 import { Reporte } from 'app/modulos/rai/entities/reporte';
+import { TareaService } from 'app/modulos/sec/services/tarea.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-plan-accion',
@@ -27,6 +29,15 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   formRevisado: FormGroup
   empleadoSelect: EmpleadoBasic;
   reporteSelect: Reporte;
+  statuses = {
+    0: 'N/A',
+    1: 'En seguimiento',
+    2: 'Abierta',
+    3: 'Cerrada en el tiempo',
+    4: 'Cerrada fuera de tiempo',
+    5: 'Vencida',
+  }
+  estado: string | null;
 
   steps = [
     {label: 'ESPECIFICO'},
@@ -47,6 +58,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private tareaService: TareaService
   ) { 
     this.formEspecifico = fb.group({
       nombreAccionCorrectiva: [null, Validators.required],
@@ -58,10 +70,11 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // //console.log(this.planAcciones);
+    console.log(this.planAcciones);
     this.planAcciones.eficaz.fechaVencimiento = (this.planAcciones.eficaz.fechaVencimiento)? new Date(this.planAcciones.eficaz.fechaVencimiento):null;
     this.planAcciones.medible.fechaVencimiento = (this.planAcciones.medible.fechaVencimiento)? new Date(this.planAcciones.medible.fechaVencimiento):null;
     this.planAcciones.especifico.fechaVencimiento = (this.planAcciones.especifico.fechaVencimiento)? new Date(this.planAcciones.especifico.fechaVencimiento):null;
+    this.validarEstado();
   }
 
   ngAfterViewInit(): void {
@@ -138,6 +151,60 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   //   //console.log(this.planAcciones.especifico);
   //   console.log(this.planAcciones.especifico.fechaVencimiento)
   // }
+
+  async validarEstado(){
+    let id: string;
+    let status: number;
+    switch(this.process){
+      case 'ESPECIFICO':
+        id = this.planAcciones.especifico.id;        
+        status = await this.calcularEstado(id);
+        this.estado = this.statuses[status];
+        break;
+      case 'EFICAZ':
+        id = this.planAcciones.eficaz.id;
+        status = await this.calcularEstado(id);
+        this.estado = this.statuses[status];
+        break;
+      case 'MEDIBLE':
+        id = this.planAcciones.medible.id;
+        status = await this.calcularEstado(id);
+        this.estado = this.statuses[status];
+        break;
+      default:
+        this.estado = null;
+        break;
+    }
+
+  }
+
+  async calcularEstado(id: string){
+    
+    let seguimientoTarea: any;
+    let keys=['id', 'fecha_cierre', 'fecha_proyectada', 'tracking'];
+    await this.tareaService.getSeguimientoTarea(id).then((res: []) => {
+      seguimientoTarea = res.reduce((item, value, index) => {
+        item[keys[index]] = value;
+        return item
+      }, {});
+    }).catch(err => {
+      console.log('Error al obtener seguimiento de la tarea: ', err);
+    });
+
+    let isFollow = (seguimientoTarea.tracking > 0) ? true : false;
+
+    let now = moment({});
+    let fechaCierre = moment(seguimientoTarea.fecha_cierre);
+    let fechaProyectada = moment(seguimientoTarea.fecha_proyectada);
+    // console.log(now, fechaCierre, fechaProyectada);
+
+    if (!fechaCierre.isValid() &&  isFollow) return 1;        
+    if (!fechaCierre.isValid() && fechaProyectada.isSameOrAfter(now,'day') && !isFollow) return 2;
+    if (fechaCierre.isValid() && fechaProyectada.isSameOrAfter(fechaCierre,'day')) return 3;
+    if (fechaCierre.isValid() && fechaProyectada.isBefore(fechaCierre,'day')) return 4;        
+    if (!fechaCierre.isValid() && fechaProyectada.isBefore(now,'day') && !isFollow) return 5;
+    return 0;
+  }
 
   test(){
     console.log(this.planAcciones);
