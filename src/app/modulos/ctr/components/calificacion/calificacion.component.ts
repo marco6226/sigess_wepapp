@@ -104,7 +104,7 @@ export class CalificacionComponent implements OnInit{
     this.values.push(this.selectedPermanencia);
     this.values.push(this.selectedTamano);
     this.values.push(this.selectedClaseRiesgo);
-    console.log(this.values);
+    // console.log(this.values);
     try{
       this.valoracionActual = Number(this.riesgo) + Number(this.selectedPermanencia.value) + Number(this.impacto)
                           + Number(this.selectedTamano.value) + Number(this.selectedClaseRiesgo.value) + Number(this.transversalidad);
