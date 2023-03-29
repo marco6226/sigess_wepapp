@@ -21,3 +21,20 @@
 	display: flex;
     justify-content: flex-end;
 }
+
+.status--danger{
+	color: red;
+}
+
+.status--success{
+	color: green;
+
+}
+
+.status--info{
+	color: blue;
+}
+
+.status--warning{
+	color: darkorange;
+}
