@@ -549,9 +549,21 @@ export class IndCasosMedicosComponent implements OnInit {
     }
 
     //Grafica seis
+    reset6(){
+      this.selectDivisiones5=[]
+      this.selectEvento5=[]
+      this.fechaDesde6=null
+      this.fechaHasta6=null
+      this.DatosGrafica6()
+    }
     DatosGrafica6(){
       this.flag5=false
       this.datosGraf5=Array.from(this.datos)
+
+      this.datosGraf5=this.datosGraf5.filter(resp=>{return resp['origen']!=null})
+      if(this.radioButon5==1){this.datosGraf5=this.datosGraf5.filter(resp=>{return resp['origen']=='Común'})}
+      if(this.radioButon5==2){this.datosGraf5=this.datosGraf5.filter(resp=>{return resp['origen']!='Común'})}
+
       this.datosGraf5=this.filtroFecha(this.fechaDesde6,this.fechaHasta6,this.datosGraf5)
 
       let opcion=[]
@@ -585,10 +597,24 @@ export class IndCasosMedicosComponent implements OnInit {
 
 
     //Grafica sieto
+    reset7(){
+      this.selectDivisiones6=[]
+      this.selectUbicacion6=[]
+      this.selectEvento6=[]
+      this.fechaDesde7=null
+      this.fechaHasta7=null
+      this.flagReturnDatos6=false
+    }
+
     DatosGrafica7(){
       this.flagReturnDatos6=true
       this.flag6=false
       this.datosGraf6=Array.from(this.datos)
+
+      this.datosGraf6=this.datosGraf6.filter(resp=>{return resp['origen']!=null})
+      if(this.radioButon6==1){this.datosGraf6=this.datosGraf6.filter(resp=>{return resp['origen']=='Común'})}
+      if(this.radioButon6==2){this.datosGraf6=this.datosGraf6.filter(resp=>{return resp['origen']!='Común'})}
+
       if(this.selectDivisiones6.length>0)this.datosGraf6=this.datosGraf6.filter(resp=>resp.divisionUnidad==this.selectDivisiones6)
 
       this.datosGraf6=this.filtroFecha(this.fechaDesde7,this.fechaHasta7,this.datosGraf6)
