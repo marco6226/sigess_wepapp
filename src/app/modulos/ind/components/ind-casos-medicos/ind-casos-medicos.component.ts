@@ -9,6 +9,7 @@ import { locale_es } from 'app/modulos/rai/enumeraciones/reporte-enumeraciones';
 import { DatePipe } from '@angular/common';
 import { NgxChartsModule } from 'ngx-charts-8';
 import {ViewscmcoService} from "../../services/indicador-scmco.service"
+import { SelectItem, Message, TreeNode } from 'primeng/primeng';
 // import { multi} from './data';
 
 class division {
@@ -41,6 +42,7 @@ export class IndCasosMedicosComponent implements OnInit {
   divisiones0=[]
   divisiones1=[]
   divisiones2=[]
+  divisiones3=[]
 
   fechaDesde0:Date;
   fechaHasta0:Date;
@@ -65,6 +67,7 @@ export class IndCasosMedicosComponent implements OnInit {
 
   datosGraf2:any;
   datosGraf2Print:any;
+  
 
   datosGraf3:any;
   datosGraf3Print:any;
@@ -73,16 +76,23 @@ export class IndCasosMedicosComponent implements OnInit {
   selectEvento1:any=[]
 
   selectDivisiones2:any=[]
+  selectUbicacion2:any=[]
   selectEvento2:any=[]
 
   selectDivisiones3:any=[]
   selectEvento3:any=[]
 
   flag1:boolean=false
-  flag2:boolean=false
+  flag2:boolean=true
   flag3:boolean=false
+  flagReturnDatos2:boolean=false
+
+  visibleDlg: boolean =false;
 
   selecDiv0=[]
+
+  radioButon0:number=0;
+  opcion0?:any;
 
   radioButon1:number=0;
   opcion1?:any;
@@ -93,7 +103,16 @@ export class IndCasosMedicosComponent implements OnInit {
   radioButon3:number=0;
   opcion3?:any;
 
-  plantas:any=[];
+  area:any=[];
+
+  valueArray:any[]
+  valueArray2:any[]
+  scmList
+
+  selectUbicacion:any=[]
+
+  areasNodes: TreeNode[] = [];
+  areasNodesMemory1: TreeNode[] = [];
 
   mesaLaboralList = [
     { label: "Si", value: "1" },
@@ -130,12 +149,13 @@ export class IndCasosMedicosComponent implements OnInit {
     this.numeroCasos()
     this.DatosGrafica1()
     this.DatosGrafica2()
-    this.DatosGrafica3()
     this.DatosGrafica4()
+    this.loadAreas()
   }
 
   constructor(
     private viewscmcoService: ViewscmcoService,
+    private areaService: AreaService,
   ){}
   
   async cargarDatos(){
@@ -143,18 +163,12 @@ export class IndCasosMedicosComponent implements OnInit {
       this.divisiones0.push({label:resp,value:resp})
       this.divisiones1.push({label:resp,value:resp})
       this.divisiones2.push(resp)
+      this.divisiones3.push({label:resp,value:resp})
     })
     this.divisiones0.push({label:'Corona total',value:'Corona total'})
     this.divisiones2.push('Corona total')
     await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
       this.datos=resp
-      let map=new Map()
-      this.datos.forEach(resp=>{
-        if(!map.has(resp['ubicacion'])){
-          map.set(resp['ubicacion'],0)
-          this.plantas.push(resp['ubicacion'])}
-      })
-      this.plantas.push(resp['Coronta total'])
     })
   }
 
@@ -173,12 +187,20 @@ export class IndCasosMedicosComponent implements OnInit {
     this.casosCerrados=this.numCasos-this.casosAbiertos
   }
 
-  test(){}
-
   //Grafica uno
   DatosGrafica1(){
     this.datosGraf0=this.datos
     this.datosGraf0=this.filtroFecha(this.fechaDesde1,this.fechaHasta1,this.datosGraf0)
+    switch (this.radioButon0) {
+      case 1:
+        this.datosGraf0=this.datosGraf0.filter(resp1=>{return resp1['estadoDelCaso']=='1'})
+        break;
+      case 2:
+        this.datosGraf0=this.datosGraf0.filter(resp1=>{return resp1['estadoDelCaso']=='0'})
+        break;
+      default:
+        break;
+    }
     this.datosGraf0Print=[]
     this.divisiones.forEach(resp=>{
       this.datosGraf0Print.push({name:resp,value:(this.datosGraf0.filter(resp1=>{return resp1['divisionUnidad']==resp})).length})
@@ -212,8 +234,10 @@ export class IndCasosMedicosComponent implements OnInit {
 
     //Grafica tres
     DatosGrafica3(){
+      this.flagReturnDatos2=true
       this.flag2=false
       this.datosGraf2=this.datos
+      if(this.selectDivisiones2.length>0)this.datosGraf2=this.datosGraf2.filter(resp=>resp.divisionUnidad==this.selectDivisiones2)
 
       this.datosGraf2=this.filtroFecha(this.fechaDesde3,this.fechaHasta3,this.datosGraf2)
       let nombre=''
@@ -222,21 +246,106 @@ export class IndCasosMedicosComponent implements OnInit {
       if(this.radioButon2==2){this.opcion2=this.prioridadList;nombre='prioridadCaso'}
       if(this.radioButon2==3){this.opcion2=this.tipoOptionList;nombre='tipoCaso'}
   
-      let plantas=this.plantas
-  
+      let plantas=[]
+      let map=new Map()
+      this.datosGraf2.forEach(resp=>{
+        if(!map.has(resp['ubicacion']) && resp['divisionUnidad']==this.selectDivisiones2){
+          map.set(resp['ubicacion'],0)
+          plantas.push(resp['ubicacion'])}
+      })
       let opcion2=this.filtroEventoMultiple(this.selectEvento2,this.opcion2)
-  
-      this.datosGraf2Print=this.datosGraf2DDivisiones(plantas,this.datosGraf2,opcion2,nombre,'ubicacion')
-
-      this.datosGraf2Print=this.top2(this.datosGraf2Print,10)
-
+      if(this.selectUbicacion2.length==0){
+        this.datosGraf2Print=this.datosGraf2DDivisiones(plantas,this.datosGraf2,opcion2,nombre,'ubicacion')
+        this.datosGraf2Print=this.top2(this.datosGraf2Print,10)
+      }else{
+        this.agregarDivision(opcion2)
+      }
       this.flag2=true
     }
   
     returnDatos2(){
-      this.selectEvento1=[]
-      this.selectDivisiones1=[]
-      this.DatosGrafica2()
+      this.selectEvento2=[]
+      this.selectDivisiones2=[]
+      this.DatosGrafica3()
+      this.flagReturnDatos2=false
+    }
+
+    async cargarArea(){
+      this.selectUbicacion2=[]
+      this.areasNodesMemory1=this.areasNodes
+      let areasNodesChildren=this.areasNodesMemory1[0]['children'].filter(resp=>resp.label==this.selectDivisiones2)
+      this.areasNodesMemory1=[{children:areasNodesChildren[0]['children'],expanded:false,label:"",parent:undefined, selectable:false}]
+    }
+  
+    sumAreaSelect2(scm,opcion,flag,datos,selectOpcion){
+      let datos0=datos
+      let datos0_1
+      if(flag){
+        this.valueArray=[]
+        opcion.forEach(resp=>{
+          this.valueArray.push({name:resp.label,value:0})
+        })
+        this.scmList=scm.label
+      }
+  
+      this.selectUbicacion.map(resp=>{
+        if(resp.label===scm.label){
+          resp.flag=true
+        }
+      })
+  
+  
+      datos0=datos0.filter(resp=>{return resp.ubicacion==scm.label})
+      opcion.forEach(resp=>{
+        datos0_1=datos0.filter(resp1=>{return resp1[selectOpcion]==resp.value})
+        const indice=this.valueArray.findIndex(el => el.name == resp.label )
+        this.valueArray[indice].value=this.valueArray[indice].value+datos0_1.length;
+      })
+  
+      if(scm.children.length>0){
+        scm.children.forEach(resp=>{
+          this.sumAreaSelect2(resp,opcion,false,datos,selectOpcion)
+        })
+      }
+    }
+  
+    cerrarDialogo(){
+      this.visibleDlg = false;
+    }
+  
+    abrirDialogo1(){
+      this.visibleDlg = true;
+    }
+
+    agregarDivision(opcion){
+      let nombre=''
+      if(this.radioButon2==0){nombre='estadoDelCaso'}
+      if(this.radioButon2==1){nombre='casoMedicoLaboral'}
+      if(this.radioButon2==2){nombre='prioridadCaso'}
+      if(this.radioButon2==3){nombre='tipoCaso'}
+      
+      this.selectUbicacion2=this.order2(this.selectUbicacion2)
+      this.selectUbicacion2=this.selectUbicacion2.filter(resp=>resp.label!="")
+      this.selectUbicacion=[]
+      this.selectUbicacion2.forEach(resp=>{
+        this.selectUbicacion.push({
+          id:resp.key,
+          label:resp.label,
+          children:resp.children,
+          flag:false
+        })
+      })
+  
+      this.valueArray2=[]
+      this.selectUbicacion.forEach(resp=>{
+        if(resp.flag==false){
+          this.sumAreaSelect2(resp,opcion,true,this.datosGraf2,nombre)
+          this.valueArray2.push({name:this.scmList,series:this.valueArray})
+        }
+      })
+  
+      this.datosGraf2Print=this.valueArray2
+      this.cerrarDialogo();
     }
 
     //Grafica cuatro
@@ -410,12 +519,100 @@ export class IndCasosMedicosComponent implements OnInit {
   top2(dato, limit) {
     let dato2=[] 
     let cont=0
-    dato.forEach(ele =>{
-      if(cont<=limit){
-        dato2.push(ele)
-      }
-      cont++
+    let order=[]
+    dato.forEach(resp=>{
+      let sum=0
+      resp['series'].forEach(resp2=>{
+        sum+=resp2.value
+      })
+      order.push({label:resp.name,value:sum})
     })
+    order=this.order(order)
+
+    order.forEach(resp=>{
+      if(cont<limit){
+        dato2.push(dato.find(resp1=>resp1.name==resp.label))
+      }
+      cont +=1;
+    })
+
     return dato2
   }
+
+  order(ele){
+    ele.sort(function (a, b) {
+      if (a.value < b.value) {
+        return 1;
+      }
+      if (a.value > b.value) {
+        return -1;
+      }
+      return 0;
+    });
+    return ele
+  }
+
+  order2(ele){
+    ele.sort(function (a, b) {
+      if (a.tipoAreaId > b.tipoAreaId) {
+        return 1;
+      }
+      if (a.tipoAreaId < b.tipoAreaId) {
+        return -1;
+      }
+      return 0;
+    });
+    return ele
+  }
+
+  
+  // Component methods
+  async loadAreas() {
+    let allComplete = {
+      organi: false,
+      fisica: false
+    };
+
+    // Consulta las areas de estructura organizacional
+    let filterAreaQuery = new FilterQuery();
+    //filterAreaQuery.fieldList=['id','nombre','descripcion','tipoArea','estructura','areaPadre','areaList']
+    filterAreaQuery.filterList = [
+      { field: 'areaPadre', criteria: Criteria.IS_NULL, value1: null, value2: null },
+    ];
+    this.areaService.findByFilter(filterAreaQuery)
+      .then(data => {
+        let root: TreeNode = {
+          label: '',
+          selectable: false,
+          expanded: false,
+        };
+        let nodos = this.createTreeNode(<Area[]>data['data'], null);
+        root.children = nodos;
+        this.areasNodes.push(root);
+        allComplete.organi = true;
+      })
+  }
+
+  createTreeNode(areas: Area[], nodoPadre: TreeNode): TreeNode[] {
+    let nodes: TreeNode[] = [];
+    for (let i = 0; i < areas.length; i++) {
+      let area = areas[i];
+      let n = {
+        key: area.id,
+        label: area.nombre,
+        descripcion: area.descripcion,
+        tipoAreaId: area.tipoArea.id,
+        estructura: area.estructura,
+        expanded: false,
+        parent: nodoPadre,
+        children: null,
+        selected: true
+      };
+      n.children = (area.areaList != null ? this.createTreeNode(area.areaList, n) : null);
+      // n.expanded = area.areaList != null && area.areaList.length > 0;
+      nodes.push(n);
+    }
+    return nodes;
+  }
+
 }

@@ -75,8 +75,10 @@
         <div class="colorfondo">
           <div class="ui-g">
             <p> <b> Casos medicos </b></p>
-            <div class="ui-g-12">&nbsp;</div>
             <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
+              <p-radioButton name="group0" label="Total " [value]="0"   (onClick)="DatosGrafica1()" [style]="{'margin-left': '15px'}" [(ngModel)]="radioButon0"></p-radioButton>
+              <p-radioButton name="group0" label=" Abiertos " [value]="1"  (onClick)="DatosGrafica1()" [style]="{'margin-left': '15px'}" [(ngModel)]="radioButon0"></p-radioButton>
+              <p-radioButton name="group0" label=" Cerrados " [value]="2"  (onClick)="DatosGrafica1()" [style]="{'margin-left': '15px'}" [(ngModel)]="radioButon0"></p-radioButton>
               <ngx-charts-advanced-pie-chart
               class="align-items-center"
               [scheme]="colorScheme"
@@ -206,33 +208,40 @@
           <div class="ui-g-12">&nbsp;</div>
   
           <div  class="ui-g-8 ui-g-nopad">
-            <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
-              <ngx-charts-bar-vertical-2d
-              class="align-items-center"
-              [scheme]="colorScheme"
-              [results]="datosGraf2Print"
-              [gradient]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="false"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxisLabel]="'Casos'"
-              [yAxisLabel]="'No. Casos'"
-              [showDataLabel]="false"
-              [barPadding]=0
-              [groupPadding]=4
-              [tooltipDisabled]="false">
-              </ngx-charts-bar-vertical-2d>
+            <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" *ngIf="flagReturnDatos2">
+              <!-- <ng-container *ngIf="flagReturnDatos2"> -->
+                <ngx-charts-bar-vertical-2d
+                class="align-items-center"
+                [scheme]="colorScheme"
+                [results]="datosGraf2Print"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="false"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Casos'"
+                [yAxisLabel]="'No. Casos'"
+                [showDataLabel]="false"
+                [barPadding]=0
+                [groupPadding]=4
+                [tooltipDisabled]="false">
+                </ngx-charts-bar-vertical-2d>
+              <!-- </ng-container> -->
             </div>
+            <ng-container *ngIf="!flagReturnDatos2">
+              <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad">
+                <s-dataNotFound [message]="'Selecione una división'"></s-dataNotFound>
+              </div>
+            </ng-container>
             <div class="ui-g-1">&nbsp;</div>
             <div class="ui-g-2">&nbsp;</div>
             <div class="ui-g-8">
-                <div class="ui-g-6">  
+                <div class="ui-g-6" *ngIf="flagReturnDatos2">  
                     <i style="font-size:24px" class="fa">&#xf073;</i>   
                     <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde3" (ngModelChange)="DatosGrafica3()"> </p-calendar> 
                 </div>
-                <div class="ui-g-6"> 
+                <div class="ui-g-6" *ngIf="flagReturnDatos2"> 
                     <i style="font-size:24px" class="fa">&#xf073;</i> 
                     <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta3" (ngModelChange)="DatosGrafica3()"> </p-calendar>
                 </div>
@@ -242,12 +251,16 @@
   
           <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
             <h5>Division</h5>
-            <!-- <p-multiSelect defaultLabel="Seleccione" [options]="divisiones0" optionLabel="label" [(ngModel)]="selectDivisiones1" (onChange)="DatosGrafica2()"></p-multiSelect> -->
-            
-            <!-- <div *ngFor="let category of divisiones0" class="p-field-checkbox">
-              <p-checkbox name="group2" value="category" [value]="category"  [(ngModel)]="selectDivisiones2" [inputId]="category.value" (click)="DatosGrafica3()"></p-checkbox>
-              <label>{{category.label}}</label>
-            </div> -->
+            <p-dropdown appendTo="body" [options]="divisiones3" [(ngModel)]="selectDivisiones2" placeholder="Seleccionar división" (onChange)="DatosGrafica3();cargarArea()"></p-dropdown>
+            <ng-container *ngIf="selectDivisiones2.length>0">
+              &nbsp;
+              <h5>Estructura</h5>
+              <!-- <area-selectorind></area-selectorind> -->
+              <!-- <area-selector [toDiv]="true" [selectDiv]="selectDivisiones2" (onAreaSelect)="areaChange($event)">
+              </area-selector> -->
+              <button style="display:flex" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo1()" label="Seleccionar Ubicación"></button>
+            </ng-container>
+            &nbsp;
             <h5>Filtro casos</h5>
             <div class="col-md-10">
               <p-radioButton name="group2" label="Estado" [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon2" (onClick)="returnDatos2()"></p-radioButton><br>
@@ -256,7 +269,7 @@
               <p-radioButton name="group2" label="Tipo de caso" [value]="3" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon2" (onClick)="returnDatos2()"></p-radioButton>
             </div>
             <br>
-            <p-multiSelect defaultLabel="Seleccione" [options]="opcion1" optionLabel="label" [(ngModel)]="selectEvento2" (onChange)="DatosGrafica3()"></p-multiSelect>
+            <p-multiSelect defaultLabel="Seleccione" [options]="opcion2" optionLabel="label" [(ngModel)]="selectEvento2" (onChange)="DatosGrafica3()"></p-multiSelect>
           </div>
         </div>
         
@@ -407,3 +420,37 @@
       </p-panel>
   </div>
 </div>
+<!-- grafica 3 -->
+<p-dialog header="Estructura" [(visible)]="visibleDlg" [contentStyle]="{'max-height':'95%'}" [style]="{width: '80%', height: '70%'}">
+    
+  <div >
+      <label for="" class="active">Seleccionar ubicacion</label>
+  </div>
+
+  <div >
+      <p-tree [filter]="true" [value]="areasNodesMemory1" selectionMode="checkbox" [(selection)]="selectUbicacion2" layout="vertical"></p-tree>
+  </div>
+
+  <p-footer>
+      <button pButton type="button" (click)="DatosGrafica3()" label="Aceptar"></button>
+      <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
+  </p-footer>
+  
+</p-dialog>
+<!-- grafica 5 -->
+<!-- <p-dialog header="Estructura" [(visible)]="false" [contentStyle]="{'max-height':'95%'}" [style]="{width: '80%', height: '70%'}">
+    
+  <div >
+      <label for="" class="active">Seleccionar ubicacion</label>
+  </div>
+
+  <div >
+      <p-tree [filter]="true" [value]="areasNodesMemory1" selectionMode="checkbox" [(selection)]="selectUbicacion2" layout="vertical"></p-tree>
+  </div>
+
+  <p-footer>
+      <button pButton type="button" (click)="DatosGrafica3()" label="Aceptar"></button>
+      <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
+  </p-footer>
+  
+</p-dialog> -->

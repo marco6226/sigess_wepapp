@@ -340,6 +340,8 @@ font-size:small;
 //   background-color: rgb(19, 215, 48);
 //   box-shadow: 0 6px 20px 0 rgba(255, 4, 167, 0.2);
 // }
-
+::ng-deep .ui-tree{
+  width: 95% !important;
+}
 
 

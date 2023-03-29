@@ -101,9 +101,12 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            <p-calendar *ngIf="empresaId!=22" [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                                 [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
-                                dateFormat="dd/mm/yy" formControlName="fechaIngreso"></p-calendar>
+                                dateFormat="dd/mm/yy" formControlName="fechaIngreso" ></p-calendar>
+                            <p-calendar *ngIf="empresaId==22" required [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                                [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
+                                dateFormat="dd/mm/yy" formControlName="fechaIngreso" ></p-calendar>
                             <label for="" class="active">Fecha de vinculación</label>
 
                         </div>
@@ -187,7 +190,10 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-calendar [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            <p-calendar *ngIf="empresaId==22" required [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
+                                [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
+                                dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
+                            <p-calendar *ngIf="empresaId!=22" [disabled]="consultar2" [attr.disabled]="true" [monthNavigator]="true" [yearNavigator]="true"
                                 [yearRange]="yearRange" [maxDate]="fechaActual" [locale]="localeES"
                                 dateFormat="dd/mm/yy" formControlName="fechaNacimiento"></p-calendar>
                             <label for="" class="active">Fecha de nacimiento</label>
@@ -264,21 +270,27 @@
 
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [readonly]="consultar2" [filter]="true" [options]="epsList" formControlName="eps"
+                            <p-dropdown *ngIf="empresaId==22" required [readonly]="consultar2" [filter]="true" [options]="epsList" formControlName="eps"
+                                class="select-material" styleClass="select-material"></p-dropdown>
+                            <p-dropdown *ngIf="empresaId!=22" [readonly]="consultar2" [filter]="true" [options]="epsList" formControlName="eps"
                                 class="select-material" styleClass="select-material"></p-dropdown>
                             <label for="" class="active">EPS</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <p-dropdown [readonly]="consultar2" [filter]="true" [options]="afpList" formControlName="afp"
+                            <p-dropdown *ngIf="empresaId==22" required [readonly]="consultar2" [filter]="true" [options]="afpList" formControlName="afp"
+                                class="select-material" styleClass="select-material"></p-dropdown>
+                            <p-dropdown *ngIf="empresaId!=22" [readonly]="consultar2" [filter]="true" [options]="afpList" formControlName="afp"
                                 class="select-material" styleClass="select-material"></p-dropdown>
                             <label for="" class="active">AFP</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
                         <div class="input-field">
-                            <input [readonly]="consultar2" [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
+                            <input *ngIf="empresaId==22" required [readonly]="consultar2" [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
+                                class="form-material" id="arl" />
+                            <input *ngIf="empresaId!=22" [readonly]="consultar2" [attr.disabled]="true" type="text" pInputText [value]="arl || ''" placeholder="Arl"
                                 class="form-material" id="arl" />
                             <label for="" class="active">ARL</label>
                         </div>
@@ -487,8 +499,8 @@
                         <div class="input-field">
                             <p-calendar  formControlName="fechaFinal" [disabled]="consultar2" *sTienePermiso="'SCM_PUT_CAMBIAR_FECHAFIN'" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
                                 [maxDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
-                                <p-calendar formControlName="fechaFinal" [disabled]="consultar2" *ngIf="!permisoFechaCierre()" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                                    [maxDate]="fechaActual" [minDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
+                            <p-calendar formControlName="fechaFinal" [disabled]="consultar2" *ngIf="!permisoFechaCierre()" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                [maxDate]="fechaActual" [minDate]="fechaActual" [locale]="localeES" dateFormat="dd/mm/yy"></p-calendar>
                             <label for="" class="active">Fecha de cierre</label>
                         </div>
                     </div>
@@ -528,7 +540,10 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown [readonly]="consultar2" [options]="caseOptionList" formControlName="casoMedicoLaboral"
+                                <p-dropdown *ngIf="empresaId=='22'" required [readonly]="consultar2" [options]="caseOptionList" formControlName="casoMedicoLaboral"
+                                    class="select-material" styleClass="select-material">
+                                </p-dropdown>
+                                <p-dropdown *ngIf="empresaId!='22'" [readonly]="consultar2" [options]="caseOptionList" formControlName="casoMedicoLaboral"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Caso de mesa laboral</label>
@@ -539,7 +554,10 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
+                                <p-dropdown *ngIf="empresaId=='22'" required [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
+                                    class="select-material" styleClass="select-material">
+                                </p-dropdown>
+                                <p-dropdown *ngIf="empresaId!='22'" [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Prioridad</label>
@@ -548,7 +566,10 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown [readonly]="consultar2" [options]="tipoOptionList" formControlName="tipoCaso"
+                                <p-dropdown *ngIf="empresaId=='22'" required [readonly]="consultar2" [options]="tipoOptionList" formControlName="tipoCaso"
+                                    class="select-material" styleClass="select-material">
+                                </p-dropdown>
+                                <p-dropdown *ngIf="empresaId!='22'" [readonly]="consultar2" [options]="tipoOptionList" formControlName="tipoCaso"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Tipo de caso</label>
