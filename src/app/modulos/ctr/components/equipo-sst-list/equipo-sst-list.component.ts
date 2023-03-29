@@ -1,8 +1,9 @@
 import { SST } from './../../entities/aliados';
 import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EquipoSST, ResponsableSST } from '../../entities/aliados';
 import { ConfirmationService, MessageService } from 'primeng/primeng';
+import { from, of } from 'rxjs';
 
 @Component({
   selector: 'app-equipo-sst-list',
@@ -41,6 +42,7 @@ export class EquipoSstListComponent implements OnInit {
     licenciaSST: ''
   };
 
+  @Output() onTeamChange = new EventEmitter<boolean>();
 
   constructor(
     private empresaService: EmpresaService,
@@ -50,6 +52,18 @@ export class EquipoSstListComponent implements OnInit {
 
   ngOnInit(): void {
     this.onLoad()
+  }
+
+  emitChanges(){
+    try{
+      if(this.responsableList.length > 0 && this.equipoList.length > 0){
+        this.onTeamChange.emit(true);
+      }else{
+        this.onTeamChange.emit(false);
+      }
+    }catch(err){
+      this.onTeamChange.emit(false);
+    }
   }
 
   crearMiembros(){
@@ -106,7 +120,7 @@ export class EquipoSstListComponent implements OnInit {
     };
 
     this.onCreateEquipo(dataSST);
-    console.log(event);
+    // console.log(event);
   }
 
 
@@ -126,6 +140,7 @@ export class EquipoSstListComponent implements OnInit {
             }else{
               this.messageservice.add({severity:'error', summary:'Error', detail:'Ocurrió un error al intentar eliminar'});
             }
+            this.emitChanges();
           });            
         },
         reject: () => {},
@@ -209,7 +224,7 @@ export class EquipoSstListComponent implements OnInit {
             
       });
       
-      
+      this.emitChanges();
     })
   }
 
@@ -220,7 +235,7 @@ export class EquipoSstListComponent implements OnInit {
 
   async onCreateEquipo(dataSST: SST){
     await this.empresaService.createEquipoSST(dataSST)
-    this.onLoad()
+    this.onLoad();
   }
 
   actualizarMiembro(sst: SST){

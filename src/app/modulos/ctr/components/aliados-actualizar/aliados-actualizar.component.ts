@@ -26,7 +26,8 @@ import { Empleado } from 'app/modulos/empresa/entities/empleado';
 export class AliadosActualizarComponent implements OnInit {
   idUsuarioAliado?:any;
   id: number = -1;
-  idEmpresa?:string
+  idEmpresa?:string;
+  idEmpresaAliada: number | null;
   aliado: Empresa={
     id: '',
     nombreComercial: '',
@@ -85,7 +86,9 @@ export class AliadosActualizarComponent implements OnInit {
   
   flagValid:boolean=false;
 
-  flagConsult:boolean=false
+  flagConsult:boolean=false;
+
+  teamSstIsComplete: boolean = false;
 
   constructor(
     private rutaActiva: ActivatedRoute,
@@ -106,7 +109,9 @@ export class AliadosActualizarComponent implements OnInit {
 
   async loadData(){
     console.log("--------------load data------------");
-    this.idEmpresa = this.sesionService.getEmpresa().id;
+    let empresa: Empresa = this.sesionService.getEmpresa();
+    this.idEmpresa = empresa.id;
+    this.idEmpresaAliada = empresa.idEmpresaAliada;
     // console.log(this.idEmpresa)
     let filterQuery = new FilterQuery();
     filterQuery.filterList = [];
@@ -310,7 +315,9 @@ export class AliadosActualizarComponent implements OnInit {
 
     this.aliado.fechaActualizacion = new Date();
     //aca ajustar el estado
-    if(this.idEmpresa!='22')this.aliado.estado='Actualizado';
+    if(this.idEmpresaAliada && this.aliadoDataIsValid()){
+      this.aliado.estado='Actualizado';
+    };
 
     this.aliado.calificacion=this.impactoV;
     if(this.aliado.division !== null){
@@ -322,7 +329,7 @@ export class AliadosActualizarComponent implements OnInit {
         this.usuarioService.emailAliadoActualizado(this.aliado.correoAliadoCreador, this.aliado.id);
         this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
       }
-      if(this.onEdit == 'edit' && this.gestorDataIsValid){
+      if(this.onEdit == 'edit' && this.gestorDataIsValid()){
         this.messageService.add({key: 'msgActualizarAliado', severity:'success', summary: 'Guardado', detail: 'Los cambios han sido guardados'});
       }
 
@@ -368,6 +375,7 @@ export class AliadosActualizarComponent implements OnInit {
       && (this.aliadoInformacion.fecha_vencimiento_arl != null)
       && (this.aliadoInformacion.fecha_vencimiento_sst != null)
       && (this.aliadoInformacion.puntaje_arl != null)
+      && (this.teamSstIsComplete)
     );
   }
 
@@ -436,6 +444,9 @@ export class AliadosActualizarComponent implements OnInit {
       if(this.aliadoInformacion.puntaje_arl == null){
         this.messageService.add({key: 'msgActualizarAliado', severity:'warn', summary: 'Información faltante', detail: 'Debe ingresar el puntaje de su certificado de ARL.', life:6000});
       }
+      if(!this.teamSstIsComplete){
+        this.messageService.add({key: 'msgActualizarAliado', severity: 'warn', summary: 'Información faltante', detail: 'Debe completar el equipo SST.'})
+      }
     }
   }
 
@@ -470,5 +481,10 @@ export class AliadosActualizarComponent implements OnInit {
     this.aliadoInformacion.documentos = documentos;
     await this.saveInformacionAliado();
     this.loadDocumentos();
+  }
+
+  onTeamSstChange(event: boolean){
+    this.teamSstIsComplete = event;
+    // console.log(event);
   }
 }

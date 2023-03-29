@@ -41,7 +41,7 @@
           ></app-informacion-general>
       </p-tabPanel>
       <p-tabPanel header="Equipo SST"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 
-        <app-equipo-sst-list [flagConsult]="flagConsult" [alidadoId]="id"></app-equipo-sst-list>
+        <app-equipo-sst-list [flagConsult]="flagConsult" [alidadoId]="id" (onTeamChange)="onTeamSstChange($event)"></app-equipo-sst-list>
       </p-tabPanel>
       <p-tabPanel header="Cargue de Documentos" [headerStyle]=" { 'background-color':'#fd9b14' }">  
         <app-cargue-documentos [flagConsult]="flagConsult"
