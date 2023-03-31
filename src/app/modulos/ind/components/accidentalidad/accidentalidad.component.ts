@@ -38,30 +38,33 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   categoriesCombo: any=[];
   seriesCombo: any=[];
   selectedAnioIli_1: number = new Date().getFullYear();
-  dataIli_1: any;
+  dataIli_1: {
+    labels: any;
+    datasets: any[];
+    options: any;
+  }
   optionsIli_1: any = {
-    title: 'ILI por división', 
-    height: 400,
-    width: 800,
-    xAxis: {
-      title: 'Divisiones',
-      labelRotation: 300,
-      labelAlign: 'middle', // left, middle, right,
-      labelEllipsisSize: 80
-    },
-    yAxis: {
-      leftTitle: 'ILI',
-      rightTitle: 'Meta',
-      labelEllipsisSize: 8
-    },
-    plotOptions: {
-      groupBarPadding: 1,
-      innerBarPadding: 3
+    title: {
+      display: true,
+      text: 'ILI por División'
     },
     legend: {
-      labelEllipsisSize: 80
+      display: true,
+      // position: 'left',
+      fontSize: 6
+    },
+    scales: {
+        yAxes: [{
+            stacked: false,
+            ticks: {
+                beginAtZero: true
+            }
+        }],
+        xAxes: [{
+            stacked: false,
+        }]
     }
-  };
+  }
   optionsIli_2: any = {
     title: 'ILI por mes', 
     height: 400,
@@ -1474,7 +1477,29 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       return  div;
     });
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.selectedAnioIli_1);
-    let dataIli_1: any[] = [];
+    let dataIli_1: {
+      labels: any;
+      datasets: any[];
+      options?: any;
+    } = {
+      labels: this.divisionesCoronaIli1,
+      datasets: [
+        {
+          label: 'ILI',
+          backgroundColor: 'rgb(124, 181, 255)',
+          borderColor: 'rgb(124, 181, 255)',
+          data: [],
+        },
+        {
+          label: 'Meta',
+          backgroundColor: 'rgb(67, 67, 72)',
+          fill: false,
+          borderColor: 'rgb(67, 67, 72)',
+          data: [],
+          type: 'line'
+        }
+      ]
+    };
 
     let filterQuery = new FilterQuery();
     filterQuery.sortOrder = SortOrder.ASC;
@@ -1486,16 +1511,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.hhtService.findByFilter(filterQuery).then(async (res: any) => {
       if(this.filtroMesesIli_1.length > 0) reportesAt = reportesAt.filter(at => this.filtroMesesIli_1.includes(this.meses[new Date(at.fechaReporte).getMonth()]));
-      let dataILI = {
-        name: 'ILI',
-        type: 'verticalBar',
-        data: []
-      };
-      let dataMeta = {
-        name: 'Meta',
-        type: 'line',
-        data: []
-      }
 
       let accidentesConDiasPerdidosTotal = 0;
       let hhtTotalEmpresa = 0;
@@ -1594,20 +1609,22 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         diasSeveridadTotalEmp += totalDiasSeveridad;
         // console.log('if: ',IF,'is:',IS,'ILI:',ILI);
         
-        dataILI.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
-        dataMeta.data.push(metaCorona);
+        dataIli_1.datasets[0].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
+        dataIli_1.datasets[1].data.push(metaCorona);
       });
 
       let IF = (accidentesConDiasPerdidosTotal / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
       let IS = (diasSeveridadTotalEmp / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
       let ILI = (IF * IS)/1000;
 
-      dataILI.data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
-      let metaTotal = JSON.parse(res.data[0].valor).ILI_Anual ? JSON.parse(res.data[0].valor).ILI_Anual : 0;
-      dataMeta.data.push(metaTotal);
+      dataIli_1.datasets[0].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
+      
+      let metaTotal = 0;
+      if(res.data[0]){
+        metaTotal = JSON.parse(res.data[0].valor).ILI_Anual ? JSON.parse(res.data[0].valor).ILI_Anual : 0;
+      }
+      dataIli_1.datasets[1].data.push(metaTotal);
 
-      dataIli_1.push(dataILI);
-      dataIli_1.push(dataMeta);
       localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
       this.filtroIli_1();
       Object.assign(this, {dataIli_1});
@@ -1620,9 +1637,11 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     if(this.selectDivisionesILI1.length > 0){
       let selectedDivisiones = this.selectDivisionesILI1.map(div => div.label);
       divisionesCoronaIli1 = divisionesCoronaIli1.filter(div => selectedDivisiones.includes(div));
-      dataIli_1[0].data = dataIli_1[0].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
+      dataIli_1.labels = divisionesCoronaIli1;
+      dataIli_1.datasets[0].data = dataIli_1.datasets[0].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
+      dataIli_1.datasets[1].data = dataIli_1.datasets[1].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
     }
-    Object.assign(this, {divisionesCoronaIli1});
+    // Object.assign(this, {divisionesCoronaIli1});
     Object.assign(this, {dataIli_1});
   }
 
