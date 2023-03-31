@@ -201,6 +201,7 @@ export class IndCasosMedicosComponent implements OnInit {
     {label: 'Reintegro', value:'Reintegro'},
     {label: 'Reubicación', value:'Reubicación'},
     {label: 'Reconversión', value:'Reconversión'},
+    {label: 'Sin PRL', value:'null'},
   ]
 
   async ngOnInit() {
@@ -230,6 +231,13 @@ export class IndCasosMedicosComponent implements OnInit {
     await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
       this.datos=resp
     })
+
+    if(this.radioButon2==0){this.opcion2=this.StatusList;}
+    if(this.radioButon2==1){this.opcion2=this.mesaLaboralList;}
+    if(this.radioButon2==2){this.opcion2=this.prioridadList;}
+    if(this.radioButon2==3){this.opcion2=this.tipoOptionList;}
+
+    this.opcion4=this.reintegroTipos
   }
 
   //Grafica cards
@@ -424,6 +432,8 @@ export class IndCasosMedicosComponent implements OnInit {
       this.flag3=false
       this.datosGraf3=Array.from(this.datos)
       this.datosGraf3=this.filtroFecha(this.fechaDesde4,this.fechaHasta4,this.datosGraf3)
+      this.datosGraf3.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='null'}})
+      
       let nombre=''
       this.opcion3=this.reintegroTipos;nombre='tipoRetorno'
   
@@ -449,7 +459,7 @@ export class IndCasosMedicosComponent implements OnInit {
       if(this.selectDivisiones4.length>0)this.datosGraf4=this.datosGraf4.filter(resp=>resp.divisionUnidad==this.selectDivisiones4)
 
       this.datosGraf4=this.filtroFecha(this.fechaDesde5,this.fechaHasta5,this.datosGraf4)
-      this.datosGraf4.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='Sin tipo de retorno'}})
+      this.datosGraf4.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='null'}})
 
       let nombre=''
       this.opcion4=this.reintegroTipos;nombre='tipoRetorno'
@@ -729,6 +739,8 @@ export class IndCasosMedicosComponent implements OnInit {
       })
   
       this.datosGraf6Print=this.valueArray7
+      this.datosGraf6Print=this.organizarDatosMayorMenor(this.datosGraf6Print)
+      this.datosGraf6Print=this.top(this.datosGraf6Print,10)
       this.cerrarDialogo7();
     }
 
@@ -846,11 +858,7 @@ export class IndCasosMedicosComponent implements OnInit {
             datos0_coronaTotal[0]['series'] = newTotal1
           }
         }
-        
-
       }
-
-
     })
 
     if(index!=-1)datos0_1.push(datos0_coronaTotal[0])
@@ -858,8 +866,20 @@ export class IndCasosMedicosComponent implements OnInit {
     return datos0_1 
   }
 
+  organizarDatosMayorMenor(dato){
+    let datosReturn=[]
+    dato.forEach(resp=>{
+      let datos=Array.from(resp['series'])
+      datos=this.order(datos)
+      datosReturn.push({name:resp['name'],series:datos})
+    })
+    // console.log(datosReturn)
+    return datosReturn
+  }
+
+
   top(dato, limit) {
-    let dato2=[] 
+    let dato2=[]
     dato.forEach(ele =>{
       let cont=0
       let serie=[]

@@ -196,6 +196,7 @@ export class IndCaracterizacionComponent implements OnInit {
   selectMonth5: any[] = [];
 
   selectDiv6: any[] = [];
+  selectPel6Flag: boolean=false;
   selectEv6: any[] = [];
   selectYear6: any =2023;
   selectMonth6: any[] = [];
@@ -992,7 +993,8 @@ filtroGraEve3(){
 
   if(this.selectEv3.length==0 && this.selectDiv3.length>0){
     // console.log(this.datosGrafica3Top)
-    // this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    this.datosGrafica3=this.organizarDatosMayorMenor(this.datosGrafica3)
     // console.log(this.datosGrafica3Top)
     this.datosGrafica3Top=this.top(this.datosGrafica3,5)
 
@@ -1061,7 +1063,8 @@ filtroGraEve3(){
   }
 
   if(this.selectEv3.length==0 && this.selectDiv3.length==0){
-    // this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    this.datosGrafica3=this.contTotal(this.datosGrafica3)
+    this.datosGrafica3=this.organizarDatosMayorMenor(this.datosGrafica3)
     this.datosGrafica3Top=this.top(this.datosGrafica3,5)
   }
 
@@ -1169,8 +1172,11 @@ DatosGrafica3(){
   });
   this.orderMap=[this.ordenarMap(this.hashmap1,this.Map1),this.ordenarMap(this.hashmap2,this.Map2),this.ordenarMap(this.hashmap3,this.Map3),this.ordenarMap(this.hashmap4,this.Map4),this.ordenarMap(this.hashmap5,this.Map5),this.ordenarMap(this.hashmap6,this.Map6),this.ordenarMap(this.hashmap7,this.Map7)]
   this.terceraGrafica()
-  // this.datosGrafica3=this.contTotal(this.datosGrafica3)
+  this.datosGrafica3=this.contTotal(this.datosGrafica3)
+  this.datosGrafica3=this.organizarDatosMayorMenor(this.datosGrafica3)
   this.datosGrafica3Top=this.top(this.datosGrafica3,5)
+
+  this.filtroGraEve3()
 }
 
 Map1:any[]=[]
@@ -1276,6 +1282,8 @@ filtroGraEve4(){
 
   if(this.selectEv4.length==0 && this.selectDiv4.length>0){
     // this.datosGrafica4=this.contTotal(this.datosGrafica4)
+    this.datosGrafica4=this.contTotal(this.datosGrafica4)
+    this.datosGrafica4=this.organizarDatosMayorMenor(this.datosGrafica4)
     this.datosGrafica4Top=this.top(this.datosGrafica4,5)
 
     if(this.selectDiv4.length>0){
@@ -1345,6 +1353,8 @@ filtroGraEve4(){
 
   if(this.selectEv4.length==0 && this.selectDiv4.length==0){
     // this.datosGrafica4=this.contTotal(this.datosGrafica4)
+    this.datosGrafica4=this.contTotal(this.datosGrafica4)
+    this.datosGrafica4=this.organizarDatosMayorMenor(this.datosGrafica4)
     this.datosGrafica4Top=this.top(this.datosGrafica4,5)
   }
 
@@ -1389,11 +1399,11 @@ DatosGrafica4(){
   this.datos4push.push(this.datos4_6)
   this.datos4push.push(this.datos4_7)
   this.graf4top5()
+  this.datosGrafica4=this.contTotal(this.datosGrafica4)
+  this.datosGrafica4=this.organizarDatosMayorMenor(this.datosGrafica4)
+
   this.datosGrafica4Top=this.top(this.datosGrafica4,5)
-  // this.datosGrafica4Top=this.contTotal(this.datosGrafica4)
-  // console.log(this.datosGrafica4)
-  
-  // console.log(this.datosGrafica4Top)
+  // this.filtroGraEve4()
 }
 
 tipoAccidente=[]
@@ -1784,7 +1794,8 @@ if(this.date9 && this.date10){
   });
 
   this.quintaGrafica()
-  // this.datosGrafica5=this.contTotal(this.datosGrafica5)
+  this.datosGrafica5=this.contTotal(this.datosGrafica5)
+  this.datosGrafica5=this.organizarDatosMayorMenor(this.datosGrafica5)
   this.datosGrafica5Top=this.top(this.datosGrafica5,5)
 }
 mapGraf5_1=new Map()
@@ -1970,6 +1981,7 @@ filtroGraEve6(){
 }
 
 resetVar6(){
+  this.selectPel6Flag=false
   this.selectEv6=[]
   this.selectDiv6=[]
   this.DatosGrafica6()
@@ -2024,6 +2036,9 @@ DatosGrafica6(){
 
   this.sextaGrafica()
   // this.datosGrafica6=this.contTotal(this.datosGrafica6)
+  this.datosGrafica6=this.contTotal(this.datosGrafica6)
+  this.datosGrafica6=this.organizarDatosMayorMenor(this.datosGrafica6)
+
   this.datosGrafica6Top=this.top(this.datosGrafica6,5)
   this.flagevent6=true
 }
@@ -2144,7 +2159,7 @@ DatosGrafica6(){
     this.tipoPeligroItemList2=[]
     this.tipoPeligroService.findAll().then(
       resp => {
-        this.tipoPeligroItemList = [{ label: '--Seleccione--', value: null }];
+        this.tipoPeligroItemList = [];
         (<TipoPeligro[]>resp['data']).forEach(
           data =>{ 
             this.tipoPeligroItemList.push({ label: data.nombre, value: data })
@@ -2162,7 +2177,7 @@ DatosGrafica6(){
     filter.filterList = [{ field: 'tipoPeligro.id', criteria: Criteria.EQUALS, value1: idtp['id'] }];
     this.peligroService.findByFilter(filter).then(
       resp => {
-        this.peligroItemList = [{ label: '--Seleccione--', value: [null, null]}];
+        this.peligroItemList = [];
         (<Peligro[]>resp).forEach(
           data => 
             {
@@ -2179,7 +2194,10 @@ DatosGrafica6(){
   }
 
   SelectPeligro(a: string){
+    this.resetVar6()
+    this.selectPel6Flag=true
     this.cargarPeligro(a)
+    
   }
 
   top(dato, limit) {
@@ -2220,6 +2238,17 @@ DatosGrafica6(){
     datos.push({name:'Corona total',series:datosGrafica_total})
   
     return datos
+  }
+
+  organizarDatosMayorMenor(dato){
+    let datosReturn=[]
+    dato.forEach(resp=>{
+      let datos=Array.from(resp['series'])
+      datos=this.order(datos)
+      datosReturn.push({name:resp['name'],series:datos})
+    })
+    // console.log(datosReturn)
+    return datosReturn
   }
 }
 

@@ -183,8 +183,30 @@
         <hr/>
         <div class="ui-g" *ngIf="flag2">
 
+          <p><b>
+            <ng-container *ngIf="selectEvento2.length>0">
+              <ng-container *ngFor="let ret of selectEvento2;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+                </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="selectEvento2.length==0">
+              <ng-container *ngFor="let ret of opcion2;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+                </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </b></p>
+
           <div class="ui-g-12">&nbsp;</div>
-  
           <div  class="ui-g-8 ui-g-nopad">
             <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" *ngIf="flagReturnDatos2">
               <!-- <ng-container *ngIf="flagReturnDatos2"> -->
@@ -327,8 +349,30 @@
 
         <div class="ui-g" *ngIf="flag4">
 
+          <p><b>
+            <ng-container *ngIf="selectEvento4.length>0">
+              <ng-container *ngFor="let ret of selectEvento4;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+                </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="selectEvento4.length==0">
+              <ng-container *ngFor="let ret of opcion4;first as f;last as l">
+                <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+                </ng-container>
+                <ng-template #otro1>
+                  /{{ret.label}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </b></p>
+
           <div class="ui-g-12">&nbsp;</div>
-  
           <div  class="ui-g-8 ui-g-nopad">
             <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" *ngIf="flagReturnDatos4">
                 <ngx-charts-bar-vertical-2d
