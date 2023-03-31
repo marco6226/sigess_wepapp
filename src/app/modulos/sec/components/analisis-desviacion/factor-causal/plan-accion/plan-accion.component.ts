@@ -7,6 +7,7 @@ import { EmpleadoBasic } from 'app/modulos/empresa/entities/empleado-basic';
 import { Reporte } from 'app/modulos/rai/entities/reporte';
 import { TareaService } from 'app/modulos/sec/services/tarea.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plan-accion',
@@ -52,13 +53,14 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   causasListSelect
   display: boolean = false;
   fechaActual = new Date();
-
+  idTarea: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private tareaService: TareaService
+    private tareaService: TareaService,
+    private router: Router,
   ) { 
     this.formEspecifico = fb.group({
       nombreAccionCorrectiva: [null, Validators.required],
@@ -153,22 +155,21 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   // }
 
   async validarEstado(){
-    let id: string;
     let status: number;
     switch(this.process){
       case 'ESPECIFICO':
-        id = this.planAcciones.especifico.id;        
-        status = await this.calcularEstado(id);
+        this.idTarea = this.planAcciones.especifico.id;
+        status = await this.calcularEstado(this.idTarea);
         this.estado = this.statuses[status];
         break;
       case 'EFICAZ':
-        id = this.planAcciones.eficaz.id;
-        status = await this.calcularEstado(id);
+        this.idTarea = this.planAcciones.eficaz.id;
+        status = await this.calcularEstado(this.idTarea);
         this.estado = this.statuses[status];
         break;
       case 'MEDIBLE':
-        id = this.planAcciones.medible.id;
-        status = await this.calcularEstado(id);
+        this.idTarea = this.planAcciones.medible.id;
+        status = await this.calcularEstado(this.idTarea);
         this.estado = this.statuses[status];
         break;
       default:
@@ -204,6 +205,24 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     if (fechaCierre.isValid() && fechaProyectada.isBefore(fechaCierre,'day')) return 4;        
     if (!fechaCierre.isValid() && fechaProyectada.isBefore(now,'day') && !isFollow) return 5;
     return 0;
+  }
+
+  onVerSeguimiento(idTarea: number | null){
+    if (idTarea) {
+      this.confirmationService.confirm({
+        icon: "pi pi-exclamation-triangle",
+        message: "¿Esta acción lo dirigirá a otro modulo, desea continuar?",
+        header: "Advertencia",
+        accept: () => {
+          this.router.navigate(['/app/sec/tarea/' + idTarea]);
+        },
+        reject: () => {},
+        acceptLabel: "Si",
+        rejectLabel: "No",
+      });
+    }else{
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo realizar la operación', life: 6000});
+    }
   }
 
   test(){
