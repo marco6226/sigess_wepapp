@@ -621,16 +621,9 @@
   <div class="ui-g">
 
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
-        <ngx-charts-combo
-        [categories]="divisionesCoronaIli1"
-        [series]="dataIli_1"
-        [options]="optionsIli_1"
-        >
-        </ngx-charts-combo>
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 650px; padding-left: 5%;">
+        <p-chart type="bar" [data]="dataIli_1" [options]="optionsIli_1" width="90%" height="100%"></p-chart>
       </div>
-      <!-- <div class="ui-g-1">&nbsp;</div>
-      <div class="ui-g-2">&nbsp;</div> -->
     </div>
 
     <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">   
@@ -649,16 +642,9 @@
    <!-- Quinta grafica.2 -->
    <div class="ui-g">
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 500px;">
-        <ngx-charts-combo
-        [categories]="mesesILI2"
-        [series]="dataIli_2"
-        [options]="optionsIli_2"
-        >
-        </ngx-charts-combo>
+      <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" style="height: 550px; padding-left: 5%;">
+        <p-chart type="bar" [options]="optionsIli_2" [data]="dataIli_2" width="90%" height="100%"></p-chart>
       </div>
-      <div class="ui-g-1">&nbsp;</div>
-      <div class="ui-g-2">&nbsp;</div>
     </div>
     <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">    
       <h5>Año</h5>
