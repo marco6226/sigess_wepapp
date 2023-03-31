@@ -2,16 +2,16 @@
     <p-panel *ngIf="process=='ESPECIFICO'">
         <p-header>
             <div class="ui-helper-clearfix">
-                <div class="ui-panel-title" style="width: 49%;">
-                    <span>ESPECIFICO</span>
-                </div>
-                <div class="ui-panel-title" style="float: right; width: 49%;">
-                    <p class="p-text-center" style="float: right;"
-                    >Estado: <b [ngClass]="{
+                <div class="ui-panel-title">
+                    <span>ESPECÍFICO</span>
+                    <button pButton class="ui-button-raised" icon="pi pi-search" type="button" style="float: right;" label="Ver detalles" (click)="onVerSeguimiento(idTarea)"></button>
+                    <p class="p-text-center" style="float: right; margin-right: 15px;" >Estado: <b 
+                        [ngClass]="{
                         'status--danger': estado === 'Vencida' || estado === 'Cerrada fuera de tiempo', 
                         'status--success': estado === 'Abierta' || estado === 'Cerrada en el tiempo',
                         'status--info': estado === 'En seguimiento',
-                        'status--warning': estado === 'N/A'}">{{ estado || '...'}}</b></p>
+                        'status--warning': estado === 'N/A'}">{{ estado || '...'}}</b>
+                    </p>
                 </div>
             </div>
         </p-header>
@@ -55,16 +55,16 @@
     <p-panel *ngIf="process=='MEDIBLE'">
         <p-header>
             <div class="ui-helper-clearfix">
-                <div class="ui-panel-title" >
+                <div class="ui-panel-title">
                     <span>MEDIBLE</span>
-                </div>
-                <div class="ui-panel-title" style="float: right; width: 49%;">
-                    <p class="p-text-center" style="float: right;"
-                    >Estado: <b [ngClass]="{
+                    <button pButton class="ui-button-raised" icon="pi pi-search" type="button" style="float: right;" label="Ver detalles" (click)="onVerSeguimiento(idTarea)"></button>
+                    <p class="p-text-center" style="float: right; margin-right: 15px;" >Estado: <b 
+                        [ngClass]="{
                         'status--danger': estado === 'Vencida' || estado === 'Cerrada fuera de tiempo', 
                         'status--success': estado === 'Abierta' || estado === 'Cerrada en el tiempo',
                         'status--info': estado === 'En seguimiento',
-                        'status--warning': estado === 'N/A'}">{{ estado || '...'}}</b></p>
+                        'status--warning': estado === 'N/A'}">{{ estado || '...'}}</b>
+                    </p>
                 </div>
             </div>
         </p-header>
@@ -90,16 +90,16 @@
     <p-panel *ngIf="process=='EFICAZ'">
         <p-header>
             <div class="ui-helper-clearfix">
-                <div class="ui-panel-title" >
+                <div class="ui-panel-title">
                     <span>EFICAZ</span>
-                </div>
-                <div class="ui-panel-title" style="float: right; width: 49%;">
-                    <p class="p-text-center" style="float: right;"
-                    >Estado: <b [ngClass]="{
+                    <button pButton class="ui-button-raised" icon="pi pi-search" type="button" style="float: right;" label="Ver detalles" (click)="onVerSeguimiento(idTarea)"></button>
+                    <p class="p-text-center" style="float: right; margin-right: 15px;" >Estado: <b 
+                        [ngClass]="{
                         'status--danger': estado === 'Vencida' || estado === 'Cerrada fuera de tiempo', 
                         'status--success': estado === 'Abierta' || estado === 'Cerrada en el tiempo',
                         'status--info': estado === 'En seguimiento',
-                        'status--warning': estado === 'N/A'}">{{ estado || '...'}}</b></p>
+                        'status--warning': estado === 'N/A'}">{{ estado || '...'}}</b>
+                    </p>
                 </div>
             </div>
         </p-header>
