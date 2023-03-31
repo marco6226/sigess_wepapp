@@ -211,7 +211,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     if (idTarea) {
       this.confirmationService.confirm({
         icon: "pi pi-exclamation-triangle",
-        message: "¿Esta acción lo dirigirá a otro modulo, desea continuar?",
+        message: "¿Esta acción lo dirigirá al modulo de tareas asignadas, desea continuar?",
         header: "Advertencia",
         accept: () => {
           this.router.navigate(['/app/sec/tarea/' + idTarea]);
