@@ -47,48 +47,19 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     title: {
       display: true,
       text: 'ILI por División'
-    },
-    legend: {
-      display: true,
-      // position: 'left',
-      fontSize: 6
-    },
-    scales: {
-        yAxes: [{
-            stacked: false,
-            ticks: {
-                beginAtZero: true
-            }
-        }],
-        xAxes: [{
-            stacked: false,
-        }]
     }
   }
+  dataIli_2: {
+    labels: any;
+    datasets: any[];
+    options: any;
+  };
   optionsIli_2: any = {
-    title: 'ILI por mes', 
-    height: 400,
-    width: 800,
-    xAxis: {
-        title: 'Meses',
-        labelRotation: 300,
-        labelAlign: 'middle', // left, middle, right,
-        labelEllipsisSize: 80
-    },
-    yAxis: {
-        leftTitle: 'ILI',
-        rightTitle: 'Meta',
-        labelEllipsisSize: 8
-    },
-    plotOptions: {
-        groupBarPadding: 1,
-        innerBarPadding: 3
-    },
-    legend: {
-        labelEllipsisSize: 80
+    title: {
+      display: true,
+      text: 'ILI por mes'
     }
   };
-  dataIli_2: any[];
   selectedAnioIli_2: number = new Date().getFullYear();
   multi: any[];
   localeES = locale_es;
@@ -1626,8 +1597,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       dataIli_1.datasets[1].data.push(metaTotal);
 
       localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
-      this.filtroIli_1();
       Object.assign(this, {dataIli_1});
+      this.filtroIli_1();
     });
   }
 
@@ -1648,9 +1619,30 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   async getIli_2(event?: any){
     this.selectDivisionesILI2 = event;
     
-    this.mesesILI2 = this.meses.map(mes => mes);
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).filter(at => new Date(at.fechaReporte).getFullYear() === this.selectedAnioIli_2);
-    let dataIli_2: any[] = [];
+    let dataIli_2: {
+      labels: any;
+      datasets: any[];
+      options?: any;
+    } = {
+      labels: this.meses,
+      datasets: [
+        {
+          label: 'ILI',
+          data: [],
+          backgroundColor: 'rgb(124, 181, 255)',
+          borderColor: 'rgb(124, 181, 255)'
+        },
+        {
+          label: 'Meta',
+          type: 'line',
+          fill: false,
+          data: [],
+          backgroundColor: 'rgb(67, 67, 72)',
+          borderColor: 'rgb(57, 57, 72)'
+        }
+      ]
+    }
 
     let filterQuery = new FilterQuery();
     filterQuery.sortOrder = SortOrder.ASC;
@@ -1664,16 +1656,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== 'Corona total'){
         // console.log('filtrando ats');
         reportesAt = reportesAt.filter(at => this.selectDivisionesILI2 === at.padreNombre);
-      }
-      let dataILI = {
-        name: 'ILI',
-        type: 'verticalBar',
-        data: [0,0,0,0,0,0,0,0,0,0,0,0]
-      };
-      let dataMeta = {
-        name: 'Meta',
-        type: 'line',
-        data: [0,0,0,0,0,0,0,0,0,0,0,0]
       }
 
       let listaHhtTemp: Hht[];
@@ -1764,27 +1746,26 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let ILI = (IF*IS)/1000;
         // console.log(accidentesConDiasPerdidos, hhtCorona, hhtTemp, totalDiasSeveridad, IF, IS, ILI);
         
-        dataILI.data[index] = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(6)));
-
-        dataMeta.data[index] = metaCorona;
+        let ILIAux = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(6)));
+        dataIli_2.datasets[0].data.push(ILIAux);
+        dataIli_2.datasets[1].data.push(metaCorona);
       });
-      dataIli_2.push(dataILI);
-      dataIli_2.push(dataMeta);
+
       localStorage.setItem('dataIli_2', JSON.stringify(dataIli_2));
+      Object.assign(this, {dataIli_2});
       this.filtroIli_2();
-      Object.assign(this, {dataIli_2})
     });
   }
 
   filtroIli_2(){
     let dataIli_2 = JSON.parse(localStorage.getItem('dataIli_2'));
-    let mesesILI2 = this.meses.map(mes => mes);
     if(this.selectMesesILI2.length > 0){
-      mesesILI2 = this.meses.filter(mes => this.selectMesesILI2.includes(mes))
-      dataIli_2[0].data = dataIli_2[0].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
+      // mesesILI2 = this.meses.filter(mes => this.selectMesesILI2.includes(mes));
+      dataIli_2.labels = this.meses.filter(mes => this.selectMesesILI2.includes(mes));
+      dataIli_2.datasets[0].data = dataIli_2.datasets[0].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
+      dataIli_2.datasets[1].data = dataIli_2.datasets[1].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
     }
 
-    Object.assign(this, {mesesILI2});
     Object.assign(this, {dataIli_2});
   }
 
