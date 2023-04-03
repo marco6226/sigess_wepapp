@@ -238,9 +238,9 @@
         <div class="ui-g">
           <p> <b> Eventos AT </b></p>
           <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
-            <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="getEventosAt();reiniciarVariableFechaEventosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
-            <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="getEventosAt('temp');reiniciarVariableFechaEventosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
-            <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="getEventosAt('dir');reiniciarVariableFechaEventosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group10" label="Total " [value]="0"   (onClick)="reiniciarVariableFechaEventosAt()" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group10" label=" Temporales " [value]="1"  (onClick)="reiniciarVariableFechaEventosAt('temp')" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group10" label=" Directos " [value]="2"  (onClick)="reiniciarVariableFechaEventosAt('dir')" [style]="{'margin-left': '15px'}"></p-radioButton>
             <ngx-charts-advanced-pie-chart
             class="align-items-center"
             [scheme]="colorScheme"
@@ -266,9 +266,9 @@
         <div class="ui-g">
           <p><b>Días perdidos</b></p>
           <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center" style="height: 10cm;">
-            <p-radioButton name="group11" label="Total " [value]="0"   (onClick)="getDiasPerdidosAt();reiniciarVariableFechaDiasPerdidos()" [style]="{'margin-left': '15px'}"></p-radioButton>
-            <p-radioButton name="group11" label=" Temporales " [value]="1"  (onClick)="getDiasPerdidosAt('temp');reiniciarVariableFechaDiasPerdidos()" [style]="{'margin-left': '15px'}"></p-radioButton>
-            <p-radioButton name="group11" label=" Directos " [value]="2"  (onClick)="getDiasPerdidosAt('dir');reiniciarVariableFechaDiasPerdidos()" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group11" label="Total " [value]="0"   (onClick)="reiniciarVariableFechaDiasPerdidos()" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group11" label=" Temporales " [value]="1"  (onClick)="reiniciarVariableFechaDiasPerdidos('temp')" [style]="{'margin-left': '15px'}"></p-radioButton>
+            <p-radioButton name="group11" label=" Directos " [value]="2"  (onClick)="reiniciarVariableFechaDiasPerdidos('dir')" [style]="{'margin-left': '15px'}"></p-radioButton>
             <ngx-charts-advanced-pie-chart
             class="align-items-center"
             [scheme]="colorScheme"
