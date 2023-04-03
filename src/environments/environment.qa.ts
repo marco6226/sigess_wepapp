@@ -101,6 +101,7 @@ export const endPoints = {
   ModeloGrafica: path,
   CaracterizacionViewService: path + "indcar/",
   ViewscmcoService: path + "indscmco/",
+  ViewscmgeService: path + "indscmge/",
 
   TipoPeligroService: path + 'tipoPeligro/',
   PeligroService: path + 'peligro/',

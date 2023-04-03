@@ -91,7 +91,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     {name:'Octubre',code:9},
     {name:'Noviembre',code:10},
     {name:'Diciembre',code:11},
-    {name:' total',code:12}
+    {name:'Corona total',code:12}
   ]
   fieldsR: string[] = [
     'id'
@@ -196,7 +196,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
   tasasNotFound: boolean = false;
   tasasNotFound2: boolean = false;
   filtroAnioTasa_1: number = new Date().getFullYear();
-  divisionesCorona: string[] = ['Almacenes ', 'Bathrooms and Kitchen', 'Comercial  Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas',' total'];
+  divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total'];
   divisionesCoronaConId: any[] = [];
   divisionesCoronaIli1: string[] = [];
   filtroAnioTasa_2: number = new Date().getFullYear();
@@ -371,8 +371,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           this.divisiones4.push({name:element['nombre'],code:cont})
           cont+=1
         });
-        this.divisiones4.push({name:' total',code:cont})
-        this.divisiones2.push({label:' total',value:' total'})
+        this.divisiones4.push({name:'Corona total',code:cont})
+        this.divisiones2.push({label:'Corona total',value:'Corona total'})
       }
     );
       // console.log(this.divisiones2)
@@ -602,7 +602,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     this.filtroFechaAt[1]=new Date()
     this.getEventosAt(filter)
     this.selectRangoEventosAt(this.filtroFechaAt[1], 'hasta')
-  }
+  } 
 
   getEventosAt(filter?: string){
     // this.filtroFechaAt = [];
@@ -1008,7 +1008,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
           }
 
           let dataTotal = {
-            name: ' total',
+            name: 'Corona total',
             series: []
           };
           
@@ -1076,7 +1076,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       }
     } catch (error) {
       
-      if(this.filtroDivisionesTasa_2 && this.filtroDivisionesTasa_2 !== ' total') reportesAt = reportesAt
+      if(this.filtroDivisionesTasa_2 && this.filtroDivisionesTasa_2 !== 'Corona total') reportesAt = reportesAt
       .filter(at => this.filtroDivisionesTasa_2 === at.padreNombre);
       // console.log(reportesAt);
 
@@ -1120,7 +1120,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               let data: DataHht = <DataHht>JSON.parse(elem.valor).Data;
               let trabajadoresPorArea = 0;
               
-              if(this.filtroDivisionesTasa_2 && this.filtroDivisionesTasa_2 !== ' total'){
+              if(this.filtroDivisionesTasa_2 && this.filtroDivisionesTasa_2 !== 'Corona total'){
                 if(data.mes === mes.label){
                   data.Areas.forEach((dataArea, indexArea) => {
                     let div = this.divisionesCoronaConId.find(div => div.id == dataArea.id);
@@ -1146,7 +1146,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
               let data: DataHht = <DataHht>JSON.parse(hht.valor).Data;
               let trabajadoresTemPorArea = 0;
 
-              if(this.filtroDivisionesTasa_2 && this.filtroDivisionesTasa_2 !== ' total'){
+              if(this.filtroDivisionesTasa_2 && this.filtroDivisionesTasa_2 !== 'Corona total'){
                 data.Areas.forEach((dataArea, index) => {
                   let div = this.divisionesCoronaConId.find(div => div.id == dataArea.id);
                   if(div.nombre === this.filtroDivisionesTasa_2){
@@ -1307,7 +1307,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       });
       
       let dataTotal = {
-        name: ' total',
+        name: 'Corona total',
         series: []
       }
 
@@ -1460,18 +1460,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       labels: this.divisionesCoronaIli1,
       datasets: [
         {
+          label: 'ILI',
+          backgroundColor: 'rgb(124, 181, 255)',
+          borderColor: 'rgb(124, 181, 255)',
+          data: [],
+        },
+        {
           label: 'Meta',
           backgroundColor: 'rgb(67, 67, 72)',
           fill: false,
           borderColor: 'rgb(67, 67, 72)',
           data: [],
           type: 'line'
-        },
-        {
-          label: 'ILI',
-          backgroundColor: 'rgb(124, 181, 255)',
-          borderColor: 'rgb(124, 181, 255)',
-          data: [],
         }
       ]
     };
@@ -1584,21 +1584,21 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         diasSeveridadTotalEmp += totalDiasSeveridad;
         // console.log('if: ',IF,'is:',IS,'ILI:',ILI);
         
-        dataIli_1.datasets[1].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
-        dataIli_1.datasets[0].data.push(metaCorona);
+        dataIli_1.datasets[0].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
+        dataIli_1.datasets[1].data.push(metaCorona);
       });
 
       let IF = (accidentesConDiasPerdidosTotal / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
       let IS = (diasSeveridadTotalEmp / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
       let ILI = (IF * IS)/1000;
 
-      dataIli_1.datasets[1].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
+      dataIli_1.datasets[0].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
       
       let metaTotal = 0;
       if(res.data[0]){
         metaTotal = JSON.parse(res.data[0].valor).ILI_Anual ? JSON.parse(res.data[0].valor).ILI_Anual : 0;
       }
-      dataIli_1.datasets[0].data.push(metaTotal);
+      dataIli_1.datasets[1].data.push(metaTotal);
 
       localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
       Object.assign(this, {dataIli_1});
@@ -1613,8 +1613,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       let selectedDivisiones = this.selectDivisionesILI1.map(div => div.label);
       divisionesCoronaIli1 = divisionesCoronaIli1.filter(div => selectedDivisiones.includes(div));
       dataIli_1.labels = divisionesCoronaIli1;
-      dataIli_1.datasets[1].data = dataIli_1.datasets[1].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
       dataIli_1.datasets[0].data = dataIli_1.datasets[0].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
+      dataIli_1.datasets[1].data = dataIli_1.datasets[1].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
     }
     // Object.assign(this, {divisionesCoronaIli1});
     Object.assign(this, {dataIli_1});
@@ -1632,18 +1632,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       labels: this.meses,
       datasets: [
         {
+          label: 'ILI',
+          data: [],
+          backgroundColor: 'rgb(124, 181, 255)',
+          borderColor: 'rgb(124, 181, 255)'
+        },
+        {
           label: 'Meta',
           type: 'line',
           fill: false,
           data: [],
           backgroundColor: 'rgb(67, 67, 72)',
           borderColor: 'rgb(57, 57, 72)'
-        },
-        {
-          label: 'ILI',
-          data: [],
-          backgroundColor: 'rgb(124, 181, 255)',
-          borderColor: 'rgb(124, 181, 255)'
         }
       ]
     }
@@ -1657,7 +1657,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     ];
     this.hhtService.findByFilter(filterQuery).then(async (res: any) => {
       // console.log(this.selectDivisionesILI2);
-      if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== ' total'){
+      if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== 'Corona total'){
         // console.log('filtrando ats');
         reportesAt = reportesAt.filter(at => this.selectDivisionesILI2 === at.padreNombre);
       }
@@ -1694,7 +1694,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let hhtCorona = 0;
         res.data.forEach(elem => {
           let dataHHT: DataHht = <DataHht>JSON.parse(elem.valor).Data;
-          if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== ' total'){
+          if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== 'Corona total'){
             if(mes == dataHHT.mes){
               dataHHT.Areas.forEach(area => {
                 let areaActual = this.divisionesCoronaConId.find(ar => ar.id == area.id).nombre;
@@ -1717,7 +1717,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         let hhtTemp = 0;
         listaHhtTemp.forEach((hht, index) => {
           let data: DataHht = <DataHht>JSON.parse(hht.valor).Data;
-          if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== ' total'){
+          if(this.selectDivisionesILI2 && this.selectDivisionesILI2 !== 'Corona total'){
             if(mes == data.mes){
               data.Areas.forEach(area => {
                 let areaActual = this.divisionesCoronaConId.find(ar => ar.id == area.id).nombre;
@@ -1751,8 +1751,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         // console.log(accidentesConDiasPerdidos, hhtCorona, hhtTemp, totalDiasSeveridad, IF, IS, ILI);
         
         let ILIAux = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(6)));
-        dataIli_2.datasets[1].data.push(ILIAux);
-        dataIli_2.datasets[0].data.push(metaCorona);
+        dataIli_2.datasets[0].data.push(ILIAux);
+        dataIli_2.datasets[1].data.push(metaCorona);
       });
 
       localStorage.setItem('dataIli_2', JSON.stringify(dataIli_2));
@@ -1766,8 +1766,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     if(this.selectMesesILI2.length > 0){
       // mesesILI2 = this.meses.filter(mes => this.selectMesesILI2.includes(mes));
       dataIli_2.labels = this.meses.filter(mes => this.selectMesesILI2.includes(mes));
-      dataIli_2.datasets[1].data = dataIli_2.datasets[1].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
       dataIli_2.datasets[0].data = dataIli_2.datasets[0].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
+      dataIli_2.datasets[1].data = dataIli_2.datasets[1].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
     }
 
     Object.assign(this, {dataIli_2});
@@ -1788,7 +1788,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       datosGrafica_total.push({name:resp,value:total.get(resp)})
     })
     
-    datos.push({name:' total',series:datosGrafica_total})
+    datos.push({name:'Corona total',series:datosGrafica_total})
   
     return datos
   }

@@ -35,7 +35,7 @@ export class IndCasosMedicosComponent implements OnInit {
   casosCerrados:number=0;
   datos:any[];
   datosNumeroCasos:any[];
-  divisiones=['Almacenes ', 'Bathrooms and Kitchen', 'Comercial  Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
+  divisiones=['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas'];
   colorScheme = {
     domain: ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   };
@@ -226,8 +226,8 @@ export class IndCasosMedicosComponent implements OnInit {
       this.divisiones2.push(resp)
       this.divisiones3.push({label:resp,value:resp})
     })
-    this.divisiones0.push({label:' total',value:' total'})
-    this.divisiones2.push(' total')
+    this.divisiones0.push({label:'Corona total',value:'Corona total'})
+    this.divisiones2.push('Corona total')
     await this.viewscmcoService.findByEmpresaId().then((resp:any)=>{
       this.datos=resp
     })
@@ -767,7 +767,7 @@ export class IndCasosMedicosComponent implements OnInit {
   filtroDivisionMono(selecDiv:any,datos:any){
     let datos0=[]
     if(selecDiv.length>0){
-      if(selecDiv==' total'){
+      if(selecDiv=='Corona total'){
         datos0=datos
       }else{
         datos0=datos.filter(resp1=>{
@@ -816,11 +816,11 @@ export class IndCasosMedicosComponent implements OnInit {
     })
 
     division.forEach(resp=>{
-      if(resp!=' total')datos0_1.push({name:resp,series:datos0_2})
+      if(resp!='Corona total')datos0_1.push({name:resp,series:datos0_2})
     })
 
-    let datos0_Total=[{name:' total',series:datos0_2}]
-    const index = division.findIndex(el => el == ' total' )
+    let datos0_coronaTotal=[{name:'Corona total',series:datos0_2}]
+    const index = division.findIndex(el => el == 'Corona total' )
 
     datos0.forEach(resp=>{
       if(resp[nombre]){
@@ -847,21 +847,21 @@ export class IndCasosMedicosComponent implements OnInit {
             }
           }
 
-          // Total
-          const indiceTotal=datos0_Total[0]['series'].findIndex(el => el.name == nomObj )
+          //corona Total
+          const indiceTotal=datos0_coronaTotal[0]['series'].findIndex(el => el.name == nomObj )
           if(indiceTotal!=-1 && index!=-1){
-            let newTotal1 = [...datos0_Total[0]['series']]
+            let newTotal1 = [...datos0_coronaTotal[0]['series']]
 
-            let sum=datos0_Total[0]['series'][indiceTotal]['value']+1
+            let sum=datos0_coronaTotal[0]['series'][indiceTotal]['value']+1
             newTotal1[indiceTotal] = {...newTotal1[indiceTotal], value: sum}
 
-            datos0_Total[0]['series'] = newTotal1
+            datos0_coronaTotal[0]['series'] = newTotal1
           }
         }
       }
     })
 
-    if(index!=-1)datos0_1.push(datos0_Total[0])
+    if(index!=-1)datos0_1.push(datos0_coronaTotal[0])
 
     return datos0_1 
   }
