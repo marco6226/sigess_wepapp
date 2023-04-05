@@ -6,6 +6,7 @@ export class Vwscmge {
     fechaNacimiento: Date;
     fechaIngreso: Date;
     fechaFinal: string;
+    fechaDiagnostico: Date;
     pcl: string;
     entidadEmitePcl: string;
     emisionPclFecha: string;
@@ -17,4 +18,9 @@ export class Vwscmge {
     conceptRehabilitacion2: string;
     entidadEmiteConceptoRehabilitacion2: string;
     empresaId: number;
+    recomendacion: number;
+    seguimiento: number;
+    documento: number;
+    planAccion: number;
+
 }

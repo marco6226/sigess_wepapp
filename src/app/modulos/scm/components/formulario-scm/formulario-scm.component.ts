@@ -131,7 +131,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         [
             { label: "--Seleccione--", value: null },
             { label: "EPS", value: "EPS" },
-            { label: "ARL", value: "EPS" },
+            { label: "ARL", value: "ARL" },
 
         ],
         [
