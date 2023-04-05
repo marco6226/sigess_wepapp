@@ -316,7 +316,9 @@ export class AliadosActualizarComponent implements OnInit {
     this.aliado.fechaActualizacion = new Date();
     //aca ajustar el estado
     if(this.idEmpresaAliada && this.aliadoDataIsValid()){
-      this.aliado.estado='Actualizado';
+      this.aliado.estado = 'Actualizado';
+    }else if(this.idEmpresaAliada){
+      this.aliado.estado = 'En proceso';
     };
 
     this.aliado.calificacion=this.impactoV;
