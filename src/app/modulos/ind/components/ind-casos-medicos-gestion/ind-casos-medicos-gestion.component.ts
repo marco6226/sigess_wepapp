@@ -115,7 +115,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
   nameGraf3:string='Antiguedad'
 
   //grafica tres
-  flag4:boolean=false
+  flag4:boolean=true
   flagReturnDatos4:boolean=false
   visibleDlg4:boolean=false
 
@@ -156,6 +156,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     this.DatosGrafica1()
     this.DatosGrafica2()
     this.DatosGrafica3()
+    this.loadAreas()
   }
 
   // Primera grafica
@@ -256,7 +257,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     if(this.selectDivisiones4.length>0)this.datosGraf4=this.datosGraf4.filter(resp=>resp.divisionUnidad==this.selectDivisiones4)
 
     this.datosGraf4=this.filtroFecha(this.fechaDesde4,this.fechaHasta4,this.datosGraf4)
-    this.datosGraf4.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='null'}})
+    // this.datosGraf4.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='null'}})
 
     let nombre=''
     this.opcion4=this.conteo;nombre='tipoRetorno'
@@ -270,7 +271,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     })
     let opcion4=this.filtroEventoMultiple(this.selectEvento4,this.opcion4)
     if(this.selectUbicacion4.length==0){
-      this.datosGraf4Print=this.datosGraf2DDivisiones(plantas,this.datosGraf4,opcion4,nombre,'ubicacion')
+      this.datosGraf4Print=this.datosGraf2DDivisiones2(plantas,this.datosGraf4,opcion4,'ubicacion')
       this.datosGraf4Print=this.top2(this.datosGraf4Print,10)
       this.datosGraf4Print=this.top(this.datosGraf4Print,10)
     }else{
@@ -287,7 +288,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     this.DatosGrafica4()
   }
 
-  sumAreaSelect4(scm,opcion,flag,datos,selectOpcion){
+  sumAreaSelect4(scm,opcion,flag,datos){
     let datos0=datos
     let datos0_1
     if(flag){
@@ -307,14 +308,14 @@ export class IndCasosMedicosGestionComponent implements OnInit {
 
     datos0=datos0.filter(resp=>{return resp.ubicacion==scm.label})
     opcion.forEach(resp=>{
-      datos0_1=datos0.filter(resp1=>{return resp1[selectOpcion]==resp.value})
+      datos0_1=datos0.filter(resp1=>{return resp1[resp.value]!=null})
       const indice=this.valueArray_4.findIndex(el => el.name == resp.label )
       this.valueArray_4[indice].value=this.valueArray_4[indice].value+datos0_1.length;
     })
 
     if(scm.children.length>0){
       scm.children.forEach(resp=>{
-        this.sumAreaSelect4(resp,opcion,false,datos,selectOpcion)
+        this.sumAreaSelect4(resp,opcion,false,datos)
       })
     }
   }
@@ -328,8 +329,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
   }
 
   agregarDivision4(opcion){
-    let nombre=''
-    this.opcion4=this.conteo;nombre='tipoRetorno'
+    this.opcion4=this.conteo
     
     this.selectUbicacion4=this.order2(this.selectUbicacion4)
     this.selectUbicacion4=this.selectUbicacion4.filter(resp=>resp.label!="")
@@ -346,13 +346,14 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     this.valueArray4=[]
     this.selectUbicacion_4.forEach(resp=>{
       if(resp.flag==false){
-        this.sumAreaSelect4(resp,opcion,true,this.datosGraf4,nombre)
+        this.sumAreaSelect4(resp,opcion,true,this.datosGraf4)
         this.valueArray4.push({name:this.scmList4,series:this.valueArray_4})
       }
     })
 
     this.datosGraf4Print=this.valueArray4
     this.cerrarDialogo4();
+
   }
   
   //codigo comun
@@ -741,7 +742,6 @@ export class IndCasosMedicosGestionComponent implements OnInit {
       datos=this.order(datos)
       datosReturn.push({name:resp['name'],series:datos})
     })
-    // console.log(datosReturn)
     return datosReturn
   }
 

@@ -1460,18 +1460,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       labels: this.divisionesCoronaIli1,
       datasets: [
         {
-          label: 'ILI',
-          backgroundColor: 'rgb(124, 181, 255)',
-          borderColor: 'rgb(124, 181, 255)',
-          data: [],
-        },
-        {
           label: 'Meta',
           backgroundColor: 'rgb(67, 67, 72)',
           fill: false,
           borderColor: 'rgb(67, 67, 72)',
           data: [],
           type: 'line'
+        },
+        {
+          label: 'ILI',
+          backgroundColor: 'rgb(124, 181, 255)',
+          borderColor: 'rgb(124, 181, 255)',
+          data: [],
         }
       ]
     };
@@ -1584,21 +1584,21 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         diasSeveridadTotalEmp += totalDiasSeveridad;
         // console.log('if: ',IF,'is:',IS,'ILI:',ILI);
         
-        dataIli_1.datasets[0].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
-        dataIli_1.datasets[1].data.push(metaCorona);
+        dataIli_1.datasets[1].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
+        dataIli_1.datasets[0].data.push(metaCorona);
       });
 
       let IF = (accidentesConDiasPerdidosTotal / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
       let IS = (diasSeveridadTotalEmp / (hhtTotalEmpresa + hhtTotalTemp)) * 240000;
       let ILI = (IF * IS)/1000;
 
-      dataIli_1.datasets[0].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
+      dataIli_1.datasets[1].data.push(isNaN(ILI) ? 0.00 : ILI === Infinity ? 0.00 : Number(ILI.toFixed(6)));
       
       let metaTotal = 0;
       if(res.data[0]){
         metaTotal = JSON.parse(res.data[0].valor).ILI_Anual ? JSON.parse(res.data[0].valor).ILI_Anual : 0;
       }
-      dataIli_1.datasets[1].data.push(metaTotal);
+      dataIli_1.datasets[0].data.push(metaTotal);
 
       localStorage.setItem('dataIli_1', JSON.stringify(dataIli_1));
       Object.assign(this, {dataIli_1});
@@ -1613,8 +1613,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       let selectedDivisiones = this.selectDivisionesILI1.map(div => div.label);
       divisionesCoronaIli1 = divisionesCoronaIli1.filter(div => selectedDivisiones.includes(div));
       dataIli_1.labels = divisionesCoronaIli1;
-      dataIli_1.datasets[0].data = dataIli_1.datasets[0].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
       dataIli_1.datasets[1].data = dataIli_1.datasets[1].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
+      dataIli_1.datasets[0].data = dataIli_1.datasets[0].data.filter((data, index) => selectedDivisiones.includes(this.divisionesCorona[index]));
     }
     // Object.assign(this, {divisionesCoronaIli1});
     Object.assign(this, {dataIli_1});
@@ -1632,18 +1632,18 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
       labels: this.meses,
       datasets: [
         {
-          label: 'ILI',
-          data: [],
-          backgroundColor: 'rgb(124, 181, 255)',
-          borderColor: 'rgb(124, 181, 255)'
-        },
-        {
           label: 'Meta',
           type: 'line',
           fill: false,
           data: [],
           backgroundColor: 'rgb(67, 67, 72)',
           borderColor: 'rgb(57, 57, 72)'
+        },
+        {
+          label: 'ILI',
+          data: [],
+          backgroundColor: 'rgb(124, 181, 255)',
+          borderColor: 'rgb(124, 181, 255)'
         }
       ]
     }
@@ -1751,8 +1751,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
         // console.log(accidentesConDiasPerdidos, hhtCorona, hhtTemp, totalDiasSeveridad, IF, IS, ILI);
         
         let ILIAux = (isNaN(ILI) ? 0.0 : ILI === Infinity ? 0.0 : Number(ILI.toFixed(6)));
-        dataIli_2.datasets[0].data.push(ILIAux);
-        dataIli_2.datasets[1].data.push(metaCorona);
+        dataIli_2.datasets[1].data.push(ILIAux);
+        dataIli_2.datasets[0].data.push(metaCorona);
       });
 
       localStorage.setItem('dataIli_2', JSON.stringify(dataIli_2));
@@ -1766,8 +1766,8 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     if(this.selectMesesILI2.length > 0){
       // mesesILI2 = this.meses.filter(mes => this.selectMesesILI2.includes(mes));
       dataIli_2.labels = this.meses.filter(mes => this.selectMesesILI2.includes(mes));
-      dataIli_2.datasets[0].data = dataIli_2.datasets[0].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
       dataIli_2.datasets[1].data = dataIli_2.datasets[1].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
+      dataIli_2.datasets[0].data = dataIli_2.datasets[0].data.filter((data, index) => this.selectMesesILI2.includes(this.meses[index]));
     }
 
     Object.assign(this, {dataIli_2});

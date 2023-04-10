@@ -247,7 +247,7 @@
 
             <div class="ui-g-12">&nbsp;</div>
             <div  class="ui-g-8 ui-g-nopad">
-            <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+            <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic" *ngIf="flagReturnDatos4">
                 <ngx-charts-bar-vertical-2d 
                 [scheme]="colorScheme"
                 [results]="datosGraf4Print"
@@ -265,29 +265,43 @@
                 [tooltipDisabled]="false">
                 </ngx-charts-bar-vertical-2d>
             </div>
+            <ng-container *ngIf="!flagReturnDatos4">
+                <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad">
+                  <s-dataNotFound [message]="'Selecione una división'"></s-dataNotFound>
+                </div>
+            </ng-container>
             <div class="ui-g-1">&nbsp;</div>
             <div class="ui-g-2">&nbsp;</div>
             <div class="ui-g-8">
-                <div class="ui-g-6">  
+                <div class="ui-g-6" *ngIf="flagReturnDatos4">  
                 <i style="font-size:24px" class="fa">&#xf073;</i>   
-                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde4" (ngModelChange)="DatosGrafica3()"> </p-calendar> 
+                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde4" (ngModelChange)="DatosGrafica4()"> </p-calendar> 
                 </div>
-                <div class="ui-g-6"> 
+                <div class="ui-g-6" *ngIf="flagReturnDatos4"> 
                 <i style="font-size:24px" class="fa">&#xf073;</i> 
-                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta4" (ngModelChange)="DatosGrafica3()"> </p-calendar>
+                <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta4" (ngModelChange)="DatosGrafica4()"> </p-calendar>
                 </div>
             </div>
             </div>
     
             <div class="ui-g-4 ui-sm-12 ui-md-4 align-items-center justify-content-md-center filter">
-            <h5>Division</h5>
-            <!-- <p-multiSelect defaultLabel="Seleccione" [options]="divisiones0" optionLabel="label" [(ngModel)]="selectDivisiones1" (onChange)="DatosGrafica2()"></p-multiSelect> -->
-            <div *ngFor="let category of divisiones0" class="p-field-checkbox">
-                <p-checkbox name="group5" value="category" [value]="category"  [(ngModel)]="selectDivisiones4" [inputId]="category.value" (click)="DatosGrafica3()"></p-checkbox>
-                <label>{{category.label}}</label>
-            </div>
-            <h5>Filtro</h5>
-            <p-multiSelect defaultLabel="Seleccione" [options]="opcion3" optionLabel="label" [(ngModel)]="selectEvento4" (onChange)="DatosGrafica3()"></p-multiSelect>
+                <h5>Division</h5>
+                <p-dropdown appendTo="body" [options]="divisiones0" [(ngModel)]="selectDivisiones4" placeholder="Seleccionar división" (onChange)="cargarArea4()"></p-dropdown>
+                <ng-container *ngIf="selectDivisiones4.length>0">
+                  &nbsp;
+                  <h5>Estructura</h5>
+                  <button style="display:flex" pButton type="button" icon="fa fa-pencil" (click)="abrirDialogo4()" label="Seleccionar Ubicación"></button>
+                </ng-container>
+                &nbsp;
+                <h5 *ngIf="flagReturnDatos4">Filtro casos</h5>
+                <!-- <div class="col-md-10">
+                  <p-radioButton name="group7" label="Estado" [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon4" (onClick)="returnDatos4()"></p-radioButton><br>
+                  <p-radioButton name="group7" label="Mesa laboral" [value]="1" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon4" (onClick)="returnDatos4()"></p-radioButton><br>
+                  <p-radioButton name="group7" label="Prioridad" [value]="2" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon4" (onClick)="returnDatos4()"></p-radioButton><br>
+                  <p-radioButton name="group7" label="Tipo de caso" [value]="3" [style]="{'margin-left':'15px'}" [(ngModel)]="radioButon4" (onClick)="returnDatos4()"></p-radioButton>
+                </div>
+                <br> -->
+                <p-multiSelect *ngIf="flagReturnDatos4" defaultLabel="Seleccione" [options]="opcion4" optionLabel="label" [(ngModel)]="selectEvento4" (onChange)="DatosGrafica4()"></p-multiSelect>
             </div>
         </div>
       </p-panel>
