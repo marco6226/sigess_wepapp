@@ -298,25 +298,28 @@
     <div class="colorfondo">
       <div class="ui-g">
       <!-- Primera grafica -->
-        <ng-container *ngIf="selectIndicarores1.length>0">
-          <ng-container *ngFor="let indicador of selectIndicarores1;first as f;last as l">
-            <p *ngIf="f || (l && selectIndicarores1.length != 2);else otro1"> <b>{{indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p *ngIf="selectIndicarores1.length != 2;else otro2"><b>/{{indicador.label}}/</b></p>
-              <ng-template #otro2>
-                <p><b>/{{indicador.label}}</b></p>
+        <p><b>
+          <ng-container *ngIf="selectIndicarores1.length>0">
+              <ng-container *ngFor="let ret of selectIndicarores1;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
               </ng-template>
-            </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
-        <ng-container *ngIf="selectIndicarores1.length==0">
-          <ng-container *ngFor="let Indicador of Indicadores;first as f;last as l">
-            <p *ngIf="f || l;else otro1"><b>{{Indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p><b>/{{Indicador.label}}/</b></p>
-            </ng-template>
+          <ng-container *ngIf="selectIndicarores1.length==0">
+              <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
+              </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
+        </b></p>
 
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group12" label="Total " [value]="0"   (onClick)="getTasas_1()" [style]="{'margin-left':'15px'}"></p-radioButton>
@@ -379,25 +382,28 @@
       <!-- Segunda grafica -->
       <div class="ui-g">
 
-        <ng-container *ngIf="selectIndicarores2.length>0">
-          <ng-container *ngFor="let indicador of selectIndicarores2;first as f;last as l">
-            <p *ngIf="f || (l && selectIndicarores2.length != 2);else otro1"><b>{{indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p *ngIf="selectIndicarores2.length != 2;else otro2"><b>/{{indicador.label}}/</b></p>
-              <ng-template #otro2>
-                <p><b>/{{indicador.label}}</b></p>
+        <p><b>
+          <ng-container *ngIf="selectIndicarores2.length>0">
+              <ng-container *ngFor="let ret of selectIndicarores2;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
               </ng-template>
-            </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
-        <ng-container *ngIf="selectIndicarores2.length==0">
-          <ng-container *ngFor="let Indicador of Indicadores;first as f;last as l">
-            <p *ngIf="f || l;else otro1"><b>{{Indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p><b>/{{Indicador.label}}/</b></p>
-            </ng-template>
+          <ng-container *ngIf="selectIndicarores2.length==0">
+              <ng-container *ngFor="let ret of Indicadores;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
+              </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
+        </b></p>
 
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <p-radioButton name="group13" label="Total " [value]="0" (onClick)="getTasas_2()" [style]="{'margin-left':'15px'}"></p-radioButton>
@@ -465,25 +471,28 @@
       <!-- Tercera grafica -->
       <div class="ui-g">
 
-        <ng-container *ngIf="selectEventos1.length>0">
-          <ng-container *ngFor="let indicador of selectEventos1;first as f;last as l">
-            <p *ngIf="f || (l && selectEventos1.length != 2);else otro1"><b>{{indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p *ngIf="selectEventos1.length != 2;else otro2"><b>/{{indicador.label}}/</b></p>
-              <ng-template #otro2>
-                <p><b>/{{indicador.label}}</b></p>
+        <p><b>
+          <ng-container *ngIf="selectEventos1.length>0">
+              <ng-container *ngFor="let ret of selectEventos1;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
               </ng-template>
-            </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
-        <ng-container *ngIf="selectEventos1.length==0">
-          <ng-container *ngFor="let Indicador of Eventos;first as f;last as l">
-            <p *ngIf="f || l;else otro1"><b>{{Indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p><b>/{{Indicador.label}}/</b></p>
-            </ng-template>
+          <ng-container *ngIf="selectEventos1.length==0">
+              <ng-container *ngFor="let ret of Eventos;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
+              </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
+        </b></p>
 
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
           <!-- <p>Eventos</p> -->
@@ -544,25 +553,28 @@
       <!-- Cuarta grafica -->
       <div class="ui-g">
 
-        <ng-container *ngIf="selectEventos2.length>0">
-          <ng-container *ngFor="let indicador of selectEventos2;first as f;last as l">
-            <p *ngIf="f || (l && selectEventos2.length != 2);else otro1"><b>{{indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p *ngIf="selectEventos2.length != 2;else otro2"><b>/{{indicador.label}}/</b></p>
-              <ng-template #otro2>
-                <p><b>/{{indicador.label}}</b></p>
+        <p><b>
+          <ng-container *ngIf="selectEventos2.length>0">
+              <ng-container *ngFor="let ret of selectEventos2;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
               </ng-template>
-            </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
-        <ng-container *ngIf="selectEventos2.length==0">
-          <ng-container *ngFor="let Indicador of Eventos;first as f;last as l">
-            <p *ngIf="f || l;else otro1"><b>{{Indicador.label}}</b></p>
-            <ng-template #otro1>
-              <p><b>/{{Indicador.label}}/</b></p>
-            </ng-template>
+          <ng-container *ngIf="selectEventos2.length==0">
+              <ng-container *ngFor="let ret of Eventos;first as f;last as l">
+              <ng-container *ngIf="f ;else otro1">
+                  {{ret.label}}
+              </ng-container>
+              <ng-template #otro1>
+                  /{{ret.label}}
+              </ng-template>
+              </ng-container>
           </ng-container>
-        </ng-container>
+        </b></p>
 
           <!-- <p>Eventos</p> -->
         <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
