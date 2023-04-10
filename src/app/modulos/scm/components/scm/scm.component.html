@@ -5,6 +5,8 @@
         Casos médicos
     </p-header>
 
+    <button  pButton type="button" (click)="abrirDialogo()" title="Exportar informe" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+
     <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="10" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
         [totalRecords]="totalRecords">
         <!-- [value]="(idEmpresa=='22')?casosList2:casosList" -->
@@ -230,9 +232,29 @@
 
 
 </p-panel>
-<!-- <button (click)="test2()">test</button> -->
 
-<!-- <div>
-    <app-formulario-scm *ngIf="visibleForm && caseSelect" (onCancel)="onCancel()" [consultar]="consultar" [caseSelect]="caseSelect">
-    </app-formulario-scm>
-</div> -->
+<p-dialog header="Informe Casos Medicos" [(visible)]="visibleDlgInforme" [contentStyle]="{'max-height':'95%'}" [style]="{width: '80%', height: '70%'}">
+    
+    <div >
+        Seleccione rango de fechas en el que desea el informe
+    </div>
+    <div style="width: 50%;">
+        <p-calendar 
+        [(ngModel)]="rangeDatesInforme"
+        dateFormat="dd/MM/yyyy"
+        selectionMode="range"
+        (onSelect)="habilitarindSCM()"
+        (onClearClick)="onResetDate()"
+        placeholder="buscar"
+        appendTo="body"
+        showButtonBar="true"
+        [locale]="es">
+            <p-header style="text-align: center;"><h5>Seleccione un rango</h5></p-header>
+        </p-calendar>
+    </div>
+    <p-footer>
+        <button pButton type="button" (click)="exportexcel()" label="Descargar" [disabled]="flagInforme"></button>
+        <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
+    </p-footer>
+    
+  </p-dialog>

@@ -8,6 +8,7 @@ import { Usuario } from 'app/modulos/empresa/entities/usuario';
 import { CargoService } from 'app/modulos/empresa/services/cargo.service';
 import { MessageService, SelectItem } from 'primeng/api';
 import { CasosMedicosService } from '../../services/casos-medicos.service';
+import { ViewscmInformeService } from '../../services/view-informescm.service';
 import { Router } from '@angular/router';
 import { Ipecr } from 'app/modulos/ipr/entities/ipecr'
 import { IpecrService } from 'app/modulos/ipr/services/ipecr.service'
@@ -15,6 +16,7 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { Reintegro } from 'app/modulos/scm/entities/reintegro.interface';
 import { SortOrder } from "app/modulos/core/entities/filter";
+import * as XLSX from 'xlsx'; 
 
 @Component({
     selector: 'app-scm',
@@ -42,6 +44,7 @@ export class ScmComponent implements OnInit {
     solicitando: boolean = false;
     loading: boolean = false;;
     totalRecords: number;
+    excel:any=[]
     fields: string[] = [
         'id',
         'fechaCreacion',
@@ -65,9 +68,23 @@ export class ScmComponent implements OnInit {
         { value: 'ACTIVO', label: 'ACTIVO' },
         { value: 'INACTIVO', label: 'INACTIVO' },
     ];
+    es = {
+        firstDayOfWeek: 1,
+        dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+        dayNamesShort: ["Dom", "Lun", "Mar", "Miér", "Juev", "Vier", "Sáb"],
+        dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+        monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+        monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+        today: 'Hoy',
+        clear: 'Limpiar'
+      };
+      rangeDatesInforme: any;
+      visibleDlgInforme:boolean=false
+      flagInforme:boolean=true
 
     constructor(
         private scmService: CasosMedicosService,
+        private viewscmInformeService: ViewscmInformeService,
         private cargoService: CargoService,
         private router: Router,
         private sesionService: SesionService,
@@ -167,9 +184,52 @@ export class ScmComponent implements OnInit {
 
 
     }
-}
 
-// SELECT id, tipo_retorno, descripcion, permanencia, periodo_seguimiento, reintegro_exitoso, observacion, pk_case, fecha_cierre
-// 	FROM scm.reintegros where pk_case=65
-//     SELECT pk_user, status_caso, observaciones, origen, codigo_cie10, sistema_afectado, diagnostico, caso_medico_laboral, razon, pcl, porcentaje_pcl, emision_pcl_fecha, pcl_emit_entidad, status_de_calificacion, fecha_calificacion, entidad_emite_calificacion, concept_rehabilitacion, fecha_concept_rehabilitacion, entidad_emite_concepto, requiere_intervencion, sve, professional_area, justification, id, region, ciudad, names, salud_status, cargo, fecha_creacion, documento, descripcion_cargo, fk_empresa_id, entidad_emitida, entidad_emitidatwo, fecha_concept_rehabilitaciontwo, concept_rehabilitaciontwo, entidad_emite_conceptotwo, eliminado, prioridad_caso, tipo_caso, fecha_final
-// 	FROM scm.casos_medicos where id =65
+    async exportexcel(): Promise<void> 
+    {
+       await this.datosExcel()
+       this.excel.forEach(el => delete el.empresaId)
+        console.log(this.excel)
+        console.log(this.rangeDatesInforme[0],this.rangeDatesInforme[1])
+        let excel=this.excel.filter(resp=>{ return new Date(resp.fechaCreacion)>=new Date(this.rangeDatesInforme[0]) && new Date(resp.fechaCreacion)<=new Date(this.rangeDatesInforme[1])})
+        excel.map(resp=>{
+            if(resp.estadoCaso==1){resp.estadoCaso='Abierto'}
+            if(resp.estadoCaso==0){resp.estadoCaso='Cerrado'}
+        })
+        console.log(excel)
+        const readyToExport = excel;
+ 
+       const workBook = XLSX.utils.book_new(); // create a new blank book
+ 
+       const workSheet = XLSX.utils.json_to_sheet(readyToExport);
+ 
+       XLSX.utils.book_append_sheet(workBook, workSheet, 'Informe'); // add the worksheet to the book
+ 
+       XLSX.writeFile(workBook, 'Informe casos medicos.xlsx'); // initiate a file download in browser
+        
+       this.cerrarDialogo();
+    }
+
+
+    async datosExcel(): Promise<void>{
+        this.excel=[]
+        await this.viewscmInformeService.findByEmpresaId().then((resp:any)=>{
+            this.excel=resp
+            this.excel.map(resp1=>{return resp1.fechaCreacion=new Date(resp1.fechaCreacion)})
+        })
+    }
+    cerrarDialogo(){
+    this.visibleDlgInforme = false;
+    }
+
+    abrirDialogo(){
+    this.visibleDlgInforme = true;
+    }
+    habilitarindSCM(){
+        if(this.rangeDatesInforme[0] && this.rangeDatesInforme[1]){this.flagInforme=false}
+        else{this.flagInforme=true}
+    }
+    onResetDate(){
+        this.flagInforme=true
+    }
+}

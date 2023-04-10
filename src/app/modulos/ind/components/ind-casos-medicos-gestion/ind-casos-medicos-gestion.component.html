@@ -104,8 +104,8 @@
               [legend]="false"
               [showXAxisLabel]="true"
               [showYAxisLabel]="true"
-              [xAxisLabel]="'Entidades'"
-              [yAxisLabel]="'No. Entidades'"
+              [xAxisLabel]="'Divisiones'"
+              [yAxisLabel]="'No. Casos'"
               [showDataLabel]="false"
               [barPadding]=0
               [groupPadding]=4
@@ -185,7 +185,7 @@
                 [legend]="false"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
-                [xAxisLabel]="'casos'"
+                [xAxisLabel]="'Divisiones'"
                 [yAxisLabel]="'No. Casos'"
                 [barPadding]=0
                 [groupPadding]=4
@@ -234,7 +234,7 @@
                     </ng-container>
                 </ng-container>
                 <ng-container *ngIf="selectEvento4.length==0">
-                    <ng-container *ngFor="let ret of opcion4;first as f;last as l">
+                    <ng-container *ngFor="let ret of conteo;first as f;last as l">
                     <ng-container *ngIf="f ;else otro1">
                         {{ret.label}}
                     </ng-container>
@@ -257,7 +257,7 @@
                 [legend]="false"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
-                [xAxisLabel]="'casos'"
+                [xAxisLabel]="'Ubicación'"
                 [yAxisLabel]="'No. Casos'"
                 [barPadding]=0
                 [groupPadding]=4

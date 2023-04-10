@@ -259,8 +259,7 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     this.datosGraf4=this.filtroFecha(this.fechaDesde4,this.fechaHasta4,this.datosGraf4)
     // this.datosGraf4.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='null'}})
 
-    let nombre=''
-    this.opcion4=this.conteo;nombre='tipoRetorno'
+    this.opcion4=this.conteo;
 
     let plantas=[]
     let map=new Map()

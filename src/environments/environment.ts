@@ -33,6 +33,8 @@ export const endPoints = {
     sede: path + "sede/",
     cargo: path + "cargo/",
     scm: path + "casomedico/",
+    ViewscmInformeService: path + "viewinfoscm/",
+
     pcl: path + "pcl/",
     EmpresaService: path + "empresa/",
     ContextoOrganizacionService: path + "contextoOrganizacion/",
