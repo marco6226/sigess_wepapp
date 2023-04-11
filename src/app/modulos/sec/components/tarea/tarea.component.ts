@@ -16,6 +16,7 @@ import { CapitalizePipe } from "../../utils/pipes/capitalize.pipe";
 import { DirectorioService } from "app/modulos/ado/services/directorio.service";
 import { SesionService } from "app/modulos/core/services/sesion.service";
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
+import { tienePermiso } from 'app/modulos/comun/services/tienePermiso.service'
 
 @Component({
     selector: "app-tarea",
@@ -49,6 +50,7 @@ export class TareaComponent implements OnInit {
     fechavisible = false;
     idEmpresa: string;
     flagEvidencias: boolean=false;
+    permisoFlag:boolean=false
 
     constructor(
         fb: FormBuilder,
@@ -59,7 +61,8 @@ export class TareaComponent implements OnInit {
         private directorioService: DirectorioService,
         private sesionService: SesionService,
         @Inject(LOCALE_ID) private locale: string,
-        private capitalizePipe: CapitalizePipe
+        private capitalizePipe: CapitalizePipe,
+        private tienePermiso:tienePermiso,
     ) {
         this.tareaForm = fb.group({
             id: ["", Validators.required],
@@ -94,11 +97,12 @@ export class TareaComponent implements OnInit {
         };
 
         // console.log(this.statuses[this.status])
+        setTimeout(() => {
+            this.permisoFlag=this.tienePermiso.getPermisoFlag();
+        }, 1000);
 
     }
-    test(){
-        console.log(this.tarea)
-    }
+
     async getTarea(event?) {
         this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
         this.tarea = await this.tareaService.findByDetailId(this.tareaId);
@@ -293,23 +297,34 @@ export class TareaComponent implements OnInit {
             console.log('hola')
         }, 100);
     }
-
     async onSubmit() {
         this.submitted = true;
         this.cargando = true;
         this.msgs = [];
 
-        if (!this.tareaForm.valid) {
-            console.log("Data: ", this.tareaForm.value);
-            this.cargando = false;
-            this.msgs.push({
-                severity: "info",
-                summary: "Mensaje del sistema",
-                detail: "Debe completar todos los campos",
-            });
-            return;
+        if(this.permisoFlag){
+            if (!this.tareaForm.valid && this.evidences.length==0) {
+                console.log("Data: ", this.tareaForm.value);
+                this.cargando = false;
+                this.msgs.push({
+                    severity: "info",
+                    summary: "Mensaje del sistema",
+                    detail: "Debe completar todos los campos",
+                });
+                return;
+            }
+        }else{
+            if (!this.tareaForm.valid) {
+                console.log("Data: ", this.tareaForm.value);
+                this.cargando = false;
+                this.msgs.push({
+                    severity: "info",
+                    summary: "Mensaje del sistema",
+                    detail: "Debe completar todos los campos",
+                });
+                return;
+            }
         }
-
         try {
             let res = await this.seguimientoService.closeTarea(
                 this.tareaForm.value
