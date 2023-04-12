@@ -1,0 +1,8 @@
+
+
+<app-formulario-accidente-ctr
+[nombreEmpresa]="nombreEmpresa"
+[nitEmpresa]="nitEmpresa">
+</app-formulario-accidente-ctr>
+
+<button pButton type="button " class="float-btn " [title]="consultar || modificar ? ' Atras ' : 'Cancelar ' " [icon]="consultar || modificar ? 'fa fa-chevron-left ' : 'fa fa-ban'" (click)="volver() " *ngIf="reporteSelect" style="margin-right:65px; z-index: 100;"> </button>

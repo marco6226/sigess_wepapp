@@ -1,0 +1,83 @@
+<button pButton label="Nuevo" icon="pi pi-plus" (click)="nuevaIncapacidad()" style="margin-right: 10px;"></button>
+<button pButton label="Borrar" icon="pi pi-trash" class="p-button-danger"></button>
+
+<div class="ui-g">
+  <div class="ui-g-12">
+    <p-table #dt [value]="incapacidades" [rows]="10" [paginator]="true"
+    [globalFilterFields]="['name','country.name','representative.name','status']"
+    [(selection)]="selectedIncapacidad" [rowHover]="true" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem;"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+          <th pSortableColumn="name">Tipo</th>
+          <th pSortableColumn="price">CIE 10</th>
+          <th pSortableColumn="category">Diagnostico</th>
+          <th pSortableColumn="rating">Fecha inicio</th>
+          <th pSortableColumn="rating">Fecha fin</th>
+          <th pSortableColumn="rating">Dias de ausencia</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body">
+        <tr>
+          <td><p-tableCheckbox></p-tableCheckbox></td>
+          <td>{{incapacidad.tipo}}</td>
+          <td *ngIf="incapacidad['cie10'];else other">{{incapacidad?.cie10?.codigo}}</td>
+          <ng-template #other>&nbsp;</ng-template>
+          <td>{{incapacidad.diagnostico}}</td>
+          <td>{{incapacidad.fechaInicio | date: 'dd/MM/yyyy'}}</td>
+          <td>{{incapacidad.fechaFin | date: 'dd/MM/yyyy'}}</td>
+          <td>{{incapacidad.diasAusencia}}</td>
+          <td>
+            <button *ngIf="!consultar" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editIncapacidad(incapacidad)"></button>
+            <button *ngIf="!consultar" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteIncapacidad(incapacidad)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog [(visible)]="isVisibleDialog" [style]="{width: '450px'}" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
+  <div class="p-field">
+      <label for="tipo">El evento generó incapacidad?</label>
+      <p-radioButton [name]="" [value]="true" label="Si" [(ngModel)]="generoIncapacidad"></p-radioButton>
+      <p-radioButton [name]="" [value]="false" label="No" [(ngModel)]="generoIncapacidad"></p-radioButton>
+  </div>
+  <ng-container *ngIf="generoIncapacidad">
+    <div class="p-field">
+      <label for="tipo">Tipo</label>
+      <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
+      <small class="p-invalid" *ngIf="!tipo">is required.</small>
+    </div>
+    <div class="p-field">
+      <label for="cie10">CIE 10</label>         
+      <s-cieSelector id="ccide-input" [(ngModel)]="cie10" required>
+      </s-cieSelector>
+      <small class="p-invalid" *ngIf="!cie10">is required.</small>
+    </div>
+    <div class="p-field">
+      <label for="fechaInicio">Fecha Inicio</label>
+      <p-calendar [(ngModel)]="fechaInicio" [touchUI]="true"
+        dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required> 
+      </p-calendar>
+      <small class="p-invalid" *ngIf="!fechaInicio">is required.</small>            
+    </div>
+    <div class="p-field">
+      <label for="fechaFin">Fecha Fin</label>
+      <p-calendar [(ngModel)]="fechaFin"  [touchUI]="true"
+      dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required>
+      </p-calendar>
+      <small class="p-invalid" *ngIf="!fechaFin">is required.</small>
+    </div>
+  </ng-container>
+  <div class="p-field">
+      <label for="diasAusencia">Dias de Ausencias</label>
+      <input type="number" autofocus [value]="diasAusencia" disabled="true"/>
+  </div>
+
+  <button *ngIf="isNewIncapacidad" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveIncapacidad()" style="margin-right: 10px;"></button>
+  <button *ngIf="isUpdateIncapacidad" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-text" (click)="saveIncapacidad()" style="margin-right: 10px;"></button>
+  <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+
+</p-dialog>
