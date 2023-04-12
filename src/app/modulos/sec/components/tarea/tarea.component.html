@@ -279,18 +279,11 @@
                 <!-- End evidences -->
 
                 <!-- Start send button -->
-                
-                <ng-container *sTienePermiso="'RAI_GET_TAREAEVI'">
-                    <button pButton *ngIf="cargando == false && !tareaClose" type="submit" icon="fa fa-floppy-o"
-                        class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
-                </ng-container>
-                <ng-container *ngIf="permisoFlag">
-                    <button pButton *ngIf="cargando == false && !tareaClose" type="submit" icon="fa fa-floppy-o"
-                        class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
-                </ng-container>
+                <ng-template [sTienePermiso]="'RAI_GET_TAREAEVI'" (flagTienePermiso)="TienePermiso($event)">
+                </ng-template>
+                <button pButton *ngIf="cargando == false && !tareaClose" type="submit" icon="fa fa-floppy-o"
+                    class="float-btn" style="bottom: 100px;" title="Guardar tarea"></button>
 
-                <!-- <button *sTienePermiso!="'RAI_GET_TAREAEVI'" pButton *ngIf="cargando == false && !tareaClose" icon="fa fa-floppy-o"
-                    class="float-btn" style="bottom: 100px;" title="otro"></button> -->
                 <p-progressSpinner *ngIf="cargando == true" class="float-btn" strokeWidth="8"
                     [style]="{width: '35px', height: '35px'}"></p-progressSpinner>
                 <!-- End send button -->

@@ -16,7 +16,6 @@ import { CapitalizePipe } from "../../utils/pipes/capitalize.pipe";
 import { DirectorioService } from "app/modulos/ado/services/directorio.service";
 import { SesionService } from "app/modulos/core/services/sesion.service";
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
-import { tienePermiso } from 'app/modulos/comun/services/tienePermiso.service'
 
 @Component({
     selector: "app-tarea",
@@ -62,7 +61,6 @@ export class TareaComponent implements OnInit {
         private sesionService: SesionService,
         @Inject(LOCALE_ID) private locale: string,
         private capitalizePipe: CapitalizePipe,
-        private tienePermiso:tienePermiso,
     ) {
         this.tareaForm = fb.group({
             id: ["", Validators.required],
@@ -96,11 +94,6 @@ export class TareaComponent implements OnInit {
             5: "Vencida",
         };
 
-        // console.log(this.statuses[this.status])
-        setTimeout(() => {
-            this.permisoFlag=this.tienePermiso.getPermisoFlag();
-        }, 1000);
-
     }
 
     async getTarea(event?) {
@@ -119,8 +112,6 @@ export class TareaComponent implements OnInit {
                 fecha_cierre = moment(this.fechaActual);
             }
 
-            console.log(permiso);
-
             let fecha_verificacion = moment(this.tarea.fecha_verificacion);
 
             this.tarea.fecha_reporte = formatDate(
@@ -136,8 +127,6 @@ export class TareaComponent implements OnInit {
 
             await this.getTareaEvidences();
 
-            console.log(this.tarea);
-
             if (this.tarea.empResponsable) {
                 let fq = new FilterQuery();
                 fq.filterList = [
@@ -149,7 +138,6 @@ export class TareaComponent implements OnInit {
                     },
                 ];
                 await this.empleadoService.findByFilter(fq).then(async (resp) => {
-                    console.log(resp);
                     if (resp["data"].length > 0) {
                         let empleado = resp["data"][0];
                         this.tarea.email = empleado.usuario.email || "";
@@ -180,10 +168,8 @@ export class TareaComponent implements OnInit {
                     },
                 ];
                 this.empleadoService.findByFilter(fq).then(async (resp) => {
-                    console.log(resp);
                     let empleado = resp["data"][0];
                     this.onSelection(empleado);
-                    console.log("antes de traer evidencias.")
                     await this.getEvidences(this.tarea.id);
                     this.tareaForm.patchValue({
                         usuarioCierre: this.tarea.fk_usuario_cierre,
@@ -192,7 +178,6 @@ export class TareaComponent implements OnInit {
                     });
                 });
             }else{
-                console.log("no entro alas evi" +this.status)
                 this.flagEvidencias=true}
             }, 600);
         }
@@ -204,7 +189,6 @@ export class TareaComponent implements OnInit {
             this.tareaForm.patchValue({ id: parseInt(this.tareaId) });
 
             this.tarea = await this.tareaService.findByDetailId(this.tareaId);
-            console.log(this.tarea.hash_id.slice(0, 3));
             let res: any = await this.tareaService.getTareaEvidencesModulos(
                 this.tareaId,
                 this.tarea.hash_id.slice(0, 3)
@@ -236,17 +220,6 @@ export class TareaComponent implements OnInit {
  cont :number=0;
     verifyStatus(isFollowsExist = false) {
         this.cont++;
-        console.log('cont:',this.cont)
-        
-        // this.statuses = {
-        //     0: "N/A",
-        //     1: "En seguimiento",
-        //     2: "Abierta",
-        //     3: "Cerrada en el tiempo",
-        //     4: "Cerrada fuera de tiempo",
-        //     5: "Vencida",
-        // };
-        console.log("Existe seguimiento? ", isFollowsExist);
 
         /* Vars */
         let now = moment({});
@@ -280,7 +253,6 @@ export class TareaComponent implements OnInit {
         this.evidences.push(obj);
         evidences.push(obj);
         this.tareaForm.patchValue({ evidences: evidences });
-        console.log(this.evidences);
     }
 
     removeImage(index) {
@@ -289,22 +261,16 @@ export class TareaComponent implements OnInit {
     }
 
     isFollows(data) {
-       // this.status = 0;
-        console.log("Funciona el emit");
         setTimeout(() => {
-            //this.getTarea()
             this.status = this.verifyStatus(data);
-            console.log('hola')
         }, 100);
     }
     async onSubmit() {
         this.submitted = true;
         this.cargando = true;
         this.msgs = [];
-
-        if(this.permisoFlag){
-            if (!this.tareaForm.valid && this.evidences.length==0) {
-                console.log("Data: ", this.tareaForm.value);
+        if(!this.permisoFlag){
+            if (!this.tareaForm.valid || this.evidences.length==0) {
                 this.cargando = false;
                 this.msgs.push({
                     severity: "info",
@@ -315,7 +281,6 @@ export class TareaComponent implements OnInit {
             }
         }else{
             if (!this.tareaForm.valid) {
-                console.log("Data: ", this.tareaForm.value);
                 this.cargando = false;
                 this.msgs.push({
                     severity: "info",
@@ -325,6 +290,7 @@ export class TareaComponent implements OnInit {
                 return;
             }
         }
+
         try {
             let res = await this.seguimientoService.closeTarea(
                 this.tareaForm.value
@@ -342,7 +308,6 @@ export class TareaComponent implements OnInit {
                 });
             }
         } catch (e) {
-            console.log(e);
             this.submitted = false;
             this.cargando = false;
             this.msgs.push({
@@ -360,7 +325,6 @@ export class TareaComponent implements OnInit {
                     id,
                     "fkTareaCierre"
                 )) as any) || [];
-                console.log(true)
                 this.flagEvidencias=true
         } catch (e) {
             this.msgs.push({
@@ -368,12 +332,10 @@ export class TareaComponent implements OnInit {
                 summary: "Mensaje del sistema",
                 detail: "Ha ocurrido un error al obtener las evidencias de esta tarea",
             });
-            console.log(e);
         }
     }
 
     async onSelection(event) {
-        console.log(event);
         this.fullName = null;
         this.empleado = null;
         let emp = <Empleado>event;
@@ -387,5 +349,9 @@ export class TareaComponent implements OnInit {
             usuarioCierre: { id: this.empleado.id },
             email: this.empleado.usuario.email,
         });
+    }
+
+    TienePermiso(e){
+        this.permisoFlag=e
     }
 }
