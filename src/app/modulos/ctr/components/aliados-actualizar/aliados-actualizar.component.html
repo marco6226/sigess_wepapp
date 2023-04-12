@@ -14,6 +14,7 @@
           [documentos]="documentos"
           [autorizaSubcontratacion]="this.aliadoInformacion.autoriza_subcontratacion"
           [istemporal]="this.aliadoInformacion.istemporal"
+          [permitirReporteAt]="aliadoInformacion.permitirReportes"
           (dataCalificacion)="onReciveCalificacionAliadoData($event, 'puntaje')"
           (dataFechaCalificacion)="onReciveCalificacionAliadoData($event, 'fecha')"
           (dataQuienCalifica)="onReciveCalificacionAliadoData($event, 'nombre')"
@@ -21,6 +22,7 @@
           (onDelete)="deleteDocumento($event)"
           (dataAutorizaSubcontratacion)="onReciveAutorizaSubcontratacion($event)"
           (dataIsTemporal)="onReciveIsTemporal($event)"
+          (onPermitirReporteAt)="onReceivePermitirRegistroAt($event)"
           ></app-aliados>
       </p-tabPanel>
       <p-tabPanel header="Información General"  [headerStyle]=" { 'background-color':'#fd9b14' }"> 

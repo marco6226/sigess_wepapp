@@ -125,17 +125,24 @@
             
         </div>
         <div class="input-field">
-            <div class="ui-g-6">
-                <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">¿La empresa cuenta con autorización para subcontratación: </label>
+            <div class="ui-g-12">
+                <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">¿La empresa cuenta con autorización para subcontratación?: </label>
                 <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="Si" label="Sí" [(ngModel)]="autorizaSubcontratacion" [ngModelOptions]="{standalone: true}" required></p-radioButton>
                 <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaSubcontratacion()" [style]="{'padding':'3px'}" name="subctr" value="No" label="No" [(ngModel)]="autorizaSubcontratacion" [ngModelOptions]="{standalone: true}" required></p-radioButton>
             </div>
         </div>
         <div class="input-field">
-            <div class="ui-g-6">
+            <div class="ui-g-12">
                 <label for="subctr" class="active" style="margin-bottom:10px;background-color:transparent;">Empresa de servicios temporales: </label>
                 <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onEsTemporal()" [style]="{'padding':'3px'}" name="temporal" value="Si" label="Sí" [(ngModel)]="istemporal" [ngModelOptions]="{standalone: true}" required></p-radioButton>
                 <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onEsTemporal()" [style]="{'padding':'3px'}" name="temporal" value="No" label="No" [(ngModel)]="istemporal" [ngModelOptions]="{standalone: true}" required></p-radioButton>
+            </div>
+        </div>
+        <div class="input-field" *ngIf="istemporal=='No'">
+            <div class="ui-g-12">
+                <label class="active" style="margin-bottom:10px;background-color:transparent;">¿Autoriza el registro de accidentes de esta empresa?</label>
+                <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaReporteAt()" [style]="{'padding':'3px'}" name="registroAt" [value]="true" label="Sí" [(ngModel)]="autorizaRegistroAt" [ngModelOptions]="{standalone: true}" required></p-radioButton>
+                <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaReporteAt()" [style]="{'padding':'3px'}" name="registroAt" [value]="false" label="No" [(ngModel)]="autorizaRegistroAt" [ngModelOptions]="{standalone: true}" required></p-radioButton>
             </div>
         </div>
     </div>

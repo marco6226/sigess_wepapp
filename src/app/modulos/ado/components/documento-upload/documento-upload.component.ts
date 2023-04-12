@@ -22,6 +22,7 @@ export class DocumentoUploadComponent implements OnInit {
     @Input('visible') visibleDlg: boolean;
     @Input('contratistasFlag') contratistasFlag: boolean=false;
     @Input('temporalesFlag') temporalesFlag: boolean=false;
+    @Input('privadoCheck') privadoCheck: boolean = true;
     @Output('visibleChange') visibleChange = new EventEmitter();
     @Output('onUpload') onUpload = new EventEmitter();
     esPrivado: boolean;

@@ -104,6 +104,7 @@ import { AccidentalidadComponent } from '../ind/components/accidentalidad/accide
 import {IndCasosMedicosComponent} from '../ind/components/ind-casos-medicos/ind-casos-medicos.component';
 import {IndCasosMedicosGestionComponent} from '../ind/components/ind-casos-medicos-gestion/ind-casos-medicos-gestion.component';
 import {IndCaracterizacionComponent} from '../ind/components/ind-caracterizacion/ind-caracterizacion.component';
+import { RegistroReporteCtrComponent } from '../rai/components/registro-reporte-ctr/registro-reporte-ctr.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -212,7 +213,8 @@ const appRoutes: Routes = [
                     { path: 'registroReporte', component: RegistroReportesComponent },
                     { path: 'registroReporteTemporal', component: RegistroReporteTemporalComponent },
                     { path: 'consultaReportes', component: ConsultaReportesComponent },
-                    { path: 'consultaReportestemporal', component: ConsultarReporteTemporalComponent }
+                    { path: 'consultaReportestemporal', component: ConsultarReporteTemporalComponent },
+                    { path: 'registroReporteCtr', component: RegistroReporteCtrComponent }
                 ]
             },
             {
