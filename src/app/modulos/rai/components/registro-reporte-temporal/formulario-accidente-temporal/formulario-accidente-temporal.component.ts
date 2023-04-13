@@ -121,6 +121,11 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     {label:'Temporal 2', value:'234'},
     {label:'Temporal 3', value:'345'}
   ];
+  ARLfirme= [
+    { label: "--Seleccione--", value: null },
+    { label: "Objetado", value: "Objetado" },
+    { label: "En firme", value: "En firme" },
+  ]
   temporalesFlag: boolean=true
 
   msgs: Message[];

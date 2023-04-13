@@ -31,6 +31,7 @@ import { ElaboracionInspeccionesComponent } from 'app/modulos/inspecciones/compo
 import { ParametrizacionPeligrosComponent } from 'app/modulos/ipr/components/parametrizacion-peligros/parametrizacion-peligros.component';
 import { FormularioIpecrComponent } from 'app/modulos/ipr/components/formulario-ipecr/formulario-ipecr.component';
 import { ConsultaIpecrComponent } from 'app/modulos/ipr/components/consulta-ipecr/consulta-ipecr.component';
+import { MatrizPeligroComponent } from 'app/modulos/ipr/components/matriz-peligro/matriz-peligro.component';
 
 import { PerfilComponent } from 'app/modulos/admin/components/perfil/perfil.component';
 import { UsuarioComponent } from 'app/modulos/admin/components/usuario/usuario.component';
@@ -266,6 +267,7 @@ const appRoutes: Routes = [
                     { path: 'peligros', component: ParametrizacionPeligrosComponent },
                     { path: 'formularioIpecr', component: FormularioIpecrComponent },
                     { path: 'consultaIpecr', component: ConsultaIpecrComponent },
+                    { path: 'matrizpeligros', component: MatrizPeligroComponent },
                 ]
             },
             {

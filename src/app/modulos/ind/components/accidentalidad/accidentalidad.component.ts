@@ -553,6 +553,10 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(6));
 
+    if(this.ili<=this.metaIli){
+      this.colorIli="card l-bg-green-dark"}
+      else {this.colorIli="card l-bg-red-dark"}
+
   }
 
   calcularTotalHht(hht: Hht[], mesInicio: number, mesFinal: number, selectedDivisionResumen: string, flagTemporales: boolean): number{

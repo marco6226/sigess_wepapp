@@ -5,12 +5,13 @@ import { ParametrizacionPeligrosComponent } from './components/parametrizacion-p
 import { FormularioIpecrComponent } from './components/formulario-ipecr/formulario-ipecr.component';
 import { FormularioPeligroComponent } from './components/formulario-peligro/formulario-peligro.component';
 import { ConsultaIpecrComponent } from './components/consulta-ipecr/consulta-ipecr.component';
+import { MatrizPeligroComponent } from './components/matriz-peligro/matriz-peligro.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ComunModule
   ],
-  declarations: [ParametrizacionPeligrosComponent, FormularioIpecrComponent, FormularioPeligroComponent, ConsultaIpecrComponent],
+  declarations: [ParametrizacionPeligrosComponent, FormularioIpecrComponent, FormularioPeligroComponent, ConsultaIpecrComponent, MatrizPeligroComponent],
 })
 export class IprModule { }

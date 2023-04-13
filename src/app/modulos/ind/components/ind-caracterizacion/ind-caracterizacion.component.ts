@@ -198,6 +198,7 @@ export class IndCaracterizacionComponent implements OnInit {
   selectDiv6: any[] = [];
   selectPel6Flag: boolean=false;
   selectEv6: any[] = [];
+  selectTipoPeligro6: any[] = [];
   selectYear6: any =2023;
   selectMonth6: any[] = [];
 
@@ -1979,7 +1980,10 @@ filtroGraEve6(){
   this.flagevent6=true
 
 }
-
+resetTipoPeligros6(){
+  this.selectTipoPeligro6=[];
+  this.resetVar6();
+}
 resetVar6(){
   this.selectPel6Flag=false
   this.selectEv6=[]
@@ -2197,7 +2201,6 @@ DatosGrafica6(){
     this.resetVar6()
     this.selectPel6Flag=true
     this.cargarPeligro(a)
-    
   }
 
   top(dato, limit) {

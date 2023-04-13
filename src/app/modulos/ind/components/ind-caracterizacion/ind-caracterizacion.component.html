@@ -74,11 +74,13 @@
             </div>
             <div class="p-col-6 p-mt-6 mid-border">
                 <div class="p-d-flex p-jc-evenly">
-                    <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones2" placeholder="Seleccionar división" (onChange)="CardsClasificacion()" [(ngModel)]="selectArea"></p-dropdown></div>
+                    <div class="p-d-flex"><p class="p-m-0">Area: </p>&nbsp;<p-dropdown appendTo="body" [options]="divisiones2" placeholder="Seleccionar división" (onChange)="CardsClasificacion()" [(ngModel)]="selectArea"></p-dropdown></div>
+                    &nbsp;
                     <div class="p-d-flex">  
                         <i style="font-size:24px" class="fa">&#xf073;</i>   
                         <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Desde" appendTo="body" [(ngModel)]="date1" (ngModelChange)="CardsClasificacion()" [showButtonBar]="true"> </p-calendar> 
                     </div>
+                    &nbsp;
                     <div class="p-d-flex"> 
                         <i style="font-size:24px" class="fa">&#xf073;</i> 
                         <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" placeholder="Hasta" appendTo="body" [(ngModel)]="date2" (ngModelChange)="CardsClasificacion()" [showButtonBar]="true"> </p-calendar>
@@ -425,9 +427,9 @@
             <div class="ui-g" >    
                 <p><b></b></p>
                 <div class="ui-g-12 ui-sm-12 ui-md-12 align-items-center">
-                    <p-radioButton name="group10" label="Total " [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra6" (onClick)="resetVar6()"></p-radioButton>
-                    <p-radioButton name="group10" label=" Temporales " [value]="1" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra6" (onClick)="resetVar6()"></p-radioButton>
-                    <p-radioButton name="group10" label=" Directos " [value]="2" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra6" (onClick)="resetVar6()"></p-radioButton>
+                    <p-radioButton name="group10" label="Total " [value]="0" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra6" (onClick)="resetTipoPeligros6()"></p-radioButton>
+                    <p-radioButton name="group10" label=" Temporales " [value]="1" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra6" (onClick)="resetTipoPeligros6()"></p-radioButton>
+                    <p-radioButton name="group10" label=" Directos " [value]="2" [style]="{'margin-left':'15px'}" [(ngModel)]="radioGra6" (onClick)="resetTipoPeligros6()"></p-radioButton>
                 </div>
         
                 <div  class="ui-g-8 ui-g-nopad">
@@ -481,7 +483,7 @@
                     <h5>Division</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="divisiones3" optionLabel="name" [(ngModel)]="selectDiv6" (onChange)="filtroGraEve6()"></p-multiSelect>
                     <h5>Filtro tipo peligro</h5>
-                    <p-dropdown [filter]="true"appendTo="body" placeholder="Seleccione"  [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)">
+                    <p-dropdown [filter]="true"appendTo="body" placeholder="Seleccione"  [options]="this.tipoPeligroItemList" (onChange)="SelectPeligro($event.value)" [(ngModel)]="selectTipoPeligro6">
                     </p-dropdown><br>
                     <h5>Filtro descripción peligro</h5>
                     <p-multiSelect defaultLabel="Seleccione" [options]="this.peligroItemList" optionLabel="label" [(ngModel)]="selectEv6" (onChange)="filtroGraEve6()"></p-multiSelect>

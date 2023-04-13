@@ -156,6 +156,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                         { label: 'Parametrización peligros', codigo: 'IPECR_PARAMPEL', routerLink: '/app/ipr/peligros', class: 'fa fa-gear' },
                         { label: 'Elaboración IPECR', codigo: 'IPECR_ELABIPECR', routerLink: '/app/ipr/formularioIpecr', class: 'fa fa-exclamation-circle' },
                         { label: 'Consulta IPECR', codigo: 'IPECR_GET_IPECR', routerLink: '/app/ipr/consultaIpecr', class: 'fa fa-list-ul' },
+                        { label: 'Matriz de peligros', codigo: 'IPECR_GET_MATRIZPELIGROS', routerLink: '/app/ipr/matrizpeligros', class: 'fa fa-exclamation-triangle' },
                     ]
             },
             {

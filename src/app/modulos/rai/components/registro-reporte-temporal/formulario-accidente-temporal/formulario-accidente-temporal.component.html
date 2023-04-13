@@ -307,21 +307,32 @@
                     </div>
                     <div class="ui-g-12 ui-sm-12 ui-md-4">
                         <p-dropdown placeholder="Seleccionar Peligro" required appendTo="body" [filter]="true" [options]="this.peligroItemList" formControlName="DescripcionPeligro"[readonly]="consultar"></p-dropdown>
-                    </div>                    
+                    </div>    
                 </div>
             </p-accordionTab>
-            <p-accordionTab header="VII. INVESTIGACIÓN" *ngFor="let data of factorCausal">
+            <p-accordionTab
+            header="VII. INFORMACIÓN COMPLEMENTARIA">
+                <div class="ui-g" [formGroup]="analisisPeligros">
+                    <div class="ui-g-12 ui-sm-12 ui-md-2">
+                        Estado del evento ante ARL
+                    </div>
+                    <div class="ui-g-12 ui-sm-12 ui-md-4">
+                        <p-dropdown appendTo="body" [options]="ARLfirme" formControlName="EnventoARL" required></p-dropdown>
+                    </div>  
+                </div>
+            </p-accordionTab>
+            <p-accordionTab header="VIII. INVESTIGACIÓN" *ngFor="let data of factorCausal">
                 <div >
                     <app-factor-causal (dataFC)="setListDataFactor()" (validators2)="getValidator($event)"[factorCausal]="data" [consultar]="consultar"></app-factor-causal>
                 </div>
             </p-accordionTab>
-            <p-accordionTab header="VIII. LISTADO DE CAUSAS">
+            <p-accordionTab header="IX. LISTADO DE CAUSAS">
                 <app-listado-causas-temporal [factores]="dataListFactor"></app-listado-causas-temporal>
             </p-accordionTab>
         </form>
 
         <form [formGroup]="formplanaccion">
-            <p-accordionTab header="IX. PLAN DE ACCION">
+            <p-accordionTab header="X. PLAN DE ACCION">
                 
                 <div class="ui-g">
 
