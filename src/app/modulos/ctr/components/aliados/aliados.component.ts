@@ -78,6 +78,7 @@ export class AliadosComponent implements OnInit {
   @Output() dataQuienCalifica = new EventEmitter<string>();
   @Output() dataAutorizaSubcontratacion =new EventEmitter<boolean>();
   @Output() dataIsTemporal =new EventEmitter<boolean>();
+  @Output() onPermitirReporteAt = new EventEmitter<boolean>();
   @Input('autorizaSubcontratacion')
   set setAutorizaSubcontratacion(data: boolean){
     if(data==null) return;
@@ -102,6 +103,16 @@ export class AliadosComponent implements OnInit {
   autorizaSubcontratacionflag: boolean;
   isCreate: boolean=true;
   guardando: boolean = false;
+  autorizaRegistroAt: boolean;
+  @Input('permitirReporteAt')
+  set setPermitirReporteAt(data: boolean){
+    console.log(data);
+    if (data) {
+      this.autorizaRegistroAt = data;
+    }else{
+      this.autorizaRegistroAt = false;
+    }
+  }
 
   nameAndLastName: string=''
 
@@ -293,7 +304,8 @@ export class AliadosComponent implements OnInit {
             nombre_calificador: this.formJuridica.value.quien_califica,
             arl: null,
             autoriza_subcontratacion: this.autorizaSubcontratacionflag,
-            istemporal: this.istemporalFlag
+            istemporal: this.istemporalFlag,
+            permitirReportes: this.autorizaRegistroAt ? this.autorizaRegistroAt : false
           }
 
           this.empresaService.saveAliadoInformacion(aliadoInformacion)
@@ -450,6 +462,10 @@ export class AliadosComponent implements OnInit {
       this.istemporalFlag=false
       this.dataIsTemporal.emit(false);
     }
+  }
+
+  onAutorizaReporteAt(){
+    this.onPermitirReporteAt.emit(this.autorizaRegistroAt);
   }
 }
 

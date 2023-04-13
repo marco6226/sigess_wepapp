@@ -1,0 +1,23 @@
+.input-field {
+    margin-top: 0.4rem;
+    margin-bottom: 0.2;
+    & > label{
+        color: black;
+    }
+}
+
+.title-header {
+    font-size: 1.25rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    position: relative;
+    margin: 0.5rem 0;
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        height: 2px;
+        width: 2rem;
+        background-color: #007ad9;
+    }
+}

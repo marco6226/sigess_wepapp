@@ -22,6 +22,21 @@ export class SistemaCausaRaizService extends ServiceCRUD<SistemaCausaRaiz>{
     });
   }
 
+  findDefault2(idEmpresa: number){
+    return new Promise((resolve, reject) => {
+      this.httpInt.get(this.end_point + `seleccionado2/${idEmpresa}`)
+      .map(res => res)
+      .subscribe(
+        res => {
+          resolve(res);
+        },
+        err => {
+          reject(err);
+        }
+      )
+    });
+  }
+
   getClassName(): string {
     return "SistemaCausaRaizService";
   }

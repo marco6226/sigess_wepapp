@@ -42,6 +42,9 @@ import { FormularioIncidenteTemporalComponent } from './components/registro-repo
 import { IncapacidadesComplementariaComponent } from 'app/modulos/sec/components/analisis-desviacion/factor-causal/incapacidades-complementaria/incapacidades-complementaria.component';
 import { IncapacidadesComplementariaTemporalComponent } from './components/registro-reporte-temporal/formulario-accidente-temporal/incapacidades-complementaria-temporal/incapacidades-complementaria-temporal.component';
 import { ListadoCausasTemporalComponent } from './components/registro-reporte-temporal/formulario-accidente-temporal/listado-causas-temporal/listado-causas-temporal.component';
+import { RegistroReporteCtrComponent } from './components/registro-reporte-ctr/registro-reporte-ctr.component';
+import { FormularioAccidenteCtrComponent } from './components/registro-reporte-ctr/formulario-accidente/formulario-accidente-ctr.component';
+import { IncapacidadesCtrComponent } from './components/registro-reporte-ctr/formulario-accidente/incapacidades-ctr/incapacidades-ctr.component';
 // import { FileUploaderComponent } from '../core/components/file-uploader/file-uploader.component';
 @NgModule({
   imports: [
@@ -90,7 +93,10 @@ import { ListadoCausasTemporalComponent } from './components/registro-reporte-te
     FormularioAccidenteTemporalComponent,
     FormularioIncidenteTemporalComponent,
     IncapacidadesComplementariaTemporalComponent,
-    ListadoCausasTemporalComponent
+    ListadoCausasTemporalComponent,
+    RegistroReporteCtrComponent,
+    FormularioAccidenteCtrComponent,
+    IncapacidadesCtrComponent
     // FlowChartComponent
   ],
   providers: [ReporteService,DiagramContextMenuService]

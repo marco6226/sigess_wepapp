@@ -71,7 +71,8 @@ export class AliadosActualizarComponent implements OnInit {
     nombre_calificador: '',
     arl: null,
     autoriza_subcontratacion: null,
-    istemporal:null
+    istemporal:null,
+    permitirReportes:null
   }
 
   documentos: Directorio[]=[]
@@ -305,11 +306,16 @@ export class AliadosActualizarComponent implements OnInit {
     this.auxIsTemporal = data;
   }
 
+  onReceivePermitirRegistroAt(data: boolean){
+    this.aliadoInformacion.permitirReportes = data;
+  }
+
   async actualizarAliado(){
     this.mensajesDeValidacion();
 
     this.aliadoInformacion.autoriza_subcontratacion = this.auxAutorizaSubcontratacion;
     this.aliadoInformacion.istemporal = this.auxIsTemporal;
+    this.aliadoInformacion.permitirReportes = this.auxIsTemporal ? false : this.aliadoInformacion.permitirReportes;
     // console.log(this.aliadoInformacion.calificacion)
     this.saveInformacionAliado();
 

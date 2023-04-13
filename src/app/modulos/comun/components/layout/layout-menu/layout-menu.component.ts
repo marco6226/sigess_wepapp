@@ -19,6 +19,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
 
     isTemporal:boolean=false;
     items: any[];
+    canSaveReportCtr: boolean = false;
 
     nombreAUC: string;
     nombreSEC: string;
@@ -51,6 +52,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
         this.idEmpresa = this.sesionService.getEmpresa().id;
         await this.empresaService.getAliadoInformacion(this.idEmpresa).then((ele: AliadoInformacion[])=>{
             if(ele[0] != undefined){
+              this.canSaveReportCtr = ele[0].permitirReportes;
               if(ele[0].istemporal){this.isTemporal = ele[0].istemporal}
               else{this.isTemporal=false}
             }else{this.isTemporal=false}
@@ -63,22 +65,20 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     }
 
     recargarMenu() {
-        if(this.idEmpresa=='22')this.isTemporal=true
-        let Temporal
-        if(this.isTemporal){Temporal=[
-            { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
-            { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
-            { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' },
-            { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
-            { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' },
-            { label: 'HHT', codigo: 'IND_GET_HHTALIADO', routerLink: '/app/ind/horahombrestrabajada', class: 'fa fa-building' },
-            // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
-            // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
-        ]}else{
+        // if(this.idEmpresa=='22')this.isTemporal=true
+        let Temporal: any[] = [];
+        if(this.isTemporal){
             Temporal=[
-                { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
-                { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
-                { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' }]
+                { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
+                { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' },
+                { label: 'HHT', codigo: 'IND_GET_HHTALIADO', routerLink: '/app/ind/horahombrestrabajada', class: 'fa fa-building' },
+                // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
+                // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
+            ]
+        }else if(this.canSaveReportCtr){
+            Temporal=[
+                { label: 'Registrar reporte', codigo: 'RAI_POST_REPCTR', routerLink: '/app/rai/registroReporteCtr', class: 'fa fa-h-square' }
+            ]
         }
 
         this.nombreAUC = this.sesionService.getConfigParam('NOMB_MOD_AUC');
@@ -120,7 +120,12 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
                 class: 'icon-ctr',
                 codigo: 'CTR',
                 expanded: false,
-                items: Temporal
+                items: 
+                    [
+                        { label: 'Nuevo Aliado', codigo: 'CTR_ADM', routerLink: '/app/ctr/aliado', class: 'fa fa-child' },
+                        { label: 'Listado de Aliados', codigo: 'CTR_ADM', routerLink: '/app/ctr/listadoAliados', class: 'fa fa-list-alt' },
+                        { label: 'Administración', codigo: 'CTR_IND', routerLink: '/app/ctr/actualizarAliado/'+this.getEmpresaID(), class: 'fa fa-handshake-o' },
+                    ].concat(Temporal)
             },
             {
                 label: 'Seguimiento Casos medicos', class: 'icon-scm',
