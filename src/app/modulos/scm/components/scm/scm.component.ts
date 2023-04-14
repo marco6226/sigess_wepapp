@@ -170,8 +170,9 @@ export class ScmComponent implements OnInit {
         filterEliminado.value1 = 'false';
 
         filterQuery.fieldList = this.fields;
-        filterQuery.filterList = [filterEliminado];        
+         
         filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
+        filterQuery.filterList.push(filterEliminado);       
         console.log(event.filters);
         try {
             
