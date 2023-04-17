@@ -550,7 +550,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let IF = (accidentesConDiasPerdidos / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let IS = (totalDiasSeveridad / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let ILI = (IF * IS) / 1000;
-    // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
+    console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(6));
 
     if(this.ili<=this.metaIli){
@@ -561,27 +561,23 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
 
   calcularTotalHht(hht: Hht[], mesInicio: number, mesFinal: number, selectedDivisionResumen: string, flagTemporales: boolean): number{
     let totalHht = 0;
-    if(mesInicio == mesFinal){
-      hht.forEach(hht => {
-        if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total'){
-          if(hht.mes === this.meses[mesInicio]){
-            let dataHht: DataHht = <DataHht>JSON.parse(hht.valor).Data;
-            totalHht += dataHht.Areas
-            .filter(ar => ar.id === this.divisionesCoronaConId.find(div => div.nombre === this.selectedDivisionResumen).id)[0].HhtArea;
-          }
-        }else{
-          if(hht.mes === this.meses[mesInicio]){
-            let dataHht: DataHht = <DataHht>JSON.parse(hht.valor).Data;
-            totalHht += dataHht.HhtMes;
-          }
+    if(mesInicio === mesFinal){
+      hht.forEach(item => {
+        if(item.mes === this.meses[mesInicio]){
+          let dataHHT: DataHht = <DataHht>JSON.parse(item.valor).Data;
+          totalHht += selectedDivisionResumen && selectedDivisionResumen !== 'Total' ?
+          dataHHT.Areas.filter(data => data.id === this.divisionesCoronaConId.find(div => div.nombre === selectedDivisionResumen).id)[0].HhtArea
+          : dataHHT.HhtMes;
         }
-      })
+      });
     }else{
-      hht.forEach(hht => {
-        let mesIndex = this.meses.findIndex(mes => hht.mes === mes);
+      hht.forEach(item => {
+        let mesIndex = this.meses.findIndex(mes => item.mes === mes);
         if(mesIndex >= mesInicio && mesIndex <= mesFinal){
-          let dataHht: DataHht = <DataHht>JSON.parse(hht.valor).Data;
-          totalHht += dataHht.HhtMes;
+          let dataHHT: DataHht = <DataHht>JSON.parse(item.valor).Data;
+          totalHht += selectedDivisionResumen && selectedDivisionResumen !== 'Total' ? 
+          dataHHT.Areas.filter(data => data.id === this.divisionesCoronaConId.find(div => div.nombre === selectedDivisionResumen).id)[0].HhtArea
+          : dataHHT.HhtMes;
         }
       });
     }
