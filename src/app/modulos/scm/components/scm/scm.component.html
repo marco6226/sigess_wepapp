@@ -5,7 +5,7 @@
         Casos médicos
     </p-header>
 
-    <button  pButton type="button" (click)="abrirDialogo()" title="Exportar informe" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <button *sTienePermiso="'SCM_GET_INFO'" pButton type="button" (click)="abrirDialogo()" title="Exportar informe" icon="fa fa-file-excel-o" class="ui-button-success"></button>
 
     <p-table #dt styleClass="material-table" autoLayout="true" selectionMode="single" [loading]="loading" [(selection)]="caseSelect" [value]="casosList" [paginator]="true" [rows]="10" dataKey="id" [lazy]="true" (onLazyLoad)="lazyLoad($event)" sortField="fechaCreacion" sortOrder="1"
         [totalRecords]="totalRecords">
