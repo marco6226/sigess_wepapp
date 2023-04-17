@@ -130,13 +130,15 @@
           <div class="ui-g-12">&nbsp;</div>
           <div  class="ui-g-8 ui-g-nopad">
             <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
+              <div class="ui-g-12 ui-sm-12 ui-md-12" style="height: 80%;">
                 <ngx-charts-bar-vertical-2d 
                 [scheme]="colorScheme"
                 [results]="datosGraf1Print"
                 [gradient]="true"
                 [xAxis]="true"
                 [yAxis]="true"
-                [legend]="false"
+                [legend]="true"
+                [legendTitle]="'Leyenda'"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
                 [xAxisLabel]="'casos'"
@@ -146,6 +148,26 @@
                 [showDataLabel]="false"
                 [tooltipDisabled]="false">
                 </ngx-charts-bar-vertical-2d>
+              </div>
+              <!-- <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad single-line">
+                  <ng-container *ngIf="this.selectEvento1.length>0">
+                    <ul><b style="padding-left: 5px;"> Leyenda</b><br></ul>
+                    <ul>
+                      <ng-container *ngFor="let t of selectEvento1; let i =index">
+                        <li style="display: inline;background: rgba(0, 0, 0, 0.05);padding: 5px;border-radius: 3px;"><span class="polig {{colorSchemeText[i]}}"></span><span style="font-size: 12px;"> {{t.label}} </span></li>
+                      </ng-container>
+                    </ul>
+                  </ng-container>
+                  <ng-container *ngIf="this.selectEvento1.length==0">
+                    <ul><b style="padding-left: 5px;"> Leyenda</b><br></ul>
+                    <ul>
+                      <ng-container *ngFor="let t of opcion1; let i =index">
+                        <li style="display: inline;background: rgba(0, 0, 0, 0.05);padding: 5px;border-radius: 3px;"><span class="polig {{colorSchemeText[i]}}"></span><span style="font-size: 12px;"> {{t.label}} </span></li>
+                      </ng-container>
+                    </ul>
+                  </ng-container>
+              </div> -->
+                
             </div>
             <div class="ui-g-1">&nbsp;</div>
             <div class="ui-g-2">&nbsp;</div>
@@ -217,7 +239,8 @@
                 [gradient]="true"
                 [xAxis]="true"
                 [yAxis]="true"
-                [legend]="false"
+                [legend]="true"
+                [legendTitle]="'Leyenda'"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
                 [xAxisLabel]="'Casos'"
@@ -309,7 +332,8 @@
               [gradient]="true"
               [xAxis]="true"
               [yAxis]="true"
-              [legend]="false"
+              [legend]="true"
+              [legendTitle]="'Leyenda'"
               [showXAxisLabel]="true"
               [showYAxisLabel]="true"
               [xAxisLabel]="'Retorno'"
@@ -382,7 +406,8 @@
                 [gradient]="true"
                 [xAxis]="true"
                 [yAxis]="true"
-                [legend]="false"
+                [legend]="true"
+                [legendTitle]="'Leyenda'"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
                 [xAxisLabel]="'Retorno'"
@@ -438,23 +463,44 @@
   
           <div  class="ui-g-8 ui-g-nopad">
             <div class="ui-g-11 ui-sm-11 ui-md-11 ui-g-nopad grafic">
-              <ngx-charts-bar-vertical-2d
-              class="align-items-center"
-              [scheme]="colorScheme"
-              [results]="datosGraf5Print"
-              [gradient]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="false"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxisLabel]="'Diagnosticos'"
-              [yAxisLabel]="'No. Casos'"
-              [showDataLabel]="false"
-              [barPadding]=0
-              [groupPadding]=4
-              [tooltipDisabled]="false">
-              </ngx-charts-bar-vertical-2d>
+              <div class="ui-g-12 ui-sm-12 ui-md-12" style="height: 90%;">
+                <ngx-charts-bar-vertical-2d
+                class="align-items-center"
+                [scheme]="colorScheme"
+                [results]="datosGraf5Print"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="true"
+                [legendTitle]="'Leyenda'"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Diagnosticos'"
+                [yAxisLabel]="'No. Casos'"
+                [showDataLabel]="false"
+                [barPadding]=0
+                [groupPadding]=4
+                [tooltipDisabled]="false">
+                </ngx-charts-bar-vertical-2d>
+              </div>
+              <!-- <div class="ui-g-12 ui-sm-12 ui-md-12 ui-g-nopad single-line">
+                <ng-container *ngIf="this.selectEvento5.length>0">
+                  <ul><b style="padding-left: 5px;"> Leyenda</b><br></ul>
+                  <ul>
+                    <ng-container *ngFor="let t of selectEvento5; let i =index">
+                      <li style="display: inline;background: rgba(0, 0, 0, 0.05);padding: 5px;border-radius: 3px;"><span class="polig {{colorSchemeText[i]}}"></span><span style="font-size: 12px;"> {{t.label}} </span></li>
+                    </ng-container>
+                  </ul>
+                </ng-container>
+                <ng-container *ngIf="this.selectEvento5.length==0">
+                  <ul><b style="padding-left: 5px;"> Leyenda</b><br></ul>
+                  <ul>
+                    <ng-container *ngFor="let t of opcion5; let i =index">
+                      <li style="display: inline;background: rgba(0, 0, 0, 0.05);padding: 5px;border-radius: 3px;"><span class="polig {{colorSchemeText[i]}}"></span><span style="font-size: 12px;"> {{t.label}} </span></li>
+                    </ng-container>
+                  </ul>
+                </ng-container>
+              </div> -->
             </div>
             <div class="ui-g-1">&nbsp;</div>
             <div class="ui-g-2">&nbsp;</div>
@@ -499,7 +545,8 @@
                 [gradient]="true"
                 [xAxis]="true"
                 [yAxis]="true"
-                [legend]="false"
+                [legend]="true"
+                [legendTitle]="'Leyenda'"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
                 [xAxisLabel]="'Diagnosticos'"

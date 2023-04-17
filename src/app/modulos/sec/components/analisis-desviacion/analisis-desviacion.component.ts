@@ -786,7 +786,6 @@ export class AnalisisDesviacionComponent implements OnInit {
 
             setTimeout(async () => {
                 this.diagram=await this.FlowchartService.getDiagram();
-                console.log(this.diagram)
                 let printOptions: IExportOptions = {};
                 printOptions.mode = 'Data';
                 printOptions.region = 'PageSettings';
@@ -809,7 +808,9 @@ export class AnalisisDesviacionComponent implements OnInit {
                 this.setListDataFactor();
                 ad.flow_chart = this.flowChartSave;
                 ad.participantes = JSON.stringify(this.participantes);
-                ad.tareaDesviacionList = this.tareasList;
+                let tareasList=this.tareasList.filter(resp=>{return resp['usuarioCierre']==null})
+                ad.tareaDesviacionList = tareasList;
+                
 
                 ad.jerarquia = this.jerarquia;
                 ad.complementaria=JSON.stringify(this.informacionComplementaria);

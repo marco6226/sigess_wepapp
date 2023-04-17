@@ -108,10 +108,6 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     } else {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta diligenciar campos'});
     }
-
-
-
-    
   }
 
   back(){
@@ -224,10 +220,4 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo realizar la operación', life: 6000});
     }
   }
-
-  test(){
-    console.log(this.planAcciones);
-    
-  }
-
 }

@@ -39,7 +39,9 @@ export class IndCasosMedicosComponent implements OnInit {
   colorScheme = {
     domain: ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   };
-
+  colorSchemeText=['colorSchemeText1','colorSchemeText2','colorSchemeText3','colorSchemeText4','colorSchemeText5','colorSchemeText6','colorSchemeText7']
+  // colorSchemeText = ['background-color:#00B0F0;', 'background-color:#FC4512;', 'background-color:#FFC000;', 'background-color:#002060;','background-color:#FCB8FC;', 'background-color:#5B9BD5;','background-color:#70AD47;']
+  // colorSchemeText1 = ['#00B0F0', '#FC4512', '#FFC000', '#002060','#FCB8FC', '#5B9BD5','#70AD47']
   divisiones0=[]
   divisiones1=[]
   divisiones2=[]

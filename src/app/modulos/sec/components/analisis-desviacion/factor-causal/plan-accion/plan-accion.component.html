@@ -79,7 +79,7 @@
         </div>
         <div class="p-field">
             <label>Fecha Vencimiento</label>
-            <p-calendar [defaultDate]="planAcciones.especifico.fechaVencimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" (onInput)="test()" dateFormat="dd/mm/yy" required></p-calendar>
+            <p-calendar [defaultDate]="planAcciones.especifico.fechaVencimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" [touchUI]="true" [locale]="localeES" [minDate]="planAcciones.especifico.fechaVencimiento" [(ngModel)]="planAcciones.medible.fechaVencimiento" dateFormat="dd/mm/yy" required></p-calendar>
         </div>
         <div class="p-field">
             <label>Plan de Verificación</label>
@@ -148,5 +148,3 @@
     <button pButton *ngIf="process=='EFICAZ'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.eficaz.planValidacion!=null && planAcciones.eficaz.fechaVencimiento!=null && (planAcciones.eficaz.responsableEmpresa))"></button>
     <button pButton *ngIf="process=='REVISADO'" type="button" (click)="submit()" label="confirmar" class="ui-button-raised" [disabled]="!(planAcciones.revisado.revisado!=null)"></button>
     <!-- <button (click)="cerrar()" pButton type="button" label="x" class="ui-button-raised ui-button-danger" style="position:absolute; top:0; right:0; height: 20px;width: 20px;"></button> -->
-
-<!-- <button (click)="test()">test</button> -->

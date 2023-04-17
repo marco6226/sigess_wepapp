@@ -343,5 +343,25 @@ font-size:small;
 ::ng-deep .ui-tree{
   width: 95% !important;
 }
+.polig{
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin-right: 5px;
+  border-radius: 3px;
+  }
+  .colorSchemeText1{background-color:#00B0F0;}
+  .colorSchemeText2{background-color:#FC4512;}
+  .colorSchemeText3{background-color:#FFC000;}
+  .colorSchemeText4{background-color:#002060;}
+  .colorSchemeText5{background-color:#FCB8FC;}
+  .colorSchemeText6{background-color:#5B9BD5;}
+  .colorSchemeText7{background-color:#70AD47;}
 
+  .single-line {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
+}
 
