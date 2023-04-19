@@ -121,6 +121,8 @@ export class IndCasosMedicosComponent implements OnInit {
   flag4:boolean=true
   flag5:boolean=false
   flag6:boolean=true
+  dataFlag5:boolean=false
+  dataFlag6:boolean=false
   flagReturnDatos2:boolean=false
   flagReturnDatos4:boolean=false
   flagReturnDatos6:boolean=false
@@ -599,6 +601,8 @@ export class IndCasosMedicosComponent implements OnInit {
 
       this.datosGraf5Print=this.top(this.datosGraf5,10)
       this.flag5=true
+      if(this.selectEvento5.length>0 && this.selectEvento5.length<=5 ){this.dataFlag5=true}
+      else{this.dataFlag5=false}
     }
   
     returnDatos6(){
@@ -658,6 +662,8 @@ export class IndCasosMedicosComponent implements OnInit {
         this.agregarDivision7(opcion6)
       }
       this.flag6=true
+      if(this.selectEvento6.length>0 && this.selectEvento6.length<=5 ){this.dataFlag6=true}
+      else{this.dataFlag6=false}
     }
 
     cargarArea7(){
