@@ -197,9 +197,9 @@ export class IndCasosMedicosGestionComponent implements OnInit {
     // this.datosGraf2.map(resp=>{if(resp['tipoRetorno']==null){return resp['tipoRetorno']='null'}})
     
     let nombre=[]
-    if(this.radioButon2==0){this.opcion2=this.entidadTipos0;nombre=['entidadEmiteConceptoRehabilitacion'];this.nameGraf2='REHABILITACIÓN'}
-    if(this.radioButon2==1){this.opcion2=this.entidadTipos2;nombre=['entidadEmitePcl'];this.nameGraf2='PCL'}
-    if(this.radioButon2==2){this.opcion2=this.entidadTipos2;nombre=['entidadEmiteOrigen'];this.nameGraf2='ORIGEN'}
+    if(this.radioButon2==0){this.opcion2=this.entidadTipos0;nombre=['entidadEmiteConceptoRehabilitacion'];this.nameGraf2='ENTIDAD RESPONSABLE DE LA REHABILITACIÓN'}
+    if(this.radioButon2==1){this.opcion2=this.entidadTipos2;nombre=['entidadEmitePcl'];this.nameGraf2='ENTIDAD RESPONSABLE DE LA PCL'}
+    if(this.radioButon2==2){this.opcion2=this.entidadTipos2;nombre=['entidadEmiteOrigen'];this.nameGraf2='ENTIDAD RESPONSABLE DEL ORIGEN'}
     if(this.radioButon2==3){this.opcion2=this.entidadTipos2;nombre=['entidadEmiteConceptoRehabilitacion','entidadEmitePcl','entidadEmiteOrigen'];this.nameGraf2='TODOS'}
 
     let divisiones=this.filtroDivisionMultiple(this.selectDivisiones2,(this.radioButon2==3)?this.divisiones:this.divisiones_)
