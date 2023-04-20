@@ -179,6 +179,9 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
     
     let seguimientoTarea: any;
     let keys=['id', 'fecha_cierre', 'fecha_proyectada', 'tracking'];
+
+    if(!id) return Object.keys(this.statuses).length;
+     
     await this.tareaService.getSeguimientoTarea(id).then((res: []) => {
       seguimientoTarea = res.reduce((item, value, index) => {
         item[keys[index]] = value;
