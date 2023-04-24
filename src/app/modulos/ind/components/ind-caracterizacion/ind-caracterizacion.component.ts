@@ -1785,7 +1785,7 @@ if(!this.date9 && this.date10){
 if(this.date9 && this.date10){
   let date10:Date=new Date(new Date(this.date10).setMonth(new Date(this.date10).getMonth()+1))
   this.CaracterizacionView6=this.CaracterizacionView.filter(resp=>{
-    return resp.fechaaccidente<date10 && resp.fechaaccidente>=new Date(this.date10)
+    return resp.fechaaccidente<date10 && resp.fechaaccidente>=new Date(this.date9)
     })}
 
   this.CaracterizacionView6.forEach(element => {
