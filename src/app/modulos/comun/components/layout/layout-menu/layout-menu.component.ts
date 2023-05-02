@@ -65,7 +65,7 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     }
 
     recargarMenu() {
-        // if(this.idEmpresa=='22')this.isTemporal=true
+        if(this.idEmpresa=='22')this.isTemporal=true
         let Temporal: any[] = [];
         if(this.isTemporal){
             Temporal=[
