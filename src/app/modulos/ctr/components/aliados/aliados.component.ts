@@ -106,7 +106,6 @@ export class AliadosComponent implements OnInit {
   autorizaRegistroAt: boolean;
   @Input('permitirReporteAt')
   set setPermitirReporteAt(data: boolean){
-    console.log(data);
     if (data) {
       this.autorizaRegistroAt = data;
     }else{

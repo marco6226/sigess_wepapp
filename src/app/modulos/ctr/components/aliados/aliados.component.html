@@ -138,11 +138,13 @@
                 <p-radioButton [disabled]="(onEdit=='edit') || flagConsult" (onClick)="onEsTemporal()" [style]="{'padding':'3px'}" name="temporal" value="No" label="No" [(ngModel)]="istemporal" [ngModelOptions]="{standalone: true}" required></p-radioButton>
             </div>
         </div>
-        <div class="input-field" *ngIf="istemporal=='No'">
-            <div class="ui-g-12">
-                <label class="active" style="margin-bottom:10px;background-color:transparent;">¿Autoriza el registro de accidentes de esta empresa?</label>
-                <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaReporteAt()" [style]="{'padding':'3px'}" name="registroAt" [value]="true" label="Sí" [(ngModel)]="autorizaRegistroAt" [ngModelOptions]="{standalone: true}" required></p-radioButton>
-                <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaReporteAt()" [style]="{'padding':'3px'}" name="registroAt" [value]="false" label="No" [(ngModel)]="autorizaRegistroAt" [ngModelOptions]="{standalone: true}" required></p-radioButton>
+        <div *sTienePermiso="'CTR_PUT_PERMISO_REPORTEAT'">
+            <div class="input-field" *ngIf="istemporal=='No'">
+                <div class="ui-g-12">
+                    <label class="active" style="margin-bottom:10px;background-color:transparent;">¿Autoriza el registro de accidentes de esta empresa?</label>
+                    <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaReporteAt()" [style]="{'padding':'3px'}" name="registroAt" [value]="true" label="Sí" [(ngModel)]="autorizaRegistroAt" [ngModelOptions]="{standalone: true}" required></p-radioButton>
+                    <p-radioButton [disabled]="(!isCreate && onEdit==null) || flagConsult" (onClick)="onAutorizaReporteAt()" [style]="{'padding':'3px'}" name="registroAt" [value]="false" label="No" [(ngModel)]="autorizaRegistroAt" [ngModelOptions]="{standalone: true}" required></p-radioButton>
+                </div>
             </div>
         </div>
     </div>
