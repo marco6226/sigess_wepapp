@@ -65,20 +65,26 @@ export class LayoutMenuComponent implements OnInit, AfterContentInit {
     }
 
     recargarMenu() {
-        if(this.idEmpresa=='22')this.isTemporal=true
+        if(this.idEmpresa=='22'){
+            this.isTemporal=true;
+            this.canSaveReportCtr = true;
+        }
         let Temporal: any[] = [];
         if(this.isTemporal){
-            Temporal=[
+            Temporal = Temporal.concat([
                 { label: 'Registrar reporte T', codigo: 'RAI_POST_REPT', routerLink: '/app/rai/registroReporteTemporal', class: 'fa fa-h-square' },
                 { label: 'Consulta reportes T', codigo: 'RAI_GET_REPT', routerLink: '/app/rai/consultaReportestemporal', class: 'fa fa-list-ul' },
                 { label: 'HHT', codigo: 'IND_GET_HHTALIADO', routerLink: '/app/ind/horahombrestrabajada', class: 'fa fa-building' },
                 // { label: 'Administración', codigo: 'CTR_ADM', routerLink: '/app/ctr/adminContratistas', class: 'fa fa-handshake-o' },
                 // { label: 'Seguimiento', codigo: 'CTR_IND', routerLink: '/app/ctr/seguimientoContratistas', class: 'fa fa-pie-chart' }
-            ]
-        }else if(this.canSaveReportCtr){
-            Temporal=[
-                { label: 'Registrar reporte', codigo: 'RAI_POST_REPCTR', routerLink: '/app/rai/registroReporteCtr', class: 'fa fa-h-square' }
-            ]
+            ])
+        }
+        
+        if(this.canSaveReportCtr){
+            Temporal = Temporal.concat([
+                { label: 'Registrar reporte', codigo: 'RAI_POST_REPCTR', routerLink: '/app/rai/registroReporteCtr', class: 'fa fa-h-square' },
+                { label: 'Consulta reportes de Aliados', codigo: 'RAI_GET_REP_ALIADO', routerLink: '/app/rai/consultarReportesAliados', class: 'fa fa-list-ul'}
+            ])
         }
 
         this.nombreAUC = this.sesionService.getConfigParam('NOMB_MOD_AUC');
