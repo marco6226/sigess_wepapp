@@ -69,6 +69,7 @@ export const endPoints = {
   com_tipoSede: path + "enums/tipoSede/",
 
   DesviacionService: path + "desviacion/",
+  DesviacionAliadosService: path + "desviacionAliados/",
   ReporteAtService: path + "reporteatview/",
   AnalisisDesviacionService: path + "analisisDesviacion/",
   SistemaCausaRaizService: path + "sistemaCausaRaiz/",

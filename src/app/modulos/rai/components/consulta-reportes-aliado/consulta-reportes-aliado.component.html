@@ -1,0 +1,101 @@
+<p-panel header="Reportes A/I">
+  <p-table #dt sortField={{sortedTable}} sortOrder="1" [value]="reportesList" autoLayout="true"
+  selectionMode="single" [(selection)]="reporteSelect" [rows]="10" [paginator]="true" dataKey="id"
+  [lazy]="true" (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="hashId">Id
+          <p-sortIcon field="hashId"></p-sortIcon>
+        </th>
+        <th pSortableColumn="razonSocial">Nombre / Razón Social
+          <p-sortIcon field="razonSocial"></p-sortIcon>
+        </th>
+        <th pSortableColumn="idEmpleado">Identificación del empleado
+          <p-sortIcon field="idEmpleado"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fechaReporte">Fecha del AT
+          <p-sortIcon field="fechaReporte"></p-sortIcon>
+        </th>
+        <th pSortableColumn="area.padreNombre">División del negocio
+          <p-sortIcon field="area.padreNombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="area.nombre">Ubicación
+          <p-sortIcon field="area.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="seguimiento">Seguimiento del evento
+          <p-sortIcon field="seguimiento"></p-sortIcon>
+        </th>
+        <th>Total dias perdidos</th>
+        <th>Gestor del AT</th>
+        <th>Porcentaje de avance</th>
+      </tr>
+      <tr class="filters">
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'hashId', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'razonSocial', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'idEmpleado', 'contains')">
+        </td>
+        <td>
+          <s-rangoFechaSelector (onSelect)="dt.filter($event, 'fechaReporte', 'bt')"></s-rangoFechaSelector>
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'area.padreNombre', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'area.nombre', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'seguimiento', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'incapacidades', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'gestor', 'contains')">
+        </td>
+        <td>
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'planAccion', 'contains')">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-reporte let-rowIndex="rowIndex">
+      <tr [pSelectableRow]="reporte">
+        <td>RAI-{{reporte.id}} </td>
+        <td>{{ reporte.razonSocial }}</td>
+        <td>{{ reporte.idEmpleado }}</td>
+        <td>{{ reporte.fechaAt | date:'dd/MM/yyyy' }}</td>
+        <td>{{ reporte.division }}</td>
+        <td>{{ reporte.ubicacion }}</td>
+        <td>{{ reporte.seguimiento }}</td>
+        <td>{{ reporte.totalDiasPerdidos }}</td>
+        <td>{{ reporte.gestor }}</td>
+        <td>{{ reporte.porcentajeAvance}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <button pButton icon="fa fa-plus" label="Consultar" (click)="consultarReporte()" 
+      [ngStyle]="{'margin-right': '10px'}" [disabled]="!reporteSelect"></button>
+      <button *sTienePermiso="'RAI_PUT_REPCTR'" pButton icon="fa fa-pencil" class="ui-button-success"
+      label="Modificar" [disabled]="!reporteSelect" (click)="editarReporte()"></button>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9">
+          <s-dataNotFound *ngIf="!reportesListAux || reportesListAux.length <= 0" icon="fa-list-ul"
+          message="No se encontraron reportes de accidentes y/o incidentes">
+            <div>
+              Reportar un nuevo evento <a>aquí</a>
+            </div>
+          </s-dataNotFound>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft" let-state style="margin-top: 50%;">
+      <span>Mostrando {{state.rows}} de {{state.totalRecords}}</span>
+    </ng-template>
+  </p-table>
+</p-panel>

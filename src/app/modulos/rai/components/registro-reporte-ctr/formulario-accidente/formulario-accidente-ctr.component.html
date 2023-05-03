@@ -1,6 +1,7 @@
+<p-toast></p-toast>
 <p-panel header="FORMULARIO DE ACCIDENTES">
   <p-accordion [multiple]="true">
-    <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA" [selected]="true">
+    <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA" [selected]="true" [disabled]="true">
       <div class="ui-g">
         <div class="ui-g-12">
           <div class="ui-g-4 ui-md-6 ui-sm-12">
@@ -69,7 +70,8 @@
           <div class="ui-g-12">
             <div class="ui-g-4 ui-md-6 ui-sm-12">
               <div class="input-field">
-                <p-calendar [showIcon]="true" [locale]="locale"
+                <p-calendar [showIcon]="true" [locale]="locale" [yearNavigator]="true" 
+                [monthNavigator]="true" yearRange="1960:{{anioActual}}"
                 formControlName="fechaNacimiento" required [ngStyle]="{'width': '90%'}"></p-calendar>
                 <label class="active">Fecha Nacimiento</label>
               </div>
@@ -79,7 +81,7 @@
                 <div style="margin-top: 10px;">
                   <p-radioButton name="sexo" required label="F" [value]="'F'" formControlName="sexo"
                   [ngStyle]="{'margin-right': '15px'}"></p-radioButton>
-                  <p-radioButton name="sexo" required label="M" [value]="'M'" formControlName="sexo"></p-radioButton>
+                  <p-radioButton name="sexo" [disabled]="esConsulta" required label="M" [value]="'M'" formControlName="sexo"></p-radioButton>
                 </div>
                 <label class="active">Sexo</label>
               </div>
@@ -88,7 +90,8 @@
           <div class="ui-g-12">
             <div class="ui-g-4 ui-md-6 ui-sm-12">
               <div class="input-field">
-                <p-calendar [showIcon]="true" required [locale]="locale"
+                <p-calendar [showIcon]="true" required [locale]="locale" [yearNavigator]="true" 
+                [monthNavigator]="true" yearRange="1960:{{anioActual}}"
                 formControlName="fechaIngreso" [ngStyle]="{'width': '90%'}"></p-calendar>
                 <label class="active">Fecha Ingreso</label>
               </div>
@@ -96,7 +99,7 @@
             <div class="ui-g-4 ui-md-6 ui-sm-12">
               <div class="input-field">
                 <input type="text" required class="form-material" formControlName="cargo" value=""
-                style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase" 
+                style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase()" 
                 required>
                 <label class="active">Cargo</label>
               </div>
@@ -113,29 +116,16 @@
             </div>
             <div class="ui-g-4 ui-md-6 ui-sm-12">
               <div class="input-field">
-                <area-selector required formControlName="ubicacion"
-                required>
+                <area-selector *ngIf="!infPersonaAccidentada.get('ubicacion').value;else editarUbicacion"
+                formControlName="ubicacion" required 
+                [name]="this.infPersonaAccidentada.get('ubicacion').value">
                 </area-selector>
+                <ng-template #editarUbicacion>
+                  <area-selector formControlName="ubicacion" required 
+                  [name]="this.infPersonaAccidentada.get('ubicacion').value.nombre">
+                  </area-selector>
+                </ng-template>
                 <label class="active">Ubicación</label>
-              </div>
-            </div>
-          </div>
-          <div class="ui-g-12">
-            <div class="ui-g-4 ui-md-6 ui-sm-12">
-              <div class="input-field">
-                <p-dropdown required [options]="divisionList" [showClear]="true" 
-                [ngStyle]="{width: '-webkit-fill-available'}" placeholder="-- seleccione --"
-                formControlName="division" (onChange)="cargarListaPlantas($event.value)"
-                ></p-dropdown>
-                <label class="active">División</label>
-              </div>
-            </div>
-            <div class="ui-g-4 ui-md-6 ui-sm-12">
-              <div class="input-field">
-                <p-dropdown [required]="flagSelectPlanta" [options]="plantaList" [showClear]="true"
-                [ngStyle]="{width: '-webkit-fill-available'}" placeholder="-- seleccione --"
-                formControlName="planta" [disabled]="!flagSelectPlanta"></p-dropdown>
-                <label class="active">Planta</label>
               </div>
             </div>
           </div>
@@ -149,7 +139,8 @@
               <div class="ui-g-4 ui-md-6 ui-sm-12">
                 <div class="input-field">
                   <p-calendar [showIcon]="true" [locale]="locale"
-                  formControlName="fechaAccidente" required
+                  formControlName="fechaAccidente" required [yearNavigator]="true" 
+                  [monthNavigator]="true" yearRange="1960:{{anioActual}}"
                   [ngStyle]="{'width': '90%'}"></p-calendar>
                   <label class="active">Fecha del accidente</label>
                 </div>
@@ -180,10 +171,10 @@
                 <div class="input-field">
                   <div>
                     <p-radioButton name="labores" required label="Si"
-                    [value]="'Si'" formControlName="labores"
+                    [value]="true" formControlName="labores"
                     [ngStyle]="{'margin-right': '15px'}"></p-radioButton>
                     <p-radioButton name="labores" required label="No"
-                    [value]="'No'" formControlName="jornada"></p-radioButton>
+                    [value]="false" formControlName="labores"></p-radioButton>
                   </div>
                   <label class="active">Realizaba labores habituales</label>
                 </div>
@@ -287,7 +278,7 @@
           <div class="ui-g">
             <div class="ui-g-12">
               <div class="input-field">
-                <textarea formControlName="descripcionPreliminarAccidente"
+                <textarea formControlName="descripcionPreliminarAccidente" rows="3"
                 class="form-control" style="margin-top: 10px;" required></textarea>
                 <label class="active">Describa preliminarmente dentro de la información del accidente, que lo originó o causó y los demas aspectos relacionados</label>  
               </div>
@@ -298,7 +289,7 @@
     <p-accordionTab header="V. DÍAS PERDIDOS">
       <div class="ui-g">
         <div class="ui-g-12">
-          <app-incapacidades-ctr></app-incapacidades-ctr>
+          <app-incapacidades-ctr [consultar]="esConsulta" [(incapacidades)]="incapacidades"></app-incapacidades-ctr>
         </div>
       </div>
     </p-accordionTab>
@@ -309,15 +300,15 @@
             <div class="input-field">
               <p-dropdown placeholder="-- seleccione --" 
               [options]="tipoPeligroList" (onChange)="cargarPeligro($event.value)"
-              [ngStyle]="{width: '-webkit-fill-available'}" required
+              [ngStyle]="{width: '-webkit-fill-available'}" required [disabled]="esConsulta"
               [(ngModel)]="selectedTipoPeligro">
               </p-dropdown>
               <label class="active">Peligro</label>
             </div>
           </div>
-          <div class="ui-g-4 ui-md-6 ui-sm-12">
+          <div class="ui-g-4 ui-md-6 ui-sm-12" *ngIf="peligroList && peligroList.length > 0">
             <div class="input-field">
-              <p-dropdown placeholder="-- seleccione --"
+              <p-dropdown placeholder="-- seleccione --" [disabled]="esConsulta"
               [options]="peligroList"
               [ngStyle]="{width: '-webkit-fill-available'}" required
               [(ngModel)]="selectedPeligro"></p-dropdown>
@@ -327,7 +318,13 @@
         </div>
       </div>
     </p-accordionTab>
-    <p-accordionTab header="VII. INVESTIGACIÓN">
+    <p-accordionTab header="VII. SELECCIÓN GESTOR CORONA">
+      <s-empleadoBasicSelector [disabled]="esConsulta"
+      [(ngModel)]="gestorData.gestor" [empresaEmpleadora]="idEmpresa" (onSelect)="onGestorSelected()"
+      required autofocus></s-empleadoBasicSelector>
+      <small class="p-invalid">Obligatorio</small>
+    </p-accordionTab>
+    <p-accordionTab header="VIII. INVESTIGACIÓN" [disabled]="esNuevo">
       <div class="ui-g">
         <div class="ui-g-12">
           <h4 class="title-header">Causas inmediatas</h4>
@@ -345,66 +342,77 @@
         </div>
       </div>
     </p-accordionTab>
-    <p-accordionTab header="VIII. LISTADO DE CAUSAS">
+    <p-accordionTab header="IX. LISTADO DE CAUSAS" [disabled]="esNuevo">
       <p-panel header="JUSTIFICACIÓN DE CAUSAS INMEDIATAS">
         <div class="ui-g">
-          <div class="ui-g-12" *ngFor="let item of causaInmediataSelect">
-            <p-panel header="{{item.label}}">
-              <div class="input-field">
-                <textarea class="form-control" placeholder="Justificación"
-                style="width: 100%;" required></textarea>
-              </div>
-            </p-panel>
-          </div>
+          <form class="ui-g-12" *ngIf="formCausasInmediatas" [formGroup]="formCausasInmediatas">
+            <div class="ui-g-12" *ngFor="let item of causaInmediataSelect">
+              <p-panel header="{{item.label}}">
+                <div class="input-field">
+                  <textarea class="form-control" placeholder="Justificación"
+                  style="width: 100%;" formControlName="{{item.label}}" required
+                  ></textarea>
+                </div>
+              </p-panel>
+            </div>
+          </form>
         </div>
       </p-panel>
       <hr>
       <p-panel header="JUSTIFICACIÓN DE CAUSAS BÁSICAS">
         <div class="ui-g">
-          <div class="ui-g-12" *ngFor="let item of causaBasicaSelect">
-            <p-panel header="{{item.label}}">
-              <div class="input-field">
-                <textarea class="form-control" placeholder="Justificación"
-                style="width: 100%;" required></textarea>
-              </div>
-            </p-panel>
-          </div>
+          <form *ngIf="formCausasRaiz" class="ui-g-12" [formGroup]="formCausasRaiz">
+            <div class="ui-g-12" *ngFor="let item of causaBasicaSelect">
+              <p-panel header="{{item.label}}">
+                <div class="input-field">
+                  <textarea class="form-control" placeholder="Justificación"
+                  style="width: 100%;" required formControlName="{{item.label}}"
+                  ></textarea>
+                </div>
+              </p-panel>
+            </div>
+          </form>
         </div>
       </p-panel>
     </p-accordionTab>
-    <p-accordionTab header="IX. PLAN DE ACCIÓN">
+    <p-accordionTab header="X. PLAN DE ACCIÓN" [disabled]="esNuevo">
       <div class="ui-g">
         <h4 class="title-header">Plan de acción</h4>
-        <div class="ui-g-12">
-          <div class="ui-g-4 ui-md-4 ui-sm-6">
-            <div class="input-field">
-              <input type="number" placeholder="%" class="form-control" required>
-              <label class="active">% de avance</label>
+        <form class="ui-g-12" [formGroup]="formPlanAccion">
+          <div class="ui-g-12">
+            <div class="ui-g-4 ui-md-4 ui-sm-6">
+              <div class="input-field">
+                <input type="number" placeholder="%" class="form-control" 
+                required formControlName="porcentajeAvance">
+                <label class="active">% de avance</label>
+              </div>
             </div>
-          </div>
-          <div class="ui-g-4 ui-md-4 ui-sm-6">
-            <div class="input-field">
-              <label class="active">Fecha de cierre</label>
-              <div>
-                <p-calendar [showIcon]="true" [locale]="locale" required
-                ></p-calendar>
+            <div class="ui-g-4 ui-md-4 ui-sm-6">
+              <div class="input-field">
+                <label class="active">Fecha de cierre</label>
+                <div>
+                  <p-calendar [showIcon]="true" [locale]="locale" required
+                  formControlName="fechaCierre"></p-calendar>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="ui-g-12">
-          <div class="input-field">
-            <textarea class="form-control" style="width: 100%;margin-top: 10px;" required></textarea>
-            <label class="active">Descripción de la acción realizada</label>
-          </div>
-        </div>
+          <div class="ui-g-12">
+            <div class="input-field">
+              <textarea class="form-control" style="width: 100%;margin-top: 10px;"
+              required formControlName="descripcionTarea"></textarea>
+              <label class="active">Descripción de la acción realizada</label>
+            </div>
+          </div>    
+        </form>
         <hr>
         <div class="ui-g-12">
           <h4 class="title-header">Evidencias</h4>
           <div class="ui-g-12">
             <p-panel header="FURAT" class="ui-g-6 ui-sm-12">
-              <div>
+              <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('furat')" label="Adjuntar"></button>
+                <br><small style="color: red;">Obligatorio</small>
                 <s-documentoUpload 
                 [(visible)]="showDialogFurat" [modParam]="analisisId" tipoEvidencia="aliadoFurat"
                 [modulo]="modulo" [privadoCheck]="false" (onUpload)="onUpload($event, 'furat')"
@@ -413,14 +421,15 @@
               <hr>
               <ol *ngFor="let item of documentosFurat" class="ui-g">
                 <li>
-                  <a >{{ item.nombre }}</a>
-                  <a class="fa fa-trash" style="color: red;"></a>
+                  <a (click)="descargarDocumento(item)">{{ item.nombre }}</a>
+                  <a class="fa fa-trash" *ngIf="!esConsulta" style="color: red;" (click)="eliminarDocumento(item)"></a>
                 </li>
               </ol>
             </p-panel>
             <p-panel header="Investigación de At" class="ui-g-6  ui-sm-12">
-              <div>
+              <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('invAt')" label="Adjuntar"></button>
+                <br><small style="color: red;">Obligatorio</small>
                 <s-documentoUpload 
                 [(visible)]="showDialogInvAt" [modParam]="analisisId" tipoEvidencia="aliadoInvAt"
                 [modulo]="modulo" [privadoCheck]="false" (onUpload)="onUpload($event, 'invAt')"
@@ -429,16 +438,17 @@
               <hr>
               <ol *ngFor="let item of documentosInvAt" class="ui-g">
                 <li>
-                  <a >{{ item.nombre }}</a>
-                  <a class="fa fa-trash" style="color: red;"></a>
+                  <a (click)="descargarDocumento(item)">{{ item.nombre }}</a>
+                  <a class="fa fa-trash" *ngIf="!esConsulta" style="color: red;" (click)="eliminarDocumento(item)"></a>
                 </li>
               </ol>
             </p-panel>
           </div>
           <div class="ui-g-12">
             <p-panel header="Reportes a EPS y/o entes territopriales" class="ui-g-6  ui-sm-12">
-              <div>
+              <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('reporteEps')" label="Adjuntar"></button>
+                <br><small style="color: red;">Obligatorio</small>
                 <s-documentoUpload 
                 [(visible)]="showDialogReporteEps" [modParam]="analisisId" tipoEvidencia="aliadoReporteEps"
                 [modulo]="modulo" [privadoCheck]="false" (onUpload)="onUpload($event, 'reporteEps')"
@@ -447,14 +457,15 @@
               <hr>
               <ol *ngFor="let item of documentosRepEps" class="ui-g">
                 <li>
-                  <a >{{ item.nombre }}</a>
-                  <a class="fa fa-trash" style="color: red;"></a>
+                  <a (click)="descargarDocumento(item)">{{ item.nombre }}</a>
+                  <a class="fa fa-trash" *ngIf="!esConsulta" style="color: red;" (click)="eliminarDocumento(item)"></a>
                 </li>
               </ol>
             </p-panel>
             <p-panel header="Evidencias plan de acción" class="ui-g-6  ui-sm-12">
-              <div>
+              <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('evidenciasPA')" label="Adjuntar"></button>
+                <br><small style="color: red;">Obligatorio</small>
                 <s-documentoUpload 
                 [(visible)]="showDialogEvidenciasPA" [modParam]="analisisId" tipoEvidencia="aliadoEvidenciasPA"
                 [modulo]="modulo" [privadoCheck]="false" (onUpload)="onUpload($event, 'evidenciasPA')"
@@ -463,16 +474,17 @@
               <hr>
               <ol *ngFor="let item of documentoEvidenciasPA" class="ui-g">
                 <li>
-                  <a >{{ item.nombre }}</a>
-                  <a class="fa fa-trash" style="color: red;"></a>
+                  <a (click)="descargarDocumento(item)">{{ item.nombre }}</a>
+                  <a class="fa fa-trash" *ngIf="!esConsulta" style="color: red;" (click)="eliminarDocumento(item)"></a>
                 </li>
               </ol>
             </p-panel>
           </div>
           <div class="ui-g-12">
             <p-panel header="Novedad de seguridad" class="ui-g-6  ui-sm-12">
-              <div>
+              <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('novedadSeg')" label="Adjuntar"></button>
+                <br><small style="color: red;">Obligatorio</small>
                 <s-documentoUpload 
                 [(visible)]="showDialogNovedadSeg" [modParam]="analisisId" tipoEvidencia="aliadosNovedadSeg"
                 [modulo]="modulo" [privadoCheck]="false" (onUpload)="onUpload($event, 'novedadSeg')"
@@ -481,13 +493,13 @@
               <hr>
               <ol *ngFor="let item of documentosNovedadSeg" class="ui-g">
                 <li>
-                  <a >{{ item.nombre }}</a>
-                  <a class="fa fa-trash" style="color: red;"></a>
+                  <a (click)="descargarDocumento(item)">{{ item.nombre }}</a>
+                  <a class="fa fa-trash" *ngIf="!esConsulta" style="color: red;" (click)="eliminarDocumento(item)"></a>
                 </li>
               </ol>
             </p-panel>
             <p-panel header="Otros" class="ui-g-6  ui-sm-12">
-              <div>
+              <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('otros')" label="Adjuntar"></button>
                 <s-documentoUpload 
                 [(visible)]="showDialogOtros" [modParam]="analisisId" tipoEvidencia="aliadoOtros"
@@ -497,8 +509,8 @@
               <hr>
               <ol *ngFor="let item of documentoOtros" class="ui-g">
                 <li>
-                  <a >{{ item.nombre }}</a>
-                  <a class="fa fa-trash" style="color: red;"></a>
+                  <a (click)="descargarDocumento(item)">{{ item.nombre }}</a>
+                  <a class="fa fa-trash" *ngIf="!esConsulta" style="color: red;" (click)="eliminarDocumento(item)"></a>
                 </li>
               </ol>
             </p-panel>
@@ -506,8 +518,46 @@
         </div>
       </div>
     </p-accordionTab>
+    <p-accordionTab header="SEGUIMIENTO" [selected]="true" [disabled]=" true">
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <div class="input-field ui-md-6 ui-sm-12">
+            <p-dropdown placeholder="-- Seleccione --" [(ngModel)]="estadoEvento"
+            [options]="estadoEventoList" required [readonly]="permisoSeguimiento"
+            ></p-dropdown>
+            <label class="active">Estado del evento</label>
+          </div>
+        </div>
+        <div class="ui-g-12" *ngIf="seguimiento">
+          <span>Estado: <b>{{ seguimiento.estado }}</b></span><br>
+          <span *ngIf="seguimiento.fecha">Fecha: <b>{{ seguimiento.fecha | date:'dd/MM/yyyy' }}</b></span>
+        </div>
+        <div class="ui-g-12">
+          <h5 class="title-header">Observaciones de Corona</h5>
+          <div class="input-field">
+            <textarea class="form-control" [readonly]="!permisoSeguimiento" placeholder="Observaciones" 
+            style="margin-top: 10px;" rows="4" [(ngModel)]="observaciones" required></textarea>
+          </div>
+        </div>
+        <div *sTienePermiso="'RAI_PUT_REP_ALIADO_SEG'" class="ui-g-12">
+          <button pButton (click)="onClickSeguimientoReporte(true)" icon="fa fa-thumbs-up" class="ui-button-success" 
+          label="APROBAR" style="margin-right: 15px;"></button>
+          <button pButton (click)="onClickSeguimientoReporte(false)" icon="fa fa-thumbs-down" class="ui-button-danger"
+          label="DENEGAR"></button>
+        </div>
+      </div>
+    </p-accordionTab>
   </p-accordion>
 </p-panel>
 
-<button pButton icon="fa fa-floppy-o" disabled
-title="Guardar reporte" class="float-btn" style="z-index: 100;"></button>
+<button *ngIf="esNuevo" pButton icon="fa fa-floppy-o"
+[disabled]="!infoAccidenteIsValid()"
+title="Guardar reporte" class="float-btn" style="z-index: 100;"
+(click)="submit()"></button>
+
+<button *ngIf="!esNuevo && !esConsulta" pButton icon="fa fa-pencil"
+[disabled]="!infoAccidenteIsValid() || !infoInvestigacionIsValid()"
+title="Actualizar reporte" class="float-btn ui-button-success" style="z-index: 100;"
+(click)="submit()"></button>
+
+<a style="visibility: hidden" id="dwldLink"></a>

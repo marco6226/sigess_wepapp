@@ -45,6 +45,8 @@ import { ListadoCausasTemporalComponent } from './components/registro-reporte-te
 import { RegistroReporteCtrComponent } from './components/registro-reporte-ctr/registro-reporte-ctr.component';
 import { FormularioAccidenteCtrComponent } from './components/registro-reporte-ctr/formulario-accidente/formulario-accidente-ctr.component';
 import { IncapacidadesCtrComponent } from './components/registro-reporte-ctr/formulario-accidente/incapacidades-ctr/incapacidades-ctr.component';
+import { ConsultaReportesAliadoComponent } from './components/consulta-reportes-aliado/consulta-reportes-aliado.component';
+import { DesviacionAliadosService } from '../sec/services/desviacion-aliados.service';
 // import { FileUploaderComponent } from '../core/components/file-uploader/file-uploader.component';
 @NgModule({
   imports: [
@@ -96,9 +98,10 @@ import { IncapacidadesCtrComponent } from './components/registro-reporte-ctr/for
     ListadoCausasTemporalComponent,
     RegistroReporteCtrComponent,
     FormularioAccidenteCtrComponent,
-    IncapacidadesCtrComponent
+    IncapacidadesCtrComponent,
+    ConsultaReportesAliadoComponent
     // FlowChartComponent
   ],
-  providers: [ReporteService,DiagramContextMenuService]
+  providers: [ReporteService, DesviacionAliadosService,DiagramContextMenuService]
 })
 export class RaiModule { }

@@ -30,4 +30,7 @@ export class AnalisisDesviacion {
   informe: string;
   plan_accion: string;
   miembros_equipo: string;
+  gestor: string;
+  seguimiento: string;
+  observacion_causas: string;
 }

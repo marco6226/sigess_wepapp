@@ -1,8 +1,10 @@
 
 
 <app-formulario-accidente-ctr
+[esConsulta]="esConsulta"
 [nombreEmpresa]="nombreEmpresa"
-[nitEmpresa]="nitEmpresa">
+[nitEmpresa]="nitEmpresa"
+[reporteId]="reporteId">
 </app-formulario-accidente-ctr>
 
-<button pButton type="button " class="float-btn " [title]="consultar || modificar ? ' Atras ' : 'Cancelar ' " [icon]="consultar || modificar ? 'fa fa-chevron-left ' : 'fa fa-ban'" (click)="volver() " *ngIf="reporteSelect" style="margin-right:65px; z-index: 100;"> </button>
+<button pButton type="button " class="float-btn " [title]="'Lista de reportes'" [icon]="'fa fa-chevron-left '" (click)="navToListaReportes()" style="margin-bottom:80px;"> </button>

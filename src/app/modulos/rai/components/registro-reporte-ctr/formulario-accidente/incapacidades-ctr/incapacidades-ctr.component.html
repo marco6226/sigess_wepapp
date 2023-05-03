@@ -1,6 +1,6 @@
-<button pButton label="Nuevo" icon="pi pi-plus" (click)="nuevaIncapacidad()" style="margin-right: 10px;"></button>
-<button pButton label="Borrar" icon="pi pi-trash" class="p-button-danger"></button>
-
+<button pButton *ngIf="!consultar" label="Nuevo" icon="pi pi-plus" (click)="nuevaIncapacidad()" style="margin-right: 10px;"></button>
+<button pButton *ngIf="!consultar" label="Borrar" icon="pi pi-trash" class="p-button-danger"></button>
+<p-confirmDialog key="confirmIncapacidad"></p-confirmDialog>
 <div class="ui-g">
   <div class="ui-g-12">
     <p-table #dt [value]="incapacidades" [rows]="10" [paginator]="true"
@@ -8,7 +8,7 @@
     [(selection)]="selectedIncapacidad" [rowHover]="true" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem;"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+          <th style="width: 3rem;">&nbsp;</th>
           <th pSortableColumn="name">Tipo</th>
           <th pSortableColumn="price">CIE 10</th>
           <th pSortableColumn="category">Diagnostico</th>
@@ -18,9 +18,9 @@
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body">
+      <ng-template pTemplate="body" let-incapacidad>
         <tr>
-          <td><p-tableCheckbox></p-tableCheckbox></td>
+          <td>{{incapacidad.id}}</td>
           <td>{{incapacidad.tipo}}</td>
           <td *ngIf="incapacidad['cie10'];else other">{{incapacidad?.cie10?.codigo}}</td>
           <ng-template #other>&nbsp;</ng-template>
@@ -29,8 +29,8 @@
           <td>{{incapacidad.fechaFin | date: 'dd/MM/yyyy'}}</td>
           <td>{{incapacidad.diasAusencia}}</td>
           <td>
-            <button *ngIf="!consultar" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editIncapacidad(incapacidad)"></button>
-            <button *ngIf="!consultar" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteIncapacidad(incapacidad)"></button>
+            <button *ngIf="!consultar" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editIncapacidad(incapacidad.id)"></button>
+            <button *ngIf="!consultar" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteIncapacidad(incapacidad.id)"></button>
           </td>
         </tr>
       </ng-template>
@@ -73,11 +73,18 @@
   </ng-container>
   <div class="p-field">
       <label for="diasAusencia">Dias de Ausencias</label>
-      <input type="number" autofocus [value]="diasAusencia" disabled="true"/>
+      <input type="number" autofocus [value]="daysCount" disabled="true"/>
   </div>
 
-  <button *ngIf="isNewIncapacidad" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveIncapacidad()" style="margin-right: 10px;"></button>
-  <button *ngIf="isUpdateIncapacidad" pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-text" (click)="saveIncapacidad()" style="margin-right: 10px;"></button>
-  <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+  <button *ngIf="isNewIncapacidad" [disabled]="!formIncapacidadIsValid() && generoIncapacidad" 
+  pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveIncapacidad()"
+  style="margin-right: 10px;"></button>
+
+  <button *ngIf="isUpdateIncapacidad" [disabled]="!formIncapacidadIsValid() && generoIncapacidad"
+  pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-text" (click)="saveIncapacidad()" 
+  style="margin-right: 10px;"></button>
+  
+  <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+  (click)="hideDialog()"></button>
 
 </p-dialog>

@@ -12,6 +12,7 @@ export class Area {
   areaPadre?: Area;
   areaList: Area[];
   contacto: string;
+  padreNombre?: string;
 
   numero: number;
 
