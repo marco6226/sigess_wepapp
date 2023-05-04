@@ -43,10 +43,11 @@ export class AnalisisDesviacionService extends ServiceCRUD<AnalisisDesviacion>{
     return "AnalisisDesviacionService";
   }
 
-  sendGestoresEmail(idReporte: number, aliadoID: number, analisisID: number){
+  sendGestoresEmail(idReporte: number, aliadoID: number, analisisID: number, esNuevo: boolean){
     let body = {
       aliadoID: aliadoID,
-      analisisID: analisisID
+      analisisID: analisisID,
+      esNuevo: esNuevo
     }
 
     return new Promise((resolve, reject) => {

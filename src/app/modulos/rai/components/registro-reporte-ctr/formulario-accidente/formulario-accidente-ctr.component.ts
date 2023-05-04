@@ -662,103 +662,16 @@ export class FormularioAccidenteCtrComponent implements OnInit {
             this.seguimiento.estado = 'Sin gestión';
             this.seguimiento.fecha = null;
             this.analisisDesviacion.seguimiento = JSON.stringify(this.seguimiento);
-
-            let documentos: Documento[] = this.documentosFurat
-            .concat(this.documentosInvAt
-              , this.documentosRepEps
-              , this.documentoEvidenciasPA
-              , this.documentosNovedadSeg
-              , this.documentoOtros);
-
-            this.analisisDesviacion.observacion_causas = JSON.stringify(
-              {
-                formCausaRaiz: this.formCausasRaiz ? this.formCausasRaiz.value : null,
-                formCausaInmediata: this.formCausasInmediatas ? this.formCausasInmediatas.value : null
-              }
-            );
-            this.analisisDesviacion.causaRaizList = this.buildList(this.causaBasicaSelect);
-            this.analisisDesviacion.causaInmediataList = this.buildList(this.causaInmediataSelect);
-            this.analisisDesviacion.plan_accion = JSON.stringify(this.formPlanAccion.value);
-            this.analisisDesviacion.documentosList = documentos;
-
-            this.reporteService.update(this.reporte).then(res => {
-              this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {
-                this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
-              }).catch(err => {
-                this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-                console.log('Error al guardar analisis desviación', err);
-              });
-            }).catch(err => {
-              this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-              console.error('Error al actualizar reporte', err);
-            });
+            this.updateReporteAT(true);
           },
           reject: () => {
             this.analisisDesviacion.seguimiento = JSON.stringify(this.seguimiento);
-
-            let documentos: Documento[] = this.documentosFurat
-            .concat(this.documentosInvAt
-              , this.documentosRepEps
-              , this.documentoEvidenciasPA
-              , this.documentosNovedadSeg
-              , this.documentoOtros);
-
-            this.analisisDesviacion.observacion_causas = JSON.stringify(
-              {
-                formCausaRaiz: this.formCausasRaiz ? this.formCausasRaiz.value : null,
-                formCausaInmediata: this.formCausasInmediatas ? this.formCausasInmediatas.value : null
-              }
-            );
-            this.analisisDesviacion.causaRaizList = this.buildList(this.causaBasicaSelect);
-            this.analisisDesviacion.causaInmediataList = this.buildList(this.causaInmediataSelect);
-            this.analisisDesviacion.plan_accion = JSON.stringify(this.formPlanAccion.value);
-            this.analisisDesviacion.documentosList = documentos;
-
-            this.reporteService.update(this.reporte).then(res => {
-              this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {
-                this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
-              }).catch(err => {
-                this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-                console.log('Error al guardar analisis desviación', err);
-              });
-            }).catch(err => {
-              this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-              console.error('Error al actualizar reporte', err);
-            });
+            this.updateReporteAT();
           }
         });
       }else{
         this.analisisDesviacion.seguimiento = JSON.stringify(this.seguimiento);
-
-        let documentos: Documento[] = this.documentosFurat
-        .concat(this.documentosInvAt
-          , this.documentosRepEps
-          , this.documentoEvidenciasPA
-          , this.documentosNovedadSeg
-          , this.documentoOtros);
-
-        this.analisisDesviacion.observacion_causas = JSON.stringify(
-          {
-            formCausaRaiz: this.formCausasRaiz ? this.formCausasRaiz.value : null,
-            formCausaInmediata: this.formCausasInmediatas ? this.formCausasInmediatas.value : null
-          }
-        );
-        this.analisisDesviacion.causaRaizList = this.buildList(this.causaBasicaSelect);
-        this.analisisDesviacion.causaInmediataList = this.buildList(this.causaInmediataSelect);
-        this.analisisDesviacion.plan_accion = JSON.stringify(this.formPlanAccion.value);
-        this.analisisDesviacion.documentosList = documentos;
-
-        this.reporteService.update(this.reporte).then(res => {
-          this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {
-            this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
-          }).catch(err => {
-            this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-            console.log('Error al guardar analisis desviación', err);
-          });
-        }).catch(err => {
-          this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-          console.error('Error al actualizar reporte', err);
-        });
+        this.updateReporteAT();
       }
     }else{
       this.seguimiento = {
@@ -790,7 +703,8 @@ export class FormularioAccidenteCtrComponent implements OnInit {
               .sendGestoresEmail(
                 this.reporte.id,
                 Number(this.sesionService.getEmpresa().id),
-                Number(this.analisisDesviacion.id))
+                Number(this.analisisDesviacion.id),
+                true)
                 .then((res?: any) => {
                   this.messageService.add({severity: 'success', summary: 'Se envió correo a gestore e interventore.', detail: 'Se guardó el reporte'});
                   console.log('correo enviado');
@@ -809,6 +723,51 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         });
       }
     }
+  }
+
+  updateReporteAT(notificarActualizacion?: boolean){
+    let documentos: Documento[] = this.documentosFurat
+    .concat(this.documentosInvAt
+      , this.documentosRepEps
+      , this.documentoEvidenciasPA
+      , this.documentosNovedadSeg
+      , this.documentoOtros);
+
+    this.analisisDesviacion.observacion_causas = JSON.stringify(
+      {
+        formCausaRaiz: this.formCausasRaiz ? this.formCausasRaiz.value : null,
+        formCausaInmediata: this.formCausasInmediatas ? this.formCausasInmediatas.value : null
+      }
+    );
+    this.analisisDesviacion.causaRaizList = this.buildList(this.causaBasicaSelect);
+    this.analisisDesviacion.causaInmediataList = this.buildList(this.causaInmediataSelect);
+    this.analisisDesviacion.plan_accion = JSON.stringify(this.formPlanAccion.value);
+    this.analisisDesviacion.documentosList = documentos;
+
+    this.reporteService.update(this.reporte).then(res => {
+      this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {
+        if(notificarActualizacion){
+          this.analisisDeviacionService.sendGestoresEmail(
+            this.reporte.id,
+            Number(this.sesionService.getEmpresa().id),
+            Number(this.analisisDesviacion.id),
+            false
+          ).then(res => {
+            this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
+          }).catch(err => {
+            console.error('Error al enviar email', err);
+          });
+        }else{
+          this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
+        }
+      }).catch(err => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
+        console.log('Error al guardar analisis desviación', err);
+      });
+    }).catch(err => {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
+      console.error('Error al actualizar reporte', err);
+    });
   }
 
   descargarDocumento(doc: Documento) {

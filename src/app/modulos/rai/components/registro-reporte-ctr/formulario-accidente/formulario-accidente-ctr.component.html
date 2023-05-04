@@ -530,7 +530,7 @@
         </div>
         <div class="ui-g-12" *ngIf="seguimiento">
           <span>Estado: <b>{{ seguimiento.estado }}</b></span><br>
-          <span *ngIf="seguimiento.fecha">Fecha: <b>{{ seguimiento.fecha | date:'dd/MM/yyyy' }}</b></span>
+          <span *ngIf="seguimiento.fecha">Fecha: <b>{{ seguimiento.fecha | date:'dd/MM/yyyy - hh:mm a' }}</b></span>
         </div>
         <div class="ui-g-12">
           <h5 class="title-header">Observaciones de Corona</h5>
@@ -543,7 +543,7 @@
           <button pButton (click)="onClickSeguimientoReporte(true)" icon="fa fa-thumbs-up" class="ui-button-success" 
           label="APROBAR" style="margin-right: 15px;"></button>
           <button pButton (click)="onClickSeguimientoReporte(false)" icon="fa fa-thumbs-down" class="ui-button-danger"
-          label="DENEGAR"></button>
+          label="RECHAZAR"></button>
         </div>
       </div>
     </p-accordionTab>
