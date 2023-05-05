@@ -70,7 +70,7 @@
           <div class="ui-g-12">
             <div class="ui-g-4 ui-md-6 ui-sm-12">
               <div class="input-field">
-                <p-calendar [showIcon]="true" [locale]="locale" [yearNavigator]="true" 
+                <p-calendar [showIcon]="true" [locale]="locale" [yearNavigator]="true" dateFormat="dd/mm/yy"
                 [monthNavigator]="true" yearRange="1960:{{anioActual}}"
                 formControlName="fechaNacimiento" required [ngStyle]="{'width': '90%'}"></p-calendar>
                 <label class="active">Fecha Nacimiento</label>
@@ -90,7 +90,7 @@
           <div class="ui-g-12">
             <div class="ui-g-4 ui-md-6 ui-sm-12">
               <div class="input-field">
-                <p-calendar [showIcon]="true" required [locale]="locale" [yearNavigator]="true" 
+                <p-calendar [showIcon]="true" required [locale]="locale" [yearNavigator]="true" dateFormat="dd/mm/yy"
                 [monthNavigator]="true" yearRange="1960:{{anioActual}}"
                 formControlName="fechaIngreso" [ngStyle]="{'width': '90%'}"></p-calendar>
                 <label class="active">Fecha Ingreso</label>
@@ -138,7 +138,7 @@
           <div class="ui-g-12">
               <div class="ui-g-4 ui-md-6 ui-sm-12">
                 <div class="input-field">
-                  <p-calendar [showIcon]="true" [locale]="locale"
+                  <p-calendar [showIcon]="true" [locale]="locale" dateFormat="dd/mm/yy"
                   formControlName="fechaAccidente" required [yearNavigator]="true" 
                   [monthNavigator]="true" yearRange="1960:{{anioActual}}"
                   [ngStyle]="{'width': '90%'}"></p-calendar>
@@ -391,7 +391,7 @@
               <div class="input-field">
                 <label class="active">Fecha de cierre</label>
                 <div>
-                  <p-calendar [showIcon]="true" [locale]="locale" required
+                  <p-calendar [showIcon]="true" [locale]="locale" required dateFormat="dd/mm/yy"
                   formControlName="fechaCierre"></p-calendar>
                 </div>
               </div>
@@ -530,7 +530,7 @@
         </div>
         <div class="ui-g-12" *ngIf="seguimiento">
           <span>Estado: <b>{{ seguimiento.estado }}</b></span><br>
-          <span *ngIf="seguimiento.fecha">Fecha: <b>{{ seguimiento.fecha | date:'dd/MM/yyyy' }}</b></span>
+          <span *ngIf="seguimiento.fecha">Fecha: <b>{{ seguimiento.fecha | date:'dd/MM/yyyy - hh:mm a' }}</b></span>
         </div>
         <div class="ui-g-12">
           <h5 class="title-header">Observaciones de Corona</h5>
@@ -543,7 +543,7 @@
           <button pButton (click)="onClickSeguimientoReporte(true)" icon="fa fa-thumbs-up" class="ui-button-success" 
           label="APROBAR" style="margin-right: 15px;"></button>
           <button pButton (click)="onClickSeguimientoReporte(false)" icon="fa fa-thumbs-down" class="ui-button-danger"
-          label="DENEGAR"></button>
+          label="RECHAZAR"></button>
         </div>
       </div>
     </p-accordionTab>

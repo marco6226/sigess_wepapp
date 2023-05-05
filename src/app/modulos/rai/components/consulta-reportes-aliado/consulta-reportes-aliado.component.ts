@@ -78,7 +78,6 @@ export class ConsultaReportesAliadoComponent implements OnInit {
     this.reportesList = <ReporteAux[]>this.desviacionAliados.map(item => {
       let gestor = JSON.parse(item.gestor);
       let planAccion = JSON.parse(item.planAccion);
-      console.log(planAccion);
       
       return {
         id: item.id,
