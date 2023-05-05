@@ -301,9 +301,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         this.estadoEvento = complementaria.EventoArl;
         this.gestorData.gestor = JSON.parse(this.analisisDesviacion.gestor);
         let plan_accion: any = JSON.parse(this.analisisDesviacion.plan_accion);
-        this.formPlanAccion.get('porcentajeAvance').setValue(plan_accion.porcentajeAvance);
-        this.formPlanAccion.get('fechaCierre').setValue(new Date(plan_accion.fechaCierre));
-        this.formPlanAccion.get('descripcionTarea').setValue(plan_accion.descripcionTarea);
+        this.formPlanAccion.get('porcentajeAvance').setValue(plan_accion ? plan_accion.porcentajeAvance : null);
+        this.formPlanAccion.get('fechaCierre').setValue(plan_accion ? new Date(plan_accion.fechaCierre) : null);
+        this.formPlanAccion.get('descripcionTarea').setValue(plan_accion ? plan_accion.descripcionTarea : null);
         this.seguimiento = JSON.parse(this.analisisDesviacion.seguimiento);
         
         let idEmpresa = this.sesionService.getEmpresa().idEmpresaAliada ? this.sesionService.getEmpresa().idEmpresaAliada : this.sesionService.getEmpresa().id;
@@ -706,7 +706,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
                 Number(this.analisisDesviacion.id),
                 true)
                 .then((res?: any) => {
-                  this.messageService.add({severity: 'success', summary: 'Se envió correo a gestore e interventore.', detail: 'Se guardó el reporte'});
+                  this.messageService.add({severity: 'success', summary: 'Se envió correo a gestor e interventor.', detail: 'Se guardó el reporte'});
                   console.log('correo enviado');
                 }).catch(err => {
                   this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo enviar correo a gestor e interventor.'});
