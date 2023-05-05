@@ -1,95 +1,276 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<p-card class="ui-g-12"  >
-   
-    <div class="p-grid  p-mt-3 p-jc-evenly colorsitos" style="padding: 2px 2px;">
-
-        <div class="col-md-10 ">
-            <div class="row ">
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card l-bg-cherry">
-                        <div class="card-statistic-3 p-3">
-                            <div class="card-icon card-icon-large"></div>
-                            <div class="mb-4">
-                                <h5 class="card-title mb-0">Numero de ATs</h5>
-                            </div>
-                            <div class="row align-items-center mb-2 d-flex">
-                                
+<div class="ui-g">
+    <div style="width: 100%;">
+      <p-panel header="RESUMEN ACCIDENTALIDAD">
+          <div class="p-grid  p-mt-3 p-jc-evenly colorsitos colorfondo">
+              <div class="col-md-10 ">
+                  <div class="row ">
+                      <div class="col-xl-3 col-lg-6">
+                          <div class="card l-bg-blue1-dark">
+                              <div class="card-statistic-3 p-3">
+                                  <div class="card-icon card-icon-large"></div>
+                                  <div class="mb-4">
+                                      <h5 class="card-title mb-0">Numero de ATs</h5>
+                                  </div>
+                                  <div class="row align-items-center mb-2 d-flex">
+                                      
+                                      <div class="col-4 text-right">
+                                          <span class="tamañotexto">{{this.NoEventos || 0}}</span>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-6">
+                          <div class="card l-bg-blue2-dark">
+                              <div class="card-statistic-3 p-3">
+                                  <div class="card-icon card-icon-large"></div>
+                                  <div class="mb-4">
+                                      <h5 class="card-title mb-0">Dias perdidos</h5>
+                                  </div>
+                                  <div class="row align-items-center mb-2 d-flex">
+                                      
+                                      <div class="col-4 text-right">
+                                          <span class="tamañotexto">{{this.diasPerdidos || 0}}</span>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-6">
+                          <div class={{colorIli}}>
+                              <div class="card-statistic-3 p-3">
+                                  <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
+                                  <div class="mb-4">
+                                      <h5 class="card-title mb-0">ILI</h5>
+                                  </div>
+                                  <div class="row align-items-center mb-2 d-flex">
+                                      
+                                      <div class="col-4 text-left">
+                                          <span class="tamañotexto">{{ili || 0}}</span>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-6">
+                          <div class="card l-bg-blue3-dark">
+                              <div class="card-statistic-3 p-3">
+                                  <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                                  <div class="mb-4">
+                                      <h5 class="card-title mb-0">Meta</h5>
+                                  </div>
+                                  <div class="row align-items-center mb-2 d-flex">
+                                      <div class="col-4 text-left">
+                                          <span class="tamañotexto">{{metaIli || 0}}</span>
+                                      </div>                                     
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="p-col-10 p-mt-6 mid-border">
+                  <div class="p-d-flex p-jc-evenly">
+                      <div class="p-d-flex"><p class="p-m-0" style="margin-right: 10px!important;">División:</p> <p-dropdown appendTo="body" [options]="divisiones" [(ngModel)]="selectedDivisionResumen" placeholder="Seleccionar división" [showClear]="true" (onChange)="loadResumen()"></p-dropdown></div>
+                      <div class="p-d-flex">
+                        <p class="p-m-0" style="margin-right: 10px!important;">Año</p>
+                        <p-dropdown [options]="yearRange"
+                        placeholder="Seleccione un año"
+                        [(ngModel)]="anioActualResumen"
+                        (onChange)="loadResumen()">
+                        </p-dropdown>
+                      </div>
+                      <div class="p-d-flex">
+                        <p class="p-m-1" style="margin-right: 10px!important;">Desde:</p>
+                          <i style="font-size:24px" class="fa">&#xf073;</i>   
+                        <p-calendar [locale]="localeES" view="month"
+                        dateFormat="MM" placeholder="Seleccione" appendTo="body" 
+                        [(ngModel)]="fechaInicioResumen" showButtonBar="true" 
+                        (onSelect)="loadResumen()" (onClearClick)="loadResumen()"
+                        (onTodayClick)="loadResumen()">
+                        </p-calendar>
+                      </div>
+                      <div class="p-d-flex">
+                        <p class="p-m-1" style="margin-right: 10px!important;">Hasta:</p>
+                          <i style="font-size:24px" class="fa">&#xf073;</i> 
+                          <p-calendar [locale]="localeES" view="month" dateFormat="MM" 
+                          placeholder="Seleccione" appendTo="body" showButtonBar="true" 
+                          [(ngModel)]="fechaFinalResumen" (onSelect)="loadResumen()"
+                          (onClearClick)="loadResumen()" (onTodayClick)="loadResumen()">
+                          </p-calendar>
+                      </div>
+                      <div class="p-d-flex">
+                        <button pButton type="button" icon="fa fa-share-square-o" title="Indicadores Accidentalidad"
+                        (click)="IndicadoresAccidentalidad()"></button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </p-panel>
+      <br>
+      <p-panel header="RESUMEN CARACTERIZACIÓN">
+        <div class="p-grid  p-mt-3 p-jc-evenly colorsitos colorfondo">
+            <div class="col-md-10 ">
+                <div class="row ">
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card l-bg-blue1-dark">
+                            <div class="card-statistic-3 p-3">
+                              <div class="card-icon card-icon-large"></div>
+                              <div class="mb-4">
+                                  <h5 class="card-title mb-0">Leve</h5>
+                              </div>
+                              <div class="row align-items-center mb-2 d-flex">
                                 <div class="col-4 text-right">
-                                    <span class="tamañotexto">{{this.NoEventos}}</span>
+                                    <span class="tamañotexto">{{this.ContLeve}}</span>
                                 </div>
+                              </div>
                             </div>
-                            
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card l-bg-blue-dark">
-                        <div class="card-statistic-3 p-3">
-                            <div class="card-icon card-icon-large"></div>
-                            <div class="mb-4">
-                                <h5 class="card-title mb-0">Dias perdidos</h5>
-                            </div>
-                            <div class="row align-items-center mb-2 d-flex">
-                                
-                                <div class="col-4 text-right">
-                                    <span class="tamañotexto">{{this.diasPerdidos}}</span>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card l-bg-blue2-dark">
+                            <div class="card-statistic-3 p-3">
+                                <div class="card-icon card-icon-large"></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Grave</h5>
+                                </div>
+                                <div class="row align-items-center mb-2 d-flex">
+                                  <div class="col-4 text-right">
+                                      <span class="tamañotexto">{{this.ContGrave}}</span>
+                                  </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card l-bg-green-dark">
-                        <div class="card-statistic-3 p-3">
-                            <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
-                            <div class="mb-4">
-                                <h5 class="card-title mb-0">ILI</h5>
-                            </div>
-                            <div class="row align-items-center mb-2 d-flex">
-                                
-                                <div class="col-4 text-left">
-                                    <span class="tamañotexto">0.0471</span>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card l-bg-blue3-dark">
+                            <div class="card-statistic-3 p-3">
+                                <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Severo</h5>
+                                </div>
+                                <div class="row align-items-center mb-2 d-flex">
+                                    <div class="col-4 text-left">
+                                        <span class="tamañotexto">{{this.ContSevero}}</span>
+                                    </div>                                     
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card l-bg-orange-dark">
-                        <div class="card-statistic-3 p-3">
-                            <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
-                            <div class="mb-4">
-                                <h5 class="card-title mb-0">Meta</h5>
-                            </div>
-                            <div class="row align-items-center mb-2 d-flex">
-                                <div class="col-4 text-left">
-                                    <span class="tamañotexto">0.02953</span>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card l-bg-blue4-dark">
+                            <div class="card-statistic-3 p-3">
+                                <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Mortal</h5>
                                 </div>
-                                
+                                <div class="row align-items-center mb-2 d-flex">
+                                    <div class="col-4 text-left">
+                                        <span class="tamañotexto">{{this.ContMortal}}</span>
+                                    </div>                                     
+                                </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="p-col-12 p-mt-4 mid-border">
-            <div class="p-d-flex p-jc-evenly">
-                <div class="p-d-flex"><p class="p-m-0">Area : </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="division($event)"></p-dropdown></div>
-                <div class="p-d-flex">  
-                    <i style="font-size:24px" class="fa">&#xf073;</i>   
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [maxDate]="this.hastas" value="this.desdes"   placeholder="Desde" appendTo="body" [(ngModel)]="this.desdes" (onSelect)="selecFromDate1($event)" > </p-calendar> 
-                </div>
-                <div class="p-d-flex"> 
-                    <i style="font-size:24px" class="fa">&#xf073;</i> 
-                    <p-calendar [locale]="localeES" view="month" dateFormat="mm/yy" [minDate]="this.desdes" value="this.hastas"   placeholder="Hasta" appendTo="body"  [(ngModel)]="this.hastas" (onSelect)="selectToDate1($event)"> </p-calendar>
+            <div class="p-col-6 p-mt-6 mid-border">
+                <div class="p-d-flex p-jc-evenly">
+                    <div class="p-d-flex"><p class="p-m-0">Area: </p>&nbsp;<p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="CardsClasificacion()" [(ngModel)]="selectArea" [showClear]="true"></p-dropdown></div>
+                    &nbsp;
+                    <div class="p-d-flex">  
+                        <i style="font-size:24px" class="fa">&#xf073;</i>   
+                        <p-calendar [locale]="localeES" view="month" dateFormat="MM" placeholder="Desde" appendTo="body" [(ngModel)]="date1" (ngModelChange)="CardsClasificacion()" [showButtonBar]="true"> </p-calendar> 
+                    </div>
+                    &nbsp;
+                    <div class="p-d-flex"> 
+                        <i style="font-size:24px" class="fa">&#xf073;</i> 
+                        <p-calendar [locale]="localeES" view="month" dateFormat="MM" placeholder="Hasta" appendTo="body" [(ngModel)]="date2" (ngModelChange)="CardsClasificacion()" [showButtonBar]="true"> </p-calendar>
+                    </div>
+                    <div class="p-d-flex">
+                        <button pButton type="button" icon="fa fa-share-square-o" title="Indicadores Caracterización"
+                        (click)="IndicadoresCaracterizacion()"></button>
+                    </div>
                 </div>
             </div>
         </div>
+      </p-panel>
+      <br>
+      <p-panel header="RESUMEN CASOS MEDICOS">
+        <div class="p-grid  p-mt-3 p-jc-evenly colorsitos colorfondo">
+            <div class="col-md-10 ">
+                <div class="row ">
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="card l-bg-blue1-dark">
+                            <div class="card-statistic-3 p-3">
+                              <div class="card-icon card-icon-large"></div>
+                              <div class="mb-4">
+                                  <h5 class="card-title mb-0">Numero de casos</h5>
+                              </div>
+                              <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-4 text-right">
+                                    <span class="tamañotexto">{{this.numCasos}}</span>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="card l-bg-blue2-dark">
+                            <div class="card-statistic-3 p-3">
+                                <div class="card-icon card-icon-large"></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Casos abiertos</h5>
+                                </div>
+                                <div class="row align-items-center mb-2 d-flex">
+                                  <div class="col-4 text-right">
+                                      <span class="tamañotexto">{{this.casosAbiertos}}</span>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="card l-bg-blue3-dark">
+                            <div class="card-statistic-3 p-3">
+                                <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Casos cerrados</h5>
+                                </div>
+                                <div class="row align-items-center mb-2 d-flex">
+                                    <div class="col-4 text-left">
+                                        <span class="tamañotexto">{{this.casosCerrados}}</span>
+                                    </div>                                     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-6 p-mt-6 mid-border">
+                <div class="p-d-flex p-jc-evenly">
+                    <div class="p-d-flex"><p class="p-m-0">Area: </p> <p-dropdown appendTo="body" [options]="divisiones" placeholder="Seleccionar división" (onChange)="numeroCasos()" [(ngModel)]="selecDiv0" [showClear]="true"></p-dropdown></div>
+                    <div class="p-d-flex">  
+                        <i style="font-size:24px" class="fa">&#xf073;</i>   
+                        <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="MM" placeholder="Desde" appendTo="body" [(ngModel)]="fechaDesde0" (ngModelChange)="numeroCasos()"> </p-calendar> 
+                    </div>
+                    <div class="p-d-flex"> 
+                        <i style="font-size:24px" class="fa">&#xf073;</i> 
+                        <p-calendar [showButtonBar]="true" [locale]="localeES" view="month" dateFormat="MM" placeholder="Hasta" appendTo="body" [(ngModel)]="fechaHasta0" (ngModelChange)="numeroCasos()"> </p-calendar>
+                    </div>
+                    <div class="p-d-flex">
+                        <button pButton type="button" icon="fa fa-share-square-o" title="Indicadores Casos Medicos"
+                        (click)="IndicadoresCasosMedicos()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-panel>
     </div>
-    <button pButton type="button" (click)="Indicadores()" icon='fa fa-ambulance' label="Indicadores"></button>
-</p-card>
+</div>
