@@ -223,7 +223,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     nameAndLastName = "";
     solicitando: boolean = false;
     flagSCM:boolean=true;
-    departamento;
+    departamento=null;
     entity: epsorarl = { EPS: [], ARL: [], AFP: [], Medicina_Prepagada: [], Proveedor_de_salud: [] };
     tipoOptionList = [
         { label: "--Seleccione--", value: null },
@@ -292,6 +292,9 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { label: "En Firme", value: "2" },
         { label: "En Apelación", value: "0" }
     ]
+
+    flagGuardado:boolean=false
+
     constructor(
         private empleadoService: EmpleadoService,
         fb: FormBuilder,
@@ -630,7 +633,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.empleadoSelect = null;
 
     }
-
+    
     async onSubmit() {
         console.log("hi");
 
@@ -690,12 +693,16 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
-
-            status = await this.scmService.create(this.casoMedicoForm.value);
+            this.flagGuardado=true
+            status = await this.scmService.create(this.casoMedicoForm.value).then(resp=>this.flagGuardado=false)
+            .catch(er=>this.flagGuardado=false)
+            
         } else {
 
             this.casoMedicoForm.patchValue({ id: this.caseSelect.id });
-            status = await this.scmService.edit(this.casoMedicoForm.value);
+            this.flagGuardado=true
+            status = await this.scmService.edit(this.casoMedicoForm.value).then(resp=>this.flagGuardado=false)
+            .catch(er=>this.flagGuardado=false);
         }
 
         if (this.adicionar) {
@@ -785,6 +792,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.empleadoSelect = null;
         this.casoMedicoForm.reset();
         let emp = <Empleado>this.value;
+        console.log(emp)
         // console.log(emp.area['padreNombre'])
 
 
@@ -816,7 +824,11 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             documento: this.empleadoSelect.numeroIdentificacion,
         });
         this.casoMedicoForm.patchValue({ pkUser: this.empleadoSelect.id })
-        this.departamento = this.empleadoSelect.area.id;
+        console.log(this.empleadoSelect)
+        if(this.empleadoSelect.area){
+            if(this.empleadoSelect.area.nombre!="SELECCIONE UBICACION"){
+            this.departamento = this.empleadoSelect.area.id;}
+        }
 
 
         if (this.empleadoSelect.businessPartner) {
@@ -826,6 +838,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             this.onSelectionJefeInmediato(this.empleadoSelect.jefeInmediato);
         }
         await this.usuarioPermisos()
+
         this.empleadoForm.patchValue({
             'id': this.empleadoSelect.id,
             'primerNombre': this.empleadoSelect.primerNombre,
@@ -846,7 +859,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             'tipoIdentificacion': this.empleadoSelect.tipoIdentificacion == null ? null : this.empleadoSelect.tipoIdentificacion.id,
             'tipoVinculacion': this.empleadoSelect.tipoVinculacion,
             'zonaResidencia': this.empleadoSelect.zonaResidencia,
-            'area': this.empleadoSelect.area,
+            'area': this.empleadoSelect.area? (this.empleadoSelect.area.nombre!="SELECCIONE UBICACION"?this.empleadoSelect.area:null):null,
             'cargoId': this.empleadoSelect.cargo.id,
             'perfilesId': this.usuarioP,
             "corporativePhone": this.empleadoSelect.corporativePhone,
@@ -857,7 +870,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             regional: this.empleadoSelect.regional,
             correoPersonal: this.empleadoSelect.correoPersonal,
             ciudadGerencia: this.empleadoSelect.ciudadGerencia,
-            division: this.empleadoSelect.area['padreNombre'],
+            division: this.empleadoSelect.area?(this.empleadoSelect.area.nombre!="SELECCIONE UBICACION"?this.empleadoSelect.area['padreNombre']:null):null,
 
             'email': [this.empleadoSelect.usuario.email]
         });
