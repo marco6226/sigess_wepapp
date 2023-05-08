@@ -559,6 +559,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
         // })
         reporte.temporal = this.form.value.razonSocial;
         reporte.identificacionEmpresa=this.form.value.identificacionEmpresa;
+        reporte.istemporal=true
         await this.reporteService.create(reporte).then(
             async data => {
                 this.onSave.emit(<Reporte>data)

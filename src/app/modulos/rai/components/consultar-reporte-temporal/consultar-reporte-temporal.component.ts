@@ -5,7 +5,6 @@ import { ParametroNavegacionService } from 'app/modulos/core/services/parametro-
 import { FilterQuery } from 'app/modulos/core/entities/filter-query'
 import { ConsuModReporteService } from 'app/modulos/sec/services/consu-mod-reporte.service'
 import { Criteria } from "../../../core/entities/filter";
-
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 @Component({
   selector: 'app-consultar-reporte-temporal',
@@ -32,7 +31,8 @@ export class ConsultarReporteTemporalComponent implements OnInit {
     'numerofurat',
     'temporal',
     'empresa',
-    'areaAccidente'
+    'areaAccidente',
+    'istemporal'
   ];
   sortedTable:string="fechaAccidente";
   constructor(
@@ -40,6 +40,7 @@ export class ConsultarReporteTemporalComponent implements OnInit {
     private paramNav: ParametroNavegacionService,
     private ConsuModReporteService: ConsuModReporteService,
     private sesionService: SesionService,
+    // private desviacionTemproalService:DesviacionTemproalService
   ) { }
 
   async ngOnInit() {
@@ -47,33 +48,6 @@ export class ConsultarReporteTemporalComponent implements OnInit {
   }
 
   lazyLoad(event: any) {
-
-    if(this.idEmpresa=='22')
-    this.reporteService.getForEmpresa().then(resp => {
-        console.log(resp)
-        this.totalRecords = resp['count'];
-        this.loading = false;
-        this.reportesList = [];
-        
-        (<any[]>resp).forEach(dto => {
-          let resp1={empresa:dto[0]
-            ,fechaAccidente:dto[1]
-            ,fechaReporte:dto[2]
-            ,id:dto[3]
-            ,numeroIdentificacionEmpleado:dto[4]
-            ,numerofurat:dto[5]
-            ,primerApellidoEmpleado:dto[6]
-            ,primerNombreEmpleado:dto[7]
-            ,temporal:dto[8]
-            ,tipo:dto[9]
-            ,areaAccidente:dto[10]
-          }
-          console.log(resp1)
-          this.reportesList.push(FilterQuery.dtoToObject(resp1));
-        });
-      }
-    );
-
     this.loading = true;
     let filterQuery = new FilterQuery();
     filterQuery.sortField = event.sortField;
@@ -84,6 +58,23 @@ export class ConsultarReporteTemporalComponent implements OnInit {
     filterQuery.fieldList = this.fields;
     filterQuery.filterList = FilterQuery.filtersToArray(event.filters);
     filterQuery.filterList.push({ criteria: Criteria.IS_NOT_NULL, field: "temporal"});
+    filterQuery.filterList.push({ criteria: Criteria.EQUALS, field: 'istemporal', value1: 'true'});
+
+    if(this.idEmpresa=='22'){
+
+    this.reporteService.getRepWithFilter(filterQuery).then(resp => {
+      this.totalRecords = resp['count'];
+      this.loading = false;
+      this.reportesList = [];
+      (<any[]>resp['data']).forEach(dto => {
+        console.log(dto)
+        this.reportesList.push(FilterQuery.dtoToObject(dto));
+      });
+      console.log(resp)
+    })
+  }
+
+
     if(this.idEmpresa!='22')
     this.reporteService.findByFilter(filterQuery).then(
       resp => {

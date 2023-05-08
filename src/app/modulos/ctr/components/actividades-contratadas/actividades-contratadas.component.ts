@@ -39,6 +39,7 @@ export class ActividadesContratadasComponent implements OnInit {
   actividadesContratadasList:TreeNode[];
   actividadesContratadasListSub1:TreeNode[];
   actividadesContratadasListSub2:TreeNode[];
+  actividadesContratadasListSub3:TreeNode[];
 
   actividadesContratadasList2:TreeNode[];
 
@@ -112,6 +113,7 @@ export class ActividadesContratadasComponent implements OnInit {
     this.actividadesContratadasList2=[]
     this.actividadesContratadasListSub1=[]
     this.actividadesContratadasListSub2=[]
+    this.actividadesContratadasListSub3=[]
 
     
     await this.empresaService.getActividadesContratadas(this.rutaActiva.snapshot.params.id).then((element: ActividadesContratadas[]) =>{
@@ -119,6 +121,7 @@ export class ActividadesContratadasComponent implements OnInit {
       console.log(element)
       let id1
       let id2
+      let id3
       element.forEach(elemen => {
         if(elemen.id==0)
         id1=elemen.id
@@ -131,6 +134,9 @@ export class ActividadesContratadasComponent implements OnInit {
 
         if(elemen.padre_id==15)
         this.actividadesContratadasListSub2.push({key:elemen.id.toString(),label: elemen.actividad,  data: elemen.actividad})
+
+        if(elemen.padre_id==86)
+        this.actividadesContratadasListSub3.push({key:elemen.id.toString(), label: elemen.actividad, data: elemen.actividad});
     });
 
       this.actividadesContratadasListSub1.sort(function(a,b){
@@ -153,8 +159,10 @@ export class ActividadesContratadasComponent implements OnInit {
 
       this.actividadesContratadasList.push({key:id1,label: "SERVICIOS ADMINISTRATIVOS",  data: "SERVICIOS ADMINISTRATIVOS",selectable:false, children:this.actividadesContratadasListSub1})
       this.actividadesContratadasList.push({key:id2,label: "SERVICIOS DE MANTENIMIENTO",  data: "SERVICIOS DE MANTENIMIENTO",selectable:false, children:this.actividadesContratadasListSub2})
+      this.actividadesContratadasList.push({key:id3, label: "TRANSPORTE DE CARGA", data: "TRANSPORTE DE CARGA", selectable:false, children: this.actividadesContratadasListSub3});
       this.actividadesContratadasList2.push({key:id1,label: "SERVICIOS ADMINISTRATIVOS",  data: "SERVICIOS ADMINISTRATIVOS",selectable:false, children:this.actividadesContratadasListSub1})
       this.actividadesContratadasList2.push({key:id2,label: "SERVICIOS DE MANTENIMIENTO",  data: "SERVICIOS DE MANTENIMIENTO",selectable:false, children:this.actividadesContratadasListSub2})
+      this.actividadesContratadasList2.push({key:id3, label: "TRANSPORTE DE CARGA", data: "TRANSPORTE DE CARGA", selectable:false, children: this.actividadesContratadasListSub3})
       
    });
   }
