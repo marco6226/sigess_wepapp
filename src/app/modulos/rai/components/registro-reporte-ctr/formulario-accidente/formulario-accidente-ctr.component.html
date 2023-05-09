@@ -147,7 +147,7 @@
               </div>
               <div class="ui-g-4 ui-md-6 ui-sm-12">
                 <div class="input-field">
-                  <p-calendar [showIcon]="true" [locale]="locale"
+                  <p-calendar [showIcon]="true" icon="pi pi-clock" [locale]="locale"
                   formControlName="horaAccidente" required
                   [ngStyle]="{'width': '90%'}" [timeOnly]="true"></p-calendar>
                   <label class="active">Hora del accidente</label>
@@ -183,7 +183,7 @@
           <div class="ui-g-12">
               <div class="ui-g-4 ui-md-6 ui-sm-12">
                 <div class="input-field">
-                  <p-calendar [showIcon]="true" [locale]="locale"
+                  <p-calendar [showIcon]="true" icon="pi pi-clock" [locale]="locale"
                   formControlName="horaInicioLabores" required
                   [ngStyle]="{'width': '90%'}" [timeOnly]="true"></p-calendar>
                   <label class="active">Hora de inicio de labores</label>
@@ -445,7 +445,7 @@
             </p-panel>
           </div>
           <div class="ui-g-12">
-            <p-panel header="Reportes a EPS y/o entes territopriales" class="ui-g-6  ui-sm-12">
+            <p-panel header="Reportes a EPS y/o entes territoriales" class="ui-g-6  ui-sm-12">
               <div *ngIf="!esConsulta">
                 <button pButton type="button" (click)="showDialog('reporteEps')" label="Adjuntar"></button>
                 <br><small style="color: red;">Obligatorio</small>

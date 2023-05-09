@@ -699,6 +699,8 @@ export class FormularioAccidenteCtrComponent implements OnInit {
             .then((res3: AnalisisDesviacion) => {
               this.analisisDesviacion.id = res3.id;
               this.analisisId = res3.id;
+              this.messageService.add({severity: 'success', summary: 'Reporte guardado'});
+
               this.analisisDeviacionService
               .sendGestoresEmail(
                 this.reporte.id,
@@ -707,10 +709,10 @@ export class FormularioAccidenteCtrComponent implements OnInit {
                 true)
                 .then((res?: any) => {
                   this.messageService.add({severity: 'success', summary: 'Se envió correo a gestor e interventor.', detail: 'Se guardó el reporte'});
-                  console.log('correo enviado');
+                  console.info('correo enviado');
                 }).catch(err => {
-                  this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo enviar correo a gestor e interventor.'});
-                  console.error('Error al enviar correo');
+                  this.messageService.add({severity: 'error', summary: 'Error al enviar correo a gestor e interventor.', detail: 'Debe verificar que cuenta con un interventor al que notificar.'});
+                  console.error('Error al enviar correo', err);
                 });
             }).catch(err => {
               this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar reporte'});
@@ -746,6 +748,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
 
     this.reporteService.update(this.reporte).then(res => {
       this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {
+        this.messageService.add({severity: 'success', summary: 'Actualizado', detail: 'Se actualizó el reporte'});
         if(notificarActualizacion){
           this.analisisDeviacionService.sendGestoresEmail(
             this.reporte.id,
@@ -753,16 +756,15 @@ export class FormularioAccidenteCtrComponent implements OnInit {
             Number(this.analisisDesviacion.id),
             false
           ).then(res => {
-            this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
+            this.messageService.add({severity: 'success', summary: 'Correo enviado a gestor e interventor'});
           }).catch(err => {
+            this.messageService.add({severity: 'error', summary: 'Error al enviar correo a gestor e interventor'});
             console.error('Error al enviar email', err);
           });
-        }else{
-          this.messageService.add({severity: 'success', summary: 'Guardado', detail: 'Se guardó el reporte'});
         }
       }).catch(err => {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
-        console.log('Error al guardar analisis desviación', err);
+        console.log('Error al actualizar analisis desviación', err);
       });
     }).catch(err => {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
