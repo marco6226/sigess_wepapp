@@ -443,14 +443,14 @@ export class HomeCoronaComponent implements OnInit {
         if(!this.selectArea)this.ContCardsClasificacion(element);
         if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
       }
-      // if(this.radioGra0==1 && element.emptemporal!=null){
-      //   if(this.selectArea.length==0 || this.selectArea.toString()=='Corona total')this.ContCardsClasificacion(element);
-      //   if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
-      // }
-      // if(this.radioGra0==2 && element.emptemporal==null){
-      //   if(this.selectArea.length==0 || this.selectArea.toString()=='Corona total')this.ContCardsClasificacion(element);
-      //   if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
-      // }
+      if(this.radioGra0==1 && element.emptemporal!=null){
+        if(!this.selectArea)this.ContCardsClasificacion(element);
+        if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
+      }
+      if(this.radioGra0==2 && element.emptemporal==null){
+        if(!this.selectArea)this.ContCardsClasificacion(element);
+        if(this.selectArea==element.padrenombre  && this.selectArea.toString()!='Corona total')this.ContCardsClasificacion(element);
+      }
 
 
 
