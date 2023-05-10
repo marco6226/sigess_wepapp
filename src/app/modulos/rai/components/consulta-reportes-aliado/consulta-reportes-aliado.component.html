@@ -52,7 +52,8 @@
           <input type="text" pInputText (input)="dt.filter($event.target.value, 'seguimiento', 'contains')">
         </td>
         <td>
-          <input type="text" pInputText (input)="dt.filter($event.target.value, 'incapacidades', 'contains')">
+          <input type="text" pInputText (input)="dt.filter($event.target.value, 'incapacidades', 'contains')"
+          pTooltip="Este filtro busca en todos los campos de las incapacidades." tooltipPosition="bottom">
         </td>
         <td>
           <input type="text" pInputText (input)="dt.filter($event.target.value, 'gestor', 'contains')">

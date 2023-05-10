@@ -1,5 +1,4 @@
 <button pButton *ngIf="!consultar" label="Nuevo" icon="pi pi-plus" (click)="nuevaIncapacidad()" style="margin-right: 10px;"></button>
-<button pButton *ngIf="!consultar" label="Borrar" icon="pi pi-trash" class="p-button-danger"></button>
 <p-confirmDialog key="confirmIncapacidad"></p-confirmDialog>
 <div class="ui-g">
   <div class="ui-g-12">
@@ -38,7 +37,7 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="isVisibleDialog" [style]="{width: '450px'}" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="isVisibleDialog" [style]="{width: '450px'}" [positionTop]="100" [draggable]="true" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
   <div class="p-field">
       <label for="tipo">El evento generó incapacidad?</label>
       <p-radioButton [name]="" [value]="true" label="Si" [(ngModel)]="generoIncapacidad"></p-radioButton>
@@ -48,27 +47,27 @@
     <div class="p-field">
       <label for="tipo">Tipo</label>
       <p-dropdown appendTo="body" [filter]="true" [options]="tipoList" [(ngModel)]="tipo" placeholder="Seleccione" required></p-dropdown>
-      <small class="p-invalid" *ngIf="!tipo">is required.</small>
+      <small class="p-invalid" *ngIf="!tipo">requerido</small>
     </div>
     <div class="p-field">
       <label for="cie10">CIE 10</label>         
       <s-cieSelector id="ccide-input" [(ngModel)]="cie10" required>
       </s-cieSelector>
-      <small class="p-invalid" *ngIf="!cie10">is required.</small>
+      <small class="p-invalid" *ngIf="!cie10">requerido</small>
     </div>
     <div class="p-field">
       <label for="fechaInicio">Fecha Inicio</label>
       <p-calendar [(ngModel)]="fechaInicio" [touchUI]="true"
         dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required> 
       </p-calendar>
-      <small class="p-invalid" *ngIf="!fechaInicio">is required.</small>            
+      <small class="p-invalid" *ngIf="!fechaInicio">requerido</small>            
     </div>
     <div class="p-field">
       <label for="fechaFin">Fecha Fin</label>
       <p-calendar [(ngModel)]="fechaFin"  [touchUI]="true"
       dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES" required>
       </p-calendar>
-      <small class="p-invalid" *ngIf="!fechaFin">is required.</small>
+      <small class="p-invalid" *ngIf="!fechaFin">requerido</small>
     </div>
   </ng-container>
   <div class="p-field">

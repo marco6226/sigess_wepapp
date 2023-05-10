@@ -57,7 +57,6 @@ export class AnalisisDesviacionService extends ServiceCRUD<AnalisisDesviacion>{
           resolve(res);
         },
         err => {
-          this.manageError(err);
           reject(err);
         }
       )
