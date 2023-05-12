@@ -26,13 +26,26 @@ input{
   margin-top: 8px;*/
 }
 
-.mantenimiento{
+.mantenimientodemo{
 	background-color: white;
   width: 100%;
   height: 280px;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(/assets/images/mantenimiento.png);
+  background-image: url(/assets/images/mantenimientodemo.png);
+  opacity: 0.9;
+  background-size: 320px;
+  /*margin-left: 8px;
+  margin-top: 8px;*/
+}
+
+.mantenimientoproduccion{
+	background-color: white;
+  width: 100%;
+  height: 280px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(/assets/images/mantenimientoproduccion.png);
   opacity: 0.9;
   background-size: 320px;
   /*margin-left: 8px;
