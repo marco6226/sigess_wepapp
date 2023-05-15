@@ -32,7 +32,8 @@ class division {
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
   
-  ili:number=0;
+  ili: number | null = 0;
+  mensajeILI: string | null = null;
   metaIli:number=0;
   colorIli?:string;
   categoriesCombo: any=[];
@@ -552,8 +553,15 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let IF = (accidentesConDiasPerdidos / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let IS = (totalDiasSeveridad / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let ILI = (IF * IS) / 1000;
-    console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
+    // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(6));
+    if(this.ili === Infinity){
+      console.log('es infinito');
+      this.ili = null;
+      this.mensajeILI = 'Debe cargar horas hombre trabajadas.';
+      this.colorIli = 'card l-bg-gray-dark';
+      return;
+    }
 
     if(this.ili<=this.metaIli){
       this.colorIli="card l-bg-green-dark"}
