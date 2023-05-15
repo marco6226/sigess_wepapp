@@ -4,8 +4,8 @@
     <p-growl [(value)]="msgs" life="10000"></p-growl>
     <div id="main-pnl">
         <div class="logo"></div>
-        <div class="mantenimientodemo"></div>
-        <!-- <div class="form-container">
+        <!-- <div class="mantenimientodemo"></div> -->
+        <div class="form-container">
             <form [formGroup]="userform" (ngSubmit)="validate(userform.value)">
                 <div class="ui-g">
                     <div class="ui-g-12" *ngIf="visiblePinForm == false">
@@ -53,7 +53,7 @@
                 *ngIf="visibleLnkResetPasswd && logueando == false && visiblePinForm == false">
                 <a>Olvide mi contraseña</a>
             </div>
-        </div> -->
+        </div>
     </div>
 </p-dialog>
 
