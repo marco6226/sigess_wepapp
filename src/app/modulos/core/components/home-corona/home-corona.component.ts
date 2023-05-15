@@ -56,7 +56,7 @@ export class HomeCoronaComponent implements OnInit {
     'Noviembre',
     'Diciembre'
   ];
-  selectedDivisionResumen: string = null;
+  selectedDivisionResumen: string |null = null;
   Indicadores: any[] = [{label: 'Tasa de Frecuencia', value: 0}, {label: 'Tasa de Severidad', value: 1}, {label: 'Proporción AT mortal', value: 2}];
   Eventos: any[] = [{label: 'Numero AT', value: 0}, {label: 'Numero días perdidos', value: 1}, {label: 'Numero AT mortales', value: 2}, {label: 'Numero AT con cero días', value: 3}];
   divisionesCorona: string[] = ['Almacenes Corona', 'Bathrooms and Kitchen', 'Comercial Corona Colombia', 'Funciones Transversales', 'Insumos Industriales y Energias', 'Mesa Servida', 'Superficies, materiales y pinturas','Corona total'];
@@ -94,7 +94,7 @@ export class HomeCoronaComponent implements OnInit {
   radioGra0:number=0
   radioGra0_1:number=0
 
-  selectArea: any[] = null;
+  selectArea: any[] | null = null;
 
   ngAfterViewInit(){
     this.cargarEventosAt().then(() => {
@@ -251,7 +251,7 @@ export class HomeCoronaComponent implements OnInit {
     reportesAt = reportesAt.filter(at => new Date(at.fechaReporte).getFullYear() == this.anioActualResumen);
 
     reportesAt = reportesAt.filter(at => {
-        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) < this.fechaFinalResumen;
+        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) <= this.fechaFinalResumen;
     });
 
     if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') reportesAt = reportesAt.filter(at => at.padreNombre === this.selectedDivisionResumen);
