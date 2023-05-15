@@ -415,6 +415,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let hhtEmpresa: Hht[] = [];
     let hhtTemp: Hht[] = [];
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).map(at => at);
+    
 
     // console.log(this.fechaInicioResumen, this.fechaFinalResumen);
     
@@ -445,8 +446,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     reportesAt = reportesAt.filter(at => new Date(at.fechaReporte).getFullYear() == this.anioActualResumen);
 
     reportesAt = reportesAt.filter(at => {
-        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) < this.fechaFinalResumen;
+        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) <= this.fechaFinalResumen;
     });
+    console.log(reportesAt)
 
     if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') reportesAt = reportesAt.filter(at => at.padreNombre === this.selectedDivisionResumen);
 
