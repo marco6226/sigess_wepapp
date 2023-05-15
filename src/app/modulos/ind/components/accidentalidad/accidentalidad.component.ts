@@ -32,7 +32,8 @@ class division {
 
 export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy {
   
-  ili:number=0;
+  ili: number | null = 0;
+  mensajeILI: string | null = null;
   metaIli:number=0;
   colorIli?:string;
   categoriesCombo: any=[];
@@ -415,6 +416,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let hhtEmpresa: Hht[] = [];
     let hhtTemp: Hht[] = [];
     let reportesAt: any[] = JSON.parse(localStorage.getItem('reportesAt')).map(at => at);
+    
 
     // console.log(this.fechaInicioResumen, this.fechaFinalResumen);
     
@@ -445,8 +447,9 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     reportesAt = reportesAt.filter(at => new Date(at.fechaReporte).getFullYear() == this.anioActualResumen);
 
     reportesAt = reportesAt.filter(at => {
-        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) < this.fechaFinalResumen;
+        return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) <= this.fechaFinalResumen;
     });
+    console.log(reportesAt)
 
     if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') reportesAt = reportesAt.filter(at => at.padreNombre === this.selectedDivisionResumen);
 
@@ -550,8 +553,15 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let IF = (accidentesConDiasPerdidos / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let IS = (totalDiasSeveridad / (totalHhtEmpresa + totalHHtTemporales)) * 240000;
     let ILI = (IF * IS) / 1000;
-    console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
+    // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(6));
+    if(this.ili === Infinity){
+      console.log('es infinito');
+      this.ili = null;
+      this.mensajeILI = 'Debe cargar horas hombre trabajadas.';
+      this.colorIli = 'card l-bg-gray-dark';
+      return;
+    }
 
     if(this.ili<=this.metaIli){
       this.colorIli="card l-bg-green-dark"}
