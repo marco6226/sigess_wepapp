@@ -357,7 +357,7 @@ export class HomeCoronaComponent implements OnInit {
     let ILI = (IF * IS) / 1000;
     // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(6));
-    if(this.ili === Infinity){
+    if(this.ili === Infinity || isNaN(this.ili)){
       console.log('es infinito');
       this.ili = null;
       this.mensajeILI = 'Debe cargar horas hombre trabajadas.';
