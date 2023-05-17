@@ -97,21 +97,21 @@
             <div class="col6">
                 <div class="ui-g" style="margin-top: 10px;">
                     <div class="ui-g-12 ui-sm-12 ui-md-10">
-                        <div *ngFor="let doc of directorios">
-                            <table class="dwrapper table table-bordered border-primary caption-top" *ngIf="doc!.documento.proceso=='soporteCalificacion'"> 
+                        <div>
+                            <table class="dwrapper table caption-top" *ngIf="directorios">
                                 <caption>Soportes: </caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">Descripción</th>
-                                        <th scope="col">Opciones</th>
+                                        <th *ngIf="!flagConsult" scope="col">Opciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
+                                <tbody *ngFor="let doc of directorios">
+                                    <tr  *ngIf="doc!.documento.proceso=='soporteCalificacion'">
                                         <td>
-                                            <button [disabled]="onEdit != 'edit'" type="button" class="btn btn-outline-primery" (click)="descargarDocumento(doc.documento)">{{doc.documento.descripcion}}</button>
+                                            <button [disabled]="onEdit != 'edit' && !flagConsult" type="button" class="btn btn-outline-primery" title="Descargar" (click)="descargarDocumento(doc.documento)">{{doc.documento.descripcion}}</button>
                                         </td>
-                                        <td>
+                                        <td *ngIf="!flagConsult">
                                             <a>&nbsp;</a>
                                             <button [disabled]="onEdit != 'edit'" type="button" class="btn tbn-outline-danger" title="Eliminar documento" (click)="eliminarDocument(doc)" style="color: red;"><span class="fa fa-trash "></span></button>
                                         </td>
