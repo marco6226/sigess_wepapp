@@ -449,7 +449,6 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     reportesAt = reportesAt.filter(at => {
         return new Date(at['fechaReporte']) >= this.fechaInicioResumen && new Date(at['fechaReporte']) <= this.fechaFinalResumen;
     });
-    console.log(reportesAt)
 
     if(this.selectedDivisionResumen && this.selectedDivisionResumen !== 'Total') reportesAt = reportesAt.filter(at => at.padreNombre === this.selectedDivisionResumen);
 
@@ -555,7 +554,7 @@ export class AccidentalidadComponent implements OnInit, AfterViewInit, OnDestroy
     let ILI = (IF * IS) / 1000;
     // console.log(accidentesConDiasPerdidos, totalHhtEmpresa, totalHHtTemporales, totalDiasSeveridad, IF, IS, ILI);
     this.ili = Number(ILI.toFixed(6));
-    if(this.ili === Infinity){
+    if(this.ili === Infinity || isNaN(this.ili)){
       console.log('es infinito');
       this.ili = null;
       this.mensajeILI = 'Debe cargar horas hombre trabajadas.';
