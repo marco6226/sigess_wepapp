@@ -178,14 +178,19 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       horaAccidente: new FormControl(null, Validators.required),
       jornada: new FormControl(null, Validators.required),
       labores: new FormControl(null, Validators.required),
+      nombreLaborHabitual: new FormControl(null),
       horaInicioLabores: new FormControl(null, Validators.required),
       tipoAccidente: new FormControl(null, Validators.required),
       clasificacionEvento: new FormControl(null, Validators.required),
       lugarAccidente: new FormControl(null, Validators.required),
       sitioAccidente: new FormControl(null, Validators.required),
+      cualSitio: new FormControl(null),
       tipoLesion: new FormControl(null, Validators.required),
+      cualTipoLesion: new FormControl(null),
       agenteAccidente: new FormControl(null, Validators.required),
+      cualAgente: new FormControl(null),
       mecanismo: new FormControl(null, Validators.required),
+      cualMecanismo: new FormControl(null),
       parteDelCuerpoAfectada: new FormControl(null, Validators.required),
       descripcionPreliminarAccidente: new FormControl(null, Validators.required)
     });
@@ -283,6 +288,11 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         this.infAccidente.get('mecanismo').setValue(this.reporte.mecanismo);
         this.infAccidente.get('parteDelCuerpoAfectada').setValue(this.reporte.parteCuerpo);
         this.infAccidente.get('descripcionPreliminarAccidente').setValue(this.reporte.descripcion);
+        this.infAccidente.get('nombreLaborHabitual').setValue(this.reporte.nombreLaborHabitual);
+        this.infAccidente.get('cualSitio').setValue(this.reporte.cualSitio);
+        this.infAccidente.get('cualTipoLesion').setValue(this.reporte.cualTipoLesion);
+        this.infAccidente.get('cualAgente').setValue(this.reporte.cualAgente);
+        this.infAccidente.get('cualMecanismo').setValue(this.reporte.cualMecanismo);
       });
 
       this.analisisDeviacionService.find(desviacionAliados.analisisDesviacionId.toString()).then(async (res: AnalisisDesviacion) => {
@@ -302,7 +312,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         this.gestorData.gestor = JSON.parse(this.analisisDesviacion.gestor);
         let plan_accion: any = JSON.parse(this.analisisDesviacion.plan_accion);
         this.formPlanAccion.get('porcentajeAvance').setValue(plan_accion ? plan_accion.porcentajeAvance : null);
-        this.formPlanAccion.get('fechaCierre').setValue(plan_accion ? new Date(plan_accion.fechaCierre) : null);
+        this.formPlanAccion.get('fechaCierre').setValue(plan_accion ? plan_accion.fechaCierre ? new Date(plan_accion.fechaCierre) : null : null);
         this.formPlanAccion.get('descripcionTarea').setValue(plan_accion ? plan_accion.descripcionTarea : null);
         this.seguimiento = JSON.parse(this.analisisDesviacion.seguimiento);
         
@@ -631,14 +641,19 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     this.reporte.horaAccidente = this.infAccidente.get('horaAccidente').value;
     this.reporte.jornadaAccidente = this.infAccidente.get('jornada').value;
     this.reporte.realizandoLaborHabitual = this.infAccidente.get('labores').value;
+    this.reporte.nombreLaborHabitual = this.infAccidente.get('nombreLaborHabitual').value;
     this.reporte.horaInicioLabor = this.infAccidente.get('horaInicioLabores').value;
     this.reporte.tipoAccidente = this.infAccidente.get('tipoAccidente').value;
     this.reporte.severidad = this.infAccidente.get('clasificacionEvento').value;
     this.reporte.lugarAccidente = this.infAccidente.get('lugarAccidente').value;
     this.reporte.sitio = this.infAccidente.get('sitioAccidente').value;
+    this.reporte.cualSitio = this.infAccidente.get('cualSitio').value;
     this.reporte.tipoLesion = this.infAccidente.get('tipoLesion').value;
+    this.reporte.cualTipoLesion = this.infAccidente.get('cualTipoLesion').value;
     this.reporte.agente = this.infAccidente.get('agenteAccidente').value;
+    this.reporte.cualAgente = this.infAccidente.get('cualAgente').value;
     this.reporte.mecanismo = this.infAccidente.get('mecanismo').value;
+    this.reporte.cualMecanismo = this.infAccidente.get('cualMecanismo').value;
     this.reporte.parteCuerpo = this.infAccidente.get('parteDelCuerpoAfectada').value;
     this.reporte.descripcion = this.infAccidente.get('descripcionPreliminarAccidente').value;
 
@@ -650,9 +665,8 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     }
     this.analisisDesviacion.complementaria = JSON.stringify(complementaria);
     this.analisisDesviacion.gestor = JSON.stringify(this.gestorData.gestor);
-
     if(!this.esNuevo){
-      if(this.seguimiento.estado === 'Rechazado'){
+      if(this.seguimiento && this.seguimiento.estado === 'Rechazado'){
         await this.confirmationService.confirm({
           header: 'Reportar correcciones',
           message: 'Este reporte ha sido rechazado, ¿desea reportar que ha sido corregido?',

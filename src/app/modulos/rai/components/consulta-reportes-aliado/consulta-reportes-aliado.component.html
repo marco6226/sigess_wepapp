@@ -96,7 +96,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft" let-state style="margin-top: 50%;">
-      <span>Mostrando {{state.rows}} de {{state.totalRecords}}</span>
+      <span>Mostrando {{ reportesList.length || 0 }} de {{state.totalRecords}}</span>
     </ng-template>
   </p-table>
 </p-panel>
