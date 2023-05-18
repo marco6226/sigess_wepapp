@@ -9,7 +9,7 @@
     <p-table #dt id="excel-table" 
         autoLayout="true"
         [value]="aliadosList"
-        styleClass="material-table" 
+        styleClass="ui-table-scrollable-body ui-table-responsive material-table" 
         (onRowUnselect)="onRowSelect($event)" 
         (onRowSelect)="onRowSelect($event)" 
         [(selection)]="selectedList" 
@@ -20,45 +20,51 @@
         >
         <ng-template pTemplate="header" let-columns>
             <tr>
-                
-                <!-- <th pSortableColumn="name">
-                    <div class="flex justify-content-between align-items-center">
-                        Name
-                        <p-sortIcon field="name"></p-sortIcon>
-                    </div>
-                </th> -->
-                <th style="width: 20%" pSortableColumn="razonSocial">
+                <th>
+                    Nit.
+                    <p-sortIcon field="nit" pSortableColumn="nit"></p-sortIcon>
+                </th>
+                <th pSortableColumn="razonSocial">
                     Nombre o Razón Social
                     <p-sortIcon field="razonSocial"></p-sortIcon>
                 </th>
-                <th style="width: 8%" pSortableColumn="tipo_persona">
+                <th pSortableColumn="tipo_persona">
                     Tipo de Persona
                     <p-sortIcon field="tipo_persona"></p-sortIcon>
                 </th>
-                <th style="width: 10rem;" pSortableColumn="division">
+                <th pSortableColumn="division">
                     División de negocio
                     <p-sortIcon field="division"></p-sortIcon>
                 </th>
-                <th style="width: 2.5rem" pSortableColumn="estado">
+                <th pSortableColumn="estado">
                     Estado
                     <p-sortIcon field="estado"></p-sortIcon>
                 </th>
-                <th style="width: 2.5rem" pSortableColumn="calificacion">
+                <th pSortableColumn="calificacion">
                     Impacto
                     <p-sortIcon field="calificacion"></p-sortIcon>
                 </th>
-                <th style="width: 10rem" pSortableColumn="fechaCreacion">
+                <th pSortableColumn="fechaCreacion">
                     Fecha Creación
                     <p-sortIcon field="fechaCreacion"></p-sortIcon>
                 </th>
-                <th style="width: 10rem" pSortableColumn="fechaActualizacion">
+                <th pSortableColumn="fechaActualizacion">
                     Fecha Modificación
                     <p-sortIcon field="fechaActualizacion"></p-sortIcon>
                 </th>
                 <th></th>
+                <th></th>
+                <th></th>
             </tr>
             <tr class="filters">
-                
+                <th>
+                    <div class="ui-inputgroup">
+                        <span class="ui-inputgroup-addon">
+                            <em class="pi pi-search"></em>
+                        </span>
+                        <input type="text" pattern="[0-9]*" pInputText (input)="dt.filter($event.target.value, 'nit', 'contains')">
+                    </div>
+                </th>
                 <th>
                     <div class="ui-inputgroup">
                         <span class="ui-inputgroup-addon">
@@ -159,7 +165,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
             <tr>
-                
+                <td> 
+                    {{rowData.nit}}
+                </td>
                 <td>
                     {{rowData.razonSocial}}
                 </td>
@@ -185,13 +193,9 @@
                 </td>
                 <td>
                     <button style="margin-left: 5px;" pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success p-mr-2" (click)="onConsult(rowData)" title="Consultar"></button>
-                    
-                 <!--    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onSendMail(rowData)" title="Enviar correo"></button> -->
                 </td>
                 <td>
                     <button style="margin-left: 5px;" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="onEdit(rowData)" title="Editar"></button>
-                    
-                 <!--    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded ui-button-warning" (click)="onSendMail(rowData)" title="Enviar correo"></button> -->
                 </td>
                 <td>
                     <button style="margin-left: 40px;" pButton pRipple icon="pi pi-power-off" *ngIf="rowData.activo" class="p-button-rounded ui-button-success p-mr-2" (click)="onChangeStatusAliado(rowData, 'Desactivar')" title="Desactivar Aliado"></button>
