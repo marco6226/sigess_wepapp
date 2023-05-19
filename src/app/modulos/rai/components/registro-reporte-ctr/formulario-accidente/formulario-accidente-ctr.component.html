@@ -23,6 +23,29 @@
             </div>
           </div>
         </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4 ui-md-6 ui-sm-12">
+            <div class="input-field">
+              <div>
+                <p-radioButton label="Propio" name="subcontratista" required [value]="true"
+                [(ngModel)]="esReportePropio" [disabled]="esConsulta" (onClick)="selectedSubcontratista=null;"
+                [ngStyle]="{'margin-right': '15px'}"></p-radioButton>
+                <p-radioButton label="Subcontratista" name="subcontratista" required [value]="false"
+                [(ngModel)]="esReportePropio" (onClick)="cargarSubcontratistas()" [disabled]="esConsulta"></p-radioButton>
+              </div>
+              <label for="" class="active">El Accidente es propio o de subcontratista</label>
+            </div>
+          </div>
+          <div class="ui-g-4 ui-md-6 ui-sm-12"
+          *ngIf="esReportePropio!==null && !esReportePropio">
+            <div class="input-field">
+              <p-dropdown placeholder="-- Seleccione --" [(ngModel)]="selectedSubcontratista"
+              [required]="!esReportePropio" [options]="subcontratistas"
+              [ngStyle]="{width: '-webkit-fill-available'}" [disabled]="esConsulta"></p-dropdown>
+              <label for="" class="active">Seleccione el subcontratista</label>
+            </div>
+          </div>
+        </div>
       </div>
     </p-accordionTab>
     <p-accordionTab header="II. INFORMACIÓN DE LA PERSONA QUE SE ACCIDENTÓ">

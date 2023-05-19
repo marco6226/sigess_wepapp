@@ -7,9 +7,11 @@ import { Criteria, SortOrder } from 'app/modulos/core/entities/filter';
 import { FilterQuery } from 'app/modulos/core/entities/filter-query';
 import { Modulo } from 'app/modulos/core/enums/enumeraciones';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
+import { Subcontratista } from 'app/modulos/ctr/entities/aliados';
 import { interventorgestor } from 'app/modulos/ctr/entities/gestorinterventor';
 import { Area } from 'app/modulos/empresa/entities/area';
 import { AreaService } from 'app/modulos/empresa/services/area.service';
+import { EmpresaService } from 'app/modulos/empresa/services/empresa.service';
 import { PlantasService } from 'app/modulos/ind/services/Plantas.service';
 import { Peligro } from 'app/modulos/ipr/entities/peligro';
 import { PeligroService } from 'app/modulos/ipr/services/peligro.service';
@@ -82,6 +84,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
   esNuevo: boolean = true;
   estadoEvento: string = null;
   idEmpresa = null;
+  esReportePropio: boolean | null = null;
+  subcontratistas: any[] | null = null;
+  selectedSubcontratista: any | null = null;
   seguimiento: {
     estado: 'Aprobado' | 'Rechazado' | 'Sin gestión',
     fecha: Date
@@ -156,7 +161,8 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     private messageService: MessageService,
     private directorioService: DirectorioService,
     private confirmationService: ConfirmationService,
-    private desviacionAliadosService: DesviacionAliadosService
+    private desviacionAliadosService: DesviacionAliadosService,
+    private empresaService: EmpresaService
   ) {
     this.infPersonaAccidentada = new FormGroup({
       primerNombre: new FormControl(null, Validators.required),
@@ -259,8 +265,14 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       let desviacionAliados: DesviacionAliados = res['data'][0];
       this.nombreEmpresa = desviacionAliados.razonSocial;
       this.nitEmpresa = desviacionAliados.nit;
-      this.reporteService.find(desviacionAliados.id.toString()).then(res => {
-        this.reporte = res[0];  
+      this.reporteService.find(desviacionAliados.id.toString()).then(async (res) => {
+        this.reporte = res[0];
+
+        await this.cargarSubcontratistas();
+        this.selectedSubcontratista = this.reporte.subcontratista;
+        console.log(this.subcontratistas, this.selectedSubcontratista);
+        this.esReportePropio = this.selectedSubcontratista == null ? true : false;
+
         this.infPersonaAccidentada.get('primerNombre').setValue(this.reporte.primerNombreEmpleado);
         this.infPersonaAccidentada.get('primerApellido').setValue(this.reporte.primerApellidoEmpleado);
         this.infPersonaAccidentada.get('segundoNombre').setValue(this.reporte.segundoNombreEmpleado);
@@ -618,10 +630,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
   async submit(){
 
     //Almacenar datos del trabajador
-    //   division: new FormControl(null, Validators.required),
-    //   planta: new FormControl(null, Validators.required)
     this.reporte.identificacionEmpresa = this.nitEmpresa;
     this.reporte.razonSocial = this.nombreEmpresa;
+    this.reporte.subcontratista = !this.esReportePropio ? this.selectedSubcontratista : null;
 
     this.reporte.primerNombreEmpleado = this.infPersonaAccidentada.get('primerNombre').value;
     this.reporte.primerApellidoEmpleado = this.infPersonaAccidentada.get('primerApellido').value;
@@ -849,6 +860,34 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     }else{
       this.messageService.add({severity: 'error', summary: 'Falta información', detail: 'Debe agregar una observación'});
     }
+  }
+
+  async cargarSubcontratistas() {
+    if(this.subcontratistas && this.subcontratistas.length > 0) return;
+    let idContratista = this.sesionService.getParamEmp();
+    this.empresaService.getSubcontratistas(Number(idContratista))
+    .then(
+      (res: Subcontratista[]) => {
+        this.subcontratistas = res.map(sub => {
+          return {
+            label: sub.nombre + ' - ' + sub.nit,
+            value: sub
+          }
+        });
+        if(!this.subcontratistas || this.subcontratistas.length < 1){
+          this.subcontratistas = [];
+          this.subcontratistas.push(
+            {
+              label: this.reporte.subcontratista.nombre + ' - ' + this.reporte.subcontratista.nit,
+              value: this.reporte.subcontratista
+            }
+          );
+        }
+      },
+      err => {
+        console.error('Error al obtener subcontratistas');
+      }
+    );
   }
 
   infoAccidenteIsValid(): boolean {
