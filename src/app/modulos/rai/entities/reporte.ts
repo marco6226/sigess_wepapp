@@ -4,6 +4,7 @@ import { Area } from 'app/modulos/empresa/entities/area'
 import { Usuario } from 'app/modulos/empresa/entities/usuario'
 import { Empresa } from 'app/modulos/empresa/entities/empresa'
 import { TestigoReporte } from 'app/modulos/rai/entities/testigo-reporte'
+import { Subcontratista } from 'app/modulos/ctr/entities/aliados'
 
 export class Reporte {
   id: number;
@@ -97,4 +98,5 @@ export class Reporte {
   fechaReporte: Date;
   temporal:string;
   istemporal:boolean | null;
+  subcontratista: Subcontratista | null;
 }

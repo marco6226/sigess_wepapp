@@ -78,7 +78,6 @@ export class ConsultaReportesAliadoComponent implements OnInit {
     this.reportesList = <ReporteAux[]>this.desviacionAliados.map(item => {
       let gestor = JSON.parse(item.gestor);
       let planAccion = JSON.parse(item.planAccion);
-      
       return {
         id: item.id,
         razonSocial: item.razonSocial,
@@ -86,9 +85,9 @@ export class ConsultaReportesAliadoComponent implements OnInit {
         fechaAt: item.fechaReporte,
         division: item.area.padreNombre,
         ubicacion: item.area.nombre,
-        seguimiento: item.seguimiento ? (JSON.parse(item.seguimiento)).estado : 'Sin gestión',
+        seguimiento: item.seguimiento ? (JSON.parse(item.seguimiento)) ? (JSON.parse(item.seguimiento)).estado : 'Sin gestión' : 'Sin gestión',
         totalDiasPerdidos: this.getDiasPerdidos(JSON.parse(item.incapacidades)),
-        gestor: gestor.primerNombre + ' ' + gestor.primerApellido,
+        gestor: (gestor ? gestor.primerNombre : '') + ' ' + (gestor ? gestor.primerApellido : ''),
         porcentajeAvance: planAccion ? planAccion.porcentajeAvance : 0
       }
     })

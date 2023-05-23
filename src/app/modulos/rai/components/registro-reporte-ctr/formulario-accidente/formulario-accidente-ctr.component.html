@@ -1,5 +1,11 @@
 <p-toast></p-toast>
 <p-panel header="FORMULARIO DE ACCIDENTES">
+  
+  <ng-template #vacio>
+    <div class="ui-g-4 ui-md-6 ui-sm-12">
+      &nbsp;
+    </div>
+  </ng-template>
   <p-accordion [multiple]="true">
     <p-accordionTab header="I. IDENTIFICACIÓN GENERAL DE LA EMPRESA" [selected]="true" [disabled]="true">
       <div class="ui-g">
@@ -14,6 +20,29 @@
             <div class="input-field">
               <input type="text" readonly [(ngModel)]="nitEmpresa" class="form-material">
               <label class="active">Nit:</label>
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4 ui-md-6 ui-sm-12">
+            <div class="input-field">
+              <div>
+                <p-radioButton label="Propio" name="subcontratista" required [value]="true"
+                [(ngModel)]="esReportePropio" [disabled]="esConsulta" (onClick)="selectedSubcontratista=null;"
+                [ngStyle]="{'margin-right': '15px'}"></p-radioButton>
+                <p-radioButton label="Subcontratista" name="subcontratista" required [value]="false"
+                [(ngModel)]="esReportePropio" (onClick)="cargarSubcontratistas()" [disabled]="esConsulta"></p-radioButton>
+              </div>
+              <label for="" class="active">El Accidente es propio o de subcontratista</label>
+            </div>
+          </div>
+          <div class="ui-g-4 ui-md-6 ui-sm-12"
+          *ngIf="esReportePropio!==null && !esReportePropio">
+            <div class="input-field">
+              <p-dropdown placeholder="-- Seleccione --" [(ngModel)]="selectedSubcontratista"
+              [required]="!esReportePropio" [options]="subcontratistas"
+              [ngStyle]="{width: '-webkit-fill-available'}" [disabled]="esConsulta"></p-dropdown>
+              <label for="" class="active">Seleccione el subcontratista</label>
             </div>
           </div>
         </div>
@@ -167,18 +196,27 @@
                   <label class="active">Jornada</label>
                 </div>
               </div>
-              <div class="ui-g-4 ui-md-6 ui-sm-12">
-                <div class="input-field">
-                  <div>
-                    <p-radioButton name="labores" required label="Si"
-                    [value]="true" formControlName="labores"
-                    [ngStyle]="{'margin-right': '15px'}"></p-radioButton>
-                    <p-radioButton name="labores" required label="No"
-                    [value]="false" formControlName="labores"></p-radioButton>
-                  </div>
-                  <label class="active">Realizaba labores habituales</label>
+          </div>
+          <div class="ui-g-12">
+            <div class="ui-g-4 ui-md-6 ui-sm-12">
+              <div class="input-field">
+                <div>
+                  <p-radioButton name="labores" required label="Si"
+                  [value]="true" formControlName="labores"
+                  [ngStyle]="{'margin-right': '15px'}"></p-radioButton>
+                  <p-radioButton name="labores" required label="No"
+                  [value]="false" formControlName="labores"></p-radioButton>
                 </div>
+                <label class="active">Realizaba labores habituales</label>
               </div>
+            </div>
+            <div class="ui-g-4 ui-md-6 ui-sm-12" *ngIf="infAccidente.value.labores==false;else vacio">
+              <div class="input-field">
+                <input [required]="!infAccidente.value.labores" pInputText 
+                formControlName="nombreLaborHabitual">
+                <label for="" class="active">¿Cual labor realizaba?</label>
+              </div>
+            </div>
           </div>
           <div class="ui-g-12">
               <div class="ui-g-4 ui-md-6 ui-sm-12">
@@ -218,14 +256,23 @@
               </div>
           </div>
           <div class="ui-g-12">
-              <div class="ui-g-4 ui-md-6 ui-sm-12">
-                <div class="input-field">
-                  <p-dropdown placeholder="-- seleccione --"
-                  [ngStyle]="{width: '-webkit-fill-available'}" required
-                  formControlName="sitioAccidente" [options]="sitioList"></p-dropdown>
-                  <label class="active">Sitio del accidente</label>
-                </div>
+            <div class="ui-g-4 ui-md-6 ui-sm-12">
+              <div class="input-field">
+                <p-dropdown placeholder="-- seleccione --"
+                [ngStyle]="{width: '-webkit-fill-available'}" required
+                formControlName="sitioAccidente" [options]="sitioList"></p-dropdown>
+                <label class="active">Sitio del accidente</label>
               </div>
+            </div>
+            <div class="ui-g-4 ui-md-6 ui-sm-12" *ngIf="infAccidente.value.sitioAccidente=='OTRO';else vacio">
+              <div class="input-field">
+                <input [required]="infAccidente.value.sitioAccidente=='OTRO'" pInputText
+                formControlName="cualSitio">
+                <label for="" class="active">¿Cual sitio?</label>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12">
               <div class="ui-g-4 ui-md-6 ui-sm-12">
                 <div class="input-field">
                   <p-dropdown placeholder="-- seleccione --"
@@ -233,6 +280,13 @@
                   formControlName="tipoLesion" [options]="tipoLesionList"
                   ></p-dropdown>
                   <label class="active">Tipo de lesión</label>
+                </div>
+              </div>
+              <div class="ui-g-4 ui-md-6 ui-sm-12" *ngIf="infAccidente.value.tipoLesion=='OTRO';else vacio">
+                <div class="input-field">
+                  <input pInputText [required]="infAccidente.value.tipoLesion=='OTRO'"
+                  formControlName="cualTipoLesion">
+                  <label for="" class="active">¿Cual tipo de lesión?</label>
                 </div>
               </div>
           </div>
@@ -245,15 +299,31 @@
                   <label class="active">Agente del accidente</label>
                 </div>
               </div>
-              <div class="ui-g-4 ui-md-6 ui-sm-12">
+              <div class="ui-g-4 ui-md-6 ui-sm-12" *ngIf="infAccidente.value.agenteAccidente=='NO_CLASIFICADOS';else vacio">
                 <div class="input-field">
-                  <p-dropdown placeholder="-- seleccione --"
-                  [ngStyle]="{width: '-webkit-fill-available'}" required
-                  formControlName="mecanismo" [options]="mecanismoList"
-                  ></p-dropdown>
-                  <label class="active">Mecanismos</label>
+                  <input pInputText [required]="infAccidente.value.agenteAccidente=='NO_CLASIFICADOS'"
+                  formControlName="cualAgente">
+                  <label for="" class="active">¿Cual agente?</label>
                 </div>
               </div>
+          </div>
+          <div class="ui-g-12">
+            <div class="ui-g-4 ui-md-6 ui-sm-12">
+              <div class="input-field">
+                <p-dropdown placeholder="-- seleccione --"
+                [ngStyle]="{width: '-webkit-fill-available'}" required
+                formControlName="mecanismo" [options]="mecanismoList"
+                ></p-dropdown>
+                <label class="active">Mecanismo</label>
+              </div>
+            </div>
+            <div class="ui-g-4 ui-md-6 ui-sm-12" *ngIf="infAccidente.value.mecanismo=='OTRO';else vacio">
+              <div class="input-field">
+                <input pInputText [required]="infAccidente.value.mecanismo=='OTRO'"
+                formControlName="cualMecanismo">
+                <label for="" class="active">¿Cual mecanismo?</label>
+              </div>
+            </div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-4 ui-md-6 ui-sm-12">
@@ -264,13 +334,6 @@
                 <label class="active">Parte del cuerpo afectada</label>
               </div>
             </div>
-            <!-- <div class="ui-g-4 ui-md-6 ui-sm-12">
-              <div class="input-field">
-                <p-dropdown placeholder="-- seleccione --"
-                [ngStyle]="{width: '-webkit-fill-available'}" required></p-dropdown>
-                <label class="active">label</label>
-              </div>
-            </div> -->
           </div>
         </div>
       </p-accordionTab>
@@ -322,7 +385,7 @@
       <s-empleadoBasicSelector [disabled]="esConsulta"
       [(ngModel)]="gestorData.gestor" [empresaEmpleadora]="idEmpresa" (onSelect)="onGestorSelected()"
       required autofocus></s-empleadoBasicSelector>
-      <small class="p-invalid">Obligatorio</small>
+      <small class="p-invalid" *ngIf="!gestorData.gestor">Obligatorio</small>
     </p-accordionTab>
     <p-accordionTab header="VIII. INVESTIGACIÓN" [disabled]="esNuevo">
       <div class="ui-g">
@@ -392,7 +455,7 @@
                 <label class="active">Fecha de cierre</label>
                 <div>
                   <p-calendar [showIcon]="true" [locale]="locale" required dateFormat="dd/mm/yy"
-                  formControlName="fechaCierre"></p-calendar>
+                  formControlName="fechaCierre" [yearNavigator]="true" yearRange="2010:2035" [monthNavigator]="true"></p-calendar>
                 </div>
               </div>
             </div>

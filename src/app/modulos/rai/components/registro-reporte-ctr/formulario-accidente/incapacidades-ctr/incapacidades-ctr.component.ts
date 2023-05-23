@@ -11,7 +11,11 @@ import { ConfirmationService, MessageService } from 'primeng/primeng';
 })
 export class IncapacidadesCtrComponent implements OnInit {
 
-  @Input() incapacidades: Incapacidad[] = [];
+  incapacidades: Incapacidad[] = [];
+  @Input('incapacidades') set setIncapacidades(data: Incapacidad[]){
+    if(!data) return;
+    this.incapacidades = data;
+  }
   selectedIncapacidad: any;
   isVisibleDialog: boolean = false;
   tipoList = [
@@ -101,8 +105,8 @@ export class IncapacidadesCtrComponent implements OnInit {
       this.tipo = incapacidad.tipo;
       this.cie10 = incapacidad.cie10;
       this.cie10.nombre = incapacidad.cie10 ? incapacidad.cie10.nombre : null;
-      this.fechaInicio = incapacidad.fechaInicio ? incapacidad.fechaInicio : null;
-      this.fechaFin = incapacidad.fechaFin ? incapacidad.fechaFin : null;
+      this.fechaInicio = incapacidad.fechaInicio ? new Date(incapacidad.fechaInicio) : null;
+      this.fechaFin = incapacidad.fechaFin ? new Date(incapacidad.fechaFin) : null;
       this.diasAusencia = incapacidad.diasAusencia;
     }
   }
