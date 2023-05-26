@@ -29,7 +29,7 @@ import { ReintegroListComponent } from './components/formulario-scm/reintegro-li
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, SeguimientosgenericoformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe, PclComponent, ScmpermisosComponent, ReintegroComponent, ReintegroListComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, SeguimientosgenericoformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe,SeguimientogenericoStatusPipe, PclComponent, ScmpermisosComponent, ReintegroComponent, ReintegroListComponent],
     imports: [
         CommonModule,
         ComunModule,

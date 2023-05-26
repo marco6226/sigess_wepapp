@@ -1728,8 +1728,8 @@
         (eventClose)="onCloseModalseguimiento()">
     </app-seguimientosform>
 </p-dialog>
-<p-dialog [header]="(seguigenericoSelect) ? 'Editar seguimiento' : 'Crear seguimiento genérico'"
-    [(visible)]="modalSeguimientosgenericos" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false"
+<p-dialog *ngIf="caseSelect" [header]="(seguigenericoSelect) ? 'Editar seguimiento' : 'Crear seguimiento genérico'"
+    [(visible)]="modalSeguimientosgenerico" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false"
     [resizable]="false">
     <app-seguimientosgenericoform [id]="caseSelect.id" [recoSelect]="seguigenericoSelect" [entity]="entity"
         (eventClose)="onCloseModalseguimientogenerico()">
