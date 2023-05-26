@@ -430,7 +430,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             prioridadCaso: [null, /*Validators.required*/],
             descripcionCargo: [null]
         });
-        console.log(this.casoMedicoForm)
         this.status = this.caseStatus.find(sta => sta.value == this.casoMedicoForm.get("statusCaso").value).label
 
     }
@@ -459,12 +458,9 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         this.consultar = (localStorage.getItem('scmShowCase') === 'true') ? true : false;
         this.consultar2 = (localStorage.getItem('scmShowCase') === 'true') ? true : false;
-        console.log(this.consultar2)
 
-        //console.log(this.caseSelect.id, "wenas");
 
         try {
-            console.log("entro");
            // 
 
            // if (this.caseSelect) {
@@ -520,7 +516,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 this.arlList.push({ label: arl.nombre, value: arl.id });
             });
             this.entity.ARL = this.arlList;
-            console.log(this.arlList);
         });
 
         await this.comunService.findAllPrepagadas().then((data) => {
@@ -530,7 +525,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 this.prepagadasList.push({ label: prepagadas.nombre, value: prepagadas.id });
             });
             this.entity.Medicina_Prepagada = this.prepagadasList;
-            console.log(this.prepagadasList);
         });
 
         await this.comunService.findAllProvSalud().then((data) => {
@@ -539,7 +533,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             (<Proveedor[]>data).forEach((prov) => {
                 this.provsaludList.push({ label: prov.nombre, value: prov.id });
             });
-            console.log(this.provsaludList);
             this.entity.Proveedor_de_salud = this.provsaludList;
         });
 
@@ -570,11 +563,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
                 this.perfilList.push({ label: perfil.nombre, value: perfil.id });
             });
-            console.log('perfilService')
             if (this.isUpdate === true || this.show === true)
                 setTimeout(() => {
-                    console.log(this.isUpdate)
-                    console.log(this.show) 
                     this.buildPerfilesIdList();
                 }, 500);
         });
@@ -584,14 +574,12 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     areaChange(event){
         this.division=event;
         this.empleadoForm.patchValue({division: this.division})
-        console.log(event)
     }
     async perfilPermisos(){
         await this.perfilService.findAll().then((resp) => {
             (<Perfil[]>resp["data"]).forEach((perfil) => {
                 this.perfilList.push({ label: perfil.nombre, value: perfil.id });
             });
-            console.log('perfilService')
             if (this.isUpdate === true || this.show === true)
                 setTimeout(() => {
                     this.buildPerfilesIdList();
@@ -1003,7 +991,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     }
     async onCloseModalseguimientogenerico() {       
         this.seguimientosgenericoList = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
-        this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);        
+        this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id); 
+
         this.modalSeguimientosgenerico = false;
         this.seguigenericoSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -1292,6 +1281,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.msgs = [];
         try {           
             if (await this.confirmService.confirmSeguimiento()){
+                console.log(typeof id,id)
                 let resp = await this.scmService.deleteSeguimiento(id);
                 if (resp) {
                     this.msgs.push({
@@ -1317,7 +1307,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.msgs = [];
         try {           
             if (await this.confirmService.confirmSeguimiento()){
-                let resp = await this.scmService.deleteSeguimientogenerico(id);
+                console.log(typeof id,id)
+                let resp = await this.scmService.deleteSeguimiento(id);
                 if (resp) {
                     this.msgs.push({
                         severity: "error",
@@ -1380,6 +1371,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.seguimientos.map((seg, idx) => {
             if (seg.fechaSeg) {
                 this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()
+            }
+        })
+
+        this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
+        this.seguimientosgenerico.map((seg, idx) => {
+            if (seg.fechaSeg) {
+                this.seguimientosgenerico[idx].fechaSeg = moment(seg.fechaSeg).toDate()
             }
         })
     }
