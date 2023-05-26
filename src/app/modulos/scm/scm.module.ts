@@ -14,6 +14,7 @@ import { UsuarioService } from '../admin/services/usuario.service';
 import { CieSelectorComponent } from '../comun/components/cie-selector/cie-selector.component';
 import { RecomendationsformComponent, RecomendationStatusPipe } from './components/recomendationsform/recomendationsform.component';
 import { SeguimientosformComponent, SeguimientoStatusPipe } from './components/seguimientosform/seguimientosform.component';
+import { SeguimientosgenericoformComponent, SeguimientogenericoStatusPipe } from './components/seguimientosgenericoform/seguimientosgenericoform.component';
 import { CoreModule } from '../core/core.module';
 import { LogmodalComponent } from './components/logmodal/logmodal.component';
 import { DiagnosticoFormComponent } from './components/diagnostico-form/diagnostico-form.component';
@@ -28,7 +29,7 @@ import { ReintegroListComponent } from './components/formulario-scm/reintegro-li
 
 
 @NgModule({
-    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe, PclComponent, ScmpermisosComponent, ReintegroComponent, ReintegroListComponent],
+    declarations: [FormularioScmComponent, ScmComponent, RecomendationsformComponent, SeguimientosformComponent, SeguimientosgenericoformComponent, LogmodalComponent, DiagnosticoFormComponent, RecomendationStatusPipe,SeguimientoStatusPipe, PclComponent, ScmpermisosComponent, ReintegroComponent, ReintegroListComponent],
     imports: [
         CommonModule,
         ComunModule,

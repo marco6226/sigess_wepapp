@@ -85,6 +85,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     loadingImg = false;
     modalRecomendatios = false;
     modalSeguimientos = false;
+    modalSeguimientosgenerico = false;
     modalDianostico = false;
     casoMedicoForm: FormGroup;
     bussinessParner: FormGroup;
@@ -104,11 +105,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         { value: 4, label: "Medicamentos" }];
     recomendationList: TreeNode[];
     seguimientosList: TreeNode[];
+    seguimientosgenericoList: TreeNode[];
     logsList = []
     empleadosList: Empleado[];
     diagnosticoList = [];
     modifyDiag = false;
     seguimientos = [];
+    seguimientosgenerico = [];
     tratamientos = [];
     products2 = [];
     statuses: SelectItem[];
@@ -197,6 +200,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     recoSelect: any;
     diagSelect: any;
     seguiSelect: any;
+    seguigenericoSelect: any;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
     tipoIdentificacionList: SelectItem[];
@@ -997,6 +1001,14 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
 
     }
+    async onCloseModalseguimientogenerico() {       
+        this.seguimientosgenericoList = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
+        this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);        
+        this.modalSeguimientosgenerico = false;
+        this.seguigenericoSelect = null;
+        this.logsList = await this.scmService.getLogs(this.caseSelect.id);
+
+    }
     async onCloseModalDianostico() {
         this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
         this.modalDianostico = false;
@@ -1079,6 +1091,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         try {
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
             this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
+            this.seguimientosgenericoList = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
             this.cargoDescripcion = this.caseSelect.descripcionCargo;
             this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
             this.fechaSeg()
@@ -1111,6 +1124,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         try {
             this.recomendationList = await this.scmService.getRecomendations(this.caseSelect.id);
             this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
+            this.seguimientosgenericoList = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
             this.cargoDescripcion = this.caseSelect.descripcionCargo;
             this.diagnosticoList = await this.scmService.getDiagnosticos(this.caseSelect.id);
             this.fechaSeg()
@@ -1299,6 +1313,31 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             console.log(error)
         }
     }
+    async deleteSeguimientogenerico(id) {
+        this.msgs = [];
+        try {           
+            if (await this.confirmService.confirmSeguimiento()){
+                let resp = await this.scmService.deleteSeguimientogenerico(id);
+                if (resp) {
+                    this.msgs.push({
+                        severity: "error",
+                        summary: "Mensaje del sistema",
+                        detail: `Su seguimiento se eliminó exitosamente`,
+                    });
+                    this.fechaSeg()
+                }
+            }
+        else {
+            this.msgs = [
+                { severity: "info", summary: "Cancelado", detail: "usted cancelo la eliminación" }
+            ];
+        }
+            
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     async nuevoSeguimiento() {
@@ -1307,6 +1346,16 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             let resp = await this.scmService.createSeguimiento(seg);
 
             this.seguimientos.push(resp)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async nuevoSeguimientogenerico() {
+        try {
+            let seg = { pkCase: this.caseSelect.id }
+            let resp = await this.scmService.createSeguimientogenerico(seg);
+
+            this.seguimientosgenerico.push(resp)
         } catch (error) {
             console.log(error)
         }
@@ -1352,6 +1401,11 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     openModalSeguimientos() {
         this.seguiSelect = false;
         this.modalSeguimientos = true;
+    }
+    openModalSeguimientosgenerico() {
+        console.log("entro")
+        this.seguigenericoSelect = false;
+        this.modalSeguimientosgenerico = true;
     }
 
     

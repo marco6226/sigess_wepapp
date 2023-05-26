@@ -1,0 +1,71 @@
+.disabled {
+    color: #555;
+    background-color: #efefef;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+/* Case data */
+
+.case-data {
+    width: 18rem;
+    @media only screen and (min-width: 768px) {
+        width: 16rem;
+    }
+    .case-code {
+        display: flex;
+        .title {
+            margin-right: .25rem;
+            font-weight: 600;
+        }
+        .number {
+            font-style: italic;
+        }
+    }
+    .case-date {
+        font-weight: 600;
+    }
+}
+
+
+/* General data */
+
+.title-header {
+    font-size: 1.25rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    position: relative;
+    margin: .25rem 0;
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        height: 2px;
+        width: 2rem;
+        background-color: #007ad9;
+    }
+}
+
+.subheader {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        height: 2px;
+        width: 2rem;
+        background-color: #9e9e9e;
+    }
+}
+
+.material-label {
+    color: #9e9e9e;
+}

@@ -7,11 +7,11 @@ import { SelectItem, Message } from "primeng/api";
 import { CasosMedicosService } from "../../services/casos-medicos.service";
 
 @Component({
-    selector: "app-seguimientosform",
-    templateUrl: "./seguimientosform.component.html",
-    styleUrls: ["./seguimientosform.component.scss"],
+    selector: "app-seguimientosgenericoform",
+    templateUrl: "./seguimientosgenericoform.component.html",
+    styleUrls: ["./seguimientosgenericoform.component.scss"],
 })
-export class SeguimientosformComponent implements OnInit, OnChanges {
+export class SeguimientosgenericoformComponent implements OnInit, OnChanges {
 
     epsList: SelectItem[];
     afpList: SelectItem[];
@@ -22,13 +22,13 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
     @Input() id: any;
     @Input() entity: epsorarl;
     @Input() recoSelect: any;
-    @Input() seguiSelect: any;
+    @Input() seguigenericoSelect: any;
   
 
     empleadosList = [];
     fechaActual = new Date();
     recomendation: FormGroup;
-    seguimiento: FormGroup;
+    seguimientogenerico: FormGroup;
     tipoIdentificacionList;
     yearRange: string = "1900:" + this.fechaActual.getFullYear();
     localeES: any = locale_es;
@@ -39,9 +39,9 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
         private empleadoService: EmpleadoService
 
     ) {
-        this.seguimiento = fb.group({
+        this.seguimientogenerico = fb.group({
 
-            seguimiento: [null, Validators.required],
+            seguimientogenerico: [null, Validators.required],
             tarea: [""],
             resultado: [null, Validators.required],
             fechaSeg: [null, Validators.required],
@@ -60,12 +60,12 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
     }
 
     //Aqui estan los get para las validaciones
-    get resultado() { return this.seguimiento.get('resultado'); }
+    get resultado() { return this.seguimientogenerico.get('resultado'); }
 
 
 
     async ngOnInit() {
-        if (this.seguiSelect) {
+        if (this.seguigenericoSelect) {
             this.patchFormValues()
         } else {
             this.clearInputs();
@@ -74,18 +74,18 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
     }
 
     clearInputs() {
-        this.seguimiento.reset();
+        this.seguimientogenerico.reset();
     }
 
     async onSubmit() {
         this.msgs = [];
-        console.log(this.seguimiento.value);
+        console.log(this.seguimientogenerico.value);
         // if (!this.seguimiento.valid) {
         //     return this.markFormGroupTouched(this.seguimiento);
         // }
         
-            if (this.seguimiento.value.responsable)
-            this.seguimiento.value.responsable = this.seguimiento.value.responsable.id;
+            if (this.seguimientogenerico.value.responsable)
+            this.seguimientogenerico.value.responsable = this.seguimientogenerico.value.responsable.id;
         
         console.log(this.accions);
         console.log(this.accions);
@@ -98,7 +98,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
             responsable,
             responsableExterno,
             
-        } = this.seguimiento.value;
+        } = this.seguimientogenerico.value;
 
         if (this.accions.length > 0) {
             this.accions.forEach(act => {
@@ -121,22 +121,22 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
 
         try {
             let res: any;
-            if (this.seguiSelect) {
-                res = await this.scmService.updateSeguimiento(body);
+            if (this.seguigenericoSelect) {
+                res = await this.scmService.updateSeguimientogenerico(body);
             } else {
-                res = await this.scmService.createSeguimiento(body);
+                res = await this.scmService.createSeguimientogenerico(body);
             }
 
             if (res) {
                 this.msgs.push({
                     severity: "success",
                     summary: 'Mensaje del sistema',
-                    detail: this.seguiSelect ? "El seguimiento fue actualizado exitosamente" : "El seguimiento fue creado exitosamente",
+                    detail: this.seguigenericoSelect ? "El seguimiento fue actualizado exitosamente" : "El seguimiento fue creado exitosamente",
                     //detail: `Su numero de caso es ${status}`,
                 });
                 setTimeout(() => {
                     this.accions = [];
-                    this.seguimiento.reset();
+                    this.seguimientogenerico.reset();
                     this.eventClose.emit()
                 }, 1000);
             }
@@ -152,22 +152,22 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
     }
 
     patchFormValues() {
-        console.log(this.seguiSelect);
-         if (this.seguiSelect) {
+        console.log(this.seguigenericoSelect);
+         if (this.seguigenericoSelect) {
         
              this.accions.map(act => act.responsable = this.onSelectionResponsable(act.responsableEmpresa))
-             this.seguimiento.patchValue({
-                fechaSeg: this.seguiSelect.fechaSeg == null ? null : new Date(this.seguiSelect.fechaSeg),
-                responsableExterno: this.seguiSelect.responsableExterno,
-                responsable: this.seguiSelect.responsable.id,
-                resultado: this.seguiSelect.resultado,
-                 tarea: this.seguiSelect.tarea,
-                 seguimiento: this.seguiSelect.seguimiento
+             this.seguimientogenerico.patchValue({
+                fechaSeg: this.seguigenericoSelect.fechaSeg == null ? null : new Date(this.seguigenericoSelect.fechaSeg),
+                responsableExterno: this.seguigenericoSelect.responsableExterno,
+                responsable: this.seguigenericoSelect.responsable.id,
+                resultado: this.seguigenericoSelect.resultado,
+                 tarea: this.seguigenericoSelect.tarea,
+                 seguimientogenerico: this.seguigenericoSelect.seguimiento
              })
          } else {
             this.clearInputs();
         }
-       console.log(this.seguiSelect);
+       console.log(this.seguigenericoSelect);
     }
 
     onSelectionResponsable(event) {
@@ -206,7 +206,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
         let { id, tarea, responsable, resultado, responsableExterno, ...product } = pseg;
 
         try {
-            let resp = await this.scmService.createSeguimiento(product);
+            let resp = await this.scmService.createSeguimientogenerico(product);
             this.msgs.push({
                 severity: "success",
                 summary: "Mensaje del sistema",
@@ -262,8 +262,8 @@ import { epsorarl } from "../../entities/eps-or-arl";
  *   {{ 2 | exponentialStrength:10 }}
  *   formats to: 1024
 */
-@Pipe({ name: 'seguimientostatus' })
-export class SeguimientoStatusPipe implements PipeTransform {
+@Pipe({ name: 'seguimientogenericostatus' })
+export class SeguimientogenericoStatusPipe implements PipeTransform {
     transform(value: string, exponent?: string): string {
         let status = new Date(value) > new Date() ? 'Vigente' : 'Expirado';
         return status;

@@ -1,0 +1,93 @@
+<p-growl [value]="msgs"></p-growl>
+
+
+<div class="ui-g">
+    <div class="ui-g-12">
+        <form [formGroup]="seguimientogenerico">
+
+            
+
+            <div class="ui-g-12">
+                                    <div class="input-field"  style="height: 30px;">
+                                    <label for="" class="active">Fecha de seguimiento</label>
+                                    <p-calendar [touchUI]="true" [monthNavigator]="true" [touchUI]="true" showButtonBar="true" [yearNavigator]="true" yearRange="2010:2030" formControlName="fechaSeg"
+                                    dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                    </p-calendar>
+                                    </div>
+
+                                <div class="ui-g-12">
+                                    <div class="input-field">
+                                        <textarea formControlName="seguimientogenerico" class="textarea-material" pInputTextarea rows="7"></textarea>
+                                        <label for="" class="active">Seguimiento</label>
+                                    </div>
+                                    
+                                </div>
+                                <div class="ui-g-12">
+                                    <div class="input-field">
+                                        <textarea formControlName="tarea" class="textarea-material" pInputTextarea rows="2"></textarea>
+                                        <label for="" class="active">Tarea</label>
+                                    </div>
+                                    
+                                </div>
+                                <div class="ui-g-6">
+                                    <div class="input-field" style="height: 30px;">
+                                        <p-autoComplete styleClass="form-material-autocomplete" #autocomplete
+                                    placeholder="Digite" [style]="{'width':'100%'}"
+                                    (onSelect)="responsable = $event"
+                                    [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                                    field="numeroIdentificacion"  formControlName="responsable"
+                                    *ngIf="empleado?.id == null">
+                                    <ng-template let-empleado pTemplate="item">
+                                        <div class="ui-helper-clearfix">
+                                            <div class="wrapper">
+                                                <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                                    style="font-size: 48px;" aria-hidden="true"></i>
+                                                <img *ngIf="empleado.usuario?.icon"
+                                                    [src]="empleado.usuario?.icon"
+                                                    style="border-radius: 50%;" #imgAvatar />
+                                                <div style="margin-left:20px">
+                                                    <label>{{empleado?.primerApellido}}
+                                                        {{empleado?.primerNombre}}
+                                                        {{empleado?.segundoNombre}}
+                                                    </label>
+                                                    <br /> {{empleado?.numeroIdentificacion}}
+                                                    <br /> {{empleado?.usuario.email}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </ng-template>
+                                </p-autoComplete>
+                                <label for="" class="active">Responsable Empresa</label>
+                                    </div>                                    
+                                    
+                                </div>
+                                <div class="ui-g-6">
+                                    <div class="input-field">
+                                        <input formControlName="responsableExterno" style="height: 30px;">
+                                        <label for="" class="active">Responsable Externo </label>
+                                    </div>                
+                                </div>
+                                <div class="ui-g-6">
+                                    <div class="input-field">
+                                        <input formControlName="resultado" style="height: 30px;">
+                                        <label for="" class="active">Resultado</label>
+                                    </div>                
+                                </div>
+                                
+
+              
+                
+            </div>
+
+            
+
+        </form>
+    </div>
+
+    <div class="ui-g-12 p-pt-3">
+        <button *sTienePermiso="'SCM_CREATE_CASE_SEG'" pButton type="button" [label]="(seguiSelect) ? 'Actualizar' : 'Guardar'" icon="fa fa-plus" (click)="onSubmit()">
+
+        </button>
+    </div>
+</div>

@@ -100,7 +100,15 @@ export class CasosMedicosService {
         return this.http.post(`${endPoints.scm}seguimiento/`, seg, this.getRequestHeaders(this.headers)).toPromise();
 
     }
+    createSeguimientogenerico(seg) {
+        return this.http.post(`${endPoints.scm}seguimiento/`, seg, this.getRequestHeaders(this.headers)).toPromise();
+
+    }
     updateSeguimiento(seguimientoCase) {
+        return this.http.put(`${endPoints.scm}seguimiento/`, seguimientoCase, this.getRequestHeaders(this.headers)).toPromise();
+
+    }
+    updateSeguimientogenerico(seguimientoCase) {
         return this.http.put(`${endPoints.scm}seguimiento/`, seguimientoCase, this.getRequestHeaders(this.headers)).toPromise();
 
     }
@@ -108,9 +116,15 @@ export class CasosMedicosService {
     deleteSeguimiento(id) {
         return this.http.put(`${endPoints.scm}seguimiento/${id}`, {}, this.getRequestHeaders(this.headers)).toPromise();
     }
+    deleteSeguimientogenerico(id) {
+        return this.http.put(`${endPoints.scm}seguimiento/${id}`, {}, this.getRequestHeaders(this.headers)).toPromise();
+    }
 
 
     getSeguimientos(documento): any {
+        return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
+    }
+    getSeguimientosgenerico(documento): any {
         return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
     /// Tratamientos

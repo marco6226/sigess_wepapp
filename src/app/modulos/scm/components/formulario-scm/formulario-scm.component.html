@@ -1108,11 +1108,11 @@
 
     <!-- Inicio seguimiento -->
     <ng-container *sTienePermiso="'SCM_GET_CASE_SEG'">
-        <p-tabPanel header="Seguimiento" *ngIf="caseSelect">
+        <p-tabPanel header="Seguimiento médico" *ngIf="caseSelect">
 
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <h5 class="title-header p-mb-2">Seguimientos del caso</h5>
+                    <h5 class="title-header p-mb-2">Seguimientos médicos del caso </h5>
                 </div>
                 <div class="ui-g-12">
                     <p-table [value]="seguimientos" dataKey="id" editMode="row" styleClass="material-table">
@@ -1257,6 +1257,157 @@
         </p-tabPanel>
     </ng-container>
     <!-- Finaliza seguimientos -->
+    <!-- Inicio seguimiento generico-->
+    <ng-container *sTienePermiso="'SCM_GET_CASE_SEG_GENERICO'">
+        <p-tabPanel header="Seguimiento  generico" *ngIf="caseSelect">
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h5 class="title-header p-mb-2">Seguimientos genéricos del caso</h5>
+                </div>
+                <div class="ui-g-12">
+                    <p-table [value]="seguimientos" dataKey="id" editMode="row" styleClass="material-table">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Fecha de seguimiento</th>
+                                <th colspan="3">Seguimiento</th>
+                                <th>Tarea</th>
+                                <th>Responsable Empresa</th>
+                                <th>Responsable Externo</th>
+                                <th>Resultado</th>
+
+                                <th style="width:10rem"></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-seguimientogenerico let-editing="editing" let-ri="rowIndex">
+                            <tr [pEditableRow]="seguimientogenerico">
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <p-calendar [disabled]="consultar2" [touchUI]="true" [(ngModel)]="seguimientogenerico.fechaSeg"
+                                                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
+                                            </p-calendar>
+
+                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimientogenerico.fechaSeg | date : 'dd/MM/yyyy'}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td colspan="3">
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.seguimientogenerico">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimientogenerico.seguimiento}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguiseguimientogenericomiento.tarea">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimientogenerico.tarea}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <p-autoComplete [readonly]="consultar2" styleClass="form-material-autocomplete" #autocomplete
+                                                placeholder="Digite" [style]="{'width':'100%'}"
+                                                (onSelect)="seguimientogenerico.responsable = $event"
+                                                [suggestions]="empleadosList" (completeMethod)="buscarEmpleado($event)"
+                                                field="numeroIdentificacion" [(ngModel)]="seguimientogenerico.responsable"
+                                                *ngIf="empleado?.id == null">
+                                                <ng-template let-empleado pTemplate="item">
+                                                    <div class="ui-helper-clearfix">
+                                                        <div class="wrapper">
+                                                            <i *ngIf="!empleado.usuario?.icon" class="fa fa-user-circle"
+                                                                style="font-size: 48px;" aria-hidden="true"></i>
+                                                            <img *ngIf="empleado.usuario?.icon"
+                                                                [src]="empleado.usuario?.icon"
+                                                                style="border-radius: 50%;" #imgAvatar />
+                                                            <div style="margin-left:20px">
+                                                                <label>{{empleado?.primerApellido}}
+                                                                    {{empleado?.primerNombre}}
+                                                                    {{empleado?.segundoNombre}}
+                                                                </label>
+                                                                <br /> {{empleado?.numeroIdentificacion}}
+                                                                <br /> {{empleado?.usuario.email}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-autoComplete>
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimientogenerico.responsable?.primerApellido }}
+                                            {{seguimientogenerico.responsable?.primerNombre }}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.responsableExterno">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimientogenerico.responsableExterno}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimseguimientogenericoiento.resultado">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimientogenerico.resultado}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td class="p-text-center" *ngIf="!this.consultar">
+                                    <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
+                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
+                                        icon="pi pi-pencil" (click)="onRowEditInit(seguimientogenerico)"
+                                        title="Editar Seguimiento" 
+                                        class="p-button-rounded p-button-text p-mr-2"></button>
+                                        <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
+                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-copy"
+                                        (click)="onRowCloneInit(seguimientogenerico)" title="Clonar Seguimiento" 
+                                        class="p-button-rounded p-button-text p-mr-2"></button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                        icon="pi pi-check" (click)="onRowEditSave(seguimientogenerico)"
+                                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                        icon="pi pi-times" (click)="onRowEditCancel(seguimientogenerico, ri)"
+                                        class="p-button-rounded p-button-text ui-button-danger"></button>
+
+                                    <button *sTienePermiso="'SCM_DEL_CASE_SEG_GENERICO'" [disabled]="consultar2" pButton pRipple type="button" pCancelEditableRow
+                                        icon="pi pi-trash" (click)="deleteSeguimientogenerico(seguimientogenerico.id)"
+                                        title="Borrar Seguimiento" class="ui-button-danger"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="summary" let-rowData>
+                            <button *sTienePermiso="'SCM_POST_CASE_SEG_GENERIC'" [disabled]="consultar2" pButton type="button" icon="fa fa-plus"
+                                label="Crear"  (click)="openModalSeguimientosgenerico()">
+
+                            </button>
+
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </p-tabPanel>
+    </ng-container>
+    <!-- Finaliza seguimientos generico -->
 
     <!-- Inicio reintegro -->
     <ng-container *sTienePermiso="'SCM_GET_REINTEGRO'">
@@ -1576,6 +1727,13 @@
     <app-seguimientosform [id]="caseSelect.id" [recoSelect]="seguiSelect" [entity]="entity"
         (eventClose)="onCloseModalseguimiento()">
     </app-seguimientosform>
+</p-dialog>
+<p-dialog [header]="(seguigenericoSelect) ? 'Editar seguimiento' : 'Crear seguimiento genérico'"
+    [(visible)]="modalSeguimientosgenericos" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false"
+    [resizable]="false">
+    <app-seguimientosgenericoform [id]="caseSelect.id" [recoSelect]="seguigenericoSelect" [entity]="entity"
+        (eventClose)="onCloseModalseguimientogenerico()">
+    </app-seguimientosgenericoform>
 </p-dialog>
 
 <!-- Boton de retorno al listado -->
