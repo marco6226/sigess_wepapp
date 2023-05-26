@@ -1266,7 +1266,7 @@
                     <h5 class="title-header p-mb-2">Seguimientos genéricos del caso</h5>
                 </div>
                 <div class="ui-g-12">
-                    <p-table [value]="seguimientos" dataKey="id" editMode="row" styleClass="material-table">
+                    <p-table [value]="seguimientogenerico" dataKey="id" editMode="row" styleClass="material-table">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Fecha de seguimiento</th>
@@ -1297,7 +1297,7 @@
                                 <td colspan="3">
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.seguimientogenerico">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.seguimiento">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimientogenerico.seguimiento}}
@@ -1307,7 +1307,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguiseguimientogenericomiento.tarea">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.tarea">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimientogenerico.tarea}}
@@ -1364,7 +1364,7 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimseguimientogenericoiento.resultado">
+                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.resultado">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimientogenerico.resultado}}

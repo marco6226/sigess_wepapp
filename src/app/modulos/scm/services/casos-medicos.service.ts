@@ -125,7 +125,7 @@ export class CasosMedicosService {
         return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
     getSeguimientosgenerico(documento): any {
-        return this.http.get<any[]>(`${endPoints.scm}seguimiento/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
+        return this.http.get<any[]>(`${endPoints.scm}seguimiento/generico/${documento}`, this.getRequestHeaders(this.headers)).toPromise();
     }
     /// Tratamientos
     createTratamiento(seg) {

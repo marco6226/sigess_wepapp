@@ -41,12 +41,13 @@ export class SeguimientosgenericoformComponent implements OnInit, OnChanges {
     ) {
         this.seguimientogenerico = fb.group({
 
-            seguimientogenerico: [null, Validators.required],
+            seguimiento: [null, Validators.required],
             tarea: [""],
             resultado: [null, Validators.required],
             fechaSeg: [null, Validators.required],
             responsable: [null],            
             responsableExterno: [null],
+            generico: [true]
            
 
         });
@@ -97,6 +98,8 @@ export class SeguimientosgenericoformComponent implements OnInit, OnChanges {
             resultado,            
             responsable,
             responsableExterno,
+            generico,
+            
             
         } = this.seguimientogenerico.value;
 
@@ -116,6 +119,7 @@ export class SeguimientosgenericoformComponent implements OnInit, OnChanges {
             resultado,
             responsable,
             responsableExterno,
+            generico:true,            
             pkCase: this.id,
         }
 
@@ -162,7 +166,8 @@ export class SeguimientosgenericoformComponent implements OnInit, OnChanges {
                 responsable: this.seguigenericoSelect.responsable.id,
                 resultado: this.seguigenericoSelect.resultado,
                  tarea: this.seguigenericoSelect.tarea,
-                 seguimientogenerico: this.seguigenericoSelect.seguimiento
+                 seguimientogenerico: this.seguigenericoSelect.seguimiento,
+                 //generico: this.seguigenericoSelect.generico
              })
          } else {
             this.clearInputs();

@@ -47,6 +47,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
             fechaSeg: [null, Validators.required],
             responsable: [null],            
             responsableExterno: [null],
+            generico: [false],
            
 
         });
@@ -97,6 +98,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
             resultado,            
             responsable,
             responsableExterno,
+            generico,
             
         } = this.seguimiento.value;
 
@@ -116,6 +118,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
             resultado,
             responsable,
             responsableExterno,
+            generico:false,
             pkCase: this.id,
         }
 
@@ -162,7 +165,8 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
                 responsable: this.seguiSelect.responsable.id,
                 resultado: this.seguiSelect.resultado,
                  tarea: this.seguiSelect.tarea,
-                 seguimiento: this.seguiSelect.seguimiento
+                 seguimiento: this.seguiSelect.seguimiento,
+                 //generico: this.seguiSelect.generico
              })
          } else {
             this.clearInputs();
