@@ -101,7 +101,8 @@ export class IncapacidadesCtrComponent implements OnInit {
     let incapacidad = this.incapacidades.find(incapacidad => incapacidad.id === incapacidadId);
     if(incapacidad){
       this.id = incapacidad.id;
-      this.generoIncapacidad = Boolean(incapacidad.generoIncapacidad);
+      // console.log(incapacidad.generoIncapacidad);
+      this.generoIncapacidad = JSON.parse(incapacidad.generoIncapacidad);
       this.tipo = incapacidad.tipo;
       this.cie10 = incapacidad.cie10;
       this.cie10.nombre = incapacidad.cie10 ? incapacidad.cie10.nombre : null;
@@ -116,6 +117,8 @@ export class IncapacidadesCtrComponent implements OnInit {
       header: 'Confirmar',
       key: 'confirmIncapacidad',
       message: '¿Seguro que desea eliminar la incapacidad?',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
       icon: 'fa fa-circle-exclamation',
       accept: () => {
         this.incapacidades = this.incapacidades
