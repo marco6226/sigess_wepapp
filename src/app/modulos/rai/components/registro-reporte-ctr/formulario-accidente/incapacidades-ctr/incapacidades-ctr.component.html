@@ -40,8 +40,8 @@
 <p-dialog [(visible)]="isVisibleDialog" [style]="{width: '450px'}" [positionTop]="100" [draggable]="true" header="Agregar incapacidad" [modal]="true" styleClass="p-fluid">
   <div class="p-field">
       <label for="tipo">El evento generó incapacidad?</label>
-      <p-radioButton [name]="" [value]="true" label="Si" [(ngModel)]="generoIncapacidad"></p-radioButton>
-      <p-radioButton [name]="" [value]="false" label="No" [(ngModel)]="generoIncapacidad"></p-radioButton>
+      <p-radioButton name="generoIncapacidad" [value]="true" label="Si" [(ngModel)]="generoIncapacidad"></p-radioButton>
+      <p-radioButton name="generoIncapacidad" [value]="false" label="No" [(ngModel)]="generoIncapacidad"></p-radioButton>
   </div>
   <ng-container *ngIf="generoIncapacidad">
     <div class="p-field">

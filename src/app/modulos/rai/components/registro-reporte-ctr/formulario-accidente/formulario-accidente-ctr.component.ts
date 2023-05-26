@@ -900,7 +900,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       && this.peligroList.length>0 
       && (this.selectedPeligro ? true : false)
       ) || (!this.peligroList))
-    && (this.gestorData.gestor ? true : false);
+    && (this.gestorData.gestor ? true : false)
+    && this.esReportePropio !== null
+    && ((this.esReportePropio && !this.selectedSubcontratista) || (!this.esReportePropio && this.selectedSubcontratista));
   }
 
   infoInvestigacionIsValid(): boolean {
