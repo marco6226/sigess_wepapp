@@ -8,6 +8,7 @@ import { Reporte } from 'app/modulos/rai/entities/reporte';
 import { TareaService } from 'app/modulos/sec/services/tarea.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { Tarea } from "app/modulos/sec/entities/tarea";
 
 @Component({
   selector: 'app-plan-accion',
@@ -19,7 +20,7 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   @Input() planAcciones: planCausaRaiz
   @Input() process: string;
   @Output() dataTest = new EventEmitter<any>()
-
+  @Input() tareasList: Tarea[];
   selectedValue
 
   datatest: PlanEspecifico
@@ -207,6 +208,25 @@ export class PlanAccionComponent implements OnInit, AfterViewInit {
   }
 
   onVerSeguimiento(idTarea: number | null){
+    let tarea
+    if(this.process=='MEDIBLE'){
+        tarea =this.tareasList.find(data=>{
+          return data.nombre.split(" ").join("") === this.planAcciones[this.process.toLowerCase()].planVerificacion.split(" ").join("")
+    } )}
+
+    else if(this.process=='EFICAZ'){
+    tarea =this.tareasList.find(data=>{
+      return data.nombre.split(" ").join("") === this.planAcciones[this.process.toLowerCase()].planValidacion.split(" ").join("")
+    } )}
+
+    else if(this.process=='ESPECIFICO'){
+    tarea =this.tareasList.find(data=>{
+      return data.nombre.split(" ").join("") === this.planAcciones[this.process.toLowerCase()].nombreAccionCorrectiva.split(" ").join("")
+    } )}
+
+    console.log(tarea)
+    console.log(this.planAcciones)
+    idTarea=Number(tarea.id)
     if (idTarea) {
       this.confirmationService.confirm({
         icon: "pi pi-exclamation-triangle",

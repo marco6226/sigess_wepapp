@@ -3,6 +3,7 @@ import { listPlanAccion } from 'app/modulos/sec/entities/factor-causal';
 import { Message, SelectItem, ConfirmationService } from 'primeng/primeng';
 import {TreeNode} from 'primeng/api';
 import { Console } from 'console';
+import { Tarea } from "app/modulos/sec/entities/tarea";
 
 @Component({
   selector: 'app-plan-accion-list',
@@ -15,6 +16,7 @@ export class PlanAccionListComponent implements OnInit {
   @Output() validacionPA = new EventEmitter<any>()
   @Output() flagPlanAccionlist =new EventEmitter<any>()
   @Output() actualizar =new EventEmitter<any>()
+  @Input() tareasList: Tarea[];
   planAccionListSelected: listPlanAccion;
   causasListSelect
   display: boolean = false;
