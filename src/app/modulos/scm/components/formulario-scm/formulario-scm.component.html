@@ -1156,7 +1156,8 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimiento.tarea">
+                                            <textarea [readOnly]="consultar2" pInputTextarea type="text" rows="3" [(ngModel)]="seguimiento.tarea"></textarea>
+                                            
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.tarea}}
@@ -1308,7 +1309,8 @@
                                 <td>
                                     <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                            <input [readOnly]="consultar2" pInputText type="text" [(ngModel)]="seguimientogenerico.tarea">
+                                            <textarea [readOnly]="consultar2" pInputTextarea type="text" rows="3" [(ngModel)]="seguimientogenerico.tarea"></textarea>
+                                            
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimientogenerico.tarea}}
