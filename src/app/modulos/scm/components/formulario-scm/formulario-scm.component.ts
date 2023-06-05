@@ -686,14 +686,18 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
             this.flagGuardado=true
-            status = await this.scmService.create(this.casoMedicoForm.value).then(resp=>this.flagGuardado=false)
+            await this.scmService.create(this.casoMedicoForm.value).then(resp=>{
+                status=resp
+                this.flagGuardado=false})
             .catch(er=>this.flagGuardado=false)
             
         } else {
 
             this.casoMedicoForm.patchValue({ id: this.caseSelect.id });
             this.flagGuardado=true
-            status = await this.scmService.edit(this.casoMedicoForm.value).then(resp=>this.flagGuardado=false)
+            await this.scmService.edit(this.casoMedicoForm.value).then(resp=>{
+                status=resp
+                this.flagGuardado=false})
             .catch(er=>this.flagGuardado=false);
         }
 
