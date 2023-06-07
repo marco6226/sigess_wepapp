@@ -52,4 +52,5 @@ export class Empleado {
     estado: string;
     empresa: string;
     nit: string;
+    enviacorreo! : boolean;
 }
