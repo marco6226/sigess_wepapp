@@ -110,6 +110,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     empleadosList: Empleado[];
     diagnosticoList = [];
     modifyDiag = false;
+    idUltimoSeguimiento?:any;
     seguimientos = [];
     seguimientosgenerico = [];
     tratamientos = [];
@@ -987,7 +988,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     async onCloseModalseguimiento() {       
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
-        
+        this.idUltimoSeguimiento=this.seguimientos[0].id
         this.modalSeguimientos = false;
         this.seguiSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -1341,6 +1342,15 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             let resp = await this.scmService.createSeguimiento(seg);
 
             this.seguimientos.push(resp)
+            this.seguimientos.sort(function(a:any,b:any){
+                if(a.id < b.id){
+                  return 1
+                }else if(a.id > b.id){
+                  return -1;
+                }
+                  return 0;
+                });
+            this.idUltimoSeguimiento=this.seguimientos[0].id
         } catch (error) {
             console.log(error)
         }
@@ -1372,9 +1382,11 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     async fechaSeg() {
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+        this.idUltimoSeguimiento=this.seguimientos[0].id
         this.seguimientos.map((seg, idx) => {
             if (seg.fechaSeg) {
                 this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()
+                this.seguimientos[idx].proxfechaSeg = moment(seg.proxfechaSeg).toDate()
             }
         })
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG_GENERICO"])this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
