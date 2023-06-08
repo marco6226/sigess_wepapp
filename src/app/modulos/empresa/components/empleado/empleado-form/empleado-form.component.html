@@ -243,6 +243,16 @@
                     <div class="ui-g-12 ui-md-4">
                         <input type="text" pInputText formControlName="ciudadGerencia" placeholder="Ciudad" />
                     </div>
+                    <div class="col-lg">
+                        <label for="enviacorreo">Enviar correo de creación</label>
+                        
+                        <div class="field-radiobutton">
+                            <p-radioButton name="enviacorreo" value=true label="Si"  formControlName="enviacorreo" checked>
+                            </p-radioButton>
+                            <p-radioButton name="enviacorreo" value=false label="No" formControlName="enviacorreo" required>
+                            </p-radioButton>
+                        </div>
+                    </div>
                 </div>
             </p-panel>
             <div style="text-align: center; width: 100%;" *ngIf="isUpdate || editable">
