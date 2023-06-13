@@ -1386,6 +1386,8 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
         this.seguimientos.map((seg, idx) => {
             if (seg.fechaSeg) {
                 this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()
+            }
+            if (seg.proxfechaSeg) {
                 this.seguimientos[idx].proxfechaSeg = moment(seg.proxfechaSeg).toDate()
             }
         })

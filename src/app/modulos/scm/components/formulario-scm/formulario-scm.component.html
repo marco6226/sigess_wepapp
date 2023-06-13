@@ -1232,18 +1232,6 @@
                                         </ng-template>
                                     </p-cellEditor>
                                 </td>
-                                <td>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <p-calendar [disabled]="consultar2" [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
-                                                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
-                                            </p-calendar>
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{seguimiento.fechaSeg | date : 'dd/MM/yyyy'}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
                                     <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
                                     <button *ngIf="!editing && idUltimoSeguimiento==seguimiento.id" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
