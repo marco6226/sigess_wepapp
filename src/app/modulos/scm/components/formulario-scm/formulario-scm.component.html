@@ -1124,7 +1124,7 @@
                                 <th>Responsable Empresa</th>
                                 <th>Responsable Externo</th>
                                 <th>Resultado</th>
-
+                                <th>Fecha próximo seguimiento</th>
                                 <th style="width:10rem"></th>
                             </tr>
                         </ng-template>
@@ -1136,8 +1136,7 @@
                                             <p-calendar [disabled]="consultar2" [touchUI]="true" [(ngModel)]="seguimiento.fechaSeg"
                                                 dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" [locale]="localeES">
                                             </p-calendar>
-
-                        </ng-template>
+                                        </ng-template>
                                         <ng-template pTemplate="output">
                                             {{seguimiento.fechaSeg | date : 'dd/MM/yyyy'}}
                                         </ng-template>
@@ -1221,14 +1220,26 @@
                                         </ng-template>
                                     </p-cellEditor>
                                 </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <p-calendar [disabled]="consultar2" [touchUI]="true" [(ngModel)]="seguimiento.proxfechaSeg"
+                                                dateFormat="dd/mm/yy" placeholder="dd/MM/yyyy" appendTo="body">
+                                            </p-calendar>
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{seguimiento.proxfechaSeg | date : 'dd/MM/yyyy'}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
                                     <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
-                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
+                                    <button *ngIf="!editing && idUltimoSeguimiento==seguimiento.id" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
                                         title="Editar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                         <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
-                                    <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-copy"
+                                    <button *ngIf="!editing && idUltimoSeguimiento==seguimiento.id" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-copy"
                                         (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" 
                                         class="p-button-rounded p-button-text p-mr-2"></button>
                                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
@@ -1237,10 +1248,11 @@
                                     <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
                                         icon="pi pi-times" (click)="onRowEditCancel(seguimiento, ri)"
                                         class="p-button-rounded p-button-text ui-button-danger"></button>
-
+                                    <ng-container *ngIf="idUltimoSeguimiento==seguimiento.id">
                                     <button *sTienePermiso="'SCM_DEL_CASE_SEG'" [disabled]="consultar2" pButton pRipple type="button" pCancelEditableRow
                                         icon="pi pi-trash" (click)="deleteSeguimiento(seguimiento.id)"
                                         title="Borrar Seguimiento" class="ui-button-danger"></button>
+                                    </ng-container>
                                 </td>
                             </tr>
                         </ng-template>
@@ -1727,7 +1739,7 @@
 <p-dialog *ngIf="caseSelect" [header]="(seguiSelect) ? 'Editar seguimiento' : 'Crear seguimiento'"
     [(visible)]="modalSeguimientos" [style]="{width: '75vw'}" [modal]="true" [closable]="true" [draggable]="false"
     [resizable]="false">
-    <app-seguimientosform [id]="caseSelect.id" [recoSelect]="seguiSelect" [entity]="entity"
+    <app-seguimientosform [id]="caseSelect.id" [recoSelect]="seguiSelect" [entity]="entity" [prioridad]="caseSelect.prioridadCaso"
         (eventClose)="onCloseModalseguimiento()">
     </app-seguimientosform>
 </p-dialog>

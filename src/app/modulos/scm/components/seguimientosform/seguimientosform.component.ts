@@ -23,8 +23,24 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
     @Input() entity: epsorarl;
     @Input() recoSelect: any;
     @Input() seguiSelect: any;
+    @Input('prioridad') 
+    set prioridadIn(prioridad: any){
+        switch (prioridad) {
+            case 'Baja':
+                this.fechaProximaDate=new Date(this.fechaActual!.getTime() + (1000 * 60 * 60 * 24*365))//un año
+                break;
+            case 'Media':
+                this.fechaProximaDate=new Date(this.fechaActual!.getTime() + (1000 * 60 * 60 * 24*183))// un semestre
+                break;
+            case 'Alta':
+                this.fechaProximaDate=new Date(this.fechaActual!.getTime() + (1000 * 60 * 60 * 24*60))// un bimestre
+                break;
+            default:
+                break;
+        }
+    }
   
-
+    fechaProximaDate?:Date
     empleadosList = [];
     fechaActual = new Date();
     recomendation: FormGroup;
@@ -41,13 +57,14 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
     ) {
         this.seguimiento = fb.group({
 
-            seguimiento: [null, Validators.required],
+            seguimiento: [null],
             tarea: [""],
-            resultado: [null, Validators.required],
-            fechaSeg: [null, Validators.required],
+            resultado: [null],
+            fechaSeg: [null],
             responsable: [null],            
             responsableExterno: [null],
             generico: [false],
+            proxfechaSeg: [null]
            
 
         });
@@ -99,6 +116,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
             responsable,
             responsableExterno,
             generico,
+            proxfechaSeg
             
         } = this.seguimiento.value;
 
@@ -120,6 +138,7 @@ export class SeguimientosformComponent implements OnInit, OnChanges {
             responsableExterno,
             generico:false,
             pkCase: this.id,
+            proxfechaSeg
         }
 
         try {

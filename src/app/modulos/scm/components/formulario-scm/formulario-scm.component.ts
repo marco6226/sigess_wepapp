@@ -110,6 +110,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     empleadosList: Empleado[];
     diagnosticoList = [];
     modifyDiag = false;
+    idUltimoSeguimiento?:any;
     seguimientos = [];
     seguimientosgenerico = [];
     tratamientos = [];
@@ -462,7 +463,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         try {
            // 
-
+           console.log(this.caseSelect)
            // if (this.caseSelect) {
                 let res: any = await this.scmService.getSvelist();
                 this.sveOptionList.push({ label: "--Seleccione--", value: null });
@@ -471,6 +472,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 });
                 
                 this.caseSelect = await this.scmService.getCase(this.route.snapshot.paramMap.get("id"));
+                console.log(this.caseSelect)
                 this.onLoadInit();
                 this.modifyCase();
           //  }
@@ -628,6 +630,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     
     async onSubmit() {
         console.log("hi");
+        this.flagGuardado=true
 
         // if(this.fechaCierre){
         //     this.casoMedicoForm.controls.fechaFinal = this.fechaCierre;
@@ -685,20 +688,14 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
         if (this.createCase) {
             this.casoMedicoForm.patchValue({ fechaCreacion: Date.now() });
-            this.flagGuardado=true
             await this.scmService.create(this.casoMedicoForm.value).then(resp=>{
-                status=resp
-                this.flagGuardado=false})
-            .catch(er=>this.flagGuardado=false)
+                status=resp})
             
         } else {
 
             this.casoMedicoForm.patchValue({ id: this.caseSelect.id });
-            this.flagGuardado=true
             await this.scmService.edit(this.casoMedicoForm.value).then(resp=>{
-                status=resp
-                this.flagGuardado=false})
-            .catch(er=>this.flagGuardado=false);
+                status=resp})
         }
 
         if (this.adicionar) {
@@ -711,12 +708,15 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             this.adicionar = false;
            
                     
-            setTimeout((res) => {
+            // setTimeout((res) => {
                 // this.closeForm();
                 // this.router.navigate(["/app/scm/list"]);
                 // this.router.navigateByUrl("/app/scm/list");
-            }, 3000);
+            // }, 3000);
+            
+            this.caseSelect = await this.scmService.getCase(status);
             this.caseSelect.id = status;
+            console.log(this.caseSelect)
           this.casocreado = true;
         }
             
@@ -731,6 +731,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             });
             this.createCase = false;
         }
+        this.flagGuardado=false
     }
 
     async buildPerfilesIdList() {
@@ -987,7 +988,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     async onCloseModalseguimiento() {       
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
-        
+        this.idUltimoSeguimiento=this.seguimientos[0].id
         this.modalSeguimientos = false;
         this.seguiSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -1341,6 +1342,15 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
             let resp = await this.scmService.createSeguimiento(seg);
 
             this.seguimientos.push(resp)
+            this.seguimientos.sort(function(a:any,b:any){
+                if(a.id < b.id){
+                  return 1
+                }else if(a.id > b.id){
+                  return -1;
+                }
+                  return 0;
+                });
+            this.idUltimoSeguimiento=this.seguimientos[0].id
         } catch (error) {
             console.log(error)
         }
@@ -1372,9 +1382,13 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     async fechaSeg() {
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
+        this.idUltimoSeguimiento=this.seguimientos[0].id
         this.seguimientos.map((seg, idx) => {
             if (seg.fechaSeg) {
                 this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()
+            }
+            if (seg.proxfechaSeg) {
+                this.seguimientos[idx].proxfechaSeg = moment(seg.proxfechaSeg).toDate()
             }
         })
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG_GENERICO"])this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);

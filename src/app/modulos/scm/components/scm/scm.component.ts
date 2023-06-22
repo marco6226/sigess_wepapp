@@ -62,7 +62,8 @@ export class ScmComponent implements OnInit {
         'prioridadCaso',
         'tipoCaso',
         'tipoReporte',
-        'diagnostico'
+        'diagnostico',
+        'proximoseguimiento'
     ];
     estadosList: SelectItem[] = [
         { value: 'ACTIVO', label: 'ACTIVO' },

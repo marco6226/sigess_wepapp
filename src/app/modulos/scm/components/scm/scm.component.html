@@ -57,6 +57,9 @@
                 <th pSortableColumn="tipoReporte" *ngIf="idEmpresa=='22'">Tipo de retorno
                     <p-sortIcon field="tipoReporte"></p-sortIcon>
                 </th>
+                <th pSortableColumn="proximoseguimiento">Proximo seguimiento
+                    <p-sortIcon field="proximoseguimiento"></p-sortIcon>
+                </th>
             </tr>
             <tr class="filters">
                 <td>
@@ -183,6 +186,12 @@
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'tipoReporte')">
                     </div>
                 </td>
+                <td class="text-center bg-light">
+                    <div class="ui-inputgroup">
+                        <s-rangoFechaSelector (onSelect)="dt.filter($event, 'proximoseguimiento', 'bt')">
+                        </s-rangoFechaSelector>
+                    </div>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-case>
@@ -210,7 +219,7 @@
                 }">{{case.prioridadCaso}}</td>
                 <td class="p-text-center">{{case.tipoCaso}}</td>
                 <td class="p-text-center" *ngIf="idEmpresa=='22'">{{case.tipoReporte}}</td>
-
+                <td class="p-text-center">{{case.proximoseguimiento | date: 'dd/MM/yyyy'}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary" let-rowData>

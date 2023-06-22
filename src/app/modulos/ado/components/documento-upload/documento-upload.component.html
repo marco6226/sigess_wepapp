@@ -25,6 +25,8 @@
 
     <div [formGroup]="myGroup" *ngIf="!temporalesFlag && privadoCheck">
         <p-checkbox #nivelAccesoH name="cbxAccessLevelH" id="nivelAccesoH" class="form-check-input" (click)="this.setNivelAcceso(nivelAccesoH.checked)" binary="true" label="Privado"></p-checkbox>
+        <label class="s-float-label">Perfiles</label>
+        <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
     </div>
     <br />
 </p-dialog>

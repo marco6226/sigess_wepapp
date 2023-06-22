@@ -4,6 +4,9 @@ import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
 import { Checkbox} from 'primeng/primeng';
 import { MessageService } from 'primeng/api';
+import { PerfilService } from 'app/modulos/admin/services/perfil.service';
+import { Perfil } from 'app/modulos/empresa/entities/perfil';
+import { Message, SelectItem } from 'primeng/primeng';
 
 
 @Component({
@@ -27,6 +30,7 @@ export class DocumentoUploadComponent implements OnInit {
     @Output('onUpload') onUpload = new EventEmitter();
     esPrivado: boolean;
     myGroup: any;
+    perfilList: SelectItem[] = [];
     form
     doContratista= [
         { label: "--Seleccione--", value: null },
@@ -45,11 +49,17 @@ export class DocumentoUploadComponent implements OnInit {
 
     constructor(
         private directorioService: DirectorioService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private perfilService: PerfilService,
         
         ) {}
 
     ngOnInit() {
+        this.perfilService.findAll().then((resp) => {
+            (<Perfil[]>resp['data']).forEach((perfil) => {
+                this.perfilList.push({ label: perfil.nombre, value: perfil.id });
+            });
+        });
         this.myGroup = new FormGroup({
             cbxNivelAcceso: new FormControl(),
         });
@@ -79,9 +89,12 @@ export class DocumentoUploadComponent implements OnInit {
             }
     
             let nivelAcceso: string = this.esPrivado ? 'PRIVADO' : 'PUBLICO';
+            
+            let fkPerfilId: string = JSON.stringify(this.form.value.perfilesId);
+           
 
             if(this.tipoEvidencia != null){
-                this.directorioService.uploadv6(event.files[0], directorioPadre, this.modulo, this.modParam, this.caseId,this.tipoEvidencia, nivelAcceso).then((resp) => {
+                this.directorioService.uploadv6(event.files[0], directorioPadre, this.modulo, this.modParam, this.caseId,this.tipoEvidencia, nivelAcceso,fkPerfilId).then((resp) => {
                     let dir = <Directorio>resp;
                     this.onVisibleChange(false);
                     this.onUpload.emit(dir);
