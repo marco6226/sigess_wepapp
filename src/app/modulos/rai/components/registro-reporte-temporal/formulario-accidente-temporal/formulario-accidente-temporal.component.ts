@@ -595,6 +595,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
 
       let reporte = <Reporte>this.form.value;
       reporte.testigoReporteList = this.testigoReporteList;
+      reporte.istemporal = true;
       // reporte.identificacionEmpresa = this.selectedTemporal;
       // let selectedTemporal=this.temporales.find((data)=>{
       //   return data.value==this.selectedTemporal
