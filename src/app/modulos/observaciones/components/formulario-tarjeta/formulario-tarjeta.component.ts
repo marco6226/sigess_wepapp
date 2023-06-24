@@ -143,7 +143,7 @@ export class FormularioTarjetaComponent implements OnInit {
             observacion = <Observacion>data;
             if (this.imagenesList != null) {
                 this.imagenesList.forEach((imgObj) => {
-                    this.directorioService.uploadv5(imgObj.file, null, 'AUC', observacion.id, null, 'PUBLICO');
+                    this.directorioService.uploadv5(imgObj.file, null, 'AUC', observacion.id, null, 'PUBLICO', null);
                 });
             }
             this.onSave.emit(observacion);

@@ -28,6 +28,8 @@ export class DocumentoUploadComponent implements OnInit {
     @Input('privadoCheck') privadoCheck: boolean = true;
     @Output('visibleChange') visibleChange = new EventEmitter();
     @Output('onUpload') onUpload = new EventEmitter();
+    @Input() scmDoc: boolean = false;
+    perfiles: any =[];
     esPrivado: boolean;
     myGroup: any;
     perfilList: SelectItem[] = [];
@@ -75,6 +77,9 @@ export class DocumentoUploadComponent implements OnInit {
 
     myfiles: any = [];
     upload(event) {
+        console.log(this.perfiles)
+        let perfil=this.perfiles.toString()
+        // if(!this.form.invalid && this.perfiles.length!=0){
         if(!this.form.invalid){
             event.files[0].descripcion=this.form.value.descripcion;
             if (this.caseId) {
@@ -99,21 +104,20 @@ export class DocumentoUploadComponent implements OnInit {
                     this.onVisibleChange(false);
                     this.onUpload.emit(dir);
                 });
-
             }
             else{
-    
-            this.directorioService.uploadv5(event.files[0], directorioPadre, this.modulo, this.modParam, this.caseId, nivelAcceso).then((resp) => {
-                let dir = <Directorio>resp;
-                this.onVisibleChange(false);
-                this.onUpload.emit(dir);
-            });
+                this.directorioService.uploadv5(event.files[0], directorioPadre, this.modulo, this.modParam, this.caseId, nivelAcceso,perfil).then((resp) => {
+                    let dir = <Directorio>resp;
+                    this.onVisibleChange(false);
+                    this.onUpload.emit(dir);
+                });
             }
+
             this.myfiles = [];
             this.form.reset();
         }
         else{
-            this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta ingresar la descripción'});
+            this.messageService.add({severity:'error', summary: 'Error', detail: 'Falta ingresar la descripción o perfiles'});
             
         }
         
@@ -123,9 +127,13 @@ export class DocumentoUploadComponent implements OnInit {
     setNivelAcceso(checked: boolean) {
         this.esPrivado = checked;
     }
+    flagSCMPPrivado:boolean=false;
+    setNivelAccesoScm(checked: boolean) {
+        this.flagSCMPPrivado=checked
+        console.log(checked)
+    }
 
     myUploader(event) {
         //event.files == files to upload
     }
-
 }

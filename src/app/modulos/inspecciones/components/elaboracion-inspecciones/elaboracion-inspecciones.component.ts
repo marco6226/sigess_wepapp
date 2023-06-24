@@ -527,7 +527,7 @@ if(dato.length > 0){
                 if (arrayFile != null) {
                     arrayFile.forEach(objFile => {
                         if (objFile != null && objFile.change == true)
-                            this.directorioService.uploadv5(objFile.file, null, 'INP', calificacion.id, null, "PUBLICO");
+                            this.directorioService.uploadv5(objFile.file, null, 'INP', calificacion.id, null, "PUBLICO", null);
                     });
                 }
             });

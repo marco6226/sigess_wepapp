@@ -14,4 +14,5 @@ export class Directorio {
     fechaCreacion: Date;
     nivelAcceso: string;
     modulo: string
+    perfilId: any
 }

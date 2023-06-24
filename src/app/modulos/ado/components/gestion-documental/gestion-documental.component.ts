@@ -12,11 +12,13 @@ import { Filter, Criteria } from 'app/modulos/core/entities/filter';
 import { TreeNode } from 'primeng/api';
 import { Util } from 'app/modulos/comun/util';
 import { Console } from 'console';
+import { PerfilService } from 'app/modulos/admin/services/perfil.service';
 
 @Component({
     selector: 'app-gestion-documental',
     templateUrl: './gestion-documental.component.html',
     styleUrls: ['./gestion-documental.component.scss'],
+    providers: [PerfilService],
 })
 export class GestionDocumentalComponent implements OnInit {
     @Input('flagSCM') flagSCM: boolean = false;
@@ -54,7 +56,7 @@ export class GestionDocumentalComponent implements OnInit {
     esConsulta: boolean = false;
     
 
-    constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService) {
+    constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService,    private perfilService: PerfilService,) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
     }
 
@@ -126,12 +128,51 @@ export class GestionDocumentalComponent implements OnInit {
             filterQuery.filterList = [filterPadre, filterEliminado,filterCase,filterAdo];
         }
 
-        return this.directorioService.findByFilter(filterQuery).then((data) => {
+        return this.directorioService.findByFilter(filterQuery).then(async (data) => {
             console.log(data)
             this.totalRecords = data['count'];
             let dirList = this.inicializarFechas(<Directorio[]>data['data']);
+            let dirList2=[]
 
-            this.directorioList = this.generarModelo(dirList, null);
+            let perfilesId = [];
+
+            let filterQuery = new FilterQuery();
+            filterQuery.filterList = [{
+                field: 'usuarioEmpresaList.usuario.id',
+                criteria: Criteria.EQUALS,
+                value1: this.sesionService.getUsuario().id,
+                value2: null
+            }];
+            filterQuery.fieldList = ["id"];
+            await this.perfilService.findByFilter(filterQuery).then(
+                resp => {
+                    resp['data'].forEach(ident => perfilesId.push(ident.id));
+                    console.log(perfilesId)
+                })
+
+            dirList.forEach((resp1:any)=>{
+                if(resp1.perfilId == null){dirList2.push(resp1)}
+                else{
+                    let perfilid=resp1.perfilId.split(',');
+                    let flag=false
+
+                    perfilid.forEach(resp2=>{
+                        perfilesId.forEach(resp3=>{
+                            if(Number(resp2)==resp3){flag=true}
+                        })
+                    })
+
+                    if(flag){
+                        dirList2.push(resp1)
+                    }
+                }
+                
+                
+            })
+            //     console.log(this.directorioList)
+            // console.log(dirList)
+
+            this.directorioList = this.generarModelo(dirList2, null);
 
             this.loading = false;
         });

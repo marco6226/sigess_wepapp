@@ -23,10 +23,18 @@
     </div>
 
 
-    <div [formGroup]="myGroup" *ngIf="!temporalesFlag && privadoCheck">
+    <div [formGroup]="myGroup" *ngIf="!temporalesFlag && privadoCheck && !scmDoc">
         <p-checkbox #nivelAccesoH name="cbxAccessLevelH" id="nivelAccesoH" class="form-check-input" (click)="this.setNivelAcceso(nivelAccesoH.checked)" binary="true" label="Privado"></p-checkbox>
-        <label class="s-float-label">Perfiles</label>
-        <p-multiSelect [options]="perfilList" formControlName="perfilesId" defaultLabel="--Perfiles--" required></p-multiSelect>
     </div>
-    <br />
+
+
+    <div *ngIf="scmDoc">
+        <p-checkbox #scmnivelAccesoH name="scmcbxAccessLevelH" id="scmnivelAccesoH" class="form-check-input" (click)="this.setNivelAccesoScm(scmnivelAccesoH.checked)" binary="true" label="Privado"></p-checkbox>
+        <ng-container *ngIf="!flagSCMPPrivado">
+            <br>
+            <label class="s-float-label">Perfiles</label>
+            <p-multiSelect appendTo="body" [options]="perfilList" [(ngModel)]="perfiles" [ngModelOptions]="{standalone: true}" defaultLabel="--Perfiles--"></p-multiSelect>
+            <small *ngIf="perfiles.length==0" id="username2-help" class="p-invalid">Obligatorio</small>
+        </ng-container>
+    </div>
 </p-dialog>

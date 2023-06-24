@@ -116,9 +116,8 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
         });
     }
 
-    uploadv5(fileToUpload, directorioPadreId: string, modulo: string, modParam: string, caseId: string, nivelAcceso: string) {
+    uploadv5(fileToUpload, directorioPadreId: string, modulo: string, modParam: string, caseId: string, nivelAcceso: string, perfilId: string | null) {
         let endPoint = modulo == 'cop' ? this.end_point + 'cop/upload' : this.end_point + 'upload';
-
         let formData: FormData = new FormData();
 
         if (fileToUpload != null) formData.append('file', fileToUpload, fileToUpload.name);
@@ -128,6 +127,8 @@ export class DirectorioService extends ServiceCRUD<Directorio> {
         if (directorioPadreId != null) formData.append('dpId', directorioPadreId);
         if (caseId != null) formData.append('caseId', caseId);
         if (nivelAcceso != null) formData.append('nivelAcceso', nivelAcceso);
+        if (perfilId != null)formData.append('perfilId', perfilId);
+        
 
         return new Promise((resolve) => {
             this.httpInt

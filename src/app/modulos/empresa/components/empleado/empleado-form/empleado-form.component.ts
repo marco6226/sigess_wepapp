@@ -467,7 +467,7 @@ export class EmpleadoFormComponent implements OnInit {
                     //agregar firma
                     if (this.imagenesList != null) {
                         this.imagenesList.forEach(async (imgObj) => {
-                            let resp = await this.directorioService.uploadv5(imgObj.file, null, 'EMP', this.empleadoSelect.id, null, 'PUBLICO');
+                            let resp = await this.directorioService.uploadv5(imgObj.file, null, 'EMP', this.empleadoSelect.id, null, 'PUBLICO',null);
                             let respid = Object.values(resp);
 
                             this.directorioService.uploadv3(respid[0], this.empleadoSelect.id, 'EMP');
@@ -486,7 +486,7 @@ export class EmpleadoFormComponent implements OnInit {
                     //agregar firma
                     if (this.imagenesList != null) {
                         this.imagenesList.forEach(async (imgObj) => {
-                            let resp = await this.directorioService.uploadv5(imgObj.file, null, 'EMP', this.empleadoSelect.id, null, 'PUBLICO');
+                            let resp = await this.directorioService.uploadv5(imgObj.file, null, 'EMP', this.empleadoSelect.id, null, 'PUBLICO', null);
                             let respid = Object.values(resp);
 
                             this.directorioService.uploadv3(respid[0], this.empleadoSelect.id, 'EMP');

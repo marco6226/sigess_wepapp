@@ -228,7 +228,7 @@ export class ElaboracionListaComponent implements OnInit {
         this.listaInspeccionService.create(listInp).then((data) => {
             if (this.imagenesList != null) {
                 this.imagenesList.forEach(async (imgObj) => {
-                    let resp = await this.directorioService.uploadv5(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null, 'PUBLICO');
+                    let resp = await this.directorioService.uploadv5(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null, 'PUBLICO', null);
                     let respid = Object.values(resp);
                     this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), listInp.listaInspeccionPK.version.toString());
                 });
@@ -279,7 +279,7 @@ export class ElaboracionListaComponent implements OnInit {
         this.listaInspeccionService.update(listInp, param).then((data) => {
             if (this.imagenesList != null) {
                 this.imagenesList.forEach(async (imgObj) => {
-                    let resp = await this.directorioService.uploadv5(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null, 'PUBLICO');
+                    let resp = await this.directorioService.uploadv5(imgObj.file, null, 'INP', listInp.listaInspeccionPK.id.toString(), null, 'PUBLICO', null);
                     let respid = Object.values(resp);
                     if (this.cambiarImagenAnterior) {
                         this.directorioService.uploadv4(respid[0], listInp.listaInspeccionPK.id.toString(), versiondato.toString());
