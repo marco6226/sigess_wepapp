@@ -79,8 +79,8 @@ export class DocumentoUploadComponent implements OnInit {
     upload(event) {
         console.log(this.perfiles)
         let perfil=this.perfiles.toString()
-        // if(!this.form.invalid && this.perfiles.length!=0){
-        if(!this.form.invalid){
+        if((!this.form.invalid && !this.flagSCMPPrivado) ||(!this.form.invalid && this.flagSCMPPrivado && this.perfiles.length!=0)){
+        // if(!this.form.invalid){
             event.files[0].descripcion=this.form.value.descripcion;
             if (this.caseId) {
                 // this.directorio.caseId = this.caseId
@@ -130,7 +130,6 @@ export class DocumentoUploadComponent implements OnInit {
     flagSCMPPrivado:boolean=false;
     setNivelAccesoScm(checked: boolean) {
         this.flagSCMPPrivado=checked
-        console.log(checked)
     }
 
     myUploader(event) {
