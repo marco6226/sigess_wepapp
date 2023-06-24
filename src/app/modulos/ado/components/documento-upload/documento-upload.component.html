@@ -30,7 +30,7 @@
 
     <div *ngIf="scmDoc">
         <p-checkbox #scmnivelAccesoH name="scmcbxAccessLevelH" id="scmnivelAccesoH" class="form-check-input" (click)="this.setNivelAccesoScm(scmnivelAccesoH.checked)" binary="true" label="Privado"></p-checkbox>
-        <ng-container *ngIf="!flagSCMPPrivado">
+        <ng-container *ngIf="flagSCMPPrivado">
             <br>
             <label class="s-float-label">Perfiles</label>
             <p-multiSelect appendTo="body" [options]="perfilList" [(ngModel)]="perfiles" [ngModelOptions]="{standalone: true}" defaultLabel="--Perfiles--"></p-multiSelect>
