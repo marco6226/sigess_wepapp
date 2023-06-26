@@ -127,7 +127,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
     { label: "En firme", value: "En firme" },
   ]
   temporalesFlag: boolean=true
-
+  guardando: boolean = false;
   msgs: Message[];
   cargoList: SelectItem[];
   flagIncapacidades:boolean=false
@@ -542,6 +542,7 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
   //botón guardar y modificar
   listPlanAccion: listPlanAccion[] =[]
   async submit1() {
+    this.guardando = true;
     this.informacionComplementaria=this.analisisPeligros.value;
     let ad = new AnalisisDesviacion();
     ad.complementaria=JSON.stringify(this.informacionComplementaria);
@@ -579,6 +580,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                     .then((data) => {
                       let analisisDesviacion = <AnalisisDesviacion>data;
                       this.analisisId = analisisDesviacion.id;
+                      this.guardando = false;
+                    }).catch(() => {
+                      this.guardando = false;
                     })
                   })
 
@@ -586,7 +590,9 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
                 this.modificar=true
             }
 
-        );
+        ).catch(() => {
+          this.guardando = false;
+        });
         this.reporte=reporte
     } else if (this.modificar) {
 
@@ -602,8 +608,13 @@ export class FormularioAccidenteTemporalComponent implements OnInit {
       //   return data.value==this.selectedTemporal
       // })
       this.reporteService.update(reporte).then(
-          data => this.onSave.emit(<Reporte>data)
-      );
+          data => {
+            this.guardando = false;
+            this.onSave.emit(<Reporte>data)
+          }
+      ).catch(() => {
+        this.guardando = false;
+      });
       this.reporte=reporte
     }
     this.setListDataFactor()
