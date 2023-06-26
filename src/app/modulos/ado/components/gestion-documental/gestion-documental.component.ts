@@ -60,7 +60,11 @@ export class GestionDocumentalComponent implements OnInit {
     perfilList: SelectItem[] = [];
     
 
-    constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService,    private perfilService: PerfilService,) {
+    constructor(
+        private directorioService: DirectorioService, 
+        private confirmationService: ConfirmationService, 
+        private sesionService: SesionService,    
+        private perfilService: PerfilService) {
         this.uploadEndPoint = this.directorioService.uploadEndPoint;
     }
 
@@ -176,7 +180,7 @@ export class GestionDocumentalComponent implements OnInit {
             })
 
             this.directorioList = this.generarModelo(dirList2, null);
-            console.log(this.directorioList)
+
             this.loading = false;
         });
     }
