@@ -614,12 +614,12 @@
 </p-panel>
 
 <button *ngIf="esNuevo" pButton icon="fa fa-floppy-o"
-[disabled]="!infoAccidenteIsValid()"
+[disabled]="!infoAccidenteIsValid() || guardando"
 title="Guardar reporte" class="float-btn" style="z-index: 100;"
 (click)="submit()"></button>
 
 <button *ngIf="!esNuevo && !esConsulta" pButton icon="fa fa-pencil"
-[disabled]="!infoAccidenteIsValid() || !infoInvestigacionIsValid()"
+[disabled]="!infoAccidenteIsValid() || !infoInvestigacionIsValid() || guardando "
 title="Actualizar reporte" class="float-btn ui-button-success" style="z-index: 100;"
 (click)="submit()"></button>
 

@@ -91,7 +91,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     estado: 'Aprobado' | 'Rechazado' | 'Sin gestión',
     fecha: Date
   } = null;
-
+  guardando: boolean = false;
   fields: string[] = [
     'modulo',
     'hashId',
@@ -628,6 +628,8 @@ export class FormularioAccidenteCtrComponent implements OnInit {
   onGestorSelected(){}
 
   async submit(){
+    this.guardando = true;
+    this.messageService.add({severity: 'info', summary: 'Guardando', detail: 'Espere un momento...'});
 
     //Almacenar datos del trabajador
     this.reporte.identificacionEmpresa = this.nitEmpresa;
@@ -703,6 +705,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         estado: 'Sin gestión',
         fecha: null
       }
+      this.reporte.fechaReporte = new Date();
       this.analisisDesviacion.seguimiento = JSON.stringify(this.seguimiento);
       if(this.infoAccidenteIsValid()){
         // console.log(this.reporte);
@@ -726,6 +729,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
               this.analisisId = res3.id;
               this.messageService.add({severity: 'success', summary: 'Reporte guardado'});
 
+              this.guardando = false;
               this.analisisDeviacionService
               .sendGestoresEmail(
                 this.reporte.id,
@@ -741,11 +745,13 @@ export class FormularioAccidenteCtrComponent implements OnInit {
                 });
             }).catch(err => {
               this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar reporte'});
+              this.guardando = false;
               console.error('Error al guardar Análisis Desviación', err);
             });
           });
         }).catch(err => {
           this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
+          this.guardando = false;
           console.error('Error al guardar reporte', err);
         });
       }
@@ -773,6 +779,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
 
     this.reporteService.update(this.reporte).then(res => {
       this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {
+        this.guardando = false;
         this.messageService.add({severity: 'success', summary: 'Actualizado', detail: 'Se actualizó el reporte'});
         if(notificarActualizacion){
           this.analisisDeviacionService.sendGestoresEmail(
@@ -793,6 +800,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       });
     }).catch(err => {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pudo guardar el reporte'});
+      this.guardando = false;
       console.error('Error al actualizar reporte', err);
     });
   }
