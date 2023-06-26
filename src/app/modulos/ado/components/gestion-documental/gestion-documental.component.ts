@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Modulo } from 'app/modulos/core/enums/enumeraciones';
 import { Directorio } from 'app/modulos/ado/entities/directorio';
 import { DirectorioService } from 'app/modulos/ado/services/directorio.service';
-import { Message, MenuItem, ConfirmationService } from 'primeng/primeng';
+import { Message, MenuItem, ConfirmationService,SelectItem } from 'primeng/primeng';
 import { PaginatorModule } from 'primeng/paginator';
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 
@@ -13,6 +13,7 @@ import { TreeNode } from 'primeng/api';
 import { Util } from 'app/modulos/comun/util';
 import { Console } from 'console';
 import { PerfilService } from 'app/modulos/admin/services/perfil.service';
+import { Perfil } from 'app/modulos/empresa/entities/perfil';
 
 @Component({
     selector: 'app-gestion-documental',
@@ -54,6 +55,9 @@ export class GestionDocumentalComponent implements OnInit {
     sortField;
     rows;
     esConsulta: boolean = false;
+    flagSCMPPrivado:boolean=false;
+    perfiles: any =[];
+    perfilList: SelectItem[] = [];
     
 
     constructor(private directorioService: DirectorioService, private confirmationService: ConfirmationService, private sesionService: SesionService,    private perfilService: PerfilService,) {
@@ -61,6 +65,12 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.perfilService.findAll().then((resp) => {
+            (<Perfil[]>resp['data']).forEach((perfil) => {
+                this.perfilList.push({ label: perfil.nombre, value: perfil.id });
+            });
+        });
+
         this.loading = true;
         this.esPrivado = false;
         this.usuarioId = this.sesionService.getUsuario().id;
@@ -72,12 +82,10 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     loadNodes(event: any) {
-        console.log(this.directorioList)
         this.cargarRaiz(event);
     }
 
     cargarRaiz(event) {
-        console.log(event)
         this.nodoPadre = null;
         // Busca los directorios del directorio seleccionado
 
@@ -87,7 +95,6 @@ export class GestionDocumentalComponent implements OnInit {
        // filterQuery.sortOrder = event.sortOrder;
        filterQuery.sortOrder = event.sortOrder;
         filterQuery.offset = event.first;
-        console.log(event.first)
         this.regactual=event.first;
         this.sortOrder=event.sortOrder;
         this.sortField=event.sortField;
@@ -129,7 +136,6 @@ export class GestionDocumentalComponent implements OnInit {
         }
 
         return this.directorioService.findByFilter(filterQuery).then(async (data) => {
-            console.log(data)
             this.totalRecords = data['count'];
             let dirList = this.inicializarFechas(<Directorio[]>data['data']);
             let dirList2=[]
@@ -147,7 +153,6 @@ export class GestionDocumentalComponent implements OnInit {
             await this.perfilService.findByFilter(filterQuery).then(
                 resp => {
                     resp['data'].forEach(ident => perfilesId.push(ident.id));
-                    console.log(perfilesId)
                 })
 
             dirList.forEach((resp1:any)=>{
@@ -169,14 +174,11 @@ export class GestionDocumentalComponent implements OnInit {
                 
                 
             })
-            //     console.log(this.directorioList)
-            // console.log(dirList)
 
             this.directorioList = this.generarModelo(dirList2, null);
-
+            console.log(this.directorioList)
             this.loading = false;
         });
-        console.log(this.totalRecords);
     }
 
     recarguesimple(event, actual:number) {
@@ -215,15 +217,11 @@ export class GestionDocumentalComponent implements OnInit {
         return this.directorioService.findByFilter(filterQuery).then((data) => {
             this.totalRecords = data['count'];
             let dirList = this.inicializarFechas(<Directorio[]>data['data']);
-            // console.log(1);
-            // console.log(2);
 
-            // console.log(dirList);
             this.directorioList = this.generarModelo(dirList, null);
 
             this.loading = false;
         });
-        console.log(this.totalRecords);
     }
 
     generarModelo(dirList: Directorio[], nodoPadre: TreeNode) {
@@ -284,10 +282,8 @@ export class GestionDocumentalComponent implements OnInit {
         
         let dir = new Directorio();
         dir.directorioPadre=null;
-        console.log(dir)
         if (this.nodeSelect != null) {
             // Determina el nodo padre de tipo carpeta
-            console.log(this.nodeSelect)
             let nodoPadre = this.nodeSelect.data.esDocumento ? this.nodeSelect.parent : this.nodeSelect;
             dir.directorioPadre = nodoPadre.data.id;
         }
@@ -306,7 +302,6 @@ export class GestionDocumentalComponent implements OnInit {
 
     onUpload(event) {
         let dir = <Directorio>event;
-
         this.adicionarRegistroAArbol(dir, this.nodeSelect);
         this.cerrarDlgUpload();
         this.growlMsgs = [];
@@ -451,19 +446,23 @@ export class GestionDocumentalComponent implements OnInit {
         });
     }
 
-    actualizarDirectorio(nodo: TreeNode) {
+    async actualizarDirectorio(nodo: TreeNode) {
+        let perfil
+        this.perfiles.length==0?null:perfil=this.perfiles.toString()
+
         let directorio = nodo.data;
         let dir = new Directorio();
         dir.id = directorio.id;
         dir.nombre = directorio.nombre;
         dir.nivelAcceso = this.esPrivado ? 'PRIVADO' : 'PUBLICO';
+        dir.perfilId=perfil
 
         if (nodo.parent != null || directorio.directorioPadre != null) {
             let dirPadre = new Directorio();
             dirPadre.id = nodo.parent == null ? directorio.directorioPadre.id : nodo.parent.data.id;
             dir.directorioPadre = dirPadre;
         }
-        this.directorioService.update(dir).then((data) => {
+        await this.directorioService.update(dir).then((data) => {
             this.growlMsgs = [];
             this.growlMsgs.push({
                 severity: 'success',
@@ -539,7 +538,6 @@ export class GestionDocumentalComponent implements OnInit {
     }
 
     onNodeExpand(event: any) {
-        console.log(this.directorioList)
         let nodo = event.node;
         this.loading = true;
         this.consultarNodos(nodo).then((data) => {
@@ -571,7 +569,6 @@ export class GestionDocumentalComponent implements OnInit {
         dir.id = directorio.id;
         dir.nombre = directorio.nombre;
         dir.nivelAcceso= directorio.nivelAcceso;
-        console.log(dir);
 
         if (dropParam != null) {
             let dirPadre = new Directorio();
@@ -606,7 +603,6 @@ export class GestionDocumentalComponent implements OnInit {
                 detail: 'Se ha trasladado correctamente el archivo. ' + this.draggedNode.data.nombre,
             });
         });
-        console.log(this.regactual)
     this.recarguesimple(event,this.regactual);
     }
 
@@ -616,8 +612,6 @@ export class GestionDocumentalComponent implements OnInit {
 
     buscar(event: any) {
         setTimeout(() => {
-        console.log(event)
-        console.log(event.rows)
         // if (event.keyCode == 13) {
             this.loading = true;
             let filterQuery = new FilterQuery();
@@ -655,7 +649,6 @@ export class GestionDocumentalComponent implements OnInit {
                 filterCase.value1 = this.caseid;
             }
             filterQuery.filterList.push(filterCase);
-            console.log(this.flagSCM)
 
             if(!this.flagSCM){
                 let filterAdo = new Filter();
@@ -665,9 +658,7 @@ export class GestionDocumentalComponent implements OnInit {
                 filterAdo.value1 = 'ADO';
                 filterQuery.filterList.push(filterAdo);}
 
-            console.log(filterQuery)
             return this.directorioService.findByFilter(filterQuery).then((data) => {
-                console.log(data)
                 this.totalRecords = data['count'];
                 let dirList = this.inicializarFechas(<Directorio[]>data['data']);
                 this.directorioList = this.generarModelo(dirList, null);
@@ -677,9 +668,21 @@ export class GestionDocumentalComponent implements OnInit {
     }, 500);
     }
     getNivelAcceso(event, dataNode?: Directorio) {
+        let perfil:any
+        this.perfiles=[]
+        if(dataNode.perfilId){
+            this.flagSCMPPrivado=true
+            perfil=dataNode.perfilId.split(',');
+            perfil.forEach(element => {
+                this.perfiles.push(Number(element))
+            });
+        }else{
+            this.flagSCMPPrivado=false 
+        }
         if (dataNode != null) {
             this.esPrivado = dataNode.nivelAcceso == 'PRIVADO';
            // this.cargarRaiz(event);
         }
     }
+
 }

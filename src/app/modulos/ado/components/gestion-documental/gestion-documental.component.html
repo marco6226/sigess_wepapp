@@ -53,7 +53,7 @@
                     <tr
                         [ttSelectableRow]="rowNode"
                         [ttContextMenuRow]="rowNode"
-                        *ngIf="data.nivelAcceso == 'PUBLICO' || (data.nivelAcceso == 'PRIVADO' && data.usuario.id == this.usuarioId)"
+                        *ngIf="data.nivelAcceso == 'PUBLICO' || (data.nivelAcceso == 'PRIVADO' && data.perfilesId) || (data.nivelAcceso == 'PRIVADO' && data.usuario.id == this.usuarioId)"
                         (click)="getNivelAcceso(rowNode, nodeSelect?.data)"
                         (dblclick)="onDoubleClick(rowNode)"
                     >
@@ -88,7 +88,18 @@
                         <i class="fa fa-check"></i>
                     </span>
                 </div>
-                <p-checkbox #nivelAcceso name="cbxAccessLevel" id="nivAcceso" class="form-check-input" [(ngModel)]="esPrivado" binary="true" label="Privado"></p-checkbox>
+                <ng-container *ngIf="esPrivado==true">
+                    <p-checkbox #nivelAcceso name="cbxAccessLevel" id="nivAcceso" class="form-check-input" [(ngModel)]="esPrivado" binary="true" label="Privado"></p-checkbox>
+                </ng-container>
+                <ng-container *ngIf="!esPrivado">
+                    <p-checkbox  class="form-check-input" [(ngModel)]="flagSCMPPrivado" binary="true" label="Privado"></p-checkbox>
+                </ng-container>
+                <ng-container *ngIf="flagSCMPPrivado">
+                    <br>
+                    <label class="s-float-label">Perfiles</label>
+                    <p-multiSelect appendTo="body" [options]="perfilList" [(ngModel)]="perfiles" [ngModelOptions]="{standalone: true}" defaultLabel="--Perfiles--"></p-multiSelect>
+                    <small *ngIf="perfiles.length==0" id="username2-help" class="p-invalid">Obligatorio</small>
+                </ng-container>
             </div>
             <p>
                 <label style="padding-right: 20px">Tipo: {{ nodeSelect?.data.extension.nombre }} ­­­ </label>
@@ -98,10 +109,10 @@
                     Descargar
                 </a>
             </p>
-            <ng-container *ngIf="nodeSelect?.data.esDocumento">
+            <!-- <ng-container *ngIf="nodeSelect?.data.esDocumento">
                 <s-documento-form [documento]="nodeSelect?.data.documento"></s-documento-form>
                 <button [disabled]="esConsulta" *sTienePermiso="'ADO_PUT_DIR'" pButton type="button" class="ui-button-success" (click)="actualizarDocumento(nodeSelect.data)" label="Actualizar" icon="fa fa-pencil"></button>
-            </ng-container>
+            </ng-container> -->
             <button [disabled]="esConsulta" *sTienePermiso="'ADO_DELETE_DIR'" pButton type="button" (click)="confirmarEliminar()" class="ui-button-danger" label="Eliminar" icon="fa fa-trash"></button>
         </div>
     </div>

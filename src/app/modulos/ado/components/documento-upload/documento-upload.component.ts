@@ -77,8 +77,8 @@ export class DocumentoUploadComponent implements OnInit {
 
     myfiles: any = [];
     upload(event) {
-        console.log(this.perfiles)
-        let perfil=this.perfiles.toString()
+        let perfil
+        this.perfiles.length==0?null:perfil=this.perfiles.toString()
         if((!this.form.invalid && !this.flagSCMPPrivado) ||(!this.form.invalid && this.flagSCMPPrivado && this.perfiles.length!=0)){
         // if(!this.form.invalid){
             event.files[0].descripcion=this.form.value.descripcion;
