@@ -8,6 +8,7 @@ import * as moment from "moment";
 import { SesionService } from 'app/modulos/core/services/sesion.service';
 import { FilterQuery } from '../../../core/entities/filter-query';
 import { Filter, Criteria } from '../../../core/entities/filter';
+import {formatDate} from '@angular/common';
 
 
 import * as XLSX from 'xlsx'; 
@@ -109,7 +110,6 @@ export class AsignacionTareasComponent implements OnInit {
                     return tarea;
                 }));
                 this.loading = false;
-                console.log(this.tareasList);
             }
 
         );
@@ -200,8 +200,60 @@ export class AsignacionTareasComponent implements OnInit {
 
     }
 
+    visibleDlgInforme:boolean=false
+    flagInforme:boolean=true
+    excel:any=[]
+    rangeDatesInforme: any;
 
-    exportexcel(): void 
+    abrirDialogo(){
+        this.visibleDlgInforme=true
+    }
+
+    cerrarDialogo(){
+        this.visibleDlgInforme=false
+    }
+
+    async datosExcel(){
+        let excel=[]
+        this.tareasList.forEach(tarea=>{excel.push({
+            Módulo:tarea.module,
+            Fecha_de_Reporte:formatDate(new Date(tarea.fecha_reporte), 'yyyy/MM/dd', 'en'),
+            División_Unidad:tarea.regional,
+            Ubicación:tarea.division,
+            Código:tarea.area,
+            Actividad:tarea.hash_id,
+            Responsable:(tarea.empResponsable)? tarea.empResponsable.primer_nombre + ' ' + tarea.empResponsable.primer_apellido : 'No posee responsable',
+            Fecha_proyectada_de_cierre:formatDate(new Date(tarea.fecha_proyectada), 'yyyy/MM/dd', 'en'),
+            Estado:tarea.estado})})
+
+        this.excel=[]
+        this.excel=excel.filter(resp=>{ return new Date(resp.Fecha_de_Reporte)>=new Date(this.rangeDatesInforme[0]) && new Date(resp.Fecha_de_Reporte)<=new Date(this.rangeDatesInforme[1])})
+        console.log(this.excel)
+    }
+
+    async exportexcel2(){
+        await this.datosExcel()
+
+        const readyToExport = this.excel;
+  
+        const workBook = XLSX.utils.book_new(); // create a new blank book
+  
+        const workSheet = XLSX.utils.json_to_sheet(readyToExport);
+  
+        XLSX.utils.book_append_sheet(workBook, workSheet, 'Informe'); // add the worksheet to the book
+  
+        XLSX.writeFile(workBook, 'Informe tareas.xlsx'); // initiate a file download in browser
+    }
+
+    habilitarindSCM(){
+        if(this.rangeDatesInforme[0] && this.rangeDatesInforme[1]){this.flagInforme=false}
+        else{this.flagInforme=true}
+    }
+    onResetDate(){
+        this.flagInforme=true
+    }
+
+    async exportexcel(): Promise<void> 
     {
        /* table id is passed over here */   
        let element = document.getElementById('excel-table'); 

@@ -8,7 +8,7 @@
 </s-dataNotFound>
             
 <p-panel header="Listado de tareas" styleClass="material-panel" [style.display]="(tareasList && tareasList.length > 0) || loading ? 'block':'none'">
-    <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
+    <button pButton type="button" (click)="abrirDialogo()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
     
     <div class="ui-g" >        
         <div class="ui-g-12 p-mb-3">
@@ -42,11 +42,9 @@
                         <th pSortableColumn="empResponsable.primer_nombre"> Responsable
                             <p-sortIcon field="empResponsable.primer_nombre"></p-sortIcon>
                         </th>
-
                         <th pSortableColumn="fecha_proyectada"> Fecha proyectada de cierre
                             <p-sortIcon field="fecha_proyectada"></p-sortIcon>
                         </th>
-
                         <th pSortableColumn="estado">Estado
                             <p-sortIcon field="estado"></p-sortIcon>
                         </th>
@@ -241,3 +239,29 @@
     <div pDroppable="dd">Droppable Div</div>
     <button pButton type="button" (click)="exportexcel()" title="Exportar a archivo Excel" icon="fa fa-file-excel-o" class="ui-button-success"></button>
 </p-dialog>
+
+<p-dialog header="Informe tareas" [(visible)]="visibleDlgInforme" [contentStyle]="{'max-height':'95%'}" [style]="{width: '80%', height: '70%'}">
+    
+    <div >
+        Seleccione rango de fechas en el que desea el informe
+    </div>
+    <div style="width: 50%;">
+        <p-calendar 
+        [(ngModel)]="rangeDatesInforme"
+        dateFormat="dd/MM/yyyy"
+        selectionMode="range"
+        (onSelect)="habilitarindSCM()"
+        (onClearClick)="onResetDate()"
+        placeholder="buscar"
+        appendTo="body"
+        showButtonBar="true"
+        [locale]="es">
+            <p-header style="text-align: center;"><h5>Seleccione un rango</h5></p-header>
+        </p-calendar>
+    </div>
+    <p-footer>
+        <button pButton type="button" (click)="exportexcel2()" label="Descargar" [disabled]="flagInforme"></button>
+        <button pButton type="button" (click)="cerrarDialogo()" class="ui-button-secondary" label="Cancelar"></button>
+    </p-footer>
+    
+  </p-dialog>
