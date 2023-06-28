@@ -393,14 +393,14 @@
           <h4 class="title-header">Causas inmediatas</h4>
           <p-tree [value]="causaInmediataList" selectionMode="checkbox"
           [(selection)]="causaInmediataSelect" [style]="{'width':'100%'}"
-          (onNodeSelect)="onCausaInmediataSelected()" (onNodeUnselect)="onCausaInmediataSelected()">
+          (onNodeSelect)="onCausaInmediataSelected($event)" (onNodeUnselect)="onCausaInmediataSelected($event)">
           </p-tree>
         </div>
         <div class="ui-g-12">
           <h4 class="title-header">Causas básicas (raíz)</h4>
           <p-tree [value]="causaBasicaList" selectionMode="checkbox"
           [(selection)]="causaBasicaSelect" [style]="{'width':'100%'}"
-          (onNodeSelect)="onCausaBasicaSelected()" (onNodeUnselect)="onCausaBasicaSelected()">
+          (onNodeSelect)="onCausaBasicaSelected($event)" (onNodeUnselect)="onCausaBasicaSelected($event)">
           </p-tree>
         </div>
       </div>
@@ -409,7 +409,7 @@
       <p-panel header="JUSTIFICACIÓN DE CAUSAS INMEDIATAS">
         <div class="ui-g">
           <form class="ui-g-12" *ngIf="formCausasInmediatas" [formGroup]="formCausasInmediatas">
-            <div class="ui-g-12" *ngFor="let item of causaInmediataSelect">
+            <div class="ui-g-12" *ngFor="let item of idCausasSelectInmediata">
               <p-panel header="{{item.label}}">
                 <div class="input-field">
                   <textarea class="form-control" placeholder="Justificación"
@@ -425,7 +425,7 @@
       <p-panel header="JUSTIFICACIÓN DE CAUSAS BÁSICAS">
         <div class="ui-g">
           <form *ngIf="formCausasRaiz" class="ui-g-12" [formGroup]="formCausasRaiz">
-            <div class="ui-g-12" *ngFor="let item of causaBasicaSelect">
+            <div class="ui-g-12" *ngFor="let item of idCausasSelectBasic">
               <p-panel header="{{item.label}}">
                 <div class="input-field">
                   <textarea class="form-control" placeholder="Justificación"

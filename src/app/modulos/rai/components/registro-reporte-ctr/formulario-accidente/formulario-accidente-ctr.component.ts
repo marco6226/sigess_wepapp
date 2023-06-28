@@ -33,6 +33,7 @@ import { DesviacionService } from 'app/modulos/sec/services/desviacion.service';
 import { SistemaCausaInmediataService } from 'app/modulos/sec/services/sistema-causa-inmediata.service';
 import { SistemaCausaRaizService } from 'app/modulos/sec/services/sistema-causa-raiz.service';
 import { ConfirmationService, MessageService, SelectItem, TreeNode } from 'primeng/primeng';
+import {parse, stringify} from 'flatted';
 
 @Component({
   selector: 'app-formulario-accidente-ctr',
@@ -124,6 +125,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
   causaInmediataSelect: any[] = [];
   causaBasicaList: TreeNode[];
   causaBasicaSelect: any[] = [];
+  idCausasSelect: any=null;
+  idCausasSelectBasic: any=null;
+  idCausasSelectInmediata: any=null;
   
   tipoIdentificacion: any[] = tipo_identificacion;
   locale: any = locale_es;
@@ -308,6 +312,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       });
 
       this.analisisDeviacionService.find(desviacionAliados.analisisDesviacionId.toString()).then(async (res: AnalisisDesviacion) => {
+        console.log(res)
         this.analisisDesviacion = res;
         this.analisisId = this.analisisDesviacion.id;
         this.observaciones = this.analisisDesviacion.observacion;
@@ -327,7 +332,15 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         this.formPlanAccion.get('fechaCierre').setValue(plan_accion ? plan_accion.fechaCierre ? new Date(plan_accion.fechaCierre) : null : null);
         this.formPlanAccion.get('descripcionTarea').setValue(plan_accion ? plan_accion.descripcionTarea : null);
         this.seguimiento = JSON.parse(this.analisisDesviacion.seguimiento);
-        
+
+        // console.log(JSON.parse(this.analisisDesviacion.idCausasSelect))
+        this.idCausasSelect=parse(this.analisisDesviacion.idCausasSelect);
+        if(this.idCausasSelect){
+          this.idCausasSelectBasic=this.idCausasSelect['Basica'];
+          this.idCausasSelectInmediata=this.idCausasSelect['Inmediata'];
+        }
+        // console.log(this.idCausasSelect)
+
         let idEmpresa = this.sesionService.getEmpresa().idEmpresaAliada ? this.sesionService.getEmpresa().idEmpresaAliada : this.sesionService.getEmpresa().id;
         await this.causaInmediataService.findDefault2(Number(idEmpresa))
           .then((src: SistemaCausaInmediata) => (
@@ -339,7 +352,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
               this.causaInmediataSelect
             )
           ));
-        this.onCausaInmediataSelected();
+        this.onCausaInmediataSelected(null);
         await this.causaBasicaService.findDefault2(Number(idEmpresa))
           .then((src: SistemaCausaRaiz) => (
             this.causaBasicaList = this.buildTreeNode(
@@ -350,7 +363,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
               this.causaBasicaSelect
             )
           ));
-        this.onCausaBasicaSelected();
+        this.onCausaBasicaSelected(null);
         let observacion_causas: {
           formCausaRaiz: any;
           formCausaInmediata: any;
@@ -484,6 +497,12 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         if (ci[listField] == null || ci[listField].length == 0) {
             node.children = null;
         } else {
+            node ={
+              id: ci.id,
+              label: ci.nombre,
+              selectable: false,
+              parent: parentNode,
+            };
             node.children = this.buildTreeNode(
                 ci[listField],
                 node,
@@ -533,14 +552,38 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     return crList;
 }
 
-  onCausaInmediataSelected(){
+  onCausaInmediataSelected(event){
+    if(!this.idCausasSelectInmediata && this.causaInmediataSelect.length>0){
+      this.idCausasSelectInmediata=[]
+      let id=[]
+      this.causaInmediataSelect.forEach(elem=>id.push(elem))
+      this.idCausasSelectInmediata=id
+    }
+
+    if(event){
+      let find=this.causaInmediataSelect.find((data:any)=> {return data.id==event.node.id})
+      if(find){this.idCausasSelectInmediata.push(event.node)}
+      else{
+        let x=[]
+        this.idCausasSelectInmediata.forEach(element => {
+          let find2=this.causaInmediataSelect.find((data:any)=> {return data.id==element.id})
+          if(find2)x.push(find2)
+        });
+        this.idCausasSelectInmediata=x
+      }
+    }
+    this.idCausasSelect={Basica:this.idCausasSelectBasic,Inmediata:this.idCausasSelectInmediata}
+
     let formControls = {};
     let values = null;
     if(this.formCausasInmediatas) values = this.formCausasInmediatas.value; 
-    this.causaInmediataSelect.forEach(ci => {
+    console.log(values)
+    console.log(this.idCausasSelectInmediata)
+    this.idCausasSelectInmediata.forEach(ci => {
       formControls[ci.label] = new FormControl(null, Validators.required);
     });
     this.formCausasInmediatas = new FormGroup(formControls);
+    console.log(this.formCausasInmediatas)
     if(values){
       let valuesAux = this.formCausasInmediatas.value;
       Object.keys(valuesAux).forEach(val => {
@@ -550,11 +593,33 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     }
   }
 
-  onCausaBasicaSelected(){
+  onCausaBasicaSelected(event){
+
+    if(!this.idCausasSelectBasic && this.causaBasicaSelect.length>0){
+      this.idCausasSelectBasic=[]
+      let id=[]
+      this.causaBasicaSelect.forEach(elem=>id.push(elem))
+      this.idCausasSelectBasic=id
+    }
+
+    if(event){
+      let find=this.causaBasicaSelect.find((data:any)=> {return data.id==event.node.id})
+      if(find){this.idCausasSelectBasic.push(event.node)}
+      else{
+        let x=[]
+        this.idCausasSelectBasic.forEach(element => {
+          let find2=this.causaBasicaSelect.find((data:any)=> {return data.id==element.id})
+          if(find2)x.push(find2)
+        });
+        this.idCausasSelectBasic=x
+      }
+    }
+    this.idCausasSelect={Basica:this.idCausasSelectBasic,Inmediata:this.idCausasSelectInmediata}
+
     let formControls = {};
     let values = null;
     if(this.formCausasRaiz) values = this.formCausasRaiz.value;
-    this.causaBasicaSelect.forEach(cb => {
+    this.idCausasSelectBasic.forEach(cb => {
       formControls[cb.label] = new FormControl(null, Validators.required);
     });
     this.formCausasRaiz = new FormGroup(formControls);
@@ -776,6 +841,8 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     this.analisisDesviacion.causaInmediataList = this.buildList(this.causaInmediataSelect);
     this.analisisDesviacion.plan_accion = JSON.stringify(this.formPlanAccion.value);
     this.analisisDesviacion.documentosList = documentos;
+    console.log(this.idCausasSelect)
+    this.analisisDesviacion.idCausasSelect = stringify(this.idCausasSelect);
 
     this.reporteService.update(this.reporte).then(res => {
       this.analisisDeviacionService.update(this.analisisDesviacion).then(res => {

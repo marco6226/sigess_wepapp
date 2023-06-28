@@ -554,10 +554,10 @@
                         <div class="ui-g-12 ui-md-6 ui-lg-4">
                             <div class="input-field">
 
-                                <p-dropdown *ngIf="empresaId=='22'" required [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
+                                <p-dropdown *ngIf="empresaId=='22' || empresaId =='8'" required [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
-                                <p-dropdown *ngIf="empresaId!='22'" [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
+                                <p-dropdown *ngIf="empresaId!='22' && empresaId!='8'" [readonly]="consultar2" [options]="prioridadOptionList" formControlName="prioridadCaso"
                                     class="select-material" styleClass="select-material">
                                 </p-dropdown>
                                 <label for="" class="active">Prioridad</label>

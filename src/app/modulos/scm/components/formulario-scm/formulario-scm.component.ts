@@ -643,6 +643,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 summary: "Por favor revise todos los campos obligatorios",
 
             });
+            this.flagGuardado=false
             return this.markFormGroupTouched(this.casoMedicoForm);
         }
 
@@ -655,6 +656,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                     detail: 'Debe actualizar la <b>ubicación</b> del trabajador involucrado en la pestaña <b>Información General</b>',
                     life: 6000,
                 });
+                this.flagGuardado=false
                 return;
             }
             let ciudad = this.empleadoForm.get("ciudad").value.nombre;
@@ -664,6 +666,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 detail: 'Por favor revise los campos <b>ciudad de residencia</b> en la pestaña <b>información general</b>.',
                 life: 6000,
             });
+            this.flagGuardado=false
             return this.markFormGroupTouched(this.empleadoForm);
         }
         this.casoMedicoForm.patchValue({
