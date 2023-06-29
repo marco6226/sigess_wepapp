@@ -274,7 +274,6 @@ export class FormularioAccidenteCtrComponent implements OnInit {
 
         await this.cargarSubcontratistas();
         this.selectedSubcontratista = this.reporte.subcontratista;
-        console.log(this.subcontratistas, this.selectedSubcontratista);
         this.esReportePropio = this.selectedSubcontratista == null ? true : false;
 
         this.infPersonaAccidentada.get('primerNombre').setValue(this.reporte.primerNombreEmpleado);
@@ -312,7 +311,6 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       });
 
       this.analisisDeviacionService.find(desviacionAliados.analisisDesviacionId.toString()).then(async (res: AnalisisDesviacion) => {
-        console.log(res)
         this.analisisDesviacion = res;
         this.analisisId = this.analisisDesviacion.id;
         this.observaciones = this.analisisDesviacion.observacion;
@@ -333,13 +331,11 @@ export class FormularioAccidenteCtrComponent implements OnInit {
         this.formPlanAccion.get('descripcionTarea').setValue(plan_accion ? plan_accion.descripcionTarea : null);
         this.seguimiento = JSON.parse(this.analisisDesviacion.seguimiento);
 
-        // console.log(JSON.parse(this.analisisDesviacion.idCausasSelect))
-        this.idCausasSelect=parse(this.analisisDesviacion.idCausasSelect);
+        this.idCausasSelect=(this.analisisDesviacion.idCausasSelect)?parse(this.analisisDesviacion.idCausasSelect):null;
         if(this.idCausasSelect){
           this.idCausasSelectBasic=this.idCausasSelect['Basica'];
           this.idCausasSelectInmediata=this.idCausasSelect['Inmediata'];
         }
-        // console.log(this.idCausasSelect)
 
         let idEmpresa = this.sesionService.getEmpresa().idEmpresaAliada ? this.sesionService.getEmpresa().idEmpresaAliada : this.sesionService.getEmpresa().id;
         await this.causaInmediataService.findDefault2(Number(idEmpresa))
@@ -553,8 +549,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
 }
 
   onCausaInmediataSelected(event){
-    if(!this.idCausasSelectInmediata && this.causaInmediataSelect.length>0){
-      this.idCausasSelectInmediata=[]
+    if(!this.idCausasSelectInmediata)this.idCausasSelectInmediata=[]
+
+    if(!this.idCausasSelectInmediata && !event && this.causaInmediataSelect.length>0){
       let id=[]
       this.causaInmediataSelect.forEach(elem=>id.push(elem))
       this.idCausasSelectInmediata=id
@@ -577,13 +574,11 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     let formControls = {};
     let values = null;
     if(this.formCausasInmediatas) values = this.formCausasInmediatas.value; 
-    console.log(values)
-    console.log(this.idCausasSelectInmediata)
     this.idCausasSelectInmediata.forEach(ci => {
       formControls[ci.label] = new FormControl(null, Validators.required);
     });
     this.formCausasInmediatas = new FormGroup(formControls);
-    console.log(this.formCausasInmediatas)
+
     if(values){
       let valuesAux = this.formCausasInmediatas.value;
       Object.keys(valuesAux).forEach(val => {
@@ -594,9 +589,9 @@ export class FormularioAccidenteCtrComponent implements OnInit {
   }
 
   onCausaBasicaSelected(event){
+    if(!this.idCausasSelectBasic)this.idCausasSelectBasic=[]
 
-    if(!this.idCausasSelectBasic && this.causaBasicaSelect.length>0){
-      this.idCausasSelectBasic=[]
+    if(!this.idCausasSelectBasic && !event && this.causaBasicaSelect.length>0){
       let id=[]
       this.causaBasicaSelect.forEach(elem=>id.push(elem))
       this.idCausasSelectBasic=id
@@ -773,7 +768,6 @@ export class FormularioAccidenteCtrComponent implements OnInit {
       this.reporte.fechaReporte = new Date();
       this.analisisDesviacion.seguimiento = JSON.stringify(this.seguimiento);
       if(this.infoAccidenteIsValid()){
-        // console.log(this.reporte);
         this.reporteService.create(this.reporte)
         .then((res: number) => {
           this.esNuevo = false;
@@ -841,7 +835,6 @@ export class FormularioAccidenteCtrComponent implements OnInit {
     this.analisisDesviacion.causaInmediataList = this.buildList(this.causaInmediataSelect);
     this.analisisDesviacion.plan_accion = JSON.stringify(this.formPlanAccion.value);
     this.analisisDesviacion.documentosList = documentos;
-    console.log(this.idCausasSelect)
     this.analisisDesviacion.idCausasSelect = stringify(this.idCausasSelect);
 
     this.reporteService.update(this.reporte).then(res => {
