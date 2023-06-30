@@ -348,6 +348,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
               this.causaInmediataSelect
             )
           ));
+          console.log(JSON.parse(this.analisisDesviacion.observacion_causas))
         this.onCausaInmediataSelected(null);
         await this.causaBasicaService.findDefault2(Number(idEmpresa))
           .then((src: SistemaCausaRaiz) => (
@@ -359,11 +360,14 @@ export class FormularioAccidenteCtrComponent implements OnInit {
               this.causaBasicaSelect
             )
           ));
+          console.log(JSON.parse(this.analisisDesviacion.observacion_causas))
         this.onCausaBasicaSelected(null);
+        console.log(JSON.parse(this.analisisDesviacion.observacion_causas))
         let observacion_causas: {
           formCausaRaiz: any;
           formCausaInmediata: any;
         } = JSON.parse(this.analisisDesviacion.observacion_causas);
+        console.log(JSON.parse(this.analisisDesviacion.observacion_causas))
         if(observacion_causas){
           if(observacion_causas.formCausaInmediata){
             this.formCausasInmediatas.setValue(observacion_causas.formCausaInmediata);
@@ -372,6 +376,7 @@ export class FormularioAccidenteCtrComponent implements OnInit {
             this.formCausasRaiz.setValue(observacion_causas.formCausaRaiz);
           }
         }
+        console.log(observacion_causas)
         this.documentosFurat = this.analisisDesviacion.documentosList
         .filter(doc => doc.proceso === 'aliadoFurat');
         this.documentosInvAt = this.analisisDesviacion.documentosList
@@ -549,15 +554,16 @@ export class FormularioAccidenteCtrComponent implements OnInit {
 }
 
   onCausaInmediataSelected(event){
-    if(!this.idCausasSelectInmediata)this.idCausasSelectInmediata=[]
 
-    if(!this.idCausasSelectInmediata && !event && this.causaInmediataSelect.length>0){
+    if(!this.idCausasSelectInmediata && (!event) && (this.causaInmediataSelect.length>0)){
+      this.idCausasSelectInmediata=[]
       let id=[]
       this.causaInmediataSelect.forEach(elem=>id.push(elem))
       this.idCausasSelectInmediata=id
     }
 
     if(event){
+      if(!this.idCausasSelectInmediata){this.idCausasSelectInmediata=[]}
       let find=this.causaInmediataSelect.find((data:any)=> {return data.id==event.node.id})
       if(find){this.idCausasSelectInmediata.push(event.node)}
       else{
@@ -589,15 +595,16 @@ export class FormularioAccidenteCtrComponent implements OnInit {
   }
 
   onCausaBasicaSelected(event){
-    if(!this.idCausasSelectBasic)this.idCausasSelectBasic=[]
 
     if(!this.idCausasSelectBasic && !event && this.causaBasicaSelect.length>0){
+      this.idCausasSelectBasic=[]
       let id=[]
       this.causaBasicaSelect.forEach(elem=>id.push(elem))
       this.idCausasSelectBasic=id
     }
 
     if(event){
+      if(!this.idCausasSelectBasic)this.idCausasSelectBasic=[]
       let find=this.causaBasicaSelect.find((data:any)=> {return data.id==event.node.id})
       if(find){this.idCausasSelectBasic.push(event.node)}
       else{
