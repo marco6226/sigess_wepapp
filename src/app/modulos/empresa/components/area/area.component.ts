@@ -267,7 +267,7 @@ export class AreaComponent implements OnInit {
   }
 
   manageCreateResponse(area: Area) {
-
+console.log(this[this.varSelected])
     this.msgs = [];
     if (this.adicionar) {
       if (this[this.varSelected] != null && this[this.varSelected].children == null) {

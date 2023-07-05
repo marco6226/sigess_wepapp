@@ -1234,10 +1234,11 @@
                                 </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
                                     <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
+                                    <ng-container *sTienePermiso="'SCM_PUT_CASE_SEG'">
                                     <button *ngIf="!editing && idUltimoSeguimiento==seguimiento.id" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimiento)"
                                         title="Editar Seguimiento" 
-                                        class="p-button-rounded p-button-text p-mr-2"></button>
+                                        class="p-button-rounded p-button-text p-mr-2"></button></ng-container>
                                         <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
                                     <button *ngIf="!editing && idUltimoSeguimiento==seguimiento.id" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-copy"
                                         (click)="onRowCloneInit(seguimiento)" title="Clonar Seguimiento" 
@@ -1388,10 +1389,11 @@
                                 </td>
                                 <td class="p-text-center" *ngIf="!this.consultar">
                                     <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
+                                    <ng-container *sTienePermiso="'SCM_PUT_CASE_SEG_GENERICO'">
                                     <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" pInitEditableRow
                                         icon="pi pi-pencil" (click)="onRowEditInit(seguimientogenerico)"
                                         title="Editar Seguimiento" 
-                                        class="p-button-rounded p-button-text p-mr-2"></button>
+                                        class="p-button-rounded p-button-text p-mr-2"></button></ng-container>
                                         <!-- *sTienePermiso="'SCM_PUT_CASE_SEG'" -->
                                     <button *ngIf="!editing" [disabled]="consultar2" pButton pRipple type="button" icon="pi pi-copy"
                                         (click)="onRowCloneInit(seguimientogenerico)" title="Clonar Seguimiento" 
