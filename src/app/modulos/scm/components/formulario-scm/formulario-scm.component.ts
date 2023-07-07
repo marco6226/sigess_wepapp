@@ -991,7 +991,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     async onCloseModalseguimiento() {       
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientosList = await this.scmService.getSeguimientos(this.caseSelect.id);
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
-        this.idUltimoSeguimiento=this.seguimientos[0].id
+        if(this.seguimientos.length>0)this.idUltimoSeguimiento=this.seguimientos[0].id
         this.modalSeguimientos = false;
         this.seguiSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -1000,7 +1000,6 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
     async onCloseModalseguimientogenerico() {       
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG_GENERICO"])this.seguimientosgenericoList = await this.scmService.getSeguimientosgenerico(this.caseSelect.id);
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG_GENERICO"])this.seguimientosgenerico = await this.scmService.getSeguimientosgenerico(this.caseSelect.id); 
-
         this.modalSeguimientosgenerico = false;
         this.seguigenericoSelect = null;
         this.logsList = await this.scmService.getLogs(this.caseSelect.id);
@@ -1353,7 +1352,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
                 }
                   return 0;
                 });
-            this.idUltimoSeguimiento=this.seguimientos[0].id
+                if(this.seguimientos.length>0)this.idUltimoSeguimiento=this.seguimientos[0].id
         } catch (error) {
             console.log(error)
         }
@@ -1385,7 +1384,7 @@ export class FormularioScmComponent implements OnInit, OnDestroy {
 
     async fechaSeg() {
         if(this.sesionService.getPermisosMap()["SCM_GET_CASE_SEG"])this.seguimientos = await this.scmService.getSeguimientos(this.caseSelect.id);
-        this.idUltimoSeguimiento=this.seguimientos[0].id
+        if(this.seguimientos.length>0)this.idUltimoSeguimiento=this.seguimientos[0].id
         this.seguimientos.map((seg, idx) => {
             if (seg.fechaSeg) {
                 this.seguimientos[idx].fechaSeg = moment(seg.fechaSeg).toDate()

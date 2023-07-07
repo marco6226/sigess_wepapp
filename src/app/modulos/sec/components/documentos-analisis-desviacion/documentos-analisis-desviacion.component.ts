@@ -47,8 +47,6 @@ export class DocumentosAnalisisDesviacionComponent implements OnInit {
   }
 
   eliminarDocument(doc: Documento) {
-    console.log(doc)
-    console.log(this.documentos)
     this.confirmationService.confirm({
       message: '¿Estás seguro de que quieres eliminar ' + doc.nombre + '?',
       header: 'Confirmar',
